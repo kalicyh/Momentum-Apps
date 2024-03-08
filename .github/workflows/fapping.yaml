@@ -1,43 +1,55 @@
 name: Build and Release FAP
 
 on:
-   push:
-      tags:
-         - 'v*.*'
+  push:
+    branches:
+      - 'master'
+      - 'dev'
+    #tags:
+     # - 'v*.*'
 
 permissions:
-   contents: write
+  contents: write
 
 jobs:
-   build:
-      runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-      steps:
-         - uses: actions/checkout@v4
-           with:
-              fetch-depth: 0
-              lfs: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
 
-         - name: Setup Python
-           uses: actions/setup-python@v4
-           with:
-              python-version: '3.11'
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-         - name: Build Flipper Application Package (.fap)
-           uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
-           id: build-app
-           #with:
-             #sdk-branch: 0.99.0
+      - name: Run UFBT update
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: ufbt update --channel=release
 
-         - name: Upload app artifacts
-           uses: actions/upload-artifact@v3
-           with:
-              name: ${{ github.event.repository.name }}-${{ steps.build-app.outputs.suffix }}
-              path: ${{ steps.build-app.outputs.fap-artifacts }}
+      - name: Run UFBT update for dev branch
+        if: ${{ github.ref == 'refs/heads/dev' }}
+        run: ufbt update --channel=dev
 
-         # Release step
-         - name: Create GitHub Release and Upload FAP
-           uses: softprops/action-gh-release@v1
-           if: startsWith(github.ref, 'refs/tags/')
-           with:
-              files: ${{ steps.build-app.outputs.fap-artifacts }}
+      - name: Build Flipper Application Package (.fap)
+        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
+        id: build-app
+        #with:
+          #sdk-branch: 0.99.0
+
+      - name: Upload app artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}-${{ steps.build-app.outputs.suffix }}
+          path: ${{ steps.build-app.outputs.fap-artifacts }}
+
+      # Release step
+      - name: Create GitHub Release and Upload FAP
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ steps.build-app.outputs.fap-artifacts }}
