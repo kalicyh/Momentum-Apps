@@ -27,20 +27,15 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run UFBT update
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: ufbt update --channel=release
-
-      - name: Run UFBT update for dev branch
-        if: ${{ github.ref == 'refs/heads/dev' }}
-        run: ufbt update --channel=dev
-
       - name: Build Flipper Application Package (.fap)
         uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
         id: build-app
-        #with:
-          #sdk-branch: 0.99.0
-
+        with:
+          if: ${{ github.ref == 'refs/heads/dev' }}
+          sdk-channel: dev
+          elif: ${{ github.ref == 'refs/heads/master' }}
+          sdk-branch: dev
+         
       - name: Upload app artifacts
         uses: actions/upload-artifact@v3
         with:
