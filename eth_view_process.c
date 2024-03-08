@@ -4,8 +4,6 @@
 #include "eth_worker_i.h"
 #include "eth_troubleshooter_icons.h"
 
-//#include "lib/ioLibrary_Driver/u8g2/csrc/u8g2.h"
-
 #include <furi_hal.h>
 #include <gui/gui.h>
 #include <gui/canvas.h>
