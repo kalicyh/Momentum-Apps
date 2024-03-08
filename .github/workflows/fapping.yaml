@@ -28,13 +28,10 @@ jobs:
           python-version: '3.11'
 
       - name: Build Flipper Application Package (.fap)
-        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
         id: build-app
+        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
         with:
-          if: ${{ github.ref == 'refs/heads/dev' }}
-          sdk-channel: dev
-          elif: ${{ github.ref == 'refs/heads/master' }}
-          sdk-branch: dev
+          sdk-branch: ${{ github.ref == 'refs/heads/master' && 'release' || 'dev' }}
          
       - name: Upload app artifacts
         uses: actions/upload-artifact@v3
