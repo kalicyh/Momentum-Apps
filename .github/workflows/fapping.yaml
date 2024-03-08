@@ -26,8 +26,8 @@ jobs:
          - name: Build Flipper Application Package (.fap)
            uses: flipperdevices/flipperzero-ufbt-action@v0.1.3
            id: build-app
-           #with:
-           #  sdk-branch: 0.97.1
+           with:
+             sdk-branch: 0.99.0
 
          - name: Upload app artifacts
            uses: actions/upload-artifact@v3
