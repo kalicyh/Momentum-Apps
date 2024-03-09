@@ -27,8 +27,8 @@ jobs:
       - name: Build Flipper Application Package (.fap)
         id: build-app
         uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
-        with:
-          sdk-channel: ${{ github.ref == 'refs/heads/master' && 'release' || 'dev' }}
+        #with:
+          #sdk-channel: ${{ github.ref == 'refs/heads/master' && 'release' || 'dev' }}
          
       - name: Upload app artifacts
         uses: actions/upload-artifact@v3
