@@ -1,9 +1,8 @@
 # Flipper zero wiegand plugin
 
-Add as git submodule
+Add as git submodule: `git submodule add https://gitlab.com/bettse/flipper-wiegand-plugin.git plugin`
 
-
-Add to your `applicaiton.fam`
+Add to your `application.fam`
 ```
 App(
     appid="plugin_wiegand",
