@@ -16,6 +16,8 @@
 
 #include <assets_icons.h>
 
+// #include <applications/main/archive/helpers/archive_helpers_ext.h>
+
 #define TAG "WavPlayer"
 
 #define WAVPLAYER_FOLDER "/ext/wav_player"
@@ -98,6 +100,8 @@ static WavPlayerApp* app_alloc() {
     app->gui = furi_record_open(RECORD_GUI);
     app->view_dispatcher = view_dispatcher_alloc();
     app->view = wav_player_view_alloc();
+
+    app->direct_launch = false;
 
     view_dispatcher_add_view(app->view_dispatcher, 0, wav_player_view_get_view(app->view));
     view_dispatcher_attach_to_gui(app->view_dispatcher, app->gui, ViewDispatcherTypeFullscreen);
@@ -344,7 +348,10 @@ static void ctrl_callback(WavPlayerCtrl ctrl, void* ctx) {
 }
 
 static void app_run(WavPlayerApp* app) {
-    if(!open_wav_stream(app->stream)) return;
+    if(!app->direct_launch) {
+        if(!open_wav_stream(app->stream)) return;
+    }
+
     if(!wav_parser_parse(app->parser, app->stream, app)) return;
 
     wav_player_view_set_volume(app->view, app->volume);
@@ -449,7 +456,8 @@ static void app_run(WavPlayerApp* app) {
 }
 
 int32_t wav_player_app(void* p) {
-    UNUSED(p);
+    const char* args = p;
+
     WavPlayerApp* app = app_alloc();
 
     Storage* storage = furi_record_open(RECORD_STORAGE);
@@ -458,7 +466,19 @@ int32_t wav_player_app(void* p) {
     }
     furi_record_close(RECORD_STORAGE);
 
-    app_run(app);
+    // FURI_LOG_I(TAG, "Args: %s", args);
+    // app->favorite = process_favorite_launch((char**)&args);
+    bool run = true;
+    if(args && strlen(args)) {
+        app->direct_launch = true;
+        FURI_LOG_I(TAG, "Launched with args: %s", args);
+        if(!file_stream_open(app->stream, args, FSAM_READ, FSOM_OPEN_EXISTING)) {
+            FURI_LOG_E(TAG, "Cannot open file \"%s\"", args);
+            run = false;
+        }
+    }
+
+    if(run) app_run(app);
     app_free(app);
     return 0;
 }
