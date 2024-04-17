@@ -71,7 +71,7 @@ typedef struct {
     Gui* gui;
     NotificationApp* notification;
 
-    bool direct_launch;
+    FuriString* path;
 } WavPlayerApp;
 
 WavParser* wav_parser_alloc();

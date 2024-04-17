@@ -16,35 +16,36 @@
 
 #include <assets_icons.h>
 
-// #include <applications/main/archive/helpers/archive_helpers_ext.h>
-
 #define TAG "WavPlayer"
 
 #define WAVPLAYER_FOLDER "/ext/wav_player"
 
-static bool open_wav_stream(Stream* stream) {
+static bool open_wav_stream(WavPlayerApp* app) {
     DialogsApp* dialogs = furi_record_open(RECORD_DIALOGS);
     bool result = false;
-    FuriString* path;
-    path = furi_string_alloc();
-    furi_string_set(path, WAVPLAYER_FOLDER);
 
-    DialogsFileBrowserOptions browser_options;
-    dialog_file_browser_set_basic_options(&browser_options, ".wav", &I_music_10px);
-    browser_options.base_path = WAVPLAYER_FOLDER;
-    browser_options.hide_ext = false;
+    if(furi_string_empty(app->path)) {
+        furi_string_set(app->path, WAVPLAYER_FOLDER);
 
-    bool ret = dialog_file_browser_show(dialogs, path, path, &browser_options);
+        DialogsFileBrowserOptions browser_options;
+        dialog_file_browser_set_basic_options(&browser_options, ".wav", &I_music_10px);
+        browser_options.base_path = WAVPLAYER_FOLDER;
+        browser_options.hide_ext = false;
 
-    furi_record_close(RECORD_DIALOGS);
-    if(ret) {
-        if(!file_stream_open(stream, furi_string_get_cstr(path), FSAM_READ, FSOM_OPEN_EXISTING)) {
-            FURI_LOG_E(TAG, "Cannot open file \"%s\"", furi_string_get_cstr(path));
-        } else {
-            result = true;
-        }
+        bool ret = dialog_file_browser_show(dialogs, app->path, app->path, &browser_options);
+
+        furi_record_close(RECORD_DIALOGS);
+
+        if(!ret) return false;
     }
-    furi_string_free(path);
+
+    if(!file_stream_open(
+           app->stream, furi_string_get_cstr(app->path), FSAM_READ, FSOM_OPEN_EXISTING)) {
+        FURI_LOG_E(TAG, "Cannot open file \"%s\"", furi_string_get_cstr(app->path));
+    } else {
+        result = true;
+    }
+
     return result;
 }
 
@@ -101,7 +102,7 @@ static WavPlayerApp* app_alloc() {
     app->view_dispatcher = view_dispatcher_alloc();
     app->view = wav_player_view_alloc();
 
-    app->direct_launch = false;
+    app->path = furi_string_alloc();
 
     view_dispatcher_add_view(app->view_dispatcher, 0, wav_player_view_get_view(app->view));
     view_dispatcher_attach_to_gui(app->view_dispatcher, app->gui, ViewDispatcherTypeFullscreen);
@@ -125,6 +126,8 @@ static void app_free(WavPlayerApp* app) {
     wav_parser_free(app->parser);
     stream_free(app->stream);
     furi_record_close(RECORD_STORAGE);
+
+    furi_string_free(app->path);
 
     notification_message(app->notification, &sequence_display_backlight_enforce_auto);
     furi_record_close(RECORD_NOTIFICATION);
@@ -348,9 +351,7 @@ static void ctrl_callback(WavPlayerCtrl ctrl, void* ctx) {
 }
 
 static void app_run(WavPlayerApp* app) {
-    if(!app->direct_launch) {
-        if(!open_wav_stream(app->stream)) return;
-    }
+    if(!open_wav_stream(app)) return;
 
     if(!wav_parser_parse(app->parser, app->stream, app)) return;
 
@@ -466,19 +467,11 @@ int32_t wav_player_app(void* p) {
     }
     furi_record_close(RECORD_STORAGE);
 
-    // FURI_LOG_I(TAG, "Args: %s", args);
-    // app->favorite = process_favorite_launch((char**)&args);
-    bool run = true;
     if(args && strlen(args)) {
-        app->direct_launch = true;
-        FURI_LOG_I(TAG, "Launched with args: %s", args);
-        if(!file_stream_open(app->stream, args, FSAM_READ, FSOM_OPEN_EXISTING)) {
-            FURI_LOG_E(TAG, "Cannot open file \"%s\"", args);
-            run = false;
-        }
+        furi_string_set(app->path, args);
     }
 
-    if(run) app_run(app);
+    app_run(app);
     app_free(app);
     return 0;
 }
