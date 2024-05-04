@@ -22,10 +22,8 @@
 App(
     appid="subghz_remote",
     name="Sub-GHz Remote",
-    apptype=FlipperAppType.MENUEXTERNAL,
+    apptype=FlipperAppType.EXTERNAL,
     entry_point="subghz_remote_app",
-    icon="A_SubGHzRemote_14",
-    order=11,
     requires=[
         "gui",
         "dialogs",
