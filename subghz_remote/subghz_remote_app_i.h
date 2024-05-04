@@ -6,7 +6,10 @@
 
 #include "helpers/txrx/subghz_txrx.h"
 
+// Fix importing from firmware for folder path
+#if __has_include("subghz_remote_icons.h")
 #include "subghz_remote_icons.h"
+#endif
 
 #include "views/remote.h"
 #include "views/edit_menu.h"
