@@ -241,8 +241,7 @@ bool subbrute_main_view_input_file_protocol(InputEvent* event, SubBruteMainView*
 
         updated = true;
     } else if(event->key == InputKeyOk) {
-      instance->callback(SubBruteCustomEventTypeIndexSelected,
-                         instance->context);
+        instance->callback(SubBruteCustomEventTypeIndexSelected, instance->context);
 
         updated = true;
     }
@@ -253,7 +252,6 @@ bool subbrute_main_view_input_ordinary_protocol(
     InputEvent* event,
     SubBruteMainView* instance,
     bool is_short) {
-
     const uint8_t min_value = 0;
     const uint8_t correct_total = SubBruteAttackTotalCount - 1;
     uint8_t index = instance->index;
@@ -424,7 +422,6 @@ void subbrute_main_view_set_index(
     bool is_select_byte,
     bool two_bytes,
     uint64_t key_from_file) {
-
     furi_assert(instance);
     furi_assert(idx < SubBruteAttackTotalCount);
 #ifdef FURI_DEBUG
