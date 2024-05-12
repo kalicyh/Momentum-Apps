@@ -825,7 +825,6 @@ int32_t mfkey_main() {
                     case InputKeyRight:
                         if(program_state->mfkey_state == Ready) {
                             program_state->mfkey_state = Help;
-                            view_port_update(view_port);
                         }
                         break;
                     case InputKeyLeft:
@@ -833,13 +832,11 @@ int32_t mfkey_main() {
                     case InputKeyOk:
                         if(program_state->mfkey_state == Ready) {
                             furi_thread_start(program_state->mfkeythread);
-                            view_port_update(view_port);
                         }
                         break;
                     case InputKeyBack:
                         if(program_state->mfkey_state == Help) {
                             program_state->mfkey_state = Ready;
-                            view_port_update(view_port);
                         } else {
                             program_state->close_thread_please = true;
                             // Wait until thread is finished
@@ -854,8 +851,8 @@ int32_t mfkey_main() {
             }
         }
 
-        view_port_update(view_port);
         furi_mutex_release(program_state->mutex);
+        view_port_update(view_port);
     }
 
     // Thread joined in back event handler
