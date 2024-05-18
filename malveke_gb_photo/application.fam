@@ -10,12 +10,12 @@ App(
     ],
     stack_size=2 * 1024,
     order=10,
-    fap_version=[2,3],
+    fap_version=[2, 3],
     fap_libs=[],
     fap_icon="icons/icon_10px.png",
     fap_icon_assets="icons",
     fap_category="GPIO/MALVEKE",
     fap_description="Game Boy Camera save RAM photo to BMP from the Flipper Zero.",
-	fap_author="Esteban Fuentealba",
-	fap_weburl="https://github.com/EstebanFuentealba/MALVEKE-Flipper-Zero/"
+    fap_author="Esteban Fuentealba",
+    fap_weburl="https://github.com/EstebanFuentealba/MALVEKE-Flipper-Zero/",
 )
