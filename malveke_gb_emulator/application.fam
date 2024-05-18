@@ -1,6 +1,6 @@
 App(
     appid="malveke_gb_emulator",
-    name="GAME BOY Emulator MALVEKE",
+    name="[GB] Emulator",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="malveke_gb_emulator_app",
     cdefines=["APP_EMULATOR"],
@@ -10,7 +10,7 @@ App(
     fap_libs=["assets"],
 	fap_icon="icons/icon.png",
     fap_icon_assets="icons",
-    fap_category="GPIO",
+    fap_category="GPIO/MALVEKE",
     fap_version=[2,1],
 	fap_description="GAME BOY Emulator (POC).",
 	fap_author="Esteban Fuentealba",
