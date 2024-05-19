@@ -29,39 +29,39 @@
 #include "scenes/nfc_playlist_scene.h"
 
 typedef enum {
-   NfcPlaylistView_Submenu,
-   NfcPlaylistView_Popup,
-   NfcPlaylistView_Widget,
-   NfcPlaylistView_VariableItemList,
-   NfcPlaylistView_FileBrowser,
-   NfcPlaylistView_TextInput
+    NfcPlaylistView_Submenu,
+    NfcPlaylistView_Popup,
+    NfcPlaylistView_Widget,
+    NfcPlaylistView_VariableItemList,
+    NfcPlaylistView_FileBrowser,
+    NfcPlaylistView_TextInput
 } NfcPlaylistViews;
 
 typedef struct {
-   FuriString* file_path;
-   bool playlist_selected;
-   uint8_t emulate_timeout;
-   uint8_t emulate_delay;
-   bool emulate_led_indicator;
-   bool skip_error;
+    FuriString* file_path;
+    bool playlist_selected;
+    uint8_t emulate_timeout;
+    uint8_t emulate_delay;
+    bool emulate_led_indicator;
+    bool skip_error;
 } NfcPlaylistSettings;
 
 typedef struct {
-   SceneManager* scene_manager;
-   ViewDispatcher* view_dispatcher;
-   Submenu* submenu;
-   Popup* popup;
-   Widget* widget;
-   VariableItemList* variable_item_list;
-   FileBrowser* file_browser;
-   FuriString* file_browser_output;
-   TextInput* text_input;
-   char* text_input_output;
-   NotificationApp* notification;
-   FuriThread* thread;
-   FuriString* temp_furi_string;
-   NfcPlaylistWorker* nfc_playlist_worker;
-   NfcPlaylistSettings settings;
+    SceneManager* scene_manager;
+    ViewDispatcher* view_dispatcher;
+    Submenu* submenu;
+    Popup* popup;
+    Widget* widget;
+    VariableItemList* variable_item_list;
+    FileBrowser* file_browser;
+    FuriString* file_browser_output;
+    TextInput* text_input;
+    char* text_input_output;
+    NotificationApp* notification;
+    FuriThread* thread;
+    FuriString* temp_furi_string;
+    NfcPlaylistWorker* nfc_playlist_worker;
+    NfcPlaylistSettings settings;
 } NfcPlaylist;
 
 static const int options_emulate_timeout[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
@@ -76,8 +76,8 @@ static const bool default_skip_error = false;
 #define PLAYLIST_VIEW_MAX_SIZE 1000
 
 typedef enum NfcPlaylistLedState {
-   NfcPlaylistLedState_Normal,
-   NfcPlaylistLedState_Error
+    NfcPlaylistLedState_Normal,
+    NfcPlaylistLedState_Error
 } NfcPlaylistLedState;
 
 void start_blink(NfcPlaylist* nfc_playlist, int state);
