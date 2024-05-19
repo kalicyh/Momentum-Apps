@@ -1,4 +1,4 @@
-# 🐬 Flipper Zero - Pokemon Trading in Game Boy
+# GAME BOY Pokemon Trading MALVEKE
 
 <p align="center">
 <a target="_blank" href="https://www.reddit.com/r/flipperzero/comments/121ncot/flipper_zero_game_boy_pokemon_trading/">
@@ -22,12 +22,23 @@ It currently trades a Pokemon based on your choice of Pokemon, Level, Stats and 
 
 ## Hardware Interface
 The Game Boy is connected to the Flipper Zero's GPIO pins via a GBC style Game Link Cable. The [Flipper GB Link module](https://www.tindie.com/products/kbembedded/game-link-gpio-module-for-flipper-zero-game-boy/) is an easy way to connect a Game Boy via a Game Link Cable to the Flipper Zero.
+
+<p align='center'>
+  <a href="https://www.tindie.com/stores/kbembedded/?ref=offsite_badges&utm_source=sellers_kbembedded&utm_medium=badges&utm_campaign=badge_large">
+<img src="https://i.imgur.com/WQIJK8G.png" alt="Flipper GB Link module" width="680">
+  </a>
+</p>
 <p align='center'>
 <a href="https://www.tindie.com/stores/kbembedded/?ref=offsite_badges&utm_source=sellers_kbembedded&utm_medium=badges&utm_campaign=badge_large"><img src="https://d2ss6ovg47m0r5.cloudfront.net/badges/tindie-larges.png" alt="I sell on Tindie" width="200" height="104"></a>
 </p>
 
 Additionally, the [MALVEKE - GAME BOY Tools for Flipper Zero](https://www.tindie.com/products/efuentealba/malveke-game-boy-tools-for-flipper-zero/) is supported by this tool.
 
+<p align='center'>
+<a href="https://www.tindie.com/stores/efuentealba/?ref=offsite_badges&utm_source=sellers_efuentealba&utm_medium=badges&utm_campaign=badge_large">
+<img src="https://i.imgur.com/xdbLXBP.png" alt="MALVEKE" width="680">
+</a>
+</p>
 <p align='center'>
 <a href="https://www.tindie.com/stores/efuentealba/?ref=offsite_badges&utm_source=sellers_efuentealba&utm_medium=badges&utm_campaign=badge_large"><img src="https://d2ss6ovg47m0r5.cloudfront.net/badges/tindie-larges.png" alt="I sell on Tindie" width="200" height="104"></a>
 </p>
@@ -62,7 +73,28 @@ And use [**qFlipper**](https://flipperzero.one/update) to copy the generated **p
 
 These instructions assume that you are starting at the Flipper Zero desktop. Otherwise, press the Back button until you are at the desktop.
 
-- If using a MALVEKE board, plug it in to the GPIO header now. The app will auto-detect and select the correct pinout to support the MALVEKE EXT1 interface. If using the Flipper GB Link board, or any other pinout, they can be connected to the Flipper Zero now, or at any point in the future.
+- If you're using a MALVEKE PCB version, verify the **Pinout** configuration:
+
+    <p align='center'>
+        <br />
+        <img src="./docs/images/flipper-zero-flat-00.png" width="400" />
+        <br />
+    </p>
+
+    - MALVEKE **2.5** PCB Version: If you're using this version, select the `MALVEKE` configuration.
+        <p align='center'>
+            <br />
+            <img src="./docs/images/flipper-zero-flat-01.png" width="400" />
+            <br />
+        </p>
+
+    - MALVEKE **2.5.1** PCB Version: If you're using this version, select the `ORIGINAL`
+        <p align='center'>
+            <br />
+            <img src="./docs/images/flipper-zero-flat-02.png" width="400" />
+            <br />
+        </p>
+
 - Press the `OK` button on the Flipper to open the main menu.
 - Choose `Applications` from the menu.
 - Choose `GPIO` from the submenu.
