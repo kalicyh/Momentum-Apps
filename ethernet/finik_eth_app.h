@@ -6,7 +6,7 @@
 #include <power/power_service/power.h>
 
 #include "eth_worker.h"
-#include "eth_troubleshooter_icons.h"
+#include "finik_eth_icons.h"
 
 typedef enum {
     DRAW_ALL,
@@ -31,7 +31,7 @@ typedef enum {
     CURSOR_EXIT,
 } CursorPosition;
 
-struct EthTroubleshooterApp {
+struct FinikEthApp {
     Gui* gui;
     ViewPort* view_port;
     FuriMessageQueue* event_queue;
@@ -46,4 +46,4 @@ struct EthTroubleshooterApp {
     CursorPosition cursor_position;
 };
 
-typedef struct EthTroubleshooterApp EthTroubleshooterApp;
+typedef struct FinikEthApp FinikEthApp;

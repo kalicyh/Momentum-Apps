@@ -1,9 +1,9 @@
 App(
-    appid="eth_troubleshooter",
-    name="Ethernet Troubleshooter",
+    appid="ethernet",
+    name="[W5500] Ethernet",
     apptype=FlipperAppType.EXTERNAL,
-    entry_point="eth_troubleshooter_app",
-    cdefines=["ETH_TROUBLESHOOTER"],
+    entry_point="finik_eth_app",
+    cdefines=["FINIK_ETH"],
     requires=[
         "gui",
         "power",
@@ -12,8 +12,9 @@ App(
     order=90,
     fap_icon="images/ethernet_icon_10x10px.png",
     fap_version="1.0",
-    fap_category="GPIO",
+    fap_category="GPIO/Debug",
     fap_icon_assets="images",
+    fap_icon_assets_symbol="finik_eth",
     fap_private_libs=[
         Lib(
             cflags=[
