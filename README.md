@@ -17,7 +17,7 @@ Many apps included in Momentum are modified (some lots more than others). This i
 - **Updating and fixing apps** that were abandoned by the original developers
 
 ### How?
-**Apps made by the our team are developed right here, the latest versions will always originate from this repository.**
+**Apps made by our team are developed right here, the latest versions will always originate from this repository.**
 
 **For all other apps we use git subtrees to pull updates from the creator's repository / other sources such as [@xMasterX's pack](https://github.com/xMasterX/all-the-plugins), while also keeping our own tweaks and additions.**
 
