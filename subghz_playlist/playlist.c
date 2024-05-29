@@ -183,6 +183,11 @@ static int playlist_worker_process(
             TAG,
             "  (TX) The SubGhz device used does not support the frequency for transmitеing, %lu",
             frequency);
+
+        subghz_devices_idle(worker->radio_device);
+
+        subghz_transmitter_free(transmitter);
+        subghz_environment_free(environment);
         return -5;
     }
     FURI_LOG_D(TAG, "  (TX) Start sending ...");
@@ -300,9 +305,12 @@ static bool playlist_worker_play_playlist_once(
                 playlist_worker_process(worker, fff_file, fff_data, str, preset, protocol);
 
             // if there was an error, fff_file is not already freed
+            // why do you do this with numbers without meaning x_x
             if(status < 0) {
-                flipper_format_file_close(fff_file);
-                flipper_format_free(fff_file);
+                if(status > -5) {
+                    flipper_format_file_close(fff_file);
+                    flipper_format_free(fff_file);
+                }
 
                 furi_check(
                     furi_mutex_acquire(worker->meta->mutex, FuriWaitForever) == FuriStatusOk);
