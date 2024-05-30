@@ -154,12 +154,15 @@ static void hc_sr04_measure(PluginState* const plugin_state) {
 
     const uint32_t start = furi_get_tick();
 
-    while(furi_get_tick() - start < timeout_ms && furi_hal_gpio_read(&gpio_usart_rx));
-    while(furi_get_tick() - start < timeout_ms && !furi_hal_gpio_read(&gpio_usart_rx));
+    while(furi_get_tick() - start < timeout_ms && furi_hal_gpio_read(&gpio_usart_rx))
+        ;
+    while(furi_get_tick() - start < timeout_ms && !furi_hal_gpio_read(&gpio_usart_rx))
+        ;
 
     const uint32_t pulse_start = DWT->CYCCNT;
 
-    while(furi_get_tick() - start < timeout_ms && furi_hal_gpio_read(&gpio_usart_rx));
+    while(furi_get_tick() - start < timeout_ms && furi_hal_gpio_read(&gpio_usart_rx))
+        ;
     const uint32_t pulse_end = DWT->CYCCNT;
 
     //FURI_CRITICAL_EXIT();
