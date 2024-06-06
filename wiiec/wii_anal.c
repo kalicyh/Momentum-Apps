@@ -62,12 +62,7 @@ static void cbTimer(void* ctx) {
 //
 static void cbInput(InputEvent* event, void* ctx) {
     ENTER;
-<<<<<<< HEAD
-    FuriMessageQueue* queue = ctx;
-    furi_assert(queue);
-=======
     furi_assert(ctx);
->>>>>>> 19c5ebf73a10da65de9107d6c33364e8524b0016
     furi_assert(event);
     FuriMessageQueue* queue = ctx;
 
