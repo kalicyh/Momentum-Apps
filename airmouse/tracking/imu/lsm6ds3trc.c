@@ -13,8 +13,7 @@ int32_t lsm6ds3trc_write_i2c(void* handle, uint8_t reg_addr, const uint8_t* data
 }
 
 int32_t lsm6ds3trc_read_i2c(void* handle, uint8_t reg_addr, uint8_t* read_data, uint16_t len) {
-    if(furi_hal_i2c_read_mem(handle, LSM6DS3_DEV_ADDRESS, reg_addr, read_data, len, 50))
-        return 0;
+    if(furi_hal_i2c_read_mem(handle, LSM6DS3_DEV_ADDRESS, reg_addr, read_data, len, 50)) return 0;
     return -1;
 }
 
@@ -88,10 +87,5 @@ int lsm6ds3trc_read(double* vec) {
     return ret;
 }
 
-struct imu_t imu_lsm6ds3trc = {
-    LSM6DS3_DEV_ADDRESS,
-    lsm6ds3trc_begin,
-    lsm6ds3trc_end,
-    lsm6ds3trc_read,
-    LSM6DS3_TAG
-};
+struct imu_t imu_lsm6ds3trc =
+    {LSM6DS3_DEV_ADDRESS, lsm6ds3trc_begin, lsm6ds3trc_end, lsm6ds3trc_read, LSM6DS3_TAG};

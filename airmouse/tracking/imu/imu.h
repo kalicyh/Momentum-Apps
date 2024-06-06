@@ -8,8 +8,7 @@
 extern "C" {
 #endif
 
-struct imu_t
-{
+struct imu_t {
     unsigned int address;
     bool (*begin)(void);
     void (*end)(void);

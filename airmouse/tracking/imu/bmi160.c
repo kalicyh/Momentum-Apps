@@ -83,10 +83,4 @@ int bmi160_read(double* vec) {
 void bmi160_end() {
 }
 
-struct imu_t imu_bmi160 = {
-   BMI160_DEV_ADDR,
-   bmi160_begin,
-   bmi160_end,
-   bmi160_read,
-   BMI160_TAG
-};
+struct imu_t imu_bmi160 = {BMI160_DEV_ADDR, bmi160_begin, bmi160_end, bmi160_read, BMI160_TAG};

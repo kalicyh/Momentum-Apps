@@ -7,14 +7,12 @@
 stmdev_ctx_t lsm6dso_ctx;
 
 int32_t lsm6dso_write_i2c(void* handle, uint8_t reg_addr, uint8_t* data, uint16_t len) {
-    if(furi_hal_i2c_write_mem(handle, LSM6DSO_DEV_ADDRESS, reg_addr, data, len, 50))
-        return 0;
+    if(furi_hal_i2c_write_mem(handle, LSM6DSO_DEV_ADDRESS, reg_addr, data, len, 50)) return 0;
     return -2;
 }
 
 int32_t lsm6dso_read_i2c(void* handle, uint8_t reg_addr, uint8_t* read_data, uint16_t len) {
-    if(furi_hal_i2c_read_mem(handle, LSM6DSO_DEV_ADDRESS, reg_addr, read_data, len, 50))
-        return 0;
+    if(furi_hal_i2c_read_mem(handle, LSM6DSO_DEV_ADDRESS, reg_addr, read_data, len, 50)) return 0;
     return -2;
 }
 
@@ -88,10 +86,5 @@ int lsm6dso_read(double* vec) {
     return ret;
 }
 
-struct imu_t imu_lsm6dso = {
-    LSM6DSO_DEV_ADDRESS,
-    lsm6dso_begin,
-    lsm6dso_end,
-    lsm6dso_read,
-    LSM6DSO_TAG
-};
+struct imu_t imu_lsm6dso =
+    {LSM6DSO_DEV_ADDRESS, lsm6dso_begin, lsm6dso_end, lsm6dso_read, LSM6DSO_TAG};
