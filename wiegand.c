@@ -26,6 +26,30 @@ static inline uint8_t evenparity32(uint32_t x) {
     return bit_lib_test_parity_32(x, BitLibParityEven);
 }
 
+uint8_t get_bit_by_position(wiegand_message_t* data, uint8_t pos) {
+    if(pos >= data->Length) return false;
+    pos = (data->Length - pos) -
+          1; // invert ordering; Indexing goes from 0 to 1. Subtract 1 for weight of bit.
+    uint8_t result = 0;
+    if(pos > 95)
+        result = 0;
+    else if(pos > 63)
+        result = (data->Top >> (pos - 64)) & 1;
+    else if(pos > 31)
+        result = (data->Mid >> (pos - 32)) & 1;
+    else
+        result = (data->Bot >> pos) & 1;
+    return result;
+}
+
+uint64_t get_linear_field(wiegand_message_t* data, uint8_t firstBit, uint8_t length) {
+    uint64_t result = 0;
+    for(uint8_t i = 0; i < length; i++) {
+        result = (result << 1) | get_bit_by_position(data, firstBit + i);
+    }
+    return result;
+}
+
 static int wiegand_C1k35s_parse(uint8_t bit_length, uint64_t bits, FuriString* description) {
     if(bit_length != 35) {
         return 0;
@@ -94,6 +118,30 @@ static int wiegand_h10301_parse(uint8_t bit_length, uint64_t bits, FuriString* d
     return 0;
 }
 
+static int wiegand_H10304_parse(uint8_t bit_length, uint64_t bits, FuriString* description) {
+    if(bit_length != 37) {
+        return 0;
+    }
+
+    wiegand_message_t value;
+    value.Mid = bits >> 32;
+    value.Bot = bits;
+    wiegand_message_t* packed = &value;
+
+    uint32_t fc = get_linear_field(packed, 1, 16);
+    uint32_t cn = get_linear_field(packed, 17, 19);
+    bool valid =
+        (get_bit_by_position(packed, 0) == evenparity32(get_linear_field(packed, 1, 18))) &&
+        (get_bit_by_position(packed, 36) == oddparity32(get_linear_field(packed, 18, 18)));
+
+    if(valid) {
+        furi_string_cat_printf(description, "H10304\nFC: %ld CN: %ld\n", fc, cn);
+        return 1;
+    }
+
+    return 0;
+}
+
 static int wiegand_format_count(uint8_t bit_length, uint64_t bits) {
     UNUSED(bit_length);
     UNUSED(bits);
@@ -102,6 +150,7 @@ static int wiegand_format_count(uint8_t bit_length, uint64_t bits) {
 
     count += wiegand_h10301_parse(bit_length, bits, ignore);
     count += wiegand_C1k35s_parse(bit_length, bits, ignore);
+    count += wiegand_H10304_parse(bit_length, bits, ignore);
 
     furi_string_free(ignore);
 
