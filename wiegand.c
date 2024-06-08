@@ -51,14 +51,13 @@ uint64_t get_linear_field(wiegand_message_t* data, uint8_t firstBit, uint8_t len
 }
 
 static int wiegand_C1k35s_parse(uint8_t bit_length, uint64_t bits, FuriString* description) {
-    if(bit_length != 35) {
-        return 0;
-    }
-
     wiegand_message_t value;
+    value.Length = bit_length;
     value.Mid = bits >> 32;
     value.Bot = bits;
     wiegand_message_t* packed = &value;
+
+    if(packed->Length != 35) return false; // Wrong length? Stop here.
 
     uint32_t cn = (packed->Bot >> 1) & 0x000FFFFF;
     uint32_t fc = ((packed->Mid & 1) << 11) | ((packed->Bot >> 21));
@@ -72,6 +71,8 @@ static int wiegand_C1k35s_parse(uint8_t bit_length, uint64_t bits, FuriString* d
     if(valid) {
         furi_string_cat_printf(description, "C1k35s\nFC: %ld CN: %ld\n", fc, cn);
         return 1;
+    } else {
+        FURI_LOG_D(PLUGIN_APP_ID, "C1k35s invalid");
     }
 
     return 0;
@@ -113,20 +114,21 @@ static int wiegand_h10301_parse(uint8_t bit_length, uint64_t bits, FuriString* d
 
         furi_string_cat_printf(description, "H10301\nFC: %d CN: %d\n", fc, cn);
         return 1;
+    } else {
+        FURI_LOG_D(PLUGIN_APP_ID, "H10301 invalid");
     }
 
     return 0;
 }
 
 static int wiegand_H10304_parse(uint8_t bit_length, uint64_t bits, FuriString* description) {
-    if(bit_length != 37) {
-        return 0;
-    }
-
     wiegand_message_t value;
+    value.Length = bit_length;
     value.Mid = bits >> 32;
     value.Bot = bits;
     wiegand_message_t* packed = &value;
+
+    if(packed->Length != 37) return false; // Wrong length? Stop here.
 
     uint32_t fc = get_linear_field(packed, 1, 16);
     uint32_t cn = get_linear_field(packed, 17, 19);
@@ -137,6 +139,32 @@ static int wiegand_H10304_parse(uint8_t bit_length, uint64_t bits, FuriString* d
     if(valid) {
         furi_string_cat_printf(description, "H10304\nFC: %ld CN: %ld\n", fc, cn);
         return 1;
+    } else {
+        FURI_LOG_D(PLUGIN_APP_ID, "H10304 invalid");
+    }
+
+    return 0;
+}
+
+static int wiegand_H10302_parse(uint8_t bit_length, uint64_t bits, FuriString* description) {
+    wiegand_message_t value;
+    value.Length = bit_length;
+    value.Mid = bits >> 32;
+    value.Bot = bits;
+    wiegand_message_t* packed = &value;
+
+    if(packed->Length != 37) return false; // Wrong length? Stop here.
+
+    uint64_t cn = get_linear_field(packed, 1, 35);
+    bool valid =
+        (get_bit_by_position(packed, 0) == evenparity32(get_linear_field(packed, 1, 18))) &&
+        (get_bit_by_position(packed, 36) == oddparity32(get_linear_field(packed, 18, 18)));
+
+    if(valid) {
+        furi_string_cat_printf(description, "H10302\nCN: %lld\n", cn);
+        return 1;
+    } else {
+        FURI_LOG_D(PLUGIN_APP_ID, "H10302 invalid");
     }
 
     return 0;
@@ -148,13 +176,17 @@ static int wiegand_format_count(uint8_t bit_length, uint64_t bits) {
     int count = 0;
     FuriString* ignore = furi_string_alloc();
 
+    // NOTE: Always update the `total` and add to the wiegand_format_description function
+    // TODO: Make this into a function pointer array
     count += wiegand_h10301_parse(bit_length, bits, ignore);
     count += wiegand_C1k35s_parse(bit_length, bits, ignore);
+    count += wiegand_H10302_parse(bit_length, bits, ignore);
     count += wiegand_H10304_parse(bit_length, bits, ignore);
+    int total = 4;
 
     furi_string_free(ignore);
 
-    FURI_LOG_I(PLUGIN_APP_ID, "count: %i", count);
+    FURI_LOG_I(PLUGIN_APP_ID, "count: %i/%i", count, total);
     return count;
 }
 
@@ -164,21 +196,16 @@ static void wiegand_format_description(
     size_t index,
     FuriString* description) {
     FURI_LOG_I(PLUGIN_APP_ID, "description %d", index);
-    UNUSED(bit_length);
-    UNUSED(bits);
 
-    size_t i = 0;
-
-    i += wiegand_h10301_parse(bit_length, bits, description);
-    if(i - 1 == index) {
-        return;
-    }
-    i += wiegand_C1k35s_parse(bit_length, bits, description);
-    if(i - 1 == index) {
+    // Turns out I did this wrong and trying to use the index means the results get repeated.  Instead, just return the results for index == 0
+    if(index != 0) {
         return;
     }
 
-    furi_string_cat_printf(description, "[%i] <name> FC: CN:", index);
+    wiegand_h10301_parse(bit_length, bits, description);
+    wiegand_C1k35s_parse(bit_length, bits, description);
+    wiegand_H10302_parse(bit_length, bits, description);
+    wiegand_H10304_parse(bit_length, bits, description);
 }
 
 /* Actual implementation of app<>plugin interface */
