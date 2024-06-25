@@ -23,7 +23,7 @@
 
 #define TAG "Meal_Pager"
 
-#define MEAL_PAGER_VERSION "1.7"
+#define MEAL_PAGER_VERSION "1.8"
 
 typedef struct Meal_PagerTransmit Meal_PagerTransmit;
 typedef struct SubGhz SubGhz;
