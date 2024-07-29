@@ -13,5 +13,5 @@ App(
     fap_icon_assets="assets",
     fap_description="@README.md",
     fap_version="0.1",
-    fap_author="Torron"
+    fap_author="Torron",
 )
