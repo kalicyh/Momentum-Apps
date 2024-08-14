@@ -30,9 +30,9 @@ typedef enum {
 } KeyCopierSubmenuIndex;
 
 typedef enum {
-    KeyCopierViewSubmenu, 
+    KeyCopierViewSubmenu,
     KeyCopierViewTextInput,
-    KeyCopierViewConfigure_i, 
+    KeyCopierViewConfigure_i,
     KeyCopierViewConfigure_e,
     KeyCopierViewSave,
     KeyCopierViewLoad,
@@ -41,19 +41,19 @@ typedef enum {
 } KeyCopierView;
 
 typedef struct {
-    ViewDispatcher* view_dispatcher; 
-    NotificationApp* notifications; 
-    Submenu* submenu; 
-    TextInput* text_input; 
-    VariableItemList* variable_item_list_config; 
-    View* view_measure; 
-    View* view_config_e; 
+    ViewDispatcher* view_dispatcher;
+    NotificationApp* notifications;
+    Submenu* submenu;
+    TextInput* text_input;
+    VariableItemList* variable_item_list_config;
+    View* view_measure;
+    View* view_config_e;
     View* view_save;
-    View* view_load; 
-    Widget* widget_about; 
-    VariableItem* key_name_item; 
+    View* view_load;
+    Widget* widget_about;
+    VariableItem* key_name_item;
     VariableItem* format_item;
-    char* temp_buffer; 
+    char* temp_buffer;
     uint32_t temp_buffer_size;
 
     DialogsApp* dialogs;
@@ -61,8 +61,8 @@ typedef struct {
 } KeyCopierApp;
 
 typedef struct {
-    uint32_t format_index; 
-    FuriString* key_name_str; 
+    uint32_t format_index;
+    FuriString* key_name_str;
     uint8_t pin_slc; // The pin that is being adjusted
     uint8_t* depth; // The cutting depth
     bool data_loaded;
