@@ -103,7 +103,8 @@ EthTroubleshooterApp* eth_troubleshooter_app_alloc() {
     app->eth_worker = eth_worker_alloc();
 
     view_port_draw_callback_set(app->view_port, eth_troubleshooter_app_draw_callback, app);
-    view_port_input_callback_set(app->view_port, eth_troubleshooter_app_input_callback, app->event_queue);
+    view_port_input_callback_set(
+        app->view_port, eth_troubleshooter_app_input_callback, app->event_queue);
 
     app->gui = furi_record_open(RECORD_GUI);
     gui_add_view_port(app->gui, app->view_port, GuiLayerFullscreen);
