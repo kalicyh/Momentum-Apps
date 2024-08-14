@@ -43,13 +43,13 @@ bool pokemon_scene_reset_confirm_on_event(void* context, SceneManagerEvent event
     bool consumed = false;
 
     if(event.type == SceneManagerEventTypeCustom) {
-        switch (event.event) {
+        switch(event.event) {
         case DialogExResultLeft:
             trade_reset_connection(pokemon_fap->trade);
-        [[fallthrough]];
+            [[fallthrough]];
         case DialogExResultRight:
             scene_manager_previous_scene(pokemon_fap->scene_manager);
-	    consumed = true;
+            consumed = true;
             break;
         }
     } else if(event.type == SceneManagerEventTypeBack) {
@@ -62,4 +62,3 @@ bool pokemon_scene_reset_confirm_on_event(void* context, SceneManagerEvent event
 void pokemon_scene_reset_confirm_on_exit(void* context) {
     UNUSED(context);
 }
-

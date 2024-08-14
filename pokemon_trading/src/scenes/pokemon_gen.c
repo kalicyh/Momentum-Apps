@@ -46,7 +46,7 @@ void pokemon_scene_gen_on_enter(void* context) {
             break;
         }
         pokemon_fap->pdata = pokemon_data_alloc(state);
-	pdata = pokemon_fap->pdata;
+        pdata = pokemon_fap->pdata;
 
         /* Clear the scene state as this is the first entry in to this scene
 	 * we definitely want to be completely reset.
@@ -55,15 +55,13 @@ void pokemon_scene_gen_on_enter(void* context) {
 
         /* Allocate select and trade views */
         /* Allocates its own view and adds it to the main view_dispatcher */
-        pokemon_fap->select = select_pokemon_alloc(
-            pdata,
-            pokemon_fap->view_dispatcher,
-            AppViewSelectPokemon);
+        pokemon_fap->select =
+            select_pokemon_alloc(pdata, pokemon_fap->view_dispatcher, AppViewSelectPokemon);
 
         // Trade View
         /* Allocates its own view and adds it to the main view_dispatcher */
-        pokemon_fap->trade = trade_alloc(
-            pdata, &pokemon_fap->pins, pokemon_fap->view_dispatcher, AppViewTrade);
+        pokemon_fap->trade =
+            trade_alloc(pdata, &pokemon_fap->pins, pokemon_fap->view_dispatcher, AppViewTrade);
     }
 
     pkmn_num = pokemon_stat_get(pdata, STAT_NUM, NONE);
@@ -80,10 +78,7 @@ void pokemon_scene_gen_on_enter(void* context) {
     submenu_reset(pokemon_fap->submenu);
 
     snprintf(
-        buf,
-        sizeof(buf),
-        "Pokemon:   %s",
-        table_stat_name_get(pdata->pokemon_table, pkmn_num));
+        buf, sizeof(buf), "Pokemon:   %s", table_stat_name_get(pdata->pokemon_table, pkmn_num));
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneSelect, scene_change_from_main_cb, pokemon_fap);
 
@@ -92,11 +87,7 @@ void pokemon_scene_gen_on_enter(void* context) {
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneNickname, scene_change_from_main_cb, pokemon_fap);
 
-    snprintf(
-        buf,
-        sizeof(buf),
-        "Level:           %d",
-        pokemon_stat_get(pdata, STAT_LEVEL, NONE));
+    snprintf(buf, sizeof(buf), "Level:           %d", pokemon_stat_get(pdata, STAT_LEVEL, NONE));
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneLevel, scene_change_from_main_cb, pokemon_fap);
 
@@ -106,8 +97,7 @@ void pokemon_scene_gen_on_enter(void* context) {
             sizeof(buf),
             "Held Item:   %s",
             namedlist_name_get_index(
-                pdata->item_list,
-                pokemon_stat_get(pdata, STAT_HELD_ITEM, NONE)));
+                pdata->item_list, pokemon_stat_get(pdata, STAT_HELD_ITEM, NONE)));
         submenu_add_item(
             pokemon_fap->submenu, buf, PokemonSceneItem, scene_change_from_main_cb, pokemon_fap);
     }
@@ -130,18 +120,14 @@ void pokemon_scene_gen_on_enter(void* context) {
 
     submenu_add_item(
         pokemon_fap->submenu,
-        namedlist_name_get_index(
-            pdata->stat_list, pokemon_stat_get(pdata, STAT_SEL, NONE)),
+        namedlist_name_get_index(pdata->stat_list, pokemon_stat_get(pdata, STAT_SEL, NONE)),
         PokemonSceneStats,
         scene_change_from_main_cb,
         pokemon_fap);
 
     if(pdata->gen == GEN_II) {
         snprintf(
-            buf,
-            sizeof(buf),
-            "Shiny:             %s",
-            pokemon_is_shiny(pdata) ? "Yes" : "No");
+            buf, sizeof(buf), "Shiny:             %s", pokemon_is_shiny(pdata) ? "Yes" : "No");
         submenu_add_item(
             pokemon_fap->submenu, buf, PokemonSceneShiny, scene_change_from_main_cb, pokemon_fap);
 
@@ -164,11 +150,7 @@ void pokemon_scene_gen_on_enter(void* context) {
         }
     }
 
-    snprintf(
-        buf,
-        sizeof(buf),
-        "OT ID#:          %05d",
-        pokemon_stat_get(pdata, STAT_OT_ID, NONE));
+    snprintf(buf, sizeof(buf), "OT ID#:          %05d", pokemon_stat_get(pdata, STAT_OT_ID, NONE));
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneOTID, scene_change_from_main_cb, pokemon_fap);
 
@@ -178,14 +160,19 @@ void pokemon_scene_gen_on_enter(void* context) {
         pokemon_fap->submenu, buf, PokemonSceneOTName, scene_change_from_main_cb, pokemon_fap);
 
     submenu_add_item(
-        pokemon_fap->submenu, "Trade PKMN", PokemonSceneTrade, scene_change_from_main_cb, pokemon_fap);
+        pokemon_fap->submenu,
+        "Trade PKMN",
+        PokemonSceneTrade,
+        scene_change_from_main_cb,
+        pokemon_fap);
 
-    if (trade_connected(pokemon_fap->trade)) {
-        submenu_add_item(pokemon_fap->submenu,
-                         "Reset Connection",
-                         PokemonSceneResetConfirm,
-                         scene_change_from_main_cb,
-                         pokemon_fap);
+    if(trade_connected(pokemon_fap->trade)) {
+        submenu_add_item(
+            pokemon_fap->submenu,
+            "Reset Connection",
+            PokemonSceneResetConfirm,
+            scene_change_from_main_cb,
+            pokemon_fap);
     }
 
     /* TODO: Add Save pokemon option here */
@@ -205,17 +192,16 @@ bool pokemon_scene_gen_on_event(void* context, SceneManagerEvent event) {
     uint8_t pokemon_num;
     uint8_t gender_ratio;
 
-
     /* If the user tries to go back from this scene to main menu, instead
      * shift to the exit confirmation scene. That scene will handle freeing
      * data as well as going back to the main menu.
      */
-    if (event.type == SceneManagerEventTypeBack) {
+    if(event.type == SceneManagerEventTypeBack) {
         scene_manager_next_scene(pokemon_fap->scene_manager, PokemonSceneExitConfirm);
         consumed = true;
     }
 
-    if (event.type == SceneManagerEventTypeCustom) {
+    if(event.type == SceneManagerEventTypeCustom) {
         consumed = true;
 
         /* Reuse of scenes to allow for using the same functions to set names */
@@ -223,20 +209,22 @@ bool pokemon_scene_gen_on_event(void* context, SceneManagerEvent event) {
         case PokemonSceneNickname:
         case PokemonSceneOTName:
         case PokemonSceneUnownForm:
-            scene_manager_set_scene_state(pokemon_fap->scene_manager, PokemonSceneNickname, event.event);
+            scene_manager_set_scene_state(
+                pokemon_fap->scene_manager, PokemonSceneNickname, event.event);
             break;
         case PokemonSceneLevel:
         case PokemonSceneOTID:
-            scene_manager_set_scene_state(pokemon_fap->scene_manager, PokemonSceneLevel, event.event);
+            scene_manager_set_scene_state(
+                pokemon_fap->scene_manager, PokemonSceneLevel, event.event);
             break;
         case PokemonSceneGender:
             pokemon_num = pokemon_stat_get(pdata, STAT_NUM, NONE);
-            gender_ratio = table_stat_base_get(pdata->pokemon_table, pokemon_num, STAT_BASE_GENDER_RATIO, NONE);
+            gender_ratio = table_stat_base_get(
+                pdata->pokemon_table, pokemon_num, STAT_BASE_GENDER_RATIO, NONE);
             /* If the pokemon's gender is static (always male, always female,
              * or unknown), then don't transition to the gender selection scene.
              */
-            if(pokemon_gender_is_static(pdata, gender_ratio))
-                goto out;
+            if(pokemon_gender_is_static(pdata, gender_ratio)) goto out;
             break;
         }
 

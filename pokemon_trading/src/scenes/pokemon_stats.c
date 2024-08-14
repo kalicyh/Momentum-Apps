@@ -38,7 +38,7 @@ bool pokemon_scene_select_stats_on_event(void* context, SceneManagerEvent event)
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom && event.event & PokemonSceneBack) {
+    if(event.type == SceneManagerEventTypeCustom && event.event & PokemonSceneBack) {
         scene_manager_previous_scene(pokemon_fap->scene_manager);
         consumed = true;
     }

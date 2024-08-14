@@ -345,7 +345,7 @@ int32_t protoview_app_entry(void* p) {
             /* Allocate a view dispatcher, add a text input view to it,
              * and activate it. */
             app->view_dispatcher = view_dispatcher_alloc();
-            
+
             /* We need to set a navigation callback for the view dispatcher
              * otherwise when the user presses back on the keyboard to
              * abort, the dispatcher will not stop. */

@@ -75,7 +75,7 @@ static bool select_pokemon_input_callback(InputEvent* event, void* context) {
     /* Advance to next view with the selected pokemon */
     case InputKeyOk:
         pokemon_stat_set(select->pdata, STAT_NUM, NONE, selected_pokemon);
-	view_dispatcher_send_custom_event(select->view_dispatcher, PokemonSceneBack);
+        view_dispatcher_send_custom_event(select->view_dispatcher, PokemonSceneBack);
         consumed = true;
         break;
 
@@ -147,10 +147,7 @@ void select_pokemon_enter_callback(void* context) {
         true);
 }
 
-void* select_pokemon_alloc(
-    PokemonData* pdata,
-    ViewDispatcher* view_dispatcher,
-    uint32_t viewid) {
+void* select_pokemon_alloc(PokemonData* pdata, ViewDispatcher* view_dispatcher, uint32_t viewid) {
     furi_assert(pdata);
 
     struct select_ctx* select = malloc(sizeof(struct select_ctx));

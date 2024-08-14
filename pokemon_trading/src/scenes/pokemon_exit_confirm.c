@@ -78,4 +78,3 @@ bool pokemon_scene_exit_confirm_on_event(void* context, SceneManagerEvent event)
 void pokemon_scene_exit_confirm_on_exit(void* context) {
     UNUSED(context);
 }
-

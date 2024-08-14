@@ -40,11 +40,11 @@ const char* pokerus_get_status_str(PokemonData* pdata);
 
 void pokerus_set_strain(PokemonData* pdata, uint8_t strain);
 
-void pokerus_set_days(PokemonData *pdata, uint8_t days);
+void pokerus_set_days(PokemonData* pdata, uint8_t days);
 
 bool pokemon_is_shiny(PokemonData* pdata);
 
-void pokemon_set_shiny(PokemonData *pdata, bool shiny);
+void pokemon_set_shiny(PokemonData* pdata, bool shiny);
 
 /* Returns ascii char, or 0 if unown is not the current pokemon */
 char unown_form_get(PokemonData* pdata);

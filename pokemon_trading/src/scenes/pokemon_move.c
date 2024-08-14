@@ -31,7 +31,8 @@ static void select_move_selected_callback(void* context, uint32_t index) {
         (int)move);
 
     /* Move back to move menu */
-    view_dispatcher_send_custom_event(pokemon_fap->view_dispatcher, (PokemonSceneMove | PokemonSceneSearch));
+    view_dispatcher_send_custom_event(
+        pokemon_fap->view_dispatcher, (PokemonSceneMove | PokemonSceneSearch));
 }
 
 static void select_move_index_callback(void* context, uint32_t index) {
@@ -89,11 +90,12 @@ bool pokemon_scene_select_move_on_event(void* context, SceneManagerEvent event) 
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom) {
-        if (event.event & PokemonSceneBack)
+    if(event.type == SceneManagerEventTypeCustom) {
+        if(event.event & PokemonSceneBack)
             scene_manager_previous_scene(pokemon_fap->scene_manager);
-        else if (event.event & PokemonSceneSearch)
-            scene_manager_search_and_switch_to_previous_scene(pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
+        else if(event.event & PokemonSceneSearch)
+            scene_manager_search_and_switch_to_previous_scene(
+                pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
         else
             scene_manager_next_scene(pokemon_fap->scene_manager, event.event);
 
@@ -113,7 +115,8 @@ void pokemon_scene_select_move_index_on_enter(void* context) {
     char letter[2] = {'\0'};
     char buf[32];
     const char* name;
-    uint32_t move_num = scene_manager_get_scene_state(pokemon_fap->scene_manager, PokemonSceneMove);
+    uint32_t move_num =
+        scene_manager_get_scene_state(pokemon_fap->scene_manager, PokemonSceneMove);
 
     submenu_reset(pokemon_fap->submenu);
     /* The move list should always start with No Move, put that at the start
@@ -166,11 +169,12 @@ bool pokemon_scene_select_move_index_on_event(void* context, SceneManagerEvent e
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom) {
-        if (event.event & PokemonSceneBack)
+    if(event.type == SceneManagerEventTypeCustom) {
+        if(event.event & PokemonSceneBack)
             scene_manager_previous_scene(pokemon_fap->scene_manager);
-        else if (event.event & PokemonSceneSearch)
-            scene_manager_search_and_switch_to_previous_scene(pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
+        else if(event.event & PokemonSceneSearch)
+            scene_manager_search_and_switch_to_previous_scene(
+                pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
         else
             scene_manager_next_scene(pokemon_fap->scene_manager, event.event);
 
@@ -214,11 +218,12 @@ bool pokemon_scene_select_move_set_on_event(void* context, SceneManagerEvent eve
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom) {
-        if (event.event & PokemonSceneBack)
+    if(event.type == SceneManagerEventTypeCustom) {
+        if(event.event & PokemonSceneBack)
             scene_manager_previous_scene(pokemon_fap->scene_manager);
-        else if (event.event & PokemonSceneSearch)
-            scene_manager_search_and_switch_to_previous_scene(pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
+        else if(event.event & PokemonSceneSearch)
+            scene_manager_search_and_switch_to_previous_scene(
+                pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
         else
             scene_manager_next_scene(pokemon_fap->scene_manager, event.event);
 

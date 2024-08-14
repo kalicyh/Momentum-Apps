@@ -965,7 +965,7 @@ void trade_free(ViewDispatcher* view_dispatcher, uint32_t view_id, void* trade_c
 }
 
 void trade_reset_connection(void* trade_ctx) {
-    struct trade_ctx *trade = trade_ctx;
+    struct trade_ctx* trade = trade_ctx;
 
     with_view_model(
         trade->view,
@@ -975,7 +975,7 @@ void trade_reset_connection(void* trade_ctx) {
 }
 
 bool trade_connected(void* trade_ctx) {
-    struct trade_ctx *trade = trade_ctx;
+    struct trade_ctx* trade = trade_ctx;
     bool connected = false;
 
     with_view_model(

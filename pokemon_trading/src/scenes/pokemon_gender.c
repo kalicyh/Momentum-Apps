@@ -20,7 +20,11 @@ void pokemon_scene_select_gender_on_enter(void* context) {
     submenu_reset(pokemon_fap->submenu);
 
     submenu_add_item(
-        pokemon_fap->submenu, "Female", GENDER_FEMALE, select_gender_selected_callback, pokemon_fap);
+        pokemon_fap->submenu,
+        "Female",
+        GENDER_FEMALE,
+        select_gender_selected_callback,
+        pokemon_fap);
 
     submenu_add_item(
         pokemon_fap->submenu, "Male", GENDER_MALE, select_gender_selected_callback, pokemon_fap);
@@ -31,7 +35,7 @@ bool pokemon_scene_select_gender_on_event(void* context, SceneManagerEvent event
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom && event.event & PokemonSceneBack) {
+    if(event.type == SceneManagerEventTypeCustom && event.event & PokemonSceneBack) {
         scene_manager_previous_scene(pokemon_fap->scene_manager);
         consumed = true;
     }

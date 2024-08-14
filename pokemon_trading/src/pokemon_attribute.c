@@ -3,7 +3,6 @@
 #include <src/include/pokemon_data.h>
 #include <src/include/pokemon_attribute.h>
 
-
 static const char* gender_str[] = {
     "Unknown",
     "Female",
@@ -54,7 +53,6 @@ const char* pokemon_gender_get(PokemonData* pdata) {
 }
 
 void pokemon_gender_set(PokemonData* pdata, Gender gender) {
-
     uint8_t ratio = table_stat_base_get(
         pdata->pokemon_table,
         pokemon_stat_get(pdata, STAT_NUM, NONE),
@@ -100,11 +98,9 @@ const char* pokerus_get_status_str(PokemonData* pdata) {
 
     pokerus = pokemon_stat_get(pdata, STAT_POKERUS, NONE);
 
-    if(pokerus == 0x00)
-        return pokerus_states[0];
+    if(pokerus == 0x00) return pokerus_states[0];
 
-    if((pokerus & 0x0f) != 0x00)
-        return pokerus_states[1];
+    if((pokerus & 0x0f) != 0x00) return pokerus_states[1];
 
     return pokerus_states[2];
 }
@@ -117,13 +113,12 @@ void pokerus_set_strain(PokemonData* pdata, uint8_t strain) {
     pokerus &= 0x0f;
     pokerus |= (strain << 4);
 
-    if((pokerus & 0xf0) == 0x00)
-        pokerus = 0;
+    if((pokerus & 0xf0) == 0x00) pokerus = 0;
 
     pokemon_stat_set(pdata, STAT_POKERUS, NONE, pokerus);
 }
 
-void pokerus_set_days(PokemonData *pdata, uint8_t days) {
+void pokerus_set_days(PokemonData* pdata, uint8_t days) {
     uint8_t pokerus;
 
     days &= 0x0f;
@@ -169,13 +164,12 @@ bool pokemon_is_shiny(PokemonData* pdata) {
 }
 
 void pokemon_set_shiny(PokemonData* pdata, bool shiny) {
-
     if(!shiny) {
         do {
             /* First, reset the IV to the selected stat */
             pokemon_stat_set(pdata, STAT_SEL, NONE, pokemon_stat_get(pdata, STAT_SEL, NONE));
 
-	    /* XXX: This may not be right? */
+            /* XXX: This may not be right? */
             /* Next, ensure the current IVs wouldn't make the pokemon shiny */
         } while(pokemon_is_shiny(pdata));
     } else {

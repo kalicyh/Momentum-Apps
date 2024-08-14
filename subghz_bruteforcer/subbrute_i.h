@@ -76,7 +76,6 @@ struct SubBruteState {
     VariableItemList* var_list;
     DialogsApp* dialogs;
 
-
     char text_store[SUBBRUTE_MAX_LEN_NAME]; /**< Text store */
     FuriString* file_path;
 

@@ -51,7 +51,7 @@ typedef struct {
 
     uint64_t current_step; /**< Current step */
 
-     /** @see @c SubGhz service for more info */
+    /** @see @c SubGhz service for more info */
     SubGhzReceiver* receiver; /**< Receiver */
     SubGhzProtocolDecoderBase* decoder_result; /**< Decoder result */
     SubGhzEnvironment* environment; /**< Environment */

@@ -23,7 +23,8 @@ static void select_item_selected_callback(void* context, uint32_t index) {
             pokemon_stat_get(pokemon_fap->pdata, STAT_HELD_ITEM, item)));
 
     /* Move back to Gen menu. This assumes this submenu is only ever used in Gen II */
-    view_dispatcher_send_custom_event(pokemon_fap->view_dispatcher, (PokemonSceneSearch | PokemonSceneGenIITrade));
+    view_dispatcher_send_custom_event(
+        pokemon_fap->view_dispatcher, (PokemonSceneSearch | PokemonSceneGenIITrade));
 }
 
 static void select_item_index_callback(void* context, uint32_t index) {
@@ -76,11 +77,12 @@ bool pokemon_scene_select_item_on_event(void* context, SceneManagerEvent event) 
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom) {
-        if (event.event & PokemonSceneBack)
+    if(event.type == SceneManagerEventTypeCustom) {
+        if(event.event & PokemonSceneBack)
             scene_manager_previous_scene(pokemon_fap->scene_manager);
-        else if (event.event & PokemonSceneSearch)
-            scene_manager_search_and_switch_to_previous_scene(pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
+        else if(event.event & PokemonSceneSearch)
+            scene_manager_search_and_switch_to_previous_scene(
+                pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
         else
             scene_manager_next_scene(pokemon_fap->scene_manager, event.event);
 
@@ -124,11 +126,12 @@ bool pokemon_scene_select_item_set_on_event(void* context, SceneManagerEvent eve
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom) {
-        if (event.event & PokemonSceneBack)
+    if(event.type == SceneManagerEventTypeCustom) {
+        if(event.event & PokemonSceneBack)
             scene_manager_previous_scene(pokemon_fap->scene_manager);
-        else if (event.event & PokemonSceneSearch)
-            scene_manager_search_and_switch_to_previous_scene(pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
+        else if(event.event & PokemonSceneSearch)
+            scene_manager_search_and_switch_to_previous_scene(
+                pokemon_fap->scene_manager, (event.event & ~PokemonSceneSearch));
         else
             scene_manager_next_scene(pokemon_fap->scene_manager, event.event);
 

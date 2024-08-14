@@ -23,7 +23,6 @@ bool pokemon_back_event_callback(void* context) {
     return scene_manager_handle_back_event(pokemon_fap->scene_manager);
 }
 
-
 PokemonFap* pokemon_alloc() {
     PokemonFap* pokemon_fap = (PokemonFap*)malloc(sizeof(PokemonFap));
     ViewDispatcher* view_dispatcher = NULL;
@@ -36,9 +35,7 @@ PokemonFap* pokemon_alloc() {
     view_dispatcher_set_custom_event_callback(view_dispatcher, pokemon_custom_event_callback);
     view_dispatcher_set_navigation_event_callback(view_dispatcher, pokemon_back_event_callback);
     view_dispatcher_attach_to_gui(
-        view_dispatcher,
-        (Gui*)furi_record_open(RECORD_GUI),
-        ViewDispatcherTypeFullscreen);
+        view_dispatcher, (Gui*)furi_record_open(RECORD_GUI), ViewDispatcherTypeFullscreen);
 
     // Set up pinout defaults
     memcpy(&pokemon_fap->pins, &common_pinouts[PINOUT_ORIGINAL], sizeof(struct gblink_pins));
@@ -56,7 +53,9 @@ PokemonFap* pokemon_alloc() {
     // Variable Item List
     pokemon_fap->variable_item_list = variable_item_list_alloc();
     view_dispatcher_add_view(
-        view_dispatcher, AppViewVariableItem, variable_item_list_get_view(pokemon_fap->variable_item_list));
+        view_dispatcher,
+        AppViewVariableItem,
+        variable_item_list_get_view(pokemon_fap->variable_item_list));
 
     // DialogEx
     pokemon_fap->dialog_ex = dialog_ex_alloc();

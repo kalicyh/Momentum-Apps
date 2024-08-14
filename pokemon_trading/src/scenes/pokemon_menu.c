@@ -56,7 +56,7 @@ bool pokemon_scene_main_menu_on_event(void* context, SceneManagerEvent event) {
     PokemonFap* pokemon_fap = context;
     bool consumed = false;
 
-    if (event.type == SceneManagerEventTypeCustom) {
+    if(event.type == SceneManagerEventTypeCustom) {
         scene_manager_next_scene(pokemon_fap->scene_manager, event.event);
         consumed = true;
     }
