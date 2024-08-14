@@ -28,8 +28,8 @@ That's why the commit history for this repo is so huge, it contains all the comm
 
 To make updating more manageable, we have added some scripts on top of subtrees:
 - add a new app with `.utils/add-subtree.sh <path> <repo url> <branch> [subdir]`, this will pull the history and create `path/.gitsubtree` to remember the url, branch and subdir
-- run `.utils/update-subtree.sh <path>` to pull updates for a subtree
-- or run `.utils/bulk-update-subtrees.sh` to do it for all subtrees
+- run `.utils/update-subtrees.sh <path> [path2] [pathN...]` to pull updates for some subtrees
+- or run `.utils/update-subtrees.sh` with no arguments to update all subtrees
 
 Most apps have a remote subtree URL for both the original repository, and for any forks / other sources such as [@xMasterX's pack](https://github.com/xMasterX/all-the-plugins).
 This process is assisted by `.utils/add-subtree.sh`, if the specified subtree path already exists, it will:
