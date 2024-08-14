@@ -1,14 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$(git rev-parse --show-prefix)" != "" ]; then
-    echo "Must be in root of git repo!"
-    exit
-fi
-if ! git diff --quiet || ! git diff --cached --quiet || ! git merge HEAD &> /dev/null; then
-    echo "Workdir must be clean!"
-    exit
-fi
+bash .utils/.check-workdir.sh
 
 if [ "$1" = "" ] || [ "$2" = "" ]; then
     echo "Usage 1: <path> <repo url> <branch> [subdir]"

@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$(git rev-parse --show-prefix)" != "" ]; then
-    echo "Must be in root of git repo!"
-    exit
-fi
+bash .utils/.check-workdir.sh
 
 shopt -s globstar
 for file in **/.gitsubtree; do

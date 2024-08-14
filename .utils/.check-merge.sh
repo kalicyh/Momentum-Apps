@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ "$(git rev-parse --show-prefix)" != "" ]; then
-    echo "Must be in root of git repo!"
-    exit
-fi
+bash .utils/.check-workdir.sh
 
 if [ "${1}" = "" ] || [ "${2}" = "" ]; then
     echo "Usage: <path> <repo url> <merge output>"
