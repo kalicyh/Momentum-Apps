@@ -29,6 +29,7 @@ prevremotedir=""
 if [ -e "${gitsubtree}" ]; then
     echo "Subtree already exists, adding new remote to it."
     prevremotedir="$(mktemp -d /tmp/gitsubtree-XXXXXXXX)"
+    # To use 2 remotes for subtree we need to remove current one, add new one, then merge
     mv -T "${path}" "${prevremotedir}"
     git add "${path}"
     git commit -m "Add new remote for ${path}"
@@ -46,7 +47,9 @@ if [ "${prevremotedir}" != "" ]; then
     mv -T "${prevremotedir}" "${path}"
 fi
 
-echo "${repo} ${branch} ${subdir}" >> "${gitsubtree}"
+# Add new remote at the top
+echo "${repo} ${branch} ${subdir}" | cat - "${gitsubtree}" 2> /dev/null > "${gitsubtree}.new"
+mv "${gitsubtree}.new" "${gitsubtree}"
 git add "${gitsubtree}"
 git commit --amend --no-edit
 
