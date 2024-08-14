@@ -5,6 +5,10 @@ if [ "$(git rev-parse --show-prefix)" != "" ]; then
     echo "Must be in root of git repo!"
     exit
 fi
+if ! git diff --quiet || ! git diff --cached --quiet || ! git merge HEAD &> /dev/null; then
+    echo "Workdir must be clean!"
+    exit
+fi
 
 if [ "$1" = "" ] || [ "$2" = "" ]; then
     echo "Usage 1: <path> <repo url> <branch> [subdir]"
@@ -19,6 +23,16 @@ else
     branch="${3}"
     subdir="${4%/}"
 fi
+gitsubtree="${path}/.gitsubtree"
+
+prevremotedir=""
+if [ -e "${gitsubtree}" ]; then
+    echo "Subtree already exists, adding new remote to it."
+    prevremotedir="$(mktemp -d /tmp/gitsubtree-XXXXXXXX)"
+    mv -T "${path}" "${prevremotedir}"
+    git add "${path}"
+    git commit -m "Add new remote for ${path}"
+fi
 
 if [ "${subdir}" = "" ]; then
     subdir="/"
@@ -27,7 +41,16 @@ else
     bash .utils/.subtree-subdir-helper.sh "${path}" "${repo}" "${branch}" "${subdir}" add
 fi
 
-gitsubtree="${path}/.gitsubtree"
-echo "${repo} ${branch} ${subdir}" > "${gitsubtree}"
+if [ "${prevremotedir}" != "" ]; then
+    rm -r "${path}"
+    mv -T "${prevremotedir}" "${path}"
+fi
+
+echo "${repo} ${branch} ${subdir}" >> "${gitsubtree}"
 git add "${gitsubtree}"
 git commit --amend --no-edit
+
+if [ "${prevremotedir}" != "" ]; then
+    prevremotedir=""
+    echo "Added new remote for existing subtree, you must solve conflicts manually..."
+fi
