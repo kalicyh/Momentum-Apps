@@ -151,7 +151,7 @@ static void mode_changed(VariableItem* item) {
         variable_item_set_current_value_text(item, modes[cfg->state].modes[index].name);
     } else {
         payload->mode = PayloadModeRandom;
-        variable_item_set_current_value_text(item, "Random");
+        variable_item_set_current_value_text(item, "随机");
     }
 }
 static void extra_config(Ctx* ctx) {
@@ -162,13 +162,13 @@ static void extra_config(Ctx* ctx) {
     uint8_t value_index;
 
     item = variable_item_list_add(
-        list, "Toy Mode", modes[cfg->state].count + 1, mode_changed, payload);
+        list, "玩具模式", modes[cfg->state].count + 1, mode_changed, payload);
     const char* mode_name = NULL;
     char mode_name_buf[9];
     switch(payload->mode) {
     case PayloadModeRandom:
     default:
-        mode_name = "Random";
+        mode_name = "随机";
         value_index = 0;
         break;
     case PayloadModeValue:
@@ -237,7 +237,7 @@ void scene_lovespouse_mode_on_enter(void* _ctx) {
     Submenu* submenu = ctx->submenu;
     uint32_t selected = 0;
 
-    submenu_add_item(submenu, "Random", 0, mode_callback, ctx);
+    submenu_add_item(submenu, "随机", 0, mode_callback, ctx);
     if(payload->mode == PayloadModeRandom) {
         selected = 0;
     }
@@ -251,12 +251,12 @@ void scene_lovespouse_mode_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", modes[cfg->state].count + 1, mode_callback, ctx);
+    submenu_add_item(submenu, "自定义", modes[cfg->state].count + 1, mode_callback, ctx);
     if(!found && payload->mode == PayloadModeValue) {
         selected = modes[cfg->state].count + 1;
     }
 
-    submenu_add_item(submenu, "Bruteforce", modes[cfg->state].count + 2, mode_callback, ctx);
+    submenu_add_item(submenu, "暴力破解", modes[cfg->state].count + 2, mode_callback, ctx);
     if(payload->mode == PayloadModeBruteforce) {
         selected = modes[cfg->state].count + 2;
     }
@@ -293,7 +293,7 @@ void scene_lovespouse_mode_custom_on_enter(void* _ctx) {
     LovespouseCfg* cfg = &payload->cfg.lovespouse;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Toy Mode");
+    byte_input_set_header_text(byte_input, "输入自定义玩具模式");
 
     ctx->byte_store[0] = (cfg->mode >> 0x10) & 0xFF;
     ctx->byte_store[1] = (cfg->mode >> 0x08) & 0xFF;

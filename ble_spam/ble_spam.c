@@ -279,21 +279,21 @@ enum {
 
 static void draw_callback(Canvas* canvas, void* _ctx) {
     State* state = *(State**)_ctx;
-    const char* back = "Back";
-    const char* next = "Next";
+    const char* back = "返回";
+    const char* next = "下一步";
     if(state->index < 0) {
-        back = "Next";
-        next = "Back";
+        back = "下一步";
+        next = "返回";
     }
     switch(state->index) {
     case PageStart - 1:
         next = "Spam";
         break;
     case PageStart:
-        back = "Help";
+        back = "帮助";
         break;
     case PageEnd:
-        next = "About";
+        next = "关于";
         break;
     case PageEnd + 1:
         back = "Spam";
@@ -313,7 +313,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
     switch(state->index) {
     case PageHelpBruteforce:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "帮助");
         elements_text_box(
             canvas,
             4,
@@ -330,7 +330,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         break;
     case PageHelpApps:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "帮助");
         elements_text_box(
             canvas,
             4,
@@ -346,7 +346,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         break;
     case PageHelpDelay:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "帮助");
         elements_text_box(
             canvas,
             4,
@@ -362,7 +362,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         break;
     case PageHelpDistance:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "帮助");
         elements_text_box(
             canvas,
             4,
@@ -378,7 +378,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         break;
     case PageHelpInfoConfig:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "帮助");
         elements_text_box(
             canvas,
             4,
@@ -394,7 +394,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         break;
     case PageAboutCredits:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Credits");
+        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "致谢");
         elements_text_box(
             canvas,
             4,
@@ -434,7 +434,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
 
         canvas_set_font(canvas, FontBatteryPercent);
         if(payload->mode == PayloadModeBruteforce) {
-            canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignBottom, "Bruteforce");
+            canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignBottom, "暴力破解");
             if(delays[state->delay] < 100) {
                 snprintf(str, sizeof(str), "%ims>", delays[state->delay]);
             } else {
@@ -444,7 +444,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             elements_slightly_rounded_box(canvas, 3, 14, 30, 10);
             elements_slightly_rounded_box(canvas, 119 - w, 14, 6 + w, 10);
             canvas_invert_color(canvas);
-            canvas_draw_str_aligned(canvas, 5, 22, AlignLeft, AlignBottom, "<Send");
+            canvas_draw_str_aligned(canvas, 5, 22, AlignLeft, AlignBottom, "<发送");
             canvas_draw_str_aligned(canvas, 122, 22, AlignRight, AlignBottom, str);
             canvas_invert_color(canvas);
         } else {
@@ -454,7 +454,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
                 "%02i/%02i: %s",
                 state->index + 1,
                 ATTACKS_COUNT,
-                protocol ? protocol->get_name(payload) : "Everything AND");
+                protocol ? protocol->get_name(payload) : "所有");
             canvas_draw_str(canvas, 4 - (state->index < 19 ? 1 : 0), 22, str);
         }
 
@@ -464,7 +464,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 4, 46, attack->text);
 
-        elements_button_center(canvas, state->advertising ? "Stop" : "Start");
+        elements_button_center(canvas, state->advertising ? "停止" : "开始");
         break;
     }
     }
@@ -479,7 +479,7 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
     if(state->lock_warning) {
         canvas_set_font(canvas, FontSecondary);
         elements_bold_rounded_frame(canvas, 14, 8, 99, 48);
-        elements_multiline_text(canvas, 65, 26, "To unlock\npress:");
+        elements_multiline_text(canvas, 65, 26, "要解锁\n按下：");
         canvas_draw_icon(canvas, 65, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 80, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 95, 42, &I_Pin_back_arrow_10x8);
