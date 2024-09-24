@@ -280,9 +280,9 @@ enum {
 static void draw_callback(Canvas* canvas, void* _ctx) {
     State* state = *(State**)_ctx;
     const char* back = "返回";
-    const char* next = "下一步";
+    const char* next = "下一页";
     if(state->index < 0) {
-        back = "下一步";
+        back = "下一页";
         next = "返回";
     }
     switch(state->index) {
