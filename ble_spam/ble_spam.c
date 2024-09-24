@@ -15,8 +15,8 @@
 
 static Attack attacks[] = {
     {
-        .title = "The Kitchen Sink",
-        .text = "Flood all attacks at once",
+        .title = "厨房水槽大作战",
+        .text = "一口气倾泻所有攻击",
         .protocol = NULL,
         .payload =
             {
@@ -25,8 +25,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "BT Settings Flood",
-        .text = "Fills available BT devices",
+        .title = "蓝牙设置洪水",
+        .text = "填满所有可用的蓝牙设备",
         .protocol = &protocol_nameflood,
         .payload =
             {
@@ -35,8 +35,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "iOS 17 Lockup Crash",
-        .text = "Newer iPhones, long range",
+        .title = "iOS 17 崩溃锁定",
+        .text = "针对较新的 iPhone，长距离攻击",
         .protocol = &protocol_continuity,
         .payload =
             {
@@ -48,8 +48,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Apple Action Modal",
-        .text = "Lock cooldown, long range",
+        .title = "苹果行动弹窗",
+        .text = "冷却时间，长距离轰炸",
         .protocol = &protocol_continuity,
         .payload =
             {
@@ -61,8 +61,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Apple Device Popup",
-        .text = "No cooldown, close range",
+        .title = "苹果设备弹窗",
+        .text = "无冷却时间，近距离攻击",
         .protocol = &protocol_continuity,
         .payload =
             {
@@ -74,8 +74,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Android Device Connect",
-        .text = "Reboot cooldown, long range",
+        .title = "安卓设备连接",
+        .text = "重启冷却，长距离攻击",
         .protocol = &protocol_fastpair,
         .payload =
             {
@@ -84,8 +84,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Samsung Buds Popup",
-        .text = "No cooldown, long range",
+        .title = "三星耳机弹窗",
+        .text = "无冷却时间，长距离轰炸",
         .protocol = &protocol_easysetup,
         .payload =
             {
@@ -97,8 +97,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Samsung Watch Pair",
-        .text = "No cooldown, long range",
+        .title = "三星手表配对",
+        .text = "无冷却时间，长距离轰炸",
         .protocol = &protocol_easysetup,
         .payload =
             {
@@ -110,8 +110,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Windows Device Found",
-        .text = "No cooldown, short range",
+        .title = "Windows 设备发现",
+        .text = "无冷却时间，短距离轰炸",
         .protocol = &protocol_swiftpair,
         .payload =
             {
@@ -120,8 +120,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Vibrate 'em All",
-        .text = "Activate all LoveSpouse toys",
+        .title = "震动大家伙",
+        .text = "激活所有 LoveSpouse 玩具",
         .protocol = &protocol_lovespouse,
         .payload =
             {
@@ -133,8 +133,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Denial of Pleasure",
-        .text = "Disable all LoveSpouse toys",
+        .title = "快感剥夺",
+        .text = "禁用所有 LoveSpouse 玩具",
         .protocol = &protocol_lovespouse,
         .payload =
             {
