@@ -1,7 +1,6 @@
 #pragma GCC optimize("O3")
 #pragma GCC optimize("-funroll-all-loops")
 
-// TODO: Add keys to top of the user dictionary, not the bottom
 // TODO: More efficient dictionary bruteforce by scanning through hardcoded very common keys and previously found dictionary keys first?
 //       (a cache for key_already_found_for_nonce_in_dict)
 // TODO: Selectively unroll loops to reduce binary size
@@ -9,8 +8,11 @@
 // TODO: Why different sscanf between Mfkey32 and Nested?
 // TODO: "Read tag again with NFC app" message upon completion, "Complete. Keys added: <n>"
 // TODO: Separate Mfkey32 and Nested functions where possible to reduce branch statements
-// TODO: More accurate timing for Nested
 // TODO: Find ~1 KB memory leak
+// TODO: Use seednt16 to reduce static encrypted key candidates: https://gist.github.com/noproto/8102f8f32546564cd674256e62ff76ea
+//       https://eprint.iacr.org/2024/1275.pdf section X
+// TODO: Static Encrypted: Minimum RAM for adding to keys dict (avoid crashes)
+// TODO: Static Encrypted: Optimize KeysDict or buffer keys to write in chunks
 
 #include <furi.h>
 #include <furi_hal.h>
@@ -32,13 +34,11 @@
 #include <storage/storage.h>
 
 // TODO: Remove defines that are not needed
-#define KEYS_DICT_SYSTEM_PATH        EXT_PATH("nfc/assets/mf_classic_dict.nfc")
-#define KEYS_DICT_USER_PATH          EXT_PATH("nfc/assets/mf_classic_dict_user.nfc")
-#define MF_CLASSIC_NONCE_PATH        EXT_PATH("nfc/.mfkey32.log")
-#define MF_CLASSIC_NESTED_NONCE_PATH EXT_PATH("nfc/.nested")
-#define TAG                          "MFKey"
-#define MAX_NAME_LEN                 32
-#define MAX_PATH_LEN                 64
+#define KEYS_DICT_SYSTEM_PATH EXT_PATH("nfc/assets/mf_classic_dict.nfc")
+#define KEYS_DICT_USER_PATH   EXT_PATH("nfc/assets/mf_classic_dict_user.nfc")
+#define TAG                   "MFKey"
+#define MAX_NAME_LEN          32
+#define MAX_PATH_LEN          64
 
 #define LF_POLY_ODD  (0x29CE5C)
 #define LF_POLY_EVEN (0x870804)
@@ -57,7 +57,8 @@ static int eta_total_time = 705;
 // MSB_LIMIT: Chunk size (out of 256)
 static int MSB_LIMIT = 16;
 
-int check_state(struct Crypto1State* t, MfClassicNonce* n) {
+static inline int
+    check_state(struct Crypto1State* t, MfClassicNonce* n, ProgramState* program_state) {
     if(!(t->odd | t->even)) return 0;
     if(n->attack == mfkey32) {
         uint32_t rb = (napi_lfsr_rollback_word(t, 0, 0) ^ n->p64);
@@ -73,7 +74,6 @@ int check_state(struct Crypto1State* t, MfClassicNonce* n) {
             crypto1_get_lfsr(&temp, &(n->key));
             return 1;
         }
-        return 0;
     } else if(n->attack == static_nested) {
         struct Crypto1State temp = {t->odd, t->even};
         rollback_word_noret(t, n->uid_xor_nt1, 0);
@@ -82,7 +82,21 @@ int check_state(struct Crypto1State* t, MfClassicNonce* n) {
             crypto1_get_lfsr(&temp, &(n->key));
             return 1;
         }
-        return 0;
+    } else if(n->attack == static_encrypted) {
+        // TODO: Parity bits from rollback_word?
+        if(n->ks1_1_enc == napi_lfsr_rollback_word(t, n->uid_xor_nt0, 0)) {
+            // Reduce with parity
+            uint8_t local_parity_keystream_bits;
+            struct Crypto1State temp = {t->odd, t->even};
+            if((crypt_word_par(&temp, n->uid_xor_nt0, 0, n->nt0, &local_parity_keystream_bits) ==
+                n->ks1_1_enc) &&
+               (local_parity_keystream_bits == n->par_1)) {
+                // Found key candidate
+                crypto1_get_lfsr(t, &(n->key));
+                program_state->num_candidates++;
+                keys_dict_add_key(program_state->cuid_dict, n->key.data, sizeof(MfClassicKey));
+            }
+        }
     }
     return 0;
 }
@@ -208,7 +222,8 @@ int old_recover(
     int s,
     MfClassicNonce* n,
     unsigned int in,
-    int first_run) {
+    int first_run,
+    ProgramState* program_state) {
     int o, e, i;
     if(rem == -1) {
         for(e = e_head; e <= e_tail; ++e) {
@@ -217,7 +232,7 @@ int old_recover(
                 struct Crypto1State temp = {0, 0};
                 temp.even = odd[o];
                 temp.odd = even[e] ^ evenparity32(odd[o] & LF_POLY_ODD);
-                if(check_state(&temp, n)) {
+                if(check_state(&temp, n, program_state)) {
                     return -1;
                 }
             }
@@ -245,7 +260,20 @@ int old_recover(
             o_tail = binsearch(odd, o_head, o = o_tail);
             e_tail = binsearch(even, e_head, e = e_tail);
             s = old_recover(
-                odd, o_tail--, o, oks, even, e_tail--, e, eks, rem, s, n, in, first_run);
+                odd,
+                o_tail--,
+                o,
+                oks,
+                even,
+                e_tail--,
+                e,
+                eks,
+                rem,
+                s,
+                n,
+                in,
+                first_run,
+                program_state);
             if(s == -1) {
                 break;
             }
@@ -381,7 +409,8 @@ int calculate_msb_tables(
             0,
             n,
             in >> 16,
-            1);
+            1,
+            program_state);
         if(res == -1) {
             return 1;
         }
@@ -434,6 +463,15 @@ bool recover(MfClassicNonce* n, int ks2, unsigned int in, ProgramState* program_
             program_state->err = InsufficientRAM;
             program_state->mfkey_state = Error;
             return false;
+        }
+    }
+    // Adjust estimates for static encrypted attacks
+    if(n->attack == static_encrypted) {
+        eta_round_time *= 4;
+        eta_total_time *= 4;
+        if(is_full_speed()) {
+            eta_round_time *= 4;
+            eta_total_time *= 4;
         }
     }
     struct Msb* odd_msbs = block_pointers[0];
@@ -523,7 +561,8 @@ static void finished_beep() {
 }
 
 void mfkey(ProgramState* program_state) {
-    MfClassicKey found_key; // recovered key
+    uint32_t ks_enc = 0, nt_xor_uid = 0;
+    MfClassicKey found_key; // Recovered key
     size_t keyarray_size = 0;
     MfClassicKey* keyarray = malloc(sizeof(MfClassicKey) * 1);
     uint32_t i = 0, j = 0;
@@ -587,6 +626,7 @@ void mfkey(ProgramState* program_state) {
     // TODO: Track free state at the time this is called to ensure double free does not happen
     furi_assert(nonce_arr);
     furi_assert(nonce_arr->stream);
+    // TODO: Already closed?
     buffered_file_stream_close(nonce_arr->stream);
     stream_free(nonce_arr->stream);
     //FURI_LOG_I(TAG, "Free heap after free(): %zub", memmgr_get_free_heap());
@@ -601,28 +641,39 @@ void mfkey(ProgramState* program_state) {
             continue;
         }
         //FURI_LOG_I(TAG, "Beginning recovery for %8lx", next_nonce.uid);
-        if(next_nonce.attack == mfkey32) {
-            if(!recover(&next_nonce, next_nonce.ar0_enc ^ next_nonce.p64, 0, program_state)) {
-                if(program_state->close_thread_please) {
-                    break;
-                }
-                // No key found in recover()
-                (program_state->num_completed)++;
-                continue;
+        FuriString* cuid_dict_path;
+        switch(next_nonce.attack) {
+        case mfkey32:
+            ks_enc = next_nonce.ar0_enc ^ next_nonce.p64;
+            nt_xor_uid = 0;
+            break;
+        case static_nested:
+            ks_enc = next_nonce.ks1_2_enc;
+            nt_xor_uid = next_nonce.uid_xor_nt1;
+            break;
+        case static_encrypted:
+            ks_enc = next_nonce.ks1_1_enc;
+            nt_xor_uid = next_nonce.uid_xor_nt0;
+            cuid_dict_path = furi_string_alloc_printf(
+                "%s/mf_classic_dict_%08lx.nfc", EXT_PATH("nfc/assets"), next_nonce.uid);
+            // May need RECORD_STORAGE?
+            program_state->cuid_dict = keys_dict_alloc(
+                furi_string_get_cstr(cuid_dict_path),
+                KeysDictModeOpenAlways,
+                sizeof(MfClassicKey));
+            break;
+        }
+
+        if(!recover(&next_nonce, ks_enc, nt_xor_uid, program_state)) {
+            if((next_nonce.attack == static_encrypted) && (program_state->cuid_dict)) {
+                keys_dict_free(program_state->cuid_dict);
             }
-        } else if(next_nonce.attack == static_nested) {
-            if(!recover(
-                   &next_nonce,
-                   next_nonce.ks1_2_enc,
-                   next_nonce.nt1 ^ next_nonce.uid,
-                   program_state)) {
-                if(program_state->close_thread_please) {
-                    break;
-                }
-                // No key found in recover()
-                (program_state->num_completed)++;
-                continue;
+            if(program_state->close_thread_please) {
+                break;
             }
+            // No key found in recover() or static encrypted
+            (program_state->num_completed)++;
+            continue;
         }
         (program_state->cracked)++;
         (program_state->num_completed)++;
@@ -727,13 +778,21 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         elements_progress_bar(canvas, 5, 18, 118, 1);
         canvas_set_font(canvas, FontSecondary);
         snprintf(draw_str, sizeof(draw_str), "Complete");
-        canvas_draw_str_aligned(canvas, 40, 31, AlignLeft, AlignTop, draw_str);
+        canvas_draw_str_aligned(canvas, 64, 31, AlignCenter, AlignTop, draw_str);
         snprintf(
             draw_str,
             sizeof(draw_str),
             "Keys added to user dict: %d",
             program_state->unique_cracked);
-        canvas_draw_str_aligned(canvas, 10, 41, AlignLeft, AlignTop, draw_str);
+        canvas_draw_str_aligned(canvas, 64, 41, AlignCenter, AlignTop, draw_str);
+        if(program_state->num_candidates > 0) {
+            snprintf(
+                draw_str,
+                sizeof(draw_str),
+                "SEN key candidates: %d",
+                program_state->num_candidates);
+            canvas_draw_str_aligned(canvas, 64, 51, AlignCenter, AlignTop, draw_str);
+        }
     } else if(program_state->mfkey_state == Ready) {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 50, 30, AlignLeft, AlignTop, "Ready");
@@ -741,10 +800,10 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         elements_button_right(canvas, "Help");
     } else if(program_state->mfkey_state == Help) {
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 7, 20, AlignLeft, AlignTop, "Collect nonces using Detect");
-        canvas_draw_str_aligned(canvas, 7, 30, AlignLeft, AlignTop, "Reader or FlipperNested.");
-        canvas_draw_str_aligned(canvas, 7, 40, AlignLeft, AlignTop, "Devs: noproto, AG, ALiberty");
-        canvas_draw_str_aligned(canvas, 7, 50, AlignLeft, AlignTop, "Thanks: bettse, Foxushka");
+        canvas_draw_str_aligned(canvas, 7, 20, AlignLeft, AlignTop, "Collect nonces by reading");
+        canvas_draw_str_aligned(canvas, 7, 30, AlignLeft, AlignTop, "tag or reader in NFC app:");
+        canvas_draw_str_aligned(canvas, 7, 40, AlignLeft, AlignTop, "https://docs.flipper.net/");
+        canvas_draw_str_aligned(canvas, 7, 50, AlignLeft, AlignTop, "nfc/mfkey32");
     } else if(program_state->mfkey_state == Error) {
         canvas_draw_str_aligned(canvas, 50, 25, AlignLeft, AlignTop, "Error");
         canvas_set_font(canvas, FontSecondary);
@@ -774,6 +833,7 @@ static void mfkey_state_init(ProgramState* program_state) {
     program_state->cracked = 0;
     program_state->unique_cracked = 0;
     program_state->num_completed = 0;
+    program_state->num_candidates = 0;
     program_state->total = 0;
     program_state->dict_count = 0;
 }
@@ -783,7 +843,6 @@ static int32_t mfkey_worker_thread(void* ctx) {
     ProgramState* program_state = ctx;
     program_state->is_thread_running = true;
     program_state->mfkey_state = Initializing;
-    //FURI_LOG_I(TAG, "Hello from the mfkey worker thread"); // DEBUG
     mfkey(program_state);
     program_state->is_thread_running = false;
     return 0;
