@@ -16,10 +16,10 @@ static bool cligui_back_event_cb(void* context) {
 }
 static void cligui_tick_event_cb(void* context) {
     CliguiApp* app = context;
-    size_t available = furi_stream_buffer_bytes_available(app->data->streams.app_rx);
+    size_t available = pipe_bytes_available(app->data->app_pipe);
     for(size_t i = 0; i < available; i++) {
         char c = 0;
-        size_t len = furi_stream_buffer_receive(app->data->streams.app_rx, &c, 1, 100);
+        size_t len = pipe_receive(app->data->app_pipe, &c, 1);
         if(len > 0) {
             furi_string_push_back(app->text_box_store, c);
         }
@@ -68,8 +68,7 @@ int32_t cligui_main(void* p) {
     cligui->data = malloc(sizeof(CliguiData));
 
     clicontrol_hijack(512, 512);
-    cligui->data->streams.app_tx = cli_rx_stream;
-    cligui->data->streams.app_rx = cli_tx_stream;
+    cligui->data->app_pipe = cli_pipe;
 
     cligui->gui = furi_record_open(RECORD_GUI);
     cligui->view_dispatcher = view_dispatcher_alloc();
