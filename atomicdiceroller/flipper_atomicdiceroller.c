@@ -7,11 +7,13 @@
 #include <gui/gui.h>
 #include <input/input.h>
 #include <notification/notification_messages.h>
+#include <furi_hal_bus.h>
 #include <furi_hal_power.h>
 #include <locale/locale.h>
 #include <toolbox/crc32_calc.h>
 #include <mbedtls/md5.h>
 #include <expansion/expansion.h>
+#include <stm32wbxx_ll_tim.h>
 
 #define SCREEN_SIZE_X 128
 #define SCREEN_SIZE_Y 64

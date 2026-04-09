@@ -10,6 +10,7 @@
 #include <furi_hal_random.h>
 #include <furi_hal_pwm.h>
 #include <furi_hal_power.h>
+#include <furi_hal_rtc.h>
 
 #include <storage/storage.h>
 #include <stream/buffered_file_stream.h>
