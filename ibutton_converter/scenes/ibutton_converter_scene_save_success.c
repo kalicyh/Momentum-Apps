@@ -14,7 +14,8 @@ void ibutton_converter_scene_save_success_on_enter(void* context) {
     dolphin_deed(DolphinDeedIbuttonAdd);
 
     popup_set_icon(popup, 0, 9, &I_DolphinSuccess_91x55);
-    popup_set_header(popup, "Saved", 63, 19, AlignLeft, AlignBottom);
+    popup_set_header(
+        popup, IBUTTON_CONVERTER_UI_TEXT("Saved", "已保存"), 63, 19, AlignLeft, AlignBottom);
     popup_set_callback(popup, ibutton_converter_scene_save_success_popup_callback);
     popup_set_context(popup, ibutton_converter);
     popup_set_timeout(popup, 1500);

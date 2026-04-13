@@ -19,7 +19,7 @@
 void scene_wiring_on_enter(void* context) {
     App* app = (App*)context;
 
-    popup_set_header(app->popup, "Wiring", 0, 0, AlignLeft, AlignTop);
+    popup_set_header(app->popup, INA_METER_UI_TEXT("Wiring", "接线"), 0, 0, AlignLeft, AlignTop);
 
     popup_set_text(
         app->popup,

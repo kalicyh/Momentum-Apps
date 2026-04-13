@@ -13,13 +13,13 @@ typedef struct {
 } LidarEmulatorSettings;
 
 static const char* lidaremulator_ir_output_text[] = {
-    "Internal",
-    "Ext. 2(A7)",
+    LIDAR_EMULATOR_UI_TEXT("Internal", "内部"),
+    LIDAR_EMULATOR_UI_TEXT("Ext. 2(A7)", "外部 2(A7)"),
 };
 
 static const char* lidaremulator_5v_text[] = {
-    "OFF",
-    "ON",
+    LIDAR_EMULATOR_UI_TEXT("OFF", "关"),
+    LIDAR_EMULATOR_UI_TEXT("ON", "开"),
 };
 
 static void lidaremulator_scene_settings_ir_output_change_callback(VariableItem* item) {
@@ -86,7 +86,7 @@ void lidaremulator_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "IR Output",
+        LIDAR_EMULATOR_UI_TEXT("IR Output", "红外输出"),
         LidarEmulatorIrOutputNum,
         lidaremulator_scene_settings_ir_output_change_callback,
         app);
@@ -96,7 +96,7 @@ void lidaremulator_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "5V on GPIO",
+        LIDAR_EMULATOR_UI_TEXT("5V on GPIO", "GPIO 输出 5V"),
         2,
         lidaremulator_scene_settings_5v_change_callback,
         app);

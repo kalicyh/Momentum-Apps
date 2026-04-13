@@ -4,6 +4,12 @@
 #include <gui/view_port.h>
 #include <subghz/devices/devices.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define RADIO_SCANNER_UI_TEXT(en, zh) (zh)
+#else
+#define RADIO_SCANNER_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     ScanDirectionUp,
     ScanDirectionDown,

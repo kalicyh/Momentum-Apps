@@ -15,6 +15,7 @@
  */
 
 #include "datalog_screen.h"
+#include "../app.h"
 #include "utils.h"
 
 #include <gui/elements.h>
@@ -52,7 +53,12 @@ static void datalog_screen_draw_callback(Canvas* canvas, void* _model) {
     canvas_set_color(canvas, ColorWhite);
     canvas_set_font(canvas, FontSecondary);
 
-    canvas_draw_str(canvas, 2, 10, model->running ? "Recording..." : "Recording stopped");
+    canvas_draw_str(
+        canvas,
+        2,
+        10,
+        model->running ? INA_METER_UI_TEXT("Recording...", "录制中...") :
+                         INA_METER_UI_TEXT("Recording stopped", "录制已停止"));
 
     if(model->record_count > 0) {
         canvas_set_color(canvas, ColorBlack);
@@ -95,27 +101,33 @@ static void datalog_screen_draw_callback(Canvas* canvas, void* _model) {
             canvas_set_color(canvas, ColorBlack);
             canvas_set_font(canvas, FontSecondary);
             canvas_draw_str_aligned(
-                canvas, 64, 36, AlignCenter, AlignBottom, "Press OK to start recording");
+                canvas,
+                64,
+                36,
+                AlignCenter,
+                AlignBottom,
+                INA_METER_UI_TEXT("Press OK to start recording", "按 OK 开始录制"));
         } else {
             canvas_set_color(canvas, ColorBlack);
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str_aligned(canvas, 64, 36, AlignCenter, AlignBottom, "No records yet");
+            canvas_draw_str_aligned(
+                canvas, 64, 36, AlignCenter, AlignBottom, INA_METER_UI_TEXT("No records yet", "暂无记录"));
         }
     }
     // Buttons
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
 
-    const char* button_text = "Stop";
+    const char* button_text = INA_METER_UI_TEXT("Stop", "停止");
 
     if(!model->running) {
         if(model->record_count == 0) {
-            button_text = "Start";
+            button_text = INA_METER_UI_TEXT("Start", "开始");
         } else {
-            button_text = "Start new";
+            button_text = INA_METER_UI_TEXT("Start new", "重新开始");
         }
     } else {
-        button_text = "Stop";
+        button_text = INA_METER_UI_TEXT("Stop", "停止");
     }
 
     elements_button_center(canvas, button_text);

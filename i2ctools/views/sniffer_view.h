@@ -2,6 +2,7 @@
 #include <furi_hal.h>
 #include <gui/gui.h>
 #include <i2ctools_icons.h>
+#include "../i2ctools_i.h"
 #include "../i2csniffer.h"
 
 #include <assets_icons.h>

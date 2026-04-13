@@ -22,6 +22,12 @@
 
 #define TAG "Camera Suite"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CAMERA_SUITE_UI_TEXT(en, zh) (zh)
+#else
+#define CAMERA_SUITE_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     Gui* gui;
     NotificationApp* notification;

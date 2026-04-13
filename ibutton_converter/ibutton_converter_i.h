@@ -23,6 +23,12 @@
 #include "ibutton_converter_custom_event.h"
 #include "scenes/ibutton_converter_scene.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define IBUTTON_CONVERTER_UI_TEXT(en, zh) (zh)
+#else
+#define IBUTTON_CONVERTER_UI_TEXT(en, zh) (en)
+#endif
+
 #define IBUTTON_APP_FOLDER             EXT_PATH("ibutton")
 #define IBUTTON_APP_FILENAME_PREFIX    "iBtn"
 #define IBUTTON_APP_FILENAME_EXTENSION ".ibtn"

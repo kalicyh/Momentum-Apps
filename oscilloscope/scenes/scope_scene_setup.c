@@ -44,7 +44,7 @@ void scope_scene_setup_on_enter(void* context) {
     VariableItemList* var_item_list = app->variable_item_list;
     VariableItem* item;
     item = variable_item_list_add(
-        var_item_list, "Time period", COUNT_OF(time_list), timeperiod_cb, app);
+        var_item_list, SCOPE_UI_TEXT("Time period", "时间周期"), COUNT_OF(time_list), timeperiod_cb, app);
 
     for(uint32_t i = 0; i < COUNT_OF(time_list); i++) {
         if(time_list[i].time == app->time) {
@@ -54,7 +54,8 @@ void scope_scene_setup_on_enter(void* context) {
         }
     }
 
-    item = variable_item_list_add(var_item_list, "FFT window", COUNT_OF(fft_list), fft_cb, app);
+    item = variable_item_list_add(
+        var_item_list, SCOPE_UI_TEXT("FFT window", "FFT 窗口"), COUNT_OF(fft_list), fft_cb, app);
 
     for(uint32_t i = 0; i < COUNT_OF(fft_list); i++) {
         if(fft_list[i].window == app->fft) {
@@ -64,7 +65,8 @@ void scope_scene_setup_on_enter(void* context) {
         }
     }
 
-    item = variable_item_list_add(var_item_list, "Scale", COUNT_OF(scale_list), scale_cb, app);
+    item = variable_item_list_add(
+        var_item_list, SCOPE_UI_TEXT("Scale", "缩放"), COUNT_OF(scale_list), scale_cb, app);
 
     for(uint32_t i = 0; i < COUNT_OF(scale_list); i++) {
         if(scale_list[i].scale == app->scale) {
@@ -75,7 +77,7 @@ void scope_scene_setup_on_enter(void* context) {
     }
 
     item = variable_item_list_add(
-        var_item_list, "Measurement", COUNT_OF(measurement_list), measurement_cb, app);
+        var_item_list, SCOPE_UI_TEXT("Measurement", "测量"), COUNT_OF(measurement_list), measurement_cb, app);
 
     for(uint32_t i = 0; i < COUNT_OF(measurement_list); i++) {
         if(measurement_list[i].type == app->measurement) {

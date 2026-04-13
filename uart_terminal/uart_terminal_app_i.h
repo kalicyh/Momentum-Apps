@@ -14,6 +14,12 @@
 #include <gui/modules/text_input.h>
 #include "uart_hex_input.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UART_TERMINAL_UI_TEXT(en, zh) (zh)
+#else
+#define UART_TERMINAL_UI_TEXT(en, zh) (en)
+#endif
+
 #define START_MENU_ITEMS (7)
 #define SETUP_MENU_ITEMS (4)
 

@@ -11,17 +11,25 @@ void draw_sender_view(Canvas* canvas, i2cSender* i2c_sender) {
 
     canvas_set_font(canvas, FontSecondary);
     if(i2c_sender->scanner->nb_found <= 0) {
-        canvas_draw_str_aligned(canvas, 20, 5, AlignLeft, AlignTop, "No peripherals found");
+        canvas_draw_str_aligned(
+            canvas,
+            20,
+            5,
+            AlignLeft,
+            AlignTop,
+            I2CTOOLS_UI_TEXT("No peripherals found", "未发现设备"));
         return;
     }
     // Send Button
     canvas_draw_rbox(canvas, 45, 48, 45, 13, 3);
     canvas_set_color(canvas, ColorWhite);
     canvas_draw_icon(canvas, 50, 50, &I_Ok_btn_9x9);
-    canvas_draw_str_aligned(canvas, 62, 51, AlignLeft, AlignTop, "Send");
+    canvas_draw_str_aligned(
+        canvas, 62, 51, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Send", "发送"));
     // Addr
     canvas_set_color(canvas, ColorBlack);
-    canvas_draw_str_aligned(canvas, 3, 5, AlignLeft, AlignTop, "Addr: ");
+    canvas_draw_str_aligned(
+        canvas, 3, 5, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Addr: ", "地址: "));
     canvas_draw_icon(canvas, 33, 5, &I_ButtonLeft_4x7);
     canvas_draw_icon(canvas, 68, 5, &I_ButtonRight_4x7);
     char addr_text[8];
@@ -32,7 +40,8 @@ void draw_sender_view(Canvas* canvas, i2cSender* i2c_sender) {
         (int)i2c_sender->scanner->addresses[i2c_sender->address_idx]);
     canvas_draw_str_aligned(canvas, 43, 5, AlignLeft, AlignTop, addr_text);
     // Value
-    canvas_draw_str_aligned(canvas, 3, 15, AlignLeft, AlignTop, "Value: ");
+    canvas_draw_str_aligned(
+        canvas, 3, 15, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Value: ", "数值: "));
     canvas_draw_icon(canvas, 33, 17, &I_ButtonUp_7x4);
     canvas_draw_icon(canvas, 68, 17, &I_ButtonDown_7x4);
     snprintf(addr_text, sizeof(addr_text), "0x%02x", (int)i2c_sender->value);
@@ -41,7 +50,8 @@ void draw_sender_view(Canvas* canvas, i2cSender* i2c_sender) {
         i2c_send(i2c_sender);
     }
     // Result
-    canvas_draw_str_aligned(canvas, 3, 25, AlignLeft, AlignTop, "Result: ");
+    canvas_draw_str_aligned(
+        canvas, 3, 25, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Result: ", "结果: "));
     if(i2c_sender->sended) {
         uint8_t row = 1;
         uint8_t column = 1;

@@ -30,8 +30,8 @@ const uint32_t dither_value[4] = {
 };
 
 const char* const flash_text[2] = {
-    "OFF",
-    "ON",
+    CAMERA_SUITE_UI_TEXT("OFF", "关"),
+    CAMERA_SUITE_UI_TEXT("ON", "开"),
 };
 
 const uint32_t flash_value[2] = {
@@ -40,8 +40,8 @@ const uint32_t flash_value[2] = {
 };
 
 const char* const jpeg_text[2] = {
-    "OFF",
-    "ON",
+    CAMERA_SUITE_UI_TEXT("OFF", "关"),
+    CAMERA_SUITE_UI_TEXT("ON", "开"),
 };
 
 const uint32_t jpeg_value[2] = {
@@ -94,7 +94,7 @@ void camera_suite_scene_cam_settings_on_enter(void* context) {
     // Camera Orientation
     item = variable_item_list_add(
         app->variable_item_list,
-        "Orientation:",
+        CAMERA_SUITE_UI_TEXT("Orientation:", "方向:"),
         4,
         camera_suite_scene_cam_settings_set_camera_orientation,
         app);
@@ -105,7 +105,7 @@ void camera_suite_scene_cam_settings_on_enter(void* context) {
     // Camera Dither Type
     item = variable_item_list_add(
         app->variable_item_list,
-        "Dithering Type:",
+        CAMERA_SUITE_UI_TEXT("Dithering Type:", "抖动类型:"),
         3,
         camera_suite_scene_cam_settings_set_camera_dither,
         app);
@@ -115,7 +115,11 @@ void camera_suite_scene_cam_settings_on_enter(void* context) {
 
     // Flash ON/OFF
     item = variable_item_list_add(
-        app->variable_item_list, "Flash:", 2, camera_suite_scene_cam_settings_set_flash, app);
+        app->variable_item_list,
+        CAMERA_SUITE_UI_TEXT("Flash:", "闪光灯:"),
+        2,
+        camera_suite_scene_cam_settings_set_flash,
+        app);
     value_index = value_index_uint32(app->flash, flash_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, flash_text[value_index]);

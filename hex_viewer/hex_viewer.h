@@ -24,6 +24,12 @@
 #include <stream/buffered_file_stream.h>
 #include <toolbox/stream/file_stream.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define HEX_VIEWER_UI_TEXT(en, zh) (zh)
+#else
+#define HEX_VIEWER_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "HexViewer"
 
 #define HEX_VIEWER_APP_PATH_FOLDER "/any" // TODO ANY_PATH

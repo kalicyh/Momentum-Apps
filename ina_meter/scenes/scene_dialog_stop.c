@@ -33,13 +33,13 @@ static void dialog_callback(DialogExResult result, void* context) {
 void scene_dialog_stop_on_enter(void* context) {
     App* app = (App*)context;
 
-    const char* title = "Stop recording?";
-    const char* message = "Are you sure?";
+    const char* title = INA_METER_UI_TEXT("Stop recording?", "停止录制?");
+    const char* message = INA_METER_UI_TEXT("Are you sure?", "确定吗?");
 
     dialog_ex_set_header(app->dialog, title, 64, 0, AlignCenter, AlignTop);
     dialog_ex_set_text(app->dialog, message, 64, 24, AlignCenter, AlignTop);
-    dialog_ex_set_left_button_text(app->dialog, "No");
-    dialog_ex_set_right_button_text(app->dialog, "Yes");
+    dialog_ex_set_left_button_text(app->dialog, INA_METER_UI_TEXT("No", "否"));
+    dialog_ex_set_right_button_text(app->dialog, INA_METER_UI_TEXT("Yes", "是"));
 
     dialog_ex_set_context(app->dialog, app);
     dialog_ex_set_result_callback(app->dialog, dialog_callback);

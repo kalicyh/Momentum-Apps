@@ -13,14 +13,14 @@ void ibutton_converter_scene_select_metakom_convert_option_on_enter(void* contex
 
     submenu_add_item(
         submenu,
-        "Direct",
+        IBUTTON_CONVERTER_UI_TEXT("Direct", "正向"),
         SubmenuIndexDirect,
         ibutton_converter_submenu_callback,
         ibutton_converter);
 
     submenu_add_item(
         submenu,
-        "Reversed",
+        IBUTTON_CONVERTER_UI_TEXT("Reversed", "反向"),
         SubmenuIndexReversed,
         ibutton_converter_submenu_callback,
         ibutton_converter);

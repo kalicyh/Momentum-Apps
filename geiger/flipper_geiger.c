@@ -19,6 +19,12 @@
 
 #include <expansion/expansion.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GEIGER_UI_TEXT(en, zh) (zh)
+#else
+#define GEIGER_UI_TEXT(en, zh) (en)
+#endif
+
 #define SCREEN_SIZE_X 128
 #define SCREEN_SIZE_Y 64
 
@@ -147,7 +153,8 @@ static void draw_callback(Canvas* canvas, void* ctx) {
         }
     } else {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignBottom, "Geiger Counter");
+        canvas_draw_str_aligned(
+            canvas, 64, 10, AlignCenter, AlignBottom, GEIGER_UI_TEXT("Geiger Counter", "盖革计数器"));
         canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, "Version 20240311");
         canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignBottom, "github.com/nmrr");
     }

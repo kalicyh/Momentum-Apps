@@ -32,17 +32,17 @@ static const char at_str[] = "AT";
 
 // NUM_MENU_ITEMS defined in uart_terminal_app_i.h - if you add an entry here, increment it!
 static const UART_TerminalItem items[START_MENU_ITEMS] = {
-    {"Setup", {""}, 1, OPEN_SETUP, BOTH_MODES},
-    {"Open port", {""}, 1, OPEN_PORT, BOTH_MODES},
-    {"Send packet", {""}, 1, SEND_CMD, HEX_MODE},
-    {"Send command", {""}, 1, SEND_CMD, TEXT_MODE},
-    {"Send AT command", {""}, 1, SEND_AT_CMD, TEXT_MODE},
-    {"Fast cmd",
+    {UART_TERMINAL_UI_TEXT("Setup", "设置"), {""}, 1, OPEN_SETUP, BOTH_MODES},
+    {UART_TERMINAL_UI_TEXT("Open port", "打开串口"), {""}, 1, OPEN_PORT, BOTH_MODES},
+    {UART_TERMINAL_UI_TEXT("Send packet", "发送数据包"), {""}, 1, SEND_CMD, HEX_MODE},
+    {UART_TERMINAL_UI_TEXT("Send command", "发送命令"), {""}, 1, SEND_CMD, TEXT_MODE},
+    {UART_TERMINAL_UI_TEXT("Send AT command", "发送 AT 命令"), {""}, 1, SEND_AT_CMD, TEXT_MODE},
+    {UART_TERMINAL_UI_TEXT("Fast cmd", "快速命令"),
      {"help", "uptime", "date", "df -h", "ps", "dmesg", "reboot", "poweroff"},
      8,
      SEND_FAST_CMD,
      TEXT_MODE},
-    {"Help", {""}, 1, OPEN_HELP, BOTH_MODES},
+    {UART_TERMINAL_UI_TEXT("Help", "帮助"), {""}, 1, OPEN_HELP, BOTH_MODES},
 };
 
 static uint8_t menu_items_num = 0;

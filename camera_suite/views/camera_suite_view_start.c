@@ -76,7 +76,7 @@ void camera_suite_view_start_draw(Canvas* canvas, CameraSuiteViewStartModel* mod
 
     // Draw "Start" button.
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 46, 57, "Start");
+    canvas_draw_str(canvas, 46, 57, CAMERA_SUITE_UI_TEXT("Start", "开始"));
     canvas_draw_circle(canvas, 75, 53, 2);
     canvas_draw_dot(canvas, 72, 50);
     canvas_draw_dot(canvas, 72, 56);
@@ -96,9 +96,9 @@ void camera_suite_view_start_draw(Canvas* canvas, CameraSuiteViewStartModel* mod
 
     // Draw "Camera Suite" text.
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 16, 23, "Camera");
+    canvas_draw_str(canvas, 16, 23, CAMERA_SUITE_UI_TEXT("Camera", "相机"));
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 23, 35, "Suite");
+    canvas_draw_str(canvas, 23, 35, CAMERA_SUITE_UI_TEXT("Suite", "套件"));
 }
 
 static void camera_suite_view_start_model_init(CameraSuiteViewStartModel* const model) {

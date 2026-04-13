@@ -17,13 +17,13 @@ void weather_station_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Read Weather Station",
+        WEATHER_STATION_UI_TEXT("Read Weather Station", "读取气象站"),
         SubmenuIndexWeatherStationReceiver,
         weather_station_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "About",
+        WEATHER_STATION_UI_TEXT("About", "关于"),
         SubmenuIndexWeatherStationAbout,
         weather_station_scene_start_submenu_callback,
         app);

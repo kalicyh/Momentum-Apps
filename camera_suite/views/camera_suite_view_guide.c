@@ -30,13 +30,29 @@ void camera_suite_view_guide_draw(Canvas* canvas, CameraSuiteViewGuideModel* mod
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, "Camera Suite Guide");
+    canvas_draw_str_aligned(
+        canvas, 0, 0, AlignLeft, AlignTop, CAMERA_SUITE_UI_TEXT("Camera Suite Guide", "相机套件指南"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 0, 12, AlignLeft, AlignTop, "Left = Toggle invert");
-    canvas_draw_str_aligned(canvas, 0, 22, AlignLeft, AlignTop, "Right = Toggle dithering");
-    canvas_draw_str_aligned(canvas, 0, 32, AlignLeft, AlignTop, "Up = Contrast up");
-    canvas_draw_str_aligned(canvas, 0, 42, AlignLeft, AlignTop, "Down = Contrast down");
-    canvas_draw_str_aligned(canvas, 0, 52, AlignLeft, AlignTop, "Center = Take picture");
+    canvas_draw_str_aligned(
+        canvas, 0, 12, AlignLeft, AlignTop, CAMERA_SUITE_UI_TEXT("Left = Toggle invert", "左键 = 反色"));
+    canvas_draw_str_aligned(
+        canvas,
+        0,
+        22,
+        AlignLeft,
+        AlignTop,
+        CAMERA_SUITE_UI_TEXT("Right = Toggle dithering", "右键 = 切换抖动"));
+    canvas_draw_str_aligned(
+        canvas, 0, 32, AlignLeft, AlignTop, CAMERA_SUITE_UI_TEXT("Up = Contrast up", "上键 = 提高对比"));
+    canvas_draw_str_aligned(
+        canvas, 0, 42, AlignLeft, AlignTop, CAMERA_SUITE_UI_TEXT("Down = Contrast down", "下键 = 降低对比"));
+    canvas_draw_str_aligned(
+        canvas,
+        0,
+        52,
+        AlignLeft,
+        AlignTop,
+        CAMERA_SUITE_UI_TEXT("Center = Take picture", "中键 = 拍照"));
 }
 
 static void camera_suite_view_guide_model_init(CameraSuiteViewGuideModel* const model) {

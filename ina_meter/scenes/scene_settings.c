@@ -76,7 +76,8 @@ static void on_sensor_averaging_changed(VariableItem* item) {
 
 static void on_led_blinking_changed(VariableItem* item) {
     uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, index ? "Yes" : "No");
+    variable_item_set_current_value_text(
+        item, index ? INA_METER_UI_TEXT("Yes", "是") : INA_METER_UI_TEXT("No", "否"));
 
     App* app = (App*)variable_item_get_context(item);
     app->config.led_blinking = index ? true : false;
@@ -104,45 +105,46 @@ void scene_settings_init(App* app) {
     VariableItem* item;
 
     item =
-        variable_item_list_add(list, "Sensor Type", SensorType_count, on_sensor_type_changed, app);
+        variable_item_list_add(
+            list, INA_METER_UI_TEXT("Sensor Type", "传感器类型"), SensorType_count, on_sensor_type_changed, app);
     variable_item_set_current_value_index(item, app->config.sensor_type);
     on_sensor_type_changed(item);
 
     item = variable_item_list_add(
-        list, "I2C Address", I2C_ADDRESS_COUNT, on_i2c_address_changed, app);
+        list, INA_METER_UI_TEXT("I2C Address", "I2C 地址"), I2C_ADDRESS_COUNT, on_i2c_address_changed, app);
     variable_item_set_current_value_index(item, app->config.i2c_address - I2C_ADDRESS_MIN);
     on_i2c_address_changed(item);
 
-    item = variable_item_list_add(list, "Shunt Resistor", 1, NULL, app);
+    item = variable_item_list_add(list, INA_METER_UI_TEXT("Shunt Resistor", "分流电阻"), 1, NULL, app);
     FuriString* text = format_resistance_value(app->config.shunt_resistor);
     variable_item_set_current_value_text(item, furi_string_get_cstr(text));
     furi_string_free(text);
 
-    item = variable_item_list_add(list, "Alt Resistor", 1, NULL, app);
+    item = variable_item_list_add(list, INA_METER_UI_TEXT("Alt Resistor", "备用电阻"), 1, NULL, app);
     text = format_resistance_value(app->config.shunt_resistor_alt);
     variable_item_set_current_value_text(item, furi_string_get_cstr(text));
     furi_string_free(text);
 
     item = variable_item_list_add(
-        list, "V Precision", SensorPrecision_count, on_voltage_precision_changed, app);
+        list, INA_METER_UI_TEXT("V Precision", "电压精度"), SensorPrecision_count, on_voltage_precision_changed, app);
     variable_item_set_current_value_index(item, app->config.voltage_precision);
     on_voltage_precision_changed(item);
 
     item = variable_item_list_add(
-        list, "I Precision", SensorPrecision_count, on_current_precision_changed, app);
+        list, INA_METER_UI_TEXT("I Precision", "电流精度"), SensorPrecision_count, on_current_precision_changed, app);
     variable_item_set_current_value_index(item, app->config.current_precision);
     on_current_precision_changed(item);
 
     item = variable_item_list_add(
-        list, "Averaging", SensorAveraging_count, on_sensor_averaging_changed, app);
+        list, INA_METER_UI_TEXT("Averaging", "平均"), SensorAveraging_count, on_sensor_averaging_changed, app);
     variable_item_set_current_value_index(item, app->config.sensor_averaging);
     on_sensor_averaging_changed(item);
 
-    item = variable_item_list_add(list, "LED blinking", 2, on_led_blinking_changed, app);
+    item = variable_item_list_add(list, INA_METER_UI_TEXT("LED blinking", "LED 闪烁"), 2, on_led_blinking_changed, app);
     variable_item_set_current_value_index(item, app->config.led_blinking ? 1 : 0);
     on_led_blinking_changed(item);
 
-    item = variable_item_list_add(list, "Wiring info", 0, NULL, app);
+    item = variable_item_list_add(list, INA_METER_UI_TEXT("Wiring info", "接线信息"), 0, NULL, app);
 
     variable_item_list_set_enter_callback(list, scene_settings_enter_callback, app);
 }

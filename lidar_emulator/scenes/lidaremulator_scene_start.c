@@ -22,8 +22,18 @@ void lidaremulator_scene_start_on_enter(void* context) {
     SceneManager* scene_manager = lidaremulator->scene_manager;
     furi_check(scene_manager);
 
-    submenu_add_item(submenu, "Predefined GUNs", SubmenuIndexPredefinedGUNs, lidaremulator_scene_start_submenu_callback, lidaremulator);
-    submenu_add_item(submenu, "Settings", SubmenuIndexSettings, lidaremulator_scene_start_submenu_callback, lidaremulator);
+    submenu_add_item(
+        submenu,
+        LIDAR_EMULATOR_UI_TEXT("Predefined GUNs", "预设测速枪"),
+        SubmenuIndexPredefinedGUNs,
+        lidaremulator_scene_start_submenu_callback,
+        lidaremulator);
+    submenu_add_item(
+        submenu,
+        LIDAR_EMULATOR_UI_TEXT("Settings", "设置"),
+        SubmenuIndexSettings,
+        lidaremulator_scene_start_submenu_callback,
+        lidaremulator);
 
     uint32_t submenu_index = scene_manager_get_scene_state(scene_manager, LidarEmulatorSceneStart);
     submenu_set_selected_item(submenu, submenu_index);

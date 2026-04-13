@@ -10,9 +10,17 @@ void ibutton_converter_scene_converted_key_menu_on_enter(void* context) {
     Submenu* submenu = ibutton_converter->submenu;
 
     submenu_add_item(
-        submenu, "Save", SubmenuIndexSave, ibutton_converter_submenu_callback, ibutton_converter);
+        submenu,
+        IBUTTON_CONVERTER_UI_TEXT("Save", "保存"),
+        SubmenuIndexSave,
+        ibutton_converter_submenu_callback,
+        ibutton_converter);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, ibutton_converter_submenu_callback, ibutton_converter);
+        submenu,
+        IBUTTON_CONVERTER_UI_TEXT("Info", "信息"),
+        SubmenuIndexInfo,
+        ibutton_converter_submenu_callback,
+        ibutton_converter);
 
     view_dispatcher_switch_to_view(
         ibutton_converter->view_dispatcher, iButtonConverterViewSubmenu);

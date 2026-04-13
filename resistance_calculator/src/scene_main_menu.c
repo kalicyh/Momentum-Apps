@@ -3,6 +3,12 @@
 #include "scenes.h"
 #include "scene_main_menu.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define RESISTORS_UI_TEXT(en, zh) (zh)
+#else
+#define RESISTORS_UI_TEXT(en, zh) (en)
+#endif
+
 /* main menu scene */
 
 /** main menu callback - sends custom events to the scene manager based on the selection */
@@ -32,15 +38,31 @@ void resistors_menu_callback(void* context, uint32_t index) {
 void resistors_main_menu_scene_on_enter(void* context) {
     App* app = context;
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Resistors");
+    submenu_set_header(app->submenu, RESISTORS_UI_TEXT("Resistors", "电阻计算"));
     submenu_add_item(
-        app->submenu, "3-bar resistor", ResistorsMainMenuSelectionR3, resistors_menu_callback, app);
+        app->submenu,
+        RESISTORS_UI_TEXT("3-bar resistor", "3 环电阻"),
+        ResistorsMainMenuSelectionR3,
+        resistors_menu_callback,
+        app);
     submenu_add_item(
-        app->submenu, "4-bar resistor", ResistorsMainMenuSelectionR4, resistors_menu_callback, app);
+        app->submenu,
+        RESISTORS_UI_TEXT("4-bar resistor", "4 环电阻"),
+        ResistorsMainMenuSelectionR4,
+        resistors_menu_callback,
+        app);
     submenu_add_item(
-        app->submenu, "5-bar resistor", ResistorsMainMenuSelectionR5, resistors_menu_callback, app);
+        app->submenu,
+        RESISTORS_UI_TEXT("5-bar resistor", "5 环电阻"),
+        ResistorsMainMenuSelectionR5,
+        resistors_menu_callback,
+        app);
     submenu_add_item(
-        app->submenu, "6-bar resistor", ResistorsMainMenuSelectionR6, resistors_menu_callback, app);
+        app->submenu,
+        RESISTORS_UI_TEXT("6-bar resistor", "6 环电阻"),
+        ResistorsMainMenuSelectionR6,
+        resistors_menu_callback,
+        app);
     view_dispatcher_switch_to_view(app->view_dispatcher, ResistorsSubmenuView);
 }
 

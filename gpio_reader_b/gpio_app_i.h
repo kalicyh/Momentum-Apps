@@ -18,6 +18,12 @@
 #include "views/gpio_usb_uart.h"
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_READER_B_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_READER_B_UI_TEXT(en, zh) (en)
+#endif
+
 struct GpioApp {
     Gui* gui;
     NotificationApp* notifications;

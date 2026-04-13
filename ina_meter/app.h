@@ -33,6 +33,12 @@
 #include "views/datalog_screen.h"
 #include "datalog.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define INA_METER_UI_TEXT(en, zh) (zh)
+#else
+#define INA_METER_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     AppViewNumberInput,
     AppViewVariableList,

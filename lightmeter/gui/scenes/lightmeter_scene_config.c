@@ -37,18 +37,18 @@ static const char* nd_numbers[] = {
 };
 
 static const char* diffusion_dome[] = {
-    [WITHOUT_DOME] = "No",
-    [WITH_DOME] = "Yes",
+    [WITHOUT_DOME] = LIGHTMETER_UI_TEXT("No", "否"),
+    [WITH_DOME] = LIGHTMETER_UI_TEXT("Yes", "是"),
 };
 
 static const char* backlight[] = {
-    [BACKLIGHT_AUTO] = "Auto",
-    [BACKLIGHT_ON] = "On",
+    [BACKLIGHT_AUTO] = LIGHTMETER_UI_TEXT("Auto", "自动"),
+    [BACKLIGHT_ON] = LIGHTMETER_UI_TEXT("On", "开"),
 };
 
 static const char* lux_only[] = {
-    [LUX_ONLY_OFF] = "Off",
-    [LUX_ONLY_ON] = "On",
+    [LUX_ONLY_OFF] = LIGHTMETER_UI_TEXT("Off", "关"),
+    [LUX_ONLY_ON] = LIGHTMETER_UI_TEXT("On", "开"),
 };
 
 static const char* sensor_type[] = {
@@ -57,9 +57,9 @@ static const char* sensor_type[] = {
 };
 
 static const char* measurement_resolution[] = {
-    [LOW_RES] = "Low",
-    [HIGH_RES] = "High",
-    [HIGH_RES2] = "High2",
+    [LOW_RES] = LIGHTMETER_UI_TEXT("Low", "低"),
+    [HIGH_RES] = LIGHTMETER_UI_TEXT("High", "高"),
+    [HIGH_RES2] = LIGHTMETER_UI_TEXT("High2", "高2"),
 };
 
 static const char* device_addr_bh1750[] = {
@@ -241,38 +241,56 @@ void lightmeter_scene_config_on_enter(void* context) {
     LightMeterConfig* config = app->config;
 
     item =
-        variable_item_list_add(var_item_list, "ISO", COUNT_OF(iso_numbers), iso_numbers_cb, app);
+        variable_item_list_add(
+            var_item_list, LIGHTMETER_UI_TEXT("ISO", "ISO"), COUNT_OF(iso_numbers), iso_numbers_cb, app);
     variable_item_set_current_value_index(item, config->iso);
     variable_item_set_current_value_text(item, iso_numbers[config->iso]);
 
     item = variable_item_list_add(
-        var_item_list, "ND factor", COUNT_OF(nd_numbers), nd_numbers_cb, app);
+        var_item_list, LIGHTMETER_UI_TEXT("ND factor", "ND 系数"), COUNT_OF(nd_numbers), nd_numbers_cb, app);
     variable_item_set_current_value_index(item, config->nd);
     variable_item_set_current_value_text(item, nd_numbers[config->nd]);
 
     item = variable_item_list_add(
-        var_item_list, "Diffusion dome", COUNT_OF(diffusion_dome), dome_presence_cb, app);
+        var_item_list,
+        LIGHTMETER_UI_TEXT("Diffusion dome", "柔光罩"),
+        COUNT_OF(diffusion_dome),
+        dome_presence_cb,
+        app);
     variable_item_set_current_value_index(item, config->dome);
     variable_item_set_current_value_text(item, diffusion_dome[config->dome]);
 
     item =
-        variable_item_list_add(var_item_list, "Backlight", COUNT_OF(backlight), backlight_cb, app);
+        variable_item_list_add(
+            var_item_list,
+            LIGHTMETER_UI_TEXT("Backlight", "背光"),
+            COUNT_OF(backlight),
+            backlight_cb,
+            app);
     variable_item_set_current_value_index(item, config->backlight);
     variable_item_set_current_value_text(item, backlight[config->backlight]);
 
     item = variable_item_list_add(
-        var_item_list, "Lux meter only", COUNT_OF(lux_only), lux_only_cb, app);
+        var_item_list,
+        LIGHTMETER_UI_TEXT("Lux meter only", "仅照度计"),
+        COUNT_OF(lux_only),
+        lux_only_cb,
+        app);
     variable_item_set_current_value_index(item, config->lux_only);
     variable_item_set_current_value_text(item, lux_only[config->lux_only]);
 
     item = variable_item_list_add(
-        var_item_list, "Sensor", COUNT_OF(sensor_type), sensor_type_cb, app);
+        var_item_list,
+        LIGHTMETER_UI_TEXT("Sensor", "传感器"),
+        COUNT_OF(sensor_type),
+        sensor_type_cb,
+        app);
     variable_item_set_current_value_index(item, config->sensor_type);
     variable_item_set_current_value_text(item, sensor_type[config->sensor_type]);
 
     item = variable_item_list_add(
         var_item_list,
-        "Resolution",
+        LIGHTMETER_UI_TEXT("Resolution", "分辨率"),
         COUNT_OF(measurement_resolution),
         measurement_resolution_cb,
         app);
@@ -283,13 +301,21 @@ void lightmeter_scene_config_on_enter(void* context) {
     switch(config->sensor_type) {
     case SENSOR_BH1750:
         item = variable_item_list_add(
-            var_item_list, "I2C address", COUNT_OF(device_addr_bh1750), device_addr_cb, app);
+            var_item_list,
+            LIGHTMETER_UI_TEXT("I2C address", "I2C 地址"),
+            COUNT_OF(device_addr_bh1750),
+            device_addr_cb,
+            app);
         variable_item_set_current_value_index(item, config->device_addr);
         variable_item_set_current_value_text(item, device_addr_bh1750[config->device_addr]);
         break;
     case SENSOR_MAX44009:
         item = variable_item_list_add(
-            var_item_list, "I2C address", COUNT_OF(device_addr_max44009), device_addr_cb, app);
+            var_item_list,
+            LIGHTMETER_UI_TEXT("I2C address", "I2C 地址"),
+            COUNT_OF(device_addr_max44009),
+            device_addr_cb,
+            app);
         variable_item_set_current_value_index(item, config->device_addr);
         variable_item_set_current_value_text(item, device_addr_max44009[config->device_addr]);
         break;
@@ -300,8 +326,9 @@ void lightmeter_scene_config_on_enter(void* context) {
     app->var_item_addr = item;
     update_item_addr(app);
 
-    item = variable_item_list_add(var_item_list, "Help and Pinout", 0, NULL, NULL);
-    item = variable_item_list_add(var_item_list, "About", 0, NULL, NULL);
+    item = variable_item_list_add(
+        var_item_list, LIGHTMETER_UI_TEXT("Help and Pinout", "帮助与引脚"), 0, NULL, NULL);
+    item = variable_item_list_add(var_item_list, LIGHTMETER_UI_TEXT("About", "关于"), 0, NULL, NULL);
 
     variable_item_list_set_selected_item(
         var_item_list,

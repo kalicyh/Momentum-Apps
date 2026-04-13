@@ -7,6 +7,12 @@
 #include <string.h>
 #include <expansion/expansion.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPS_UI_TEXT(en, zh) (zh)
+#else
+#define GPS_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey,
@@ -27,7 +33,8 @@ static void render_callback(Canvas* const canvas, void* context) {
     switch(gps_uart->view_state) {
     case CHANGE_BAUDRATE:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, "Baudrate set to:");
+        canvas_draw_str_aligned(
+            canvas, 64, 32, AlignCenter, AlignBottom, GPS_UI_TEXT("Baudrate set to:", "波特率已设为:"));
         snprintf(buffer, 64, "%ld baud", gps_uart->baudrate);
         canvas_draw_str_aligned(canvas, 64, 47, AlignCenter, AlignBottom, buffer);
         break;
@@ -39,7 +46,9 @@ static void render_callback(Canvas* const canvas, void* context) {
             32,
             AlignCenter,
             AlignBottom,
-            gps_uart->backlight_on ? "Backlight enabled" : "Backlight disabled");
+            gps_uart->backlight_on ?
+                GPS_UI_TEXT("Backlight enabled", "背光已启用") :
+                GPS_UI_TEXT("Backlight disabled", "背光已关闭"));
         break;
     case CHANGE_DEEPSLEEP:
         canvas_set_font(canvas, FontPrimary);
@@ -49,11 +58,14 @@ static void render_callback(Canvas* const canvas, void* context) {
             32,
             AlignCenter,
             AlignBottom,
-            gps_uart->deep_sleep_enabled ? "Deep sleep enabled" : "Deep sleep disabled");
+            gps_uart->deep_sleep_enabled ?
+                GPS_UI_TEXT("Deep sleep enabled", "深度休眠已启用") :
+                GPS_UI_TEXT("Deep sleep disabled", "深度休眠已关闭"));
         break;
     case CHANGE_SPEEDUNIT:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, "Speed unit set to:");
+        canvas_draw_str_aligned(
+            canvas, 64, 32, AlignCenter, AlignBottom, GPS_UI_TEXT("Speed unit set to:", "速度单位已设为:"));
         switch(gps_uart->speed_units) {
         case KPH:
             canvas_draw_str_aligned(canvas, 64, 47, AlignCenter, AlignBottom, "km/h");
@@ -70,13 +82,13 @@ static void render_callback(Canvas* const canvas, void* context) {
     case NORMAL:
     default:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 32, 8, AlignCenter, AlignBottom, "Latitude");
-        canvas_draw_str_aligned(canvas, 96, 8, AlignCenter, AlignBottom, "Longitude");
-        canvas_draw_str_aligned(canvas, 21, 30, AlignCenter, AlignBottom, "Course");
-        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignBottom, "Speed");
-        canvas_draw_str_aligned(canvas, 107, 30, AlignCenter, AlignBottom, "Altitude");
-        canvas_draw_str_aligned(canvas, 32, 52, AlignCenter, AlignBottom, "Satellites");
-        canvas_draw_str_aligned(canvas, 96, 52, AlignCenter, AlignBottom, "Last Fix");
+        canvas_draw_str_aligned(canvas, 32, 8, AlignCenter, AlignBottom, GPS_UI_TEXT("Latitude", "纬度"));
+        canvas_draw_str_aligned(canvas, 96, 8, AlignCenter, AlignBottom, GPS_UI_TEXT("Longitude", "经度"));
+        canvas_draw_str_aligned(canvas, 21, 30, AlignCenter, AlignBottom, GPS_UI_TEXT("Course", "航向"));
+        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignBottom, GPS_UI_TEXT("Speed", "速度"));
+        canvas_draw_str_aligned(canvas, 107, 30, AlignCenter, AlignBottom, GPS_UI_TEXT("Altitude", "高度"));
+        canvas_draw_str_aligned(canvas, 32, 52, AlignCenter, AlignBottom, GPS_UI_TEXT("Satellites", "卫星"));
+        canvas_draw_str_aligned(canvas, 96, 52, AlignCenter, AlignBottom, GPS_UI_TEXT("Last Fix", "最近定位"));
 
         canvas_set_font(canvas, FontSecondary);
         snprintf(buffer, 64, "%f", (double)gps_uart->status.latitude);

@@ -144,12 +144,12 @@ static void camera_suite_view_camera_draw(Canvas* canvas, void* model) {
         canvas_draw_str(canvas, 12, 25, "-GND");
 
         // Draw the "Please Connect Module!" text.
-        canvas_draw_str(canvas, 2, 40, "Please");
-        canvas_draw_str(canvas, 2, 49, "Connect");
-        canvas_draw_str(canvas, 2, 58, "Module!");
+        canvas_draw_str(canvas, 2, 40, CAMERA_SUITE_UI_TEXT("Please", "请先"));
+        canvas_draw_str(canvas, 2, 49, CAMERA_SUITE_UI_TEXT("Connect", "连接"));
+        canvas_draw_str(canvas, 2, 58, CAMERA_SUITE_UI_TEXT("Module!", "模块!"));
 
         // Draw the "Back" text and button logo.
-        canvas_draw_str(canvas, 92, 57, "Back");
+        canvas_draw_str(canvas, 92, 57, CAMERA_SUITE_UI_TEXT("Back", "返回"));
         canvas_draw_line(canvas, 116, 49, 116, 53);
         canvas_draw_line(canvas, 115, 50, 115, 52);
         canvas_draw_dot(canvas, 114, 51);

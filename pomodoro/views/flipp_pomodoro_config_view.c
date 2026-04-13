@@ -1,6 +1,7 @@
 
 
 #include "flipp_pomodoro_config_view.h"
+#include "../flipp_pomodoro_app.h"
 #include "../modules/flipp_pomodoro_settings.h"
 #include <furi.h>
 
@@ -30,13 +31,13 @@ struct FlippPomodoroConfigView {
 
 static const char* buzz_mode_to_str(uint8_t m) {
     switch(m) {
-        case FlippPomodoroBuzzSlide: return "Slide";
-        case FlippPomodoroBuzzOnce: return "Once";
-        case FlippPomodoroBuzzAnnoying: return "Naggy";
-        case FlippPomodoroBuzzFlash: return "Flash";
-        case FlippPomodoroBuzzVibrate: return "Vibrate";
-        case FlippPomodoroBuzzSoftBeep: return "Beep soft";
-        case FlippPomodoroBuzzLoudBeep: return "Beep loud";
+        case FlippPomodoroBuzzSlide: return FLIPP_POMODORO_UI_TEXT("Slide", "滑动");
+        case FlippPomodoroBuzzOnce: return FLIPP_POMODORO_UI_TEXT("Once", "一次");
+        case FlippPomodoroBuzzAnnoying: return FLIPP_POMODORO_UI_TEXT("Naggy", "持续提醒");
+        case FlippPomodoroBuzzFlash: return FLIPP_POMODORO_UI_TEXT("Flash", "闪光");
+        case FlippPomodoroBuzzVibrate: return FLIPP_POMODORO_UI_TEXT("Vibrate", "震动");
+        case FlippPomodoroBuzzSoftBeep: return FLIPP_POMODORO_UI_TEXT("Beep soft", "轻提示音");
+        case FlippPomodoroBuzzLoudBeep: return FLIPP_POMODORO_UI_TEXT("Beep loud", "响提示音");
         default: return "?";
     }
 }
@@ -89,7 +90,11 @@ static void config_draw_callback(Canvas* canvas, void* ctx) {
     FlippPomodoroConfigViewModel* model = ctx;
     canvas_clear(canvas); // clear the screen
 
-    const char* labels[4] = {"Focus:", "Short Break:", "Long Break:", "Buzz Mode:"}; // labels on the left (x_label)
+    const char* labels[4] = {
+        FLIPP_POMODORO_UI_TEXT("Focus:", "专注:"),
+        FLIPP_POMODORO_UI_TEXT("Short Break:", "短休息:"),
+        FLIPP_POMODORO_UI_TEXT("Long Break:", "长休息:"),
+        FLIPP_POMODORO_UI_TEXT("Buzz Mode:", "提醒模式:")}; // labels on the left (x_label)
 
     // Vertical layout of text:
     const uint8_t y_base = 10;  // base Y for the first row
@@ -119,7 +124,7 @@ static void config_draw_callback(Canvas* canvas, void* ctx) {
 
         if(i < 3) {
             char val_buf[8];
-            snprintf(val_buf, sizeof(val_buf), "%2u min", model->durations[i]); // format value as minutes
+            snprintf(val_buf, sizeof(val_buf), FLIPP_POMODORO_UI_TEXT("%2u min", "%2u 分"), model->durations[i]); // format value as minutes
             canvas_draw_str(canvas, x_val, y, val_buf);     // draw value at (x_val, y)
         } else {
             canvas_draw_str(canvas, x_val, y, buzz_mode_to_str(model->buzz_mode)); // draw buzz mode at (x_val, y)
@@ -130,8 +135,8 @@ static void config_draw_callback(Canvas* canvas, void* ctx) {
 
     canvas_set_font(canvas, FontSecondary);
     canvas_set_color(canvas, ColorBlack);
-    elements_button_center(canvas, "Save"); // soft-button centered on the bottom bar
-    elements_button_back(canvas, "Back");  // soft-button on the right of the bottom bar
+    elements_button_center(canvas, FLIPP_POMODORO_UI_TEXT("Save", "保存")); // soft-button centered on the bottom bar
+    elements_button_back(canvas, FLIPP_POMODORO_UI_TEXT("Back", "返回"));  // soft-button on the right of the bottom bar
 }
 
 static bool config_input_callback(InputEvent* event, void* ctx) {

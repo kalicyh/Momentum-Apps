@@ -9,8 +9,8 @@ enum WSSettingIndex {
 
 #define HOPPING_COUNT 2
 const char* const hopping_text[HOPPING_COUNT] = {
-    "OFF",
-    "ON",
+    WEATHER_STATION_UI_TEXT("OFF", "关"),
+    WEATHER_STATION_UI_TEXT("ON", "开"),
 };
 const uint32_t hopping_value[HOPPING_COUNT] = {
     WSHopperStateOFF,
@@ -152,7 +152,7 @@ void weather_station_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Frequency:",
+        WEATHER_STATION_UI_TEXT("Frequency:", "频率:"),
         subghz_setting_get_frequency_count(app->setting),
         weather_station_scene_receiver_config_set_frequency,
         app);
@@ -172,7 +172,7 @@ void weather_station_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Hopping:",
+        WEATHER_STATION_UI_TEXT("Hopping:", "跳频:"),
         HOPPING_COUNT,
         weather_station_scene_receiver_config_set_hopping_running,
         app);
@@ -183,7 +183,7 @@ void weather_station_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Modulation:",
+        WEATHER_STATION_UI_TEXT("Modulation:", "调制:"),
         subghz_setting_get_preset_count(app->setting),
         weather_station_scene_receiver_config_set_preset,
         app);
@@ -193,7 +193,8 @@ void weather_station_scene_receiver_config_on_enter(void* context) {
     variable_item_set_current_value_text(
         item, subghz_setting_get_preset_name(app->setting, value_index));
 
-    variable_item_list_add(app->variable_item_list, "Lock Keyboard", 1, NULL, NULL);
+    variable_item_list_add(
+        app->variable_item_list, WEATHER_STATION_UI_TEXT("Lock Keyboard", "锁定按键"), 1, NULL, NULL);
     variable_item_list_set_enter_callback(
         app->variable_item_list,
         weather_station_scene_receiver_config_var_list_enter_callback,

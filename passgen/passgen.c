@@ -9,6 +9,12 @@
 
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PASSGEN_UI_TEXT(en, zh) (zh)
+#else
+#define PASSGEN_UI_TEXT(en, zh) (en)
+#endif
+
 #define PASSGEN_MAX_LENGTH 16
 #define PASSGEN_CHARACTERS_LENGTH (26 * 4)
 
@@ -95,7 +101,7 @@ static void input_callback(InputEvent* input_event, void* ctx) {
 }
 
 static void render_callback(Canvas* canvas, void* ctx) {
-    char str_length[8];
+    char str_length[20];
     PassGen* app = ctx;
     furi_check(furi_mutex_acquire(app->mutex, FuriWaitForever) == FuriStatusOk);
 
@@ -103,7 +109,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
     canvas_draw_box(canvas, 0, 0, 128, 14);
     canvas_set_color(canvas, ColorWhite);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 2, 11, "Password Generator");
+    canvas_draw_str(canvas, 2, 11, PASSGEN_UI_TEXT("Password Generator", "密码生成器"));
 
     canvas_set_color(canvas, ColorBlack);
     canvas_draw_str_aligned(canvas, 64, 35, AlignCenter, AlignCenter, app->password);
@@ -111,12 +117,12 @@ static void render_callback(Canvas* canvas, void* ctx) {
     // Navigation menu:
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_icon(canvas, 96, 52, &I_Pin_back_arrow_10x8);
-    canvas_draw_str(canvas, 108, 60, "Exit");
+    canvas_draw_str(canvas, 108, 60, PASSGEN_UI_TEXT("Exit", "退出"));
 
     canvas_draw_icon(canvas, 54, 52, &I_Vertical_arrow_7x9);
     canvas_draw_str(canvas, 64, 60, AlphabetLevelNames[app->level]);
 
-    snprintf(str_length, sizeof(str_length), "Len: %d", app->length);
+    snprintf(str_length, sizeof(str_length), PASSGEN_UI_TEXT("Len: %d", "长度: %d"), app->length);
     canvas_draw_icon(canvas, 4, 53, &I_Horizontal_arrow_9x7);
     canvas_draw_str(canvas, 15, 60, str_length);
 

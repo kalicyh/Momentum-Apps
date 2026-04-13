@@ -7,6 +7,12 @@
 
 const char* TAG = "Resistors";
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define RESISTORS_UI_TEXT(en, zh) (zh)
+#else
+#define RESISTORS_UI_TEXT(en, zh) (en)
+#endif
+
 /** entrypoint */
 int32_t resistors_app(void* p) {
     UNUSED(p);

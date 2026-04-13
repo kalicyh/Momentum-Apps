@@ -86,13 +86,18 @@ void signal_gen_scene_mco_on_enter(void* context) {
 
     VariableItem* item;
 
-    item = variable_item_list_add(var_item_list, "GPIO Pin", COUNT_OF(mco_pin_names), NULL, NULL);
+    item = variable_item_list_add(
+        var_item_list,
+        SIGNAL_GEN_UI_TEXT("GPIO Pin", "GPIO 引脚"),
+        COUNT_OF(mco_pin_names),
+        NULL,
+        NULL);
     variable_item_set_current_value_index(item, 0);
     variable_item_set_current_value_text(item, mco_pin_names[0]);
 
     item = variable_item_list_add(
         var_item_list,
-        "Frequency",
+        SIGNAL_GEN_UI_TEXT("Frequency", "频率"),
         COUNT_OF(mco_source_names),
         mco_source_list_change_callback,
         app);
@@ -101,7 +106,7 @@ void signal_gen_scene_mco_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Freq. divider",
+        SIGNAL_GEN_UI_TEXT("Freq. divider", "分频"),
         COUNT_OF(mco_divisor_names),
         mco_divisor_list_change_callback,
         app);

@@ -616,15 +616,34 @@ void nearby_files_gps_timer_callback(void* context) {
         if(!coords.module_detected) {
             // No GPS module detected
             widget_add_string_element(
-                app->widget, 64, 24, AlignCenter, AlignCenter, FontPrimary, "No GPS Module");
+                app->widget,
+                64,
+                24,
+                AlignCenter,
+                AlignCenter,
+                FontPrimary,
+                NEARBY_FILES_UI_TEXT("No GPS Module", "未检测到 GPS 模块"));
             widget_add_string_element(
-                app->widget, 64, 40, AlignCenter, AlignCenter, FontSecondary, "Please connect GPS module");
+                app->widget,
+                64,
+                40,
+                AlignCenter,
+                AlignCenter,
+                FontSecondary,
+                NEARBY_FILES_UI_TEXT("Please connect GPS module", "请连接 GPS 模块"));
         } else {
             // GPS module detected, show satellite count
             widget_add_string_element(
-                app->widget, 64, 24, AlignCenter, AlignCenter, FontPrimary, "Waiting for GPS...");
+                app->widget,
+                64,
+                24,
+                AlignCenter,
+                AlignCenter,
+                FontPrimary,
+                NEARBY_FILES_UI_TEXT("Waiting for GPS...", "等待 GPS..."));
             
-            FuriString* sat_str = furi_string_alloc_printf("Satellites: %d", coords.satellite_count);
+            FuriString* sat_str = furi_string_alloc_printf(
+                NEARBY_FILES_UI_TEXT("Satellites: %d", "卫星数: %d"), coords.satellite_count);
             widget_add_string_element(
                 app->widget, 64, 40, AlignCenter, AlignCenter, FontSecondary, furi_string_get_cstr(sat_str));
             furi_string_free(sat_str);

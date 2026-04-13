@@ -4,6 +4,7 @@
 #include <gui/elements.h>
 #include <gui/view.h>
 #include "flipp_pomodoro_info_view.h"
+#include "../flipp_pomodoro_app.h"
 // Auto-compiled icons
 #include "flipp_pomodoro_icons.h"
 
@@ -30,7 +31,12 @@ static void flipp_pomodoro_info_view_draw_statistics(Canvas *canvas, FlippPomodo
 {
     FuriString *stats_string = furi_string_alloc();
 
-    furi_string_printf(stats_string, "So Long,\nand Thanks for All the Focus...\nand for completing\n\e#%i\e# pomodoro(s)", model->pomodoros_completed);
+    furi_string_printf(
+        stats_string,
+        FLIPP_POMODORO_UI_TEXT(
+            "So Long,\nand Thanks for All the Focus...\nand for completing\n\e#%i\e# pomodoro(s)",
+            "辛苦了，\n感谢你的专注。\n你已完成\n\e#%i\e# 个番茄钟"),
+        model->pomodoros_completed);
     const char *stats_string_formatted = furi_string_get_cstr(stats_string);
 
     elements_text_box(
@@ -46,14 +52,14 @@ static void flipp_pomodoro_info_view_draw_statistics(Canvas *canvas, FlippPomodo
 
     furi_string_free(stats_string);
 
-    elements_button_left(canvas, "Guide");
+    elements_button_left(canvas, FLIPP_POMODORO_UI_TEXT("Guide", "指南"));
 }
 
 static void flipp_pomodoro_info_view_draw_about(Canvas *canvas, FlippPomodoroInfoViewModel *model)
 {
     UNUSED(model);
     canvas_draw_icon(canvas, 0, 0, &I_flipp_pomodoro_learn_50x128);
-    elements_button_left(canvas, "Stats");
+    elements_button_left(canvas, FLIPP_POMODORO_UI_TEXT("Stats", "统计"));
 }
 
 static void flipp_pomodoro_info_view_draw_callback(Canvas *canvas, void *_model)
@@ -76,7 +82,7 @@ static void flipp_pomodoro_info_view_draw_callback(Canvas *canvas, void *_model)
         flipp_pomodoro_info_view_draw_about(canvas, model);
     }
 
-    elements_button_right(canvas, "Resume");
+    elements_button_right(canvas, FLIPP_POMODORO_UI_TEXT("Resume", "继续"));
 }
 
 void flipp_pomodoro_info_view_set_mode(View *view, FlippPomodoroInfoViewMode desired_mode)

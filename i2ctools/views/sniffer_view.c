@@ -11,18 +11,27 @@ void draw_sniffer_view(Canvas* canvas, i2cSniffer* i2c_sniffer) {
     canvas_set_color(canvas, ColorWhite);
     canvas_draw_icon(canvas, 45, 50, &I_Ok_btn_9x9);
     if(!i2c_sniffer->started) {
-        canvas_draw_str_aligned(canvas, 57, 51, AlignLeft, AlignTop, "Start");
+        canvas_draw_str_aligned(
+            canvas, 57, 51, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Start", "开始"));
     } else {
-        canvas_draw_str_aligned(canvas, 57, 51, AlignLeft, AlignTop, "Stop");
+        canvas_draw_str_aligned(
+            canvas, 57, 51, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Stop", "停止"));
     }
     canvas_set_color(canvas, ColorBlack);
     if(i2c_sniffer->first) {
-        canvas_draw_str_aligned(canvas, 30, 3, AlignLeft, AlignTop, "Nothing Recorded");
+        canvas_draw_str_aligned(
+            canvas,
+            30,
+            3,
+            AlignLeft,
+            AlignTop,
+            I2CTOOLS_UI_TEXT("Nothing Recorded", "暂无记录"));
         return;
     }
     char text_buffer[10];
     // nbFrame text
-    canvas_draw_str_aligned(canvas, 3, 3, AlignLeft, AlignTop, "Frame: ");
+    canvas_draw_str_aligned(
+        canvas, 3, 3, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Frame: ", "帧: "));
     snprintf(
         text_buffer,
         sizeof(text_buffer),
@@ -36,13 +45,16 @@ void draw_sniffer_view(Canvas* canvas, i2cSniffer* i2c_sniffer) {
         sizeof(text_buffer),
         "0x%02x",
         (int)(i2c_sniffer->frames[i2c_sniffer->menu_index].data[0] >> 1));
-    canvas_draw_str_aligned(canvas, 3, 13, AlignLeft, AlignTop, "Addr: ");
+    canvas_draw_str_aligned(
+        canvas, 3, 13, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Addr: ", "地址: "));
     canvas_draw_str_aligned(canvas, 30, 13, AlignLeft, AlignTop, text_buffer);
     // R/W
     if((int)(i2c_sniffer->frames[i2c_sniffer->menu_index].data[0]) % 2 == 0) {
-        canvas_draw_str_aligned(canvas, 58, 13, AlignLeft, AlignTop, "Write");
+        canvas_draw_str_aligned(
+            canvas, 58, 13, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Write", "写入"));
     } else {
-        canvas_draw_str_aligned(canvas, 58, 13, AlignLeft, AlignTop, "Read");
+        canvas_draw_str_aligned(
+            canvas, 58, 13, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Read", "读取"));
     }
     // ACK
     if(i2c_sniffer->frames[i2c_sniffer->menu_index].ack[0]) {
@@ -62,7 +74,8 @@ void draw_sniffer_view(Canvas* canvas, i2cSniffer* i2c_sniffer) {
     if(i2c_sniffer->row_index > 0) {
         offset += 1;
     }
-    canvas_draw_str_aligned(canvas, x_min, y_min, AlignLeft, AlignTop, "Data:");
+    canvas_draw_str_aligned(
+        canvas, x_min, y_min, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Data:", "数据:"));
     for(uint8_t i = 1 + offset; i < frame_size; i++) {
         snprintf(
             text_buffer,

@@ -1,4 +1,5 @@
 #include "gpio_reader.h"
+#include "../gpio_app_i.h"
 #include "../gpio_item.h"
 
 #include <gui/elements.h>
@@ -22,11 +23,13 @@ static bool gpio_reader_process_right(GpioReader* gpio_reader);
 static void gpio_reader_draw_callback(Canvas* canvas, void* _model) {
     GpioReaderModel* model = _model;
     canvas_set_font(canvas, FontPrimary);
-    elements_multiline_text_aligned(canvas, 64, 2, AlignCenter, AlignTop, "GPIO Reader");
+    elements_multiline_text_aligned(
+        canvas, 64, 2, AlignCenter, AlignTop, GPIO_READER_B_UI_TEXT("GPIO Reader", "GPIO 读取"));
     canvas_set_font(canvas, FontSecondary);
     elements_multiline_text_aligned(
         canvas, 64, 16, AlignCenter, AlignTop, "A7  A6  A4  B3  B2  C3  C1  C0");
-    elements_multiline_text_aligned(canvas, 64, 40, AlignCenter, AlignTop, "Pull Up");
+    elements_multiline_text_aligned(
+        canvas, 64, 40, AlignCenter, AlignTop, GPIO_READER_B_UI_TEXT("Pull Up", "上拉"));
     int charOffset = 10;
     for(uint8_t i = 0; i < GPIO_ITEM_COUNT; i++) {
         bool high = gpio_item_get_pin(i);

@@ -21,28 +21,28 @@ void camera_suite_scene_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Stream Camera to Screen",
+        CAMERA_SUITE_UI_TEXT("Stream Camera to Screen", "实时预览相机"),
         SubmenuIndexSceneCamera,
         camera_suite_scene_menu_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Camera Settings",
+        CAMERA_SUITE_UI_TEXT("Camera Settings", "相机设置"),
         SubmenuIndexCamSettings,
         camera_suite_scene_menu_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Application Settings",
+        CAMERA_SUITE_UI_TEXT("Application Settings", "应用设置"),
         SubmenuIndexAppSettings,
         camera_suite_scene_menu_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Camera Suite Guide",
+        CAMERA_SUITE_UI_TEXT("Camera Suite Guide", "相机指南"),
         SubmenuIndexGuide,
         camera_suite_scene_menu_submenu_callback,
         app);

@@ -24,6 +24,12 @@
 #define BAR_X     30
 #define BAR_WIDTH 97
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PC_MONITOR_UI_TEXT(en, zh) (zh)
+#else
+#define PC_MONITOR_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     BtStateChecking,
     BtStateInactive,

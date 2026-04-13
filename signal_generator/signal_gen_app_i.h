@@ -13,6 +13,12 @@
 #include <gui/modules/submenu.h>
 #include "views/signal_gen_pwm.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SIGNAL_GEN_UI_TEXT(en, zh) (zh)
+#else
+#define SIGNAL_GEN_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct SignalGenApp SignalGenApp;
 
 struct SignalGenApp {

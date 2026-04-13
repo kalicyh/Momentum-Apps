@@ -12,7 +12,7 @@ void ibutton_converter_scene_info_on_enter(void* context) {
 
     furi_string_printf(
         tmp,
-        "Source key: %s\n\e#%s %s\e#\n",
+        IBUTTON_CONVERTER_UI_TEXT("Source key: %s\n\e#%s %s\e#\n", "原始钥匙: %s\n\e#%s %s\e#\n"),
         ibutton_converter->key_name,
         ibutton_protocols_get_manufacturer(ibutton_converter->protocols, protocol_id),
         ibutton_protocols_get_name(ibutton_converter->protocols, protocol_id));

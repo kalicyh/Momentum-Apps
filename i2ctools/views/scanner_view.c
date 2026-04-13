@@ -6,7 +6,7 @@ void draw_scanner_view(Canvas* canvas, i2cScanner* i2c_scanner) {
     canvas_draw_rframe(canvas, 0, 0, 128, 64, 3);
 
     char count_text[46];
-    char count_text_fmt[] = "Peripherals Found: %d";
+    char count_text_fmt[] = I2CTOOLS_UI_TEXT("Peripherals Found: %d", "发现设备: %d");
     canvas_set_font(canvas, FontSecondary);
     snprintf(count_text, sizeof(count_text), count_text_fmt, (int)i2c_scanner->nb_found);
     canvas_draw_str_aligned(canvas, 3, 3, AlignLeft, AlignTop, count_text);
@@ -43,5 +43,6 @@ void draw_scanner_view(Canvas* canvas, i2cScanner* i2c_scanner) {
     canvas_draw_rbox(canvas, 45, 48, 45, 13, 3);
     canvas_set_color(canvas, ColorWhite);
     canvas_draw_icon(canvas, 50, 50, &I_Ok_btn_9x9);
-    canvas_draw_str_aligned(canvas, 62, 51, AlignLeft, AlignTop, "Scan");
+    canvas_draw_str_aligned(
+        canvas, 62, 51, AlignLeft, AlignTop, I2CTOOLS_UI_TEXT("Scan", "扫描"));
 }

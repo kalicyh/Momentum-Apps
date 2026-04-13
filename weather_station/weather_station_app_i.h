@@ -22,6 +22,12 @@
 
 #include "helpers/radio_device_loader.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WEATHER_STATION_UI_TEXT(en, zh) (zh)
+#else
+#define WEATHER_STATION_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct WeatherStationApp WeatherStationApp;
 
 struct WeatherStationTxRx {

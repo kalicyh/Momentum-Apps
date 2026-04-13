@@ -50,27 +50,44 @@ void ws_view_receiver_info_draw(Canvas* canvas, WSReceiverInfoModel* model) {
     canvas_draw_str(canvas, 0, 8, buffer);
 
     if(model->generic->channel != WS_NO_CHANNEL) {
-        snprintf(buffer, sizeof(buffer), "Ch: %01d", model->generic->channel);
+        snprintf(
+            buffer,
+            sizeof(buffer),
+            WEATHER_STATION_UI_TEXT("Ch: %01d", "通道: %01d"),
+            model->generic->channel);
         canvas_draw_str(canvas, 106, 8, buffer);
     }
 
     if(model->generic->id != WS_NO_ID) {
-        snprintf(buffer, sizeof(buffer), "Sn: 0x%02lX", model->generic->id);
+        snprintf(
+            buffer,
+            sizeof(buffer),
+            WEATHER_STATION_UI_TEXT("Sn: 0x%02lX", "序号: 0x%02lX"),
+            model->generic->id);
         canvas_draw_str(canvas, 0, 20, buffer);
     }
 
     if(model->generic->btn != WS_NO_BTN) {
-        snprintf(buffer, sizeof(buffer), "Btn: %01d", model->generic->btn);
+        snprintf(
+            buffer,
+            sizeof(buffer),
+            WEATHER_STATION_UI_TEXT("Btn: %01d", "按键: %01d"),
+            model->generic->btn);
         canvas_draw_str(canvas, 57, 20, buffer);
     }
 
     if(model->generic->battery_low != WS_NO_BATT) {
         snprintf(
-            buffer, sizeof(buffer), "Batt: %s", (!model->generic->battery_low ? "ok" : "low"));
+            buffer,
+            sizeof(buffer),
+            WEATHER_STATION_UI_TEXT("Batt: %s", "电池: %s"),
+            (!model->generic->battery_low ? WEATHER_STATION_UI_TEXT("ok", "正常") :
+                                            WEATHER_STATION_UI_TEXT("low", "低电")));
         canvas_draw_str_aligned(canvas, 126, 17, AlignRight, AlignCenter, buffer);
     }
 
-    snprintf(buffer, sizeof(buffer), "Data: 0x%llX", model->generic->data);
+    snprintf(
+        buffer, sizeof(buffer), WEATHER_STATION_UI_TEXT("Data: 0x%llX", "数据: 0x%llX"), model->generic->data);
     canvas_draw_str(canvas, 0, 32, buffer);
 
     elements_bold_rounded_frame(canvas, 0, 38, 127, 25);
@@ -129,10 +146,12 @@ void ws_view_receiver_info_draw(Canvas* canvas, WSReceiverInfoModel* model) {
             }
 
             if(model->curr_ts % 2 == 0) {
-                canvas_draw_str_aligned(canvas, 105, 51, AlignLeft, AlignCenter, "Old");
+                canvas_draw_str_aligned(
+                    canvas, 105, 51, AlignLeft, AlignCenter, WEATHER_STATION_UI_TEXT("Old", "较旧"));
             } else {
                 if(cnt_min >= 59) {
-                    canvas_draw_str_aligned(canvas, 105, 51, AlignLeft, AlignCenter, "Old");
+                    canvas_draw_str_aligned(
+                        canvas, 105, 51, AlignLeft, AlignCenter, WEATHER_STATION_UI_TEXT("Old", "较旧"));
                 } else {
                     snprintf(buffer, sizeof(buffer), "%dm", cnt_min);
                     canvas_draw_str_aligned(canvas, 114, 51, AlignCenter, AlignCenter, buffer);

@@ -10,6 +10,12 @@
 
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MUSIC_PLAYER_UI_TEXT(en, zh) (zh)
+#else
+#define MUSIC_PLAYER_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "MusicPlayer"
 
 #define MUSIC_PLAYER_APP_EXTENSION "*"
@@ -134,7 +140,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 12, "MusicPlayer");
+    canvas_draw_str(canvas, 0, 12, MUSIC_PLAYER_UI_TEXT("MusicPlayer", "音乐播放器"));
 
     uint8_t x_pos = 0;
     uint8_t y_pos = 24;

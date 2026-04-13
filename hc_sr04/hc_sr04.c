@@ -13,6 +13,12 @@
 #include <notification/notification_messages.h>
 #include <expansion/expansion.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define HC_SR04_UI_TEXT(en, zh) (zh)
+#else
+#define HC_SR04_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey,
@@ -64,7 +70,12 @@ static void render_callback(Canvas* const canvas, void* ctx) {
 
     canvas_set_font(canvas, FontPrimary);
     elements_multiline_text_aligned(
-        canvas, 64, 2, AlignCenter, AlignTop, "HC-SR04 Ultrasonic\nDistance Sensor");
+        canvas,
+        64,
+        2,
+        AlignCenter,
+        AlignTop,
+        HC_SR04_UI_TEXT("HC-SR04 Ultrasonic\nDistance Sensor", "HC-SR04 超声波\n测距传感器"));
 
     canvas_set_font(canvas, FontSecondary);
 
@@ -75,31 +86,57 @@ static void render_callback(Canvas* const canvas, void* ctx) {
             28,
             AlignLeft,
             AlignTop,
-            "5V on GPIO must be\nenabled, or USB must\nbe connected.");
+            HC_SR04_UI_TEXT(
+                "5V on GPIO must be\nenabled, or USB must\nbe connected.",
+                "必须启用 GPIO 5V\n或连接 USB\n才能使用。"));
     } else {
         if(!plugin_state->measurement_made) {
             elements_multiline_text_aligned(
-                canvas, 64, 28, AlignCenter, AlignTop, "Press OK button to measure");
+                canvas,
+                64,
+                28,
+                AlignCenter,
+                AlignTop,
+                HC_SR04_UI_TEXT("Press OK button to measure", "按 OK 键开始测量"));
             elements_multiline_text_aligned(
-                canvas, 64, 40, AlignCenter, AlignTop, "13/TX -> Trig\n14/RX -> Echo");
+                canvas,
+                64,
+                40,
+                AlignCenter,
+                AlignTop,
+                HC_SR04_UI_TEXT("13/TX -> Trig\n14/RX -> Echo", "13/TX -> 触发\n14/RX -> 回波"));
         } else {
-            elements_multiline_text_aligned(canvas, 4, 28, AlignLeft, AlignTop, "Readout:");
+            elements_multiline_text_aligned(
+                canvas, 4, 28, AlignLeft, AlignTop, HC_SR04_UI_TEXT("Readout:", "读数:"));
 
             FuriString* str_buf;
             str_buf = furi_string_alloc();
-            furi_string_printf(str_buf, "Echo: %ld us", plugin_state->echo);
+            furi_string_printf(
+                str_buf, HC_SR04_UI_TEXT("Echo: %ld us", "回波: %ld us"), plugin_state->echo);
 
             canvas_draw_str_aligned(
                 canvas, 8, 38, AlignLeft, AlignTop, furi_string_get_cstr(str_buf));
 
-            if (plugin_state->mode == 1) {
-                furi_string_printf(str_buf, "Distance: %02f m", (double)plugin_state->distance);
-            } else if (plugin_state->mode == 2) {
-                furi_string_printf(str_buf, "Distance: %02f cm", (double)m_to_cm(plugin_state->distance));
-            } else if (plugin_state->mode == 3) {
-                furi_string_printf(str_buf, "Distance: %02f ft", (double)m_to_feet(plugin_state->distance));
-            } else if (plugin_state->mode == 4) {
-                furi_string_printf(str_buf, "Distance: %02f in", (double)m_to_inches(plugin_state->distance));
+            if(plugin_state->mode == 1) {
+                furi_string_printf(
+                    str_buf,
+                    HC_SR04_UI_TEXT("Distance: %02f m", "距离: %02f m"),
+                    (double)plugin_state->distance);
+            } else if(plugin_state->mode == 2) {
+                furi_string_printf(
+                    str_buf,
+                    HC_SR04_UI_TEXT("Distance: %02f cm", "距离: %02f cm"),
+                    (double)m_to_cm(plugin_state->distance));
+            } else if(plugin_state->mode == 3) {
+                furi_string_printf(
+                    str_buf,
+                    HC_SR04_UI_TEXT("Distance: %02f ft", "距离: %02f ft"),
+                    (double)m_to_feet(plugin_state->distance));
+            } else if(plugin_state->mode == 4) {
+                furi_string_printf(
+                    str_buf,
+                    HC_SR04_UI_TEXT("Distance: %02f in", "距离: %02f in"),
+                    (double)m_to_inches(plugin_state->distance));
             }
 
             canvas_draw_str_aligned(

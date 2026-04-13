@@ -13,6 +13,12 @@
 
 #include "gui_extensions.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define METRONOME_UI_TEXT(en, zh) (zh)
+#else
+#define METRONOME_UI_TEXT(en, zh) (en)
+#endif
+
 #define BPM_STEP_SIZE_FINE   0.5d
 #define BPM_STEP_SIZE_COARSE 10.0d
 #define BPM_BOUNDARY_LOW     10.0d
@@ -117,15 +123,15 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     }
     // draw button prompts
     canvas_set_font(canvas, FontSecondary);
-    elements_button_left(canvas, "Slow");
-    elements_button_right(canvas, "Fast");
+    elements_button_left(canvas, METRONOME_UI_TEXT("Slow", "减速"));
+    elements_button_right(canvas, METRONOME_UI_TEXT("Fast", "加速"));
     if(metronome_state->playing) {
-        elements_button_center(canvas, "Stop ");
+        elements_button_center(canvas, METRONOME_UI_TEXT("Stop ", "停止"));
     } else {
-        elements_button_center(canvas, "Start");
+        elements_button_center(canvas, METRONOME_UI_TEXT("Start", "开始"));
     }
-    elements_button_top_left(canvas, "Push");
-    elements_button_top_right(canvas, "Hold");
+    elements_button_top_left(canvas, METRONOME_UI_TEXT("Push", "点按"));
+    elements_button_top_right(canvas, METRONOME_UI_TEXT("Hold", "长按"));
 
     // draw progress bar
     float current_progress = (float)metronome_state->current_beat / metronome_state->beats_per_bar;

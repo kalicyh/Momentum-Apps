@@ -13,7 +13,7 @@ void ibutton_converter_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Select file",
+        IBUTTON_CONVERTER_UI_TEXT("Select file", "选择文件"),
         SubmenuIndexSelectFile,
         ibutton_converter_submenu_callback,
         ibutton_converter);

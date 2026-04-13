@@ -7,9 +7,9 @@ enum ErrorType {
 char* getErrorDescription(int error) {
     switch(error) {
     case UnsupportedProtocolError:
-        return "Protocol is not supported";
+        return IBUTTON_CONVERTER_UI_TEXT("Protocol is not supported", "协议不受支持");
     default:
-        return "Error occured";
+        return IBUTTON_CONVERTER_UI_TEXT("Error occured", "发生错误");
     }
 }
 

@@ -12,7 +12,8 @@ void uart_terminal_scene_hex_input_on_enter(void* context) {
     // Setup view
     UART_TextInput* text_input = app->hex_input;
     // Add help message to header
-    uart_hex_input_set_header_text(text_input, "Send HEX packet to UART");
+    uart_hex_input_set_header_text(
+        text_input, UART_TERMINAL_UI_TEXT("Send HEX packet to UART", "向 UART 发送 HEX 数据包"));
     uart_hex_input_set_result_callback(
         text_input,
         uart_terminal_scene_hex_input_callback,

@@ -12,6 +12,12 @@
 #include <gui/modules/text_input.h>
 #include <notification/notification_messages.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SCOPE_UI_TEXT(en, zh) (zh)
+#else
+#define SCOPE_UI_TEXT(en, zh) (en)
+#endif
+
 #define ADC_CONVERTED_DATA_BUFFER_SIZE ((uint32_t)128)
 #define FLIPPERSCOPE_APP_EXTENSION     ".dat"
 #define MAX_LEN_NAME                   30
@@ -54,7 +60,10 @@ typedef struct {
 } measurement;
 
 static const measurement measurement_list[] =
-    {{m_time, "Time"}, {m_voltage, "Voltage"}, {m_capture, "Capture"}, {m_fft, "FFT"}};
+    {{m_time, SCOPE_UI_TEXT("Time", "时间")},
+     {m_voltage, SCOPE_UI_TEXT("Voltage", "电压")},
+     {m_capture, SCOPE_UI_TEXT("Capture", "采集")},
+     {m_fft, "FFT"}};
 
 struct ScopeApp {
     Gui* gui;

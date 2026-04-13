@@ -9,6 +9,12 @@
 
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BPM_TAPPER_UI_TEXT(en, zh) (zh)
+#else
+#define BPM_TAPPER_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey,
@@ -106,12 +112,12 @@ static void show_hello() {
     DialogsApp* dialogs = furi_record_open(RECORD_DIALOGS);
     DialogMessage* message = dialog_message_alloc();
 
-    const char* header_text = "BPM Tapper";
-    const char* message_text = "Tap center to start";
+    const char* header_text = BPM_TAPPER_UI_TEXT("BPM Tapper", "BPM 节拍器");
+    const char* message_text = BPM_TAPPER_UI_TEXT("Tap center to start", "按中键开始");
 
     dialog_message_set_header(message, header_text, 63, 3, AlignCenter, AlignTop);
     dialog_message_set_text(message, message_text, 0, 17, AlignLeft, AlignTop);
-    dialog_message_set_buttons(message, NULL, "Tap", NULL);
+    dialog_message_set_buttons(message, NULL, BPM_TAPPER_UI_TEXT("Tap", "点击"), NULL);
 
     dialog_message_set_icon(message, &I_WarningDolphinFlip_45x42, 83, 22);
 
@@ -142,19 +148,23 @@ static void render_callback(Canvas* const canvas, void* ctx) {
 
     tempStr = furi_string_alloc();
 
-    furi_string_printf(tempStr, "Taps: %d", bpm_state->taps);
+    furi_string_printf(tempStr, BPM_TAPPER_UI_TEXT("Taps: %d", "点击: %d"), bpm_state->taps);
     canvas_draw_str_aligned(canvas, 5, 10, AlignLeft, AlignBottom, furi_string_get_cstr(tempStr));
     furi_string_reset(tempStr);
 
-    furi_string_printf(tempStr, "Queue: %d", bpm_state->tap_queue->size);
+    furi_string_printf(tempStr, BPM_TAPPER_UI_TEXT("Queue: %d", "队列: %d"), bpm_state->tap_queue->size);
     canvas_draw_str_aligned(canvas, 70, 10, AlignLeft, AlignBottom, furi_string_get_cstr(tempStr));
     furi_string_reset(tempStr);
 
-    furi_string_printf(tempStr, "Interval: %ldms", bpm_state->interval);
+    furi_string_printf(tempStr, BPM_TAPPER_UI_TEXT("Interval: %ldms", "间隔: %ldms"), bpm_state->interval);
     canvas_draw_str_aligned(canvas, 5, 20, AlignLeft, AlignBottom, furi_string_get_cstr(tempStr));
     furi_string_reset(tempStr);
 
-    furi_string_printf(tempStr, "x2 %.2f /2 %.2f", bpm_state->bpm * 2, bpm_state->bpm / 2);
+    furi_string_printf(
+        tempStr,
+        BPM_TAPPER_UI_TEXT("x2 %.2f /2 %.2f", "x2 %.2f /2 %.2f"),
+        bpm_state->bpm * 2,
+        bpm_state->bpm / 2);
     canvas_draw_str_aligned(
         canvas, 64, 60, AlignCenter, AlignCenter, furi_string_get_cstr(tempStr));
     furi_string_reset(tempStr);

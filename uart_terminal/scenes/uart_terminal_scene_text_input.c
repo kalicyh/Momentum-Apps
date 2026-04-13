@@ -31,9 +31,11 @@ void uart_terminal_scene_text_input_on_enter(void* context) {
             app->TERMINAL_MODE = 1;
             app->atmode_was_set = true;
         }
-        text_input_set_header_text(text_input, "Send AT command to UART");
+        text_input_set_header_text(
+            text_input, UART_TERMINAL_UI_TEXT("Send AT command to UART", "向 UART 发送 AT 命令"));
     } else {
-        text_input_set_header_text(text_input, "Send command to UART");
+        text_input_set_header_text(
+            text_input, UART_TERMINAL_UI_TEXT("Send command to UART", "向 UART 发送命令"));
     }
     text_input_set_result_callback(
         text_input,

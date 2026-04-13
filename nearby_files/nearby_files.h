@@ -15,6 +15,12 @@
 #define NEARBY_FILES_VERSION "1.5"
 #define NEARBY_FILES_APP_NAME "Nearby Files"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NEARBY_FILES_UI_TEXT(en, zh) (zh)
+#else
+#define NEARBY_FILES_UI_TEXT(en, zh) (en)
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

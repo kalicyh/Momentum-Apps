@@ -14,6 +14,12 @@
 
 #include "app_defines.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_CONTROLLER_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_CONTROLLER_UI_TEXT(en, zh) (en)
+#endif
+
 static void draw_main_view(Canvas* canvas, void* ctx);
 static void draw_config_menu_view(Canvas* canvas, void* ctx);
 
@@ -46,7 +52,7 @@ static ViewElement elements[] = {
      -1,
      112,
      0,
-     "Settings",
+     GPIO_CONTROLLER_UI_TEXT("Settings", "设置"),
      (Icon*)&I_gear_unhighlighted,
      (Icon*)&I_gear_highlighted},
     {PIN_3V, PIN_5V, true, false, false, true, -1, 0, 48, "3.3V", (Icon*)&I_3v_pin, NULL},
@@ -59,15 +65,59 @@ static ViewElement elements[] = {
      -1,
      14,
      48,
-     "Serial Wire Clock",
+     GPIO_CONTROLLER_UI_TEXT("Serial Wire Clock", "串行时钟"),
      (Icon*)&I_swc_pin,
      NULL},
-    {PIN_SIO, PIN_A4, true, false, false, true, -1, 42, 48, "Serial IO", (Icon*)&I_sio_pin, NULL},
-    {PIN_TX, PIN_B3, true, false, false, true, -1, 56, 48, "UART - Transmit", (Icon*)&I_tx_pin, NULL},
-    {PIN_RX, PIN_B2, true, false, false, true, -1, 70, 48, "UART - Receive", (Icon*)&I_rx_pin, NULL},
+    {PIN_SIO,
+     PIN_A4,
+     true,
+     false,
+     false,
+     true,
+     -1,
+     42,
+     48,
+     GPIO_CONTROLLER_UI_TEXT("Serial IO", "串行 IO"),
+     (Icon*)&I_sio_pin,
+     NULL},
+    {PIN_TX,
+     PIN_B3,
+     true,
+     false,
+     false,
+     true,
+     -1,
+     56,
+     48,
+     GPIO_CONTROLLER_UI_TEXT("UART - Transmit", "UART - 发送"),
+     (Icon*)&I_tx_pin,
+     NULL},
+    {PIN_RX,
+     PIN_B2,
+     true,
+     false,
+     false,
+     true,
+     -1,
+     70,
+     48,
+     GPIO_CONTROLLER_UI_TEXT("UART - Receive", "UART - 接收"),
+     (Icon*)&I_rx_pin,
+     NULL},
     {PIN_C1, PIN_C3, true, false, false, true, -1, 84, 48, "PC1", (Icon*)&I_c1_pin, NULL},
     {PIN_C0, NONE, true, false, false, true, -1, 98, 48, "PC0", (Icon*)&I_c0_pin, NULL},
-    {PIN_1W, GEARIC, true, true, false, true, -1, 112, 48, "1-Wire", (Icon*)&I_1w_pin, NULL},
+    {PIN_1W,
+     GEARIC,
+     true,
+     true,
+     false,
+     true,
+     -1,
+     112,
+     48,
+     GPIO_CONTROLLER_UI_TEXT("1-Wire", "单总线"),
+     (Icon*)&I_1w_pin,
+     NULL},
     {PIN_GND_08,
      NONE,
      false,
@@ -77,7 +127,7 @@ static ViewElement elements[] = {
      -1,
      98,
      -1,
-     "GND (Ground)",
+     GPIO_CONTROLLER_UI_TEXT("GND (Ground)", "GND(地线)"),
      (Icon*)&I_gnd_pin,
      NULL},
     {PIN_GND_11,
@@ -89,7 +139,7 @@ static ViewElement elements[] = {
      -1,
      28,
      48,
-     "GND (Ground)",
+     GPIO_CONTROLLER_UI_TEXT("GND (Ground)", "GND(地线)"),
      (Icon*)&I_gnd_pin,
      NULL},
     {PIN_GND_18,
@@ -101,7 +151,7 @@ static ViewElement elements[] = {
      -1,
      126,
      48,
-     "GND (Ground)",
+     GPIO_CONTROLLER_UI_TEXT("GND (Ground)", "GND(地线)"),
      (Icon*)&I_gnd_pin,
      NULL},
 };
@@ -174,8 +224,17 @@ static void update_gpio() {
 #define TOGGLECOLOR(state, canvas, setting, selected_col, deselected_col) \
     canvas_set_color(canvas, (state == setting) ? selected_col : deselected_col)
 
-const char* gpio_user_mode_strs[] = {"INPUT", "INPUT_PULLUP", "OUTPUT", "UNSET"};
-const char* gpio_user_value_strs[] = {"TRUE", "FALSE", "INPUT"};
+const char* gpio_user_mode_strs[] = {
+    GPIO_CONTROLLER_UI_TEXT("INPUT", "输入"),
+    GPIO_CONTROLLER_UI_TEXT("INPUT_PULLUP", "输入上拉"),
+    GPIO_CONTROLLER_UI_TEXT("OUTPUT", "输出"),
+    GPIO_CONTROLLER_UI_TEXT("UNSET", "未设置"),
+};
+const char* gpio_user_value_strs[] = {
+    GPIO_CONTROLLER_UI_TEXT("TRUE", "高电平"),
+    GPIO_CONTROLLER_UI_TEXT("FALSE", "低电平"),
+    GPIO_CONTROLLER_UI_TEXT("INPUT", "输入"),
+};
 
 static void draw_config_menu_view(Canvas* canvas, void* ctx) {
     UNUSED(ctx);
@@ -194,7 +253,7 @@ static void draw_config_menu_view(Canvas* canvas, void* ctx) {
     canvas_draw_box(canvas, 2, 2, 124, 15);
 
     TOGGLECOLOR(vstate.config_menu_selected, canvas, CONFIG_MENU_MODE, ColorWhite, ColorBlack);
-    canvas_draw_str(canvas, 6, 12, "Mode");
+    canvas_draw_str(canvas, 6, 12, GPIO_CONTROLLER_UI_TEXT("Mode", "模式"));
 
     if(gpc->user.mode > 0) canvas_draw_str(canvas, 34, 12, "<");
 
@@ -209,7 +268,7 @@ static void draw_config_menu_view(Canvas* canvas, void* ctx) {
 
         TOGGLECOLOR(
             vstate.config_menu_selected, canvas, CONFIG_MENU_VALUE, ColorWhite, ColorBlack);
-        canvas_draw_str(canvas, 6, 12 + 16, "Value");
+        canvas_draw_str(canvas, 6, 12 + 16, GPIO_CONTROLLER_UI_TEXT("Value", "数值"));
 
         if(gpc->user.value > 0) canvas_draw_str(canvas, 34, 12 + 16, "<");
 

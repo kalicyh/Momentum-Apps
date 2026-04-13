@@ -16,6 +16,12 @@
 #define OFFSET_Y      9
 #define VIBRO_TIME_MS 20
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define COUNTER_UI_TEXT(en, zh) (zh)
+#else
+#define COUNTER_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     FuriMessageQueue* input_queue;
     ViewPort* view_port;
@@ -51,7 +57,8 @@ static void render_callback(Canvas* canvas, void* ctx) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignCenter, "Counter :)");
+    canvas_draw_str_aligned(
+        canvas, 64, 10, AlignCenter, AlignCenter, COUNTER_UI_TEXT("Counter :)", "计数器 :)"));
     canvas_set_font(canvas, FontBigNumbers);
 
     char scount[8];

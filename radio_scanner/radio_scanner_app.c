@@ -27,24 +27,42 @@ static void radio_scanner_draw_callback(Canvas* canvas, void* context) {
     RadioScannerApp* app = (RadioScannerApp*)context;
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Radio Scanner");
+    canvas_draw_str_aligned(
+        canvas, 64, 2, AlignCenter, AlignTop, RADIO_SCANNER_UI_TEXT("Radio Scanner", "无线扫描"));
 
     canvas_set_font(canvas, FontSecondary);
     char freq_str[RADIO_SCANNER_BUFFER_SZ + 1] = {0};
     snprintf(
-        freq_str, RADIO_SCANNER_BUFFER_SZ, "Freq: %.2f MHz", (double)app->frequency / 1000000);
+        freq_str,
+        RADIO_SCANNER_BUFFER_SZ,
+        RADIO_SCANNER_UI_TEXT("Freq: %.2f MHz", "频率: %.2f MHz"),
+        (double)app->frequency / 1000000);
     canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, freq_str);
 
     char rssi_str[RADIO_SCANNER_BUFFER_SZ + 1] = {0};
-    snprintf(rssi_str, RADIO_SCANNER_BUFFER_SZ, "RSSI: %.2f", (double)app->rssi);
+    snprintf(
+        rssi_str,
+        RADIO_SCANNER_BUFFER_SZ,
+        RADIO_SCANNER_UI_TEXT("RSSI: %.2f", "RSSI: %.2f"),
+        (double)app->rssi);
     canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignTop, rssi_str);
 
     char sensitivity_str[RADIO_SCANNER_BUFFER_SZ + 1] = {0};
-    snprintf(sensitivity_str, RADIO_SCANNER_BUFFER_SZ, "Sens: %.2f", (double)app->sensitivity);
+    snprintf(
+        sensitivity_str,
+        RADIO_SCANNER_BUFFER_SZ,
+        RADIO_SCANNER_UI_TEXT("Sens: %.2f", "灵敏度: %.2f"),
+        (double)app->sensitivity);
     canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignTop, sensitivity_str);
 
     canvas_draw_str_aligned(
-        canvas, 64, 54, AlignCenter, AlignTop, app->scanning ? "Scanning..." : "Locked");
+        canvas,
+        64,
+        54,
+        AlignCenter,
+        AlignTop,
+        app->scanning ? RADIO_SCANNER_UI_TEXT("Scanning...", "扫描中...") :
+                        RADIO_SCANNER_UI_TEXT("Locked", "已锁定"));
 #ifdef FURI_DEBUG
     FURI_LOG_D(TAG, "Exit radio_scanner_draw_callback");
 #endif

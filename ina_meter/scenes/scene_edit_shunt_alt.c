@@ -24,7 +24,8 @@ static void scene_edit_shunt_input_callback(void* context, int32_t number) {
 }
 
 static void scene_edit_shunt_init(App* app) {
-    number_input_set_header_text(app->number_input, "Resistance [milliohm]");
+    number_input_set_header_text(
+        app->number_input, INA_METER_UI_TEXT("Resistance [milliohm]", "电阻 [毫欧]"));
 
     number_input_set_result_callback(
         app->number_input,

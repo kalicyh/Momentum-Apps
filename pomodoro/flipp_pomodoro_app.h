@@ -15,6 +15,12 @@
 #include "modules/flipp_pomodoro_settings.h"
 #include "helpers/notification_manager.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPP_POMODORO_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPP_POMODORO_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum
 {
     // Reserve first 100 events for button types and indexes, starting from 0

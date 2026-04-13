@@ -29,6 +29,12 @@
 /** Valid ECC levels are Low (0), Medium (1), Quartile (2), and High (3) */
 #define MAX_QRCODE_ECC 3
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define QRCODE_UI_TEXT(en, zh) (zh)
+#else
+#define QRCODE_UI_TEXT(en, zh) (en)
+#endif
+
 /** Maximum length by mode, ecc, and version */
 static const uint16_t MAX_LENGTH[3][4][MAX_QRCODE_VERSION] = {
     {
@@ -179,7 +185,12 @@ static void render_callback(Canvas* canvas, void* ctx) {
     uint8_t height = canvas_height(canvas);
     if(instance->loading) {
         canvas_draw_str_aligned(
-            canvas, width / 2, height / 2, AlignCenter, AlignCenter, "Loading...");
+            canvas,
+            width / 2,
+            height / 2,
+            AlignCenter,
+            AlignCenter,
+            QRCODE_UI_TEXT("Loading...", "加载中..."));
     } else if(instance->qrcode) {
         uint8_t size = instance->qrcode->size;
         uint8_t pixel_size = height / size;
@@ -209,7 +220,10 @@ static void render_callback(Canvas* canvas, void* ctx) {
             FuriString* str = furi_string_alloc();
 
             if(!instance->edit || instance->selected_idx == 0) {
-                furi_string_printf(str, "Mod: %c", get_mode_char(instance->set_mode));
+                furi_string_printf(
+                    str,
+                    QRCODE_UI_TEXT("Mod: %c", "模式: %c"),
+                    get_mode_char(instance->set_mode));
                 canvas_draw_str(canvas, left + 5, font_height + top, furi_string_get_cstr(str));
                 if(instance->selected_idx == 0) {
                     canvas_draw_triangle(
@@ -221,7 +235,11 @@ static void render_callback(Canvas* canvas, void* ctx) {
                         CanvasDirectionLeftToRight);
                 }
                 if(instance->edit) {
-                    uint8_t arrow_left = left + 5 + canvas_string_width(canvas, "Mod: B") / 2;
+                    uint8_t arrow_left =
+                        left + 5 +
+                        canvas_string_width(
+                            canvas, QRCODE_UI_TEXT("Mod: B", "模式: B")) /
+                            2;
                     canvas_draw_triangle(
                         canvas, arrow_left, top, font_height - 4, 4, CanvasDirectionBottomToTop);
                     canvas_draw_triangle(
@@ -235,7 +253,8 @@ static void render_callback(Canvas* canvas, void* ctx) {
             }
 
             if(!instance->edit || instance->selected_idx == 1) {
-                furi_string_printf(str, "Ver: %i", instance->set_version);
+                furi_string_printf(
+                    str, QRCODE_UI_TEXT("Ver: %i", "版本: %i"), instance->set_version);
                 canvas_draw_str(
                     canvas, left + 5, 2 * font_height + top + 2, furi_string_get_cstr(str));
                 if(instance->selected_idx == 1) {
@@ -248,7 +267,11 @@ static void render_callback(Canvas* canvas, void* ctx) {
                         CanvasDirectionLeftToRight);
                 }
                 if(instance->edit) {
-                    uint8_t arrow_left = left + 5 + canvas_string_width(canvas, "Ver: 8") / 2;
+                    uint8_t arrow_left =
+                        left + 5 +
+                        canvas_string_width(
+                            canvas, QRCODE_UI_TEXT("Ver: 8", "版本: 8")) /
+                            2;
                     canvas_draw_triangle(
                         canvas,
                         arrow_left,
@@ -267,7 +290,8 @@ static void render_callback(Canvas* canvas, void* ctx) {
             }
 
             if(!instance->edit || instance->selected_idx == 2) {
-                furi_string_printf(str, "ECC: %c", get_ecc_char(instance->set_ecc));
+                furi_string_printf(
+                    str, QRCODE_UI_TEXT("ECC: %c", "纠错: %c"), get_ecc_char(instance->set_ecc));
                 canvas_draw_str(
                     canvas, left + 5, 3 * font_height + top + 4, furi_string_get_cstr(str));
                 if(instance->selected_idx == 2) {
@@ -280,7 +304,11 @@ static void render_callback(Canvas* canvas, void* ctx) {
                         CanvasDirectionLeftToRight);
                 }
                 if(instance->edit) {
-                    uint8_t arrow_left = left + 5 + canvas_string_width(canvas, "ECC: H") / 2;
+                    uint8_t arrow_left =
+                        left + 5 +
+                        canvas_string_width(
+                            canvas, QRCODE_UI_TEXT("ECC: H", "纠错: H")) /
+                            2;
                     canvas_draw_triangle(
                         canvas,
                         arrow_left,
@@ -303,10 +331,19 @@ static void render_callback(Canvas* canvas, void* ctx) {
     } else {
         uint8_t margin = (height - font_height * 2) / 3;
         canvas_draw_str_aligned(
-            canvas, width / 2, margin, AlignCenter, AlignTop, "Could not load qrcode.");
+            canvas,
+            width / 2,
+            margin,
+            AlignCenter,
+            AlignTop,
+            QRCODE_UI_TEXT("Could not load qrcode.", "无法加载二维码。"));
         if(instance->too_long) {
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, width / 2, margin * 2 + font_height, "Message is too long.");
+            canvas_draw_str(
+                canvas,
+                width / 2,
+                margin * 2 + font_height,
+                QRCODE_UI_TEXT("Message is too long.", "消息过长。"));
         }
     }
 

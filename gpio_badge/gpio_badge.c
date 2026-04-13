@@ -19,6 +19,12 @@ const GpioPin* const pin_leds[] = {
 
 uint32_t speed = 50;
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_BADGE_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_BADGE_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EffectIdLRL,
     EffectIdBothLRL,
@@ -38,9 +44,10 @@ const GpioPin* const pin_back = &gpio_button_back;
 static void my_draw_callback(Canvas* canvas, void* context) {
     UNUSED(context);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 5, 8, "GPIO BADGE");
-    canvas_draw_str(canvas, 5, 28, "Left/Right : Speed");
-    canvas_draw_str(canvas, 5, 38, "Up/Down : Effect");
+    canvas_draw_str(canvas, 5, 8, GPIO_BADGE_UI_TEXT("GPIO BADGE", "GPIO 徽章"));
+    canvas_draw_str(
+        canvas, 5, 28, GPIO_BADGE_UI_TEXT("Left/Right : Speed", "左/右 : 速度"));
+    canvas_draw_str(canvas, 5, 38, GPIO_BADGE_UI_TEXT("Up/Down : Effect", "上/下 : 效果"));
 }
 
 static void my_input_callback(InputEvent* event, void* context) {

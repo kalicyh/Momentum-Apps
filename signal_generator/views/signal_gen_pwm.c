@@ -131,11 +131,11 @@ static void signal_gen_pwm_draw_callback(Canvas* canvas, void* _model) {
 
     for(size_t line = 0; line < LineIndexTotalCount; line++) {
         if(line == LineIndexChannel) {
-            line_label = "GPIO Pin";
+            line_label = SIGNAL_GEN_UI_TEXT("GPIO Pin", "GPIO 引脚");
         } else if(line == LineIndexFrequency) {
-            line_label = "Frequency";
+            line_label = SIGNAL_GEN_UI_TEXT("Frequency", "频率");
         } else if(line == LineIndexDuty) { //-V547
-            line_label = "Pulse width";
+            line_label = SIGNAL_GEN_UI_TEXT("Pulse width", "脉宽");
         }
 
         canvas_set_color(canvas, ColorBlack);

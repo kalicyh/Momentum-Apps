@@ -16,6 +16,12 @@
 #define MAX_PATH_LENGTH 256
 #define MAX_NAME_LENGTH 128
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLAME_RNG_UI_TEXT(en, zh) (zh)
+#else
+#define FLAME_RNG_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     uint32_t rng_value;
     uint32_t seed;
@@ -136,7 +142,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
 
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 2, 10, "Flame RNG");
+    canvas_draw_str(canvas, 2, 10, FLAME_RNG_UI_TEXT("Flame RNG", "火焰随机数"));
 
     // Main random number display (always updates)
     canvas_set_font(canvas, FontBigNumbers);
@@ -151,13 +157,21 @@ static void render_callback(Canvas* canvas, void* ctx) {
 
         if(elapsed_time < 1000) {
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 2, 55, "New value! Press OK to save");
+            canvas_draw_str(
+                canvas,
+                2,
+                55,
+                FLAME_RNG_UI_TEXT("New value! Press OK to save", "新数值! 按 OK 保存"));
         } else {
             state->new_value = false; // Clear the message after delay
         }
     } else {
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 2, 55, "Waiting for IR signal...");
+        canvas_draw_str(
+            canvas,
+            2,
+            55,
+            FLAME_RNG_UI_TEXT("Waiting for IR signal...", "等待红外信号..."));
     }
 
     furi_mutex_release(state->mutex);

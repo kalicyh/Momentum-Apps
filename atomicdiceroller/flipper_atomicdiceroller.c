@@ -18,6 +18,12 @@
 #define SCREEN_SIZE_X 128
 #define SCREEN_SIZE_Y 64
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ATOMIC_DICE_UI_TEXT(en, zh) (zh)
+#else
+#define ATOMIC_DICE_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeInput,
     ClockEventTypeTick,
@@ -52,7 +58,7 @@ static void draw_callback(Canvas* canvas, void* ctx) {
 
     canvas_set_font(canvas, FontPrimary);
     char buffer[32];
-    snprintf(buffer, sizeof(buffer), "%ld cps", mutexDraw.cps);
+    snprintf(buffer, sizeof(buffer), ATOMIC_DICE_UI_TEXT("%ld cps", "%ld 次/秒"), mutexDraw.cps);
     canvas_draw_str_aligned(canvas, 0, 10, AlignLeft, AlignBottom, buffer);
 
     snprintf(buffer, sizeof(buffer), "%u/64", mutexDraw.diceAvailiable);
@@ -106,14 +112,18 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     canvas_draw_str_aligned(canvas, SCREEN_SIZE_X - 5, 20, AlignRight, AlignBottom, buffer);
 
     if(mutexDraw.method == 0)
-        canvas_draw_str_aligned(canvas, 0, 22, AlignLeft, AlignBottom, "Hash: CRC32");
+        canvas_draw_str_aligned(
+            canvas, 0, 22, AlignLeft, AlignBottom, ATOMIC_DICE_UI_TEXT("Hash: CRC32", "哈希: CRC32"));
     else
-        canvas_draw_str_aligned(canvas, 0, 22, AlignLeft, AlignBottom, "Hash: MD5");
+        canvas_draw_str_aligned(
+            canvas, 0, 22, AlignLeft, AlignBottom, ATOMIC_DICE_UI_TEXT("Hash: MD5", "哈希: MD5"));
 
     if(mutexDraw.range == 0)
-        canvas_draw_str_aligned(canvas, 0, 34, AlignLeft, AlignBottom, "Range: 0-1");
+        canvas_draw_str_aligned(
+            canvas, 0, 34, AlignLeft, AlignBottom, ATOMIC_DICE_UI_TEXT("Range: 0-1", "范围: 0-1"));
     else
-        canvas_draw_str_aligned(canvas, 0, 34, AlignLeft, AlignBottom, "Range: 1-6");
+        canvas_draw_str_aligned(
+            canvas, 0, 34, AlignLeft, AlignBottom, ATOMIC_DICE_UI_TEXT("Range: 1-6", "范围: 1-6"));
 
     if(mutexDraw.pause == 0) {
         canvas_set_font(canvas, FontBigNumbers);

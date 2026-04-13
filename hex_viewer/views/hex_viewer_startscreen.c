@@ -35,17 +35,20 @@ void hex_viewer_startscreen_draw(Canvas* canvas, HexViewerStartscreenModel* mode
     if(!model->file_size) {
         canvas_set_color(canvas, ColorBlack);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "HexViewer v2.0");
+        canvas_draw_str_aligned(
+            canvas, 64, 10, AlignCenter, AlignTop, HEX_VIEWER_UI_TEXT("HexViewer v2.0", "十六进制查看器 v2.0"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, "Basic hex viewer");
-        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignTop, "for your Flipper");
-        elements_button_center(canvas, "Open");
+        canvas_draw_str_aligned(
+            canvas, 64, 22, AlignCenter, AlignTop, HEX_VIEWER_UI_TEXT("Basic hex viewer", "基础十六进制查看器"));
+        canvas_draw_str_aligned(
+            canvas, 64, 32, AlignCenter, AlignTop, HEX_VIEWER_UI_TEXT("for your Flipper", "适用于 Flipper"));
+        elements_button_center(canvas, HEX_VIEWER_UI_TEXT("Open", "打开"));
     } else {
         canvas_set_color(canvas, ColorBlack);
 
-        elements_button_left(canvas, model->mode ? "Addr" : "Text");
+        elements_button_left(canvas, model->mode ? HEX_VIEWER_UI_TEXT("Addr", "地址") : HEX_VIEWER_UI_TEXT("Text", "文本"));
         //elements_button_right(canvas, "Info");
-        elements_button_center(canvas, "Menu");
+        elements_button_center(canvas, HEX_VIEWER_UI_TEXT("Menu", "菜单"));
 
         int ROW_HEIGHT = 12;
         int TOP_OFFSET = 10;

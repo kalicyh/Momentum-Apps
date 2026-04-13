@@ -14,8 +14,11 @@ void uart_terminal_scene_help_on_enter(void* context) {
     temp_str = furi_string_alloc();
     furi_string_printf(
         temp_str,
-        "\nUART terminal for Flipper\n\nAT Command is using CR+LF\nSend command is using CR\nmode from Setup\n\nI'm in github: cool4uma\n\nThis app is a modified\nWiFi Marauder companion,\nThanks 0xchocolate(github)\nfor great code and app.\n\n");
-    furi_string_cat_printf(temp_str, "Press BACK to return\n");
+        UART_TERMINAL_UI_TEXT(
+            "\nUART terminal for Flipper\n\nAT Command is using CR+LF\nSend command is using CR\nmode from Setup\n\nI'm in github: cool4uma\n\nThis app is a modified\nWiFi Marauder companion,\nThanks 0xchocolate(github)\nfor great code and app.\n\n",
+            "\nFlipper 的 UART 终端\n\nAT 命令使用 CR+LF\n普通命令使用设置中的\nCR 模式\n\nGithub: cool4uma\n\n本应用基于 WiFi Marauder\ncompanion 修改而来，\n感谢 0xchocolate(github)\n提供优秀代码与应用。\n\n"));
+    furi_string_cat_printf(
+        temp_str, "%s\n", UART_TERMINAL_UI_TEXT("Press BACK to return", "按返回键返回"));
 
     widget_add_text_box_element(
         app->widget,
@@ -35,7 +38,9 @@ void uart_terminal_scene_help_on_enter(void* context) {
         14,
         AlignCenter,
         AlignBottom,
-        "\e#\e!         UART Terminal            \e!\n",
+        UART_TERMINAL_UI_TEXT(
+            "\e#\e!         UART Terminal            \e!\n",
+            "\e#\e!            UART 终端             \e!\n"),
         false);
     widget_add_text_scroll_element(app->widget, 0, 16, 128, 50, furi_string_get_cstr(temp_str));
     furi_string_free(temp_str);

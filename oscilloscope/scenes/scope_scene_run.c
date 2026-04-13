@@ -408,10 +408,10 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
 
     if(type == m_capture) {
         if(!pause)
-            elements_button_center(canvas, "Stop");
+            elements_button_center(canvas, SCOPE_UI_TEXT("Stop", "停止"));
         else {
             elements_button_center(canvas, "REC");
-            elements_button_right(canvas, "Save");
+            elements_button_right(canvas, SCOPE_UI_TEXT("Save", "保存"));
         }
     }
 
@@ -434,7 +434,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
         snprintf(buf1, 50, "%.0fx", (double)scale);
         canvas_draw_str(canvas, 95, 10, buf1);
         // Display current time period
-        snprintf(buf1, 50, "Time: %s", time);
+        snprintf(buf1, 50, SCOPE_UI_TEXT("Time: %s", "时间: %s"), time);
         canvas_draw_str(canvas, 2, 10, buf1);
         // Shift waveform across a virtual 0 line, so it crosses 0
         for(uint32_t x = 0; x < adc_buffer; x++) {
@@ -468,7 +468,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
         }
         avg /= countv;
         // Display frequency of waveform
-        snprintf(buf1, 50, "Freq: %.1f Hz", (double)((float)freq / avg));
+        snprintf(buf1, 50, SCOPE_UI_TEXT("Freq: %.1f Hz", "频率: %.1f Hz"), (double)((float)freq / avg));
         canvas_draw_str(canvas, 2, 20, buf1);
     } break;
     case m_fft: {
@@ -492,7 +492,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
         }
 
         // Display frequency of waveform
-        snprintf(buf1, 50, "Freq: %.1fHz", (double)idx * ((double)freq / (double)adc_buffer));
+        snprintf(buf1, 50, SCOPE_UI_TEXT("Freq: %.1fHz", "频率: %.1fHz"), (double)idx * ((double)freq / (double)adc_buffer));
         canvas_draw_str(canvas, 2, 10, buf1);
     } break;
     case m_voltage: {
@@ -500,11 +500,11 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
         snprintf(buf1, 50, "%.0fx", (double)scale);
         canvas_draw_str(canvas, 95, 10, buf1);
         // Display max, min, peak-to-peak voltages
-        snprintf(buf1, 50, "Max: %.2fV", (double)max);
+        snprintf(buf1, 50, SCOPE_UI_TEXT("Max: %.2fV", "最大: %.2fV"), (double)max);
         canvas_draw_str(canvas, 2, 10, buf1);
-        snprintf(buf1, 50, "Min: %.2fV", (double)min);
+        snprintf(buf1, 50, SCOPE_UI_TEXT("Min: %.2fV", "最小: %.2fV"), (double)min);
         canvas_draw_str(canvas, 2, 20, buf1);
-        snprintf(buf1, 50, "Vpp: %.2fV", (double)(max - min));
+        snprintf(buf1, 50, SCOPE_UI_TEXT("Vpp: %.2fV", "峰峰值: %.2fV"), (double)(max - min));
         canvas_draw_str(canvas, 2, 30, buf1);
     } break;
     default:

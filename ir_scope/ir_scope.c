@@ -11,6 +11,12 @@
 #define COLS 128
 #define ROWS 8
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define IR_SCOPE_UI_TEXT(en, zh) (zh)
+#else
+#define IR_SCOPE_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     bool autoscale;
     uint16_t us_per_sample;
@@ -66,7 +72,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
 
     canvas_set_font(canvas, FontSecondary);
     if(state->autoscale)
-        canvas_draw_str_outline(canvas, 100, 64, "Auto");
+        canvas_draw_str_outline(canvas, 100, 64, IR_SCOPE_UI_TEXT("Auto", "自动"));
     else {
         char buf[20];
         snprintf(buf, sizeof(buf), "%uus", state->us_per_sample);

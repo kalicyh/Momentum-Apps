@@ -25,7 +25,7 @@ void ibutton_converter_scene_select_cyfral_convert_option_on_enter(void* context
 
     submenu_add_item(
         submenu,
-        "C2 (Alt)",
+        IBUTTON_CONVERTER_UI_TEXT("C2 (Alt)", "C2(备用)"),
         SubmenuIndexC2Alt,
         ibutton_converter_submenu_callback,
         ibutton_converter);

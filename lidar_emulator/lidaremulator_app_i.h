@@ -17,6 +17,12 @@
 
 #include "view_hijacker.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define LIDAR_EMULATOR_UI_TEXT(en, zh) (zh)
+#else
+#define LIDAR_EMULATOR_UI_TEXT(en, zh) (en)
+#endif
+
 /** IR output selection: internal LED or external via extension header A7 */
 typedef enum {
     LidarEmulatorIrOutputInternal,
@@ -57,4 +63,3 @@ typedef enum {
     LidarEmulatorViewSubmenu,
     LidarEmulatorViewVariableList,
 } LidarEmulatorView;
-

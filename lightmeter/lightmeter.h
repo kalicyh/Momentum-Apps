@@ -23,6 +23,12 @@
 #include <BH1750.h>
 #include <MAX44009.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define LIGHTMETER_UI_TEXT(en, zh) (zh)
+#else
+#define LIGHTMETER_UI_TEXT(en, zh) (en)
+#endif
+
 #define APP_PATH_DIR STORAGE_APP_DATA_PATH_PREFIX
 #define APP_PATH_CFG "config.txt"
 

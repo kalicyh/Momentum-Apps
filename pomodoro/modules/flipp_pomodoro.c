@@ -1,6 +1,7 @@
 #include <furi.h>
 #include <furi_hal.h>
 #include "../helpers/time.h"
+#include "../flipp_pomodoro_app.h"
 #include "flipp_pomodoro.h"
 #include "flipp_pomodoro_settings.h"
 
@@ -19,15 +20,15 @@ PomodoroStage stages_sequence[] = {
 };
 
 char *current_stage_label[] = {
-    [FlippPomodoroStageFocus] = "Focusing...",
-    [FlippPomodoroStageRest] = "Short Break...",
-    [FlippPomodoroStageLongBreak] = "Long Break...",
+    [FlippPomodoroStageFocus] = FLIPP_POMODORO_UI_TEXT("Focusing...", "专注中..."),
+    [FlippPomodoroStageRest] = FLIPP_POMODORO_UI_TEXT("Short Break...", "短休息..."),
+    [FlippPomodoroStageLongBreak] = FLIPP_POMODORO_UI_TEXT("Long Break...", "长休息..."),
 };
 
 char *next_stage_label[] = {
-    [FlippPomodoroStageFocus] = "Focus",
-    [FlippPomodoroStageRest] = "Short Break",
-    [FlippPomodoroStageLongBreak] = "Long Break",
+    [FlippPomodoroStageFocus] = FLIPP_POMODORO_UI_TEXT("Focus", "专注"),
+    [FlippPomodoroStageRest] = FLIPP_POMODORO_UI_TEXT("Short Break", "短休息"),
+    [FlippPomodoroStageLongBreak] = FLIPP_POMODORO_UI_TEXT("Long Break", "长休息"),
 };
 
 static uint8_t s_focus_min = 25;
@@ -127,5 +128,5 @@ FlippPomodoroState *flipp_pomodoro__new()
 };
 
 const char* flipp_pomodoro__settings_button_label() {
-    return "Settings";
+    return FLIPP_POMODORO_UI_TEXT("Settings", "设置");
 }

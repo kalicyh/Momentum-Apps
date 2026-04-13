@@ -33,9 +33,18 @@
 #define BACKLIGHT_ALWAYS_ON
 #define TAG "FM_Radio"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FM_RADIO_UI_TEXT(en, zh) (zh)
+#else
+#define FM_RADIO_UI_TEXT(en, zh) (en)
+#endif
+
 // Declare global variables
 uint8_t volume_values[] = {0, 1};
-char* volume_names[] = {"Un-Muted", "Muted"};
+char* volume_names[] = {
+    FM_RADIO_UI_TEXT("Un-Muted", "未静音"),
+    FM_RADIO_UI_TEXT("Muted", "已静音"),
+};
 bool current_volume = 1; // Current volume state
 int* signal_strength; // Signal strength (unused, consider removing or implementing)
 uint8_t tea5767_registers[5];
@@ -231,22 +240,32 @@ char station_display[256];
 char signal_display[64];
 char volume_display[32];
 
+static const char* fm_radio_signal_quality_text(const char* quality) {
+    if(!quality) return FM_RADIO_UI_TEXT("Unknown", "未知");
+    if(strcmp(quality, "Poor") == 0) return FM_RADIO_UI_TEXT("Poor", "差");
+    if(strcmp(quality, "Fair") == 0) return FM_RADIO_UI_TEXT("Fair", "一般");
+    if(strcmp(quality, "Good") == 0) return FM_RADIO_UI_TEXT("Good", "良好");
+    if(strcmp(quality, "Excellent") == 0) return FM_RADIO_UI_TEXT("Excellent", "极佳");
+    if(strcmp(quality, "Unknown") == 0) return FM_RADIO_UI_TEXT("Unknown", "未知");
+    return quality;
+}
+
 // Callback for drawing the view
 void my_app_view_draw_callback(Canvas* canvas, void* model) {
     (void)model;
 
     // Draw strings on the canvas
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 35, 10, "FM Radio");
+    canvas_draw_str(canvas, 35, 10, FM_RADIO_UI_TEXT("FM Radio", "FM 收音机"));
     canvas_draw_icon(canvas, 84, 0, &I_radio);
 
     // Draw button prompts
     canvas_set_font(canvas, FontSecondary);
-    elements_button_up(canvas, "Pre");
-    elements_button_down(canvas, "Pre");
-    elements_button_left(canvas, "Scan-");
-    elements_button_center(canvas, "Mute");
-    elements_button_right(canvas, "Scan+");
+    elements_button_up(canvas, FM_RADIO_UI_TEXT("Pre", "预设"));
+    elements_button_down(canvas, FM_RADIO_UI_TEXT("Pre", "预设"));
+    elements_button_left(canvas, FM_RADIO_UI_TEXT("Scan-", "扫描-"));
+    elements_button_center(canvas, FM_RADIO_UI_TEXT("Mute", "静音"));
+    elements_button_right(canvas, FM_RADIO_UI_TEXT("Scan+", "扫描+"));
 
     struct RADIO_INFO info; // Create a struct to hold the radio info
     uint8_t buffer[5]; // Create a buffer to hold the TEA5767 register values
@@ -270,19 +289,27 @@ void my_app_view_draw_callback(Canvas* canvas, void* model) {
         snprintf(
             volume_display,
             sizeof(volume_display),
-            "Status: %s %s",
-            info.muted ? "Playing" : "Muted",
-            info.stereo ? "(Mono)" : "(Stereo)");
+            FM_RADIO_UI_TEXT("Status: %s %s", "状态: %s %s"),
+            info.muted ? FM_RADIO_UI_TEXT("Playing", "播放中") :
+                         FM_RADIO_UI_TEXT("Muted", "已静音"),
+            info.stereo ? FM_RADIO_UI_TEXT("(Mono)", "(单声道)") :
+                          FM_RADIO_UI_TEXT("(Stereo)", "(立体声)"));
         snprintf(
             signal_display,
             sizeof(signal_display),
-            "Signal: %d (%s)",
+            FM_RADIO_UI_TEXT("Signal: %d (%s)", "信号: %d (%s)"),
             info.signalLevel,
-            info.signalQuality);
+            fm_radio_signal_quality_text(info.signalQuality));
     } else {
         // Display error message if TEA5767 is not detected
-        snprintf(frequency_display, sizeof(frequency_display), "TEA5767 Not Detected");
-        snprintf(signal_display, sizeof(signal_display), "Pin 15 = SDA | Pin 16 = SLC");
+        snprintf(
+            frequency_display,
+            sizeof(frequency_display),
+            FM_RADIO_UI_TEXT("TEA5767 Not Detected", "未检测到 TEA5767"));
+        snprintf(
+            signal_display,
+            sizeof(signal_display),
+            FM_RADIO_UI_TEXT("Pin 15 = SDA | Pin 16 = SLC", "15脚=SDA | 16脚=SCL"));
         // Reset frequency_display and volume_display to blank
         station_display[0] = '\0';
         volume_display[0] = '\0';
@@ -308,9 +335,14 @@ MyApp* my_app_alloc() {
     // Initialize the submenu
     app->submenu = submenu_alloc();
     submenu_add_item(
-        app->submenu, "Listen Now", MyAppSubmenuIndexFlipTheWorld, my_app_submenu_callback, app);
+        app->submenu,
+        FM_RADIO_UI_TEXT("Listen Now", "立即收听"),
+        MyAppSubmenuIndexFlipTheWorld,
+        my_app_submenu_callback,
+        app);
     //submenu_add_item(app->submenu, "Config", MyAppSubmenuIndexConfigure, my_app_submenu_callback, app);
-    submenu_add_item(app->submenu, "About", MyAppSubmenuIndexAbout, my_app_submenu_callback, app);
+    submenu_add_item(
+        app->submenu, FM_RADIO_UI_TEXT("About", "关于"), MyAppSubmenuIndexAbout, my_app_submenu_callback, app);
     view_set_previous_callback(submenu_get_view(app->submenu), my_app_navigation_exit_callback);
     view_dispatcher_add_view(
         app->view_dispatcher, MyAppViewSubmenu, submenu_get_view(app->submenu));
@@ -322,14 +354,18 @@ MyApp* my_app_alloc() {
 
     // Add frequency configuration
     VariableItem* frequency_item = variable_item_list_add(
-        app->variable_item_list_config, "Freq (MHz)", NUM_STATIONS, my_app_frequency_change, app);
+        app->variable_item_list_config,
+        FM_RADIO_UI_TEXT("Freq (MHz)", "频率(MHz)"),
+        NUM_STATIONS,
+        my_app_frequency_change,
+        app);
 
     uint32_t current_station_index = 0;
     variable_item_set_current_value_index(frequency_item, current_station_index);
     // Add volume configuration
     VariableItem* volume_item = variable_item_list_add(
         app->variable_item_list_config,
-        "Volume",
+        FM_RADIO_UI_TEXT("Volume", "音量"),
         COUNT_OF(volume_values),
         my_app_volume_change,
         app);
@@ -363,6 +399,7 @@ MyApp* my_app_alloc() {
         0,
         128,
         64,
+        FM_RADIO_UI_TEXT(
         "FM Radio (v1.1)\n"
         "---\n"
         "Created By Coolshrimp\n\n"
@@ -370,7 +407,15 @@ MyApp* my_app_alloc() {
         "Down = Preset Down\n"
         "Left = Seek Down\n"
         "Right = Seek Up\n"
-        "OK = Toggle Mute");
+        "OK = Toggle Mute",
+        "FM 收音机 (v1.1)\n"
+        "---\n"
+        "作者: Coolshrimp\n\n"
+        "上 = 上一个预设\n"
+        "下 = 下一个预设\n"
+        "左 = 向下搜索\n"
+        "右 = 向上搜索\n"
+        "OK = 切换静音"));
 
     view_set_previous_callback(
         widget_get_view(app->widget_about), my_app_navigation_submenu_callback);

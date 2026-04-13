@@ -7,20 +7,31 @@ void lightmeter_scene_help_on_enter(void* context) {
     temp_str = furi_string_alloc();
     furi_string_printf(
         temp_str,
-        "App works with BH1750/MAX44009\nambient light sensor\nconnected via I2C interface\n\n");
-    furi_string_cat(temp_str, "\e#Pinout:\r\n");
+        LIGHTMETER_UI_TEXT(
+            "App works with BH1750/MAX44009\nambient light sensor\nconnected via I2C interface\n\n",
+            "本应用适用于通过 I2C\n连接的 BH1750/MAX44009\n环境光传感器\n\n"));
+    furi_string_cat(temp_str, LIGHTMETER_UI_TEXT("\e#Pinout:\r\n", "\e#引脚:\r\n"));
     furi_string_cat(
         temp_str,
-        "    VCC: 3.3V\r\n"
-        "    GND: GND\r\n"
-        "    SDA: 15 [C1]\r\n"
-        "    SCL: 16 [C0]\r\n");
-    furi_string_cat(temp_str, "\r\n\e#Resolutions:\r\n");
+        LIGHTMETER_UI_TEXT(
+            "    VCC: 3.3V\r\n"
+            "    GND: GND\r\n"
+            "    SDA: 15 [C1]\r\n"
+            "    SCL: 16 [C0]\r\n",
+            "    VCC: 3.3V\r\n"
+            "    GND: GND\r\n"
+            "    SDA: 15 [C1]\r\n"
+            "    SCL: 16 [C0]\r\n"));
+    furi_string_cat(temp_str, LIGHTMETER_UI_TEXT("\r\n\e#Resolutions:\r\n", "\r\n\e#分辨率:\r\n"));
     furi_string_cat(
         temp_str,
-        "Low: 4.0lx (16ms, 0-54k)\r\n"
-        "High: 1.0lx (120ms, 0-54k)\r\n"
-        "High2: 0.5lx (120ms, 0-27k)\r\n");
+        LIGHTMETER_UI_TEXT(
+            "Low: 4.0lx (16ms, 0-54k)\r\n"
+            "High: 1.0lx (120ms, 0-54k)\r\n"
+            "High2: 0.5lx (120ms, 0-27k)\r\n",
+            "低: 4.0lx (16ms, 0-54k)\r\n"
+            "高: 1.0lx (120ms, 0-54k)\r\n"
+            "高2: 0.5lx (120ms, 0-27k)\r\n"));
 
     widget_add_text_scroll_element(app->widget, 0, 0, 128, 64, furi_string_get_cstr(temp_str));
     furi_string_free(temp_str);

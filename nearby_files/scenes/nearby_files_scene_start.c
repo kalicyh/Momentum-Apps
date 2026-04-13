@@ -22,7 +22,13 @@ bool nearby_files_scene_start_on_event(void* context, SceneManagerEvent event) {
                 // Update widget to show scanning message
                 widget_reset(app->widget);
                 widget_add_string_element(
-                    app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "Calculating distances...");
+                    app->widget,
+                    64,
+                    32,
+                    AlignCenter,
+                    AlignCenter,
+                    FontPrimary,
+                    NEARBY_FILES_UI_TEXT("Calculating distances...", "计算距离中..."));
                 
                 // Scan directories for files
                 if(nearby_files_scan_directories(app)) {
@@ -31,16 +37,40 @@ bool nearby_files_scene_start_on_event(void* context, SceneManagerEvent event) {
                     } else {
                         widget_reset(app->widget);
                         widget_add_string_element(
-                            app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "No files found");
+                            app->widget,
+                            64,
+                            32,
+                            AlignCenter,
+                            AlignCenter,
+                            FontPrimary,
+                            NEARBY_FILES_UI_TEXT("No files found", "未找到文件"));
                         widget_add_string_element(
-                            app->widget, 64, 44, AlignCenter, AlignCenter, FontSecondary, "Press Back to exit");
+                            app->widget,
+                            64,
+                            44,
+                            AlignCenter,
+                            AlignCenter,
+                            FontSecondary,
+                            NEARBY_FILES_UI_TEXT("Press Back to exit", "按返回退出"));
                     }
                 } else {
                     widget_reset(app->widget);
                     widget_add_string_element(
-                        app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "Scan failed");
+                        app->widget,
+                        64,
+                        32,
+                        AlignCenter,
+                        AlignCenter,
+                        FontPrimary,
+                        NEARBY_FILES_UI_TEXT("Scan failed", "扫描失败"));
                     widget_add_string_element(
-                        app->widget, 64, 44, AlignCenter, AlignCenter, FontSecondary, "Press Back to exit");
+                        app->widget,
+                        64,
+                        44,
+                        AlignCenter,
+                        AlignCenter,
+                        FontSecondary,
+                        NEARBY_FILES_UI_TEXT("Press Back to exit", "按返回退出"));
                 }
                 consumed = true;
                 break;

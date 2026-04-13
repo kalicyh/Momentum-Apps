@@ -10,13 +10,13 @@ typedef struct {
 
 // SETUP_MENU_ITEMS defined in uart_terminal_app_i.h - if you add an entry here, increment it!
 static const UART_Terminal_Setup_Item items[SETUP_MENU_ITEMS] = {
-    {"UART Pins", 2, {"13,14", "15,16"}},
-    {"Baudrate", 25, {"75",     "110",    "150",    "300",   "600",    "1200",   "1800",
+    {UART_TERMINAL_UI_TEXT("UART Pins", "UART 引脚"), 2, {"13,14", "15,16"}},
+    {UART_TERMINAL_UI_TEXT("Baudrate", "波特率"), 25, {"75",     "110",    "150",    "300",   "600",    "1200",   "1800",
                       "2400",   "4800",   "7200",   "9600",  "14400",  "19200",  "31250",
                       "38400",  "56000",  "57600",  "76800", "115200", "128000", "230400",
                       "250000", "256000", "460800", "921600"}},
-    {"HEX mode", 2, {"OFF", "ON"}},
-    {"CR mode", 2, {"Newline", "CR+LF"}},
+    {UART_TERMINAL_UI_TEXT("HEX mode", "HEX 模式"), 2, {UART_TERMINAL_UI_TEXT("OFF", "关"), UART_TERMINAL_UI_TEXT("ON", "开")}},
+    {UART_TERMINAL_UI_TEXT("CR mode", "CR 模式"), 2, {UART_TERMINAL_UI_TEXT("Newline", "换行"), "CR+LF"}},
 };
 
 static void uart_terminal_scene_setup_var_list_enter_callback(void* context, uint32_t index) {

@@ -31,21 +31,21 @@ void nearby_files_scene_menu_on_enter(void* context) {
     
     submenu_add_item(
         app->submenu,
-        "Refresh List",
+        NEARBY_FILES_UI_TEXT("Refresh List", "刷新列表"),
         NearbyFilesMenuItemRefreshList,
         nearby_files_scene_menu_submenu_callback,
         app);
     
     submenu_add_item(
         app->submenu,
-        "About",
+        NEARBY_FILES_UI_TEXT("About", "关于"),
         NearbyFilesMenuItemAbout,
         nearby_files_scene_menu_submenu_callback,
         app);
     
     submenu_add_item(
         app->submenu,
-        "Exit",
+        NEARBY_FILES_UI_TEXT("Exit", "退出"),
         NearbyFilesMenuItemExit,
         nearby_files_scene_menu_submenu_callback,
         app);

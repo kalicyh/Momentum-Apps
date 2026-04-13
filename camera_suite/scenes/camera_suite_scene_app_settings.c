@@ -2,8 +2,8 @@
 #include <lib/toolbox/value_index.h>
 
 const char* const haptic_text[2] = {
-    "OFF",
-    "ON",
+    CAMERA_SUITE_UI_TEXT("OFF", "关"),
+    CAMERA_SUITE_UI_TEXT("ON", "开"),
 };
 
 const uint32_t haptic_value[2] = {
@@ -12,8 +12,8 @@ const uint32_t haptic_value[2] = {
 };
 
 const char* const speaker_text[2] = {
-    "OFF",
-    "ON",
+    CAMERA_SUITE_UI_TEXT("OFF", "关"),
+    CAMERA_SUITE_UI_TEXT("ON", "开"),
 };
 
 const uint32_t speaker_value[2] = {
@@ -22,8 +22,8 @@ const uint32_t speaker_value[2] = {
 };
 
 const char* const led_text[2] = {
-    "OFF",
-    "ON",
+    CAMERA_SUITE_UI_TEXT("OFF", "关"),
+    CAMERA_SUITE_UI_TEXT("ON", "开"),
 };
 
 const uint32_t led_value[2] = {
@@ -66,7 +66,7 @@ void camera_suite_scene_app_settings_on_enter(void* context) {
     // Haptic Effects ON/OFF
     item = variable_item_list_add(
         app->variable_item_list,
-        "Haptic Effects:",
+        CAMERA_SUITE_UI_TEXT("Haptic Effects:", "触觉反馈:"),
         2,
         camera_suite_scene_app_settings_set_haptic,
         app);
@@ -77,7 +77,7 @@ void camera_suite_scene_app_settings_on_enter(void* context) {
     // Sound Effects ON/OFF
     item = variable_item_list_add(
         app->variable_item_list,
-        "Sound Effects:",
+        CAMERA_SUITE_UI_TEXT("Sound Effects:", "声音效果:"),
         2,
         camera_suite_scene_app_settings_set_speaker,
         app);
@@ -87,7 +87,11 @@ void camera_suite_scene_app_settings_on_enter(void* context) {
 
     // LED Effects ON/OFF
     item = variable_item_list_add(
-        app->variable_item_list, "LED Effects:", 2, camera_suite_scene_app_settings_set_led, app);
+        app->variable_item_list,
+        CAMERA_SUITE_UI_TEXT("LED Effects:", "LED 效果:"),
+        2,
+        camera_suite_scene_app_settings_set_led,
+        app);
     value_index = value_index_uint32(app->led, led_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, led_text[value_index]);

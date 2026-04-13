@@ -15,22 +15,22 @@ void hex_viewer_scene_menu_submenu_callback(void* context, uint32_t index) {
 void hex_viewer_scene_menu_on_enter(void* context) {
     HexViewer* app = context;
 
-    submenu_set_header(app->submenu, "Select action");
+    submenu_set_header(app->submenu, HEX_VIEWER_UI_TEXT("Select action", "选择操作"));
     submenu_add_item(
         app->submenu,
-        "Open file ...",
+        HEX_VIEWER_UI_TEXT("Open file ...", "打开文件..."),
         SubmenuIndexOpen,
         hex_viewer_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Scroll to ...",
+        HEX_VIEWER_UI_TEXT("Scroll to ...", "滚动到..."),
         SubmenuIndexScroll,
         hex_viewer_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Show info ...",
+        HEX_VIEWER_UI_TEXT("Show info ...", "显示信息..."),
         SubmenuIndexInfo,
         hex_viewer_scene_menu_submenu_callback,
         app);
