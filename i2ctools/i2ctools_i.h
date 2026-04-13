@@ -1,13 +1,11 @@
+#pragma once
+
 #include <furi.h>
 #include <furi_hal.h>
 #include <gui/gui.h>
 #include <input/input.h>
 
-#ifdef MOMENTUM_UI_LANG_ZH_CN
-#define I2CTOOLS_UI_TEXT(en, zh) (zh)
-#else
-#define I2CTOOLS_UI_TEXT(en, zh) (en)
-#endif
+#include "i2ctools_ui.h"
 
 #include "i2csniffer.h"
 #include "i2cscanner.h"

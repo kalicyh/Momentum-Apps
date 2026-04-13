@@ -1,8 +1,10 @@
+#pragma once
+
 #include <furi.h>
 #include <furi_hal.h>
 #include <gui/gui.h>
 #include <i2ctools_icons.h>
-#include "../i2ctools_i.h"
+#include "../i2ctools_ui.h"
 #define APP_NAME I2CTOOLS_UI_TEXT("I2C Tools", "I2C 工具")
 
 #include <assets_icons.h>
