@@ -22,6 +22,12 @@
 
 #define AVR_ISP_MAX_LEN_NAME 64
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AVR_ISP_UI_TEXT(en, zh) (zh)
+#else
+#define AVR_ISP_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     Gui* gui;
     ViewDispatcher* view_dispatcher;

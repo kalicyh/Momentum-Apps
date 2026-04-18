@@ -11,6 +11,11 @@
 #include "combo_cracker_icons.h"
 
 #define TAG "ComboLockCracker"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define COMBO_UI_TEXT(en, zh) (zh)
+#else
+#define COMBO_UI_TEXT(en, zh) (en)
+#endif
 
 #define BACKLIGHT_ON 1
 
@@ -633,7 +638,7 @@ static void combo_view_cracker_draw_callback(Canvas* canvas, void* model) {
     int value_x = 75;
     int indicator_offset = -5;
 
-    canvas_draw_str(canvas, text_x, 12, "First Lock:");
+    canvas_draw_str(canvas, text_x, 12, COMBO_UI_TEXT("First Lock:", "第一锁位:"));
     snprintf(buf, sizeof(buf), "%s", lock1_label_from_model(my_model));
     canvas_draw_str(
         canvas,
@@ -642,7 +647,7 @@ static void combo_view_cracker_draw_callback(Canvas* canvas, void* model) {
         (my_model->selected == 0 ? ">" : ""));
     canvas_draw_str(canvas, value_x, 12, buf);
 
-    canvas_draw_str(canvas, text_x, 24, "Second Lock:");
+    canvas_draw_str(canvas, text_x, 24, COMBO_UI_TEXT("Second Lock:", "第二锁位:"));
     snprintf(buf, sizeof(buf), "%s", lock2_label_from_model(my_model));
     canvas_draw_str(
         canvas,
@@ -651,7 +656,7 @@ static void combo_view_cracker_draw_callback(Canvas* canvas, void* model) {
         (my_model->selected == 1 ? ">" : ""));
     canvas_draw_str(canvas, value_x, 24, buf);
 
-    canvas_draw_str(canvas, text_x, 36, "Resistance:");
+    canvas_draw_str(canvas, text_x, 36, COMBO_UI_TEXT("Resistance:", "阻力点:"));
     snprintf(buf, sizeof(buf), "%s", resistance_label_from_model(my_model));
     canvas_draw_str(
         canvas,
@@ -660,7 +665,7 @@ static void combo_view_cracker_draw_callback(Canvas* canvas, void* model) {
         (my_model->selected == 2 ? ">" : ""));
     canvas_draw_str(canvas, value_x, 36, buf);
 
-    canvas_draw_str(canvas, text_x, 48, "LockType: ");
+    canvas_draw_str(canvas, text_x, 48, COMBO_UI_TEXT("LockType: ", "锁类型: "));
     snprintf(buf, sizeof(buf), "%s", lock_type_label(my_model));
     canvas_draw_str(
         canvas,
@@ -669,7 +674,7 @@ static void combo_view_cracker_draw_callback(Canvas* canvas, void* model) {
         (my_model->selected == 3 ? ">" : ""));
     canvas_draw_str(canvas, value_x, 48, buf);
 
-    canvas_draw_str(canvas, text_x, 62, "OK to calculate");
+    canvas_draw_str(canvas, text_x, 62, COMBO_UI_TEXT("OK to calculate", "按 OK 计算"));
     canvas_draw_icon(canvas, icon_x, icon_y, &I_lock32x32);
 }
 
@@ -845,10 +850,19 @@ static ComboLockCrackerApp* combo_app_alloc() {
 
     app->submenu = submenu_alloc();
     submenu_add_item(
-        app->submenu, "Crack Lock", ComboSubmenuIndexCracker, combo_submenu_callback, app);
+        app->submenu,
+        COMBO_UI_TEXT("Crack Lock", "破解锁"),
+        ComboSubmenuIndexCracker,
+        combo_submenu_callback,
+        app);
     submenu_add_item(
-        app->submenu, "Tutorial", ComboSubmenuIndexTutorial, combo_submenu_callback, app);
-    submenu_add_item(app->submenu, "About", ComboSubmenuIndexAbout, combo_submenu_callback, app);
+        app->submenu,
+        COMBO_UI_TEXT("Tutorial", "教程"),
+        ComboSubmenuIndexTutorial,
+        combo_submenu_callback,
+        app);
+    submenu_add_item(
+        app->submenu, COMBO_UI_TEXT("About", "关于"), ComboSubmenuIndexAbout, combo_submenu_callback, app);
     view_set_previous_callback(submenu_get_view(app->submenu), combo_navigation_exit_callback);
     view_dispatcher_add_view(
         app->view_dispatcher, ComboViewSubmenu, submenu_get_view(app->submenu));

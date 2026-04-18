@@ -7,6 +7,12 @@
 
 #define TAG "Dice Roller"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MULTI_DICE_UI_TEXT(en, zh) (zh)
+#else
+#define MULTI_DICE_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey,
@@ -84,66 +90,66 @@ static void dice_render_callback(Canvas* const canvas, void* ctx) {
             strAMPM);
         if(state->diceSelect == 229) {
             const char* eightBall[] = {
-                "It is certain",
-                "Without a doubt",
-                "You may rely on it",
-                "Yes definitely",
-                "It is decidedly so",
-                "As I see it, yes",
-                "Most likely",
-                "Yes",
-                "Outlook good",
-                "Signs point to yes",
-                "Reply hazy try again",
-                "Better not tell you now",
-                "Ask again later",
-                "Cannot predict now",
-                "Concentrate and ask again",
-                "Don't count on it",
-                "Outlook not so good",
-                "My sources say no",
-                "Very doubtful",
-                "My reply is no"};
+                MULTI_DICE_UI_TEXT("It is certain", "当然"),
+                MULTI_DICE_UI_TEXT("Without a doubt", "毫无疑问"),
+                MULTI_DICE_UI_TEXT("You may rely on it", "可以相信"),
+                MULTI_DICE_UI_TEXT("Yes definitely", "绝对是"),
+                MULTI_DICE_UI_TEXT("It is decidedly so", "确定如此"),
+                MULTI_DICE_UI_TEXT("As I see it, yes", "我看是的"),
+                MULTI_DICE_UI_TEXT("Most likely", "很可能"),
+                MULTI_DICE_UI_TEXT("Yes", "是"),
+                MULTI_DICE_UI_TEXT("Outlook good", "前景不错"),
+                MULTI_DICE_UI_TEXT("Signs point to yes", "迹象显示是"),
+                MULTI_DICE_UI_TEXT("Reply hazy try again", "答案模糊，再试"),
+                MULTI_DICE_UI_TEXT("Better not tell you now", "现在最好不说"),
+                MULTI_DICE_UI_TEXT("Ask again later", "稍后再问"),
+                MULTI_DICE_UI_TEXT("Cannot predict now", "现在无法预测"),
+                MULTI_DICE_UI_TEXT("Concentrate and ask again", "专心后再问"),
+                MULTI_DICE_UI_TEXT("Don't count on it", "别指望"),
+                MULTI_DICE_UI_TEXT("Outlook not so good", "前景不太好"),
+                MULTI_DICE_UI_TEXT("My sources say no", "消息源说不"),
+                MULTI_DICE_UI_TEXT("Very doubtful", "很可疑"),
+                MULTI_DICE_UI_TEXT("My reply is no", "我的回答是否")};
             state->diceRoll =
                 ((rand() % state->diceSelect) + 1); // JUST TO GET IT GOING? AND FIX BUG
-            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", "8BALL");
+            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", MULTI_DICE_UI_TEXT("8BALL", "魔法球"));
             snprintf(
                 state->strings[0],
                 sizeof(state->strings[0]),
-                "%s at %s",
+                MULTI_DICE_UI_TEXT("%s at %s", "%s 于 %s"),
                 state->diceType[0],
                 state->rollTime[0]);
             uint8_t d1_i = rand() % COUNT_OF(eightBall);
             snprintf(state->strings[1], sizeof(state->strings[1]), "%s", eightBall[d1_i]);
         } else if(state->diceSelect == 228) {
             const char* eightBall[] = {
-                "I'd do it.",
-                "Hell, yeah!",
-                "You bet your life!",
-                "What are you waiting for?",
-                "You could do worse things.",
-                "Sure, I won't tell.",
-                "Yeah, you got this. Would I lie to you?",
-                "Looks like fun to me. ",
-                "Yeah, sure, why not?",
-                "DO IT!!!",
-                "Who's it gonna hurt?",
-                "Can you blame someone else?",
-                "Ask me again later.",
-                "Maybe, maybe not, I can't tell right now. ",
-                "Are you the betting type? ",
-                "Don't blame me if you get caught.",
-                "What have you got to lose?",
-                "I wouldn't if I were you.",
-                "My money's on the snowball.",
-                "Oh Hell no!"};
+                MULTI_DICE_UI_TEXT("I'd do it.", "我会做"),
+                MULTI_DICE_UI_TEXT("Hell, yeah!", "当然"),
+                MULTI_DICE_UI_TEXT("You bet your life!", "赌上命都行"),
+                MULTI_DICE_UI_TEXT("What are you waiting for?", "还等什么"),
+                MULTI_DICE_UI_TEXT("You could do worse things.", "还能更糟"),
+                MULTI_DICE_UI_TEXT("Sure, I won't tell.", "行，我不说"),
+                MULTI_DICE_UI_TEXT("Yeah, you got this. Would I lie to you?", "能行，我会骗你吗"),
+                MULTI_DICE_UI_TEXT("Looks like fun to me. ", "看起来挺有趣"),
+                MULTI_DICE_UI_TEXT("Yeah, sure, why not?", "行啊，为何不"),
+                MULTI_DICE_UI_TEXT("DO IT!!!", "去做!!!"),
+                MULTI_DICE_UI_TEXT("Who's it gonna hurt?", "会伤到谁"),
+                MULTI_DICE_UI_TEXT("Can you blame someone else?", "能甩锅吗"),
+                MULTI_DICE_UI_TEXT("Ask me again later.", "稍后再问"),
+                MULTI_DICE_UI_TEXT("Maybe, maybe not, I can't tell right now. ", "也许吧，现在说不准"),
+                MULTI_DICE_UI_TEXT("Are you the betting type? ", "你敢赌吗"),
+                MULTI_DICE_UI_TEXT("Don't blame me if you get caught.", "被抓别怪我"),
+                MULTI_DICE_UI_TEXT("What have you got to lose?", "你还有啥可失去"),
+                MULTI_DICE_UI_TEXT("I wouldn't if I were you.", "是我就不"),
+                MULTI_DICE_UI_TEXT("My money's on the snowball.", "我押不行"),
+                MULTI_DICE_UI_TEXT("Oh Hell no!", "绝对不!")};
             state->diceRoll =
                 ((rand() % state->diceSelect) + 1); // JUST TO GET IT GOING? AND FIX BUG
-            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", "Devil Ball");
+            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", MULTI_DICE_UI_TEXT("Devil Ball", "恶魔球"));
             snprintf(
                 state->strings[0],
                 sizeof(state->strings[0]),
-                "%s at %s",
+                MULTI_DICE_UI_TEXT("%s at %s", "%s 于 %s"),
                 state->diceType[0],
                 state->rollTime[0]);
             uint8_t d1_i = rand() % COUNT_OF(eightBall);
@@ -163,11 +169,11 @@ static void dice_render_callback(Canvas* const canvas, void* ctx) {
                                "KC", "KD", "KS", "AH", "AC", "AD"}; // ONE LESS SINCE ONE WILL BE REMOVED
             state->diceRoll =
                 ((rand() % state->diceSelect) + 1); // JUST TO GET IT GOING? AND FIX BUG
-            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", "WAR!");
+            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", MULTI_DICE_UI_TEXT("WAR!", "战争!"));
             snprintf(
                 state->strings[0],
                 sizeof(state->strings[0]),
-                "%s at %s",
+                MULTI_DICE_UI_TEXT("%s at %s", "%s 于 %s"),
                 state->diceType[0],
                 state->rollTime[0]);
             uint8_t d1_i = rand() % COUNT_OF(deckOne);
@@ -199,35 +205,40 @@ static void dice_render_callback(Canvas* const canvas, void* ctx) {
             }
         } else if(state->diceSelect == 232) {
             const char* diceOne[] = {
-                "You", "You choose", "Nobody", "Everyone", "Nose goes", "Player to your right"};
+                MULTI_DICE_UI_TEXT("You", "你"),
+                MULTI_DICE_UI_TEXT("You choose", "你来选"),
+                MULTI_DICE_UI_TEXT("Nobody", "没人"),
+                MULTI_DICE_UI_TEXT("Everyone", "所有人"),
+                MULTI_DICE_UI_TEXT("Nose goes", "摸鼻者"),
+                MULTI_DICE_UI_TEXT("Player to your right", "你右边玩家")};
             const char* diceTwo[] = {
-                "take a tiny toke",
-                "just chill",
-                "take 2 tokes",
-                "take a huge hit",
-                "bogart it",
-                "take a puff"};
+                MULTI_DICE_UI_TEXT("take a tiny toke", "来一小口"),
+                MULTI_DICE_UI_TEXT("just chill", "先冷静"),
+                MULTI_DICE_UI_TEXT("take 2 tokes", "来两口"),
+                MULTI_DICE_UI_TEXT("take a huge hit", "来一大口"),
+                MULTI_DICE_UI_TEXT("bogart it", "别传了"),
+                MULTI_DICE_UI_TEXT("take a puff", "吸一口")};
             const char* diceThree[] = {
-                "while humming a tune",
-                "with your eyes closed",
-                "on your knees",
-                "while holding your nose",
-                "while spinning in a circle",
-                "in slow motion"};
+                MULTI_DICE_UI_TEXT("while humming a tune", "一边哼歌"),
+                MULTI_DICE_UI_TEXT("with your eyes closed", "闭着眼"),
+                MULTI_DICE_UI_TEXT("on your knees", "跪着"),
+                MULTI_DICE_UI_TEXT("while holding your nose", "捏着鼻子"),
+                MULTI_DICE_UI_TEXT("while spinning in a circle", "一边转圈"),
+                MULTI_DICE_UI_TEXT("in slow motion", "慢动作进行")};
             const char* diceFour[] = {
-                "twice",
-                "then tell a joke",
-                "then laugh as hard as you can",
-                "with the player to your left",
-                "then sing a song",
-                "then do a dance"};
+                MULTI_DICE_UI_TEXT("twice", "两次"),
+                MULTI_DICE_UI_TEXT("then tell a joke", "然后讲笑话"),
+                MULTI_DICE_UI_TEXT("then laugh as hard as you can", "然后大笑"),
+                MULTI_DICE_UI_TEXT("with the player to your left", "和左边玩家一起"),
+                MULTI_DICE_UI_TEXT("then sing a song", "然后唱首歌"),
+                MULTI_DICE_UI_TEXT("then do a dance", "然后跳支舞")};
             state->diceRoll =
                 ((rand() % state->diceSelect) + 1); // JUST TO GET IT GOING? AND FIX BUG
-            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", "WEED!");
+            snprintf(state->diceType[0], sizeof(state->diceType[0]), "%s", MULTI_DICE_UI_TEXT("WEED!", "烟局!"));
             snprintf(
                 state->strings[0],
                 sizeof(state->strings[0]),
-                "%s at %s",
+                MULTI_DICE_UI_TEXT("%s at %s", "%s 于 %s"),
                 state->diceType[0],
                 state->rollTime[0]);
             uint8_t d1_i = rand() % COUNT_OF(diceOne);
@@ -245,7 +256,7 @@ static void dice_render_callback(Canvas* const canvas, void* ctx) {
             snprintf(
                 state->strings[0],
                 sizeof(state->strings[0]),
-                "%d%s at %s",
+                MULTI_DICE_UI_TEXT("%d%s at %s", "%d%s 于 %s"),
                 state->diceQty,
                 state->diceType[0],
                 state->rollTime[0]);
@@ -333,11 +344,11 @@ static void dice_render_callback(Canvas* const canvas, void* ctx) {
         }
     }
     if(state->diceSelect == 229 || state->diceSelect == 228) {
-        elements_button_center(canvas, "Shake");
+        elements_button_center(canvas, MULTI_DICE_UI_TEXT("Shake", "摇一摇"));
     } else if(state->diceSelect == 231) {
-        elements_button_center(canvas, "Draw");
+        elements_button_center(canvas, MULTI_DICE_UI_TEXT("Draw", "抽牌"));
     } else {
-        elements_button_center(canvas, "Roll");
+        elements_button_center(canvas, MULTI_DICE_UI_TEXT("Roll", "掷骰"));
     }
     if(state->diceSelect == 2) {
         elements_button_right(canvas, "d2");
@@ -366,9 +377,9 @@ static void dice_render_callback(Canvas* const canvas, void* ctx) {
     } else if(state->diceSelect == 228) {
         elements_button_right(canvas, "DBALL");
     } else if(state->diceSelect == 231) {
-        elements_button_right(canvas, "WAR");
+        elements_button_right(canvas, MULTI_DICE_UI_TEXT("WAR", "战争"));
     } else if(state->diceSelect == 232) {
-        elements_button_right(canvas, "WEED");
+        elements_button_right(canvas, MULTI_DICE_UI_TEXT("WEED", "烟局"));
     }
 }
 

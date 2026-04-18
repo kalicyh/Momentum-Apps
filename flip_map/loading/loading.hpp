@@ -1,5 +1,10 @@
 #pragma once
 #include <gui/gui.h>
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_MAP_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_MAP_UI_TEXT(en, zh) (en)
+#endif
 
 class Loading
 {
@@ -20,5 +25,5 @@ private:
     uint32_t timeElapsed;
     uint32_t timeStart;
     bool animating = false;
-    const char *currentText = "Loading...";
+    const char *currentText = FLIP_MAP_UI_TEXT("Loading...", "加载中...");
 };

@@ -1,5 +1,11 @@
 #include "../ac_remote_app_i.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define HITACHI_AC_UI_TEXT(en, zh) (zh)
+#else
+#define HITACHI_AC_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "ACRemoteSettings"
 
 enum {
@@ -21,8 +27,8 @@ static const char* const TIMER_STEP_TEXT[SETTINGS_TIMER_STEP_COUNT] = {
 };
 
 static const char* const BOOLEAN_TEXT[2] = {
-    "No",
-    "Yes",
+    HITACHI_AC_UI_TEXT("No", "否"),
+    HITACHI_AC_UI_TEXT("Yes", "是"),
 };
 
 static void on_change_side(VariableItem* item) {
@@ -72,20 +78,27 @@ void ac_remote_scene_settings_on_enter(void* context) {
     VariableItemList* vil_settings = app->vil_settings;
     VariableItem* item;
 
-    item = variable_item_list_add(vil_settings, "Side", SETTINGS_SIDE_COUNT, on_change_side, app);
+    item = variable_item_list_add(
+        vil_settings, HITACHI_AC_UI_TEXT("Side", "侧边"), SETTINGS_SIDE_COUNT, on_change_side, app);
     variable_item_set_current_value_index(item, app->app_state.side);
     variable_item_set_current_value_text(item, SIDE_LABEL_TEXT[app->app_state.side]);
 
     item = variable_item_list_add(
-        vil_settings, "Timer step", SETTINGS_TIMER_STEP_COUNT, on_change_timer_step, app);
+        vil_settings,
+        HITACHI_AC_UI_TEXT("Timer step", "定时步进"),
+        SETTINGS_TIMER_STEP_COUNT,
+        on_change_timer_step,
+        app);
     variable_item_set_current_value_index(item, app->app_state.timer_step);
     variable_item_set_current_value_text(item, TIMER_STEP_TEXT[app->app_state.timer_step]);
 
-    item = variable_item_list_add(vil_settings, "Allow auto", 2, on_change_allow_auto, app);
+    item = variable_item_list_add(
+        vil_settings, HITACHI_AC_UI_TEXT("Allow auto", "允许自动"), 2, on_change_allow_auto, app);
     variable_item_set_current_value_index(item, app->app_state.allow_auto);
     variable_item_set_current_value_text(item, BOOLEAN_TEXT[app->app_state.allow_auto]);
 
-    variable_item_list_add(vil_settings, "Reset settings", 1, NULL, NULL);
+    variable_item_list_add(
+        vil_settings, HITACHI_AC_UI_TEXT("Reset settings", "重置设置"), 1, NULL, NULL);
     variable_item_list_set_enter_callback(vil_settings, &vil_settings_on_enter, app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, AC_RemoteAppViewSettings);

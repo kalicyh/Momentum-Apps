@@ -4,6 +4,12 @@
 #include <input/input.h>
 #include <gui/elements.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHECKERS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHECKERS_UI_TEXT(en, zh) (en)
+#endif
+
 struct FlipCheckersStartscreen {
     View* view;
     FlipCheckersStartscreenCallback callback;
@@ -81,7 +87,8 @@ void flipcheckers_startscreen_draw(Canvas* canvas, FlipCheckersStartscreenModel*
 
     // === Bottom: "Press OK to play" centered ===
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, "Press OK to play");
+    canvas_draw_str_aligned(
+        canvas, 64, 55, AlignCenter, AlignBottom, FLIPCHECKERS_UI_TEXT("Press OK to play", "按 OK 开始"));
 }
 
 static void flipcheckers_startscreen_model_init(FlipCheckersStartscreenModel* const model) {

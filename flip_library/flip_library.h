@@ -15,6 +15,12 @@
 
 #define TAG "FlipLibrary"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_LIBRARY_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_LIBRARY_UI_TEXT(en, zh) (en)
+#endif
+
 // Define the submenu items for our FlipLibrary application
 typedef enum
 {

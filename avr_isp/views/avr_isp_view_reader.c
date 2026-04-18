@@ -3,6 +3,12 @@
 
 #include "../helpers/avr_isp_worker_rw.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AVR_ISP_UI_TEXT(en, zh) (zh)
+#else
+#define AVR_ISP_UI_TEXT(en, zh) (en)
+#endif
+
 struct AvrIspReaderView {
     View* view;
     AvrIspWorkerRW* avr_isp_worker_rw;
@@ -59,15 +65,18 @@ void avr_isp_reader_view_draw(Canvas* canvas, AvrIspReaderViewModel* model) {
     canvas_set_font(canvas, FontPrimary);
     switch(model->status) {
     case AvrIspReaderViewStatusIDLE:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Press start to dump");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Press start to dump", "按开始读取转储"));
         canvas_set_font(canvas, FontSecondary);
-        elements_button_center(canvas, "Start");
+        elements_button_center(canvas, AVR_ISP_UI_TEXT("Start", "开始"));
         break;
     case AvrIspReaderViewStatusReading:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Reading dump");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Reading dump", "正在读取转储"));
         break;
     case AvrIspReaderViewStatusVerification:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Verifyng dump");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Verifyng dump", "正在校验转储"));
         break;
 
     default:
@@ -75,10 +84,10 @@ void avr_isp_reader_view_draw(Canvas* canvas, AvrIspReaderViewModel* model) {
     }
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 27, "Flash");
+    canvas_draw_str(canvas, 0, 27, AVR_ISP_UI_TEXT("Flash", "闪存"));
     snprintf(str_buf, sizeof(str_buf), "%d%%", (uint8_t)(model->progress_flash * 100));
     elements_progress_bar_with_text(canvas, 44, 17, 84, model->progress_flash, str_buf);
-    canvas_draw_str(canvas, 0, 43, "EEPROM");
+    canvas_draw_str(canvas, 0, 43, AVR_ISP_UI_TEXT("EEPROM", "EEPROM"));
     snprintf(str_buf, sizeof(str_buf), "%d%%", (uint8_t)(model->progress_eeprom * 100));
     elements_progress_bar_with_text(canvas, 44, 34, 84, model->progress_eeprom, str_buf);
 }

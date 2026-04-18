@@ -178,10 +178,10 @@ static void calculate_timing_stats(TimingTunerContext* ctx) {
 
 static void timing_tuner_draw_listening(Canvas* canvas, TimingTunerContext* ctx) {
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Timing Tuner");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "时序调谐");
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, "Listening for signals...");
+    canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, "正在监听信号...");
 
     int wave_y = 38;
     ctx->animation_frame++;
@@ -209,7 +209,7 @@ static void timing_tuner_draw_listening(Canvas* canvas, TimingTunerContext* ctx)
     char rssi_str[24];
     snprintf(rssi_str, sizeof(rssi_str), "%.0f", (double)ctx->rssi);
     canvas_draw_str_aligned(canvas, 127, 62, AlignRight, AlignBottom, rssi_str);
-    elements_button_left(canvas, "Config");
+    elements_button_left(canvas, "配置");
 }
 
 // Get a specific line of content
@@ -239,13 +239,13 @@ static bool
     if(ctx->timing_info) {
         switch(line_idx) {
         case 0:
-            snprintf(buf, buf_size, "PROTOCOL DEFINITION:");
+            snprintf(buf, buf_size, "协议定义:");
             return true;
         case 1:
-            snprintf(buf, buf_size, "  Short: %lu us", ctx->timing_info->te_short);
+            snprintf(buf, buf_size, "  短脉冲: %lu us", ctx->timing_info->te_short);
             return true;
         case 2:
-            snprintf(buf, buf_size, "  Long: %lu us", ctx->timing_info->te_long);
+            snprintf(buf, buf_size, "  长脉冲: %lu us", ctx->timing_info->te_long);
             return true;
         case 3:
             snprintf(buf, buf_size, "  Tolerance: +/-%lu us", ctx->timing_info->te_delta);

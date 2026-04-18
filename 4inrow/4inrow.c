@@ -6,6 +6,12 @@
 #include <notification/notification_messages.h>
 #include <dolphin/dolphin.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FOURINROW_UI_TEXT(en, zh) (zh)
+#else
+#define FOURINROW_UI_TEXT(en, zh) (en)
+#endif
+
 static int matrix[6][7] = {0};
 static int cursorx = 3;
 static int cursory = 5;
@@ -154,13 +160,13 @@ static void draw_callback(Canvas* canvas, void* ctx) {
         canvas_set_font(canvas, FontPrimary);
 
         if(wincheck() == 0) {
-            canvas_draw_str(canvas, 30, 35, "Draw! O_o");
+            canvas_draw_str(canvas, 30, 35, FOURINROW_UI_TEXT("Draw! O_o", "平局!"));
         }
         if(wincheck() == 1) {
-            canvas_draw_str(canvas, 30, 35, "Player X win!");
+            canvas_draw_str(canvas, 30, 35, FOURINROW_UI_TEXT("Player X win!", "X 方获胜!"));
         }
         if(wincheck() == 2) {
-            canvas_draw_str(canvas, 30, 35, "Player O win!");
+            canvas_draw_str(canvas, 30, 35, FOURINROW_UI_TEXT("Player O win!", "O 方获胜!"));
         }
 
         furi_mutex_release(fourinrow_state->mutex);
@@ -190,10 +196,10 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     canvas_draw_str(canvas, cursorx * 10 + 8, cursory * 10 + 10, "[ ]");
 
     if(player == 1) {
-        canvas_draw_str(canvas, 80, 10, "Turn: X");
+        canvas_draw_str(canvas, 80, 10, FOURINROW_UI_TEXT("Turn: X", "轮到: X"));
     }
     if(player == 2) {
-        canvas_draw_str(canvas, 80, 10, "Turn: O");
+        canvas_draw_str(canvas, 80, 10, FOURINROW_UI_TEXT("Turn: O", "轮到: O"));
     }
     char scX[1];
     intToStr(scoreX, scX);
@@ -323,3 +329,8 @@ int32_t four_in_row_app(void* p) {
 
     return 0;
 }
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FOURINROW_UI_TEXT(en, zh) (zh)
+#else
+#define FOURINROW_UI_TEXT(en, zh) (en)
+#endif

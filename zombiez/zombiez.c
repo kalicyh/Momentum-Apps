@@ -9,6 +9,12 @@
 
 #include "zombiez.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ZOMBIEZ_UI_TEXT(en, zh) (zh)
+#else
+#define ZOMBIEZ_UI_TEXT(en, zh) (en)
+#endif
+
 #define ZOMBIES_MAX     3
 #define ZOMBIES_WIDTH   5
 #define ZOMBIES_HEIGHT  8
@@ -149,7 +155,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     if(plugin_state->game_state == GameStatePlaying) {
         // display ammo / reload
         if(plugin_state->projectiles_count >= PROJECTILES_MAX) {
-            canvas_draw_str_aligned(canvas, 24, 10, AlignLeft, AlignCenter, "RELOAD");
+            canvas_draw_str_aligned(canvas, 24, 10, AlignLeft, AlignCenter, ZOMBIEZ_UI_TEXT("RELOAD", "装填"));
         } else {
             for(uint8_t i = 0; i < (PROJECTILES_MAX - plugin_state->projectiles_count); i++) {
                 canvas_draw_box(canvas, 24 + (4 * i), 6, 2, 4);
@@ -172,10 +178,10 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         canvas_draw_frame(canvas, 34, 20, 62, 24);
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 37, 31, "Game Over");
+        canvas_draw_str(canvas, 37, 31, ZOMBIEZ_UI_TEXT("Game Over", "游戏结束"));
 
         canvas_set_font(canvas, FontSecondary);
-        snprintf(scoreBuffer, sizeof(scoreBuffer), "Score: %u", plugin_state->score);
+        snprintf(scoreBuffer, sizeof(scoreBuffer), ZOMBIEZ_UI_TEXT("Score: %u", "分数: %u"), plugin_state->score);
         canvas_draw_str_aligned(canvas, 64, 41, AlignCenter, AlignBottom, scoreBuffer);
     }
 

@@ -9,6 +9,12 @@
 
 #define SWD_PATH EXT_PATH("apps_data/swd")
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SWD_PROBE_UI_TEXT(en, zh) (zh)
+#else
+#define SWD_PROBE_UI_TEXT(en, zh) (en)
+#endif
+
 static void render_callback(Canvas* const canvas, void* cb_ctx);
 static bool swd_message_process(AppFSM* ctx);
 static uint8_t swd_transfer(AppFSM* const ctx, bool ap, bool write, uint8_t a23, uint32_t* data);
@@ -2317,18 +2323,18 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
     case ModePageScan: {
         draw_model(canvas);
 
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "Searching");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("Searching", "搜索中"));
         y += 14;
 
         canvas_set_font(canvas, FontSecondary);
 
         bool info_page = (ctx->loop_count % 500) >= 250;
         if(info_page) {
-            canvas_draw_str(canvas, 2, y, "Connect GND with target GND");
+            canvas_draw_str(canvas, 2, y, SWD_PROBE_UI_TEXT("Connect GND with target GND", "将 GND 接到目标 GND"));
             y += 10;
-            canvas_draw_str(canvas, 2, y, "and any two GPIOs with pads");
+            canvas_draw_str(canvas, 2, y, SWD_PROBE_UI_TEXT("and any two GPIOs with pads", "再将任意两个 GPIO"));
             y += 10;
-            canvas_draw_str(canvas, 2, y, "you want to check for SWD");
+            canvas_draw_str(canvas, 2, y, SWD_PROBE_UI_TEXT("you want to check for SWD", "接到待检测 SWD 焊盘"));
 
             canvas_set_font(canvas, FontPrimary);
             canvas_draw_str(canvas, 111, 62, "2/2");
@@ -2344,7 +2350,7 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
             }
 
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "Autoexec Script");
+            canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("Autoexec Script", "自动执行脚本"));
             y += 10;
             canvas_set_font(canvas, FontKeyboard);
             canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, filename);
@@ -2353,14 +2359,14 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
             canvas_set_font(canvas, FontSecondary);
             canvas_draw_icon(canvas, 14, y - 5, &I_ButtonUp_7x4);
             canvas_draw_icon(canvas, 78, y - 5, &I_ButtonDown_7x4);
-            canvas_draw_str(canvas, 23, y, "Clear");
-            canvas_draw_str(canvas, 87, y, "Choose");
+            canvas_draw_str(canvas, 23, y, SWD_PROBE_UI_TEXT("Clear", "清除"));
+            canvas_draw_str(canvas, 87, y, SWD_PROBE_UI_TEXT("Choose", "选择"));
 
             canvas_set_font(canvas, FontPrimary);
             canvas_draw_str(canvas, 111, 62, "1/2");
         }
         canvas_set_font(canvas, FontSecondary);
-        elements_button_left(canvas, "Script");
+        elements_button_left(canvas, SWD_PROBE_UI_TEXT("Script", "脚本"));
         break;
     }
     case ModePageFound: {
@@ -2403,13 +2409,13 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
         y += 10;
 
         canvas_set_font(canvas, FontSecondary);
-        elements_button_left(canvas, "Script");
-        elements_button_right(canvas, "DP Regs");
+        elements_button_left(canvas, SWD_PROBE_UI_TEXT("Script", "脚本"));
+        elements_button_right(canvas, SWD_PROBE_UI_TEXT("DP Regs", "DP 寄存器"));
 
         break;
     }
     case ModePageDPRegs: {
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "DP Registers");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("DP Registers", "DP 寄存器"));
         y += 10;
         canvas_set_font(canvas, FontKeyboard);
         if(ctx->dp_regs.dpidr_ok) {
@@ -2436,14 +2442,14 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
         }
         y += 10;
         canvas_set_font(canvas, FontSecondary);
-        elements_button_left(canvas, "Scan");
+        elements_button_left(canvas, SWD_PROBE_UI_TEXT("Scan", "扫描"));
         elements_button_right(canvas, "DPID");
 
         break;
     }
 
     case ModePageDPID: {
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "DP ID Register");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("DP ID Register", "DP ID 寄存器"));
         y += 10;
         canvas_set_font(canvas, FontKeyboard);
         if(ctx->dpidr_info.version != 2) {
@@ -2466,13 +2472,13 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
             }
         }
         canvas_set_font(canvas, FontSecondary);
-        elements_button_left(canvas, "DP Regs");
+        elements_button_left(canvas, SWD_PROBE_UI_TEXT("DP Regs", "DP 寄存器"));
         elements_button_right(canvas, "APs");
         break;
     }
 
     case ModePageAPID: {
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "AP Menu");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("AP Menu", "AP 菜单"));
         y += 10;
         canvas_set_font(canvas, FontKeyboard);
 
@@ -2553,22 +2559,22 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
             canvas_draw_str_aligned(canvas, 5, y, AlignLeft, AlignBottom, buffer);
             y += 10;
 
-            elements_button_center(canvas, "Show");
+            elements_button_center(canvas, SWD_PROBE_UI_TEXT("Show", "显示"));
         }
         canvas_set_font(canvas, FontSecondary);
         elements_button_left(canvas, "DPID");
-        elements_button_right(canvas, "CoreS.");
+        elements_button_right(canvas, SWD_PROBE_UI_TEXT("CoreS.", "核心"));
         elements_scrollbar_pos(canvas, 4, 10, 40, ctx->ap_pos / 32, COUNT(ctx->apidr_info) / 32);
         break;
     }
 
     /* hex dump view */
     case ModePageHexDump: {
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "Hex dump");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("Hex dump", "十六进制转储"));
         y += 10;
         canvas_set_font(canvas, FontKeyboard);
 
-        canvas_draw_str_aligned(canvas, 5, y, AlignLeft, AlignBottom, "Addr:");
+        canvas_draw_str_aligned(canvas, 5, y, AlignLeft, AlignBottom, SWD_PROBE_UI_TEXT("Addr:", "地址:"));
 
         snprintf(buffer, sizeof(buffer), "%08lX", ctx->hex_addr);
         canvas_draw_str_aligned(canvas, 38, y, AlignLeft, AlignBottom, buffer);
@@ -2599,7 +2605,7 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
     }
 
     case ModePageCoresight: {
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "Coresight");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("Coresight", "Coresight"));
         y += 10;
         canvas_set_font(canvas, FontSecondary);
 
@@ -2626,14 +2632,14 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
                 base_next);
             canvas_draw_str_aligned(canvas, 5, y, AlignLeft, AlignBottom, buffer);
             canvas_set_font(canvas, FontSecondary);
-            elements_button_center(canvas, "Enter");
+            elements_button_center(canvas, SWD_PROBE_UI_TEXT("Enter", "进入"));
         }
         y += 10;
 
         canvas_set_font(canvas, FontSecondary);
 
         if(ctx->coresight_level) {
-            elements_button_left(canvas, "Prev");
+            elements_button_left(canvas, SWD_PROBE_UI_TEXT("Prev", "上一级"));
         } else {
             elements_button_left(canvas, "APs");
         }
@@ -2650,10 +2656,10 @@ static void render_callback(Canvas* const canvas, void* ctx_in) {
 
     /* hex dump view */
     case ModePageScript: {
-        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, "Script");
+        canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, SWD_PROBE_UI_TEXT("Script", "脚本"));
         y += 10;
         y += 10;
-        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignBottom, "Status:");
+        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignBottom, SWD_PROBE_UI_TEXT("Status:", "状态:"));
         y += 10;
         canvas_set_font(canvas, FontKeyboard);
         canvas_draw_str_aligned(canvas, 64, y, AlignCenter, AlignBottom, ctx->state_string);

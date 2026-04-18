@@ -23,6 +23,12 @@ Sometimes duplicate cards will show up. there is a function to test this. I shou
 
 #define TAG "Video Poker"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define VPOKER_UI_TEXT(en, zh) (zh)
+#else
+#define VPOKER_UI_TEXT(en, zh) (en)
+#endif
+
 static void Shake(void) {
     NotificationApp* notification = furi_record_open(RECORD_NOTIFICATION);
     notification_message(notification, &sequence_single_vibro);
@@ -583,9 +589,9 @@ void poker_draw_callback(Canvas* canvas, void* ctx) {
 
     /* Start of game. Cards are face down, bet can be changed */
     if(poker_player->GameState == 1) {
-        snprintf(buffer, sizeof(buffer), "Bet:%d", poker_player->bet);
+        snprintf(buffer, sizeof(buffer), VPOKER_UI_TEXT("Bet:%d", "下注:%d"), poker_player->bet);
         canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, buffer);
-        snprintf(buffer, sizeof(buffer), "<*> Place Bet");
+        snprintf(buffer, sizeof(buffer), VPOKER_UI_TEXT("<*> Place Bet", "<*> 调整下注"));
         canvas_draw_str_aligned(canvas, 0, 9, AlignLeft, AlignTop, buffer);
 
         for(int i = 0; i < 5; ++i) {
@@ -594,9 +600,9 @@ void poker_draw_callback(Canvas* canvas, void* ctx) {
     }
     /* Cards are turned face up. Bet is deducted and put in th pot. Show the selector hand */
     else if(poker_player->GameState == 2 || poker_player->GameState == 3) {
-        snprintf(buffer, sizeof(buffer), "Pot:%d", poker_player->bet);
+        snprintf(buffer, sizeof(buffer), VPOKER_UI_TEXT("Pot:%d", "奖池:%d"), poker_player->bet);
         canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, buffer);
-        snprintf(buffer, sizeof(buffer), "<*> Select Hold");
+        snprintf(buffer, sizeof(buffer), VPOKER_UI_TEXT("<*> Select Hold", "<*> 选择保留"));
         canvas_draw_str_aligned(canvas, 0, 9, AlignLeft, AlignTop, buffer);
 
         /* Normal or inverse to indicate selection - cards*/
@@ -657,11 +663,11 @@ void poker_draw_callback(Canvas* canvas, void* ctx) {
         /* canvas_draw_icon(canvas, 0, 0, &I_BadEnd_128x64);  Just Lost The Game - disabled for now :( */
         canvas_set_color(canvas, ColorBlack);
         canvas_set_font(canvas, FontSecondary);
-        snprintf(buffer, sizeof(buffer), "%s", "You have run out of money!");
+        snprintf(buffer, sizeof(buffer), "%s", VPOKER_UI_TEXT("You have run out of money!", "你已经没钱了!"));
         canvas_draw_str_aligned(canvas, 63, 22, AlignCenter, AlignCenter, buffer);
-        snprintf(buffer, sizeof(buffer), "%s", "At one point, you had");
+        snprintf(buffer, sizeof(buffer), "%s", VPOKER_UI_TEXT("At one point, you had", "你最高曾拥有"));
         canvas_draw_str_aligned(canvas, 63, 32, AlignCenter, AlignCenter, buffer);
-        snprintf(buffer, sizeof(buffer), "%d dollars", poker_player->highscore);
+        snprintf(buffer, sizeof(buffer), VPOKER_UI_TEXT("%d dollars", "%d 美元"), poker_player->highscore);
         canvas_draw_str_aligned(canvas, 63, 42, AlignCenter, AlignCenter, buffer);
     }
 

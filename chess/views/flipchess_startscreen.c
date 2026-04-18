@@ -6,6 +6,12 @@
 #include "flipchess_icons.h"
 #include "helpers/flipchess_fonts.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHESS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHESS_UI_TEXT(en, zh) (en)
+#endif
+
 struct FlipChessStartscreen {
     View* view;
     FlipChessStartscreenCallback callback;
@@ -49,8 +55,8 @@ void flipchess_startscreen_draw(Canvas* canvas, FlipChessStartscreenModel* model
     //canvas_draw_icon(canvas, 0, 40, &I_Background_128x11);
     //canvas_draw_str(canvas, 10, 61, "FLIPR");
 
-    elements_button_left(canvas, "Sound");
-    elements_button_right(canvas, "Silent");
+    elements_button_left(canvas, FLIPCHESS_UI_TEXT("Sound", "有声"));
+    elements_button_right(canvas, FLIPCHESS_UI_TEXT("Silent", "静音"));
 }
 
 static void flipchess_startscreen_model_init(FlipChessStartscreenModel* const model) {

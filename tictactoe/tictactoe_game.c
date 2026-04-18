@@ -7,6 +7,12 @@
 
 #define TAG "TicTacToe"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TTT_UI_TEXT(en, zh) (zh)
+#else
+#define TTT_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey
@@ -99,7 +105,7 @@ void tictactoe_draw(Canvas* canvas, TicTacToeState* ts) {
 
     // Draws the sidebar
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 81, 10, "SCORE");
+    canvas_draw_str(canvas, 81, 10, TTT_UI_TEXT("SCORE", "比分"));
     canvas_draw_str(canvas, 75, 24, "X:");
 
     char scoreXBuffer[10];
@@ -112,7 +118,7 @@ void tictactoe_draw(Canvas* canvas, TicTacToeState* ts) {
     canvas_draw_str(canvas, 88, 35, scoreOBuffer);
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 75, 46, "Player:");
+    canvas_draw_str(canvas, 75, 46, TTT_UI_TEXT("Player:", "当前:"));
 
     if(ts->player == 'X') {
         drawCross(canvas, 93, 50);

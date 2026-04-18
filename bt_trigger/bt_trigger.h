@@ -17,6 +17,11 @@
 
 #define HID_BT_KEYS_STORAGE_PATH EXT_PATH("apps_data/hid_ble/.bt_hid.keys")
 #define TAG                      "bt_trigger"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BT_TRIGGER_UI_TEXT(en, zh) (zh)
+#else
+#define BT_TRIGGER_UI_TEXT(en, zh) (en)
+#endif
 
 // Enum of allowed event types
 typedef enum {

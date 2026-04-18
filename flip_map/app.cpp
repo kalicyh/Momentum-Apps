@@ -19,9 +19,20 @@ FlipMapApp::FlipMapApp()
         return;
     }
 
-    submenu_add_item(submenu, "Run", FlipMapSubmenuRun, submenuChoicesCallback, this);
-    submenu_add_item(submenu, "About", FlipMapSubmenuAbout, submenuChoicesCallback, this);
-    submenu_add_item(submenu, "Settings", FlipMapSubmenuSettings, submenuChoicesCallback, this);
+    submenu_add_item(
+        submenu, FLIP_MAP_UI_TEXT("Run", "运行"), FlipMapSubmenuRun, submenuChoicesCallback, this);
+    submenu_add_item(
+        submenu,
+        FLIP_MAP_UI_TEXT("About", "关于"),
+        FlipMapSubmenuAbout,
+        submenuChoicesCallback,
+        this);
+    submenu_add_item(
+        submenu,
+        FLIP_MAP_UI_TEXT("Settings", "设置"),
+        FlipMapSubmenuSettings,
+        submenuChoicesCallback,
+        this);
 
     flipperHttp = flipper_http_alloc();
     if (!flipperHttp)
@@ -113,21 +124,33 @@ void FlipMapApp::callbackSubmenuChoices(uint32_t index)
         // if the board is not connected, we can't use WiFi
         if (!isBoardConnected())
         {
-            easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+            easy_flipper_dialog(
+                FLIP_MAP_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+                FLIP_MAP_UI_TEXT(
+                    "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                    "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
             return;
         }
         // if we don't have WiFi credentials, we can't connect to WiFi in case
         // we are not connected to WiFi yet
         if (!hasWiFiCredentials())
         {
-            easy_flipper_dialog("No WiFi Credentials", "Please set your WiFi SSID\nand Password in Settings.");
+            easy_flipper_dialog(
+                FLIP_MAP_UI_TEXT("No WiFi Credentials", "缺少 WiFi 凭据"),
+                FLIP_MAP_UI_TEXT(
+                    "Please set your WiFi SSID\nand Password in Settings.",
+                    "请在设置中填写 WiFi SSID\n和密码。"));
             return;
         }
 
         // if we don't have user credentials, we can't connect to the user account
         if (!hasUserCredentials())
         {
-            easy_flipper_dialog("No User Credentials", "Please set your Username\nand Password in Settings.");
+            easy_flipper_dialog(
+                FLIP_MAP_UI_TEXT("No User Credentials", "缺少用户凭据"),
+                FLIP_MAP_UI_TEXT(
+                    "Please set your Username\nand Password in Settings.",
+                    "请在设置中填写用户名\n和密码。"));
             return;
         }
 
@@ -171,7 +194,11 @@ void FlipMapApp::callbackSubmenuChoices(uint32_t index)
         // if the board is not connected, we can't use WiFi when getting location
         if (!isBoardConnected())
         {
-            easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+            easy_flipper_dialog(
+                FLIP_MAP_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+                FLIP_MAP_UI_TEXT(
+                    "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                    "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
             return;
         }
         if (!settings)

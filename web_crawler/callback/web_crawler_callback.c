@@ -20,11 +20,28 @@ static bool alloc_widget(WebCrawlerApp *app, uint32_t view)
         switch (view)
         {
         case WebCrawlerViewAbout:
-            return easy_flipper_set_widget(&app->widget, WebCrawlerViewWidget, "Web Crawler App\n---\nBrowse the web, fetch API data, and more..\n---\nVisit github.com/jblanked for more details.\n---\nPress BACK to return.", web_crawler_back_to_main_callback, &app->view_dispatcher);
+            return easy_flipper_set_widget(
+                &app->widget,
+                WebCrawlerViewWidget,
+                WEB_CRAWLER_UI_TEXT(
+                    "Web Crawler App\n---\nBrowse the web, fetch API data, and more..\n---\nVisit github.com/jblanked for more details.\n---\nPress BACK to return.",
+                    "Web Crawler\n---\n浏览网页、获取 API 数据等。\n---\n详情见 github.com/jblanked\n---\n按 BACK 返回。"),
+                web_crawler_back_to_main_callback,
+                &app->view_dispatcher);
         case WebCrawlerViewFileRead:
-            return easy_flipper_set_widget(&app->widget, WebCrawlerViewWidget, "Data will be displayed here.", web_crawler_back_to_file_callback, &app->view_dispatcher);
+            return easy_flipper_set_widget(
+                &app->widget,
+                WebCrawlerViewWidget,
+                WEB_CRAWLER_UI_TEXT("Data will be displayed here.", "数据将显示在这里。"),
+                web_crawler_back_to_file_callback,
+                &app->view_dispatcher);
         case WebCrawlerViewFileDelete:
-            return easy_flipper_set_widget(&app->widget, WebCrawlerViewWidget, "File deleted.", web_crawler_back_to_file_callback, &app->view_dispatcher);
+            return easy_flipper_set_widget(
+                &app->widget,
+                WebCrawlerViewWidget,
+                WEB_CRAWLER_UI_TEXT("File deleted.", "文件已删除。"),
+                web_crawler_back_to_file_callback,
+                &app->view_dispatcher);
         }
     }
     return false;
@@ -46,11 +63,31 @@ static bool alloc_submenu_config(WebCrawlerApp *app)
         FURI_LOG_E(TAG, "alloc_submenu_config: Submenu already allocated");
         return false;
     }
-    if (easy_flipper_set_submenu(&app->submenu_config, WebCrawlerViewSubmenuConfig, "Settings", web_crawler_back_to_main_callback, &app->view_dispatcher))
+    if (easy_flipper_set_submenu(
+            &app->submenu_config,
+            WebCrawlerViewSubmenuConfig,
+            WEB_CRAWLER_UI_TEXT("Settings", "设置"),
+            web_crawler_back_to_main_callback,
+            &app->view_dispatcher))
     {
-        submenu_add_item(app->submenu_config, "WiFi", WebCrawlerSubmenuIndexWifi, web_crawler_submenu_callback, app);
-        submenu_add_item(app->submenu_config, "File", WebCrawlerSubmenuIndexFile, web_crawler_submenu_callback, app);
-        submenu_add_item(app->submenu_config, "Request", WebCrawlerSubmenuIndexRequest, web_crawler_submenu_callback, app);
+        submenu_add_item(
+            app->submenu_config,
+            WEB_CRAWLER_UI_TEXT("WiFi", "WiFi"),
+            WebCrawlerSubmenuIndexWifi,
+            web_crawler_submenu_callback,
+            app);
+        submenu_add_item(
+            app->submenu_config,
+            WEB_CRAWLER_UI_TEXT("File", "文件"),
+            WebCrawlerSubmenuIndexFile,
+            web_crawler_submenu_callback,
+            app);
+        submenu_add_item(
+            app->submenu_config,
+            WEB_CRAWLER_UI_TEXT("Request", "请求"),
+            WebCrawlerSubmenuIndexRequest,
+            web_crawler_submenu_callback,
+            app);
         return true;
     }
     return false;
@@ -98,12 +135,14 @@ static bool alloc_variable_item_list(WebCrawlerApp *app, uint32_t view)
         }
         if (!app->ssid_item)
         {
-            app->ssid_item = variable_item_list_add(app->variable_item_list, "SSID", 0, NULL, NULL); // index 0
+            app->ssid_item = variable_item_list_add(
+                app->variable_item_list, WEB_CRAWLER_UI_TEXT("SSID", "SSID"), 0, NULL, NULL); // index 0
             variable_item_set_current_value_text(app->ssid_item, "");                                // Initialize
         }
         if (!app->password_item)
         {
-            app->password_item = variable_item_list_add(app->variable_item_list, "Password", 0, NULL, NULL); // index 1
+            app->password_item = variable_item_list_add(
+                app->variable_item_list, WEB_CRAWLER_UI_TEXT("Password", "密码"), 0, NULL, NULL); // index 1
             variable_item_set_current_value_text(app->password_item, "");                                    // Initialize
         }
         if (settings_loaded)
@@ -134,22 +173,38 @@ static bool alloc_variable_item_list(WebCrawlerApp *app, uint32_t view)
         }
         if (!app->file_read_item)
         {
-            app->file_read_item = variable_item_list_add(app->variable_item_list, "Read File", 0, NULL, NULL); // index 0
+            app->file_read_item = variable_item_list_add(
+                app->variable_item_list, WEB_CRAWLER_UI_TEXT("Read File", "读取文件"), 0, NULL, NULL); // index 0
             variable_item_set_current_value_text(app->file_read_item, "");                                     // Initialize
         }
         if (!app->file_type_item)
         {
-            app->file_type_item = variable_item_list_add(app->variable_item_list, "Set File Type", 0, NULL, NULL); // index 1
+            app->file_type_item = variable_item_list_add(
+                app->variable_item_list,
+                WEB_CRAWLER_UI_TEXT("Set File Type", "设置文件类型"),
+                0,
+                NULL,
+                NULL); // index 1
             variable_item_set_current_value_text(app->file_type_item, "");                                         // Initialize
         }
         if (!app->file_rename_item)
         {
-            app->file_rename_item = variable_item_list_add(app->variable_item_list, "Rename File", 0, NULL, NULL); // index 2
+            app->file_rename_item = variable_item_list_add(
+                app->variable_item_list,
+                WEB_CRAWLER_UI_TEXT("Rename File", "重命名文件"),
+                0,
+                NULL,
+                NULL); // index 2
             variable_item_set_current_value_text(app->file_rename_item, "");                                       // Initialize
         }
         if (!app->file_delete_item)
         {
-            app->file_delete_item = variable_item_list_add(app->variable_item_list, "Delete File", 0, NULL, NULL); // index 3
+            app->file_delete_item = variable_item_list_add(
+                app->variable_item_list,
+                WEB_CRAWLER_UI_TEXT("Delete File", "删除文件"),
+                0,
+                NULL,
+                NULL); // index 3
             variable_item_set_current_value_text(app->file_delete_item, "");                                       // Initialize
         }
         if (settings_loaded)
@@ -180,23 +235,31 @@ static bool alloc_variable_item_list(WebCrawlerApp *app, uint32_t view)
         }
         if (!app->path_item)
         {
-            app->path_item = variable_item_list_add(app->variable_item_list, "Path", 0, NULL, NULL);
+            app->path_item = variable_item_list_add(
+                app->variable_item_list, WEB_CRAWLER_UI_TEXT("Path", "路径"), 0, NULL, NULL);
             variable_item_set_current_value_text(app->path_item, ""); // Initialize
         }
         if (!app->http_method_item)
         {
-            app->http_method_item = variable_item_list_add(app->variable_item_list, "HTTP Method", 6, web_crawler_http_method_change, app);
+            app->http_method_item = variable_item_list_add(
+                app->variable_item_list,
+                WEB_CRAWLER_UI_TEXT("HTTP Method", "HTTP 方法"),
+                6,
+                web_crawler_http_method_change,
+                app);
             variable_item_set_current_value_text(app->http_method_item, ""); // Initialize
             variable_item_set_current_value_index(app->http_method_item, 0); // Initialize
         }
         if (!app->headers_item)
         {
-            app->headers_item = variable_item_list_add(app->variable_item_list, "Headers", 0, NULL, NULL);
+            app->headers_item = variable_item_list_add(
+                app->variable_item_list, WEB_CRAWLER_UI_TEXT("Headers", "请求头"), 0, NULL, NULL);
             variable_item_set_current_value_text(app->headers_item, ""); // Initialize
         }
         if (!app->payload_item)
         {
-            app->payload_item = variable_item_list_add(app->variable_item_list, "Payload", 0, NULL, NULL);
+            app->payload_item = variable_item_list_add(
+                app->variable_item_list, WEB_CRAWLER_UI_TEXT("Payload", "负载"), 0, NULL, NULL);
             variable_item_set_current_value_text(app->payload_item, ""); // Initialize
         }
         //
@@ -326,7 +389,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter URL", app->temp_buffer_path, app->temp_buffer_size_path, web_crawler_set_path_updated, web_crawler_back_to_request_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter URL", "输入 URL"),
+                app->temp_buffer_path,
+                app->temp_buffer_size_path,
+                web_crawler_set_path_updated,
+                web_crawler_back_to_request_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -341,7 +413,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter SSID", app->temp_buffer_ssid, app->temp_buffer_size_ssid, web_crawler_set_ssid_updated, web_crawler_back_to_wifi_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter SSID", "输入 SSID"),
+                app->temp_buffer_ssid,
+                app->temp_buffer_size_ssid,
+                web_crawler_set_ssid_updated,
+                web_crawler_back_to_wifi_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -356,7 +437,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter Password", app->temp_buffer_password, app->temp_buffer_size_password, web_crawler_set_password_update, web_crawler_back_to_wifi_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter Password", "输入密码"),
+                app->temp_buffer_password,
+                app->temp_buffer_size_password,
+                web_crawler_set_password_update,
+                web_crawler_back_to_wifi_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -371,7 +461,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter File Type", app->temp_buffer_file_type, app->temp_buffer_size_file_type, web_crawler_set_file_type_update, web_crawler_back_to_file_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter File Type", "输入文件类型"),
+                app->temp_buffer_file_type,
+                app->temp_buffer_size_file_type,
+                web_crawler_set_file_type_update,
+                web_crawler_back_to_file_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -386,7 +485,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter File Rename", app->temp_buffer_file_rename, app->temp_buffer_size_file_rename, web_crawler_set_file_rename_update, web_crawler_back_to_file_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter File Rename", "输入文件名"),
+                app->temp_buffer_file_rename,
+                app->temp_buffer_size_file_rename,
+                web_crawler_set_file_rename_update,
+                web_crawler_back_to_file_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -401,7 +509,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter Headers", app->temp_buffer_headers, app->temp_buffer_size_headers, web_crawler_set_headers_updated, web_crawler_back_to_request_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter Headers", "输入请求头"),
+                app->temp_buffer_headers,
+                app->temp_buffer_size_headers,
+                web_crawler_set_headers_updated,
+                web_crawler_back_to_request_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -416,7 +533,16 @@ static bool alloc_text_input(WebCrawlerApp *app, uint32_t view)
         {
             return false;
         }
-        if (!easy_flipper_set_uart_text_input(&app->uart_text_input, WebCrawlerViewInput, "Enter Payload", app->temp_buffer_payload, app->temp_buffer_size_payload, web_crawler_set_payload_updated, web_crawler_back_to_request_callback, &app->view_dispatcher, app))
+        if (!easy_flipper_set_uart_text_input(
+                &app->uart_text_input,
+                WebCrawlerViewInput,
+                WEB_CRAWLER_UI_TEXT("Enter Payload", "输入负载"),
+                app->temp_buffer_payload,
+                app->temp_buffer_size_payload,
+                web_crawler_set_payload_updated,
+                web_crawler_back_to_request_callback,
+                &app->view_dispatcher,
+                app))
         {
             return false;
         }
@@ -537,12 +663,18 @@ static void web_crawler_draw_error(Canvas *canvas, DataLoaderModel *model)
 
     if (model->fhttp->state == INACTIVE)
     {
-        canvas_draw_str(canvas, 0, 7, "Wifi Dev Board disconnected.");
-        canvas_draw_str(canvas, 0, 17, "Please connect to the board.");
-        canvas_draw_str(canvas, 0, 32, "If your board is connected,");
-        canvas_draw_str(canvas, 0, 42, "make sure you have flashed");
-        canvas_draw_str(canvas, 0, 52, "your WiFi Devboard with the");
-        canvas_draw_str(canvas, 0, 62, "latest FlipperHTTP flash.");
+        canvas_draw_str(
+            canvas, 0, 7, WEB_CRAWLER_UI_TEXT("Wifi Dev Board disconnected.", "WiFi 开发板未连接。"));
+        canvas_draw_str(
+            canvas, 0, 17, WEB_CRAWLER_UI_TEXT("Please connect to the board.", "请连接开发板。"));
+        canvas_draw_str(
+            canvas, 0, 32, WEB_CRAWLER_UI_TEXT("If your board is connected,", "如果开发板已连接，"));
+        canvas_draw_str(
+            canvas, 0, 42, WEB_CRAWLER_UI_TEXT("make sure you have flashed", "请确认已刷入"));
+        canvas_draw_str(
+            canvas, 0, 52, WEB_CRAWLER_UI_TEXT("your WiFi Devboard with the", "最新 FlipperHTTP"));
+        canvas_draw_str(
+            canvas, 0, 62, WEB_CRAWLER_UI_TEXT("latest FlipperHTTP flash.", "固件到 WiFi 开发板。"));
         return;
     }
 
@@ -550,52 +682,74 @@ static void web_crawler_draw_error(Canvas *canvas, DataLoaderModel *model)
     {
         if (strstr(model->fhttp->last_response, "[ERROR] Not connected to Wifi. Failed to reconnect.") != NULL)
         {
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, WEB_CRAWLER_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接到 WiFi。"));
+            canvas_draw_str(
+                canvas, 0, 50, WEB_CRAWLER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, WEB_CRAWLER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
             return;
         }
         if (strstr(model->fhttp->last_response, "[ERROR] Failed to connect to Wifi.") != NULL)
         {
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, WEB_CRAWLER_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接到 WiFi。"));
+            canvas_draw_str(
+                canvas, 0, 50, WEB_CRAWLER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, WEB_CRAWLER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
             return;
         }
         if (strstr(model->fhttp->last_response, "request failed with error: connection refused") != NULL)
         {
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Connection refused.");
-            canvas_draw_str(canvas, 0, 50, "Choose another URL.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, WEB_CRAWLER_UI_TEXT("[ERROR] Connection refused.", "[错误] 连接被拒绝。"));
+            canvas_draw_str(
+                canvas, 0, 50, WEB_CRAWLER_UI_TEXT("Choose another URL.", "请选择其他 URL。"));
+            canvas_draw_str(
+                canvas, 0, 60, WEB_CRAWLER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
             return;
         }
         if (strstr(model->fhttp->last_response, "[PONG]") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[STATUS]Connecting to AP...");
+            canvas_draw_str(
+                canvas, 0, 10, WEB_CRAWLER_UI_TEXT("[STATUS]Connecting to AP...", "[状态] 正在连接 AP..."));
             return;
         }
         // handle failed requests
         if (strstr(model->fhttp->last_response, "request failed or returned empty data.") != NULL)
         {
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Request failed.");
-            canvas_draw_str(canvas, 0, 50, "If this is your third attempt,");
-            canvas_draw_str(canvas, 0, 60, "it's likely your URL is not");
-            canvas_draw_str(canvas, 0, 70, "compabilbe or correct.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, WEB_CRAWLER_UI_TEXT("[ERROR] Request failed.", "[错误] 请求失败。"));
+            canvas_draw_str(
+                canvas, 0, 50, WEB_CRAWLER_UI_TEXT("If this is your third attempt,", "如果这已是第三次尝试，"));
+            canvas_draw_str(
+                canvas, 0, 60, WEB_CRAWLER_UI_TEXT("it's likely your URL is not", "很可能是 URL 不兼容"));
+            canvas_draw_str(
+                canvas, 0, 70, WEB_CRAWLER_UI_TEXT("compabilbe or correct.", "或填写不正确。"));
+            canvas_draw_str(
+                canvas, 0, 60, WEB_CRAWLER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
             return;
         }
 
-        canvas_draw_str(canvas, 0, 10, "[ERROR] Failed to sync data.");
-        canvas_draw_str(canvas, 0, 30, "If this is your third attempt,");
-        canvas_draw_str(canvas, 0, 40, "it's likely your URL is not");
-        canvas_draw_str(canvas, 0, 50, "compabilbe or correct.");
-        canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+        canvas_draw_str(
+            canvas, 0, 10, WEB_CRAWLER_UI_TEXT("[ERROR] Failed to sync data.", "[错误] 同步数据失败。"));
+        canvas_draw_str(
+            canvas, 0, 30, WEB_CRAWLER_UI_TEXT("If this is your third attempt,", "如果这已是第三次尝试，"));
+        canvas_draw_str(
+            canvas, 0, 40, WEB_CRAWLER_UI_TEXT("it's likely your URL is not", "很可能是 URL 不兼容"));
+        canvas_draw_str(
+            canvas, 0, 50, WEB_CRAWLER_UI_TEXT("compabilbe or correct.", "或填写不正确。"));
+        canvas_draw_str(
+            canvas, 0, 60, WEB_CRAWLER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         return;
     }
 
-    canvas_draw_str(canvas, 0, 10, "HTTP request failed.");
-    canvas_draw_str(canvas, 0, 20, "Press BACK to return.");
+    canvas_draw_str(
+        canvas, 0, 10, WEB_CRAWLER_UI_TEXT("HTTP request failed.", "HTTP 请求失败。"));
+    canvas_draw_str(
+        canvas, 0, 20, WEB_CRAWLER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
 }
 
 static void save_simply()
@@ -666,37 +820,61 @@ static bool web_crawler_fetch(DataLoaderModel *model)
     char url[128];
     if (!load_char("path", url, 128))
     {
-        easy_flipper_dialog("Error", "Failed to load URL.\nGo into Settings -> Request\n and enter a Path.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("Error", "错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Failed to load URL.\nGo into Settings -> Request\n and enter a Path.",
+                "URL 加载失败。\n请进入 设置 -> 请求\n并输入路径。"));
         return false;
     }
     char file_type[16];
     if (!load_char("file_type", file_type, 16))
     {
-        easy_flipper_dialog("Error", "Failed to load file type.\nGo into settings and\nre-save the file type.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("Error", "错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Failed to load file type.\nGo into settings and\nre-save the file type.",
+                "文件类型加载失败。\n请进入设置并重新保存\n文件类型。"));
         return false;
     }
     char file_rename[128];
     if (!load_char("file_rename", file_rename, 128))
     {
-        easy_flipper_dialog("Error", "Failed to load file rename.\nGo into Settings -> File\n and Rename the file.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("Error", "错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Failed to load file rename.\nGo into Settings -> File\n and Rename the file.",
+                "文件名加载失败。\n请进入 设置 -> 文件\n并重命名文件。"));
         return false;
     }
     char http_method[16];
     if (!load_char("http_method", http_method, 16))
     {
-        easy_flipper_dialog("Error", "Failed to load http method.\nGo into Settings -> Request\n and select an HTTP Method.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("Error", "错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Failed to load http method.\nGo into Settings -> Request\n and select an HTTP Method.",
+                "HTTP 方法加载失败。\n请进入 设置 -> 请求\n并选择 HTTP 方法。"));
         return false;
     }
     char headers[256];
     if (!load_char("headers", headers, 256))
     {
-        easy_flipper_dialog("Error", "Failed to load headers.\nGo into Settings -> Request\n and add Headers.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("Error", "错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Failed to load headers.\nGo into Settings -> Request\n and add Headers.",
+                "请求头加载失败。\n请进入 设置 -> 请求\n并添加请求头。"));
         return false;
     }
     char payload[256];
     if (!load_char("payload", payload, 256))
     {
-        easy_flipper_dialog("Error", "Failed to load payload.\nGo into Settings -> Request\n and add a Payload.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("Error", "错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Failed to load payload.\nGo into Settings -> Request\n and add a Payload.",
+                "负载加载失败。\n请进入 设置 -> 请求\n并添加负载。"));
         return false;
     }
 
@@ -1534,12 +1712,18 @@ void web_crawler_loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == INACTIVE)
     {
-        canvas_draw_str(canvas, 0, 7, "Wifi Dev Board disconnected.");
-        canvas_draw_str(canvas, 0, 17, "Please connect to the board.");
-        canvas_draw_str(canvas, 0, 32, "If your board is connected,");
-        canvas_draw_str(canvas, 0, 42, "make sure you have flashed");
-        canvas_draw_str(canvas, 0, 52, "your WiFi Devboard with the");
-        canvas_draw_str(canvas, 0, 62, "latest FlipperHTTP flash.");
+        canvas_draw_str(
+            canvas, 0, 7, WEB_CRAWLER_UI_TEXT("Wifi Dev Board disconnected.", "WiFi 开发板未连接。"));
+        canvas_draw_str(
+            canvas, 0, 17, WEB_CRAWLER_UI_TEXT("Please connect to the board.", "请连接开发板。"));
+        canvas_draw_str(
+            canvas, 0, 32, WEB_CRAWLER_UI_TEXT("If your board is connected,", "如果开发板已连接，"));
+        canvas_draw_str(
+            canvas, 0, 42, WEB_CRAWLER_UI_TEXT("make sure you have flashed", "请确认已刷入"));
+        canvas_draw_str(
+            canvas, 0, 52, WEB_CRAWLER_UI_TEXT("your WiFi Devboard with the", "最新 FlipperHTTP"));
+        canvas_draw_str(
+            canvas, 0, 62, WEB_CRAWLER_UI_TEXT("latest FlipperHTTP flash.", "固件到 WiFi 开发板。"));
         return;
     }
 
@@ -1550,7 +1734,7 @@ void web_crawler_loader_draw_callback(Canvas *canvas, void *model)
     }
 
     canvas_draw_str(canvas, 0, 7, title);
-    canvas_draw_str(canvas, 0, 17, "Loading...");
+    canvas_draw_str(canvas, 0, 17, WEB_CRAWLER_UI_TEXT("Loading...", "加载中..."));
 
     if (data_state == DataStateInitial)
     {
@@ -1559,25 +1743,25 @@ void web_crawler_loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == SENDING)
     {
-        canvas_draw_str(canvas, 0, 27, "Fetching...");
+        canvas_draw_str(canvas, 0, 27, WEB_CRAWLER_UI_TEXT("Fetching...", "获取中..."));
         return;
     }
 
     if (http_state == RECEIVING || data_state == DataStateRequested)
     {
-        canvas_draw_str(canvas, 0, 27, "Receiving...");
+        canvas_draw_str(canvas, 0, 27, WEB_CRAWLER_UI_TEXT("Receiving...", "接收中..."));
         return;
     }
 
     if (http_state == IDLE && data_state == DataStateReceived)
     {
-        canvas_draw_str(canvas, 0, 27, "Processing...");
+        canvas_draw_str(canvas, 0, 27, WEB_CRAWLER_UI_TEXT("Processing...", "处理中..."));
         return;
     }
 
     if (http_state == IDLE && data_state == DataStateParsed)
     {
-        canvas_draw_str(canvas, 0, 27, "Processed...");
+        canvas_draw_str(canvas, 0, 27, WEB_CRAWLER_UI_TEXT("Processed...", "已处理。"));
         return;
     }
 }

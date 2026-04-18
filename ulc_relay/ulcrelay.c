@@ -33,6 +33,12 @@
 #define NFC_APP_FOLDER                EXT_PATH("nfc")
 #define NFC_APP_EXTENSION             ".nfc"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ULC_RELAY_UI_TEXT(en, zh) (zh)
+#else
+#define ULC_RELAY_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     AppStateMain,
     AppStateHelp,
@@ -524,17 +530,19 @@ static void render_callback(Canvas* canvas, void* ctx) {
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
 
-    const char* mode_str = (app->mode == AppModeStandard) ? "ULC Relay" :
-                           (app->mode == AppModeCardSide) ? "ULC Relay: Read Card" :
-                                                            "ULC Relay: Emulate Card";
+    const char* mode_str = (app->mode == AppModeStandard) ?
+                               ULC_RELAY_UI_TEXT("ULC Relay", "ULC 中继") :
+                           (app->mode == AppModeCardSide) ?
+                               ULC_RELAY_UI_TEXT("ULC Relay: Read Card", "ULC 中继: 读卡") :
+                               ULC_RELAY_UI_TEXT("ULC Relay: Emulate Card", "ULC 中继: 模拟卡");
     canvas_draw_str(canvas, 2, 12, mode_str);
 
     canvas_set_font(canvas, FontSecondary);
     switch(app->state) {
     case AppStateMain:
-        canvas_draw_str(canvas, 2, 24, "Ready");
-        elements_button_center(canvas, "Start");
-        elements_button_right(canvas, "Help");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Ready", "就绪"));
+        elements_button_center(canvas, ULC_RELAY_UI_TEXT("Start", "开始"));
+        elements_button_right(canvas, ULC_RELAY_UI_TEXT("Help", "帮助"));
         break;
     case AppStateHelp:
         elements_scrollbar_pos(
@@ -567,26 +575,26 @@ static void render_callback(Canvas* canvas, void* ctx) {
         }
         break;
     case AppStateEmulateOrRead:
-        canvas_draw_str(canvas, 2, 24, "Emulate or Read");
-        elements_button_left(canvas, "Emulate");
-        elements_button_right(canvas, "Read");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Emulate or Read", "模拟或读取"));
+        elements_button_left(canvas, ULC_RELAY_UI_TEXT("Emulate", "模拟"));
+        elements_button_right(canvas, ULC_RELAY_UI_TEXT("Read", "读取"));
         break;
     case AppStateChooseCardMode: {
-        canvas_draw_str(canvas, 2, 24, "Select Read Mode");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Select Read Mode", "选择读取模式"));
         char postauth_mode_str[32];
         snprintf(
             postauth_mode_str,
             sizeof(postauth_mode_str),
-            "Read mode is: %s",
-            (app->postauth_mode == AppPostauthModeRead)       ? "READ" :
-            (app->postauth_mode == AppPostauthModeUnlock)     ? "UNLOCK" :
-            (app->postauth_mode == AppPostauthModeKDFCheck)   ? "KDF CHECK" :
-            (app->postauth_mode == AppPostauthModeCredForge1) ? "FORGE 1" :
-            (app->postauth_mode == AppPostauthModeKey1)       ? "KEY 1" :
-            (app->postauth_mode == AppPostauthModeKey2)       ? "KEY 2" :
-            (app->postauth_mode == AppPostauthModeKey3)       ? "KEY 3" :
-            (app->postauth_mode == AppPostauthModeKey4)       ? "KEY 4" :
-                                                                "UNDEF");
+            ULC_RELAY_UI_TEXT("Read mode is: %s", "当前模式: %s"),
+            (app->postauth_mode == AppPostauthModeRead)       ? ULC_RELAY_UI_TEXT("READ", "读取") :
+            (app->postauth_mode == AppPostauthModeUnlock)     ? ULC_RELAY_UI_TEXT("UNLOCK", "解锁") :
+            (app->postauth_mode == AppPostauthModeKDFCheck)   ? ULC_RELAY_UI_TEXT("KDF CHECK", "KDF 检查") :
+            (app->postauth_mode == AppPostauthModeCredForge1) ? ULC_RELAY_UI_TEXT("FORGE 1", "伪造 1") :
+            (app->postauth_mode == AppPostauthModeKey1)       ? ULC_RELAY_UI_TEXT("KEY 1", "密钥 1") :
+            (app->postauth_mode == AppPostauthModeKey2)       ? ULC_RELAY_UI_TEXT("KEY 2", "密钥 2") :
+            (app->postauth_mode == AppPostauthModeKey3)       ? ULC_RELAY_UI_TEXT("KEY 3", "密钥 3") :
+            (app->postauth_mode == AppPostauthModeKey4)       ? ULC_RELAY_UI_TEXT("KEY 4", "密钥 4") :
+                                                                ULC_RELAY_UI_TEXT("UNDEF", "未定义"));
         canvas_draw_str(canvas, 2, 36, postauth_mode_str);
         char postauth_mode_num[4];
         snprintf(postauth_mode_num, sizeof(postauth_mode_num), "%d", app->postauth_mode + 1);
@@ -603,48 +611,48 @@ static void render_callback(Canvas* canvas, void* ctx) {
         snprintf(
             postauth_mode_desc,
             sizeof(postauth_mode_desc),
-            "Description: %s",
-            (app->postauth_mode == AppPostauthModeRead)       ? "Reads full card" :
-            (app->postauth_mode == AppPostauthModeUnlock)     ? "Allow page access" :
-            (app->postauth_mode == AppPostauthModeKDFCheck)   ? "Static key check" :
-            (app->postauth_mode == AppPostauthModeCredForge1) ? "Forge (system 1)" :
-            (app->postauth_mode == AppPostauthModeKey1)       ? "Attack key 1, pt1" :
-            (app->postauth_mode == AppPostauthModeKey2)       ? "Attack key 1, pt2" :
-            (app->postauth_mode == AppPostauthModeKey3)       ? "Attack key 2, pt1" :
-            (app->postauth_mode == AppPostauthModeKey4)       ? "Attack key 2, pt2" :
-                                                                "Undefined");
+            ULC_RELAY_UI_TEXT("Description: %s", "说明: %s"),
+            (app->postauth_mode == AppPostauthModeRead)       ? ULC_RELAY_UI_TEXT("Reads full card", "读取整卡") :
+            (app->postauth_mode == AppPostauthModeUnlock)     ? ULC_RELAY_UI_TEXT("Allow page access", "允许访问页面") :
+            (app->postauth_mode == AppPostauthModeKDFCheck)   ? ULC_RELAY_UI_TEXT("Static key check", "静态密钥检查") :
+            (app->postauth_mode == AppPostauthModeCredForge1) ? ULC_RELAY_UI_TEXT("Forge (system 1)", "伪造(系统1)") :
+            (app->postauth_mode == AppPostauthModeKey1)       ? ULC_RELAY_UI_TEXT("Attack key 1, pt1", "攻击密钥1 上") :
+            (app->postauth_mode == AppPostauthModeKey2)       ? ULC_RELAY_UI_TEXT("Attack key 1, pt2", "攻击密钥1 下") :
+            (app->postauth_mode == AppPostauthModeKey3)       ? ULC_RELAY_UI_TEXT("Attack key 2, pt1", "攻击密钥2 上") :
+            (app->postauth_mode == AppPostauthModeKey4)       ? ULC_RELAY_UI_TEXT("Attack key 2, pt2", "攻击密钥2 下") :
+                                                                ULC_RELAY_UI_TEXT("Undefined", "未定义"));
         canvas_draw_str(canvas, 2, 48, postauth_mode_desc);
-        elements_button_left(canvas, "Mode");
-        elements_button_right(canvas, "Mode");
-        elements_button_center(canvas, "Select");
+        elements_button_left(canvas, ULC_RELAY_UI_TEXT("Mode", "模式"));
+        elements_button_right(canvas, ULC_RELAY_UI_TEXT("Mode", "模式"));
+        elements_button_center(canvas, ULC_RELAY_UI_TEXT("Select", "选择"));
     } break;
     case AppStateReaderSideInit:
-        canvas_draw_str(canvas, 2, 24, "Reader side init");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Reader side init", "读卡端初始化"));
         break;
     case AppStateCardSideInit:
-        canvas_draw_str(canvas, 2, 24, "Card side init");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Card side init", "卡片端初始化"));
         break;
     case AppStateNfcActive:
-        canvas_draw_str(canvas, 2, 24, "NFC Field Active");
-        canvas_draw_str(canvas, 2, 36, "Waiting for card...");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("NFC Field Active", "NFC 场已开启"));
+        canvas_draw_str(canvas, 2, 36, ULC_RELAY_UI_TEXT("Waiting for card...", "等待卡片..."));
         break;
     case AppStateWaitingForAuth1:
-        canvas_draw_str(canvas, 2, 24, "Waiting for AUTH1...");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Waiting for AUTH1...", "等待 AUTH1..."));
         break;
     case AppStateWaitingForAuth2:
-        canvas_draw_str(canvas, 2, 24, "Waiting for AUTH2...");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Waiting for AUTH2...", "等待 AUTH2..."));
         break;
     case AppStateEmulatingCardInit:
     case AppStateEmulatingCard:
     case AppStateEmulatingCardDone:
-        canvas_draw_str(canvas, 2, 24, "Emulating card");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Emulating card", "模拟卡片中"));
         // Display the UID and AUTH1 challenge. Must create a str to display
         char uid_str[32];
         char auth1_str[32];
         snprintf(
             uid_str,
             sizeof(uid_str),
-            "UID: %02X%02X%02X%02X%02X%02X%02X",
+            ULC_RELAY_UI_TEXT("UID: %02X%02X%02X%02X%02X%02X%02X", "UID: %02X%02X%02X%02X%02X%02X%02X"),
             app->uid[0],
             app->uid[1],
             app->uid[2],
@@ -655,7 +663,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
         snprintf(
             auth1_str,
             sizeof(auth1_str),
-            "AUTH1: %02X%02X%02X%02X%02X%02X%02X%02X",
+            ULC_RELAY_UI_TEXT("AUTH1: %02X%02X%02X%02X%02X%02X%02X%02X", "AUTH1: %02X%02X%02X%02X%02X%02X%02X%02X"),
             app->auth1_response[0],
             app->auth1_response[1],
             app->auth1_response[2],
@@ -666,32 +674,32 @@ static void render_callback(Canvas* canvas, void* ctx) {
             app->auth1_response[7]);
         canvas_draw_str(canvas, 2, 36, uid_str);
         canvas_draw_str(canvas, 2, 48, auth1_str);
-        canvas_draw_str(canvas, 2, 60, "Waiting for AUTH2...");
+        canvas_draw_str(canvas, 2, 60, ULC_RELAY_UI_TEXT("Waiting for AUTH2...", "等待 AUTH2..."));
         break;
     case AppStateKDFCheckResult: {
-        char kdf_check_result_str[16];
+        char kdf_check_result_str[24];
         snprintf(
             kdf_check_result_str,
             sizeof(kdf_check_result_str),
-            "Static key: %s",
-            app->is_static_key ? "YES" : "NO");
+            ULC_RELAY_UI_TEXT("Static key: %s", "静态密钥: %s"),
+            app->is_static_key ? ULC_RELAY_UI_TEXT("YES", "是") : ULC_RELAY_UI_TEXT("NO", "否"));
         canvas_draw_str(canvas, 2, 24, kdf_check_result_str);
     } break;
     case AppStateRelayComplete:
-        canvas_draw_str(canvas, 2, 24, "Relay Complete!");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Relay Complete!", "中继完成!"));
         if(app->mode == AppModeCardSide && app->postauth_mode == AppPostauthModeRead) {
-            char is_vulnerable[16];
+            char is_vulnerable[24];
             snprintf(
                 is_vulnerable,
                 sizeof(is_vulnerable),
-                "Vulnerable: %s",
-                app->is_vulnerable ? "YES" : "NO");
+                ULC_RELAY_UI_TEXT("Vulnerable: %s", "存在漏洞: %s"),
+                app->is_vulnerable ? ULC_RELAY_UI_TEXT("YES", "是") : ULC_RELAY_UI_TEXT("NO", "否"));
             canvas_draw_str(canvas, 2, 36, is_vulnerable);
-            canvas_draw_str(canvas, 2, 48, "(does not include tear off)");
+            canvas_draw_str(canvas, 2, 48, ULC_RELAY_UI_TEXT("(does not include tear off)", "(不含 tear off)"));
         }
         break;
     case AppStateError:
-        canvas_draw_str(canvas, 2, 24, "Error!");
+        canvas_draw_str(canvas, 2, 24, ULC_RELAY_UI_TEXT("Error!", "错误!"));
         if(app->error) canvas_draw_str(canvas, 2, 36, app->error);
         break;
     }

@@ -71,7 +71,8 @@ void update_widgets(Mag* mag) {
 
     // Titlebar
     widget_add_icon_element(mag->widget, 38, -1, &I_mag_file_10px);
-    widget_add_string_element(mag->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, "READ");
+    widget_add_string_element(
+        mag->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, MAGSPOOF_UI_TEXT("READ", "读取"));
     widget_add_icon_element(mag->widget, 81, -1, &I_mag_file_10px);
 
     // Text box
@@ -79,14 +80,16 @@ void update_widgets(Mag* mag) {
         mag->widget, 0, 10, 128, 40, furi_string_get_cstr(mag->uart_text_box_store));
 
     // Buttons
-    widget_add_button_element(mag->widget, GuiButtonTypeLeft, "Clear", mag_widget_callback, mag);
-    widget_add_button_element(mag->widget, GuiButtonTypeRight, "Parse", mag_widget_callback, mag);
+    widget_add_button_element(
+        mag->widget, GuiButtonTypeLeft, MAGSPOOF_UI_TEXT("Clear", "清空"), mag_widget_callback, mag);
+    widget_add_button_element(
+        mag->widget, GuiButtonTypeRight, MAGSPOOF_UI_TEXT("Parse", "解析"), mag_widget_callback, mag);
 }
 
 void mag_scene_read_on_enter(void* context) {
     Mag* mag = context;
     FuriString* message = furi_string_alloc();
-    furi_string_printf(message, "Please swipe a card!\n");
+    furi_string_printf(message, "%s\n", MAGSPOOF_UI_TEXT("Please swipe a card!", "请刷卡!"));
     mag->uart_text_box_store = message;
 
     view_dispatcher_switch_to_view(mag->view_dispatcher, MagViewWidget);

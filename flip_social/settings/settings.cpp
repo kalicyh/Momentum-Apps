@@ -9,11 +9,16 @@ FlipSocialSettings::FlipSocialSettings(ViewDispatcher **view_dispatcher, void *a
         return;
     }
 
-    variable_item_wifi_ssid = variable_item_list_add(variable_item_list, "WiFi SSID", 1, nullptr, nullptr);
-    variable_item_wifi_pass = variable_item_list_add(variable_item_list, "WiFi Password", 1, nullptr, nullptr);
-    variable_item_connect = variable_item_list_add(variable_item_list, "[Connect To WiFi]", 1, nullptr, nullptr);
-    variable_item_user_name = variable_item_list_add(variable_item_list, "User Name", 1, nullptr, nullptr);
-    variable_item_user_pass = variable_item_list_add(variable_item_list, "User Password", 1, nullptr, nullptr);
+    variable_item_wifi_ssid = variable_item_list_add(
+        variable_item_list, FLIP_SOCIAL_UI_TEXT("WiFi SSID", "WiFi SSID"), 1, nullptr, nullptr);
+    variable_item_wifi_pass = variable_item_list_add(
+        variable_item_list, FLIP_SOCIAL_UI_TEXT("WiFi Password", "WiFi 密码"), 1, nullptr, nullptr);
+    variable_item_connect = variable_item_list_add(
+        variable_item_list, FLIP_SOCIAL_UI_TEXT("[Connect To WiFi]", "[连接到 WiFi]"), 1, nullptr, nullptr);
+    variable_item_user_name = variable_item_list_add(
+        variable_item_list, FLIP_SOCIAL_UI_TEXT("User Name", "用户名"), 1, nullptr, nullptr);
+    variable_item_user_pass = variable_item_list_add(
+        variable_item_list, FLIP_SOCIAL_UI_TEXT("User Password", "用户密码"), 1, nullptr, nullptr);
 
     char loaded_ssid[64];
     char loaded_pass[64];
@@ -133,11 +138,11 @@ bool FlipSocialSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipSocialViewTextInput,
-                                                "Enter SSID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_SOCIAL_UI_TEXT("Enter SSID", "输入 SSID"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedSsidCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipSocialViewTextInput,
-                                           "Enter SSID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_SOCIAL_UI_TEXT("Enter SSID", "输入 SSID"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedSsidCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -154,11 +159,11 @@ bool FlipSocialSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipSocialViewTextInput,
-                                                "Enter Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_SOCIAL_UI_TEXT("Enter Password", "输入密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipSocialViewTextInput,
-                                           "Enter Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_SOCIAL_UI_TEXT("Enter Password", "输入密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -175,11 +180,11 @@ bool FlipSocialSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipSocialViewTextInput,
-                                                "Enter User Name", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_SOCIAL_UI_TEXT("Enter User Name", "输入用户名"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedUserNameCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipSocialViewTextInput,
-                                           "Enter User Name", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_SOCIAL_UI_TEXT("Enter User Name", "输入用户名"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedUserNameCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -196,11 +201,11 @@ bool FlipSocialSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipSocialViewTextInput,
-                                                "Enter User Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_SOCIAL_UI_TEXT("Enter User Password", "输入用户密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedUserPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipSocialViewTextInput,
-                                           "Enter User Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_SOCIAL_UI_TEXT("Enter User Password", "输入用户密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedUserPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -226,7 +231,11 @@ void FlipSocialSettings::settingsItemSelected(uint32_t index)
             !app->loadChar("wifi_pass", loaded_pass, sizeof(loaded_pass), "flipper_http"))
         {
             FURI_LOG_E(TAG, "WiFi credentials not set");
-            easy_flipper_dialog("No WiFi Credentials", "Please set your WiFi SSID\nand Password in Settings.");
+            easy_flipper_dialog(
+                FLIP_SOCIAL_UI_TEXT("No WiFi Credentials", "缺少 WiFi 凭据"),
+                FLIP_SOCIAL_UI_TEXT(
+                    "Please set your WiFi SSID\nand Password in Settings.",
+                    "请在设置中填写 WiFi SSID\n和密码。"));
         }
         else
         {

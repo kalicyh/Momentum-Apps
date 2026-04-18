@@ -17,6 +17,11 @@
 #include <assets_icons.h>
 
 #define TAG "Simon" // Used for logging
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SIMON_UI_TEXT(en, zh) (zh)
+#else
+#define SIMON_UI_TEXT(en, zh) (en)
+#endif
 
 #define DEBUG_MSG 1
 #define SCREEN_XRES 128
@@ -247,7 +252,7 @@ void simon_draw_callback(Canvas* canvas, void* ctx) {
             SCREEN_YRES / 2 - 4,
             AlignCenter,
             AlignCenter,
-            "Welcome to Simon Says");
+            SIMON_UI_TEXT("Welcome to Simon Says", "欢迎来到 Simon Says"));
 
         // Display Press OK to start below title
         canvas_set_color(canvas, ColorXOR);
@@ -257,7 +262,7 @@ void simon_draw_callback(Canvas* canvas, void* ctx) {
             SCREEN_YRES / 2 + 10,
             AlignCenter,
             AlignCenter,
-            "Press OK to start");
+            SIMON_UI_TEXT("Press OK to start", "按 OK 开始"));
     }
 
     // ######################### in Game #########################
@@ -323,10 +328,20 @@ void simon_draw_callback(Canvas* canvas, void* ctx) {
         // Display High Score Text
         if(simon_state->is_new_highscore) {
             canvas_draw_str_aligned(
-                canvas, SCREEN_XRES / 2, 6, AlignCenter, AlignTop, "New High Score!");
+                canvas,
+                SCREEN_XRES / 2,
+                6,
+                AlignCenter,
+                AlignTop,
+                SIMON_UI_TEXT("New High Score!", "新的最高分!"));
         } else {
             canvas_draw_str_aligned(
-                canvas, SCREEN_XRES / 2, 6, AlignCenter, AlignTop, "High Score");
+                canvas,
+                SCREEN_XRES / 2,
+                6,
+                AlignCenter,
+                AlignTop,
+                SIMON_UI_TEXT("High Score", "最高分"));
         }
 
         // Convert highscore to string
@@ -341,7 +356,12 @@ void simon_draw_callback(Canvas* canvas, void* ctx) {
 
         // Display Game Over
         canvas_draw_str_aligned(
-            canvas, SCREEN_XRES / 2, SCREEN_YRES / 2 + 2, AlignCenter, AlignCenter, "GAME OVER");
+            canvas,
+            SCREEN_XRES / 2,
+            SCREEN_YRES / 2 + 2,
+            AlignCenter,
+            AlignCenter,
+            SIMON_UI_TEXT("GAME OVER", "游戏结束"));
 
         // Display Press OK to restart below title
         canvas_set_font(canvas, FontSecondary);
@@ -351,7 +371,7 @@ void simon_draw_callback(Canvas* canvas, void* ctx) {
             SCREEN_YRES / 2 + 15,
             AlignCenter,
             AlignCenter,
-            "Press OK to restart");
+            SIMON_UI_TEXT("Press OK to restart", "按 OK 重新开始"));
     }
 
     // ######################### Victory #########################

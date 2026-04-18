@@ -54,21 +54,51 @@ FlipTraderApp *flip_trader_app_alloc()
     flip_trader_loader_init(app->view_loader);
 
     // Widget
-    if (!easy_flipper_set_widget(&app->widget_about, FlipTraderViewAbout, "FlipTrader v1.2\n-----\nUse WiFi to get the price of\nstocks and currency pairs.\n-----\nwww.github.com/jblanked", callback_to_submenu, &app->view_dispatcher))
+    if (!easy_flipper_set_widget(
+            &app->widget_about,
+            FlipTraderViewAbout,
+            FLIP_TRADER_UI_TEXT(
+                "FlipTrader v1.2\n-----\nUse WiFi to get the price of\nstocks and currency pairs.\n-----\nwww.github.com/jblanked",
+                "FlipTrader v1.2\n-----\n使用 WiFi 获取股票和\n货币对价格。\n-----\nwww.github.com/jblanked"),
+            callback_to_submenu,
+            &app->view_dispatcher))
     {
         return NULL;
     }
-    if (!easy_flipper_set_widget(&app->widget_result, FlipTraderViewWidgetResult, "Error, try again.", callback_to_assets_submenu, &app->view_dispatcher))
+    if (!easy_flipper_set_widget(
+            &app->widget_result,
+            FlipTraderViewWidgetResult,
+            FLIP_TRADER_UI_TEXT("Error, try again.", "出错了，请重试。"),
+            callback_to_assets_submenu,
+            &app->view_dispatcher))
     {
         return NULL;
     }
 
     // Text Input
-    if (!easy_flipper_set_uart_text_input(&app->uart_text_input_ssid, FlipTraderViewTextInputSSID, "Enter SSID", app->uart_text_input_temp_buffer_ssid, app->uart_text_input_buffer_size_ssid, text_updated_ssid, callback_to_wifi_settings, &app->view_dispatcher, app))
+    if (!easy_flipper_set_uart_text_input(
+            &app->uart_text_input_ssid,
+            FlipTraderViewTextInputSSID,
+            FLIP_TRADER_UI_TEXT("Enter SSID", "输入 SSID"),
+            app->uart_text_input_temp_buffer_ssid,
+            app->uart_text_input_buffer_size_ssid,
+            text_updated_ssid,
+            callback_to_wifi_settings,
+            &app->view_dispatcher,
+            app))
     {
         return NULL;
     }
-    if (!easy_flipper_set_uart_text_input(&app->uart_text_input_password, FlipTraderViewTextInputPassword, "Enter password", app->uart_text_input_temp_buffer_password, app->uart_text_input_buffer_size_password, text_updated_password, callback_to_wifi_settings, &app->view_dispatcher, app))
+    if (!easy_flipper_set_uart_text_input(
+            &app->uart_text_input_password,
+            FlipTraderViewTextInputPassword,
+            FLIP_TRADER_UI_TEXT("Enter password", "输入密码"),
+            app->uart_text_input_temp_buffer_password,
+            app->uart_text_input_buffer_size_password,
+            text_updated_password,
+            callback_to_wifi_settings,
+            &app->view_dispatcher,
+            app))
     {
         return NULL;
     }
@@ -78,23 +108,50 @@ FlipTraderApp *flip_trader_app_alloc()
     {
         return NULL;
     }
-    app->variable_item_ssid = variable_item_list_add(app->variable_item_list_wifi, "SSID", 0, NULL, NULL);
-    app->variable_item_password = variable_item_list_add(app->variable_item_list_wifi, "Password", 0, NULL, NULL);
+    app->variable_item_ssid = variable_item_list_add(
+        app->variable_item_list_wifi, FLIP_TRADER_UI_TEXT("SSID", "SSID"), 0, NULL, NULL);
+    app->variable_item_password = variable_item_list_add(
+        app->variable_item_list_wifi, FLIP_TRADER_UI_TEXT("Password", "密码"), 0, NULL, NULL);
     variable_item_set_current_value_text(app->variable_item_ssid, "");
     variable_item_set_current_value_text(app->variable_item_password, "");
 
     // Submenu
-    if (!easy_flipper_set_submenu(&app->submenu_main, FlipTraderViewMainSubmenu, "FlipTrader v1.2", easy_flipper_callback_exit_app, &app->view_dispatcher))
+    if (!easy_flipper_set_submenu(
+            &app->submenu_main,
+            FlipTraderViewMainSubmenu,
+            FLIP_TRADER_UI_TEXT("FlipTrader v1.2", "FlipTrader v1.2"),
+            easy_flipper_callback_exit_app,
+            &app->view_dispatcher))
     {
         return NULL;
     }
-    if (!easy_flipper_set_submenu(&app->submenu_assets, FlipTraderViewAssetsSubmenu, "Assets", callback_to_submenu, &app->view_dispatcher))
+    if (!easy_flipper_set_submenu(
+            &app->submenu_assets,
+            FlipTraderViewAssetsSubmenu,
+            FLIP_TRADER_UI_TEXT("Assets", "资产"),
+            callback_to_submenu,
+            &app->view_dispatcher))
     {
         return NULL;
     }
-    submenu_add_item(app->submenu_main, "Assets", FlipTradeSubmenuIndexAssets, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "About", FlipTraderSubmenuIndexAbout, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "WiFi", FlipTraderSubmenuIndexSettings, callback_submenu_choices, app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_TRADER_UI_TEXT("Assets", "资产"),
+        FlipTradeSubmenuIndexAssets,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_TRADER_UI_TEXT("About", "关于"),
+        FlipTraderSubmenuIndexAbout,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_TRADER_UI_TEXT("WiFi", "WiFi"),
+        FlipTraderSubmenuIndexSettings,
+        callback_submenu_choices,
+        app);
     // add the assets
     for (uint32_t i = 0; i < ASSET_COUNT; i++)
     {

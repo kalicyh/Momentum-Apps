@@ -29,37 +29,50 @@ static void flip_trader_request_error_draw(Canvas *canvas)
         if (strstr(fhttp.last_response, "[ERROR] Not connected to Wifi. Failed to reconnect.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 22, "Failed to reconnect.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_TRADER_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接到 WiFi。"));
+            canvas_draw_str(
+                canvas, 0, 22, FLIP_TRADER_UI_TEXT("Failed to reconnect.", "重连失败。"));
+            canvas_draw_str(
+                canvas, 0, 50, FLIP_TRADER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_TRADER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(fhttp.last_response, "[ERROR] Failed to connect to Wifi.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_TRADER_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接到 WiFi。"));
+            canvas_draw_str(
+                canvas, 0, 50, FLIP_TRADER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_TRADER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(fhttp.last_response, "[PONG]") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[STATUS]Connecting to AP...");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_TRADER_UI_TEXT("[STATUS]Connecting to AP...", "[状态] 正在连接 AP..."));
         }
         else
         {
             canvas_clear(canvas);
             FURI_LOG_E(TAG, "Received an error: %s", fhttp.last_response);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Unusual error...");
-            canvas_draw_str(canvas, 0, 60, "Press BACK and retry.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_TRADER_UI_TEXT("[ERROR] Unusual error...", "[错误] 异常错误..."));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_TRADER_UI_TEXT("Press BACK and retry.", "按 BACK 后重试。"));
         }
     }
     else
     {
         canvas_clear(canvas);
-        canvas_draw_str(canvas, 0, 10, "Failed to receive data.");
-        canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-        canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+        canvas_draw_str(
+            canvas, 0, 10, FLIP_TRADER_UI_TEXT("Failed to receive data.", "接收数据失败。"));
+        canvas_draw_str(
+            canvas, 0, 50, FLIP_TRADER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+        canvas_draw_str(
+            canvas, 0, 60, FLIP_TRADER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
     }
 }
 
@@ -152,7 +165,14 @@ static char *process_asset_price(AssetLoaderModel* model)
 
 static void flip_trader_asset_switch_to_view(FlipTraderApp *app)
 {
-    flip_trader_generic_switch_to_view(app, "Fetching..", send_price_request, process_asset_price, 1, callback_to_assets_submenu, FlipTraderViewLoader);
+    flip_trader_generic_switch_to_view(
+        app,
+        FLIP_TRADER_UI_TEXT("Fetching..", "正在获取.."),
+        send_price_request,
+        process_asset_price,
+        1,
+        callback_to_assets_submenu,
+        FlipTraderViewLoader);
 }
 
 void callback_submenu_choices(void *context, uint32_t index)

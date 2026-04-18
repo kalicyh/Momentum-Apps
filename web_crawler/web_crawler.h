@@ -8,6 +8,11 @@
 
 #define TAG "Web Crawler"
 #define VERSION_TAG TAG " v1.0.1"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WEB_CRAWLER_UI_TEXT(en, zh) (zh)
+#else
+#define WEB_CRAWLER_UI_TEXT(en, zh) (en)
+#endif
 extern char *http_method_names[];
 
 // Define the submenu items for our WebCrawler application

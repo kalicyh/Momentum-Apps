@@ -18,6 +18,12 @@
 #define TEXT_WIDTH        12
 #define ITEM_FRAME_RADIUS 2
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SUBBRUTE_UI_TEXT(en, zh) (zh)
+#else
+#define SUBBRUTE_UI_TEXT(en, zh) (en)
+#endif
+
 struct SubBruteMainView {
     View* view;
     SubBruteMainViewCallback callback;
@@ -110,12 +116,12 @@ void subbrute_main_view_center_displayed_key(
 void subbrute_main_view_draw_is_byte_selected(Canvas* canvas, SubBruteMainViewModel* model) {
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(
-        canvas, 64, 17, AlignCenter, AlignTop, "Please select values to calc:");
+        canvas, 64, 17, AlignCenter, AlignTop, SUBBRUTE_UI_TEXT("Please select values to calc:", "请选择用于计算的值:"));
 
     subbrute_main_view_center_displayed_key(
         canvas, model->key_from_file, model->index, model->two_bytes);
 
-    elements_button_center(canvas, "Select");
+    elements_button_center(canvas, SUBBRUTE_UI_TEXT("Select", "选择"));
     if(model->index > 0) {
         elements_button_left(canvas, " ");
     }
@@ -125,9 +131,9 @@ void subbrute_main_view_draw_is_byte_selected(Canvas* canvas, SubBruteMainViewMo
 
     // Switch to another mode
     if(model->two_bytes) {
-        elements_button_up(canvas, "One byte");
+        elements_button_up(canvas, SUBBRUTE_UI_TEXT("One byte", "单字节"));
     } else {
-        elements_button_up(canvas, "Two bytes");
+        elements_button_up(canvas, SUBBRUTE_UI_TEXT("Two bytes", "双字节"));
     }
 }
 

@@ -18,6 +18,12 @@
 #include "digits.h"
 #include "array_utils.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GAME2048_UI_TEXT(en, zh) (zh)
+#else
+#define GAME2048_UI_TEXT(en, zh) (en)
+#endif
+
 #define CELLS_COUNT     4
 #define CELL_INNER_SIZE 14
 #define FRAME_LEFT      10
@@ -49,7 +55,10 @@ typedef struct {
 } MoveResult;
 
 #define MENU_ITEMS_COUNT 2
-static const char* popup_menu_strings[] = {"Resume", "New Game"};
+static const char* popup_menu_strings[] = {
+    GAME2048_UI_TEXT("Resume", "继续"),
+    GAME2048_UI_TEXT("New Game", "新游戏"),
+};
 
 static void input_callback(InputEvent* input_event, void* ctx) {
     furi_assert(ctx);
@@ -115,9 +124,12 @@ static void draw_callback(Canvas* const canvas, void* ctx) {
     draw_table(canvas, game_state->table);
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 128, FRAME_TOP, AlignRight, AlignTop, "Score");
-    canvas_draw_str_aligned(canvas, 128, FRAME_TOP + 20, AlignRight, AlignTop, "Moves");
-    canvas_draw_str_aligned(canvas, 128, FRAME_TOP + 40, AlignRight, AlignTop, "Top Score");
+    canvas_draw_str_aligned(
+        canvas, 128, FRAME_TOP, AlignRight, AlignTop, GAME2048_UI_TEXT("Score", "分数"));
+    canvas_draw_str_aligned(
+        canvas, 128, FRAME_TOP + 20, AlignRight, AlignTop, GAME2048_UI_TEXT("Moves", "步数"));
+    canvas_draw_str_aligned(
+        canvas, 128, FRAME_TOP + 40, AlignRight, AlignTop, GAME2048_UI_TEXT("Top Score", "最高分"));
 
     int bufSize = 12;
     char buf[bufSize];
@@ -168,13 +180,16 @@ static void draw_callback(Canvas* const canvas, void* ctx) {
         canvas_draw_rframe(canvas, 14, 12, 100, 40, 4);
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 15, AlignCenter, AlignTop, "Game Over");
+        canvas_draw_str_aligned(
+            canvas, 64, 15, AlignCenter, AlignTop, GAME2048_UI_TEXT("Game Over", "游戏结束"));
 
         canvas_set_font(canvas, FontSecondary);
         if(record_broken) {
-            canvas_draw_str_aligned(canvas, 64, 29, AlignCenter, AlignTop, "New Top Score!!!");
+            canvas_draw_str_aligned(
+                canvas, 64, 29, AlignCenter, AlignTop, GAME2048_UI_TEXT("New Top Score!!!", "新的最高分!"));
         } else {
-            canvas_draw_str_aligned(canvas, 64, 29, AlignCenter, AlignTop, "Your Score");
+            canvas_draw_str_aligned(
+                canvas, 64, 29, AlignCenter, AlignTop, GAME2048_UI_TEXT("Your Score", "你的分数"));
         }
 
         memset(buf, 0, bufSize);

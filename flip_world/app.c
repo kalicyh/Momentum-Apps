@@ -1,6 +1,11 @@
 #include <alloc/alloc.h>
 #include <flip_storage/storage.h>
 #include <update/update.h>
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_WORLD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_WORLD_UI_TEXT(en, zh) (en)
+#endif
 
 // Entry point for the FlipWorld application
 int32_t flip_world_main(void *p)
@@ -8,7 +13,9 @@ int32_t flip_world_main(void *p)
     // check memory
     if (!is_enough_heap(sizeof(FlipWorldApp) + sizeof(FlipperHTTP), true))
     {
-        easy_flipper_dialog("Memory Error", "Not enough heap memory.\nPlease restart your Flipper Zero.");
+        easy_flipper_dialog(
+            "Memory Error",
+            "Not enough heap memory.\nPlease restart your Flipper Zero.");
         return 0; // return success so the user can see the error
     }
 
@@ -28,7 +35,11 @@ int32_t flip_world_main(void *p)
     FlipperHTTP *fhttp = flipper_http_alloc();
     if (!fhttp)
     {
-        easy_flipper_dialog("FlipperHTTP Error", "The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.");
+        easy_flipper_dialog(
+            FLIP_WORLD_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+            FLIP_WORLD_UI_TEXT(
+                "The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.",
+                "UART 可能正忙。\n请确认已刷入适合开发板的\n正确固件，然后重启\nFlipper Zero。"));
         return -1;
     }
 
@@ -54,7 +65,11 @@ int32_t flip_world_main(void *p)
     // last response should be PONG
     if (!fhttp->last_response || strcmp(fhttp->last_response, "[PONG]") != 0)
     {
-        easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+        easy_flipper_dialog(
+            FLIP_WORLD_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+            FLIP_WORLD_UI_TEXT(
+                "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
         FURI_LOG_E(TAG, "Failed to receive PONG");
     }
     else
@@ -62,7 +77,9 @@ int32_t flip_world_main(void *p)
         // for now use the catalog API until I implement caching on the server
         if (update_is_ready(fhttp, true))
         {
-            easy_flipper_dialog("Update Status", "Complete.\nRestart your Flipper Zero.");
+            easy_flipper_dialog(
+                FLIP_WORLD_UI_TEXT("Update Status", "更新状态"),
+                FLIP_WORLD_UI_TEXT("Complete.\nRestart your Flipper Zero.", "已完成。\n请重启 Flipper Zero。"));
         }
     }
 

@@ -2,6 +2,12 @@
 #include <lib/toolbox/value_index.h>
 #include "../helpers/flipcheckers_file.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHECKERS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHECKERS_UI_TEXT(en, zh) (en)
+#endif
+
 #define FLIPCHECKERS_SETTINGS_FILE_NAME "settings.txt"
 
 void flipcheckers_save_settings(FlipCheckers* app) {
@@ -30,8 +36,8 @@ void flipcheckers_load_settings(FlipCheckers* app) {
     }
 }
 
-#define TEXT_LABEL_ON  "ON"
-#define TEXT_LABEL_OFF "OFF"
+#define TEXT_LABEL_ON  FLIPCHECKERS_UI_TEXT("ON", "开")
+#define TEXT_LABEL_OFF FLIPCHECKERS_UI_TEXT("OFF", "关")
 
 const char* const haptic_text[2] = {
     TEXT_LABEL_OFF,
@@ -52,10 +58,10 @@ const uint32_t must_jump_value[2] = {
 };
 
 const char* const player_mode_text[4] = {
-    "Human",
-    "CPU 1",
-    "CPU 2",
-    "CPU 3",
+    FLIPCHECKERS_UI_TEXT("Human", "玩家"),
+    FLIPCHECKERS_UI_TEXT("CPU 1", "电脑 1"),
+    FLIPCHECKERS_UI_TEXT("CPU 2", "电脑 2"),
+    FLIPCHECKERS_UI_TEXT("CPU 3", "电脑 3"),
 };
 const uint32_t player_mode_value[4] = {
     FlipCheckersPlayerHuman,
@@ -111,35 +117,35 @@ void flipcheckers_scene_settings_on_enter(void* context) {
 
     // White player mode
     item = variable_item_list_add(
-        app->variable_item_list, "White:", 4, flipcheckers_scene_settings_set_white_mode, app);
+        app->variable_item_list, FLIPCHECKERS_UI_TEXT("White:", "白方:"), 4, flipcheckers_scene_settings_set_white_mode, app);
     value_index = value_index_uint32(app->white_mode, player_mode_value, 4);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, player_mode_text[value_index]);
 
     // Black player mode
     item = variable_item_list_add(
-        app->variable_item_list, "Black:", 4, flipcheckers_scene_settings_set_black_mode, app);
+        app->variable_item_list, FLIPCHECKERS_UI_TEXT("Black:", "黑方:"), 4, flipcheckers_scene_settings_set_black_mode, app);
     value_index = value_index_uint32(app->black_mode, player_mode_value, 4);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, player_mode_text[value_index]);
 
     // Must Jump rule
     item = variable_item_list_add(
-        app->variable_item_list, "Must Jump:", 2, flipcheckers_scene_settings_set_must_jump, app);
+        app->variable_item_list, FLIPCHECKERS_UI_TEXT("Must Jump:", "强制跳吃:"), 2, flipcheckers_scene_settings_set_must_jump, app);
     value_index = value_index_uint32(app->must_jump, must_jump_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, must_jump_text[value_index]);
 
     // Vibro on/off
     item = variable_item_list_add(
-        app->variable_item_list, "Vibro/Haptic:", 2, flipcheckers_scene_settings_set_haptic, app);
+        app->variable_item_list, FLIPCHECKERS_UI_TEXT("Vibro/Haptic:", "振动反馈:"), 2, flipcheckers_scene_settings_set_haptic, app);
     value_index = value_index_uint32(app->haptic, haptic_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, haptic_text[value_index]);
 
     // Sound on/off
     item = variable_item_list_add(
-        app->variable_item_list, "Sound:", 2, flipcheckers_scene_settings_set_sound, app);
+        app->variable_item_list, FLIPCHECKERS_UI_TEXT("Sound:", "声音:"), 2, flipcheckers_scene_settings_set_sound, app);
     value_index = value_index_uint32(app->sound, haptic_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, haptic_text[value_index]);

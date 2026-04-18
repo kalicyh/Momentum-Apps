@@ -1,5 +1,11 @@
 #include "../flipchess.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHESS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHESS_UI_TEXT(en, zh) (en)
+#endif
+
 enum SubmenuIndex {
     SubmenuIndexScene1New = 10,
     SubmenuIndexScene1Resume,
@@ -17,7 +23,7 @@ void flipchess_scene_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "New Game",
+        FLIPCHESS_UI_TEXT("New Game", "新游戏"),
         SubmenuIndexScene1New,
         flipchess_scene_menu_submenu_callback,
         app);
@@ -25,7 +31,7 @@ void flipchess_scene_menu_on_enter(void* context) {
     if(app->import_game == 1) {
         submenu_add_item(
             app->submenu,
-            "Resume Game",
+            FLIPCHESS_UI_TEXT("Resume Game", "继续游戏"),
             SubmenuIndexScene1Resume,
             flipchess_scene_menu_submenu_callback,
             app);
@@ -39,7 +45,11 @@ void flipchess_scene_menu_on_enter(void* context) {
     //     app);
 
     submenu_add_item(
-        app->submenu, "Settings", SubmenuIndexSettings, flipchess_scene_menu_submenu_callback, app);
+        app->submenu,
+        FLIPCHESS_UI_TEXT("Settings", "设置"),
+        SubmenuIndexSettings,
+        flipchess_scene_menu_submenu_callback,
+        app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, FlipChessSceneMenu));
@@ -72,7 +82,8 @@ bool flipchess_scene_menu_on_event(void* context, SceneManagerEvent event) {
         } else if(event.event == SubmenuIndexScene1Import) {
             app->import_game = 1;
             app->input_state = FlipChessTextInputGame;
-            text_input_set_header_text(app->text_input, "Enter board FEN");
+            text_input_set_header_text(
+                app->text_input, FLIPCHESS_UI_TEXT("Enter board FEN", "输入棋盘 FEN"));
             view_dispatcher_switch_to_view(app->view_dispatcher, FlipChessViewIdTextInput);
             return true;
         } else if(event.event == SubmenuIndexSettings) {

@@ -44,6 +44,12 @@ typedef enum {
 
 #define SAVING_FILENAME APP_DATA_PATH("snake2.save")
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SNAKE2_UI_TEXT(en, zh) (zh)
+#else
+#define SNAKE2_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     FuriMutex* mutex;
     Point points[MAX_SNAKE_LEN];
@@ -150,18 +156,18 @@ static void snake_game_render_callback(Canvas* const canvas, void* ctx) {
         canvas_set_font(canvas, FontPrimary);
         if(snake_state->state == GameStateGameOver) {
             if(snake_state->len >= MAX_SNAKE_LEN - 1) {
-                canvas_draw_str_aligned(canvas, 65, 35, AlignCenter, AlignBottom, "You WON!");
+                canvas_draw_str_aligned(canvas, 65, 35, AlignCenter, AlignBottom, SNAKE2_UI_TEXT("You WON!", "你赢了!"));
             } else {
-                canvas_draw_str_aligned(canvas, 65, 35, AlignCenter, AlignBottom, "Game Over");
+                canvas_draw_str_aligned(canvas, 65, 35, AlignCenter, AlignBottom, SNAKE2_UI_TEXT("Game Over", "游戏结束"));
             }
         }
         if(snake_state->state == GameStatePause) {
-            canvas_draw_str_aligned(canvas, 65, 35, AlignCenter, AlignBottom, "Pause");
+            canvas_draw_str_aligned(canvas, 65, 35, AlignCenter, AlignBottom, SNAKE2_UI_TEXT("Pause", "暂停"));
         }
 
         canvas_set_font(canvas, FontSecondary);
         char buffer[40];
-        snprintf(buffer, sizeof(buffer), "Score: %u", snake_state->len - 7U);
+        snprintf(buffer, sizeof(buffer), SNAKE2_UI_TEXT("Score: %u", "分数: %u"), snake_state->len - 7U);
         canvas_draw_str_aligned(canvas, 65, 45, AlignCenter, AlignBottom, buffer);
 
         // Painting "back"-symbol, Help message for Exit App, ProgressBar (Complete %)
@@ -170,13 +176,13 @@ static void snake_game_render_callback(Canvas* const canvas, void* ctx) {
         canvas_draw_box(canvas, 24, 54, 83, 9);
         canvas_set_color(canvas, ColorBlack);
         canvas_draw_str_aligned(
-            canvas, 65, 10, AlignCenter, AlignBottom, "Hold        to Exit App");
+            canvas, 65, 10, AlignCenter, AlignBottom, SNAKE2_UI_TEXT("Hold        to Exit App", "长按        退出"));
         //Endless mode ON/OFF
         if(snake_state->Endlessmode == false) {
-            canvas_draw_str_aligned(canvas, 24, 21, AlignLeft, AlignBottom, "Endless mode   OFF");
+            canvas_draw_str_aligned(canvas, 24, 21, AlignLeft, AlignBottom, SNAKE2_UI_TEXT("Endless mode   OFF", "无尽模式   关"));
         } else {
-            canvas_draw_str_aligned(canvas, 24, 21, AlignLeft, AlignBottom, "Endless mode");
-            canvas_draw_str_aligned(canvas, 89, 21, AlignLeft, AlignBottom, "ON");
+            canvas_draw_str_aligned(canvas, 24, 21, AlignLeft, AlignBottom, SNAKE2_UI_TEXT("Endless mode", "无尽模式"));
+            canvas_draw_str_aligned(canvas, 89, 21, AlignLeft, AlignBottom, SNAKE2_UI_TEXT("ON", "开"));
         }
 
         snprintf(

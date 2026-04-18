@@ -20,6 +20,11 @@
 /*** Defines ***/
 #define VERSION "1.2"
 #define TAG "hc11_modem"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define HC11_UI_TEXT(en, zh) (zh)
+#else
+#define HC11_UI_TEXT(en, zh) (en)
+#endif
 
 #define CONFIG_FILE "hc11_modem.save"
 

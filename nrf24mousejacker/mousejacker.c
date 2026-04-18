@@ -13,6 +13,12 @@
 #include "mousejacker_ducky.h"
 #include <nrf24_mouse_jacker_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MOUSEJACKER_UI_TEXT(en, zh) (zh)
+#else
+#define MOUSEJACKER_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "mousejacker"
 
 #define LOGITECH_MAX_CHANNEL               85
@@ -53,41 +59,68 @@ static void render_callback(Canvas* const canvas, void* ctx) {
        !plugin_state->is_ducky_running) {
         snprintf(target_text, sizeof(target_text), target_fmt_text, target_address_str);
         canvas_draw_str_aligned(canvas, 7, 10, AlignLeft, AlignBottom, target_text);
-        canvas_draw_str_aligned(canvas, 22, 20, AlignLeft, AlignBottom, "<- select address ->");
+        canvas_draw_str_aligned(
+            canvas, 22, 20, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("<- select address ->", "<- 选择地址 ->"));
         snprintf(
-            index_text, sizeof(index_text), "Address index: %d/%d", addr_idx + 1, addrs_count);
+            index_text,
+            sizeof(index_text),
+            MOUSEJACKER_UI_TEXT("Address index: %d/%d", "地址索引: %d/%d"),
+            addr_idx + 1,
+            addrs_count);
         canvas_draw_str_aligned(canvas, 10, 30, AlignLeft, AlignBottom, index_text);
-        canvas_draw_str_aligned(canvas, 10, 40, AlignLeft, AlignBottom, "Press Ok button to ");
-        canvas_draw_str_aligned(canvas, 10, 50, AlignLeft, AlignBottom, "browse for ducky script");
+        canvas_draw_str_aligned(
+            canvas, 10, 40, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Press Ok button to ", "按 OK 键"));
+        canvas_draw_str_aligned(
+            canvas,
+            10,
+            50,
+            AlignLeft,
+            AlignBottom,
+            MOUSEJACKER_UI_TEXT("browse for ducky script", "浏览 ducky 脚本"));
         if(!plugin_state->is_nrf24_connected) {
             canvas_draw_str_aligned(
-                canvas, 10, 60, AlignLeft, AlignBottom, "Connect NRF24 to GPIO!");
+                canvas, 10, 60, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Connect NRF24 to GPIO!", "请将 NRF24 接到 GPIO!"));
         }
     } else if(plugin_state->addr_err) {
         canvas_draw_str_aligned(
-            canvas, 10, 10, AlignLeft, AlignBottom, "Error: No nrf24sniff folder");
-        canvas_draw_str_aligned(canvas, 10, 20, AlignLeft, AlignBottom, "or addresses.txt file");
+            canvas, 10, 10, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Error: No nrf24sniff folder", "错误: 缺少 nrf24sniff 文件夹"));
         canvas_draw_str_aligned(
-            canvas, 10, 30, AlignLeft, AlignBottom, "loading error / empty file");
+            canvas, 10, 20, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("or addresses.txt file", "或 addresses.txt 文件"));
         canvas_draw_str_aligned(
-            canvas, 7, 40, AlignLeft, AlignBottom, "Run (NRF24: Sniff) app first!");
+            canvas, 10, 30, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("loading error / empty file", "加载失败 / 文件为空"));
+        canvas_draw_str_aligned(
+            canvas, 7, 40, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Run (NRF24: Sniff) app first!", "请先运行 (NRF24: Sniff)!"));
     } else if(plugin_state->ducky_err) {
         canvas_draw_str_aligned(
-            canvas, 3, 10, AlignLeft, AlignBottom, "Error: No mousejacker folder");
-        canvas_draw_str_aligned(canvas, 3, 20, AlignLeft, AlignBottom, "or duckyscript file");
-        canvas_draw_str_aligned(canvas, 3, 30, AlignLeft, AlignBottom, "loading error");
-    } else if(plugin_state->is_thread_running && !plugin_state->is_ducky_running) {
-        canvas_draw_str_aligned(canvas, 3, 10, AlignLeft, AlignBottom, "Loading...");
-        canvas_draw_str_aligned(canvas, 3, 20, AlignLeft, AlignBottom, "Please wait!");
-    } else if(plugin_state->is_thread_running && plugin_state->is_ducky_running) {
-        canvas_draw_str_aligned(canvas, 3, 10, AlignLeft, AlignBottom, "Running duckyscript");
-        canvas_draw_str_aligned(canvas, 3, 20, AlignLeft, AlignBottom, "Please wait!");
+            canvas, 3, 10, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Error: No mousejacker folder", "错误: 缺少 mousejacker 文件夹"));
         canvas_draw_str_aligned(
-            canvas, 3, 30, AlignLeft, AlignBottom, "Press back to exit (if it stuck)");
+            canvas, 3, 20, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("or duckyscript file", "或 duckyscript 文件"));
+        canvas_draw_str_aligned(
+            canvas, 3, 30, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("loading error", "加载失败"));
+    } else if(plugin_state->is_thread_running && !plugin_state->is_ducky_running) {
+        canvas_draw_str_aligned(
+            canvas, 3, 10, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Loading...", "加载中..."));
+        canvas_draw_str_aligned(
+            canvas, 3, 20, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Please wait!", "请稍候!"));
+    } else if(plugin_state->is_thread_running && plugin_state->is_ducky_running) {
+        canvas_draw_str_aligned(
+            canvas, 3, 10, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Running duckyscript", "正在运行 duckyscript"));
+        canvas_draw_str_aligned(
+            canvas, 3, 20, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Please wait!", "请稍候!"));
+        canvas_draw_str_aligned(
+            canvas,
+            3,
+            30,
+            AlignLeft,
+            AlignBottom,
+            MOUSEJACKER_UI_TEXT("Press back to exit (if it stuck)", "如卡住请按返回退出"));
     } else {
-        canvas_draw_str_aligned(canvas, 3, 10, AlignLeft, AlignBottom, "Unknown Error");
-        canvas_draw_str_aligned(canvas, 3, 20, AlignLeft, AlignBottom, "press back");
-        canvas_draw_str_aligned(canvas, 3, 30, AlignLeft, AlignBottom, "to exit");
+        canvas_draw_str_aligned(
+            canvas, 3, 10, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("Unknown Error", "未知错误"));
+        canvas_draw_str_aligned(
+            canvas, 3, 20, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("press back", "按返回"));
+        canvas_draw_str_aligned(
+            canvas, 3, 30, AlignLeft, AlignBottom, MOUSEJACKER_UI_TEXT("to exit", "退出"));
     }
 
     furi_mutex_release(plugin_state->mutex);

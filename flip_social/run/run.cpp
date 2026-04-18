@@ -65,7 +65,7 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Fetching...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Fetching...", "获取中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -137,7 +137,8 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
             {
                 free(feedSaveKey);
             }
-            canvas_draw_str(canvas, 0, 10, "Failed to load comments data.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Failed to load comments data.", "加载评论数据失败。"));
             return;
         }
         snprintf(feedSaveKey, 32, "feed_%d_comments", feedIteration);
@@ -234,8 +235,10 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
             else
             {
                 canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
-                canvas_draw_str(canvas, 0, 10, "No comments found for this post.");
-                canvas_draw_str(canvas, 0, 60, "Be the first, click DOWN");
+                canvas_draw_str(
+                    canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("No comments found for this post.", "这条动态还没有评论。"));
+                canvas_draw_str(
+                    canvas, 0, 60, FLIP_SOCIAL_UI_TEXT("Be the first, click DOWN", "成为第一个评论的人，按 DOWN"));
             }
         }
 
@@ -246,15 +249,15 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
     case CommentsRequestError:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Comments request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Comments request failed!", "评论请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case CommentsParseError:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Failed to parse comments!");
-        canvas_draw_str(canvas, 0, 20, "Try again...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Failed to parse comments!", "解析评论失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Try again...", "请重试..."));
 
         break;
     case CommentsNotStarted:
@@ -270,7 +273,7 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Comment:");
+            keyboard->draw(canvas, FLIP_SOCIAL_UI_TEXT("Comment:", "评论:"));
         }
         break;
     case CommentsSending:
@@ -283,7 +286,7 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Sending...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Sending...", "发送中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -327,7 +330,7 @@ void FlipSocialRun::drawCommentsView(Canvas *canvas)
     default:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Loading comments...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Loading comments...", "加载评论中..."));
         break;
     }
 }
@@ -349,7 +352,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Searching...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Searching...", "搜索中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -399,7 +402,8 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
         if (!app || !app->loadChar("explore", messagesUserList, 1024))
         {
             FURI_LOG_E(TAG, "drawExploreView: Failed to load explore data from storage");
-            canvas_draw_str(canvas, 0, 30, "Failed to load explore data.");
+            canvas_draw_str(
+                canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("Failed to load explore data.", "加载探索数据失败。"));
             free(messagesUserList);
             return;
         }
@@ -419,7 +423,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
 
         if (usersList.empty())
         {
-            canvas_draw_str(canvas, 0, 30, "No users found.");
+            canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("No users found.", "未找到用户。"));
         }
         else
         {
@@ -437,14 +441,14 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
         break;
     }
     case ExploreRequestError:
-        canvas_draw_str(canvas, 0, 10, "Messages request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Messages request failed!", "消息请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case ExploreParseError:
-        canvas_draw_str(canvas, 0, 10, "Error parsing messages!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Error parsing messages!", "解析消息失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case ExploreNotStarted:
         exploreStatus = ExploreWaiting;
@@ -458,7 +462,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Enter text:");
+            keyboard->draw(canvas, FLIP_SOCIAL_UI_TEXT("Enter text:", "输入文本:"));
         }
         break;
     case ExploreKeyboardMessage:
@@ -469,7 +473,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Enter message:");
+            keyboard->draw(canvas, FLIP_SOCIAL_UI_TEXT("Enter message:", "输入消息:"));
         }
         break;
     case ExploreSending:
@@ -482,7 +486,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Sending...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Sending...", "发送中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -523,9 +527,9 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
         }
         break;
     case ExploreDeciding:
-        canvas_draw_str(canvas, 0, 10, "What would you like to do?");
-        canvas_draw_str(canvas, 0, 50, "UP: Add friend");
-        canvas_draw_str(canvas, 0, 60, "DOWN: Message");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("What would you like to do?", "你想做什么?"));
+        canvas_draw_str(canvas, 0, 50, FLIP_SOCIAL_UI_TEXT("UP: Add friend", "UP: 加好友"));
+        canvas_draw_str(canvas, 0, 60, FLIP_SOCIAL_UI_TEXT("DOWN: Message", "DOWN: 发消息"));
         break;
     case ExploreAddingFriend:
         if (!loadingStarted)
@@ -537,7 +541,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Adding...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Adding...", "添加中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -564,7 +568,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
             if (response && app->loadChar("add_friend", response, 64) && strstr(response, "[SUCCESS]") != NULL)
             {
                 canvas_clear(canvas);
-                canvas_draw_str(canvas, 0, 10, "Friend added!");
+                canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Friend added!", "好友已添加!"));
                 free(response);
                 return;
             }
@@ -575,7 +579,7 @@ void FlipSocialRun::drawExploreView(Canvas *canvas)
         }
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Retrieving messages...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Retrieving messages...", "正在获取消息..."));
         break;
     }
 }
@@ -622,18 +626,29 @@ void FlipSocialRun::drawFeedItem(Canvas *canvas, char *username, char *message, 
     drawFeedMessage(canvas, message, 0, 12);
     canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
     char flip_message[32];
-    snprintf(flip_message, sizeof(flip_message), "%u %s", flipCount, flipCount == 1 ? "flip" : "flips");
+    snprintf(
+        flip_message,
+        sizeof(flip_message),
+        FLIP_SOCIAL_UI_TEXT("%u %s", "%u %s"),
+        flipCount,
+        flipCount == 1 ? FLIP_SOCIAL_UI_TEXT("flip", "翻转") :
+                         FLIP_SOCIAL_UI_TEXT("flips", "翻转"));
     canvas_draw_str(canvas, 0, 60, flip_message);
     canvas_draw_icon(canvas, 35, 54, &I_ButtonOK_7x7);
     char flip_status[16];
-    snprintf(flip_status, sizeof(flip_status), isFlipped ? "Unflip" : "Flip");
+    snprintf(
+        flip_status,
+        sizeof(flip_status),
+        "%s",
+        isFlipped ? FLIP_SOCIAL_UI_TEXT("Unflip", "取消翻转") :
+                    FLIP_SOCIAL_UI_TEXT("Flip", "翻转"));
     canvas_draw_str(canvas, isFlipped ? 44 : 46, 60, flip_status);
 
     if (!isComment)
     {
         // Draw down arrow icon and comment count
         canvas_draw_icon(canvas, 74, 56, &I_ButtonDown_5x3);
-        canvas_draw_str(canvas, 83, 60, "Comment");
+        canvas_draw_str(canvas, 83, 60, FLIP_SOCIAL_UI_TEXT("Comment", "评论"));
         canvas_draw_str(canvas, 112, 60, "(");
         canvas_draw_str(canvas, 118, 60, comments);
         canvas_draw_str(canvas, 124, 60, ")");
@@ -779,7 +794,7 @@ void FlipSocialRun::drawFeedView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Fetching...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Fetching...", "获取中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -851,7 +866,7 @@ void FlipSocialRun::drawFeedView(Canvas *canvas)
             {
                 free(feedSaveKey);
             }
-            canvas_draw_str(canvas, 0, 10, "Failed to load feed data.");
+            canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Failed to load feed data.", "加载动态数据失败。"));
             return;
         }
         snprintf(feedSaveKey, 16, "feed_%d", feedIteration);
@@ -953,15 +968,15 @@ void FlipSocialRun::drawFeedView(Canvas *canvas)
     case FeedRequestError:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Feed request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Feed request failed!", "动态请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case FeedParseError:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Failed to parse feed!");
-        canvas_draw_str(canvas, 0, 20, "Try again...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Failed to parse feed!", "解析动态失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Try again...", "请重试..."));
         break;
     case FeedNotStarted:
         canvas_clear(canvas);
@@ -976,7 +991,7 @@ void FlipSocialRun::drawFeedView(Canvas *canvas)
     default:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Loading feed...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Loading feed...", "加载动态中..."));
         break;
     }
 }
@@ -998,7 +1013,7 @@ void FlipSocialRun::drawFriendsView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Fetching...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Fetching...", "获取中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1050,7 +1065,7 @@ void FlipSocialRun::drawFriendsView(Canvas *canvas)
         if (!app || !app->loadChar("friends", friendsList, 1024))
         {
             FURI_LOG_E(TAG, "drawFriendsView: Failed to load friends data from storage");
-            canvas_draw_str(canvas, 0, 30, "Failed to load friends.");
+            canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("Failed to load friends.", "加载好友失败。"));
             free(friendsList);
             return;
         }
@@ -1070,7 +1085,7 @@ void FlipSocialRun::drawFriendsView(Canvas *canvas)
 
         if (friendList.empty())
         {
-            canvas_draw_str(canvas, 0, 30, "No friends found.");
+            canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("No friends found.", "未找到好友。"));
         }
         else
         {
@@ -1088,9 +1103,9 @@ void FlipSocialRun::drawFriendsView(Canvas *canvas)
         break;
     }
     case FriendConfirmRemove:
-        canvas_draw_str(canvas, 0, 10, "Remove friend?");
-        canvas_draw_str(canvas, 0, 50, "OK: Confirm");
-        canvas_draw_str(canvas, 0, 60, "Back: Cancel");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Remove friend?", "移除好友?"));
+        canvas_draw_str(canvas, 0, 50, FLIP_SOCIAL_UI_TEXT("OK: Confirm", "OK: 确认"));
+        canvas_draw_str(canvas, 0, 60, FLIP_SOCIAL_UI_TEXT("Back: Cancel", "Back: 取消"));
         break;
     case FriendRemove:
         if (!loadingStarted)
@@ -1102,7 +1117,7 @@ void FlipSocialRun::drawFriendsView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Removing...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Removing...", "移除中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1144,20 +1159,20 @@ void FlipSocialRun::drawFriendsView(Canvas *canvas)
         }
         break;
     case FriendRequestError:
-        canvas_draw_str(canvas, 0, 10, "Friends request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Friends request failed!", "好友请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case FriendParseError:
-        canvas_draw_str(canvas, 0, 10, "Error parsing friends!");
-        canvas_draw_str(canvas, 0, 20, "Try again...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Error parsing friends!", "解析好友失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Try again...", "请重试..."));
         break;
     case FriendNotStarted:
         friendStatus = FriendWaiting;
         userRequest(RequestTypeFriendFetch);
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Retrieving friends...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Retrieving friends...", "正在获取好友..."));
         break;
     }
 }
@@ -1179,7 +1194,7 @@ void FlipSocialRun::drawLoginView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Logging in...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Logging in...", "登录中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1237,37 +1252,43 @@ void FlipSocialRun::drawLoginView(Canvas *canvas)
         }
         break;
     case LoginSuccess:
-        canvas_draw_str(canvas, 0, 10, "Login successful!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Login successful!", "登录成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case LoginCredentialsMissing:
-        canvas_draw_str(canvas, 0, 10, "Missing credentials!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Missing credentials!", "缺少凭据!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case LoginRequestError:
-        canvas_draw_str(canvas, 0, 10, "Login request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Login request failed!", "登录请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case LoginWrongPassword:
-        canvas_draw_str(canvas, 0, 10, "Wrong password!");
-        canvas_draw_str(canvas, 0, 20, "Please check your password");
-        canvas_draw_str(canvas, 0, 30, "and try again.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Wrong password!", "密码错误!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please check your password", "请检查密码后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and try again.", "重新尝试。"));
         break;
     case LoginNotStarted:
         loginStatus = LoginWaiting;
         userRequest(RequestTypeLogin);
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Logging in...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Logging in...", "登录中..."));
         break;
     }
 }
 
 void FlipSocialRun::drawMainMenuView(Canvas *canvas)
 {
-    const char *menuItems[] = {"Feed", "Post", "Messages", "Explore", "Profile"};
+    const char *menuItems[] = {
+        FLIP_SOCIAL_UI_TEXT("Feed", "动态"),
+        FLIP_SOCIAL_UI_TEXT("Post", "发帖"),
+        FLIP_SOCIAL_UI_TEXT("Messages", "消息"),
+        FLIP_SOCIAL_UI_TEXT("Explore", "探索"),
+        FLIP_SOCIAL_UI_TEXT("Profile", "资料"),
+    };
     drawMenu(canvas, (uint8_t)currentMenuIndex, menuItems, 5);
 }
 
@@ -1484,7 +1505,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Retrieving...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Retrieving...", "获取中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1534,7 +1555,8 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
         if (!app || !app->loadChar("messages_with_user", messagesUserList, 1024))
         {
             FURI_LOG_E(TAG, "drawMessageUsersView: Failed to load messages user list from storage");
-            canvas_draw_str(canvas, 0, 30, "Failed to load messages.");
+            canvas_draw_str(
+                canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("Failed to load messages.", "加载消息失败。"));
             free(messagesUserList);
             return;
         }
@@ -1586,7 +1608,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
             canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
             if (messagesIndex > 0)
             {
-                canvas_draw_str(canvas, 2, 60, "< Prev");
+                canvas_draw_str(canvas, 2, 60, FLIP_SOCIAL_UI_TEXT("< Prev", "< 上一条"));
             }
             if (messagesIndex < (MAX_MESSAGES - 1))
             {
@@ -1594,7 +1616,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
                 char *nextMessage = get_json_array_value("conversations", messagesIndex + 1, messagesUserList);
                 if (nextMessage)
                 {
-                    canvas_draw_str(canvas, 96, 60, "Next >");
+                    canvas_draw_str(canvas, 96, 60, FLIP_SOCIAL_UI_TEXT("Next >", "下一条 >"));
                     free(nextMessage);
                 }
             }
@@ -1620,7 +1642,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
             canvas_draw_str(canvas, 112, 10, message_counter);
 
             canvas_draw_icon(canvas, 52, 54, &I_ButtonOK_7x7);
-            canvas_draw_str(canvas, 60, 60, "Reply");
+            canvas_draw_str(canvas, 60, 60, FLIP_SOCIAL_UI_TEXT("Reply", "回复"));
 
             free(sender);
             free(content);
@@ -1631,14 +1653,14 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
         break;
     }
     case MessagesRequestError:
-        canvas_draw_str(canvas, 0, 10, "Messages request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Messages request failed!", "消息请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case MessagesParseError:
-        canvas_draw_str(canvas, 0, 10, "Error parsing messages!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Error parsing messages!", "解析消息失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case MessagesNotStarted:
         messagesStatus = MessagesWaiting;
@@ -1652,7 +1674,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Enter reply:");
+            keyboard->draw(canvas, FLIP_SOCIAL_UI_TEXT("Enter reply:", "输入回复:"));
         }
         break;
     case MessagesSending:
@@ -1665,7 +1687,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Sending...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Sending...", "发送中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1703,7 +1725,7 @@ void FlipSocialRun::drawMessagesView(Canvas *canvas)
         }
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Retrieving messages...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Retrieving messages...", "正在获取消息..."));
         break;
     }
 }
@@ -1725,7 +1747,7 @@ void FlipSocialRun::drawMessageUsersView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Retrieving...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Retrieving...", "获取中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1763,8 +1785,8 @@ void FlipSocialRun::drawMessageUsersView(Canvas *canvas)
         break;
     case MessageUsersSuccess:
     {
-        canvas_draw_str(canvas, 0, 10, "Messages retrieved successfully!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Messages retrieved successfully!", "消息获取成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         char *messagesUserList = (char *)malloc(1024);
         if (!messagesUserList)
         {
@@ -1777,7 +1799,7 @@ void FlipSocialRun::drawMessageUsersView(Canvas *canvas)
         if (!app || !app->loadChar("messages_user_list", messagesUserList, 1024))
         {
             FURI_LOG_E(TAG, "drawMessageUsersView: Failed to load messages user list from storage");
-            canvas_draw_str(canvas, 0, 30, "Failed to load messages.");
+            canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("Failed to load messages.", "加载消息失败。"));
             free(messagesUserList);
             return;
         }
@@ -1797,7 +1819,7 @@ void FlipSocialRun::drawMessageUsersView(Canvas *canvas)
 
         if (usersList.empty())
         {
-            canvas_draw_str(canvas, 0, 30, "No messages found.");
+            canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("No messages found.", "未找到消息。"));
         }
         else
         {
@@ -1814,21 +1836,21 @@ void FlipSocialRun::drawMessageUsersView(Canvas *canvas)
         break;
     }
     case MessageUsersRequestError:
-        canvas_draw_str(canvas, 0, 10, "Messages request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Messages request failed!", "消息请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case MessageUsersParseError:
-        canvas_draw_str(canvas, 0, 10, "Error parsing messages!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Error parsing messages!", "解析消息失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case MessageUsersNotStarted:
         messageUsersStatus = MessageUsersWaiting;
         userRequest(RequestTypeMessagesUserList);
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Retrieving messages...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Retrieving messages...", "正在获取消息..."));
         break;
     }
 }
@@ -1850,7 +1872,7 @@ void FlipSocialRun::drawPostView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Posting...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Posting...", "发帖中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -1894,18 +1916,18 @@ void FlipSocialRun::drawPostView(Canvas *canvas)
     case PostSuccess:
         // unlike other "views", we shouldnt hit here
         // since after posting, users will be redirected to feed
-        canvas_draw_str(canvas, 0, 10, "Posted successfully!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Posted successfully!", "发布成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case PostRequestError:
-        canvas_draw_str(canvas, 0, 10, "Post request failed!");
-        canvas_draw_str(canvas, 0, 20, "Ensure your message");
-        canvas_draw_str(canvas, 0, 30, "follows the rules.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Post request failed!", "发帖请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Ensure your message", "请确认你的内容"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("follows the rules.", "符合规则。"));
         break;
     case PostParseError:
-        canvas_draw_str(canvas, 0, 10, "Error parsing post!");
-        canvas_draw_str(canvas, 0, 20, "Ensure your message");
-        canvas_draw_str(canvas, 0, 30, "follows the rules.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Error parsing post!", "解析帖子失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Ensure your message", "请确认你的内容"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("follows the rules.", "符合规则。"));
         break;
     case PostKeyboard:
         if (!keyboard)
@@ -1915,7 +1937,7 @@ void FlipSocialRun::drawPostView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Enter post:");
+            keyboard->draw(canvas, FLIP_SOCIAL_UI_TEXT("Enter post:", "输入帖子:"));
         }
         break;
     case PostChoose:
@@ -1976,7 +1998,7 @@ void FlipSocialRun::drawPostView(Canvas *canvas)
 
         // Insert "[New Post]" as the first item, then add user's pre-saved messages
         std::vector<std::string> menuItems;
-        menuItems.push_back("[New Post]");
+        menuItems.push_back(FLIP_SOCIAL_UI_TEXT("[New Post]", "[新建帖子]"));
         for (const auto &msg : preSavedList)
         {
             menuItems.push_back(msg);
@@ -1998,7 +2020,7 @@ void FlipSocialRun::drawPostView(Canvas *canvas)
         break;
     }
     default:
-        canvas_draw_str(canvas, 0, 10, "Awaiting...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Awaiting...", "等待中..."));
         break;
     }
 }
@@ -2019,7 +2041,7 @@ void FlipSocialRun::drawProfileView(Canvas *canvas)
     {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignCenter,
-                                "Failed to load user info.");
+                                FLIP_SOCIAL_UI_TEXT("Failed to load user info.", "加载用户信息失败。"));
         return;
     }
 
@@ -2028,7 +2050,7 @@ void FlipSocialRun::drawProfileView(Canvas *canvas)
     {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignCenter,
-                                "Failed to load username.");
+                                FLIP_SOCIAL_UI_TEXT("Failed to load username.", "加载用户名失败。"));
         return;
     }
 
@@ -2040,7 +2062,7 @@ void FlipSocialRun::drawProfileView(Canvas *canvas)
     {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignCenter,
-                                "Incomplete profile data.");
+                                FLIP_SOCIAL_UI_TEXT("Incomplete profile data.", "资料数据不完整。"));
         if (bio)
             free(bio);
         if (friendsCount)
@@ -2065,7 +2087,11 @@ void FlipSocialRun::drawProfileView(Canvas *canvas)
     }
 
     // Profile element labels
-    const char *elementLabels[] = {"Bio", "Friends", "Joined"};
+    const char *elementLabels[] = {
+        FLIP_SOCIAL_UI_TEXT("Bio", "简介"),
+        FLIP_SOCIAL_UI_TEXT("Friends", "好友"),
+        FLIP_SOCIAL_UI_TEXT("Joined", "加入时间"),
+    };
 
     // current element label
     canvas_set_font_custom(canvas, FONT_SIZE_MEDIUM);
@@ -2085,7 +2111,7 @@ void FlipSocialRun::drawProfileView(Canvas *canvas)
     case ProfileElementBio:
         if (strlen(bio) == 0)
         {
-            canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignCenter, "No bio");
+            canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignCenter, FLIP_SOCIAL_UI_TEXT("No bio", "暂无简介"));
         }
         else
         {
@@ -2103,7 +2129,7 @@ void FlipSocialRun::drawProfileView(Canvas *canvas)
     }
     break;
     default:
-        canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignCenter, "Unknown");
+        canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignCenter, FLIP_SOCIAL_UI_TEXT("Unknown", "未知"));
         break;
     }
 
@@ -2150,7 +2176,7 @@ void FlipSocialRun::drawWrappedBio(Canvas *canvas, const char *text, uint8_t x, 
 {
     if (!text || strlen(text) == 0)
     {
-        canvas_draw_str_aligned(canvas, 64, y + 2, AlignCenter, AlignCenter, "No bio");
+        canvas_draw_str_aligned(canvas, 64, y + 2, AlignCenter, AlignCenter, FLIP_SOCIAL_UI_TEXT("No bio", "暂无简介"));
         return;
     }
 
@@ -2229,7 +2255,7 @@ void FlipSocialRun::drawBioEditView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Edit Bio:");
+            keyboard->draw(canvas, FLIP_SOCIAL_UI_TEXT("Edit Bio:", "编辑简介:"));
         }
         break;
     case BioEditWaiting:
@@ -2242,7 +2268,7 @@ void FlipSocialRun::drawBioEditView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Updating bio...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Updating bio...", "更新简介中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -2277,16 +2303,16 @@ void FlipSocialRun::drawBioEditView(Canvas *canvas)
         }
         break;
     case BioEditSuccess:
-        canvas_draw_str(canvas, 0, 10, "Bio updated!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to view profile.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Bio updated!", "简介已更新!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Press OK to view profile.", "按 OK 查看资料。"));
         break;
     case BioEditRequestError:
-        canvas_draw_str(canvas, 0, 10, "Failed to update bio!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Failed to update bio!", "更新简介失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Updating bio...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Updating bio...", "更新简介中..."));
         break;
     }
 }
@@ -2308,7 +2334,7 @@ void FlipSocialRun::drawRegistrationView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Registering...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Registering...", "注册中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -2387,55 +2413,55 @@ void FlipSocialRun::drawRegistrationView(Canvas *canvas)
         }
         break;
     case RegistrationSuccess:
-        canvas_draw_str(canvas, 0, 10, "Registration successful!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Registration successful!", "注册成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case RegistrationCredentialsMissing:
-        canvas_draw_str(canvas, 0, 10, "Missing credentials!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Missing credentials!", "缺少凭据!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case RegistrationErrorAllOneLetter:
-        canvas_draw_str(canvas, 0, 10, "Username cannot be");
-        canvas_draw_str(canvas, 0, 20, "all one letter!");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Username cannot be", "用户名不能"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("all one letter!", "全是同一个字母!"));
         break;
     case RegistrationErrorAllNumbers:
-        canvas_draw_str(canvas, 0, 10, "Username cannot be");
-        canvas_draw_str(canvas, 0, 20, "all numbers!");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Username cannot be", "用户名不能"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("all numbers!", "全是数字!"));
         break;
     case RegistrationErrorUsernameTooShort:
-        canvas_draw_str(canvas, 0, 10, "Username too short!");
-        canvas_draw_str(canvas, 0, 20, "Must be at least 5 chars.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Username too short!", "用户名太短!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Must be at least 5 chars.", "至少需要 5 个字符。"));
         break;
     case RegistrationErrorPasswordTooShort:
-        canvas_draw_str(canvas, 0, 10, "Password too short!");
-        canvas_draw_str(canvas, 0, 20, "Must be at least 5 chars.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Password too short!", "密码太短!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Must be at least 5 chars.", "至少需要 5 个字符。"));
         break;
     case RegistrationErrorUsernameTooLong:
-        canvas_draw_str(canvas, 0, 10, "Username too long!");
-        canvas_draw_str(canvas, 0, 20, "Must be 32 chars or less.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Username too long!", "用户名太长!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Must be 32 chars or less.", "必须不超过 32 个字符。"));
         break;
     case RegistrationErrorPasswordTooLong:
-        canvas_draw_str(canvas, 0, 10, "Password too long!");
-        canvas_draw_str(canvas, 0, 20, "Must be 32 chars or less.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Password too long!", "密码太长!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Must be 32 chars or less.", "必须不超过 32 个字符。"));
         break;
     case RegistrationErrorUsernameNotAllowed:
-        canvas_draw_str(canvas, 0, 10, "Username not allowed!");
-        canvas_draw_str(canvas, 0, 20, "Please choose another.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Username not allowed!", "用户名不允许!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please choose another.", "请选择其他用户名。"));
         break;
     case RegistrationUserExists:
-        canvas_draw_str(canvas, 0, 10, "User already exists!");
-        canvas_draw_str(canvas, 0, 20, "Please choose another");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("User already exists!", "用户已存在!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please choose another", "请选择其他"));
         ;
-        canvas_draw_str(canvas, 0, 30, "username.");
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("username.", "用户名。"));
         break;
     case RegistrationRequestError:
-        canvas_draw_str(canvas, 0, 10, "Registration request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Registration request failed!", "注册请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Registering...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Registering...", "注册中..."));
         break;
     }
 }
@@ -2455,7 +2481,7 @@ void FlipSocialRun::drawUserInfoView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Syncing...");
+                loading->setText(FLIP_SOCIAL_UI_TEXT("Syncing...", "同步中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -2467,9 +2493,13 @@ void FlipSocialRun::drawUserInfoView(Canvas *canvas)
         }
         else
         {
-            canvas_draw_str(canvas, 0, 10, "Loading user info...");
-            canvas_draw_str(canvas, 0, 20, "Please wait...");
-            canvas_draw_str(canvas, 0, 30, "It may take up to 15 seconds.");
+            canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Loading user info...", "加载用户信息中..."));
+            canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please wait...", "请稍候..."));
+            canvas_draw_str(
+                canvas,
+                0,
+                30,
+                FLIP_SOCIAL_UI_TEXT("It may take up to 15 seconds.", "最多可能需要 15 秒。"));
             FlipSocialApp *app = static_cast<FlipSocialApp *>(appContext);
             if (app->getHttpState() == ISSUE)
             {
@@ -2503,33 +2533,36 @@ void FlipSocialRun::drawUserInfoView(Canvas *canvas)
     case UserInfoSuccess:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "User info loaded successfully!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(
+            canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("User info loaded successfully!", "用户信息加载成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case UserInfoCredentialsMissing:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Missing credentials!");
-        canvas_draw_str(canvas, 0, 20, "Please update your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the settings.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Missing credentials!", "缺少凭据!"));
+        canvas_draw_str(
+            canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Please update your username", "请更新你的用户名"));
+        canvas_draw_str(
+            canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("and password in the settings.", "并在设置中更新密码。"));
         break;
     case UserInfoRequestError:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "User info request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("User info request failed!", "用户信息请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_SOCIAL_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case UserInfoParseError:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Failed to parse user info!");
-        canvas_draw_str(canvas, 0, 20, "Try again...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Failed to parse user info!", "解析用户信息失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_SOCIAL_UI_TEXT("Try again...", "请重试..."));
         break;
     default:
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 10, "Loading user info...");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("Loading user info...", "加载用户信息中..."));
         break;
     }
 }
@@ -2569,7 +2602,7 @@ bool FlipSocialRun::getSelectedPost(char *buffer, size_t buffer_size)
     if (postIndex == 0)
     {
         // If postIndex is 0, we are in the "New Post" mode
-        snprintf(buffer, buffer_size, "[New Post]");
+        snprintf(buffer, buffer_size, "%s", FLIP_SOCIAL_UI_TEXT("[New Post]", "[新建帖子]"));
         return true;
     }
     char *preSavedLocation = (char *)malloc(128);
@@ -2817,7 +2850,7 @@ void FlipSocialRun::updateDraw(Canvas *canvas)
         drawBioEditView(canvas);
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "View not implemented yet.");
+        canvas_draw_str(canvas, 0, 10, FLIP_SOCIAL_UI_TEXT("View not implemented yet.", "该页面暂未实现。"));
         break;
     };
 }

@@ -11,6 +11,12 @@
 #include <notification/notification.h>
 #include <notification/notification_messages.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define T5577_UI_TEXT(en, zh) (zh)
+#else
+#define T5577_UI_TEXT(en, zh) (en)
+#endif
+
 #include <applications/services/storage/storage.h>
 #include <applications/services/dialogs/dialogs.h>
 #include <dolphin/dolphin.h>
@@ -535,14 +541,14 @@ static void t5577_writer_view_write_callback(Canvas* canvas, void* model) {
         t5577_writer_actual_writing(model);
         canvas_set_bitmap_mode(canvas, true);
         canvas_draw_icon(canvas, 0, 8, &I_NFC_manual_60x50);
-        canvas_draw_str_aligned(canvas, 97, 15, AlignCenter, AlignTop, "Writing");
-        canvas_draw_str_aligned(canvas, 94, 27, AlignCenter, AlignTop, "Hold card next");
-        canvas_draw_str_aligned(canvas, 93, 39, AlignCenter, AlignTop, "to Flipper's back");
+        canvas_draw_str_aligned(canvas, 97, 15, AlignCenter, AlignTop, T5577_UI_TEXT("Writing", "写入中"));
+        canvas_draw_str_aligned(canvas, 94, 27, AlignCenter, AlignTop, T5577_UI_TEXT("Hold card next", "请将卡片贴近"));
+        canvas_draw_str_aligned(canvas, 93, 39, AlignCenter, AlignTop, T5577_UI_TEXT("to Flipper's back", "Flipper 背面"));
     } else {
         canvas_set_bitmap_mode(canvas, true);
         canvas_draw_icon(canvas, 0, 9, &I_DolphinSuccess_91x55);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 75, 16, "Finished!");
+        canvas_draw_str(canvas, 75, 16, T5577_UI_TEXT("Finished!", "完成!"));
     }
 }
 

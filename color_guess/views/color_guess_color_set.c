@@ -36,7 +36,8 @@ void color_guess_color_set_draw(Canvas* canvas, ColorGuessColorSetModel* model) 
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 5, 7, "Set a custom color on LED");
+    canvas_draw_str(
+        canvas, 5, 7, COLOR_GUESS_UI_TEXT("Set a custom color on LED", "为 LED 设置自定义颜色"));
 
     canvas_draw_icon(canvas, newCursorPos, 18, &I_ButtonUp_10x5);
     canvas_draw_icon(canvas, newCursorPos, 41, &I_ButtonDown_10x5);
@@ -47,7 +48,7 @@ void color_guess_color_set_draw(Canvas* canvas, ColorGuessColorSetModel* model) 
     canvas_draw_icon(canvas, 66, 25, digits[model->digit[3]]);
     canvas_draw_icon(canvas, 78, 25, digits[model->digit[4]]);
     canvas_draw_icon(canvas, 90, 25, digits[model->digit[5]]);
-    elements_button_right(canvas, "See your color here");
+    elements_button_right(canvas, COLOR_GUESS_UI_TEXT("See your color here", "查看这个颜色"));
 }
 
 static void color_guess_color_set_model_init(ColorGuessColorSetModel* const model) {

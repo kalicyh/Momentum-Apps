@@ -3,6 +3,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CO2_LOGGER_UI_TEXT(en, zh) (zh)
+#else
+#define CO2_LOGGER_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct co2_logger co2_logger;
 
 co2_logger* co2_logger_alloc();

@@ -1,6 +1,12 @@
 #include "../minesweeper.h"
 #include "../views/minesweeper_game_screen.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MS_UI_TEXT(en, zh) (zh)
+#else
+#define MS_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     MineSweeperSettingsScreenDifficultyTypeEasy,
     MineSweeperSettingsScreenDifficultyTypeMedium,
@@ -25,14 +31,14 @@ typedef enum {
 } MineSweeperSettingsScreenEvent;
 
 static const char* settings_screen_difficulty_text[MineSweeperSettingsScreenDifficultyTypeNum] = {
-    "Easy",
-    "Medium",
-    "Hard",
+    MS_UI_TEXT("Easy", "简单"),
+    MS_UI_TEXT("Medium", "中等"),
+    MS_UI_TEXT("Hard", "困难"),
 };
 
 static const char* settings_screen_verifier_text[2] = {
-    "False",
-    "True",
+    MS_UI_TEXT("False", "否"),
+    MS_UI_TEXT("True", "是"),
 };
 
 static void minesweeper_scene_settings_screen_set_difficulty(VariableItem* item) {
@@ -179,7 +185,8 @@ static void minesweeper_scene_settings_screen_set_feedback(VariableItem* item) {
 
     FURI_LOG_I(TAG, "FEEDBACK CALLBACK INDEX %d", app->feedback_enabled);
 
-    variable_item_set_current_value_text(item, ((index) ? "Enabled" : "Disabled"));
+    variable_item_set_current_value_text(
+        item, ((index) ? MS_UI_TEXT("Enabled", "开启") : MS_UI_TEXT("Disabled", "关闭")));
 
     view_dispatcher_send_custom_event(
         app->view_dispatcher, MineSweeperSettingsScreenEventFeedbackChange);
@@ -210,7 +217,7 @@ void minesweeper_scene_settings_screen_on_enter(void* context) {
     // Set Difficulty Item
     item = variable_item_list_add(
         va,
-        "Difficulty",
+        MS_UI_TEXT("Difficulty", "难度"),
         MineSweeperSettingsScreenDifficultyTypeNum,
         minesweeper_scene_settings_screen_set_difficulty,
         app);
@@ -224,7 +231,7 @@ void minesweeper_scene_settings_screen_on_enter(void* context) {
 
     // Set Width Item
     item = variable_item_list_add(
-        va, "Board Width", 33 - 16, minesweeper_scene_settings_screen_set_width, app);
+        va, MS_UI_TEXT("Board Width", "棋盘宽度"), 33 - 16, minesweeper_scene_settings_screen_set_width, app);
 
     app->t_settings_info.width_item = item;
 
@@ -240,7 +247,7 @@ void minesweeper_scene_settings_screen_on_enter(void* context) {
 
     // Set Height Item
     item = variable_item_list_add(
-        va, "Board Height", 33 - 7, minesweeper_scene_settings_screen_set_height, app);
+        va, MS_UI_TEXT("Board Height", "棋盘高度"), 33 - 7, minesweeper_scene_settings_screen_set_height, app);
 
     app->t_settings_info.height_item = item;
 
@@ -255,7 +262,7 @@ void minesweeper_scene_settings_screen_on_enter(void* context) {
 
     // Set solvable item
     item = variable_item_list_add(
-        va, "Ensure Solvable", 2, minesweeper_scene_settings_screen_set_solvable, app);
+        va, MS_UI_TEXT("Ensure Solvable", "保证可解"), 2, minesweeper_scene_settings_screen_set_solvable, app);
 
     app->t_settings_info.solvable_item = item;
 
@@ -269,15 +276,17 @@ void minesweeper_scene_settings_screen_on_enter(void* context) {
 
     // Set sound feedback item
     item = variable_item_list_add(
-        va, "Feedback", 2, minesweeper_scene_settings_screen_set_feedback, app);
+        va, MS_UI_TEXT("Feedback", "反馈"), 2, minesweeper_scene_settings_screen_set_feedback, app);
 
     variable_item_set_current_value_index(item, app->feedback_enabled);
 
-    variable_item_set_current_value_text(item, ((app->feedback_enabled) ? "Enabled" : "Disabled"));
+    variable_item_set_current_value_text(
+        item,
+        ((app->feedback_enabled) ? MS_UI_TEXT("Enabled", "开启") : MS_UI_TEXT("Disabled", "关闭")));
 
     // Set info item
     item = variable_item_list_add(
-        va, "Right For Info", 2, minesweeper_scene_settings_screen_set_info, app);
+        va, MS_UI_TEXT("Right For Info", "右键查看说明"), 2, minesweeper_scene_settings_screen_set_info, app);
 
     variable_item_set_current_value_index(item, 0);
 

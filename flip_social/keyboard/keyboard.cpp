@@ -1,5 +1,10 @@
 #include "keyboard.hpp"
 #include "font/font.h"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_SOCIAL_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_SOCIAL_UI_TEXT(en, zh) (en)
+#endif
 #include <furi_hal.h>
 #include <string.h>
 
@@ -180,7 +185,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         canvas_draw_rbox(canvas, 3, func_y - 7, 30, 9, 1);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_str(canvas, 10, func_y, "SPACE");
+    canvas_draw_str(canvas, 10, func_y, FLIP_SOCIAL_UI_TEXT("SPACE", "空格"));
     canvas_set_color(canvas, ColorBlack);
 
     // Backspace
@@ -190,7 +195,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         canvas_draw_rbox(canvas, 35, func_y - 7, 20, 9, 1);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_str(canvas, 38, func_y, "DEL");
+    canvas_draw_str(canvas, 38, func_y, FLIP_SOCIAL_UI_TEXT("DEL", "删"));
     canvas_set_color(canvas, ColorBlack);
 
     // Shift/Mode
@@ -202,11 +207,11 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
     }
     if (mode == KEYBOARD_NUMBERS)
     {
-        canvas_draw_str(canvas, 60, func_y, "ABC");
+        canvas_draw_str(canvas, 60, func_y, FLIP_SOCIAL_UI_TEXT("ABC", "字母"));
     }
     else
     {
-        canvas_draw_str(canvas, 60, func_y, "123");
+        canvas_draw_str(canvas, 60, func_y, FLIP_SOCIAL_UI_TEXT("123", "数字"));
     }
     canvas_set_color(canvas, ColorBlack);
 
@@ -218,7 +223,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         {
             canvas_draw_rbox(canvas, 79, func_y - 7, 20, 9, 1);
             canvas_set_color(canvas, ColorWhite);
-            canvas_draw_str(canvas, 82, func_y, "CAPS");
+            canvas_draw_str(canvas, 82, func_y, FLIP_SOCIAL_UI_TEXT("CAPS", "大写"));
             canvas_set_color(canvas, ColorBlack);
         }
         else if (caps_lock)
@@ -226,12 +231,12 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
             // When caps lock is on but not selected, draw with inverted colors
             canvas_draw_rbox(canvas, 79, func_y - 7, 20, 9, 1);
             canvas_set_color(canvas, ColorWhite);
-            canvas_draw_str(canvas, 82, func_y, "CAPS");
+            canvas_draw_str(canvas, 82, func_y, FLIP_SOCIAL_UI_TEXT("CAPS", "大写"));
             canvas_set_color(canvas, ColorBlack);
         }
         else
         {
-            canvas_draw_str(canvas, 82, func_y, "CAPS");
+            canvas_draw_str(canvas, 82, func_y, FLIP_SOCIAL_UI_TEXT("CAPS", "大写"));
         }
     }
 
@@ -242,7 +247,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         canvas_draw_rbox(canvas, 101, func_y - 7, 25, 9, 1);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_str(canvas, 105, func_y, "DONE");
+    canvas_draw_str(canvas, 105, func_y, FLIP_SOCIAL_UI_TEXT("DONE", "完成"));
     canvas_set_color(canvas, ColorBlack);
 
     // Draw title at the bottom centered
@@ -379,11 +384,12 @@ const char *Keyboard::getModeName()
     switch (mode)
     {
     case KEYBOARD_UPPERCASE:
-        return caps_lock ? "CAPS" : "ABC";
+        return caps_lock ? FLIP_SOCIAL_UI_TEXT("CAPS", "大写") :
+                           FLIP_SOCIAL_UI_TEXT("ABC", "字母");
     case KEYBOARD_NUMBERS:
-        return "123";
+        return FLIP_SOCIAL_UI_TEXT("123", "数字");
     default:
-        return "abc";
+        return FLIP_SOCIAL_UI_TEXT("abc", "小写");
     }
 }
 

@@ -10,6 +10,11 @@
 #define VERSION "2.0.9"
 #define VERSION_TAG TAG " " VERSION
 #define APP_ID "flip_social"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_SOCIAL_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_SOCIAL_UI_TEXT(en, zh) (en)
+#endif
 
 typedef enum
 {

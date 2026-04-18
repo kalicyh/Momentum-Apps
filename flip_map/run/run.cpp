@@ -68,7 +68,7 @@ void FlipMapRun::drawLocationView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Syncing...");
+                loading->setText(FLIP_MAP_UI_TEXT("Syncing...", "同步中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -117,18 +117,18 @@ void FlipMapRun::drawLocationView(Canvas *canvas)
         }
         break;
     case LocationSuccess:
-        canvas_draw_str(canvas, 0, 10, "Location successful!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Location successful!", "位置更新成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case LocationCredentialsMissing:
-        canvas_draw_str(canvas, 0, 10, "Missing credentials!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Missing credentials!", "缺少凭据!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case LocationRequestError:
-        canvas_draw_str(canvas, 0, 10, "Location request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Location request failed!", "位置请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case LocationNotStarted:
         locationStatus = LocationWaiting;
@@ -136,7 +136,7 @@ void FlipMapRun::drawLocationView(Canvas *canvas)
         break;
     default:
         FURI_LOG_E(TAG, "Unknown location status");
-        canvas_draw_str(canvas, 0, 10, "Syncing...");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Syncing...", "同步中..."));
         break;
     }
 }
@@ -157,7 +157,7 @@ void FlipMapRun::drawLoginView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Logging in...");
+                loading->setText(FLIP_MAP_UI_TEXT("Logging in...", "登录中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -218,30 +218,30 @@ void FlipMapRun::drawLoginView(Canvas *canvas)
         }
         break;
     case LoginSuccess:
-        canvas_draw_str(canvas, 0, 10, "Login successful!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Login successful!", "登录成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case LoginCredentialsMissing:
-        canvas_draw_str(canvas, 0, 10, "Missing credentials!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Missing credentials!", "缺少凭据!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case LoginRequestError:
-        canvas_draw_str(canvas, 0, 10, "Login request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Login request failed!", "登录请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case LoginWrongPassword:
-        canvas_draw_str(canvas, 0, 10, "Wrong password!");
-        canvas_draw_str(canvas, 0, 20, "Please check your password");
-        canvas_draw_str(canvas, 0, 30, "and try again.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Wrong password!", "密码错误!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Please check your password", "请检查密码后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("and try again.", "重新尝试。"));
         break;
     case LoginNotStarted:
         loginStatus = LoginWaiting;
         userRequest(RequestTypeLogin);
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Logging in...");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Logging in...", "登录中..."));
         break;
     }
 }
@@ -254,7 +254,7 @@ void FlipMapRun::drawMapDataMenu(Canvas *canvas)
     char *response = (char *)malloc(2048);
     if (!app || !app->loadChar("map_data", response, 2048))
     {
-        canvas_draw_str(canvas, 0, 10, "Error loading map data!");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Error loading map data!", "加载地图数据失败!"));
         free(response);
         return;
     }
@@ -263,7 +263,7 @@ void FlipMapRun::drawMapDataMenu(Canvas *canvas)
     char *total_users = get_json_value("total_users", response);
     if (!total_users)
     {
-        canvas_draw_str(canvas, 0, 10, "Error parsing map data!");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Error parsing map data!", "解析地图数据失败!"));
         free(response);
         return;
     }
@@ -271,7 +271,12 @@ void FlipMapRun::drawMapDataMenu(Canvas *canvas)
     // Draw title with current view indicator
     canvas_set_font(canvas, FontPrimary);
     char title[32];
-    snprintf(title, sizeof(title), "FlipMap - %s", inCountryView ? "Countries" : "Cities");
+    snprintf(
+        title,
+        sizeof(title),
+        FLIP_MAP_UI_TEXT("FlipMap - %s", "FlipMap - %s"),
+        inCountryView ? FLIP_MAP_UI_TEXT("Countries", "国家") :
+                        FLIP_MAP_UI_TEXT("Cities", "城市"));
     int title_width = canvas_string_width(canvas, title);
     int title_x = (128 - title_width) / 2;
     canvas_draw_str(canvas, title_x, 10, title);
@@ -288,7 +293,7 @@ void FlipMapRun::drawMapDataMenu(Canvas *canvas)
     // Draw total users info in top-right corner
     canvas_set_font(canvas, FontSecondary);
     char users_text[16];
-    snprintf(users_text, sizeof(users_text), "Users: %s", total_users);
+    snprintf(users_text, sizeof(users_text), FLIP_MAP_UI_TEXT("Users: %s", "用户: %s"), total_users);
     int users_width = canvas_string_width(canvas, users_text);
     canvas_draw_str(canvas, 128 - users_width - 2, 63, users_text);
 
@@ -312,7 +317,12 @@ void FlipMapRun::drawMapDataMenu(Canvas *canvas)
         // No items found
         canvas_set_font(canvas, FontPrimary);
         char no_items[32];
-        snprintf(no_items, sizeof(no_items), "No %s found", inCountryView ? "countries" : "cities");
+        snprintf(
+            no_items,
+            sizeof(no_items),
+            FLIP_MAP_UI_TEXT("No %s found", "未找到%s"),
+            inCountryView ? FLIP_MAP_UI_TEXT("countries", "国家") :
+                            FLIP_MAP_UI_TEXT("cities", "城市"));
         int no_items_width = canvas_string_width(canvas, no_items);
         int no_items_x = (128 - no_items_width) / 2;
         canvas_draw_str(canvas, no_items_x, 35, no_items);
@@ -430,7 +440,7 @@ void FlipMapRun::drawMapDataMenu(Canvas *canvas)
 
     // Draw navigation hints at bottom
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 18, 63, "Switch");
+    canvas_draw_str(canvas, 18, 63, FLIP_MAP_UI_TEXT("Switch", "切换"));
     canvas_draw_icon(canvas, 2, 56, &I_ButtonLeft_4x7);
     canvas_draw_icon(canvas, 10, 56, &I_ButtonRight_4x7);
 
@@ -464,7 +474,7 @@ void FlipMapRun::drawMapDataView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Locating...");
+                loading->setText(FLIP_MAP_UI_TEXT("Locating...", "定位中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -512,19 +522,19 @@ void FlipMapRun::drawMapDataView(Canvas *canvas)
         break;
     }
     case MapDataNotStarted:
-        canvas_draw_str(canvas, 0, 10, "Map data not started.");
-        canvas_draw_str(canvas, 0, 20, "Please try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Map data not started.", "地图数据未开始。"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Please try again later.", "请稍后重试。"));
         break;
     case MapDataRequestError:
-        canvas_draw_str(canvas, 0, 10, "Map data request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Map data request failed!", "地图数据请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("try again later.", "稍后重试。"));
         break;
     case MapDataParseError:
-        canvas_draw_str(canvas, 0, 10, "Error parsing map data!");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Error parsing map data!", "解析地图数据失败!"));
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Fetching map data...");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Fetching map data...", "获取地图数据中..."));
         break;
     };
 }
@@ -545,7 +555,7 @@ void FlipMapRun::drawRegistrationView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Registering...");
+                loading->setText(FLIP_MAP_UI_TEXT("Registering...", "注册中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -598,21 +608,21 @@ void FlipMapRun::drawRegistrationView(Canvas *canvas)
         }
         break;
     case RegistrationSuccess:
-        canvas_draw_str(canvas, 0, 10, "Registration successful!");
-        canvas_draw_str(canvas, 0, 20, "Press OK to continue.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Registration successful!", "注册成功!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Press OK to continue.", "按 OK 继续。"));
         break;
     case RegistrationCredentialsMissing:
-        canvas_draw_str(canvas, 0, 10, "Missing credentials!");
-        canvas_draw_str(canvas, 0, 20, "Please set your username");
-        canvas_draw_str(canvas, 0, 30, "and password in the app.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Missing credentials!", "缺少凭据!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Please set your username", "请在应用中设置"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("and password in the app.", "用户名和密码。"));
         break;
     case RegistrationRequestError:
-        canvas_draw_str(canvas, 0, 10, "Registration request failed!");
-        canvas_draw_str(canvas, 0, 20, "Check your network and");
-        canvas_draw_str(canvas, 0, 30, "try again later.");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Registration request failed!", "注册请求失败!"));
+        canvas_draw_str(canvas, 0, 20, FLIP_MAP_UI_TEXT("Check your network and", "请检查网络后"));
+        canvas_draw_str(canvas, 0, 30, FLIP_MAP_UI_TEXT("try again later.", "稍后重试。"));
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Registering...");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Registering...", "注册中..."));
         break;
     }
 }
@@ -648,7 +658,7 @@ void FlipMapRun::updateDraw(Canvas *canvas)
         drawLocationView(canvas);
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Unknown view");
+        canvas_draw_str(canvas, 0, 10, FLIP_MAP_UI_TEXT("Unknown view", "未知视图"));
         break;
     }
 }

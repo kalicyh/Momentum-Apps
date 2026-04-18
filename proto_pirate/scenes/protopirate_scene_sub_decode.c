@@ -127,7 +127,7 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
     if(ctx->state == DecodeStateShowSuccess) {
         // Success screen
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, "DECODED!");
+        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, "已解码!");
 
         // Checkmark animation
         int check_progress = ctx->result_display_counter * 3;
@@ -171,14 +171,14 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
         }
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, "Signal matched!");
+        canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, "信号匹配成功!");
         return;
     }
 
     if(ctx->state == DecodeStateShowFailure) {
         // Failure screen
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, "NO MATCH");
+        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, "未匹配");
 
         // X animation
         int x_progress = ctx->result_display_counter * 3;
@@ -222,7 +222,7 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
             canvas_draw_str_aligned(
                 canvas, 64, 54, AlignCenter, AlignTop, furi_string_get_cstr(ctx->error_info));
         } else {
-            canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, "Unknown protocol");
+            canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, "未知协议");
         }
         return;
     }
@@ -232,7 +232,7 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
     // Title with occasional glitch
     canvas_set_font(canvas, FontPrimary);
     int glitch = (frame % 47 == 0) ? 1 : 0;
-    canvas_draw_str_aligned(canvas, 64 + glitch, 0, AlignCenter, AlignTop, "Decoding");
+    canvas_draw_str_aligned(canvas, 64 + glitch, 0, AlignCenter, AlignTop, "解码中");
 
     // Waveform visualization - original style with sinf
     int wave_y = 22;

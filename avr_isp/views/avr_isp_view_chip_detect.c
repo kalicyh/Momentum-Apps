@@ -4,6 +4,12 @@
 
 #include "../helpers/avr_isp_worker_rw.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AVR_ISP_UI_TEXT(en, zh) (zh)
+#else
+#define AVR_ISP_UI_TEXT(en, zh) (en)
+#endif
+
 struct AvrIspChipDetectView {
     View* view;
     AvrIspWorkerRW* avr_isp_worker_rw;
@@ -44,40 +50,42 @@ void avr_isp_chip_detect_view_draw(Canvas* canvas, AvrIspChipDetectViewModel* mo
 
     switch(model->state) {
     case AvrIspChipDetectViewStateDetected:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "AVR chip detected!");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("AVR chip detected!", "已检测到 AVR 芯片!"));
         canvas_draw_icon(canvas, 29, 14, &I_chip_long_70x22);
         canvas_set_font(canvas, FontSecondary);
         snprintf(str_buf, sizeof(str_buf), "%ld Kb", model->flash_size / 1024);
         canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignCenter, str_buf);
         canvas_draw_str_aligned(canvas, 64, 45, AlignCenter, AlignCenter, model->name_chip);
-        elements_button_right(canvas, "Next");
+        elements_button_right(canvas, AVR_ISP_UI_TEXT("Next", "下一步"));
         break;
     case AvrIspChipDetectViewStateErrorOccured:
         canvas_draw_str_aligned(
-            canvas, 64, 5, AlignCenter, AlignCenter, "Error occured, try again!");
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Error occured, try again!", "发生错误，请重试!"));
         canvas_draw_icon(canvas, 29, 14, &I_chip_error_70x22);
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(
-            canvas, 64, 45, AlignCenter, AlignCenter, "Check the wiring and retry");
+            canvas, 64, 45, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Check the wiring and retry", "请检查接线后重试"));
         break;
     case AvrIspChipDetectViewStateErrorVerification:
         canvas_draw_str_aligned(
-            canvas, 64, 5, AlignCenter, AlignCenter, "Data verification failed");
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Data verification failed", "数据校验失败"));
         canvas_draw_icon(canvas, 29, 14, &I_chip_error_70x22);
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(
-            canvas, 64, 45, AlignCenter, AlignCenter, "Try to restart the process");
+            canvas, 64, 45, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Try to restart the process", "请尝试重新开始流程"));
         break;
 
     default:
         //AvrIspChipDetectViewStateNoDetect
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "AVR chip not found!");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("AVR chip not found!", "未找到 AVR 芯片!"));
         canvas_draw_icon(canvas, 29, 12, &I_chif_not_found_83x37);
 
         break;
     }
     canvas_set_font(canvas, FontSecondary);
-    elements_button_left(canvas, "Retry");
+    elements_button_left(canvas, AVR_ISP_UI_TEXT("Retry", "重试"));
 }
 
 bool avr_isp_chip_detect_view_input(InputEvent* event, void* context) {

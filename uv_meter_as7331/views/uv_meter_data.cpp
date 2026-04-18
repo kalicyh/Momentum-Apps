@@ -6,6 +6,12 @@
 #include <locale/locale.h>
 #include <math.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UV_METER_UI_TEXT(en, zh) (zh)
+#else
+#define UV_METER_UI_TEXT(en, zh) (en)
+#endif
+
 #define UV_METER_MAX_RAW_VALUE 65535.0
 
 struct UVMeterData {
@@ -181,7 +187,8 @@ static void uv_meter_data_draw_maximum_daily_exposure_time(
 
     // Draw "min" label
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, x_center_4_4, y_uvb_bottom + 2, AlignCenter, AlignTop, "min");
+    canvas_draw_str_aligned(
+        canvas, x_center_4_4, y_uvb_bottom + 2, AlignCenter, AlignTop, UV_METER_UI_TEXT("min", "分钟"));
 
     // Draw max exposure time in minutes
     canvas_set_font(canvas, FontPrimary);
@@ -224,13 +231,13 @@ static void uv_meter_data_draw_config_section(
     const char* setting_string;
     switch(current_config_mode) {
     case UVMeterConfigModeGain:
-        setting_string = "Gain";
+        setting_string = UV_METER_UI_TEXT("Gain", "增益");
         break;
     case UVMeterConfigModeExposureTime:
-        setting_string = "Exposure Time (s)";
+        setting_string = UV_METER_UI_TEXT("Exposure Time (s)", "曝光时间(秒)");
         break;
     case UVMeterConfigModeEyesProtection:
-        setting_string = "Eyes Protected";
+        setting_string = UV_METER_UI_TEXT("Eyes Protected", "护眼模式");
         break;
     default:
         setting_string = "";
@@ -279,7 +286,8 @@ static void uv_meter_data_draw_config_section(
 
     // Config button
     canvas_draw_icon(canvas, 2, y_conf + 3, &I_ButtonCenter_7x7);
-    canvas_draw_str_aligned(canvas, 11, y_conf + 3, AlignLeft, AlignTop, "Conf");
+    canvas_draw_str_aligned(
+        canvas, 11, y_conf + 3, AlignLeft, AlignTop, UV_METER_UI_TEXT("Conf", "配置"));
 
     // Gain value
     if(current_config_mode == UVMeterConfigModeGain) {

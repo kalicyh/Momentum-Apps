@@ -5,6 +5,12 @@
 
 #include <gui/gui.h>
 #include <gui/elements.h>
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define YATZEE_UI_TEXT(en, zh) (zh)
+#else
+#define YATZEE_UI_TEXT(en, zh) (en)
+#endif
 #include <input/input.h>
 
 #include <stdlib.h>
@@ -411,14 +417,16 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
     // if new_game, show user instructions
     if(new_game) {
         canvas_set_font(canvas, FontPrimary);
-        elements_multiline_text_aligned(canvas, 64, 0, AlignCenter, AlignTop, "Yatzee!");
+        elements_multiline_text_aligned(canvas, 64, 0, AlignCenter, AlignTop, YATZEE_UI_TEXT("Yatzee!", "快艇骰!"));
         canvas_set_font(canvas, FontSecondary);
         snprintf(
             bigbuffer,
             sizeof(bigbuffer),
-            "Up: Roll\nLeft/Right: Move cursor\nOK: Hold Die\nDown: Score");
+            YATZEE_UI_TEXT(
+                "Up: Roll\nLeft/Right: Move cursor\nOK: Hold Die\nDown: Score",
+                "上: 掷骰\n左/右: 移动光标\nOK: 锁定骰子\n下: 记分"));
         elements_multiline_text_aligned(canvas, 0, 8, AlignLeft, AlignTop, bigbuffer);
-        elements_button_center(canvas, "Start!");
+        elements_button_center(canvas, YATZEE_UI_TEXT("Start!", "开始!"));
         return;
 
     } else {
@@ -622,7 +630,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
             }
             // set game over to true and tell the user the game is over
             game_over = true;
-            elements_button_center(canvas, "Game Over");
+            elements_button_center(canvas, YATZEE_UI_TEXT("Game Over", "游戏结束"));
         }
     }
 }

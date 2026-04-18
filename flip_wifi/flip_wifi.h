@@ -8,6 +8,11 @@
 #define TAG "FlipWiFi"
 #define VERSION "1.6.3"
 #define VERSION_TAG TAG " " VERSION
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_WIFI_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_WIFI_UI_TEXT(en, zh) (en)
+#endif
 #define MAX_SCAN_NETWORKS 100
 #define MAX_SAVED_NETWORKS 25
 #define MAX_SSID_LENGTH 64

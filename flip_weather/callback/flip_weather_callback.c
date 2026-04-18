@@ -27,60 +27,92 @@ static void flip_weather_request_error_draw(Canvas *canvas)
         if (strstr(fhttp.last_response, "[ERROR] Not connected to Wifi. Failed to reconnect.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_WEATHER_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接到 WiFi。"));
+            canvas_draw_str(
+                canvas, 0, 50, FLIP_WEATHER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_WEATHER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(fhttp.last_response, "[ERROR] Failed to connect to Wifi.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_WEATHER_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接到 WiFi。"));
+            canvas_draw_str(
+                canvas, 0, 50, FLIP_WEATHER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_WEATHER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(fhttp.last_response, "[ERROR] GET request failed or returned empty data.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] WiFi error.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_WEATHER_UI_TEXT("[ERROR] WiFi error.", "[错误] WiFi 异常。"));
+            canvas_draw_str(
+                canvas, 0, 50, FLIP_WEATHER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_WEATHER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(fhttp.last_response, "[PONG]") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[STATUS]Connecting to AP...");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_WEATHER_UI_TEXT("[STATUS]Connecting to AP...", "[状态] 正在连接 AP..."));
         }
         else
         {
             canvas_clear(canvas);
             FURI_LOG_E(TAG, "Received an error: %s", fhttp.last_response);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Unusual error...");
-            canvas_draw_str(canvas, 0, 60, "Press BACK and retry.");
+            canvas_draw_str(
+                canvas, 0, 10, FLIP_WEATHER_UI_TEXT("[ERROR] Unusual error...", "[错误] 异常错误..."));
+            canvas_draw_str(
+                canvas, 0, 60, FLIP_WEATHER_UI_TEXT("Press BACK and retry.", "按 BACK 后重试。"));
         }
     }
     else
     {
         canvas_clear(canvas);
-        canvas_draw_str(canvas, 0, 10, "[ERROR] Unknown error.");
-        canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-        canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+        canvas_draw_str(
+            canvas, 0, 10, FLIP_WEATHER_UI_TEXT("[ERROR] Unknown error.", "[错误] 未知错误。"));
+        canvas_draw_str(
+            canvas, 0, 50, FLIP_WEATHER_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+        canvas_draw_str(
+            canvas, 0, 60, FLIP_WEATHER_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
     }
 }
 static void flip_weather_gps_switch_to_view(FlipWeatherApp *app)
 {
-    flip_weather_generic_switch_to_view(app, "Fetching GPS data..", send_geo_location_request, process_geo_location, 1, callback_to_submenu, FlipWeatherViewLoader);
+    flip_weather_generic_switch_to_view(
+        app,
+        FLIP_WEATHER_UI_TEXT("Fetching GPS data..", "正在获取 GPS 数据.."),
+        send_geo_location_request,
+        process_geo_location,
+        1,
+        callback_to_submenu,
+        FlipWeatherViewLoader);
 }
 
 static void flip_weather_weather_switch_to_view(FlipWeatherApp *app)
 {
-    flip_weather_generic_switch_to_view(app, "Fetching Weather data..", send_geo_weather_request, process_weather, 1, callback_to_submenu, FlipWeatherViewLoader);
+    flip_weather_generic_switch_to_view(
+        app,
+        FLIP_WEATHER_UI_TEXT("Fetching Weather data..", "正在获取天气数据.."),
+        send_geo_weather_request,
+        process_weather,
+        1,
+        callback_to_submenu,
+        FlipWeatherViewLoader);
 }
 
 void temperature_unit_change(VariableItem *item)
 {
     uint8_t index = variable_item_get_current_value_index(item);
     use_fahrenheit = (index == 1);
-    variable_item_set_current_value_text(item, use_fahrenheit ? "Fahrenheit" : "Celsius");
+    variable_item_set_current_value_text(
+        item,
+        use_fahrenheit ? FLIP_WEATHER_UI_TEXT("Fahrenheit", "华氏") :
+                         FLIP_WEATHER_UI_TEXT("Celsius", "摄氏"));
     save_settings(
         app_instance->uart_text_input_buffer_ssid,
         app_instance->uart_text_input_buffer_password,

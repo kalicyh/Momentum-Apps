@@ -152,9 +152,9 @@ static void init_matrix_context(MatrixContext* ctx) {
 
 static void render_main_menu(Canvas* canvas, MatrixApp* app) {
     const char* menu_items[] = {
-        "Make it rain!",
-        "Configure fmatrix",
-        "Exit"
+        "开始下雨!",
+        "配置 fmatrix",
+        "退出"
     };
     int num_items = sizeof(menu_items) / sizeof(menu_items[0]);
     
@@ -169,7 +169,7 @@ static void render_main_menu(Canvas* canvas, MatrixApp* app) {
 }
 
 static void render_options_menu(Canvas* canvas, MatrixApp* app) {
-    canvas_draw_str(canvas, 2, 10, "Configure fmatrix");
+    canvas_draw_str(canvas, 2, 10, "配置 fmatrix");
     
     Settings* settings = &app->matrix_ctx.settings;
     

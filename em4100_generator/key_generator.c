@@ -12,6 +12,12 @@
 
 #include "key_generator_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define EM4100_GEN_UI_TEXT(en, zh) (zh)
+#else
+#define EM4100_GEN_UI_TEXT(en, zh) (en)
+#endif
+
 #define DIR_PATH "/ext/lfrfid_fuzzer"
 #define FILE_PATH "/ext/lfrfid_fuzzer/em4100_gen.txt"
 
@@ -24,7 +30,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
 
     canvas_clear(canvas);
     canvas_draw_icon(canvas, 0, 0, &I_ok_64x64);
-    canvas_draw_str(canvas, 74, 24, "Saved as");
+    canvas_draw_str(canvas, 74, 24, EM4100_GEN_UI_TEXT("Saved as", "已保存为"));
     canvas_draw_str(canvas, 65, 36, "lfrfid_fuzzer/");
     canvas_draw_str(canvas, 56, 48, "em4100_gen.txt");
 }

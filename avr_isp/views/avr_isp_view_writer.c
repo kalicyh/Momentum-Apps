@@ -4,6 +4,12 @@
 #include "../helpers/avr_isp_worker_rw.h"
 #include <float_tools.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AVR_ISP_UI_TEXT(en, zh) (zh)
+#else
+#define AVR_ISP_UI_TEXT(en, zh) (en)
+#endif
+
 struct AvrIspWriterView {
     View* view;
     AvrIspWorkerRW* avr_isp_worker_rw;
@@ -62,41 +68,46 @@ void avr_isp_writer_view_draw(Canvas* canvas, AvrIspWriterViewModel* model) {
 
     switch(model->status) {
     case AvrIspWriterViewStatusIDLE:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Press start to write");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Press start to write", "按开始写入"));
         canvas_set_font(canvas, FontSecondary);
-        elements_button_center(canvas, "Start");
+        elements_button_center(canvas, AVR_ISP_UI_TEXT("Start", "开始"));
         snprintf(str_flash, sizeof(str_flash), "%d%%", (uint8_t)(model->progress_flash * 100));
         snprintf(str_eeprom, sizeof(str_eeprom), "%d%%", (uint8_t)(model->progress_eeprom * 100));
         break;
     case AvrIspWriterViewStatusWriting:
         if(float_is_equal(model->progress_flash, 0.f)) {
-            canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Verifying firmware");
+            canvas_draw_str_aligned(
+                canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Verifying firmware", "正在校验固件"));
             snprintf(str_flash, sizeof(str_flash), "***");
             snprintf(str_eeprom, sizeof(str_eeprom), "***");
         } else {
-            canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Writing dump");
+            canvas_draw_str_aligned(
+                canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Writing dump", "正在写入转储"));
             snprintf(str_flash, sizeof(str_flash), "%d%%", (uint8_t)(model->progress_flash * 100));
             snprintf(
                 str_eeprom, sizeof(str_eeprom), "%d%%", (uint8_t)(model->progress_eeprom * 100));
         }
         break;
     case AvrIspWriterViewStatusVerification:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Verifying dump");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Verifying dump", "正在校验转储"));
         snprintf(str_flash, sizeof(str_flash), "%d%%", (uint8_t)(model->progress_flash * 100));
         snprintf(str_eeprom, sizeof(str_eeprom), "%d%%", (uint8_t)(model->progress_eeprom * 100));
         break;
     case AvrIspWriterViewStatusWritingFuse:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Writing fuse");
+        canvas_draw_str_aligned(
+            canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Writing fuse", "正在写入熔丝位"));
         snprintf(str_flash, sizeof(str_flash), "%d%%", (uint8_t)(model->progress_flash * 100));
         snprintf(str_eeprom, sizeof(str_eeprom), "%d%%", (uint8_t)(model->progress_eeprom * 100));
         break;
     case AvrIspWriterViewStatusWritingFuseOk:
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, "Done!");
+        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignCenter, AVR_ISP_UI_TEXT("Done!", "完成!"));
         snprintf(str_flash, sizeof(str_flash), "%d%%", (uint8_t)(model->progress_flash * 100));
         snprintf(str_eeprom, sizeof(str_eeprom), "%d%%", (uint8_t)(model->progress_eeprom * 100));
         canvas_set_font(canvas, FontSecondary);
-        elements_button_center(canvas, "Reflash");
-        elements_button_right(canvas, "Exit");
+        elements_button_center(canvas, AVR_ISP_UI_TEXT("Reflash", "重新刷写"));
+        elements_button_right(canvas, AVR_ISP_UI_TEXT("Exit", "退出"));
         break;
 
     default:
@@ -104,10 +115,10 @@ void avr_isp_writer_view_draw(Canvas* canvas, AvrIspWriterViewModel* model) {
     }
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 27, "Flash");
+    canvas_draw_str(canvas, 0, 27, AVR_ISP_UI_TEXT("Flash", "闪存"));
     // snprintf(str_buf, sizeof(str_buf), "%d%%", (uint8_t)(model->progress_flash * 100));
     elements_progress_bar_with_text(canvas, 44, 17, 84, model->progress_flash, str_flash);
-    canvas_draw_str(canvas, 0, 43, "EEPROM");
+    canvas_draw_str(canvas, 0, 43, AVR_ISP_UI_TEXT("EEPROM", "EEPROM"));
     // snprintf(str_buf, sizeof(str_buf), "%d%%", (uint8_t)(model->progress_eeprom * 100));
     elements_progress_bar_with_text(canvas, 44, 34, 84, model->progress_eeprom, str_eeprom);
 }

@@ -1,5 +1,11 @@
 #include "../ac_remote_app_i.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define HITACHI_AC_UI_TEXT(en, zh) (zh)
+#else
+#define HITACHI_AC_UI_TEXT(en, zh) (en)
+#endif
+
 static void dex_reset_confirm_on_result(DialogExResult result, void* context) {
     furi_assert(context);
 
@@ -27,16 +33,17 @@ void ac_remote_scene_reset_confirm_on_enter(void* context) {
     AC_RemoteApp* app = context;
     DialogEx* dex_reset_confirm = app->dex_reset_confirm;
 
-    dialog_ex_set_header(dex_reset_confirm, "Reset settings?", 63, 0, AlignCenter, AlignTop);
+    dialog_ex_set_header(
+        dex_reset_confirm, HITACHI_AC_UI_TEXT("Reset settings?", "重置设置?"), 63, 0, AlignCenter, AlignTop);
     dialog_ex_set_text(
         dex_reset_confirm,
-        "All settings will be reset to a\nsafe default.",
+        HITACHI_AC_UI_TEXT("All settings will be reset to a\nsafe default.", "所有设置都将重置为\n安全默认值。"),
         63,
         31,
         AlignCenter,
         AlignCenter);
-    dialog_ex_set_left_button_text(dex_reset_confirm, "Back");
-    dialog_ex_set_right_button_text(dex_reset_confirm, "Reset");
+    dialog_ex_set_left_button_text(dex_reset_confirm, HITACHI_AC_UI_TEXT("Back", "返回"));
+    dialog_ex_set_right_button_text(dex_reset_confirm, HITACHI_AC_UI_TEXT("Reset", "重置"));
     dialog_ex_set_context(dex_reset_confirm, app);
     dialog_ex_set_result_callback(dex_reset_confirm, dex_reset_confirm_on_result);
 

@@ -1,4 +1,10 @@
 #include <furi.h>
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ROOTS_UI_TEXT(en, zh) (zh)
+#else
+#define ROOTS_UI_TEXT(en, zh) (en)
+#endif
 #include <gui/gui.h>
 #include <input/input.h>
 #include <stdlib.h>
@@ -540,8 +546,8 @@ static void draw_start_ui(Canvas* canvas, GameState* state) {
 
     int x = FLIPPER_LCD_WIDTH / 2 - w2;
     int y = FLIPPER_LCD_HEIGHT / 2 - h2;
-    canvas_draw_str(canvas, x + 1, y + 9, "  Grow your roots  ");
-    canvas_draw_str(canvas, x + 1, y + 18, "Press [OK] to start");
+    canvas_draw_str(canvas, x + 1, y + 9, ROOTS_UI_TEXT("  Grow your roots  ", "    生长根系    "));
+    canvas_draw_str(canvas, x + 1, y + 18, ROOTS_UI_TEXT("Press [OK] to start", "按 [OK] 开始"));
 
     UNUSED(state);
 }
@@ -555,14 +561,15 @@ static void draw_end_ui(Canvas* canvas, GameState* state) {
     int x = FLIPPER_LCD_WIDTH / 2 - w2;
     int y = FLIPPER_LCD_HEIGHT / 2 - h2;
 
-    canvas_draw_str(canvas, x + 1, y + 9, "        Game Over        ");
+    canvas_draw_str(canvas, x + 1, y + 9, ROOTS_UI_TEXT("        Game Over        ", "         游戏结束         "));
 
     FuriString* tmp_string = furi_string_alloc();
-    furi_string_printf(tmp_string, "You've got %d points", MAX(0, state->score));
+    furi_string_printf(
+        tmp_string, ROOTS_UI_TEXT("You've got %d points", "你获得了 %d 分"), MAX(0, state->score));
     canvas_draw_str(canvas, x + 1, y + 19, furi_string_get_cstr(tmp_string));
     furi_string_free(tmp_string);
 
-    canvas_draw_str(canvas, x + 2, y + 29, "Press [OK] to restart");
+    canvas_draw_str(canvas, x + 2, y + 29, ROOTS_UI_TEXT("Press [OK] to restart", "按 [OK] 重新开始"));
 
     int h = 13, w = 54;
     canvas_set_color(canvas, ColorWhite);

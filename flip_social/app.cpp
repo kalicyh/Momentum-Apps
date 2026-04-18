@@ -20,9 +20,24 @@ FlipSocialApp::FlipSocialApp()
         return;
     }
 
-    submenu_add_item(submenu, "Run", FlipSocialSubmenuRun, submenuChoicesCallback, this);
-    submenu_add_item(submenu, "About", FlipSocialSubmenuAbout, submenuChoicesCallback, this);
-    submenu_add_item(submenu, "Settings", FlipSocialSubmenuSettings, submenuChoicesCallback, this);
+    submenu_add_item(
+        submenu,
+        FLIP_SOCIAL_UI_TEXT("Run", "运行"),
+        FlipSocialSubmenuRun,
+        submenuChoicesCallback,
+        this);
+    submenu_add_item(
+        submenu,
+        FLIP_SOCIAL_UI_TEXT("About", "关于"),
+        FlipSocialSubmenuAbout,
+        submenuChoicesCallback,
+        this);
+    submenu_add_item(
+        submenu,
+        FLIP_SOCIAL_UI_TEXT("Settings", "设置"),
+        FlipSocialSubmenuSettings,
+        submenuChoicesCallback,
+        this);
 
     flipperHttp = flipper_http_alloc();
     if (!flipperHttp)
@@ -114,21 +129,33 @@ void FlipSocialApp::callbackSubmenuChoices(uint32_t index)
         // if the board is not connected, we can't use WiFi
         if (!isBoardConnected())
         {
-            easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+            easy_flipper_dialog(
+                FLIP_SOCIAL_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+                FLIP_SOCIAL_UI_TEXT(
+                    "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                    "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
             return;
         }
         // if we don't have WiFi credentials, we can't connect to WiFi in case
         // we are not connected to WiFi yet
         if (!hasWiFiCredentials())
         {
-            easy_flipper_dialog("No WiFi Credentials", "Please set your WiFi SSID\nand Password in Settings.");
+            easy_flipper_dialog(
+                FLIP_SOCIAL_UI_TEXT("No WiFi Credentials", "缺少 WiFi 凭据"),
+                FLIP_SOCIAL_UI_TEXT(
+                    "Please set your WiFi SSID\nand Password in Settings.",
+                    "请在设置中填写 WiFi SSID\n和密码。"));
             return;
         }
 
         // if we don't have user credentials, we can't connect to the user account
         if (!hasUserCredentials())
         {
-            easy_flipper_dialog("No User Credentials", "Please set your Username\nand Password in Settings.");
+            easy_flipper_dialog(
+                FLIP_SOCIAL_UI_TEXT("No User Credentials", "缺少用户凭据"),
+                FLIP_SOCIAL_UI_TEXT(
+                    "Please set your Username\nand Password in Settings.",
+                    "请在设置中填写用户名\n和密码。"));
             return;
         }
 
@@ -519,7 +546,11 @@ void FlipSocialApp::updateApp()
     {
         if (update_is_ready(flipperHttp, true))
         {
-            easy_flipper_dialog("Update Status", "Complete.\nRestart your Flipper Zero.");
+            easy_flipper_dialog(
+                FLIP_SOCIAL_UI_TEXT("Update Status", "更新状态"),
+                FLIP_SOCIAL_UI_TEXT(
+                    "Complete.\nRestart your Flipper Zero.",
+                    "更新完成。\n请重启 Flipper Zero。"));
         }
     }
 }

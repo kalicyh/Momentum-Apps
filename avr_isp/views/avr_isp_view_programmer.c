@@ -4,6 +4,12 @@
 #include "../helpers/avr_isp_worker.h"
 #include <gui/elements.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AVR_ISP_UI_TEXT(en, zh) (zh)
+#else
+#define AVR_ISP_UI_TEXT(en, zh) (en)
+#endif
+
 struct AvrIspProgrammerView {
     View* view;
     AvrIspWorker* worker;
@@ -32,11 +38,12 @@ void avr_isp_programmer_view_draw(Canvas* canvas, AvrIspProgrammerViewModel* mod
     if(model->status == AvrIspProgrammerViewStatusUSBConnect) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_icon(canvas, 0, 0, &I_isp_active_128x53);
-        elements_multiline_text(canvas, 45, 10, "ISP mode active");
+        elements_multiline_text(canvas, 45, 10, AVR_ISP_UI_TEXT("ISP mode active", "ISP 模式已启用"));
     } else {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_icon(canvas, 51, 6, &I_link_waiting_77x56);
-        elements_multiline_text(canvas, 0, 25, "Waiting for\nsoftware\nconnection");
+        elements_multiline_text(
+            canvas, 0, 25, AVR_ISP_UI_TEXT("Waiting for\nsoftware\nconnection", "等待软件\n连接"));
     }
 }
 

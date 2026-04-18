@@ -1265,10 +1265,10 @@ static void render_callback(Canvas* const canvas, void* ctx) {
             struct ADDRS* a;
             if(what_to_do == 1) {
                 a = &addrs_sniff;
-                canvas_draw_str(canvas, 0, 1 * 7, "Sniff prefix:");
+                canvas_draw_str(canvas, 0, 1 * 7, "嗅探前缀:");
             } else {
                 a = &addrs;
-                canvas_draw_str(canvas, 0, 1 * 7, "Addresses:");
+                canvas_draw_str(canvas, 0, 1 * 7, "地址:");
             }
             if(a->addr_count > 0) {
                 snprintf(screen_buf, sizeof(screen_buf), "P0: ");

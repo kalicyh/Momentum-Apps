@@ -3,6 +3,12 @@
 
 #include "ui.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BLACKJACK_UI_TEXT(en, zh) (zh)
+#else
+#define BLACKJACK_UI_TEXT(en, zh) (en)
+#endif
+
 #define LINE_HEIGHT  16
 #define ITEM_PADDING 4
 
@@ -36,7 +42,11 @@ void popup_frame(Canvas* const canvas) {
 }
 
 void draw_play_menu(Canvas* const canvas, const GameState* game_state) {
-    const char* menus[3] = {"Double", "Hit", "Stay"};
+    const char* menus[3] = {
+        BLACKJACK_UI_TEXT("Double", "加倍"),
+        BLACKJACK_UI_TEXT("Hit", "要牌"),
+        BLACKJACK_UI_TEXT("Stay", "停牌"),
+    };
     for(uint8_t m = 0; m < 3; m++) {
         if(m == 0 &&
            (game_state->doubled || game_state->player_score < game_state->settings.round_price))
@@ -72,7 +82,7 @@ void draw_screen(Canvas* const canvas, const bool* points) {
 
 void draw_score(Canvas* const canvas, bool top, uint8_t amount) {
     char drawChar[20];
-    snprintf(drawChar, sizeof(drawChar), "Player score: %i", amount);
+    snprintf(drawChar, sizeof(drawChar), BLACKJACK_UI_TEXT("Player score: %i", "玩家点数: %i"), amount);
     if(top)
         canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, drawChar);
     else
@@ -143,7 +153,7 @@ void settings_page(Canvas* const canvas, const GameState* gameState) {
     snprintf(drawChar, sizeof(drawChar), "%li", gameState->settings.starting_money);
     draw_menu(
         canvas,
-        "Start money",
+        BLACKJACK_UI_TEXT("Start money", "初始金额"),
         drawChar,
         0 * LINE_HEIGHT + startY,
         gameState->settings.starting_money > gameState->settings.round_price,
@@ -152,7 +162,7 @@ void settings_page(Canvas* const canvas, const GameState* gameState) {
     snprintf(drawChar, sizeof(drawChar), "%li", gameState->settings.round_price);
     draw_menu(
         canvas,
-        "Round price",
+        BLACKJACK_UI_TEXT("Round price", "每局下注"),
         drawChar,
         1 * LINE_HEIGHT + startY,
         gameState->settings.round_price > 10,
@@ -162,7 +172,7 @@ void settings_page(Canvas* const canvas, const GameState* gameState) {
     snprintf(drawChar, sizeof(drawChar), "%li", gameState->settings.animation_duration);
     draw_menu(
         canvas,
-        "Anim. length",
+        BLACKJACK_UI_TEXT("Anim. length", "动画时长"),
         drawChar,
         2 * LINE_HEIGHT + startY,
         gameState->settings.animation_duration > 0,
@@ -171,7 +181,7 @@ void settings_page(Canvas* const canvas, const GameState* gameState) {
     snprintf(drawChar, sizeof(drawChar), "%li", gameState->settings.message_duration);
     draw_menu(
         canvas,
-        "Popup time",
+        BLACKJACK_UI_TEXT("Popup time", "弹窗时长"),
         drawChar,
         3 * LINE_HEIGHT + startY,
         gameState->settings.message_duration > 0,

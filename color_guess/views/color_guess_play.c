@@ -135,9 +135,10 @@ void color_guess_play_draw(Canvas* canvas, ColorGuessPlayModel* model) {
         canvas_clear(canvas);
         canvas_set_color(canvas, ColorBlack);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "You won!!");
+        canvas_draw_str_aligned(
+            canvas, 64, 2, AlignCenter, AlignTop, COLOR_GUESS_UI_TEXT("You won!!", "你赢了!!"));
         canvas_set_font(canvas, FontSecondary);
-        elements_button_center(canvas, "New Round");
+        elements_button_center(canvas, COLOR_GUESS_UI_TEXT("New Round", "新一轮"));
         canvas_set_font(canvas, FontBigNumbers);
         canvas_draw_str_aligned(canvas, 64, 16, AlignCenter, AlignTop, timer_string);
 
@@ -167,9 +168,11 @@ void color_guess_play_draw(Canvas* canvas, ColorGuessPlayModel* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, "Time spent:");
+    canvas_draw_str_aligned(
+        canvas, 0, 0, AlignLeft, AlignTop, COLOR_GUESS_UI_TEXT("Time spent:", "耗时:"));
     canvas_draw_str_aligned(canvas, 55, 0, AlignLeft, AlignTop, timer_string); // DRAW TIMER
-    canvas_draw_str_aligned(canvas, 0, 9, AlignLeft, AlignTop, "You are this close:");
+    canvas_draw_str_aligned(
+        canvas, 0, 9, AlignLeft, AlignTop, COLOR_GUESS_UI_TEXT("You are this close:", "接近程度:"));
     canvas_draw_str_aligned(canvas, 105, 9, AlignLeft, AlignTop, closeness_string);
 
     canvas_draw_icon(canvas, newCursorPos, 20, &I_ButtonUp_10x5);
@@ -181,7 +184,7 @@ void color_guess_play_draw(Canvas* canvas, ColorGuessPlayModel* model) {
     canvas_draw_icon(canvas, 66, 27, digits[model->digit[3]]);
     canvas_draw_icon(canvas, 78, 27, digits[model->digit[4]]);
     canvas_draw_icon(canvas, 90, 27, digits[model->digit[5]]);
-    elements_button_right(canvas, "Guess this color");
+    elements_button_right(canvas, COLOR_GUESS_UI_TEXT("Guess this color", "提交颜色"));
     drawDifficulty(canvas, model);
 }
 

@@ -31,7 +31,7 @@ void flip_tdi_view_main_draw(Canvas* canvas, FlipTDIViewMainTypeModel* model) {
 
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_icon(canvas, 0, 0, &I_flip_tdi);
-    elements_button_right(canvas, "More");
+    elements_button_right(canvas, FLIP_TDI_UI_TEXT("More", "更多"));
 }
 
 bool flip_tdi_view_main_input(InputEvent* event, void* context) {

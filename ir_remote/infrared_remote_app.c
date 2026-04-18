@@ -19,6 +19,12 @@
 #include "infrared_remote_button.h"
 #define TAG "ir_remote"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define IR_REMOTE_UI_TEXT(en, zh) (zh)
+#else
+#define IR_REMOTE_UI_TEXT(en, zh) (en)
+#endif
+
 #include <flipper_format/flipper_format.h>
 
 typedef struct {
@@ -47,10 +53,13 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
         canvas_clear(canvas);
         view_port_set_orientation(app->view_port, ViewPortOrientationHorizontal);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 62, 5, AlignCenter, AlignTop, "Config is incorrect.");
+        canvas_draw_str_aligned(
+            canvas, 62, 5, AlignCenter, AlignTop, IR_REMOTE_UI_TEXT("Config is incorrect.", "配置不正确。"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 62, 30, AlignCenter, AlignTop, "Please configure map.");
-        canvas_draw_str_aligned(canvas, 62, 60, AlignCenter, AlignBottom, "Press Back to Exit.");
+        canvas_draw_str_aligned(
+            canvas, 62, 30, AlignCenter, AlignTop, IR_REMOTE_UI_TEXT("Please configure map.", "请先配置映射。"));
+        canvas_draw_str_aligned(
+            canvas, 62, 60, AlignCenter, AlignBottom, IR_REMOTE_UI_TEXT("Press Back to Exit.", "按返回键退出。"));
     } else {
         canvas_clear(canvas);
         view_port_set_orientation(app->view_port, ViewPortOrientationVertical);
@@ -101,7 +110,8 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
             furi_string_get_cstr(app->right_hold_button));
         canvas_draw_str_aligned(
             canvas, 32, 113, AlignCenter, AlignCenter, furi_string_get_cstr(app->ok_hold_button));
-        canvas_draw_str_aligned(canvas, 32, 123, AlignCenter, AlignCenter, "Exit App");
+        canvas_draw_str_aligned(
+            canvas, 32, 123, AlignCenter, AlignCenter, IR_REMOTE_UI_TEXT("Exit App", "退出应用"));
     }
 }
 

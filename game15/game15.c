@@ -7,6 +7,12 @@
 
 #include "sandbox.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GAME15_UI_TEXT(en, zh) (zh)
+#else
+#define GAME15_UI_TEXT(en, zh) (en)
+#endif
+
 #define FPS              20
 #define CELL_WIDTH       10
 #define CELL_HEIGHT      8
@@ -51,7 +57,10 @@ static moving_cell_t moving_cell;
 static uint8_t loaded_saving_ticks;
 static uint8_t popup_menu_selected_item;
 
-static const char* popup_menu_strings[] = {"Continue", "Reset"};
+static const char* popup_menu_strings[] = {
+    GAME15_UI_TEXT("Continue", "继续"),
+    GAME15_UI_TEXT("Reset", "重置"),
+};
 
 static uint8_t keys[KEY_STACK_SIZE];
 static uint8_t key_stack_head = 0;
@@ -364,7 +373,12 @@ static void render_callback(Canvas* const canvas) {
             canvas_set_color(canvas, ColorBlack);
             canvas_draw_rframe(canvas, 20, 24, 88, 16, 4);
             canvas_draw_str_aligned(
-                canvas, 64, 32, AlignCenter, AlignCenter, "Restoring game ...");
+                canvas,
+                64,
+                32,
+                AlignCenter,
+                AlignCenter,
+                GAME15_UI_TEXT("Restoring game ...", "正在恢复游戏..."));
         }
     }
 

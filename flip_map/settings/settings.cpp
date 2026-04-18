@@ -9,12 +9,18 @@ FlipMapSettings::FlipMapSettings(ViewDispatcher **view_dispatcher, void *appCont
         return;
     }
 
-    variable_item_wifi_ssid = variable_item_list_add(variable_item_list, "WiFi SSID", 1, nullptr, nullptr);
-    variable_item_wifi_pass = variable_item_list_add(variable_item_list, "WiFi Password", 1, nullptr, nullptr);
-    variable_item_connect = variable_item_list_add(variable_item_list, "[Connect To WiFi]", 1, nullptr, nullptr);
-    variable_item_user_name = variable_item_list_add(variable_item_list, "User Name", 1, nullptr, nullptr);
-    variable_item_user_pass = variable_item_list_add(variable_item_list, "User Password", 1, nullptr, nullptr);
-    variable_item_location = variable_item_list_add(variable_item_list, "Location", 2, callbackLocation, nullptr);
+    variable_item_wifi_ssid = variable_item_list_add(
+        variable_item_list, FLIP_MAP_UI_TEXT("WiFi SSID", "WiFi SSID"), 1, nullptr, nullptr);
+    variable_item_wifi_pass = variable_item_list_add(
+        variable_item_list, FLIP_MAP_UI_TEXT("WiFi Password", "WiFi 密码"), 1, nullptr, nullptr);
+    variable_item_connect = variable_item_list_add(
+        variable_item_list, FLIP_MAP_UI_TEXT("[Connect To WiFi]", "[连接到 WiFi]"), 1, nullptr, nullptr);
+    variable_item_user_name = variable_item_list_add(
+        variable_item_list, FLIP_MAP_UI_TEXT("User Name", "用户名"), 1, nullptr, nullptr);
+    variable_item_user_pass = variable_item_list_add(
+        variable_item_list, FLIP_MAP_UI_TEXT("User Password", "用户密码"), 1, nullptr, nullptr);
+    variable_item_location = variable_item_list_add(
+        variable_item_list, FLIP_MAP_UI_TEXT("Location", "位置"), 2, callbackLocation, nullptr);
 
     char loaded_ssid[64];
     char loaded_pass[64];
@@ -58,12 +64,16 @@ FlipMapSettings::FlipMapSettings(ViewDispatcher **view_dispatcher, void *appCont
     {
         const int index = strcmp(locationStatus, "Enabled") == 0 ? 1 : 0;
         variable_item_set_current_value_index(variable_item_location, index);
-        variable_item_set_current_value_text(variable_item_location, locationStatus);
+        variable_item_set_current_value_text(
+            variable_item_location,
+            index == 1 ? FLIP_MAP_UI_TEXT("Enabled", "已启用") :
+                         FLIP_MAP_UI_TEXT("Disabled", "已禁用"));
     }
     else
     {
         variable_item_set_current_value_index(variable_item_location, 0);
-        variable_item_set_current_value_text(variable_item_location, "Disabled");
+        variable_item_set_current_value_text(
+            variable_item_location, FLIP_MAP_UI_TEXT("Disabled", "已禁用"));
     }
 }
 
@@ -101,7 +111,11 @@ uint32_t FlipMapSettings::callbackToSubmenu(void *context)
         // show warning message if enabled
         if (index == 1)
         {
-            easy_flipper_dialog("Warning", "User location is enabled.\n\nOther users may see your\ngeneral location ONLY. Exact\nlocation is NEVER shared!");
+            easy_flipper_dialog(
+                FLIP_MAP_UI_TEXT("Warning", "警告"),
+                FLIP_MAP_UI_TEXT(
+                    "User location is enabled.\n\nOther users may see your\ngeneral location ONLY. Exact\nlocation is NEVER shared!",
+                    "用户位置已启用。\n\n其他用户只能看到你的\n大致位置，绝不会共享\n精确位置。"));
         }
     }
     return FlipMapViewSubmenu;
@@ -112,7 +126,11 @@ void FlipMapSettings::callbackLocation(VariableItem *item)
 
     uint8_t index = variable_item_get_current_value_index(item);
     const char *locationOptions[] = {"Disabled", "Enabled"};
-    variable_item_set_current_value_text(item, locationOptions[index]);
+    const char *locationDisplayOptions[] = {
+        FLIP_MAP_UI_TEXT("Disabled", "已禁用"),
+        FLIP_MAP_UI_TEXT("Enabled", "已启用"),
+    };
+    variable_item_set_current_value_text(item, locationDisplayOptions[index]);
     variable_item_set_current_value_index(item, index);
     // manual save here since appContext is not available in static methods
     // which still doesnt make sense to me but probably because it expects a C function
@@ -181,11 +199,11 @@ bool FlipMapSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipMapViewTextInput,
-                                                "Enter SSID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_MAP_UI_TEXT("Enter SSID", "输入 SSID"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedSsidCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipMapViewTextInput,
-                                           "Enter SSID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_MAP_UI_TEXT("Enter SSID", "输入 SSID"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedSsidCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -202,11 +220,11 @@ bool FlipMapSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipMapViewTextInput,
-                                                "Enter Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_MAP_UI_TEXT("Enter Password", "输入密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipMapViewTextInput,
-                                           "Enter Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_MAP_UI_TEXT("Enter Password", "输入密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -223,11 +241,11 @@ bool FlipMapSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipMapViewTextInput,
-                                                "Enter User Name", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_MAP_UI_TEXT("Enter User Name", "输入用户名"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedUserNameCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipMapViewTextInput,
-                                           "Enter User Name", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_MAP_UI_TEXT("Enter User Name", "输入用户名"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedUserNameCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -244,11 +262,11 @@ bool FlipMapSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipMapViewTextInput,
-                                                "Enter User Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                FLIP_MAP_UI_TEXT("Enter User Password", "输入用户密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedUserPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipMapViewTextInput,
-                                           "Enter User Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           FLIP_MAP_UI_TEXT("Enter User Password", "输入用户密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedUserPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }

@@ -106,7 +106,9 @@ void callback_text_updated_deauth(void *context)
         app->fhttp = flipper_http_alloc();
         if (!app->fhttp)
         {
-            easy_flipper_dialog("[ERROR]", "Failed to initialize flipper http");
+            easy_flipper_dialog(
+                FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"),
+                FLIP_WIFI_UI_TEXT("Failed to initialize flipper http", "初始化 FlipperHTTP 失败"));
             return;
         }
     }
@@ -116,7 +118,9 @@ void callback_text_updated_deauth(void *context)
     view_dispatcher_switch_to_view(app->view_dispatcher, loading_view_id);
     if (!flipper_http_deauth_start(app->fhttp, app->uart_text_input_temp_buffer))
     {
-        easy_flipper_dialog("[ERROR]", "Failed to start deauth attack");
+        easy_flipper_dialog(
+            FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"),
+            FLIP_WIFI_UI_TEXT("Failed to start deauth attack", "启动去认证攻击失败"));
         flipper_http_free(app->fhttp);
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWiFiViewSubmenuMain);
         view_dispatcher_remove_view(app->view_dispatcher, loading_view_id);
@@ -131,8 +135,12 @@ void callback_text_updated_deauth(void *context)
     if (strstr(app->fhttp->last_response, "[DEAUTH/STARTING]") == NULL)
     {
         char response[256];
-        snprintf(response, sizeof(response), "Failed to start deauth attack:\n%s", app->fhttp->last_response);
-        easy_flipper_dialog("[ERROR]", response);
+        snprintf(
+            response,
+            sizeof(response),
+            FLIP_WIFI_UI_TEXT("Failed to start deauth attack:\n%s", "启动去认证攻击失败:\n%s"),
+            app->fhttp->last_response);
+        easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), response);
         flipper_http_free(app->fhttp);
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWiFiViewSubmenuMain);
         view_dispatcher_remove_view(app->view_dispatcher, loading_view_id);
@@ -147,8 +155,12 @@ void callback_text_updated_deauth(void *context)
     if (strstr(app->fhttp->last_response, "[ERROR]") != NULL)
     {
         char response[256];
-        snprintf(response, sizeof(response), "Failed to start deauth attack:\n%s", app->fhttp->last_response);
-        easy_flipper_dialog("[ERROR]", response);
+        snprintf(
+            response,
+            sizeof(response),
+            FLIP_WIFI_UI_TEXT("Failed to start deauth attack:\n%s", "启动去认证攻击失败:\n%s"),
+            app->fhttp->last_response);
+        easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), response);
         flipper_http_free(app->fhttp);
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWiFiViewSubmenuMain);
         view_dispatcher_remove_view(app->view_dispatcher, loading_view_id);
@@ -190,8 +202,13 @@ void callback_redraw_submenu_saved(void *context)
         return;
     }
     submenu_reset(app->submenu_wifi);
-    submenu_set_header(app->submenu_wifi, "Saved APs");
-    submenu_add_item(app->submenu_wifi, "[Add Network]", FlipWiFiSubmenuIndexWiFiSavedAddSSID, callback_submenu_choices, app);
+    submenu_set_header(app->submenu_wifi, FLIP_WIFI_UI_TEXT("Saved APs", "已保存 AP"));
+    submenu_add_item(
+        app->submenu_wifi,
+        FLIP_WIFI_UI_TEXT("[Add Network]", "[添加网络]"),
+        FlipWiFiSubmenuIndexWiFiSavedAddSSID,
+        callback_submenu_choices,
+        app);
     for (size_t i = 0; i < wifi_playlist->count; i++)
     {
         submenu_add_item(app->submenu_wifi, wifi_playlist->ssids[i], FlipWiFiSubmenuIndexWiFiSavedStart + i, callback_submenu_choices, app);
@@ -205,9 +222,11 @@ void callback_view_draw_callback_scan(Canvas *canvas, void *model)
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 0, 10, ssid_list[ssid_index]);
     canvas_draw_icon(canvas, 0, 53, &I_ButtonBACK_10x8);
-    canvas_draw_str_aligned(canvas, 12, 54, AlignLeft, AlignTop, "Back");
+    canvas_draw_str_aligned(
+        canvas, 12, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Back", "返回"));
     canvas_draw_icon(canvas, 96, 53, &I_ButtonRight_4x7);
-    canvas_draw_str_aligned(canvas, 103, 54, AlignLeft, AlignTop, "Add");
+    canvas_draw_str_aligned(
+        canvas, 103, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Add", "添加"));
 }
 
 void callback_view_draw_callback_saved(Canvas *canvas, void *model)
@@ -218,16 +237,21 @@ void callback_view_draw_callback_saved(Canvas *canvas, void *model)
     canvas_draw_str(canvas, 0, 10, current_ssid);
     canvas_set_font(canvas, FontSecondary);
     char password[72];
-    snprintf(password, sizeof(password), "Pass: %s", current_password);
+    snprintf(
+        password, sizeof(password), FLIP_WIFI_UI_TEXT("Pass: %s", "密码: %s"), current_password);
     canvas_draw_str(canvas, 0, 20, password);
     canvas_draw_icon(canvas, 0, 54, &I_ButtonLeft_4x7);
-    canvas_draw_str_aligned(canvas, 7, 54, AlignLeft, AlignTop, "Delete");
+    canvas_draw_str_aligned(
+        canvas, 7, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Delete", "删除"));
     canvas_draw_icon(canvas, 37, 53, &I_ButtonBACK_10x8);
-    canvas_draw_str_aligned(canvas, 49, 54, AlignLeft, AlignTop, "Back");
+    canvas_draw_str_aligned(
+        canvas, 49, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Back", "返回"));
     canvas_draw_icon(canvas, 73, 54, &I_ButtonOK_7x7);
-    canvas_draw_str_aligned(canvas, 81, 54, AlignLeft, AlignTop, "Set");
+    canvas_draw_str_aligned(
+        canvas, 81, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Set", "设为"));
     canvas_draw_icon(canvas, 100, 54, &I_ButtonRight_4x7);
-    canvas_draw_str_aligned(canvas, 107, 54, AlignLeft, AlignTop, "Edit");
+    canvas_draw_str_aligned(
+        canvas, 107, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Edit", "编辑"));
 }
 
 // Callback for drawing the deauth screen
@@ -236,9 +260,10 @@ void callback_view_draw_callback_deauth(Canvas *canvas, void *model)
     UNUSED(model);
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 10, "Deauthing...");
+    canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("Deauthing...", "去认证中..."));
     canvas_draw_icon(canvas, 0, 53, &I_ButtonBACK_10x8);
-    canvas_draw_str_aligned(canvas, 12, 54, AlignLeft, AlignTop, "Hit Back to stop");
+    canvas_draw_str_aligned(
+        canvas, 12, 54, AlignLeft, AlignTop, FLIP_WIFI_UI_TEXT("Hit Back to stop", "按 Back 停止"));
 }
 
 // Input callback for the view (async input handling)
@@ -307,7 +332,9 @@ bool callback_view_input_callback_saved(InputEvent *event, void *context)
         FlipperHTTP *fhttp = flipper_http_alloc();
         if (!fhttp)
         {
-            easy_flipper_dialog("[ERROR]", "Failed to initialize flipper http");
+            easy_flipper_dialog(
+                FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"),
+                FLIP_WIFI_UI_TEXT("Failed to initialize flipper http", "初始化 FlipperHTTP 失败"));
             return false;
         }
 
@@ -317,7 +344,9 @@ bool callback_view_input_callback_saved(InputEvent *event, void *context)
 
         if (!flipper_http_save_wifi(fhttp, wifi_playlist->ssids[ssid_index], wifi_playlist->passwords[ssid_index]))
         {
-            easy_flipper_dialog("[ERROR]", "Failed to save WiFi settings");
+            easy_flipper_dialog(
+                FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"),
+                FLIP_WIFI_UI_TEXT("Failed to save WiFi settings", "保存 WiFi 设置失败"));
             return false;
         }
 
@@ -330,15 +359,23 @@ bool callback_view_input_callback_saved(InputEvent *event, void *context)
         if (strstr(fhttp->last_response, "[SUCCESS]") == NULL)
         {
             char response[256];
-            snprintf(response, sizeof(response), "Failed to save WiFi settings:\n%s", fhttp->last_response);
-            easy_flipper_dialog("[ERROR]", response);
+            snprintf(
+                response,
+                sizeof(response),
+                FLIP_WIFI_UI_TEXT("Failed to save WiFi settings:\n%s", "保存 WiFi 设置失败:\n%s"),
+                fhttp->last_response);
+            easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), response);
             flipper_http_free(fhttp);
             return false;
         }
 
         flipper_http_free(fhttp);
 
-        easy_flipper_dialog("[SUCCESS]", "All FlipperHTTP apps will now\nuse the selected network.");
+        easy_flipper_dialog(
+            FLIP_WIFI_UI_TEXT("[SUCCESS]", "[成功]"),
+            FLIP_WIFI_UI_TEXT(
+                "All FlipperHTTP apps will now\nuse the selected network.",
+                "所有 FlipperHTTP 应用\n现在都会使用该网络。"));
         return true;
     }
     else if (event->type == InputTypePress && event->key == InputKeyLeft)

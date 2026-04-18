@@ -37,6 +37,11 @@
 #include "scenes/mag_scene_read.h"
 
 #define MAG_TEXT_STORE_SIZE 150
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
 
 // CFWs have `submenue_add_lockable_item`; OFW doesn't,
 // replace with conditional submenu item

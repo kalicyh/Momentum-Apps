@@ -3,6 +3,12 @@
 #include "../imu_mouse.h"
 #include "vgm_air_mouse_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AIR_MOUSE_UI_TEXT(en, zh) (zh)
+#else
+#define AIR_MOUSE_UI_TEXT(en, zh) (en)
+#endif
+
 struct AirMouseView {
     View* view;
     void* imu_device;
@@ -65,9 +71,9 @@ static void air_mouse_view_draw_callback(Canvas* canvas, void* context) {
     canvas_set_color(canvas, ColorBlack);
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 17, 12, "Air Mouse");
+    canvas_draw_str(canvas, 17, 12, AIR_MOUSE_UI_TEXT("Air Mouse", "空气鼠标"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 56, "Press Back to exit");
+    canvas_draw_str(canvas, 0, 56, AIR_MOUSE_UI_TEXT("Press Back to exit", "按返回退出"));
 }
 
 static bool air_mouse_view_input_callback(InputEvent* event, void* context) {

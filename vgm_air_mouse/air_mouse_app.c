@@ -13,6 +13,12 @@
 #include <furi_hal_usb_hid.h>
 #include <storage/storage.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AIR_MOUSE_UI_TEXT(en, zh) (zh)
+#else
+#define AIR_MOUSE_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "SensorModule"
 
 #define HID_BT_KEYS_STORAGE_NAME ".bt_hid.keys"
@@ -216,16 +222,20 @@ static AirMouseApp* air_mouse_alloc(void) {
 
     app->start_submenu = submenu_alloc();
     submenu_add_item(
-        app->start_submenu, "USB Remote", StartSubmenuIndexUsb, air_mouse_submenu_callback, app);
+        app->start_submenu,
+        AIR_MOUSE_UI_TEXT("USB Remote", "USB 遥控"),
+        StartSubmenuIndexUsb,
+        air_mouse_submenu_callback,
+        app);
     submenu_add_item(
         app->start_submenu,
-        "Bluetooth Remote",
+        AIR_MOUSE_UI_TEXT("Bluetooth Remote", "蓝牙遥控"),
         StartSubmenuIndexBle,
         air_mouse_submenu_callback,
         app);
     submenu_add_item(
         app->start_submenu,
-        "Remove Pairing",
+        AIR_MOUSE_UI_TEXT("Remove Pairing", "移除配对"),
         StartSubmenuIndexBleReset,
         air_mouse_submenu_callback,
         app);
@@ -234,8 +244,10 @@ static AirMouseApp* air_mouse_alloc(void) {
         app->view_dispatcher, AirMouseViewStartSubmenu, submenu_get_view(app->start_submenu));
 
     app->error_dialog = dialog_ex_alloc();
-    dialog_ex_set_header(app->error_dialog, "Sensor Module error", 63, 0, AlignCenter, AlignTop);
-    dialog_ex_set_text(app->error_dialog, "Module not conntected", 63, 30, AlignCenter, AlignTop);
+    dialog_ex_set_header(
+        app->error_dialog, AIR_MOUSE_UI_TEXT("Sensor Module error", "传感器模块错误"), 63, 0, AlignCenter, AlignTop);
+    dialog_ex_set_text(
+        app->error_dialog, AIR_MOUSE_UI_TEXT("Module not conntected", "模块未连接"), 63, 30, AlignCenter, AlignTop);
     view_set_previous_callback(dialog_ex_get_view(app->error_dialog), air_mouse_exit);
     view_dispatcher_add_view(
         app->view_dispatcher, AirMouseViewError, dialog_ex_get_view(app->error_dialog));

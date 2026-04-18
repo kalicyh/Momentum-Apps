@@ -8,6 +8,12 @@
 #include <furi_hal.h>
 #define TAG "Flappy"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLAPPY_UI_TEXT(en, zh) (zh)
+#else
+#define FLAPPY_UI_TEXT(en, zh) (en)
+#endif
+
 #define DEBUG false
 
 #define FLAPPY_BIRD_HEIGHT 15
@@ -346,19 +352,19 @@ static void flappy_game_render_callback(Canvas* const canvas, void* ctx) {
             canvas_set_font(canvas, FontPrimary);
             // Change title based on selected character
             if(game_state->selected_bird == BirdTypeYapper) {
-                canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, "Yappy Bird");
+                canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("Yappy Bird", "鸭皮鸟"));
             } else if(game_state->selected_bird == BirdTypeYappyGhost) {
-                canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, "Yappy Ghost");
+                canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("Yappy Ghost", "鸭皮幽灵"));
             } else {
-                canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, "Flappy Bird");
+                canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("Flappy Bird", "像素小鸟"));
             }
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, "Press OK to start");
-            canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignBottom, "^ to select char");
+            canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("Press OK to start", "按 OK 开始"));
+            canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("^ to select char", "^ 选择角色"));
 
             if(game_state->high_score > 0) {
                 char hi_buffer[24];
-                snprintf(hi_buffer, sizeof(hi_buffer), "Best: %d", game_state->high_score);
+                snprintf(hi_buffer, sizeof(hi_buffer), FLAPPY_UI_TEXT("Best: %d", "最高分: %d"), game_state->high_score);
                 canvas_draw_str_aligned(canvas, 64, 52, AlignCenter, AlignBottom, hi_buffer);
             }
         } else {
@@ -371,7 +377,7 @@ static void flappy_game_render_callback(Canvas* const canvas, void* ctx) {
 
             // Title more space from top
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str_aligned(canvas, 64, 14, AlignCenter, AlignBottom, "Select Character");
+            canvas_draw_str_aligned(canvas, 64, 14, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("Select Character", "选择角色"));
 
             // Get current character dimensions
             CharacterDimensions dims = character_dimensions[game_state->selected_bird];
@@ -390,8 +396,8 @@ static void flappy_game_render_callback(Canvas* const canvas, void* ctx) {
 
             canvas_set_font(canvas, FontSecondary);
             // Instructions pushed lower with more spacing
-            canvas_draw_str_aligned(canvas, 64, 48, AlignCenter, AlignBottom, "</> to choose");
-            canvas_draw_str_aligned(canvas, 64, 56, AlignCenter, AlignBottom, "OK to confirm");
+            canvas_draw_str_aligned(canvas, 64, 48, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("</> to choose", "</> 切换"));
+            canvas_draw_str_aligned(canvas, 64, 56, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("OK to confirm", "OK 确认"));
         }
     }
 
@@ -486,22 +492,22 @@ static void flappy_game_render_callback(Canvas* const canvas, void* ctx) {
 
         // Game Over text
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignBottom, "Game Over");
+        canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("Game Over", "游戏结束"));
 
         // Current score
         canvas_set_font(canvas, FontSecondary);
         char buffer[12];
-        snprintf(buffer, sizeof(buffer), "Score: %u", game_state->points);
+        snprintf(buffer, sizeof(buffer), FLAPPY_UI_TEXT("Score: %u", "分数: %u"), game_state->points);
         canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, buffer);
 
         // High score
         char hi_buffer[16];
-        snprintf(hi_buffer, sizeof(hi_buffer), "Best: %u", game_state->high_score);
+        snprintf(hi_buffer, sizeof(hi_buffer), FLAPPY_UI_TEXT("Best: %u", "最高分: %u"), game_state->high_score);
         canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignBottom, hi_buffer);
 
         // New Best! message (shown outside the box)
         if(game_state->points > game_state->high_score) {
-            canvas_draw_str_aligned(canvas, 64, 52, AlignCenter, AlignBottom, "New Best!");
+            canvas_draw_str_aligned(canvas, 64, 52, AlignCenter, AlignBottom, FLAPPY_UI_TEXT("New Best!", "新纪录!"));
         }
 
         // Collision effect

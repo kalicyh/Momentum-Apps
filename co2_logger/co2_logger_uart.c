@@ -307,7 +307,7 @@ static void co2_logger_uart_draw_main_view(Canvas* canvas, co2_loggerUart* app) 
         canvas_draw_str(canvas, 2 + dash_width + 10, 18, "ppm");
         
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 2, 37, "Disconnected");
+        canvas_draw_str(canvas, 2, 37, CO2_LOGGER_UI_TEXT("Disconnected", "未连接"));
     }
     
     // Show logging status at bottom left
@@ -315,15 +315,19 @@ static void co2_logger_uart_draw_main_view(Canvas* canvas, co2_loggerUart* app) 
     if(app->csv_logging_enabled && app->csv_enabled) {
         char logging_status[32];
         const char* interval_text = co2_logger_uart_get_log_interval_text(app->log_interval_option);
-        snprintf(logging_status, sizeof(logging_status), "Logging every %s", interval_text);
+        snprintf(
+            logging_status,
+            sizeof(logging_status),
+            CO2_LOGGER_UI_TEXT("Logging every %s", "记录间隔 %s"),
+            interval_text);
         canvas_draw_str(canvas, 2, 58, logging_status);
     } else {
-        canvas_draw_str(canvas, 2, 58, "Not logging");
+        canvas_draw_str(canvas, 2, 58, CO2_LOGGER_UI_TEXT("Not logging", "未记录"));
     }
     
     // Settings button with inverted background (white text on black)
     canvas_set_font(canvas, FontSecondary);
-    const char* settings_text = "Settings >";
+    const char* settings_text = CO2_LOGGER_UI_TEXT("Settings >", "设置 >");
     size_t settings_width = canvas_string_width(canvas, settings_text);
     uint8_t settings_x = 85;
     uint8_t settings_y = 58;
@@ -342,15 +346,15 @@ static void co2_logger_uart_draw_main_view(Canvas* canvas, co2_loggerUart* app) 
 
 static void co2_logger_uart_draw_settings_view(Canvas* canvas, co2_loggerUart* app) {
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 2, 12, "Settings");
+    canvas_draw_str(canvas, 2, 12, CO2_LOGGER_UI_TEXT("Settings", "设置"));
 
     canvas_set_font(canvas, FontSecondary);
     
     // Draw "Logging Interval:" with selection indicator
     if(app->settings_selection == 0) {
-        canvas_draw_str(canvas, 2, 28, "> Logging Interval:");
+        canvas_draw_str(canvas, 2, 28, CO2_LOGGER_UI_TEXT("> Logging Interval:", "> 记录间隔:"));
     } else {
-        canvas_draw_str(canvas, 10, 28, "Logging Interval:");
+        canvas_draw_str(canvas, 10, 28, CO2_LOGGER_UI_TEXT("Logging Interval:", "记录间隔:"));
     }
     
     // Show current selection on same line as label (no dropdown)
@@ -360,20 +364,28 @@ static void co2_logger_uart_draw_settings_view(Canvas* canvas, co2_loggerUart* a
     // Auto-dim setting - show value on same line as label
     int auto_dim_y = 40;
     if(app->settings_selection == 1) {
-        canvas_draw_str(canvas, 2, auto_dim_y, "> Auto Dim:");
+        canvas_draw_str(canvas, 2, auto_dim_y, CO2_LOGGER_UI_TEXT("> Auto Dim:", "> 自动调暗:"));
     } else {
-        canvas_draw_str(canvas, 10, auto_dim_y, "Auto Dim:");
+        canvas_draw_str(canvas, 10, auto_dim_y, CO2_LOGGER_UI_TEXT("Auto Dim:", "自动调暗:"));
     }
-    canvas_draw_str(canvas, 100, auto_dim_y, app->auto_dim_enabled ? "ON" : "OFF");
+    canvas_draw_str(
+        canvas,
+        100,
+        auto_dim_y,
+        app->auto_dim_enabled ? CO2_LOGGER_UI_TEXT("ON", "开") : CO2_LOGGER_UI_TEXT("OFF", "关"));
     
     // CSV Logging setting - show value on same line as label
     int csv_logging_y = 52;
     if(app->settings_selection == 2) {
-        canvas_draw_str(canvas, 2, csv_logging_y, "> CSV Logging:");
+        canvas_draw_str(canvas, 2, csv_logging_y, CO2_LOGGER_UI_TEXT("> CSV Logging:", "> CSV 记录:"));
     } else {
-        canvas_draw_str(canvas, 10, csv_logging_y, "CSV Logging:");
+        canvas_draw_str(canvas, 10, csv_logging_y, CO2_LOGGER_UI_TEXT("CSV Logging:", "CSV 记录:"));
     }
-    canvas_draw_str(canvas, 100, csv_logging_y, app->csv_logging_enabled ? "ON" : "OFF");
+    canvas_draw_str(
+        canvas,
+        100,
+        csv_logging_y,
+        app->csv_logging_enabled ? CO2_LOGGER_UI_TEXT("ON", "开") : CO2_LOGGER_UI_TEXT("OFF", "关"));
 }
 
 static void co2_logger_uart_draw_callback(Canvas* canvas, void* ctx) {

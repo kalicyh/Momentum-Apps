@@ -15,6 +15,12 @@
 #include "nfc_hardware.h"
 #include "crypto.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ULC_BRUTE_UI_TEXT(en, zh) (zh)
+#else
+#define ULC_BRUTE_UI_TEXT(en, zh) (en)
+#endif
+
 // Application configuration constants
 #define SCREEN_UPDATE_INTERVAL_MS    1000 // How often to refresh the display (in ms)
 #define BRUTEFORCE_THREAD_STACK_SIZE 2048 // Memory allocation for bruteforce thread
@@ -30,9 +36,13 @@
  * @param app Application state and context
  */
 static void render_state_waiting(Canvas* canvas, AppContext* app) {
-    canvas_draw_str(canvas, 2, 24, "Press OK to begin bruteforce");
+    canvas_draw_str(canvas, 2, 24, ULC_BRUTE_UI_TEXT("Press OK to begin bruteforce", "按 OK 开始爆破"));
     char key_mode_str[32];
-    snprintf(key_mode_str, sizeof(key_mode_str), "Key segment (DOWN): %d", app->key_mode + 1);
+    snprintf(
+        key_mode_str,
+        sizeof(key_mode_str),
+        ULC_BRUTE_UI_TEXT("Key segment (DOWN): %d", "密钥段(下): %d"),
+        app->key_mode + 1);
     canvas_draw_str(canvas, 2, 60, key_mode_str);
 }
 
@@ -43,13 +53,13 @@ static void render_state_waiting(Canvas* canvas, AppContext* app) {
  * @param app Application state and context
  */
 static void render_state_bruteforcing(Canvas* canvas, AppContext* app) {
-    canvas_draw_str(canvas, 2, 24, "Bruteforcing...");
+    canvas_draw_str(canvas, 2, 24, ULC_BRUTE_UI_TEXT("Bruteforcing...", "爆破中..."));
 
     // Calculate and show progress (0-100%)
     char key_str[32];
     // Convert to percentage (key space is 2^28)
     double key_index = app->current_key_index / (double)(1 << 28);
-    snprintf(key_str, sizeof(key_str), "Progress: %.4f%%", key_index * 100);
+    snprintf(key_str, sizeof(key_str), ULC_BRUTE_UI_TEXT("Progress: %.4f%%", "进度: %.4f%%"), key_index * 100);
     canvas_draw_str(canvas, 2, 36, key_str);
 
     // Calculate and show keys tested per second
@@ -57,15 +67,23 @@ static void render_state_bruteforcing(Canvas* canvas, AppContext* app) {
     int time_elapsed = furi_hal_rtc_get_timestamp() - app->time_start;
     if(time_elapsed > 0) {
         double keys_per_sec = app->current_key_index / (double)time_elapsed;
-        snprintf(benchmark_str, sizeof(benchmark_str), "Speed: %.1f keys/sec", keys_per_sec);
+        snprintf(
+            benchmark_str,
+            sizeof(benchmark_str),
+            ULC_BRUTE_UI_TEXT("Speed: %.1f keys/sec", "速度: %.1f 密钥/秒"),
+            keys_per_sec);
     } else {
-        snprintf(benchmark_str, sizeof(benchmark_str), "Speed: -- keys/sec");
+        snprintf(benchmark_str, sizeof(benchmark_str), ULC_BRUTE_UI_TEXT("Speed: -- keys/sec", "速度: -- 密钥/秒"));
     }
     canvas_draw_str(canvas, 2, 48, benchmark_str);
 
     // Display total number of keys tested
     char total_keys_str[32];
-    snprintf(total_keys_str, sizeof(total_keys_str), "Keys tested: %lu", app->current_key_index);
+    snprintf(
+        total_keys_str,
+        sizeof(total_keys_str),
+        ULC_BRUTE_UI_TEXT("Keys tested: %lu", "已测试密钥: %lu"),
+        app->current_key_index);
     canvas_draw_str(canvas, 2, 60, total_keys_str);
 }
 
@@ -76,7 +94,7 @@ static void render_state_bruteforcing(Canvas* canvas, AppContext* app) {
  * @param app Application state and context
  */
 static void render_state_complete(Canvas* canvas, AppContext* app) {
-    canvas_draw_str(canvas, 2, 24, "Bruteforce complete! Key:");
+    canvas_draw_str(canvas, 2, 24, ULC_BRUTE_UI_TEXT("Bruteforce complete! Key:", "爆破完成! 密钥:"));
 
     uint8_t key[16];
     calculate_key_from_index(app->current_key_index, app->key_mode, key);
@@ -95,7 +113,7 @@ static void render_state_complete(Canvas* canvas, AppContext* app) {
  * @param app Application context
  */
 static void render_state_error(Canvas* canvas, AppContext* app) {
-    canvas_draw_str(canvas, 2, 24, "Error!");
+    canvas_draw_str(canvas, 2, 24, ULC_BRUTE_UI_TEXT("Error!", "错误!"));
     if(app->error) {
         canvas_draw_str(canvas, 2, 36, app->error);
     }
@@ -113,7 +131,9 @@ static void render_callback(Canvas* canvas, void* ctx) {
 
     // Draw header with primary font
     canvas_set_font(canvas, FontPrimary);
-    const char* mode_str = (app->mode == AppModeReady) ? "ULC Brute" : "ULC Brute: Running";
+    const char* mode_str = (app->mode == AppModeReady) ?
+                               ULC_BRUTE_UI_TEXT("ULC Brute", "ULC 爆破") :
+                               ULC_BRUTE_UI_TEXT("ULC Brute: Running", "ULC 爆破: 运行中");
     canvas_draw_str(canvas, 2, 12, mode_str);
 
     // Draw content with secondary font

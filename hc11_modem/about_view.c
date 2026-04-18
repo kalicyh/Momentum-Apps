@@ -44,7 +44,7 @@ void about_view_draw_callback(Canvas *canvas, void *model) {
 
       /* Draw "modem" and the app's version number */
       canvas_set_font(canvas, FontPrimary);
-      canvas_draw_str(canvas, 90, 15, "modem");
+      canvas_draw_str(canvas, 90, 15, HC11_UI_TEXT("modem", "调制解调器"));
       canvas_draw_str(canvas, 90, 28, "v");
       canvas_draw_str(canvas, 96, 28, VERSION);
 
@@ -59,15 +59,15 @@ void about_view_draw_callback(Canvas *canvas, void *model) {
 
       /* Draw the title */
       canvas_set_font(canvas, FontPrimary);
-      canvas_draw_str(canvas, 29, 8, "HC-11 modem");
+      canvas_draw_str(canvas, 29, 8, HC11_UI_TEXT("HC-11 modem", "HC-11 调制解调器"));
 
       /* Draw the URL */
       canvas_draw_str(canvas, 7, 62, "https://www.hc01.com/");
 
       /* Draw the description */
       canvas_set_font(canvas, FontSecondary);
-      canvas_draw_str(canvas, 7, 29, "Send data to/from a HC-11");
-      canvas_draw_str(canvas, 11, 40, "wireless RF UART module ");
+      canvas_draw_str(canvas, 7, 29, HC11_UI_TEXT("Send data to/from a HC-11", "与 HC-11 收发数据"));
+      canvas_draw_str(canvas, 11, 40, HC11_UI_TEXT("wireless RF UART module ", "无线 RF UART 模块"));
 
       /* Draw a left arrow at the top left */
       canvas_draw_icon(canvas, 0, 0, &I_arrow_left);
@@ -82,13 +82,13 @@ void about_view_draw_callback(Canvas *canvas, void *model) {
 
       /* Draw the title */
       canvas_set_font(canvas, FontPrimary);
-      canvas_draw_str(canvas, 38, 8, "WARNING");
+      canvas_draw_str(canvas, 38, 8, HC11_UI_TEXT("WARNING", "警告"));
 
       /* Draw the description */
       canvas_set_font(canvas, FontSecondary);
-      canvas_draw_str(canvas, 6, 29, "Currently only transmissions");
-      canvas_draw_str(canvas, 0, 40, "mode 3 (FU3) works reliably &");
-      canvas_draw_str(canvas, 3, 51, "mode 1 (FU1) in reception only");
+      canvas_draw_str(canvas, 6, 29, HC11_UI_TEXT("Currently only transmissions", "当前仅传输模式"));
+      canvas_draw_str(canvas, 0, 40, HC11_UI_TEXT("mode 3 (FU3) works reliably &", "3(FU3) 工作稳定，且"));
+      canvas_draw_str(canvas, 3, 51, HC11_UI_TEXT("mode 1 (FU1) in reception only", "1(FU1) 仅接收可用"));
 
       /* Draw a left arrow at the top left */
       canvas_draw_icon(canvas, 0, 0, &I_arrow_left);

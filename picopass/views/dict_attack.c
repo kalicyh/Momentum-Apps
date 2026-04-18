@@ -2,6 +2,12 @@
 
 #include <gui/elements.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PICOPASS_UI_TEXT(en, zh) (zh)
+#else
+#define PICOPASS_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     DictAttackStateStart,
     DictAttackStateRead,
@@ -34,13 +40,18 @@ static void dict_attack_draw_callback(Canvas* canvas, void* model) {
         canvas_draw_icon(canvas, 0, 8, &I_RFIDDolphinReceive_97x61);
         canvas_set_font(canvas, FontPrimary);
         elements_multiline_text_aligned(
-            canvas, 128, 40, AlignRight, AlignCenter, "Apply card to\nthe back");
+            canvas, 128, 40, AlignRight, AlignCenter, PICOPASS_UI_TEXT("Apply card to\nthe back", "将卡片贴到\n背面"));
     } else if(m->state == DictAttackStateCardRemoved) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 4, AlignCenter, AlignTop, "Lost the tag!");
+        canvas_draw_str_aligned(canvas, 64, 4, AlignCenter, AlignTop, PICOPASS_UI_TEXT("Lost the tag!", "标签已丢失!"));
         canvas_set_font(canvas, FontSecondary);
         elements_multiline_text_aligned(
-            canvas, 64, 23, AlignCenter, AlignTop, "Make sure the tag is\npositioned correctly.");
+            canvas,
+            64,
+            23,
+            AlignCenter,
+            AlignTop,
+            PICOPASS_UI_TEXT("Make sure the tag is\npositioned correctly.", "请确认标签已\n正确放置。"));
     } else if(m->state == DictAttackStateRead) {
         char draw_str[32] = {};
         canvas_set_font(canvas, FontSecondary);
@@ -50,11 +61,14 @@ static void dict_attack_draw_callback(Canvas* canvas, void* model) {
             snprintf(
                 draw_str,
                 sizeof(draw_str),
-                "Reuse key check for sector: %d",
+                PICOPASS_UI_TEXT("Reuse key check for sector: %d", "复用密钥检查扇区: %d"),
                 m->key_attack_current_sector);
         } else {
             snprintf(
-                draw_str, sizeof(draw_str), "Unlocking Application Area %d", m->sector_current + 1);
+                draw_str,
+                sizeof(draw_str),
+                PICOPASS_UI_TEXT("Unlocking Application Area %d", "正在解锁应用区域 %d"),
+                m->sector_current + 1);
         }
         canvas_draw_str_aligned(canvas, 0, 10, AlignLeft, AlignTop, draw_str);
         float dict_progress = m->dict_keys_total == 0 ?
@@ -75,16 +89,21 @@ static void dict_attack_draw_callback(Canvas* canvas, void* model) {
         }
         elements_progress_bar_with_text(canvas, 0, 20, 128, dict_progress, draw_str);
         canvas_set_font(canvas, FontSecondary);
-        snprintf(draw_str, sizeof(draw_str), "Keys found: %d/%d", m->keys_found, m->keys_total);
+        snprintf(
+            draw_str,
+            sizeof(draw_str),
+            PICOPASS_UI_TEXT("Keys found: %d/%d", "已找到密钥: %d/%d"),
+            m->keys_found,
+            m->keys_total);
         canvas_draw_str_aligned(canvas, 0, 33, AlignLeft, AlignTop, draw_str);
         snprintf(
             draw_str,
             sizeof(draw_str),
-            "Application Area Read: %d/%d",
+            PICOPASS_UI_TEXT("Application Area Read: %d/%d", "已读取应用区域: %d/%d"),
             m->sectors_read,
             m->sectors_total);
         canvas_draw_str_aligned(canvas, 0, 43, AlignLeft, AlignTop, draw_str);
-        elements_button_center(canvas, "Skip");
+        elements_button_center(canvas, PICOPASS_UI_TEXT("Skip", "跳过"));
     }
 }
 

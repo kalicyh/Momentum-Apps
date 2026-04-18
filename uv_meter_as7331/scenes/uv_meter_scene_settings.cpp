@@ -1,6 +1,12 @@
 #include "uv_meter_app_i.hpp"
 #include "uv_meter_event.hpp"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UV_METER_UI_TEXT(en, zh) (zh)
+#else
+#define UV_METER_UI_TEXT(en, zh) (en)
+#endif
+
 static const char* i2c_addresses[] = {
     [UVMeterI2CAddressAuto] = "Auto",
     [UVMeterI2CAddress74] = "0x74",
@@ -55,7 +61,7 @@ void uv_meter_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "I2C Address",
+        UV_METER_UI_TEXT("I2C Address", "I2C 地址"),
         COUNT_OF(i2c_addresses),
         i2c_address_change_callback,
         app);
@@ -63,13 +69,17 @@ void uv_meter_scene_settings_on_enter(void* context) {
     variable_item_set_current_value_text(item, i2c_addresses[app->app_state->i2c_address]);
 
     item = variable_item_list_add(
-        app->variable_item_list, "Unit", COUNT_OF(units), unit_change_callback, app);
+        app->variable_item_list,
+        UV_METER_UI_TEXT("Unit", "单位"),
+        COUNT_OF(units),
+        unit_change_callback,
+        app);
     variable_item_set_current_value_index(item, app->app_state->unit);
     variable_item_set_current_value_text(item, units[app->app_state->unit]);
 
     // Be aware when adding new items before "Help" to change index in `enter_callback()`
-    variable_item_list_add(app->variable_item_list, "Help", 0, NULL, NULL);
-    variable_item_list_add(app->variable_item_list, "About", 0, NULL, NULL);
+    variable_item_list_add(app->variable_item_list, UV_METER_UI_TEXT("Help", "帮助"), 0, NULL, NULL);
+    variable_item_list_add(app->variable_item_list, UV_METER_UI_TEXT("About", "关于"), 0, NULL, NULL);
 
     variable_item_list_set_enter_callback(app->variable_item_list, enter_callback, app);
 

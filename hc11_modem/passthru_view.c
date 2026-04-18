@@ -759,9 +759,9 @@ void passthru_view_draw_callback(Canvas *canvas, void *model) {
   canvas_draw_frame(canvas, 77, 52, 51, 12);
   canvas_draw_icon(canvas, 79, 54, &I_ok_button);
   if(passthru_model->enabled)
-    canvas_draw_str(canvas, 102, 62, "Stop");
+    canvas_draw_str(canvas, 102, 62, HC11_UI_TEXT("Stop", "停止"));
   else
-    canvas_draw_str(canvas, 102, 62, "Start");
+    canvas_draw_str(canvas, 102, 62, HC11_UI_TEXT("Start", "开始"));
 }
 
 

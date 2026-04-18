@@ -16,6 +16,12 @@
 
 #include "blackjack_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BLACKJACK_UI_TEXT(en, zh) (zh)
+#else
+#define BLACKJACK_UI_TEXT(en, zh) (en)
+#endif
+
 #define DEALER_MAX 17
 
 void start_round(GameState* game_state);
@@ -94,42 +100,48 @@ void to_lose_state(const void* ctx, Canvas* const canvas) {
     const GameState* game_state = ctx;
     if(game_state->settings.message_duration == 0) return;
     popup_frame(canvas);
-    elements_multiline_text_aligned(canvas, 64, 22, AlignCenter, AlignCenter, "You lost");
+    elements_multiline_text_aligned(
+        canvas, 64, 22, AlignCenter, AlignCenter, BLACKJACK_UI_TEXT("You lost", "你输了"));
 }
 
 void to_bust_state(const void* ctx, Canvas* const canvas) {
     const GameState* game_state = ctx;
     if(game_state->settings.message_duration == 0) return;
     popup_frame(canvas);
-    elements_multiline_text_aligned(canvas, 64, 22, AlignCenter, AlignCenter, "Busted!");
+    elements_multiline_text_aligned(
+        canvas, 64, 22, AlignCenter, AlignCenter, BLACKJACK_UI_TEXT("Busted!", "爆牌!"));
 }
 
 void to_draw_state(const void* ctx, Canvas* const canvas) {
     const GameState* game_state = ctx;
     if(game_state->settings.message_duration == 0) return;
     popup_frame(canvas);
-    elements_multiline_text_aligned(canvas, 64, 22, AlignCenter, AlignCenter, "Draw");
+    elements_multiline_text_aligned(
+        canvas, 64, 22, AlignCenter, AlignCenter, BLACKJACK_UI_TEXT("Draw", "平局"));
 }
 
 void to_dealer_turn(const void* ctx, Canvas* const canvas) {
     const GameState* game_state = ctx;
     if(game_state->settings.message_duration == 0) return;
     popup_frame(canvas);
-    elements_multiline_text_aligned(canvas, 64, 22, AlignCenter, AlignCenter, "Dealers turn");
+    elements_multiline_text_aligned(
+        canvas, 64, 22, AlignCenter, AlignCenter, BLACKJACK_UI_TEXT("Dealers turn", "庄家回合"));
 }
 
 void to_win_state(const void* ctx, Canvas* const canvas) {
     const GameState* game_state = ctx;
     if(game_state->settings.message_duration == 0) return;
     popup_frame(canvas);
-    elements_multiline_text_aligned(canvas, 64, 22, AlignCenter, AlignCenter, "You win");
+    elements_multiline_text_aligned(
+        canvas, 64, 22, AlignCenter, AlignCenter, BLACKJACK_UI_TEXT("You win", "你赢了"));
 }
 
 void to_start(const void* ctx, Canvas* const canvas) {
     const GameState* game_state = ctx;
     if(game_state->settings.message_duration == 0) return;
     popup_frame(canvas);
-    elements_multiline_text_aligned(canvas, 64, 22, AlignCenter, AlignCenter, "Round started");
+    elements_multiline_text_aligned(
+        canvas, 64, 22, AlignCenter, AlignCenter, BLACKJACK_UI_TEXT("Round started", "本轮开始"));
 }
 
 void before_start(void* ctx) {
@@ -551,9 +563,9 @@ int32_t blackjack_app(void* p) {
     game_state->menu = malloc(sizeof(Menu));
     game_state->menu->menu_width = 40;
     init(game_state);
-    add_menu(game_state->menu, "Double", doubleAction);
-    add_menu(game_state->menu, "Hit", hitAction);
-    add_menu(game_state->menu, "Stay", stayAction);
+    add_menu(game_state->menu, BLACKJACK_UI_TEXT("Double", "加倍"), doubleAction);
+    add_menu(game_state->menu, BLACKJACK_UI_TEXT("Hit", "要牌"), hitAction);
+    add_menu(game_state->menu, BLACKJACK_UI_TEXT("Stay", "停牌"), stayAction);
     set_card_graphics(&I_card_graphics);
 
     game_state->state = GameStateStart;

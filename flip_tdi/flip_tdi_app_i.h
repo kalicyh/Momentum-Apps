@@ -15,6 +15,11 @@
 
 #include "helpers/ftdi_usb.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_TDI_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_TDI_UI_TEXT(en, zh) (en)
+#endif
 
 typedef struct FlipTDIApp FlipTDIApp;
 

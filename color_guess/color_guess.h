@@ -19,6 +19,11 @@
 
 #define COLOR_GUESS_VERSION "1.6"
 #define TAG "Color_Guess"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define COLOR_GUESS_UI_TEXT(en, zh) (zh)
+#else
+#define COLOR_GUESS_UI_TEXT(en, zh) (en)
+#endif
 
 typedef struct {
     Gui* gui;

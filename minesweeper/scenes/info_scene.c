@@ -1,4 +1,39 @@
 #include "../minesweeper.h"
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+static const char* info_string =
+    "--   游戏说明   --\n\n"
+    "1. 按 OK 清除格子。\n\n"
+    "2. 在数字格上长按 OK，\n"
+    "若周围旗子数量正确，\n"
+    "会自动清除周围格子。\n\n"
+    "3. 在格子上长按 Back\n"
+    "可插旗标记。\n\n"
+    "4. 在已清除格上长按 Back\n"
+    "可跳到最近的目标格。\n\n"
+    "---   设置说明   ---\n\n"
+    "可在设置中调整难度和\n"
+    "地图尺寸，最大为 1024\n"
+    "格(32x32)。修改这些\n"
+    "设置时会提示确认，\n"
+    "因为它会重置棋盘。\n\n"
+    "----   反馈   ----\n"
+    "该选项用于启用/禁用\n"
+    "振动和声音反馈。\n\n"
+    "-  保证可解  -\n"
+    "该选项会在生成新棋盘时\n"
+    "启用验证器。\n\n"
+    "警告:\n"
+    "开启后生成新地图时会有\n"
+    "额外开销，可能需要几秒\n"
+    "才能得到有效地图。期间\n"
+    "界面可能短暂停顿，通常\n"
+    "会在几秒内恢复。\n\n"
+    "如果要反馈问题，可访问:\n\n"
+    "github.com/squee72564/\n"
+    "F0_Minesweeper_Fap\n\n"
+    "祝你玩得开心!";
+#else
 static const char* info_string = "--   GAME INFO BELOW   --\n\n"
                                  "1. Press OK to clear a tile.\n\n"
                                  "2. Hold OK on a numbered tile\n"
@@ -46,6 +81,7 @@ static const char* info_string = "--   GAME INFO BELOW   --\n\n"
                                  "'github.com/squee72564/\n"
                                  "F0_Minesweeper_Fap'\n\n"
                                  "Thanks and enjoy!";
+#endif
 
 void minesweeper_scene_info_screen_on_enter(void* context) {
     furi_assert(context);

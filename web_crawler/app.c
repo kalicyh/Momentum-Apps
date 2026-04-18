@@ -20,7 +20,11 @@ int32_t web_crawler_app(void *p)
     FlipperHTTP *fhttp = flipper_http_alloc();
     if (!fhttp)
     {
-        easy_flipper_dialog("FlipperHTTP Error", "The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.",
+                "UART 可能正忙。\n请确认已刷入适合开发板的\n正确固件，然后重启\nFlipper Zero。"));
         return -1;
     }
 
@@ -42,7 +46,11 @@ int32_t web_crawler_app(void *p)
     flipper_http_free(fhttp);
     if (counter == 0)
     {
-        easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+        easy_flipper_dialog(
+            WEB_CRAWLER_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"),
+            WEB_CRAWLER_UI_TEXT(
+                "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
     }
 
     // Run the application

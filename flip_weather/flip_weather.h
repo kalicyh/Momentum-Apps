@@ -7,6 +7,11 @@
 
 #define TAG "FlipWeather"
 #define MAX_TOKENS 64 // Adjust based on expected JSON size (50)
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_WEATHER_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_WEATHER_UI_TEXT(en, zh) (en)
+#endif
 
 // Define the submenu items for our FlipWeather application
 typedef enum

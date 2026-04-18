@@ -143,18 +143,30 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     char chaine_delais[36];
     char chaine_shooting[36];
 
-    snprintf(chaine_photo, sizeof(chaine_photo), "%i shots", app->shots);
+    snprintf(
+        chaine_photo,
+        sizeof(chaine_photo),
+        BT_TRIGGER_UI_TEXT("%i shots", "%i 次"),
+        app->shots);
     snprintf(chaine_delais, sizeof(chaine_delais), "%i", app->delay);
     if(app->shooting) {
-        snprintf(chaine_shooting, sizeof(chaine_shooting), "Press to stop");
+        snprintf(
+            chaine_shooting,
+            sizeof(chaine_shooting),
+            "%s",
+            BT_TRIGGER_UI_TEXT("Press to stop", "按下停止"));
     } else {
-        snprintf(chaine_shooting, sizeof(chaine_shooting), "Press to start");
+        snprintf(
+            chaine_shooting,
+            sizeof(chaine_shooting),
+            "%s",
+            BT_TRIGGER_UI_TEXT("Press to start", "按下开始"));
     }
 
     canvas_clear(canvas);
     canvas_draw_frame(canvas, 0, 0, 128, 64);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 2, 10, "iOS Intervalometer");
+    canvas_draw_str(canvas, 2, 10, BT_TRIGGER_UI_TEXT("iOS Intervalometer", "iOS 间隔拍摄"));
     //Represent
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 92, 62, "Nem0oo");
@@ -165,17 +177,17 @@ static void draw_callback(Canvas* canvas, void* ctx) {
         //Delay line
         canvas_draw_icon(canvas, 3, 19, &I_ButtonDown_7x4);
         canvas_draw_icon(canvas, 3, 14, &I_ButtonUp_7x4);
-        canvas_draw_str(canvas, 13, 22, "Delay (in sec)");
+        canvas_draw_str(canvas, 13, 22, BT_TRIGGER_UI_TEXT("Delay (in sec)", "延时(秒)"));
         canvas_draw_str(canvas, 71, 22, chaine_delais);
         //Start/stop line
         canvas_draw_icon(canvas, 2, 25, &I_Ok_btn_9x9);
         canvas_draw_str(canvas, 13, 33, chaine_shooting);
         //Single shot line
         canvas_draw_icon(canvas, 6, 36, &I_ButtonRight_4x7);
-        canvas_draw_str(canvas, 13, 43, "Single shot");
+        canvas_draw_str(canvas, 13, 43, BT_TRIGGER_UI_TEXT("Single shot", "单次拍摄"));
         //Reset shot count line
         canvas_draw_icon(canvas, 3, 45, &I_ButtonLeft_4x7);
-        canvas_draw_str(canvas, 13, 52, "Reset shot count");
+        canvas_draw_str(canvas, 13, 52, BT_TRIGGER_UI_TEXT("Reset shot count", "重置次数"));
         //Shots number line
         canvas_draw_icon(canvas, 2, 53, &I_dir_10px);
         canvas_draw_str(canvas, 14, 62, chaine_photo);
@@ -183,7 +195,7 @@ static void draw_callback(Canvas* canvas, void* ctx) {
         canvas_draw_icon(canvas, 111, 2, &I_Ble_disconnected_15x15);
         canvas_draw_icon(canvas, 1, 21, &I_WarningDolphin_45x42);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 48, 37, "Awaiting bluetooth");
+        canvas_draw_str(canvas, 48, 37, BT_TRIGGER_UI_TEXT("Awaiting bluetooth", "等待蓝牙连接"));
     }
 }
 

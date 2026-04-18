@@ -1,5 +1,11 @@
 #include "minesweeper_game_screen.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MS_UI_TEXT(en, zh) (zh)
+#else
+#define MS_UI_TEXT(en, zh) (en)
+#endif
+
 static const Icon* tile_icons[13] = {
     &I_tile_empty_8x8,
     &I_tile_0_8x8,
@@ -1131,9 +1137,9 @@ static void mine_sweeper_game_screen_view_end_draw_callback(Canvas* canvas, void
     const char* end_status_str = "";
 
     if(model->has_lost_game) {
-        end_status_str = "YOU LOSE!  PRESS OK.\0";
+        end_status_str = MS_UI_TEXT("YOU LOSE!  PRESS OK.", "你输了! 按 OK。");
     } else {
-        end_status_str = "YOU WIN!   PRESS OK.\0";
+        end_status_str = MS_UI_TEXT("YOU WIN!   PRESS OK.", "你赢了! 按 OK。");
     }
 
     // Draw win/lose text

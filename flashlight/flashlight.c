@@ -9,6 +9,12 @@
 
 #include "flashlight_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLASHLIGHT_UI_TEXT(en, zh) (zh)
+#else
+#define FLASHLIGHT_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey,
@@ -30,7 +36,8 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     furi_mutex_acquire(plugin_state->mutex, FuriWaitForever);
 
     canvas_set_font(canvas, FontPrimary);
-    elements_multiline_text_aligned(canvas, 64, 4, AlignCenter, AlignTop, "Flashlight");
+    elements_multiline_text_aligned(
+        canvas, 64, 4, AlignCenter, AlignTop, FLASHLIGHT_UI_TEXT("Flashlight", "手电筒"));
 
     canvas_set_font(canvas, FontSecondary);
 
@@ -38,11 +45,12 @@ static void render_callback(Canvas* const canvas, void* ctx) {
 
     if(!plugin_state->is_on) {
         elements_multiline_text_aligned(
-            canvas, 64, 44, AlignCenter, AlignTop, "Press OK button turn on");
+            canvas, 64, 44, AlignCenter, AlignTop, FLASHLIGHT_UI_TEXT("Press OK button turn on", "按 OK 键开启"));
     } else {
-        elements_multiline_text_aligned(canvas, 64, 38, AlignCenter, AlignTop, "Light is on!");
         elements_multiline_text_aligned(
-            canvas, 64, 50, AlignCenter, AlignTop, "Press OK button to off");
+            canvas, 64, 38, AlignCenter, AlignTop, FLASHLIGHT_UI_TEXT("Light is on!", "已开启!"));
+        elements_multiline_text_aligned(
+            canvas, 64, 50, AlignCenter, AlignTop, FLASHLIGHT_UI_TEXT("Press OK button to off", "按 OK 键关闭"));
     }
 
     furi_mutex_release(plugin_state->mutex);

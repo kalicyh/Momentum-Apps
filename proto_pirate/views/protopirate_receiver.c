@@ -226,7 +226,7 @@ void protopirate_view_receiver_draw(Canvas* canvas, ProtoPirateReceiverModel* mo
     } else {
         if(model->lock == ProtoPirateLockOn) {
             canvas_draw_icon(canvas, 64, 55, &I_Lock_7x8);
-            canvas_draw_str(canvas, 74, 62, "Locked");
+            canvas_draw_str(canvas, 74, 62, "锁定");
         } else {
             canvas_draw_str(canvas, 44, 63, furi_string_get_cstr(model->frequency_str));
             canvas_draw_str(canvas, 79, 63, furi_string_get_cstr(model->preset_str));
@@ -383,9 +383,9 @@ void protopirate_view_receiver_draw(Canvas* canvas, ProtoPirateReceiverModel* mo
         // Draw EXT/INT indicator in upper right corner
         canvas_set_font(canvas, FontSecondary);
         if(model->external_radio) {
-            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, "Ext");
+            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, "外置");
         } else {
-            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, "Int");
+            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, "内置");
         }
 
         //Draw the Auto-save Indicator

@@ -5,6 +5,12 @@
 #include <notification/notification.h>
 #include <notification/notification_messages.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FMTX_UI_TEXT(en, zh) (zh)
+#else
+#define FMTX_UI_TEXT(en, zh) (en)
+#endif
+
 // I2C конфигурация
 #define I2C_BUS &furi_hal_i2c_handle_external
 #define I2C_TIMEOUT 100
@@ -18,9 +24,9 @@ typedef struct {
 } RegionConfig;
 
 static const RegionConfig regions[] = {
-    {"Europe", 87.5f, 108.0f, 0.1f},
+    {FMTX_UI_TEXT("Europe", "欧洲"), 87.5f, 108.0f, 0.1f},
     {"USA", 88.0f, 108.0f, 0.2f},
-    {"Japan", 76.0f, 95.0f, 0.1f}
+    {FMTX_UI_TEXT("Japan", "日本"), 76.0f, 95.0f, 0.1f}
 };
 static const size_t REGION_COUNT = COUNT_OF(regions);
 
@@ -109,20 +115,25 @@ void fmtx_draw_callback(Canvas* canvas, void* ctx) {
     switch(app->state.current_screen) {
         case SCREEN_MAIN:
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "KT0803 Init");
+            canvas_draw_str_aligned(
+                canvas, 64, 10, AlignCenter, AlignTop, FMTX_UI_TEXT("KT0803 Init", "KT0803 初始化"));
             
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignTop, "Set frequency on module to");
-            canvas_draw_str_aligned(canvas, 64, 35, AlignCenter, AlignTop, "transmit AUX signal");
+            canvas_draw_str_aligned(
+                canvas, 64, 25, AlignCenter, AlignTop, FMTX_UI_TEXT("Set frequency on module to", "设置模块频率以"));
+            canvas_draw_str_aligned(
+                canvas, 64, 35, AlignCenter, AlignTop, FMTX_UI_TEXT("transmit AUX signal", "发射 AUX 音频信号"));
             
             // Кнопка "Configure"
-            canvas_draw_str_aligned(canvas, 64, 50, AlignCenter, AlignTop, "[ Configure ]");
+            canvas_draw_str_aligned(
+                canvas, 64, 50, AlignCenter, AlignTop, FMTX_UI_TEXT("[ Configure ]", "[ 配置 ]"));
             break;
             
         case SCREEN_REGION:
             canvas_set_font(canvas, FontPrimary);
             // Заголовок сдвинут вверх на 8 пикселей
-            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "Select Region");
+            canvas_draw_str_aligned(
+                canvas, 64, 10, AlignCenter, AlignTop, FMTX_UI_TEXT("Select Region", "选择区域"));
             
             canvas_set_font(canvas, FontSecondary);
             for(size_t i = 0; i < REGION_COUNT; i++) {
@@ -137,7 +148,8 @@ void fmtx_draw_callback(Canvas* canvas, void* ctx) {
             
         case SCREEN_FREQUENCY:
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "Set Frequency");
+            canvas_draw_str_aligned(
+                canvas, 64, 10, AlignCenter, AlignTop, FMTX_UI_TEXT("Set Frequency", "设置频率"));
             
             canvas_set_font(canvas, FontSecondary);
             const RegionConfig* region = &regions[app->state.region_index];
@@ -152,18 +164,20 @@ void fmtx_draw_callback(Canvas* canvas, void* ctx) {
             canvas_draw_str_aligned(canvas, 64, 35, AlignCenter, AlignTop, freq_text);
             
             // Кнопки управления
-            canvas_draw_str(canvas, 5, 50, "L:Back");
-            canvas_draw_str(canvas, 50, 50, "U/D:Set");
-            canvas_draw_str(canvas, 95, 50, "OK:Next");
+            canvas_draw_str(canvas, 5, 50, FMTX_UI_TEXT("L:Back", "左:返回"));
+            canvas_draw_str(canvas, 50, 50, FMTX_UI_TEXT("U/D:Set", "上/下:调整"));
+            canvas_draw_str(canvas, 95, 50, FMTX_UI_TEXT("OK:Next", "OK:下一步"));
             break;
             
         case SCREEN_INIT:
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "Init Status");
+            canvas_draw_str_aligned(
+                canvas, 64, 10, AlignCenter, AlignTop, FMTX_UI_TEXT("Init Status", "初始化状态"));
             
             canvas_set_font(canvas, FontSecondary);
             if(app->state.init_in_progress) {
-                canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignTop, "Initializing...");
+                canvas_draw_str_aligned(
+                    canvas, 64, 25, AlignCenter, AlignTop, FMTX_UI_TEXT("Initializing...", "初始化中..."));
             } else {
                 // Разбиваем статус на строки, если он слишком длинный
                 char status_line[32];
@@ -181,7 +195,8 @@ void fmtx_draw_callback(Canvas* canvas, void* ctx) {
             }
             
             // Кнопка "Start Init"
-            canvas_draw_str_aligned(canvas, 64, 50, AlignCenter, AlignTop, "[ Start Init ]");
+            canvas_draw_str_aligned(
+                canvas, 64, 50, AlignCenter, AlignTop, FMTX_UI_TEXT("[ Start Init ]", "[ 开始初始化 ]"));
             break;
     }
     
@@ -212,7 +227,7 @@ int32_t fmtx_i2c_init_app(void* p) {
         app->state.region_index = 0; // Europe по умолчанию
         app->state.frequency = 100.0f;
         app->state.init_in_progress = false;
-        strcpy(app->state.init_status, "Ready to set frequency");
+        strcpy(app->state.init_status, FMTX_UI_TEXT("Ready to set frequency", "已准备设置频率"));
         furi_mutex_release(app->state_mutex);
     }
     

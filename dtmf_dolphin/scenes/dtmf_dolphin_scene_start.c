@@ -1,5 +1,11 @@
 #include "../dtmf_dolphin_i.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define DTMF_UI_TEXT(en, zh) (zh)
+#else
+#define DTMF_UI_TEXT(en, zh) (en)
+#endif
+
 static void dtmf_dolphin_scene_start_main_menu_enter_callback(void* context, uint32_t index) {
     DTMFDolphinApp* app = context;
     uint8_t cust_event = 255;
@@ -37,12 +43,12 @@ void dtmf_dolphin_scene_start_on_enter(void* context) {
     variable_item_list_set_enter_callback(
         var_item_list, dtmf_dolphin_scene_start_main_menu_enter_callback, app);
 
-    variable_item_list_add(var_item_list, "Dialer", 0, NULL, context);
-    variable_item_list_add(var_item_list, "Bluebox", 0, NULL, context);
-    variable_item_list_add(var_item_list, "Redbox (US)", 0, NULL, context);
-    variable_item_list_add(var_item_list, "Redbox (UK)", 0, NULL, context);
-    variable_item_list_add(var_item_list, "Redbox (CA)", 0, NULL, context);
-    variable_item_list_add(var_item_list, "Misc", 0, NULL, context);
+    variable_item_list_add(var_item_list, DTMF_UI_TEXT("Dialer", "拨号器"), 0, NULL, context);
+    variable_item_list_add(var_item_list, DTMF_UI_TEXT("Bluebox", "蓝盒"), 0, NULL, context);
+    variable_item_list_add(var_item_list, DTMF_UI_TEXT("Redbox (US)", "红盒(美版)"), 0, NULL, context);
+    variable_item_list_add(var_item_list, DTMF_UI_TEXT("Redbox (UK)", "红盒(英版)"), 0, NULL, context);
+    variable_item_list_add(var_item_list, DTMF_UI_TEXT("Redbox (CA)", "红盒(加拿大)"), 0, NULL, context);
+    variable_item_list_add(var_item_list, DTMF_UI_TEXT("Misc", "杂项"), 0, NULL, context);
 
     variable_item_list_set_selected_item(
         var_item_list, scene_manager_get_scene_state(app->scene_manager, DTMFDolphinSceneStart));

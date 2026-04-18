@@ -1,13 +1,33 @@
 #include "../minesweeper.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MS_UI_TEXT(en, zh) (zh)
+#else
+#define MS_UI_TEXT(en, zh) (en)
+#endif
+
 static const char* farewellPrompts[] = {
-    "Leaving so\n   soon?",      "Will you\n   stay?",       "Don't swim\n   away.",
-    "Feeling\n   farewell?",     "Sad to part\n   ways.",    "Ocean of\n   goodbyes.",
-    "Dolphin tears,\n   why?",   "Lonely without\n   you.",  "End of our\n   wave?",
-    "Will you\n   return?",      "Drowning in\n   goodbye.", "Farewell\n   ripples.",
-    "Flipper's\n   frown.",      "Sea of\n   solitude.",     "Parting\n   currents.",
-    "Goodbye, old\n   friend.",  "Will tide\n  bring back?", "Echoes of\n  departure.",
-    "Dolphin's last\n   dance.", "Ocean misses\n   you."};
+    MS_UI_TEXT("Leaving so\n   soon?", "这么快就要\n   走吗?"),
+    MS_UI_TEXT("Will you\n   stay?", "还要继续\n   吗?"),
+    MS_UI_TEXT("Don't swim\n   away.", "别这么快\n   游走。"),
+    MS_UI_TEXT("Feeling\n   farewell?", "真的要\n   离开吗?"),
+    MS_UI_TEXT("Sad to part\n   ways.", "真舍不得\n   你走。"),
+    MS_UI_TEXT("Ocean of\n   goodbyes.", "满是离别的\n   海洋。"),
+    MS_UI_TEXT("Dolphin tears,\n   why?", "海豚落泪,\n   为什么?"),
+    MS_UI_TEXT("Lonely without\n   you.", "没有你会\n   很孤单。"),
+    MS_UI_TEXT("End of our\n   wave?", "我们的浪花\n   到此为止?"),
+    MS_UI_TEXT("Will you\n   return?", "你还会\n   回来吗?"),
+    MS_UI_TEXT("Drowning in\n   goodbye.", "沉没在\n   告别里。"),
+    MS_UI_TEXT("Farewell\n   ripples.", "告别的\n   涟漪。"),
+    MS_UI_TEXT("Flipper's\n   frown.", "Flipper 的\n   失落。"),
+    MS_UI_TEXT("Sea of\n   solitude.", "孤独的\n   海。"),
+    MS_UI_TEXT("Parting\n   currents.", "离别的\n   洋流。"),
+    MS_UI_TEXT("Goodbye, old\n   friend.", "再见了,\n   老朋友。"),
+    MS_UI_TEXT("Will tide\n  bring back?", "潮汐还会\n  带你回来吗?"),
+    MS_UI_TEXT("Echoes of\n  departure.", "离去的\n  回声。"),
+    MS_UI_TEXT("Dolphin's last\n   dance.", "海豚最后的\n   舞步。"),
+    MS_UI_TEXT("Ocean misses\n   you.", "海洋会想念\n   你。"),
+};
 
 static void minesweeper_menu_scene_dialog_callback(DialogExResult result, void* context) {
     furi_assert(context);
@@ -24,7 +44,8 @@ void minesweeper_scene_menu_screen_on_enter(void* context) {
 
     dialog_ex_set_context(app->menu_screen, app);
 
-    dialog_ex_set_header(app->menu_screen, "Exit Game?", (128 * 3) / 4, 4, AlignCenter, AlignTop);
+    dialog_ex_set_header(
+        app->menu_screen, MS_UI_TEXT("Exit Game?", "退出游戏?"), (128 * 3) / 4, 4, AlignCenter, AlignTop);
 
     uint32_t prompt_index = furi_hal_random_get() % sizeof(farewellPrompts) / sizeof(char*);
 
@@ -33,11 +54,9 @@ void minesweeper_scene_menu_screen_on_enter(void* context) {
 
     dialog_ex_set_icon(app->menu_screen, 11, 0, &I_dolph_cry_49x54);
 
-    dialog_ex_set_left_button_text(app->menu_screen, "Back");
-
-    dialog_ex_set_center_button_text(app->menu_screen, "Settings");
-
-    dialog_ex_set_right_button_text(app->menu_screen, "Exit");
+    dialog_ex_set_left_button_text(app->menu_screen, MS_UI_TEXT("Back", "返回"));
+    dialog_ex_set_center_button_text(app->menu_screen, MS_UI_TEXT("Settings", "设置"));
+    dialog_ex_set_right_button_text(app->menu_screen, MS_UI_TEXT("Exit", "退出"));
 
     dialog_ex_set_result_callback(app->menu_screen, minesweeper_menu_scene_dialog_callback);
 

@@ -14,6 +14,11 @@
 #include <jsmn/jsmn.h>
 
 #define TAG "FlipTrader"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_TRADER_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_TRADER_UI_TEXT(en, zh) (en)
+#endif
 
 // Define the submenu items for our FlipTrader application
 typedef enum

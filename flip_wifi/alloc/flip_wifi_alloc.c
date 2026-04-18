@@ -18,12 +18,42 @@ FlipWiFiApp *flip_wifi_app_alloc()
     {
         return NULL;
     }
-    submenu_add_item(app->submenu_main, "Scan", FlipWiFiSubmenuIndexWiFiScan, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "Deauthentication", FlipWiFiSubmenuIndexWiFiDeauth, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "Captive Portal", FlipWiFiSubmenuIndexWiFiAP, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "Saved APs", FlipWiFiSubmenuIndexWiFiSaved, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "Commands", FlipWiFiSubmenuIndexCommands, callback_submenu_choices, app);
-    submenu_add_item(app->submenu_main, "Info", FlipWiFiSubmenuIndexAbout, callback_submenu_choices, app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_WIFI_UI_TEXT("Scan", "扫描"),
+        FlipWiFiSubmenuIndexWiFiScan,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_WIFI_UI_TEXT("Deauthentication", "去认证"),
+        FlipWiFiSubmenuIndexWiFiDeauth,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_WIFI_UI_TEXT("Captive Portal", "门户页面"),
+        FlipWiFiSubmenuIndexWiFiAP,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_WIFI_UI_TEXT("Saved APs", "已保存 AP"),
+        FlipWiFiSubmenuIndexWiFiSaved,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_WIFI_UI_TEXT("Commands", "命令"),
+        FlipWiFiSubmenuIndexCommands,
+        callback_submenu_choices,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        FLIP_WIFI_UI_TEXT("Info", "信息"),
+        FlipWiFiSubmenuIndexAbout,
+        callback_submenu_choices,
+        app);
 
     app->fhttp = NULL;
 

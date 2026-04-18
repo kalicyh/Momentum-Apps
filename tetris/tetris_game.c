@@ -9,6 +9,12 @@
 #include <dolphin/dolphin.h>
 #include "tetris_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TETRIS_UI_TEXT(en, zh) (zh)
+#else
+#define TETRIS_UI_TEXT(en, zh) (en)
+#endif
+
 #include <assets_icons.h>
 
 #define BORDER_OFFSET 1
@@ -214,10 +220,10 @@ static void tetris_game_render_callback(Canvas* const canvas, void* ctx) {
         canvas_draw_frame(canvas, 1, 52, 62, 24);
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 4, 63, "Game Over");
+        canvas_draw_str(canvas, 4, 63, TETRIS_UI_TEXT("Game Over", "游戏结束"));
 
-        char buffer[13];
-        snprintf(buffer, sizeof(buffer), "Lines: %u", tetris_state->numLines);
+        char buffer[20];
+        snprintf(buffer, sizeof(buffer), TETRIS_UI_TEXT("Lines: %u", "消行: %u"), tetris_state->numLines);
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 32, 73, AlignCenter, AlignBottom, buffer);
     }
@@ -231,10 +237,10 @@ static void tetris_game_render_callback(Canvas* const canvas, void* ctx) {
         canvas_draw_frame(canvas, 1, 52, 62, 24);
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 4, 63, "Paused");
+        canvas_draw_str(canvas, 4, 63, TETRIS_UI_TEXT("Paused", "已暂停"));
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 4, 73, "hold      to quit");
+        canvas_draw_str(canvas, 4, 73, TETRIS_UI_TEXT("hold      to quit", "长按      退出"));
         canvas_draw_icon(canvas, 22, 66, &I_Pin_back_arrow_10x8);
     }
     furi_mutex_release(tetris_state->mutex);

@@ -166,7 +166,7 @@ static void player_render(Entity* self, GameManager* manager, Canvas* canvas, vo
     UNUSED(game_context);
 
     canvas_draw_str(canvas, 20, 6, "@codeallnight - ver 0.1");
-    canvas_draw_str(canvas, 10, 61, "video game module demo");
+    canvas_draw_str(canvas, 10, 61, "视频游戏模块演示");
 }
 
 static const EntityDescription player_desc = {

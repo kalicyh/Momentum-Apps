@@ -10,6 +10,11 @@
 #define VERSION "0.2.2"
 #define VERSION_TAG TAG " " VERSION
 #define APP_ID "flip_map"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_MAP_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_MAP_UI_TEXT(en, zh) (en)
+#endif
 
 typedef enum
 {

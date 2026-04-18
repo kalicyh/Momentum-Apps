@@ -33,13 +33,16 @@ void color_guess_startscreen_draw(Canvas* canvas, ColorGuessStartscreenModel* mo
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_icon(canvas, 0, 9, &I_start_dolph_49x55);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "Color Guess");
+    canvas_draw_str_aligned(
+        canvas, 64, 10, AlignCenter, AlignTop, COLOR_GUESS_UI_TEXT("Color Guess", "颜色猜猜看"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 54, 22, AlignLeft, AlignTop, "Guess the color");
-    canvas_draw_str_aligned(canvas, 54, 32, AlignLeft, AlignTop, "on Flipper's LED");
+    canvas_draw_str_aligned(
+        canvas, 54, 22, AlignLeft, AlignTop, COLOR_GUESS_UI_TEXT("Guess the color", "猜出颜色"));
+    canvas_draw_str_aligned(
+        canvas, 54, 32, AlignLeft, AlignTop, COLOR_GUESS_UI_TEXT("on Flipper's LED", "看 Flipper 的灯"));
     snprintf(buffer, sizeof(buffer), "Ver. %s", COLOR_GUESS_VERSION);
     canvas_draw_str_aligned(canvas, 92, 56, AlignLeft, AlignTop, buffer);
-    elements_button_center(canvas, "Start");
+    elements_button_center(canvas, COLOR_GUESS_UI_TEXT("Start", "开始"));
 }
 
 static void color_guess_startscreen_model_init(ColorGuessStartscreenModel* const model) {

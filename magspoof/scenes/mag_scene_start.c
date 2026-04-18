@@ -1,5 +1,11 @@
 #include "../mag_i.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     SubmenuIndexSaved,
     SubmenuIndexRead,
@@ -18,21 +24,22 @@ void mag_scene_start_on_enter(void* context) {
     Mag* mag = context;
     Submenu* submenu = mag->submenu;
 
-    submenu_add_item(submenu, "Saved", SubmenuIndexSaved, mag_scene_start_submenu_callback, mag);
+    submenu_add_item(
+        submenu, MAGSPOOF_UI_TEXT("Saved", "已保存"), SubmenuIndexSaved, mag_scene_start_submenu_callback, mag);
     submenu_add_lockable_item(
         submenu,
-        "Read",
+        MAGSPOOF_UI_TEXT("Read", "读取"),
         SubmenuIndexRead,
         mag_scene_start_submenu_callback,
         mag,
         (!mag->state.is_debug && !mag->state.allow_uart),
-        "Enable Debug!");
+        MAGSPOOF_UI_TEXT("Enable Debug!", "请启用调试!"));
     //submenu_add_item(
     //    submenu, "Add Manually", SubmenuIndexAddManually, mag_scene_start_submenu_callback, mag);
     submenu_add_item(
-        submenu, "Settings", SubmenuIndexSettings, mag_scene_start_submenu_callback, mag);
+        submenu, MAGSPOOF_UI_TEXT("Settings", "设置"), SubmenuIndexSettings, mag_scene_start_submenu_callback, mag);
 
-    submenu_add_item(submenu, "About", SubmenuIndexAbout, mag_scene_start_submenu_callback, mag);
+    submenu_add_item(submenu, MAGSPOOF_UI_TEXT("About", "关于"), SubmenuIndexAbout, mag_scene_start_submenu_callback, mag);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(mag->scene_manager, MagSceneStart));

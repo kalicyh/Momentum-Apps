@@ -14,6 +14,12 @@
 #define DASH_REVERSE_PHASE_READ 4U
 #define DASH_REVERSE_FLASH_MS   250U
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define DASHBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define DASHBOARD_UI_TEXT(en, zh) (en)
+#endif
+
 static bool dashboard_is_numeric_token(const char* text) {
     if(!text || text[0] == '\0') {
         return false;
@@ -732,7 +738,7 @@ static bool dashboard_parse_reverse_change(const char* text, uint32_t* out_id, u
 
 static void dashboard_metric_draw_write(Canvas* canvas, const AppDashboardModel* dashboard) {
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Write Frames");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Write Frames", "发送帧"));
 
     char id_text[12] = {0};
     dashboard_format_id(dashboard->write_ext, dashboard->write_id, id_text, sizeof(id_text));
@@ -784,7 +790,7 @@ static void dashboard_metric_draw_write(Canvas* canvas, const AppDashboardModel*
     }
 
     char sent[24] = {0};
-    snprintf(sent, sizeof(sent), "Sent Frames: %lu", (unsigned long)dashboard->counter);
+    snprintf(sent, sizeof(sent), DASHBOARD_UI_TEXT("Sent Frames: %lu", "已发送帧: %lu"), (unsigned long)dashboard->counter);
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 2, 60, sent);
 }
@@ -794,10 +800,11 @@ static void dashboard_metric_draw_speed(Canvas* canvas, const AppDashboardModel*
 
     const uint8_t page = (uint8_t)(dashboard->mode_page % 2U);
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Speed Test");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Speed Test", "速度测试"));
         if(!dashboard->speed_has_sample) {
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "Waiting for sample");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R History");
+            canvas_draw_str_aligned(
+                canvas, 64, 26, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("Waiting for sample", "等待采样"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R History", "左/右 历史"));
             return;
         }
 
@@ -818,18 +825,18 @@ static void dashboard_metric_draw_speed(Canvas* canvas, const AppDashboardModel*
 
         canvas_draw_rframe(canvas, 2, 12, 124, 50, 4);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, "Current Rate");
+        canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Current Rate", "当前速率"));
         canvas_set_font(canvas, FontBigNumbers);
         canvas_draw_str_aligned(canvas, 64, 38, AlignCenter, AlignCenter, rate);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 58, AlignCenter, AlignBottom, "msg/s");
+        canvas_draw_str_aligned(canvas, 64, 58, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("msg/s", "帧/秒"));
         canvas_set_font(canvas, FontSecondary);
         //canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, stats);
     } else {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Recent Samples");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Recent Samples", "最近采样"));
         if(dashboard->speed_count == 0U) {
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "No samples yet");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Overview");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No samples yet", "暂无采样"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R Overview", "左/右 概览"));
             return;
         }
         uint8_t selected = dashboard->speed_selected;
@@ -865,7 +872,7 @@ static void dashboard_metric_draw_speed(Canvas* canvas, const AppDashboardModel*
             canvas_set_font(canvas, FontSecondary);
             canvas_draw_str(canvas, 2, (int32_t)(22 + i * 10U), row);
         }
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "U/D Sel  L/R Page");
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("U/D Sel  L/R Page", "上/下 选中 左/右 翻页"));
     }
 }
 
@@ -874,7 +881,7 @@ static void dashboard_metric_draw_valtrack(Canvas* canvas, const AppDashboardMod
 
     const uint8_t page = (uint8_t)(dashboard->mode_page % 2U);
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Byte Values (hex/changes)");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Byte Values (hex/changes)", "字节值(HEX/变化)"));
 
         for(uint8_t row = 0U; row < 4U; row++) {
             const uint8_t b0 = (uint8_t)(row * 2U);
@@ -910,14 +917,19 @@ static void dashboard_metric_draw_valtrack(Canvas* canvas, const AppDashboardMod
                 dashboard->val_bytes[selected],
                 dashboard->val_byte_changes[selected]);
         } else {
-            snprintf(footer, sizeof(footer), "Sel B%u waiting chg:%u", selected, dashboard->val_byte_changes[selected]);
+            snprintf(
+                footer,
+                sizeof(footer),
+                DASHBOARD_UI_TEXT("Sel B%u waiting chg:%u", "选中 B%u 等待 chg:%u"),
+                selected,
+                dashboard->val_byte_changes[selected]);
         }
         canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, footer);
     } else {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Recent Changes");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Recent Changes", "最近变化"));
         if(dashboard->val_count == 0U) {
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "No changes yet");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Bytes");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No changes yet", "暂无变化"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R Bytes", "左/右 字节"));
             return;
         }
         uint8_t selected = dashboard->val_selected;
@@ -954,7 +966,7 @@ static void dashboard_metric_draw_valtrack(Canvas* canvas, const AppDashboardMod
         }
 
         char footer[32] = {0};
-        snprintf(footer, sizeof(footer), "Total changes: %lu", (unsigned long)dashboard->val_total_changes);
+        snprintf(footer, sizeof(footer), DASHBOARD_UI_TEXT("Total changes: %lu", "变化总数: %lu"), (unsigned long)dashboard->val_total_changes);
         canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, footer);
     }
 }
@@ -964,9 +976,9 @@ static void dashboard_metric_draw_unique(Canvas* canvas, const AppDashboardModel
 
     const uint8_t page = (uint8_t)(dashboard->mode_page % 2U);
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Unique IDs");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Unique IDs", "唯一 ID"));
         canvas_draw_rframe(canvas, 2, 12, 124, 50, 4);
-        canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, "Unique IDs Discovered");
+        canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Unique IDs Discovered", "发现的唯一 ID"));
 
         char value[24] = {0};
         snprintf(value, sizeof(value), "%lu", (unsigned long)dashboard->unique_total);
@@ -986,15 +998,15 @@ static void dashboard_metric_draw_unique(Canvas* canvas, const AppDashboardModel
                 cc_bus_to_string(dashboard->unique_last.bus),
                 dashboard->unique_last.ext ? "EXT" : "STD");
         } else {
-            snprintf(footer, sizeof(footer), "Waiting for new IDs");
+            snprintf(footer, sizeof(footer), DASHBOARD_UI_TEXT("Waiting for new IDs", "等待新的 ID"));
         }
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 56, AlignCenter, AlignBottom, footer);
     } else {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Recent IDs");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Recent IDs", "最近 ID"));
         if(dashboard->unique_count == 0U) {
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "No IDs yet");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Overview");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No IDs yet", "暂无 ID"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R Overview", "左/右 概览"));
             return;
         }
         uint8_t selected = dashboard->unique_selected;
@@ -1031,7 +1043,7 @@ static void dashboard_metric_draw_unique(Canvas* canvas, const AppDashboardModel
                 entry->ext ? 'E' : 'S');
             canvas_draw_str(canvas, 2, (int32_t)(22 + i * 10U), row);
         }
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "U/D Sel  L/R Page");
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("U/D Sel  L/R Page", "上/下 选中 左/右 翻页"));
     }
 }
 
@@ -1040,10 +1052,10 @@ static void dashboard_metric_draw_dbc(Canvas* canvas, const AppDashboardModel* d
 
     const uint8_t page = (uint8_t)(dashboard->mode_page % 2U);
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "DBC Decode");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("DBC Decode", "DBC 解码"));
         if(!dashboard->dbc_has_latest) {
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "Waiting for decoded data");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R History");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("Waiting for decoded data", "等待解码数据"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R History", "左/右 历史"));
             return;
         }
 
@@ -1058,7 +1070,7 @@ static void dashboard_metric_draw_dbc(Canvas* canvas, const AppDashboardModel* d
             "%s 0x%lX %s",
             cc_bus_to_string(dashboard->dbc_latest.bus),
             (unsigned long)dashboard->dbc_latest.frame_id,
-            dashboard->dbc_latest.in_range ? "ok" : "oor");
+                dashboard->dbc_latest.in_range ? DASHBOARD_UI_TEXT("ok", "正常") : DASHBOARD_UI_TEXT("oor", "超限"));
 
         canvas_draw_rframe(canvas, 2, 12, 124, 50, 4);
         canvas_set_font(canvas, FontSecondary);
@@ -1071,10 +1083,10 @@ static void dashboard_metric_draw_dbc(Canvas* canvas, const AppDashboardModel* d
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, footer);
     } else {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Recent Signals");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Recent Signals", "最近信号"));
         if(dashboard->dbc_count == 0U) {
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "No decoded signals yet");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Latest");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No decoded signals yet", "暂无已解码信号"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R Latest", "左/右 最新"));
             return;
         }
         uint8_t selected = dashboard->dbc_selected;
@@ -1119,7 +1131,7 @@ static void dashboard_metric_draw_dbc(Canvas* canvas, const AppDashboardModel* d
                 "%s 0x%lX %s",
                 cc_bus_to_string(selected_entry->bus),
                 (unsigned long)selected_entry->frame_id,
-                selected_entry->in_range ? "ok" : "oor");
+                selected_entry->in_range ? DASHBOARD_UI_TEXT("ok", "正常") : DASHBOARD_UI_TEXT("oor", "超限"));
         }
         canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, footer);
     }
@@ -1127,20 +1139,20 @@ static void dashboard_metric_draw_dbc(Canvas* canvas, const AppDashboardModel* d
 
 static void dashboard_metric_draw_reverse(Canvas* canvas, const AppDashboardModel* dashboard) {
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Phase");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Phase", "阶段"));
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str_aligned(
         canvas, 64, 11, AlignCenter, AlignTop, dashboard_reverse_phase_text(dashboard->reverse_phase));
 
     canvas_set_font(canvas, FontSecondary);
     if(dashboard->reverse_phase == DASH_REVERSE_PHASE_CAL) {
-        canvas_draw_str_aligned(canvas, 64, 27, AlignCenter, AlignTop, "Don't trigger target signals");
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "OK: Exclude + clear");
+        canvas_draw_str_aligned(canvas, 64, 27, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Don't trigger target signals", "请勿触发目标信号"));
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("OK: Exclude + clear", "OK: 排除并清除"));
         return;
     }
 
     if(dashboard->reverse_count == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 37, AlignCenter, AlignCenter, "No changed IDs yet");
+        canvas_draw_str_aligned(canvas, 64, 37, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No changed IDs yet", "暂无变化 ID"));
     } else {
         uint8_t selected = dashboard->reverse_selected;
         if(selected >= dashboard->reverse_count) {
@@ -1183,9 +1195,9 @@ static void dashboard_metric_draw_reverse(Canvas* canvas, const AppDashboardMode
 
     if(dashboard->reverse_overflow) {
         canvas_draw_str_aligned(
-            canvas, 64, 63, AlignCenter, AlignBottom, "Too many changes. Increase calibration");
+            canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("Too many changes. Increase calibration", "变化过多，请增加校准"));
     } else {
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "U/D Scroll  OK Exclude");
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("U/D Scroll  OK Exclude", "上/下 滚动 OK 排除"));
     }
 }
 
@@ -1194,16 +1206,19 @@ static bool dashboard_metric_draw_obd(Canvas* canvas, const AppDashboardModel* d
         return false;
     }
 
-    static const char* kTypeTitle[3] = {"Stored DTCs", "Pending DTCs", "Permanent DTCs"};
+    static const char* kTypeTitle[3] = {
+        DASHBOARD_UI_TEXT("Stored DTCs", "已存 DTC"),
+        DASHBOARD_UI_TEXT("Pending DTCs", "待定 DTC"),
+        DASHBOARD_UI_TEXT("Permanent DTCs", "永久 DTC")};
     canvas_set_font(canvas, FontSecondary);
 
     const uint8_t page = (uint8_t)(dashboard->obd_dtc_page % 4U);
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "DTC Summary");
-        canvas_draw_str(canvas, 2, 20, "Powertrain:");
-        canvas_draw_str(canvas, 2, 30, "Body:");
-        canvas_draw_str(canvas, 2, 40, "Chassis:");
-        canvas_draw_str(canvas, 2, 50, "Network:");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("DTC Summary", "DTC 汇总"));
+        canvas_draw_str(canvas, 2, 20, DASHBOARD_UI_TEXT("Powertrain:", "动力系统:"));
+        canvas_draw_str(canvas, 2, 30, DASHBOARD_UI_TEXT("Body:", "车身:"));
+        canvas_draw_str(canvas, 2, 40, DASHBOARD_UI_TEXT("Chassis:", "底盘:"));
+        canvas_draw_str(canvas, 2, 50, DASHBOARD_UI_TEXT("Network:", "网络:"));
 
         char value[12] = {0};
         snprintf(value, sizeof(value), "%u", dashboard->obd_dtc_cat_counts[0]);
@@ -1221,7 +1236,8 @@ static bool dashboard_metric_draw_obd(Canvas* canvas, const AppDashboardModel* d
             63,
             AlignCenter,
             AlignBottom,
-            dashboard->obd_dtc_complete ? "Scan complete  R:Stored" : "Scanning...  R:Stored");
+            dashboard->obd_dtc_complete ? DASHBOARD_UI_TEXT("Scan complete  R:Stored", "扫描完成  右:已存") :
+                                          DASHBOARD_UI_TEXT("Scanning...  R:Stored", "扫描中...  右:已存"));
         return true;
     }
 
@@ -1237,8 +1253,8 @@ static bool dashboard_metric_draw_obd(Canvas* canvas, const AppDashboardModel* d
     canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, kTypeTitle[type_index]);
 
     if(count == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, "No DTCs");
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Page");
+        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No DTCs", "无 DTC"));
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("L/R Page", "左/右 翻页"));
         return true;
     }
 
@@ -1263,7 +1279,7 @@ static bool dashboard_metric_draw_obd(Canvas* canvas, const AppDashboardModel* d
         canvas_draw_str(canvas, 2, (int32_t)(18 + i * 11U), row);
     }
 
-    canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "U/D Scroll  L/R Page");
+    canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, DASHBOARD_UI_TEXT("U/D Scroll  L/R Page", "上/下 滚动 左/右 翻页"));
     return true;
 }
 
@@ -1272,12 +1288,12 @@ static void dashboard_metric_draw_custom_inject(Canvas* canvas, const AppDashboa
 
     const uint8_t page = (uint8_t)(dashboard->mode_page % 2U);
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Custom Inject Slots");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Custom Inject Slots", "自定义注入槽"));
 
         for(uint8_t i = 0U; i < 5U; i++) {
             const bool used = dashboard->custom_slot_used[i];
             const char* slot_name =
-                (dashboard->custom_slot_name[i][0] != '\0') ? dashboard->custom_slot_name[i] : "Slot";
+                (dashboard->custom_slot_name[i][0] != '\0') ? dashboard->custom_slot_name[i] : DASHBOARD_UI_TEXT("Slot", "槽位");
             char row[60] = {0};
 
             if(used) {
@@ -1294,7 +1310,7 @@ static void dashboard_metric_draw_custom_inject(Canvas* canvas, const AppDashboa
                 snprintf(
                     row,
                     sizeof(row),
-                    "%cS%u - %s : <empty>",
+                    DASHBOARD_UI_TEXT("%cS%u - %s : <empty>", "%cS%u - %s : <空>"),
                     (dashboard->custom_selected_slot == i) ? '>' : ' ',
                     (unsigned)(i + 1U),
                     slot_name);
@@ -1315,9 +1331,9 @@ static void dashboard_metric_draw_custom_inject(Canvas* canvas, const AppDashboa
             canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, footer);
         }
     } else {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Recent Events");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, DASHBOARD_UI_TEXT("Recent Events", "最近事件"));
         if(dashboard->custom_recent_count == 0U) {
-            canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, "No events yet");
+            canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, DASHBOARD_UI_TEXT("No events yet", "暂无事件"));
             return;
         }
 
@@ -1381,7 +1397,7 @@ void dashboard_metric_draw(Canvas* canvas, const AppDashboardModel* dashboard) {
         2,
         AlignCenter,
         AlignTop,
-        dashboard->title[0] ? dashboard->title : "CAN Commander");
+        dashboard->title[0] ? dashboard->title : DASHBOARD_UI_TEXT("CAN Commander", "CAN Commander"));
 
     canvas_draw_rframe(canvas, 2, 12, 124, 50, 4);
 

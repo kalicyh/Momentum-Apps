@@ -31,15 +31,35 @@ WebCrawlerApp *web_crawler_app_alloc()
     }
 
     // Allocate Submenu views
-    if (!easy_flipper_set_submenu(&app->submenu_main, WebCrawlerViewSubmenuMain, VERSION_TAG, web_crawler_exit_app_callback, &app->view_dispatcher))
+    if (!easy_flipper_set_submenu(
+            &app->submenu_main,
+            WebCrawlerViewSubmenuMain,
+            WEB_CRAWLER_UI_TEXT(VERSION_TAG, "Web Crawler v1.0.1"),
+            web_crawler_exit_app_callback,
+            &app->view_dispatcher))
     {
         return NULL;
     }
 
     // Add Submenu items
-    submenu_add_item(app->submenu_main, "Run", WebCrawlerSubmenuIndexRun, web_crawler_submenu_callback, app);
-    submenu_add_item(app->submenu_main, "About", WebCrawlerSubmenuIndexAbout, web_crawler_submenu_callback, app);
-    submenu_add_item(app->submenu_main, "Settings", WebCrawlerSubmenuIndexConfig, web_crawler_submenu_callback, app);
+    submenu_add_item(
+        app->submenu_main,
+        WEB_CRAWLER_UI_TEXT("Run", "运行"),
+        WebCrawlerSubmenuIndexRun,
+        web_crawler_submenu_callback,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        WEB_CRAWLER_UI_TEXT("About", "关于"),
+        WebCrawlerSubmenuIndexAbout,
+        web_crawler_submenu_callback,
+        app);
+    submenu_add_item(
+        app->submenu_main,
+        WEB_CRAWLER_UI_TEXT("Settings", "设置"),
+        WebCrawlerSubmenuIndexConfig,
+        web_crawler_submenu_callback,
+        app);
 
     // Main view
     if (!easy_flipper_set_view(&app->view_loader, WebCrawlerViewLoader, web_crawler_loader_draw_callback, NULL, web_crawler_back_to_main_callback, &app->view_dispatcher, app))
@@ -47,7 +67,12 @@ WebCrawlerApp *web_crawler_app_alloc()
         return NULL;
     }
     web_crawler_loader_init(app->view_loader);
-    if (!easy_flipper_set_widget(&app->widget_result, WebCrawlerViewWidgetResult, "Error, try again.", web_crawler_back_to_main_callback, &app->view_dispatcher))
+    if (!easy_flipper_set_widget(
+            &app->widget_result,
+            WebCrawlerViewWidgetResult,
+            WEB_CRAWLER_UI_TEXT("Error, try again.", "出错了，请重试。"),
+            web_crawler_back_to_main_callback,
+            &app->view_dispatcher))
     {
         return NULL;
     }

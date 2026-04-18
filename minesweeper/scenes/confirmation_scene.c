@@ -1,5 +1,11 @@
 #include "../minesweeper.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MS_UI_TEXT(en, zh) (zh)
+#else
+#define MS_UI_TEXT(en, zh) (en)
+#endif
+
 static void confirmation_scene_dialog_callback(DialogExResult result, void* context) {
     furi_assert(context);
 
@@ -16,21 +22,26 @@ void minesweeper_scene_confirmation_screen_on_enter(void* context) {
     dialog_ex_set_context(app->confirmation_screen, app);
 
     dialog_ex_set_header(
-        app->confirmation_screen, "Save Settings?", 128 / 2, 4, AlignCenter, AlignTop);
+        app->confirmation_screen,
+        MS_UI_TEXT("Save Settings?", "保存设置?"),
+        128 / 2,
+        4,
+        AlignCenter,
+        AlignTop);
 
     dialog_ex_set_text(
         app->confirmation_screen,
-        "Warning: Saving will reset\nthe game with the\nselected settings.",
+        MS_UI_TEXT(
+            "Warning: Saving will reset\nthe game with the\nselected settings.",
+            "警告: 保存后将按\n当前设置重置\n游戏。"),
         128 / 2,
         64 / 2,
         AlignCenter,
         AlignCenter);
 
-    dialog_ex_set_left_button_text(app->confirmation_screen, "Back");
-
-    dialog_ex_set_center_button_text(app->confirmation_screen, "Cancel");
-
-    dialog_ex_set_right_button_text(app->confirmation_screen, "Save");
+    dialog_ex_set_left_button_text(app->confirmation_screen, MS_UI_TEXT("Back", "返回"));
+    dialog_ex_set_center_button_text(app->confirmation_screen, MS_UI_TEXT("Cancel", "取消"));
+    dialog_ex_set_right_button_text(app->confirmation_screen, MS_UI_TEXT("Save", "保存"));
 
     dialog_ex_set_result_callback(app->confirmation_screen, confirmation_scene_dialog_callback);
 

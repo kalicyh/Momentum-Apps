@@ -67,8 +67,8 @@ static char *flip_library_wiki_parse(FactLoaderModel *model)
 }
 static void flip_library_wiki_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Search Wikipedia");
-    flip_library_generic_switch_to_view(app, "Searching..", flip_library_wiki_fetch, flip_library_wiki_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Search Wikipedia", "搜索维基百科"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Searching..", "搜索中.."), flip_library_wiki_fetch, flip_library_wiki_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
 }
 //
 static bool flip_library_random_fact_fetch(FactLoaderModel *model)
@@ -83,7 +83,7 @@ static char *flip_library_random_fact_parse(FactLoaderModel *model)
 }
 static void flip_library_random_fact_switch_to_view(FlipLibraryApp *app)
 {
-    flip_library_generic_switch_to_view(app, "Random Fact", flip_library_random_fact_fetch, flip_library_random_fact_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Random Fact", "随机事实"), flip_library_random_fact_fetch, flip_library_random_fact_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
 }
 //
 static bool flip_library_cat_fact_fetch(FactLoaderModel *model)
@@ -98,7 +98,7 @@ static char *flip_library_cat_fact_parse(FactLoaderModel *model)
 }
 static void flip_library_cat_fact_switch_to_view(FlipLibraryApp *app)
 {
-    flip_library_generic_switch_to_view(app, "Random Cat Fact", flip_library_cat_fact_fetch, flip_library_cat_fact_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Random Cat Fact", "随机猫咪事实"), flip_library_cat_fact_fetch, flip_library_cat_fact_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
 }
 //
 static bool flip_library_dog_fact_fetch(FactLoaderModel *model)
@@ -113,7 +113,7 @@ static char *flip_library_dog_fact_parse(FactLoaderModel *model)
 }
 static void flip_library_dog_fact_switch_to_view(FlipLibraryApp *app)
 {
-    flip_library_generic_switch_to_view(app, "Random Dog Fact", flip_library_dog_fact_fetch, flip_library_dog_fact_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Random Dog Fact", "随机狗狗事实"), flip_library_dog_fact_fetch, flip_library_dog_fact_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
 }
 //
 static bool flip_library_quote_fetch(FactLoaderModel *model)
@@ -147,7 +147,7 @@ static char *flip_library_quote_parse(FactLoaderModel *model)
 }
 static void flip_library_quote_switch_to_view(FlipLibraryApp *app)
 {
-    flip_library_generic_switch_to_view(app, "Random Quote", flip_library_quote_fetch, flip_library_quote_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Random Quote", "随机语录"), flip_library_quote_fetch, flip_library_quote_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
 }
 //
 static bool flip_library_dictionary_fetch(FactLoaderModel *model)
@@ -170,8 +170,8 @@ static char *flip_library_dictionary_parse(FactLoaderModel *model)
 }
 static void flip_library_dictionary_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Enter a word");
-    flip_library_generic_switch_to_view(app, "Defining", flip_library_dictionary_fetch, flip_library_dictionary_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Enter a word", "输入单词"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Defining", "释义中"), flip_library_dictionary_fetch, flip_library_dictionary_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
 }
 // GPS
 static bool flip_library_gps_fetch(FactLoaderModel *model)
@@ -235,7 +235,7 @@ static char *flip_library_gps_parse(FactLoaderModel *model)
 }
 static void flip_library_gps_switch_to_view(FlipLibraryApp *app)
 {
-    flip_library_generic_switch_to_view(app, "Fetching GPS data..", flip_library_gps_fetch, flip_library_gps_parse, 1, callback_to_submenu_library, FlipLibraryViewLoader);
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Fetching GPS data..", "获取 GPS 数据.."), flip_library_gps_fetch, flip_library_gps_parse, 1, callback_to_submenu_library, FlipLibraryViewLoader);
 }
 // Weather
 static const char *weather_code_to_str(const char *code)
@@ -605,8 +605,8 @@ static char *flip_library_asset_price_parse(FactLoaderModel *model)
 }
 static void flip_library_asset_price_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Enter an asset");
-    flip_library_generic_switch_to_view(app, "Fetching Asset Price..", flip_library_asset_price_fetch, flip_library_asset_price_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Enter an asset", "输入资产"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Fetching Asset Price..", "获取资产价格.."), flip_library_asset_price_fetch, flip_library_asset_price_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
 }
 //
 static bool flip_library_next_holiday_fetch(FactLoaderModel *model)
@@ -661,8 +661,8 @@ static char *flip_library_next_holiday_parse(FactLoaderModel *model)
 }
 static void flip_library_next_holiday_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Enter a country code");
-    flip_library_generic_switch_to_view(app, "Fetching Next Holiday..", flip_library_next_holiday_fetch, flip_library_next_holiday_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Enter a country code", "输入国家代码"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Fetching Next Holiday..", "获取下个假日.."), flip_library_next_holiday_fetch, flip_library_next_holiday_parse, 1, callback_to_submenu_library, FlipLibraryViewTextInputQuery);
 }
 //
 static bool flip_library_predict_age_fetch(FactLoaderModel *model)
@@ -688,8 +688,8 @@ static char *flip_library_predict_age_parse(FactLoaderModel *model)
 }
 static void flip_library_predict_age_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Enter a name");
-    flip_library_generic_switch_to_view(app, "Predicting Age..", flip_library_predict_age_fetch, flip_library_predict_age_parse, 1, callback_to_submenu_predict, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Enter a name", "输入姓名"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Predicting Age..", "预测年龄.."), flip_library_predict_age_fetch, flip_library_predict_age_parse, 1, callback_to_submenu_predict, FlipLibraryViewTextInputQuery);
 }
 //
 static bool flip_library_predict_gender_fetch(FactLoaderModel *model)
@@ -715,8 +715,8 @@ static char *flip_library_predict_gender_parse(FactLoaderModel *model)
 }
 static void flip_library_predict_gender_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Enter a name");
-    flip_library_generic_switch_to_view(app, "Predicing Gender..", flip_library_predict_gender_fetch, flip_library_predict_gender_parse, 1, callback_to_submenu_predict, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Enter a name", "输入姓名"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Predicing Gender..", "预测性别.."), flip_library_predict_gender_fetch, flip_library_predict_gender_parse, 1, callback_to_submenu_predict, FlipLibraryViewTextInputQuery);
 }
 //
 static bool flip_library_predict_ethnicity_fetch(FactLoaderModel *model)
@@ -742,8 +742,8 @@ static char *flip_library_predict_ethnicity_parse(FactLoaderModel *model)
 }
 static void flip_library_predict_ethnicity_switch_to_view(FlipLibraryApp *app)
 {
-    text_input_set_header_text(app->uart_text_input_query, "Enter a name");
-    flip_library_generic_switch_to_view(app, "Predicting Ethnicity..", flip_library_predict_ethnicity_fetch, flip_library_predict_ethnicity_parse, 1, callback_to_submenu_predict, FlipLibraryViewTextInputQuery);
+    text_input_set_header_text(app->uart_text_input_query, FLIP_LIBRARY_UI_TEXT("Enter a name", "输入姓名"));
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Predicting Ethnicity..", "预测族裔.."), flip_library_predict_ethnicity_fetch, flip_library_predict_ethnicity_parse, 1, callback_to_submenu_predict, FlipLibraryViewTextInputQuery);
 }
 //
 static bool flip_library_random_advice_fetch(FactLoaderModel *model)
@@ -763,7 +763,7 @@ static char *flip_library_random_advice_parse(FactLoaderModel *model)
 }
 static void flip_library_random_advice_switch_to_view(FlipLibraryApp *app)
 {
-    flip_library_generic_switch_to_view(app, "Random Advice", flip_library_random_advice_fetch, flip_library_random_advice_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
+    flip_library_generic_switch_to_view(app, FLIP_LIBRARY_UI_TEXT("Random Advice", "随机建议"), flip_library_random_advice_fetch, flip_library_random_advice_parse, 1, callback_to_random_facts, FlipLibraryViewLoader);
 }
 //
 static bool flip_library_random_trivia_fetch(FactLoaderModel *model)
@@ -1016,36 +1016,36 @@ static void flip_library_request_error_draw(Canvas *canvas)
         if (strstr(fhttp.last_response, "[ERROR] Not connected to Wifi. Failed to reconnect.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 22, "Failed to reconnect.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(canvas, 0, 10, FLIP_LIBRARY_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接 WiFi。"));
+            canvas_draw_str(canvas, 0, 22, FLIP_LIBRARY_UI_TEXT("Failed to reconnect.", "重新连接失败。"));
+            canvas_draw_str(canvas, 0, 50, FLIP_LIBRARY_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(canvas, 0, 60, FLIP_LIBRARY_UI_TEXT("Press BACK to return.", "按返回键返回。"));
         }
         else if (strstr(fhttp.last_response, "[ERROR] Failed to connect to Wifi.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(canvas, 0, 10, FLIP_LIBRARY_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接 WiFi。"));
+            canvas_draw_str(canvas, 0, 50, FLIP_LIBRARY_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(canvas, 0, 60, FLIP_LIBRARY_UI_TEXT("Press BACK to return.", "按返回键返回。"));
         }
         else if (strstr(fhttp.last_response, "[PONG]") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[STATUS]Connecting to AP...");
+            canvas_draw_str(canvas, 0, 10, FLIP_LIBRARY_UI_TEXT("[STATUS]Connecting to AP...", "[状态] 正在连接 AP..."));
         }
         else
         {
             canvas_clear(canvas);
             FURI_LOG_E(TAG, "Received an error: %s", fhttp.last_response);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Unusual error...");
-            canvas_draw_str(canvas, 0, 60, "Press BACK and retry.");
+            canvas_draw_str(canvas, 0, 10, FLIP_LIBRARY_UI_TEXT("[ERROR] Unusual error...", "[错误] 异常错误..."));
+            canvas_draw_str(canvas, 0, 60, FLIP_LIBRARY_UI_TEXT("Press BACK and retry.", "按返回键后重试。"));
         }
     }
     else
     {
         canvas_clear(canvas);
-        canvas_draw_str(canvas, 0, 10, "Failed to receive data.");
-        canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+        canvas_draw_str(canvas, 0, 10, FLIP_LIBRARY_UI_TEXT("Failed to receive data.", "接收数据失败。"));
+        canvas_draw_str(canvas, 0, 60, FLIP_LIBRARY_UI_TEXT("Press BACK to return.", "按返回键返回。"));
     }
 }
 
@@ -1169,12 +1169,12 @@ void flip_library_loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == INACTIVE)
     {
-        canvas_draw_str(canvas, 0, 7, "Wifi Dev Board disconnected.");
-        canvas_draw_str(canvas, 0, 17, "Please connect to the board.");
-        canvas_draw_str(canvas, 0, 32, "If your board is connected,");
-        canvas_draw_str(canvas, 0, 42, "make sure you have flashed");
-        canvas_draw_str(canvas, 0, 52, "your WiFi Devboard with the");
-        canvas_draw_str(canvas, 0, 62, "latest FlipperHTTP flash.");
+        canvas_draw_str(canvas, 0, 7, FLIP_LIBRARY_UI_TEXT("Wifi Dev Board disconnected.", "WiFi 开发板已断开。"));
+        canvas_draw_str(canvas, 0, 17, FLIP_LIBRARY_UI_TEXT("Please connect to the board.", "请连接开发板。"));
+        canvas_draw_str(canvas, 0, 32, FLIP_LIBRARY_UI_TEXT("If your board is connected,", "如果开发板已连接，"));
+        canvas_draw_str(canvas, 0, 42, FLIP_LIBRARY_UI_TEXT("make sure you have flashed", "请确认已刷入"));
+        canvas_draw_str(canvas, 0, 52, FLIP_LIBRARY_UI_TEXT("your WiFi Devboard with the", "最新版 FlipperHTTP"));
+        canvas_draw_str(canvas, 0, 62, FLIP_LIBRARY_UI_TEXT("latest FlipperHTTP flash.", "到你的 WiFi 开发板。"));
         return;
     }
 
@@ -1185,7 +1185,7 @@ void flip_library_loader_draw_callback(Canvas *canvas, void *model)
     }
 
     canvas_draw_str(canvas, 0, 7, title);
-    canvas_draw_str(canvas, 0, 15, "Loading...");
+    canvas_draw_str(canvas, 0, 15, FLIP_LIBRARY_UI_TEXT("Loading...", "加载中..."));
 
     if (fact_state == FactStateInitial)
     {
@@ -1194,25 +1194,25 @@ void flip_library_loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == SENDING)
     {
-        canvas_draw_str(canvas, 0, 22, "Sending...");
+        canvas_draw_str(canvas, 0, 22, FLIP_LIBRARY_UI_TEXT("Sending...", "发送中..."));
         return;
     }
 
     if (http_state == RECEIVING || fact_state == FactStateRequested)
     {
-        canvas_draw_str(canvas, 0, 22, "Receiving...");
+        canvas_draw_str(canvas, 0, 22, FLIP_LIBRARY_UI_TEXT("Receiving...", "接收中..."));
         return;
     }
 
     if (http_state == IDLE && fact_state == FactStateReceived)
     {
-        canvas_draw_str(canvas, 0, 22, "Processing...");
+        canvas_draw_str(canvas, 0, 22, FLIP_LIBRARY_UI_TEXT("Processing...", "处理中..."));
         return;
     }
 
     if (http_state == IDLE && fact_state == FactStateParsed)
     {
-        canvas_draw_str(canvas, 0, 22, "Processed...");
+        canvas_draw_str(canvas, 0, 22, FLIP_LIBRARY_UI_TEXT("Processed...", "处理完成..."));
         return;
     }
 }

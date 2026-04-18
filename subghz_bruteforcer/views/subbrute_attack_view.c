@@ -310,9 +310,9 @@ void subbrute_attack_view_draw(Canvas* canvas, void* context) {
 
         elements_button_left(canvas, "-1");
         elements_button_right(canvas, "+1");
-        elements_button_center(canvas, "Start");
-        elements_button_up(canvas, "Save");
-        elements_button_down(canvas, "Resend");
+        elements_button_center(canvas, SUBBRUTE_UI_TEXT("Start", "开始"));
+        elements_button_up(canvas, SUBBRUTE_UI_TEXT("Save", "保存"));
+        elements_button_down(canvas, SUBBRUTE_UI_TEXT("Resend", "重发"));
     } else {
         // canvas_draw_icon_animation
         const uint8_t icon_h_offset = 0;
@@ -334,8 +334,8 @@ void subbrute_attack_view_draw(Canvas* canvas, void* context) {
             "x%d",
             model->repeat_count); // + subbrute_protocol_repeats_count(model->attack_type));
         canvas_draw_str(canvas, 4, y - 8, buffer);
-        canvas_draw_str(canvas, 4, y - 1, "repeats");
+        canvas_draw_str(canvas, 4, y - 1, SUBBRUTE_UI_TEXT("repeats", "次"));
 
-        elements_button_center(canvas, "Stop");
+        elements_button_center(canvas, SUBBRUTE_UI_TEXT("Stop", "停止"));
     }
 }

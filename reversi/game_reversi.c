@@ -8,6 +8,12 @@
 #include <storage/storage.h>
 #include "reversi.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define REVERSI_UI_TEXT(en, zh) (zh)
+#else
+#define REVERSI_UI_TEXT(en, zh) (en)
+#endif
+
 #define FRAME_LEFT      3
 #define FRAME_TOP       3
 #define FRAME_CELL_SIZE 7
@@ -27,7 +33,10 @@ typedef struct {
 } AppState;
 
 #define MENU_ITEMS_COUNT 2
-static const char* popup_menu_strings[] = {"Resume", "New Game"};
+static const char* popup_menu_strings[] = {
+    REVERSI_UI_TEXT("Resume", "继续"),
+    REVERSI_UI_TEXT("New Game", "新游戏"),
+};
 
 static void draw_menu(Canvas* const canvas, const AppState* app_state);
 static void gray_canvas(Canvas* const canvas);
@@ -109,7 +118,8 @@ static void draw_callback(Canvas* const canvas, void* ctx) {
 
     canvas_set_font(canvas, FontSecondary);
     if(game_state->is_game_over) {
-        canvas_draw_str_aligned(canvas, 70, 20, AlignLeft, AlignTop, "Game over");
+        canvas_draw_str_aligned(
+            canvas, 70, 20, AlignLeft, AlignTop, REVERSI_UI_TEXT("Game over", "游戏结束"));
 
         canvas_draw_str_aligned(
             canvas,
@@ -117,23 +127,24 @@ static void draw_callback(Canvas* const canvas, void* ctx) {
             FRAME_TOP + FRAME_CELL_SIZE * BOARD_SIZE,
             AlignLeft,
             AlignBottom,
-            "Press OK");
+            REVERSI_UI_TEXT("Press OK", "按 OK"));
 
         canvas_set_font(canvas, FontPrimary);
 
         if(whites == blacks) {
-            canvas_draw_str_aligned(canvas, 70, 30, AlignLeft, AlignTop, "DRAW");
+            canvas_draw_str_aligned(canvas, 70, 30, AlignLeft, AlignTop, REVERSI_UI_TEXT("DRAW", "平局"));
         } else if(
             ((game_state->human_color == WHITE) && whites > blacks) ||
             ((game_state->human_color == BLACK) && blacks > whites)) {
-            canvas_draw_str_aligned(canvas, 70, 30, AlignLeft, AlignTop, "YOU WIN");
+            canvas_draw_str_aligned(canvas, 70, 30, AlignLeft, AlignTop, REVERSI_UI_TEXT("YOU WIN", "你赢了"));
         } else {
-            canvas_draw_str_aligned(canvas, 70, 30, AlignLeft, AlignTop, "YOU LOSE");
+            canvas_draw_str_aligned(canvas, 70, 30, AlignLeft, AlignTop, REVERSI_UI_TEXT("YOU LOSE", "你输了"));
         }
     } else if(game_state->current_player == game_state->human_color) {
-        canvas_draw_str_aligned(canvas, 70, 12, AlignLeft, AlignTop, "Your turn");
+        canvas_draw_str_aligned(canvas, 70, 12, AlignLeft, AlignTop, REVERSI_UI_TEXT("Your turn", "你的回合"));
     } else {
-        canvas_draw_str_aligned(canvas, 70, 12, AlignLeft, AlignTop, "Computer turn");
+        canvas_draw_str_aligned(
+            canvas, 70, 12, AlignLeft, AlignTop, REVERSI_UI_TEXT("Computer turn", "电脑回合"));
     }
 
     if(app_state->screen == AppScreenMenu) {

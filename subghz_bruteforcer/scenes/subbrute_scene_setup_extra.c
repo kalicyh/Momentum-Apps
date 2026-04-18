@@ -208,7 +208,8 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
 
     variable_item_list_reset(var_list);
 
-    item = variable_item_list_add(var_list, "TimeDelay", 3, setup_extra_td_callback, instance);
+    item = variable_item_list_add(
+        var_list, SUBBRUTE_UI_TEXT("TimeDelay", "时间延迟"), 3, setup_extra_td_callback, instance);
     snprintf(&str[0], 5, "%d", subbrute_worker_get_timeout(instance->worker));
     variable_item_set_current_value_text(item, &str[0]);
     switch(subbrute_worker_get_timeout(instance->worker)) {
@@ -225,7 +226,8 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
     }
 
     if(extra) {
-        item = variable_item_list_add(var_list, "Repeats", 3, setup_extra_rep_callback, instance);
+        item = variable_item_list_add(
+            var_list, SUBBRUTE_UI_TEXT("Repeats", "重复次数"), 3, setup_extra_rep_callback, instance);
         snprintf(&str[0], 5, "%d", subbrute_worker_get_repeats(instance->worker));
         variable_item_set_current_value_text(item, &str[0]);
         switch(subbrute_worker_get_repeats(instance->worker)) {
@@ -242,7 +244,8 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
         }
         const uint32_t te = subbrute_worker_get_te(instance->worker);
         if(te != 0) {
-            item = variable_item_list_add(var_list, "Te", 3, setup_extra_te_callback, instance);
+            item = variable_item_list_add(
+                var_list, SUBBRUTE_UI_TEXT("Te", "Te"), 3, setup_extra_te_callback, instance);
             snprintf(&str[0], 5, "%ld", te);
             variable_item_set_current_value_text(item, &str[0]);
             switch(te) {
@@ -262,13 +265,13 @@ static void subbrute_scene_setup_extra_init_var_list(SubBruteState* instance, bo
         if(subbrute_worker_get_is_pt2262(instance->worker)) {
             uint8_t value_index;
             item = variable_item_list_add(
-                var_list, "PT2262Code", 9, setup_extra_opencode_callback, instance);
+                var_list, SUBBRUTE_UI_TEXT("PT2262Code", "PT2262 码"), 9, setup_extra_opencode_callback, instance);
             value_index = subbrute_worker_get_opencode(instance->worker);
             variable_item_set_current_value_index(item, value_index);
             variable_item_set_current_value_text(item, opencode_names[value_index]);
         }
     } else {
-        item = variable_item_list_add(var_list, "Show Extra", 0, NULL, NULL);
+        item = variable_item_list_add(var_list, SUBBRUTE_UI_TEXT("Show Extra", "显示更多"), 0, NULL, NULL);
         variable_item_set_current_value_index(item, 0);
     }
 

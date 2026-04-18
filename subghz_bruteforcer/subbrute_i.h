@@ -34,6 +34,11 @@
 #include "views/subbrute_main_view.h"
 
 #define SUB_BRUTE_FORCER_VERSION "Sub-GHz BruteForcer 4.0"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SUBBRUTE_UI_TEXT(en, zh) (zh)
+#else
+#define SUBBRUTE_UI_TEXT(en, zh) (en)
+#endif
 
 #ifdef FURI_DEBUG
 //#define SUBBRUTE_FAST_TRACK false

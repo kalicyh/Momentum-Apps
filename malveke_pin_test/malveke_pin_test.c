@@ -12,7 +12,7 @@ static void gb_live_camera_view_draw_callback(Canvas* canvas, void* _model) {
 
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 37, 35, "PIN:");
+    canvas_draw_str(canvas, 37, 35, "引脚:");
     canvas_set_font(canvas, FontBigNumbers);
     canvas_draw_str(canvas, 57, 38, show_pin);
 }

@@ -4,6 +4,12 @@
 #include <dolphin/dolphin.h>
 #include <notification/notification_messages.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SOLITAIRE_UI_TEXT(en, zh) (zh)
+#else
+#define SOLITAIRE_UI_TEXT(en, zh) (en)
+#endif
+
 static int hours, minutes, seconds;
 static bool isStarted = false;
 static char timeString[24];
@@ -43,9 +49,11 @@ void render_result_screen(void* data) {
     canvas_draw_frame(state->canvas, 21, 13, 87, 32);
 
     canvas_set_font(state->canvas, FontPrimary);
-    canvas_draw_str_aligned(state->canvas, 64, 15, AlignCenter, AlignTop, "Congratulations!");
+    canvas_draw_str_aligned(
+        state->canvas, 64, 15, AlignCenter, AlignTop, SOLITAIRE_UI_TEXT("Congratulations!", "恭喜通关!"));
     canvas_set_font(state->canvas, FontSecondary);
-    canvas_draw_str_aligned(state->canvas, 64, 26, AlignCenter, AlignTop, "Solve time:");
+    canvas_draw_str_aligned(
+        state->canvas, 64, 26, AlignCenter, AlignTop, SOLITAIRE_UI_TEXT("Solve time:", "完成时间:"));
 
     if(hours > 0)
         snprintf(timeString, sizeof(timeString), "%02d:%02d:%02d", hours, minutes, seconds);
