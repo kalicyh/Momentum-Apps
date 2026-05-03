@@ -9,6 +9,12 @@
 
 #include "scenes/_setup.h"
 
+#ifdef FURI_DEBUG
+#define BLE_SPAM_UI_TEXT(en, zh) (zh)
+#else
+#define BLE_SPAM_UI_TEXT(en, zh) (en)
+#endif
+
 enum {
     ViewMain,
     ViewByteInput,

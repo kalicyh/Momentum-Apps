@@ -542,13 +542,13 @@ static void pp_model_changed(VariableItem* item) {
                 value_index_color = colors_count;
             }
         } else {
-            color_name = "Bruteforce";
+            color_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
             value_index_color = colors_count;
         }
     } else {
         payload->mode = PayloadModeRandom;
-        variable_item_set_current_value_text(item, "Random");
-        color_name = "Random";
+        variable_item_set_current_value_text(item, BLE_SPAM_UI_TEXT("Random", "随机"));
+        color_name = BLE_SPAM_UI_TEXT("Random", "随机");
         colors_count = 1;
         value_index_color = 0;
     }
@@ -581,7 +581,7 @@ static void pp_prefix_changed(VariableItem* item) {
         variable_item_set_current_value_text(item, pp_prefixes[index].name);
     } else {
         cfg->data.proximity_pair.prefix = 0x00;
-        variable_item_set_current_value_text(item, "Auto");
+        variable_item_set_current_value_text(item, BLE_SPAM_UI_TEXT("Auto", "自动"));
     }
 }
 static void na_action_changed(VariableItem* item) {
@@ -595,7 +595,7 @@ static void na_action_changed(VariableItem* item) {
         variable_item_set_current_value_text(item, na_actions[index].name);
     } else {
         payload->mode = PayloadModeRandom;
-        variable_item_set_current_value_text(item, "Random");
+        variable_item_set_current_value_text(item, BLE_SPAM_UI_TEXT("Random", "随机"));
     }
 }
 static void extra_config(Ctx* ctx) {
@@ -607,8 +607,12 @@ static void extra_config(Ctx* ctx) {
 
     switch(cfg->type) {
     case ContinuityTypeProximityPair: {
-        item =
-            variable_item_list_add(list, "Model Code", pp_models_count + 1, pp_model_changed, ctx);
+        item = variable_item_list_add(
+            list,
+            BLE_SPAM_UI_TEXT("Model Code", "型号代码"),
+            pp_models_count + 1,
+            pp_model_changed,
+            ctx);
         const char* model_name = NULL;
         char model_name_buf[5];
         const char* color_name = NULL;
@@ -618,9 +622,9 @@ static void extra_config(Ctx* ctx) {
         switch(payload->mode) {
         case PayloadModeRandom:
         default:
-            model_name = "Random";
+            model_name = BLE_SPAM_UI_TEXT("Random", "随机");
             value_index = 0;
-            color_name = "Random";
+            color_name = BLE_SPAM_UI_TEXT("Random", "随机");
             colors_count = 1;
             value_index_color = 0;
             break;
@@ -658,7 +662,7 @@ static void extra_config(Ctx* ctx) {
             switch(cfg->data.proximity_pair.bruteforce_mode) {
             case ContinuityPpBruteforceModel:
             default:
-                model_name = "Bruteforce";
+                model_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
                 value_index = pp_models_count + 1;
                 snprintf(
                     color_name_buf, sizeof(color_name_buf), "%02X", cfg->data.proximity_pair.color);
@@ -685,7 +689,7 @@ static void extra_config(Ctx* ctx) {
                     value_index = pp_models_count + 1;
                     colors_count = 0;
                 }
-                color_name = "Bruteforce";
+                color_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
                 value_index_color = colors_count;
                 break;
             }
@@ -694,17 +698,25 @@ static void extra_config(Ctx* ctx) {
         variable_item_set_current_value_index(item, value_index);
         variable_item_set_current_value_text(item, model_name);
 
-        item =
-            variable_item_list_add(list, "Device Color", colors_count, pp_color_changed, payload);
+        item = variable_item_list_add(
+            list,
+            BLE_SPAM_UI_TEXT("Device Color", "设备颜色"),
+            colors_count,
+            pp_color_changed,
+            payload);
         variable_item_set_current_value_index(item, value_index_color);
         variable_item_set_current_value_text(item, color_name);
 
         item = variable_item_list_add(
-            list, "Prefix", pp_prefixes_count + 1, pp_prefix_changed, payload);
+            list,
+            BLE_SPAM_UI_TEXT("Prefix", "前缀"),
+            pp_prefixes_count + 1,
+            pp_prefix_changed,
+            payload);
         const char* prefix_name = NULL;
         char prefix_name_buf[3];
         if(cfg->data.proximity_pair.prefix == 0x00) {
-            prefix_name = "Auto";
+            prefix_name = BLE_SPAM_UI_TEXT("Auto", "自动");
             value_index = 0;
         } else {
             for(uint8_t i = 0; i < pp_prefixes_count; i++) {
@@ -730,13 +742,17 @@ static void extra_config(Ctx* ctx) {
     }
     case ContinuityTypeNearbyAction: {
         item = variable_item_list_add(
-            list, "Action Type", na_actions_count + 1, na_action_changed, payload);
+            list,
+            BLE_SPAM_UI_TEXT("Action Type", "操作类型"),
+            na_actions_count + 1,
+            na_action_changed,
+            payload);
         const char* action_name = NULL;
         char action_name_buf[3];
         switch(payload->mode) {
         case PayloadModeRandom:
         default:
-            action_name = "Random";
+            action_name = BLE_SPAM_UI_TEXT("Random", "随机");
             value_index = 0;
             break;
         case PayloadModeValue:
@@ -758,18 +774,18 @@ static void extra_config(Ctx* ctx) {
             }
             break;
         case PayloadModeBruteforce:
-            action_name = "Bruteforce";
+            action_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
             value_index = na_actions_count + 1;
             break;
         }
         variable_item_set_current_value_index(item, value_index);
         variable_item_set_current_value_text(item, action_name);
 
-        item = variable_item_list_add(list, "Flags", 0, NULL, NULL);
+        item = variable_item_list_add(list, BLE_SPAM_UI_TEXT("Flags", "标志"), 0, NULL, NULL);
         const char* flags_name = NULL;
         char flags_name_buf[3];
         if(cfg->data.nearby_action.flags == 0x00) {
-            flags_name = "Auto";
+            flags_name = BLE_SPAM_UI_TEXT("Auto", "自动");
         } else {
             snprintf(
                 flags_name_buf, sizeof(flags_name_buf), "%02X", cfg->data.nearby_action.flags);
@@ -779,9 +795,24 @@ static void extra_config(Ctx* ctx) {
         break;
     }
     case ContinuityTypeCustomCrash: {
-        variable_item_list_add(list, "CRASH FIXED IN IOS 17.2", 0, NULL, NULL);
-        variable_item_list_add(list, "Lock+unlock helps to crash", 0, NULL, NULL);
-        variable_item_list_add(list, "Works on iPhone 12 and up", 0, NULL, NULL);
+        variable_item_list_add(
+            list,
+            BLE_SPAM_UI_TEXT("CRASH FIXED IN IOS 17.2", "iOS 17.2 已修复崩溃"),
+            0,
+            NULL,
+            NULL);
+        variable_item_list_add(
+            list,
+            BLE_SPAM_UI_TEXT("Lock+unlock helps to crash", "锁屏再解锁更易触发"),
+            0,
+            NULL,
+            NULL);
+        variable_item_list_add(
+            list,
+            BLE_SPAM_UI_TEXT("Works on iPhone 12 and up", "适用于 iPhone 12 及以上"),
+            0,
+            NULL,
+            NULL);
         break;
     }
     default:
@@ -853,7 +884,7 @@ void scene_continuity_pp_model_on_enter(void* _ctx) {
                  (payload->mode == PayloadModeBruteforce &&
                   cfg->data.proximity_pair.bruteforce_mode != ContinuityPpBruteforceModel);
 
-    submenu_add_item(submenu, "Random", 0, pp_model_callback, ctx);
+    submenu_add_item(submenu, BLE_SPAM_UI_TEXT("Random", "随机"), 0, pp_model_callback, ctx);
     if(payload->mode == PayloadModeRandom) {
         selected = 0;
     }
@@ -866,12 +897,18 @@ void scene_continuity_pp_model_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", pp_models_count + 1, pp_model_callback, ctx);
+    submenu_add_item(
+        submenu, BLE_SPAM_UI_TEXT("Custom", "自定义"), pp_models_count + 1, pp_model_callback, ctx);
     if(!found && value) {
         selected = pp_models_count + 1;
     }
 
-    submenu_add_item(submenu, "Bruteforce", pp_models_count + 2, pp_model_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"),
+        pp_models_count + 2,
+        pp_model_callback,
+        ctx);
     if(!value && payload->mode == PayloadModeBruteforce) {
         selected = pp_models_count + 2;
     }
@@ -909,7 +946,8 @@ void scene_continuity_pp_model_custom_on_enter(void* _ctx) {
     ContinuityCfg* cfg = &payload->cfg.continuity;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Model Code");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Model Code", "输入自定义型号代码"));
 
     ctx->byte_store[0] = (cfg->data.proximity_pair.model >> 0x08) & 0xFF;
     ctx->byte_store[1] = (cfg->data.proximity_pair.model >> 0x00) & 0xFF;
@@ -996,12 +1034,18 @@ void scene_continuity_pp_color_on_enter(void* _ctx) {
             }
         }
     }
-    submenu_add_item(submenu, "Custom", colors_count, pp_color_callback, ctx);
+    submenu_add_item(
+        submenu, BLE_SPAM_UI_TEXT("Custom", "自定义"), colors_count, pp_color_callback, ctx);
     if(!found && value) {
         selected = colors_count;
     }
 
-    submenu_add_item(submenu, "Bruteforce", colors_count + 1, pp_color_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"),
+        colors_count + 1,
+        pp_color_callback,
+        ctx);
     if(!value && payload->mode == PayloadModeBruteforce) {
         selected = colors_count + 1;
     }
@@ -1039,7 +1083,8 @@ void scene_continuity_pp_color_custom_on_enter(void* _ctx) {
     ContinuityCfg* cfg = &payload->cfg.continuity;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Device Color");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Device Color", "输入自定义设备颜色"));
 
     ctx->byte_store[0] = (cfg->data.proximity_pair.color >> 0x00) & 0xFF;
 
@@ -1087,7 +1132,7 @@ void scene_continuity_pp_prefix_on_enter(void* _ctx) {
     uint32_t selected = 0;
     bool found = false;
 
-    submenu_add_item(submenu, "Automatic", 0, pp_prefix_callback, ctx);
+    submenu_add_item(submenu, BLE_SPAM_UI_TEXT("Automatic", "自动"), 0, pp_prefix_callback, ctx);
     if(cfg->data.proximity_pair.prefix == 0x00) {
         found = true;
         selected = 0;
@@ -1100,7 +1145,12 @@ void scene_continuity_pp_prefix_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", pp_prefixes_count + 1, pp_prefix_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Custom", "自定义"),
+        pp_prefixes_count + 1,
+        pp_prefix_callback,
+        ctx);
     if(!found) {
         selected = pp_prefixes_count + 1;
     }
@@ -1135,7 +1185,8 @@ void scene_continuity_pp_prefix_custom_on_enter(void* _ctx) {
     ContinuityCfg* cfg = &payload->cfg.continuity;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Prefix");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Prefix", "输入自定义前缀"));
 
     ctx->byte_store[0] = (cfg->data.proximity_pair.prefix >> 0x00) & 0xFF;
 
@@ -1190,7 +1241,7 @@ void scene_continuity_na_action_on_enter(void* _ctx) {
     Submenu* submenu = ctx->submenu;
     uint32_t selected = 0;
 
-    submenu_add_item(submenu, "Random", 0, na_action_callback, ctx);
+    submenu_add_item(submenu, BLE_SPAM_UI_TEXT("Random", "随机"), 0, na_action_callback, ctx);
     if(payload->mode == PayloadModeRandom) {
         selected = 0;
     }
@@ -1204,12 +1255,22 @@ void scene_continuity_na_action_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", na_actions_count + 1, na_action_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Custom", "自定义"),
+        na_actions_count + 1,
+        na_action_callback,
+        ctx);
     if(!found && payload->mode == PayloadModeValue) {
         selected = na_actions_count + 1;
     }
 
-    submenu_add_item(submenu, "Bruteforce", na_actions_count + 2, na_action_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"),
+        na_actions_count + 2,
+        na_action_callback,
+        ctx);
     if(payload->mode == PayloadModeBruteforce) {
         selected = na_actions_count + 2;
     }
@@ -1245,7 +1306,8 @@ void scene_continuity_na_action_custom_on_enter(void* _ctx) {
     ContinuityCfg* cfg = &payload->cfg.continuity;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Action Type");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Action Type", "输入自定义操作类型"));
 
     ctx->byte_store[0] = (cfg->data.nearby_action.action >> 0x00) & 0xFF;
 
@@ -1277,7 +1339,8 @@ void scene_continuity_na_flags_on_enter(void* _ctx) {
     ContinuityCfg* cfg = &payload->cfg.continuity;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Press back for automatic");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Press back for automatic", "按返回使用自动值"));
 
     ctx->byte_store[0] = (cfg->data.nearby_action.flags >> 0x00) & 0xFF;
 

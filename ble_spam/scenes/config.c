@@ -5,12 +5,14 @@
 static void _config_bool(VariableItem* item) {
     bool* value = variable_item_get_context(item);
     *value = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, *value ? "ON" : "OFF");
+    variable_item_set_current_value_text(
+        item, *value ? BLE_SPAM_UI_TEXT("ON", "开") : BLE_SPAM_UI_TEXT("OFF", "关"));
 }
 static void config_bool(VariableItemList* list, const char* name, bool* value) {
     VariableItem* item = variable_item_list_add(list, name, 2, _config_bool, value);
     variable_item_set_current_value_index(item, *value);
-    variable_item_set_current_value_text(item, *value ? "ON" : "OFF");
+    variable_item_set_current_value_text(
+        item, *value ? BLE_SPAM_UI_TEXT("ON", "开") : BLE_SPAM_UI_TEXT("OFF", "关"));
 }
 
 static void config_callback(void* _ctx, uint32_t index) {
@@ -43,19 +45,21 @@ void scene_config_on_enter(void* _ctx) {
 
     variable_item_list_set_header(list, ctx->attack->title);
 
-    config_bool(list, "Random MAC", &ctx->attack->payload.random_mac);
+    config_bool(
+        list, BLE_SPAM_UI_TEXT("Random MAC", "随机 MAC"), &ctx->attack->payload.random_mac);
 
     variable_item_list_set_enter_callback(list, config_callback, ctx);
     if(!ctx->attack->protocol) {
-        variable_item_list_add(list, "None shall escape the SINK", 0, NULL, NULL);
+        variable_item_list_add(
+            list, BLE_SPAM_UI_TEXT("None shall escape the SINK", "全部攻击已启用"), 0, NULL, NULL);
     } else if(ctx->attack->protocol->extra_config) {
         ctx->fallback_config_enter = config_callback;
         ctx->attack->protocol->extra_config(ctx);
     }
 
-    config_bool(list, "LED Indicator", &ctx->led_indicator);
+    config_bool(list, BLE_SPAM_UI_TEXT("LED Indicator", "LED 指示"), &ctx->led_indicator);
 
-    variable_item_list_add(list, "Lock Keyboard", 0, NULL, NULL);
+    variable_item_list_add(list, BLE_SPAM_UI_TEXT("Lock Keyboard", "锁定按键"), 0, NULL, NULL);
 
     variable_item_list_set_selected_item(
         list, scene_manager_get_scene_state(ctx->scene_manager, SceneConfig));

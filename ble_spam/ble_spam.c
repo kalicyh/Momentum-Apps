@@ -15,8 +15,8 @@
 
 static Attack attacks[] = {
     {
-        .title = "The Kitchen Sink",
-        .text = "Flood all attacks at once",
+        .title = BLE_SPAM_UI_TEXT("The Kitchen Sink", "全部攻击"),
+        .text = BLE_SPAM_UI_TEXT("Flood all attacks at once", "同时发送所有攻击"),
         .protocol = NULL,
         .payload =
             {
@@ -25,8 +25,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "BT Settings Flood",
-        .text = "Fills available BT devices",
+        .title = BLE_SPAM_UI_TEXT("BT Settings Flood", "蓝牙设置泛洪"),
+        .text = BLE_SPAM_UI_TEXT("Fills available BT devices", "填满蓝牙设备列表"),
         .protocol = &protocol_nameflood,
         .payload =
             {
@@ -35,8 +35,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "iOS 17 Lockup Crash",
-        .text = "Newer iPhones, long range",
+        .title = BLE_SPAM_UI_TEXT("iOS 17 Lockup Crash", "iOS 17 锁死崩溃"),
+        .text = BLE_SPAM_UI_TEXT("Newer iPhones, long range", "新版 iPhone，远距离"),
         .protocol = &protocol_continuity,
         .payload =
             {
@@ -48,8 +48,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Apple Action Modal",
-        .text = "Lock cooldown, long range",
+        .title = BLE_SPAM_UI_TEXT("Apple Action Modal", "Apple 操作弹窗"),
+        .text = BLE_SPAM_UI_TEXT("Lock cooldown, long range", "有冷却，远距离"),
         .protocol = &protocol_continuity,
         .payload =
             {
@@ -61,8 +61,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Apple Device Popup",
-        .text = "No cooldown, close range",
+        .title = BLE_SPAM_UI_TEXT("Apple Device Popup", "Apple 设备弹窗"),
+        .text = BLE_SPAM_UI_TEXT("No cooldown, close range", "无冷却，近距离"),
         .protocol = &protocol_continuity,
         .payload =
             {
@@ -74,8 +74,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Android Device Connect",
-        .text = "Reboot cooldown, long range",
+        .title = BLE_SPAM_UI_TEXT("Android Device Connect", "Android 设备连接"),
+        .text = BLE_SPAM_UI_TEXT("Reboot cooldown, long range", "重启冷却，远距离"),
         .protocol = &protocol_fastpair,
         .payload =
             {
@@ -84,8 +84,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Samsung Buds Popup",
-        .text = "No cooldown, long range",
+        .title = BLE_SPAM_UI_TEXT("Samsung Buds Popup", "Samsung Buds 弹窗"),
+        .text = BLE_SPAM_UI_TEXT("No cooldown, long range", "无冷却，远距离"),
         .protocol = &protocol_easysetup,
         .payload =
             {
@@ -97,8 +97,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Samsung Watch Pair",
-        .text = "No cooldown, long range",
+        .title = BLE_SPAM_UI_TEXT("Samsung Watch Pair", "Samsung 手表配对"),
+        .text = BLE_SPAM_UI_TEXT("No cooldown, long range", "无冷却，远距离"),
         .protocol = &protocol_easysetup,
         .payload =
             {
@@ -110,8 +110,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Windows Device Found",
-        .text = "No cooldown, short range",
+        .title = BLE_SPAM_UI_TEXT("Windows Device Found", "Windows 发现设备"),
+        .text = BLE_SPAM_UI_TEXT("No cooldown, short range", "无冷却，短距离"),
         .protocol = &protocol_swiftpair,
         .payload =
             {
@@ -120,8 +120,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Vibrate 'em All",
-        .text = "Activate all LoveSpouse toys",
+        .title = BLE_SPAM_UI_TEXT("Vibrate 'em All", "全部振动"),
+        .text = BLE_SPAM_UI_TEXT("Activate all LoveSpouse toys", "激活所有 LoveSpouse"),
         .protocol = &protocol_lovespouse,
         .payload =
             {
@@ -133,8 +133,8 @@ static Attack attacks[] = {
             },
     },
     {
-        .title = "Denial of Pleasure",
-        .text = "Disable all LoveSpouse toys",
+        .title = BLE_SPAM_UI_TEXT("Denial of Pleasure", "全部禁用"),
+        .text = BLE_SPAM_UI_TEXT("Disable all LoveSpouse toys", "禁用所有 LoveSpouse"),
         .protocol = &protocol_lovespouse,
         .payload =
             {
@@ -279,24 +279,24 @@ enum {
 
 static void draw_callback(Canvas* canvas, void* _ctx) {
     State* state = *(State**)_ctx;
-    const char* back = "Back";
-    const char* next = "Next";
+    const char* back = BLE_SPAM_UI_TEXT("Back", "返回");
+    const char* next = BLE_SPAM_UI_TEXT("Next", "下一页");
     if(state->index < 0) {
-        back = "Next";
-        next = "Back";
+        back = BLE_SPAM_UI_TEXT("Next", "下一页");
+        next = BLE_SPAM_UI_TEXT("Back", "返回");
     }
     switch(state->index) {
     case PageStart - 1:
-        next = "Spam";
+        next = BLE_SPAM_UI_TEXT("Spam", "攻击");
         break;
     case PageStart:
-        back = "Help";
+        back = BLE_SPAM_UI_TEXT("Help", "帮助");
         break;
     case PageEnd:
-        next = "About";
+        next = BLE_SPAM_UI_TEXT("About", "关于");
         break;
     case PageEnd + 1:
-        back = "Spam";
+        back = BLE_SPAM_UI_TEXT("Spam", "攻击");
         break;
     }
 
@@ -313,7 +313,8 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
     switch(state->index) {
     case PageHelpBruteforce:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(
+            canvas, 124, 12, AlignRight, AlignBottom, BLE_SPAM_UI_TEXT("Help", "帮助"));
         elements_text_box(
             canvas,
             4,
@@ -322,15 +323,21 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             48,
             AlignLeft,
             AlignTop,
-            "\e#Bruteforce\e# cycles codes\n"
-            "to find popups, hold left and\n"
-            "right to send manually and\n"
-            "change delay",
+            BLE_SPAM_UI_TEXT(
+                "\e#Bruteforce\e# cycles codes\n"
+                "to find popups, hold left and\n"
+                "right to send manually and\n"
+                "change delay",
+                "\e#暴力枚举\e#会循环代码\n"
+                "查找弹窗；长按左键\n"
+                "手动发送，长按右键\n"
+                "切换延迟"),
             false);
         break;
     case PageHelpApps:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(
+            canvas, 124, 12, AlignRight, AlignBottom, BLE_SPAM_UI_TEXT("Help", "帮助"));
         elements_text_box(
             canvas,
             4,
@@ -339,14 +346,19 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             48,
             AlignLeft,
             AlignTop,
-            "\e#Some Apps\e# interfere\n"
-            "with the attacks, stay on\n"
-            "homescreen for best results",
+            BLE_SPAM_UI_TEXT(
+                "\e#Some Apps\e# interfere\n"
+                "with the attacks, stay on\n"
+                "homescreen for best results",
+                "\e#部分 App\e# 会干扰攻击\n"
+                "停留在主屏幕\n"
+                "效果最好"),
             false);
         break;
     case PageHelpDelay:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(
+            canvas, 124, 12, AlignRight, AlignBottom, BLE_SPAM_UI_TEXT("Help", "帮助"));
         elements_text_box(
             canvas,
             4,
@@ -355,14 +367,19 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             48,
             AlignLeft,
             AlignTop,
-            "\e#Delay\e# is time between\n"
-            "attack attempts (top right),\n"
-            "keep 20ms for best results",
+            BLE_SPAM_UI_TEXT(
+                "\e#Delay\e# is time between\n"
+                "attack attempts (top right),\n"
+                "keep 20ms for best results",
+                "\e#延迟\e# 是攻击间隔\n"
+                "显示在右上角\n"
+                "20ms 效果最好"),
             false);
         break;
     case PageHelpDistance:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(
+            canvas, 124, 12, AlignRight, AlignBottom, BLE_SPAM_UI_TEXT("Help", "帮助"));
         elements_text_box(
             canvas,
             4,
@@ -371,14 +388,19 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             48,
             AlignLeft,
             AlignTop,
-            "\e#Distance\e# varies greatly:\n"
-            "some are long range (>30 m)\n"
-            "others are close range (<1 m)",
+            BLE_SPAM_UI_TEXT(
+                "\e#Distance\e# varies greatly:\n"
+                "some are long range (>30 m)\n"
+                "others are close range (<1 m)",
+                "\e#距离\e# 差异很大:\n"
+                "有些可远距离 (>30 m)\n"
+                "有些仅近距离 (<1 m)"),
             false);
         break;
     case PageHelpInfoConfig:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Help");
+        canvas_draw_str_aligned(
+            canvas, 124, 12, AlignRight, AlignBottom, BLE_SPAM_UI_TEXT("Help", "帮助"));
         elements_text_box(
             canvas,
             4,
@@ -387,14 +409,19 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             48,
             AlignLeft,
             AlignTop,
-            "See \e#more info\e# and change\n"
-            "attack \e#options\e# by holding\n"
-            "Ok on each attack page",
+            BLE_SPAM_UI_TEXT(
+                "See \e#more info\e# and change\n"
+                "attack \e#options\e# by holding\n"
+                "Ok on each attack page",
+                "在每个攻击页面\n"
+                "长按 OK 可查看信息\n"
+                "并修改\e#选项\e#"),
             false);
         break;
     case PageAboutCredits:
         canvas_set_font(canvas, FontBatteryPercent);
-        canvas_draw_str_aligned(canvas, 124, 12, AlignRight, AlignBottom, "Credits");
+        canvas_draw_str_aligned(
+            canvas, 124, 12, AlignRight, AlignBottom, BLE_SPAM_UI_TEXT("Credits", "鸣谢"));
         elements_text_box(
             canvas,
             4,
@@ -403,10 +430,15 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             48,
             AlignLeft,
             AlignTop,
-            "App+Spam: \e#WillyJL\e# MNTM\n"
-            "Apple+Crash: \e#ECTO-1A\e#\n"
-            "Android+Win: \e#Spooks4576\e#\n"
-            "                                   Version \e#" FAP_VERSION "\e#",
+            BLE_SPAM_UI_TEXT(
+                "App+Spam: \e#WillyJL\e# MNTM\n"
+                "Apple+Crash: \e#ECTO-1A\e#\n"
+                "Android+Win: \e#Spooks4576\e#\n"
+                "                                   Version \e#" FAP_VERSION "\e#",
+                "App+Spam: \e#WillyJL\e# MNTM\n"
+                "Apple+Crash: \e#ECTO-1A\e#\n"
+                "Android+Win: \e#Spooks4576\e#\n"
+                "                                      版本 \e#" FAP_VERSION "\e#"),
             false);
         break;
     default: {
@@ -434,7 +466,13 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
 
         canvas_set_font(canvas, FontBatteryPercent);
         if(payload->mode == PayloadModeBruteforce) {
-            canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignBottom, "Bruteforce");
+            canvas_draw_str_aligned(
+                canvas,
+                64,
+                22,
+                AlignCenter,
+                AlignBottom,
+                BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"));
             if(delays[state->delay] < 100) {
                 snprintf(str, sizeof(str), "%ims>", delays[state->delay]);
             } else {
@@ -444,7 +482,8 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
             elements_slightly_rounded_box(canvas, 3, 14, 30, 10);
             elements_slightly_rounded_box(canvas, 119 - w, 14, 6 + w, 10);
             canvas_invert_color(canvas);
-            canvas_draw_str_aligned(canvas, 5, 22, AlignLeft, AlignBottom, "<Send");
+            canvas_draw_str_aligned(
+                canvas, 5, 22, AlignLeft, AlignBottom, BLE_SPAM_UI_TEXT("<Send", "<发送"));
             canvas_draw_str_aligned(canvas, 122, 22, AlignRight, AlignBottom, str);
             canvas_invert_color(canvas);
         } else {
@@ -454,7 +493,8 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
                 "%02i/%02i: %s",
                 state->index + 1,
                 ATTACKS_COUNT,
-                protocol ? protocol->get_name(payload) : "Everything AND");
+                protocol ? protocol->get_name(payload) :
+                           BLE_SPAM_UI_TEXT("Everything AND", "全部协议"));
             canvas_draw_str(canvas, 4 - (state->index < 19 ? 1 : 0), 22, str);
         }
 
@@ -464,7 +504,10 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 4, 46, attack->text);
 
-        elements_button_center(canvas, state->advertising ? "Stop" : "Start");
+        elements_button_center(
+            canvas,
+            state->advertising ? BLE_SPAM_UI_TEXT("Stop", "停止") :
+                                 BLE_SPAM_UI_TEXT("Start", "开始"));
         break;
     }
     }
@@ -479,7 +522,8 @@ static void draw_callback(Canvas* canvas, void* _ctx) {
     if(state->lock_warning) {
         canvas_set_font(canvas, FontSecondary);
         elements_bold_rounded_frame(canvas, 14, 8, 99, 48);
-        elements_multiline_text(canvas, 65, 26, "To unlock\npress:");
+        elements_multiline_text(
+            canvas, 65, 26, BLE_SPAM_UI_TEXT("To unlock\npress:", "解锁请\n按下:"));
         canvas_draw_icon(canvas, 65, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 80, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 95, 42, &I_Pin_back_arrow_10x8);

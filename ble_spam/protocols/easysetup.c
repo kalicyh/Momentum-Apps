@@ -247,7 +247,7 @@ static void buds_model_changed(VariableItem* item) {
         variable_item_set_current_value_text(item, buds_models[index].name);
     } else {
         payload->mode = PayloadModeRandom;
-        variable_item_set_current_value_text(item, "Random");
+        variable_item_set_current_value_text(item, BLE_SPAM_UI_TEXT("Random", "随机"));
     }
 }
 static void watch_model_changed(VariableItem* item) {
@@ -261,7 +261,7 @@ static void watch_model_changed(VariableItem* item) {
         variable_item_set_current_value_text(item, watch_models[index].name);
     } else {
         payload->mode = PayloadModeRandom;
-        variable_item_set_current_value_text(item, "Random");
+        variable_item_set_current_value_text(item, BLE_SPAM_UI_TEXT("Random", "随机"));
     }
 }
 static void extra_config(Ctx* ctx) {
@@ -274,13 +274,17 @@ static void extra_config(Ctx* ctx) {
     switch(cfg->type) {
     case EasysetupTypeBuds: {
         item = variable_item_list_add(
-            list, "Model Code", buds_models_count + 1, buds_model_changed, payload);
+            list,
+            BLE_SPAM_UI_TEXT("Model Code", "型号代码"),
+            buds_models_count + 1,
+            buds_model_changed,
+            payload);
         const char* model_name = NULL;
         char model_name_buf[9];
         switch(payload->mode) {
         case PayloadModeRandom:
         default:
-            model_name = "Random";
+            model_name = BLE_SPAM_UI_TEXT("Random", "随机");
             value_index = 0;
             break;
         case PayloadModeValue:
@@ -298,25 +302,34 @@ static void extra_config(Ctx* ctx) {
             }
             break;
         case PayloadModeBruteforce:
-            model_name = "Bruteforce";
+            model_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
             value_index = buds_models_count + 1;
             break;
         }
         variable_item_set_current_value_index(item, value_index);
         variable_item_set_current_value_text(item, model_name);
 
-        variable_item_list_add(list, "Works on Android 13 only", 0, NULL, NULL);
+        variable_item_list_add(
+            list,
+            BLE_SPAM_UI_TEXT("Works on Android 13 only", "仅适用于 Android 13"),
+            0,
+            NULL,
+            NULL);
         break;
     }
     case EasysetupTypeWatch: {
         item = variable_item_list_add(
-            list, "Model Code", watch_models_count + 1, watch_model_changed, payload);
+            list,
+            BLE_SPAM_UI_TEXT("Model Code", "型号代码"),
+            watch_models_count + 1,
+            watch_model_changed,
+            payload);
         const char* model_name = NULL;
         char model_name_buf[3];
         switch(payload->mode) {
         case PayloadModeRandom:
         default:
-            model_name = "Random";
+            model_name = BLE_SPAM_UI_TEXT("Random", "随机");
             value_index = 0;
             break;
         case PayloadModeValue:
@@ -334,7 +347,7 @@ static void extra_config(Ctx* ctx) {
             }
             break;
         case PayloadModeBruteforce:
-            model_name = "Bruteforce";
+            model_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
             value_index = watch_models_count + 1;
             break;
         }
@@ -399,7 +412,7 @@ void scene_easysetup_buds_model_on_enter(void* _ctx) {
     Submenu* submenu = ctx->submenu;
     uint32_t selected = 0;
 
-    submenu_add_item(submenu, "Random", 0, buds_model_callback, ctx);
+    submenu_add_item(submenu, BLE_SPAM_UI_TEXT("Random", "随机"), 0, buds_model_callback, ctx);
     if(payload->mode == PayloadModeRandom) {
         selected = 0;
     }
@@ -413,12 +426,22 @@ void scene_easysetup_buds_model_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", buds_models_count + 1, buds_model_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Custom", "自定义"),
+        buds_models_count + 1,
+        buds_model_callback,
+        ctx);
     if(!found && payload->mode == PayloadModeValue) {
         selected = buds_models_count + 1;
     }
 
-    submenu_add_item(submenu, "Bruteforce", buds_models_count + 2, buds_model_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"),
+        buds_models_count + 2,
+        buds_model_callback,
+        ctx);
     if(payload->mode == PayloadModeBruteforce) {
         selected = buds_models_count + 2;
     }
@@ -455,7 +478,8 @@ void scene_easysetup_buds_model_custom_on_enter(void* _ctx) {
     EasysetupCfg* cfg = &payload->cfg.easysetup;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Model Code");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Model Code", "输入自定义型号代码"));
 
     ctx->byte_store[0] = (cfg->data.buds.model >> 0x10) & 0xFF;
     ctx->byte_store[1] = (cfg->data.buds.model >> 0x08) & 0xFF;
@@ -512,7 +536,7 @@ void scene_easysetup_watch_model_on_enter(void* _ctx) {
     Submenu* submenu = ctx->submenu;
     uint32_t selected = 0;
 
-    submenu_add_item(submenu, "Random", 0, watch_model_callback, ctx);
+    submenu_add_item(submenu, BLE_SPAM_UI_TEXT("Random", "随机"), 0, watch_model_callback, ctx);
     if(payload->mode == PayloadModeRandom) {
         selected = 0;
     }
@@ -526,12 +550,22 @@ void scene_easysetup_watch_model_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", watch_models_count + 1, watch_model_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Custom", "自定义"),
+        watch_models_count + 1,
+        watch_model_callback,
+        ctx);
     if(!found && payload->mode == PayloadModeValue) {
         selected = watch_models_count + 1;
     }
 
-    submenu_add_item(submenu, "Bruteforce", watch_models_count + 2, watch_model_callback, ctx);
+    submenu_add_item(
+        submenu,
+        BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"),
+        watch_models_count + 2,
+        watch_model_callback,
+        ctx);
     if(payload->mode == PayloadModeBruteforce) {
         selected = watch_models_count + 2;
     }
@@ -567,7 +601,8 @@ void scene_easysetup_watch_model_custom_on_enter(void* _ctx) {
     EasysetupCfg* cfg = &payload->cfg.easysetup;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Model Code");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Model Code", "输入自定义型号代码"));
 
     ctx->byte_store[0] = (cfg->data.watch.model >> 0x00) & 0xFF;
 

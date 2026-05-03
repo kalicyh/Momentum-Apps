@@ -109,11 +109,13 @@ static void extra_config(Ctx* ctx) {
     VariableItemList* list = ctx->variable_item_list;
     VariableItem* item;
 
-    item = variable_item_list_add(list, "Display Name", 0, NULL, NULL);
+    item =
+        variable_item_list_add(list, BLE_SPAM_UI_TEXT("Display Name", "显示名称"), 0, NULL, NULL);
     variable_item_set_current_value_text(
-        item, payload->mode == PayloadModeRandom ? "Random" : cfg->name);
+        item, payload->mode == PayloadModeRandom ? BLE_SPAM_UI_TEXT("Random", "随机") : cfg->name);
 
-    variable_item_list_add(list, "Requires enabling SwiftPair", 0, NULL, NULL);
+    variable_item_list_add(
+        list, BLE_SPAM_UI_TEXT("Requires enabling SwiftPair", "需要启用 SwiftPair"), 0, NULL, NULL);
 
     variable_item_list_set_enter_callback(list, config_callback, ctx);
 }
@@ -143,7 +145,8 @@ void scene_swiftpair_name_on_enter(void* _ctx) {
     SwiftpairCfg* cfg = &payload->cfg.swiftpair;
     TextInput* text_input = ctx->text_input;
 
-    text_input_set_header_text(text_input, "Press back for random");
+    text_input_set_header_text(
+        text_input, BLE_SPAM_UI_TEXT("Press back for random", "按返回使用随机名称"));
 
     text_input_set_result_callback(
         text_input, name_callback, ctx, cfg->name, sizeof(cfg->name), true);

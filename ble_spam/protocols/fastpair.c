@@ -652,7 +652,7 @@ static void model_changed(VariableItem* item) {
     } else {
         payload->mode = PayloadModeRandom;
         variable_item_set_current_value_index(item, 0);
-        variable_item_set_current_value_text(item, "Random");
+        variable_item_set_current_value_text(item, BLE_SPAM_UI_TEXT("Random", "随机"));
     }
 }
 static void extra_config(Ctx* ctx) {
@@ -663,13 +663,14 @@ static void extra_config(Ctx* ctx) {
     uint8_t value_index;
     uint16_t model_index;
 
-    item = variable_item_list_add(list, "Model Code", 3, model_changed, payload);
+    item = variable_item_list_add(
+        list, BLE_SPAM_UI_TEXT("Model Code", "型号代码"), 3, model_changed, payload);
     const char* model_name = NULL;
     char model_name_buf[9];
     switch(payload->mode) {
     case PayloadModeRandom:
     default:
-        model_name = "Random";
+        model_name = BLE_SPAM_UI_TEXT("Random", "随机");
         value_index = 0;
         model_index = 0;
         break;
@@ -690,7 +691,7 @@ static void extra_config(Ctx* ctx) {
         }
         break;
     case PayloadModeBruteforce:
-        model_name = "Bruteforce";
+        model_name = BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举");
         value_index = 3;
         model_index = models_count + 1;
         break;
@@ -699,9 +700,11 @@ static void extra_config(Ctx* ctx) {
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, model_name);
 
-    variable_item_list_add(list, "Requires Google services", 0, NULL, NULL);
+    variable_item_list_add(
+        list, BLE_SPAM_UI_TEXT("Requires Google services", "需要 Google 服务"), 0, NULL, NULL);
 
-    variable_item_list_add(list, "Patched on new Android", 0, NULL, NULL);
+    variable_item_list_add(
+        list, BLE_SPAM_UI_TEXT("Patched on new Android", "新版 Android 已修复"), 0, NULL, NULL);
 
     variable_item_list_set_enter_callback(list, config_callback, ctx);
 }
@@ -752,7 +755,7 @@ void scene_fastpair_model_on_enter(void* _ctx) {
     Submenu* submenu = ctx->submenu;
     uint32_t selected = 0;
 
-    submenu_add_item(submenu, "Random", 0, model_callback, ctx);
+    submenu_add_item(submenu, BLE_SPAM_UI_TEXT("Random", "随机"), 0, model_callback, ctx);
     if(payload->mode == PayloadModeRandom) {
         selected = 0;
     }
@@ -765,12 +768,14 @@ void scene_fastpair_model_on_enter(void* _ctx) {
             selected = i + 1;
         }
     }
-    submenu_add_item(submenu, "Custom", models_count + 1, model_callback, ctx);
+    submenu_add_item(
+        submenu, BLE_SPAM_UI_TEXT("Custom", "自定义"), models_count + 1, model_callback, ctx);
     if(!found && payload->mode == PayloadModeValue) {
         selected = models_count + 1;
     }
 
-    submenu_add_item(submenu, "Bruteforce", models_count + 2, model_callback, ctx);
+    submenu_add_item(
+        submenu, BLE_SPAM_UI_TEXT("Bruteforce", "暴力枚举"), models_count + 2, model_callback, ctx);
     if(payload->mode == PayloadModeBruteforce) {
         selected = models_count + 2;
     }
@@ -807,7 +812,8 @@ void scene_fastpair_model_custom_on_enter(void* _ctx) {
     FastpairCfg* cfg = &payload->cfg.fastpair;
     ByteInput* byte_input = ctx->byte_input;
 
-    byte_input_set_header_text(byte_input, "Enter custom Model Code");
+    byte_input_set_header_text(
+        byte_input, BLE_SPAM_UI_TEXT("Enter custom Model Code", "输入自定义型号代码"));
 
     ctx->byte_store[0] = (cfg->model >> 0x10) & 0xFF;
     ctx->byte_store[1] = (cfg->model >> 0x08) & 0xFF;
