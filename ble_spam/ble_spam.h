@@ -9,7 +9,7 @@
 
 #include "scenes/_setup.h"
 
-#ifdef FURI_DEBUG
+#ifdef MOMENTUM_UI_LANG_ZH_CN
 #define BLE_SPAM_UI_TEXT(en, zh) (zh)
 #else
 #define BLE_SPAM_UI_TEXT(en, zh) (en)
