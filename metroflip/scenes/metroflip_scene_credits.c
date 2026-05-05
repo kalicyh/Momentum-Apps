@@ -13,7 +13,7 @@ void metroflip_scene_credits_on_enter(void* context) {
 
     FuriString* str = furi_string_alloc();
 
-    furi_string_printf(str, "\e#Credits:\n\n");
+    furi_string_printf(str, METROFLIP_UI_TEXT("\e#Credits:\n\n", "\xe8\x87\xb4\xe8\xb0\xa2:\n\n"));
     furi_string_cat_printf(str, "Created by luu176\n");
     furi_string_cat_printf(str, "Inspired by Metrodroid\n\n");
     furi_string_cat_printf(str, "Special Thanks:\nWillyJL\n\n");
@@ -40,7 +40,7 @@ void metroflip_scene_credits_on_enter(void* context) {
     widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(str));
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+        widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
 
     furi_string_free(str);
     view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);

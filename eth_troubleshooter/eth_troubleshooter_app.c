@@ -46,47 +46,47 @@ static void draw_module_status(Canvas* canvas, EthWorkerState state) {
 
     switch(state) {
     case EthWorkerStateNotInited:
-        furi_string_printf(string, "no init");
+        furi_string_printf(string, ETH_UI_TEXT("no init", "未初始化"));
         break;
     case EthWorkerStateDefaultNext:
-        furi_string_printf(string, "df next");
+        furi_string_printf(string, ETH_UI_TEXT("df next", "默认下一步"));
         break;
     case EthWorkerStateInited:
-        furi_string_printf(string, "init ok");
+        furi_string_printf(string, ETH_UI_TEXT("init ok", "初始化成功"));
         break;
     case EthWorkerStateInit:
-        furi_string_printf(string, "init");
+        furi_string_printf(string, ETH_UI_TEXT("init", "初始化"));
         break;
     case EthWorkerStateModulePowerOn:
-        furi_string_printf(string, "pwr on");
+        furi_string_printf(string, ETH_UI_TEXT("pwr on", "电源开"));
         break;
     case EthWorkerStateModuleConnect:
-        furi_string_printf(string, "connect");
+        furi_string_printf(string, ETH_UI_TEXT("connect", "连接中"));
         break;
     case EthWorkerStateMACInit:
-        furi_string_printf(string, "mac init");
+        furi_string_printf(string, ETH_UI_TEXT("mac init", "MAC初始化"));
         break;
     case EthWorkerStateStaticIp:
-        furi_string_printf(string, "static ip");
+        furi_string_printf(string, ETH_UI_TEXT("static ip", "静态IP"));
         break;
     case EthWorkerStateDHCP:
-        furi_string_printf(string, "dhcp req.");
+        furi_string_printf(string, ETH_UI_TEXT("dhcp req.", "DHCP请求"));
         break;
     case EthWorkerStateOnline:
-        furi_string_printf(string, "online");
+        furi_string_printf(string, ETH_UI_TEXT("online", "在线"));
         break;
     case EthWorkerStatePing:
-        furi_string_printf(string, "ping");
+        furi_string_printf(string, ETH_UI_TEXT("ping", "Ping"));
         break;
     case EthWorkerStateStop:
-        furi_string_printf(string, "stop");
+        furi_string_printf(string, ETH_UI_TEXT("stop", "停止"));
         break;
     case EthWorkerStateReset:
-        furi_string_printf(string, "reset");
+        furi_string_printf(string, ETH_UI_TEXT("reset", "重置"));
         break;
 
     default:
-        furi_string_printf(string, "unknown");
+        furi_string_printf(string, ETH_UI_TEXT("unknown", "未知"));
         break;
     }
 

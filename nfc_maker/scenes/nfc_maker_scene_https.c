@@ -14,7 +14,7 @@ void nfc_maker_scene_https_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Enter Https Link:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Enter Https Link:", "输入 HTTPS 链接:"));
 
     strlcpy(
         app->big_buf,

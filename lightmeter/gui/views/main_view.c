@@ -341,7 +341,7 @@ void draw_top_row(Canvas* canvas, MainViewModel* context) {
         canvas_draw_box(canvas, 0, 0, 128, 12);
         canvas_set_color(canvas, ColorWhite);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 24, 10, "No sensor found");
+        canvas_draw_str(canvas, 24, 10, LIGHTMETER_UI_TEXT("No sensor found", "未发现传感器"));
         canvas_set_color(canvas, ColorBlack);
     } else {
         model->iso_val = iso_numbers[model->iso];
@@ -499,7 +499,7 @@ void draw_lux_only_mode(Canvas* canvas, MainViewModel* context) {
         canvas_draw_box(canvas, 0, 0, 128, 12);
         canvas_set_color(canvas, ColorWhite);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 24, 10, "No sensor found");
+        canvas_draw_str(canvas, 24, 10, LIGHTMETER_UI_TEXT("No sensor found", "未发现传感器"));
         canvas_set_color(canvas, ColorBlack);
     } else {
         char str[12];
@@ -507,21 +507,21 @@ void draw_lux_only_mode(Canvas* canvas, MainViewModel* context) {
         canvas_set_font(canvas, FontPrimary);
 
         canvas_draw_line(canvas, 0, 10, 128, 10);
-        canvas_draw_str_aligned(canvas, 64, 1, AlignCenter, AlignTop, "Lux meter mode");
+        canvas_draw_str_aligned(canvas, 64, 1, AlignCenter, AlignTop, LIGHTMETER_UI_TEXT("Lux meter mode", "照度计模式"));
 
         canvas_set_font(canvas, FontBigNumbers);
         snprintf(str, sizeof(str), "%.0f", (double)model->lux);
         canvas_draw_str_aligned(canvas, 80, 22, AlignRight, AlignCenter, str);
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 85, 29, AlignLeft, AlignBottom, "Lux now");
+        canvas_draw_str_aligned(canvas, 85, 29, AlignLeft, AlignBottom, LIGHTMETER_UI_TEXT("Lux now", "当前"));
 
         canvas_set_font(canvas, FontPrimary);
         snprintf(str, sizeof(str), "%.0f", (double)model->peakLux);
         canvas_draw_str_aligned(canvas, 80, 39, AlignRight, AlignCenter, str);
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 85, 43, AlignLeft, AlignBottom, "Lux peak");
+        canvas_draw_str_aligned(canvas, 85, 43, AlignLeft, AlignBottom, LIGHTMETER_UI_TEXT("Lux peak", "峰值"));
 
         for(int i = 0; i < LUX_HISTORGRAM_LENGTH; i++) {
             float lux =

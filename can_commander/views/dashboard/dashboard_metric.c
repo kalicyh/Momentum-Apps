@@ -138,7 +138,7 @@ static bool dashboard_parse_obd_dtc_line(
     }
 
     if(*right == '\0' || dashboard_ieq(right, "none")) {
-        strncpy(out_value, "None", out_value_size - 1U);
+        strncpy(out_value, DASHBOARD_UI_TEXT("None", "无"), out_value_size - 1U);
         out_value[out_value_size - 1U] = '\0';
         strncpy(out_note, "P0 B0 C0 U0", out_note_size - 1U);
         out_note[out_note_size - 1U] = '\0';
@@ -148,7 +148,7 @@ static bool dashboard_parse_obd_dtc_line(
     if(right[0] == '+') {
         strncpy(out_value, right, out_value_size - 1U);
         out_value[out_value_size - 1U] = '\0';
-        strncpy(out_note, "Additional DTCs", out_note_size - 1U);
+        strncpy(out_note, DASHBOARD_UI_TEXT("Additional DTCs", "更多故障码"), out_note_size - 1U);
         out_note[out_note_size - 1U] = '\0';
         return true;
     }
@@ -196,7 +196,7 @@ static bool dashboard_parse_obd_dtc_line(
 
     snprintf(out_value, out_value_size, "P%u B%u C%u U%u", p_count, b_count, c_count, u_count);
     out_value[out_value_size - 1U] = '\0';
-    snprintf(out_note, out_note_size, "Powertrain Body Chassis Network");
+    snprintf(out_note, out_note_size, DASHBOARD_UI_TEXT("Powertrain Body Chassis Network", "动力 车身 底盘 网络"));
     out_note[out_note_size - 1U] = '\0';
     return true;
 }
@@ -602,15 +602,15 @@ static void dashboard_format_id(bool ext, uint32_t id, char* out, size_t out_siz
 static const char* dashboard_reverse_phase_text(uint8_t phase) {
     switch(phase) {
     case DASH_REVERSE_PHASE_CAL:
-        return "Calibration";
+        return DASHBOARD_UI_TEXT("Calibration", "校准");
     case DASH_REVERSE_PHASE_MON:
-        return "Monitoring";
+        return DASHBOARD_UI_TEXT("Monitoring", "监测中");
     case DASH_REVERSE_PHASE_DONE:
-        return "Done";
+        return DASHBOARD_UI_TEXT("Done", "完成");
     case DASH_REVERSE_PHASE_READ:
-        return "Read";
+        return DASHBOARD_UI_TEXT("Read", "读取");
     default:
-        return "Init";
+        return DASHBOARD_UI_TEXT("Init", "初始化");
     }
 }
 
@@ -1521,7 +1521,7 @@ bool dashboard_metric_input(App* app, const InputEvent* event) {
                             dashboard_reverse_clear_changes(model);
                             strncpy(
                                 model->note,
-                                "Ignore list extended",
+                                DASHBOARD_UI_TEXT("Ignore list extended", "排除列表已扩展"),
                                 sizeof(model->note) - 1U);
                             model->note[sizeof(model->note) - 1U] = '\0';
                             reverse_exclude_pre = true;
@@ -1687,12 +1687,12 @@ void dashboard_update_obd(App* app, const CcEvent* event) {
                     dashboard_obd_dtc_clear_all(model);
                     strncpy(model->title, "OBD DTC", sizeof(model->title) - 1U);
                     model->title[sizeof(model->title) - 1U] = '\0';
-                    strncpy(model->label, "DTC Scan", sizeof(model->label) - 1U);
+                    strncpy(model->label, DASHBOARD_UI_TEXT("DTC Scan", "DTC 扫描"), sizeof(model->label) - 1U);
                     model->label[sizeof(model->label) - 1U] = '\0';
-                    strncpy(model->value, "Running", sizeof(model->value) - 1U);
+                    strncpy(model->value, DASHBOARD_UI_TEXT("Running", "运行中"), sizeof(model->value) - 1U);
                     model->value[sizeof(model->value) - 1U] = '\0';
                     model->unit[0] = '\0';
-                    strncpy(model->note, "Scanning stored/pending/permanent", sizeof(model->note) - 1U);
+                    strncpy(model->note, DASHBOARD_UI_TEXT("Scanning stored/pending/permanent", "扫描已存/待定/永久"), sizeof(model->note) - 1U);
                     model->note[sizeof(model->note) - 1U] = '\0';
                 }
 
@@ -1732,7 +1732,7 @@ void dashboard_update_obd(App* app, const CcEvent* event) {
 
                 if(is_dtc_all_complete) {
                     model->obd_dtc_complete = true;
-                    strncpy(model->note, "DTC scan complete", sizeof(model->note) - 1U);
+                    strncpy(model->note, DASHBOARD_UI_TEXT("DTC scan complete", "DTC 扫描完成"), sizeof(model->note) - 1U);
                     model->note[sizeof(model->note) - 1U] = '\0';
                 }
             },
@@ -1758,12 +1758,12 @@ void dashboard_update_obd(App* app, const CcEvent* event) {
     char note[40] = {0};
 
     if(event->data.tool.code == CcToolEvtWarning || event->data.tool.code == CcToolEvtError) {
-        strncpy(label, "OBD Diagnostic", sizeof(label) - 1U);
+        strncpy(label, DASHBOARD_UI_TEXT("OBD Diagnostic", "OBD 诊断"), sizeof(label) - 1U);
         strncpy(
             value,
-            (event->data.tool.code == CcToolEvtWarning) ? "Warning" : "Error",
+            (event->data.tool.code == CcToolEvtWarning) ? DASHBOARD_UI_TEXT("Warning", "警告") : DASHBOARD_UI_TEXT("Error", "错误"),
             sizeof(value) - 1U);
-        strncpy(note, text[0] ? text : "No detail", sizeof(note) - 1U);
+        strncpy(note, text[0] ? text : DASHBOARD_UI_TEXT("No detail", "无详情"), sizeof(note) - 1U);
     } else {
         if(!dashboard_parse_obd_dtc_line(
                text, label, sizeof(label), value, sizeof(value), note, sizeof(note))) {
@@ -1840,7 +1840,7 @@ void dashboard_update_write(App* app, const CcEvent* event) {
 
             strncpy(model->title, "WRITE", sizeof(model->title) - 1U);
             model->title[sizeof(model->title) - 1U] = '\0';
-            strncpy(model->label, "Sent", sizeof(model->label) - 1U);
+            strncpy(model->label, DASHBOARD_UI_TEXT("Sent", "已发送"), sizeof(model->label) - 1U);
             model->label[sizeof(model->label) - 1U] = '\0';
             snprintf(model->value, sizeof(model->value), "%lu", (unsigned long)model->counter);
             model->value[sizeof(model->value) - 1U] = '\0';
@@ -1884,7 +1884,7 @@ void dashboard_update_speed(App* app, const CcEvent* event) {
         {
             strncpy(model->title, "SPEED TEST", sizeof(model->title) - 1U);
             model->title[sizeof(model->title) - 1U] = '\0';
-            strncpy(model->label, "Rate", sizeof(model->label) - 1U);
+            strncpy(model->label, DASHBOARD_UI_TEXT("Rate", "速率"), sizeof(model->label) - 1U);
             model->label[sizeof(model->label) - 1U] = '\0';
 
             if(parsed) {
@@ -1924,7 +1924,7 @@ void dashboard_update_speed(App* app, const CcEvent* event) {
                 }
 
                 snprintf(model->value, sizeof(model->value), "%lu", (unsigned long)rate);
-                strncpy(model->unit, "msg/s", sizeof(model->unit) - 1U);
+                strncpy(model->unit, DASHBOARD_UI_TEXT("msg/s", "帧/秒"), sizeof(model->unit) - 1U);
                 model->unit[sizeof(model->unit) - 1U] = '\0';
                 snprintf(model->note, sizeof(model->note), "Bus: %s", bus_name);
             } else {
@@ -1991,10 +1991,10 @@ void dashboard_update_valtrack(App* app, const CcEvent* event) {
                 strncpy(model->unit, "dec", sizeof(model->unit) - 1U);
                 snprintf(model->note, sizeof(model->note), "0x%02lX -> 0x%02lX", old_hex, new_hex);
             } else {
-                strncpy(model->label, "Status", sizeof(model->label) - 1U);
+                strncpy(model->label, DASHBOARD_UI_TEXT("Status", "状态"), sizeof(model->label) - 1U);
                 strncpy(
                     model->value,
-                    event->data.tool.code == CcToolEvtWarning ? "Warning" : "--",
+                    event->data.tool.code == CcToolEvtWarning ? DASHBOARD_UI_TEXT("Warning", "警告") : "--",
                     sizeof(model->value) - 1U);
                 model->unit[0] = '\0';
                 strncpy(model->note, text, sizeof(model->note) - 1U);
@@ -2028,9 +2028,9 @@ void dashboard_update_unique_ids(App* app, const CcEvent* event) {
         {
             strncpy(model->title, "UNIQUE IDS", sizeof(model->title) - 1U);
             model->title[sizeof(model->title) - 1U] = '\0';
-            strncpy(model->label, "Found", sizeof(model->label) - 1U);
+            strncpy(model->label, DASHBOARD_UI_TEXT("Found", "已发现"), sizeof(model->label) - 1U);
             model->label[sizeof(model->label) - 1U] = '\0';
-            strncpy(model->unit, "ids", sizeof(model->unit) - 1U);
+            strncpy(model->unit, DASHBOARD_UI_TEXT("ids", "个"), sizeof(model->unit) - 1U);
             model->unit[sizeof(model->unit) - 1U] = '\0';
 
             if(parsed_count) {
@@ -2106,9 +2106,9 @@ void dashboard_update_reverse(App* app, const CcEvent* event) {
         app->dashboard_view,
         AppDashboardModel * model,
         {
-            strncpy(model->title, "Auto Reverse Engineer", sizeof(model->title) - 1U);
+            strncpy(model->title, DASHBOARD_UI_TEXT("Auto Reverse Engineer", "自动逆向工程"), sizeof(model->title) - 1U);
             model->title[sizeof(model->title) - 1U] = '\0';
-            strncpy(model->label, "Phase", sizeof(model->label) - 1U);
+            strncpy(model->label, DASHBOARD_UI_TEXT("Phase", "阶段"), sizeof(model->label) - 1U);
             model->label[sizeof(model->label) - 1U] = '\0';
 
             if(is_calibration_start) {
@@ -2188,7 +2188,7 @@ void dashboard_update_dbc_decode(App* app, const CcEvent* event) {
                 "%s 0x%lX %s",
                 cc_bus_to_string(event->data.dbc_decode.bus),
                 (unsigned long)event->data.dbc_decode.frame_id,
-                event->data.dbc_decode.in_range ? "ok" : "oor");
+                event->data.dbc_decode.in_range ? DASHBOARD_UI_TEXT("ok", "正常") : DASHBOARD_UI_TEXT("oor", "超限"));
         },
         true);
 }
@@ -2337,7 +2337,7 @@ void dashboard_update_custom_inject(App* app, const CcEvent* event) {
 
             strncpy(model->title, "CUSTOM INJECT", sizeof(model->title) - 1U);
             model->title[sizeof(model->title) - 1U] = '\0';
-            strncpy(model->label, "Slot", sizeof(model->label) - 1U);
+            strncpy(model->label, DASHBOARD_UI_TEXT("Slot", "槽位"), sizeof(model->label) - 1U);
             model->label[sizeof(model->label) - 1U] = '\0';
             snprintf(model->value, sizeof(model->value), "%u", (unsigned)(model->custom_selected_slot + 1U));
             model->unit[0] = '\0';

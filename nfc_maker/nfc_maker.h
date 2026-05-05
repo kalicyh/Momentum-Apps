@@ -37,6 +37,12 @@ extern const Icon I_WarningDolphinFlip_45x42;
 #include <lib/nfc/protocols/slix/slix.h>
 #include <lib/nfc/helpers/nfc_data_generator.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_MAKER_UI_TEXT(en, zh) (zh)
+#else
+#define NFC_MAKER_UI_TEXT(en, zh) (en)
+#endif
+
 #define MAC_INPUT_LEN   (GAP_MAC_ADDR_SIZE)
 #define MAIL_INPUT_LEN  (128)
 #define PHONE_INPUT_LEN (17)

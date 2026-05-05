@@ -8,33 +8,33 @@ void story_draw_tutorial(Canvas *canvas, GameManager *manager)
     GameContext *game_context = game_manager_game_context_get(manager);
     furi_check(game_context);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 45, 12, "Tutorial");
+    canvas_draw_str(canvas, 45, 12, FLIP_WORLD_UI_TEXT("Tutorial", "教程"));
     canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
     switch (game_context->story_step)
     {
     case 0:
-        canvas_draw_str(canvas, 15, 20, "Press LEFT to move left");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Press LEFT to move left", "按左键向左移动"));
         break;
     case 1:
-        canvas_draw_str(canvas, 15, 20, "Press RIGHT to move right");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Press RIGHT to move right", "按右键向右移动"));
         break;
     case 2:
-        canvas_draw_str(canvas, 15, 20, "Press UP to move up");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Press UP to move up", "按上键向上移动"));
         break;
     case 3:
-        canvas_draw_str(canvas, 15, 20, "Press DOWN to move down");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Press DOWN to move down", "按下键向下移动"));
         break;
     case 4:
-        canvas_draw_str(canvas, 0, 20, "Press OK + collide with an enemy to attack");
+        canvas_draw_str(canvas, 0, 20, FLIP_WORLD_UI_TEXT("Press OK + collide with an enemy to attack", "靠近敌人后按OK键攻击"));
         break;
     case 5:
-        canvas_draw_str(canvas, 15, 20, "Hold OK to open the menu");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Hold OK to open the menu", "长按OK键打开菜单"));
         break;
     case 6:
-        canvas_draw_str(canvas, 15, 20, "Press BACK to escape the menu");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Press BACK to escape the menu", "按返回键关闭菜单"));
         break;
     case 7:
-        canvas_draw_str(canvas, 15, 20, "Hold BACK to save and exit");
+        canvas_draw_str(canvas, 15, 20, FLIP_WORLD_UI_TEXT("Hold BACK to save and exit", "长按返回键保存并退出"));
         break;
     case 8:
         save_char("tutorial_done", "J You BLANKED on this one");

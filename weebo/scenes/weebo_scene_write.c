@@ -187,7 +187,7 @@ void weebo_scene_write_on_enter(void* context) {
     Weebo* weebo = context;
     Popup* popup = weebo->popup;
 
-    popup_set_header(popup, "Present NTAG215", 58, 28, AlignCenter, AlignCenter);
+    popup_set_header(popup, WEEBO_UI_TEXT("Present NTAG215", "请放置 NTAG215"), 58, 28, AlignCenter, AlignCenter);
 
     weebo->poller = nfc_poller_alloc(weebo->nfc, NfcProtocolMfUltralight);
     nfc_poller_start(weebo->poller, weebo_scene_write_poller_callback, weebo);
@@ -204,23 +204,23 @@ bool weebo_scene_write_on_event(void* context, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         scene_manager_set_scene_state(weebo->scene_manager, WeeboSceneWrite, event.event);
         if(event.event == WeeboCustomEventCardDetected) {
-            popup_set_text(weebo->popup, "Card detected", 64, 36, AlignCenter, AlignTop);
+            popup_set_text(weebo->popup, WEEBO_UI_TEXT("Card detected", "检测到卡片"), 64, 36, AlignCenter, AlignTop);
             consumed = true;
         } else if(event.event == WeeboCustomEventWritingUserData) {
-            popup_set_text(weebo->popup, "Writing user data", 64, 36, AlignCenter, AlignTop);
+            popup_set_text(weebo->popup, WEEBO_UI_TEXT("Writing user data", "写入用户数据"), 64, 36, AlignCenter, AlignTop);
             consumed = true;
         } else if(event.event == WeeboCustomEventWritingConfigData) {
-            popup_set_text(weebo->popup, "Writing config data", 64, 36, AlignCenter, AlignTop);
+            popup_set_text(weebo->popup, WEEBO_UI_TEXT("Writing config data", "写入配置数据"), 64, 36, AlignCenter, AlignTop);
             consumed = true;
         } else if(event.event == WeeboCustomEventWriteSuccess) {
-            popup_set_text(weebo->popup, "Write success", 64, 36, AlignCenter, AlignTop);
+            popup_set_text(weebo->popup, WEEBO_UI_TEXT("Write success", "写入成功"), 64, 36, AlignCenter, AlignTop);
             consumed = true;
             scene_manager_next_scene(weebo->scene_manager, WeeboSceneWriteCardSuccess);
         } else if(event.event == WeeboCustomEventWrongCard) {
-            popup_set_text(weebo->popup, "Wrong card", 64, 36, AlignCenter, AlignTop);
+            popup_set_text(weebo->popup, WEEBO_UI_TEXT("Wrong card", "卡片错误"), 64, 36, AlignCenter, AlignTop);
             consumed = true;
         } else if(event.event == WeeboCustomEventWriteFailure) {
-            popup_set_text(weebo->popup, "Write failure", 64, 36, AlignCenter, AlignTop);
+            popup_set_text(weebo->popup, WEEBO_UI_TEXT("Write failure", "写入失败"), 64, 36, AlignCenter, AlignTop);
             consumed = true;
         }
     }

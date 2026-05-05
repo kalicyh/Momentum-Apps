@@ -22,11 +22,23 @@ void picopass_scene_start_on_enter(void* context) {
 
     Submenu* submenu = picopass->submenu;
     submenu_add_item(
-        submenu, "Read Card", SubmenuIndexRead, picopass_scene_start_submenu_callback, picopass);
+        submenu,
+        PICOPASS_UI_TEXT("Read Card", "读卡"),
+        SubmenuIndexRead,
+        picopass_scene_start_submenu_callback,
+        picopass);
     submenu_add_item(
-        submenu, "Saved", SubmenuIndexSaved, picopass_scene_start_submenu_callback, picopass);
+        submenu,
+        PICOPASS_UI_TEXT("Saved", "已保存"),
+        SubmenuIndexSaved,
+        picopass_scene_start_submenu_callback,
+        picopass);
     submenu_add_item(
-        submenu, "Create", SubmenuIndexCreate, picopass_scene_start_submenu_callback, picopass);
+        submenu,
+        PICOPASS_UI_TEXT("Create", "创建"),
+        SubmenuIndexCreate,
+        picopass_scene_start_submenu_callback,
+        picopass);
     submenu_add_item(
         submenu, "Loclass", SubmenuIndexLoclass, picopass_scene_start_submenu_callback, picopass);
     if(furi_hal_rtc_is_flag_set(FuriHalRtcFlagDebug)) {
@@ -35,7 +47,7 @@ void picopass_scene_start_on_enter(void* context) {
     }
     submenu_add_item(
         submenu,
-        "Acknowledgements",
+        PICOPASS_UI_TEXT("Acknowledgements", "致谢"),
         SubmenuIndexAcknowledgements,
         picopass_scene_start_submenu_callback,
         picopass);

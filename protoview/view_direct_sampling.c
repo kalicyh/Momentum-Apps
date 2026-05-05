@@ -28,13 +28,13 @@ void render_view_direct_sampling(Canvas* const canvas, ProtoViewApp* app) {
 
     if(!app->direct_sampling_enabled && privdata->show_usage_info) {
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 2, 9, "Direct sampling displays the");
-        canvas_draw_str(canvas, 2, 18, "the captured signal in real");
-        canvas_draw_str(canvas, 2, 27, "time, like in a CRT TV set.");
-        canvas_draw_str(canvas, 2, 36, "Use UP/DOWN to change the");
-        canvas_draw_str(canvas, 2, 45, "resolution (usec/pixel).");
+        canvas_draw_str(canvas, 2, 9, PROTOVIEW_UI_TEXT("Direct sampling displays the", "直接采样实时显示"));
+        canvas_draw_str(canvas, 2, 18, PROTOVIEW_UI_TEXT("the captured signal in real", "捕获的信号"));
+        canvas_draw_str(canvas, 2, 27, PROTOVIEW_UI_TEXT("time, like in a CRT TV set.", "类似CRT电视效果"));
+        canvas_draw_str(canvas, 2, 36, PROTOVIEW_UI_TEXT("Use UP/DOWN to change the", "上下键调整"));
+        canvas_draw_str(canvas, 2, 45, PROTOVIEW_UI_TEXT("resolution (usec/pixel).", "分辨率(微秒/像素)"));
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 5, 60, "To start/stop, press OK");
+        canvas_draw_str(canvas, 5, 60, PROTOVIEW_UI_TEXT("To start/stop, press OK", "按确认键开始/停止"));
         return;
     }
     privdata->show_usage_info = false;

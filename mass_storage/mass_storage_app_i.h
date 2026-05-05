@@ -26,6 +26,12 @@
 
 #define TEXT_BUFFER_SIZE 128
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MASS_STORAGE_UI_TEXT(en, zh) (zh)
+#else
+#define MASS_STORAGE_UI_TEXT(en, zh) (en)
+#endif
+
 struct MassStorageApp {
     Gui* gui;
     Storage* fs_api;

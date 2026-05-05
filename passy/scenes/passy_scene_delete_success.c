@@ -11,7 +11,7 @@ void passy_scene_delete_success_on_enter(void* context) {
     // Setup view
     Popup* popup = passy->popup;
     popup_set_icon(popup, 0, 2, &I_DolphinMafia_119x62);
-    popup_set_header(popup, "Deleted", 80, 19, AlignLeft, AlignBottom);
+    popup_set_header(popup, PASSY_UI_TEXT("Deleted", "已删除"), 80, 19, AlignLeft, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, passy);
     popup_set_callback(popup, passy_scene_delete_success_popup_callback);

@@ -77,11 +77,11 @@ static void _enter_callback(void* context, uint32_t index) {
     if(unitemp_gpio_getAviablePort(type->interface, 0, NULL) == NULL) {
         if(type->interface == &SINGLE_WIRE || type->interface == &ONE_WIRE) {
             unitemp_popup(
-                &I_dolph_cry_49x54, "Sensor is unavailable", "All GPIOs\nare busy", VIEW_ID);
+                &I_dolph_cry_49x54, UNITEMP_UI_TEXT("Sensor is unavailable", "传感器不可用"), UNITEMP_UI_TEXT("All GPIOs\nare busy", "所有GPIO\n已被占用"), VIEW_ID);
         }
         if(type->interface == &I2C) {
             unitemp_popup(
-                &I_dolph_cry_49x54, "Sensor is unavailable", "GPIOs 15 or 16\nare busy", VIEW_ID);
+                &I_dolph_cry_49x54, UNITEMP_UI_TEXT("Sensor is unavailable", "传感器不可用"), UNITEMP_UI_TEXT("GPIOs 15 or 16\nare busy", "GPIO 15或16\n已被占用"), VIEW_ID);
         }
         return;
     }
@@ -133,7 +133,7 @@ void unitemp_SensorsList_alloc(void) {
                 variable_item_list, unitemp_sensors_getTypes()[i]->altname, 1, NULL, app);
         }
     }
-    variable_item_list_add(variable_item_list, "I don't know what to choose", 1, NULL, app);
+    variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("I don't know what to choose", "不知道选哪个"), 1, NULL, app);
 
     //Adding a callback for pressing the middle button
     variable_item_list_set_enter_callback(variable_item_list, _enter_callback, app);

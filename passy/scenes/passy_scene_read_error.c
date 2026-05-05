@@ -16,22 +16,22 @@ void passy_scene_read_error_on_enter(void* context) {
     Passy* passy = context;
     Widget* widget = passy->widget;
 
-    FuriString* primary_str = furi_string_alloc_set("Read Error");
+    FuriString* primary_str = furi_string_alloc_set(PASSY_UI_TEXT("Read Error", "读取错误"));
     FuriString* secondary_str = furi_string_alloc();
 
     // Send notification
     notification_message(passy->notifications, &sequence_error);
 
     if(passy->last_sw == 0x6a82) {
-        furi_string_printf(secondary_str, "File not found\nTry again?");
+        furi_string_printf(secondary_str, PASSY_UI_TEXT("File not found\nTry again?", "未找到文件\n重试?"));
     } else if(passy->last_sw == 0x9000) {
-        furi_string_printf(secondary_str, "Try again?");
+        furi_string_printf(secondary_str, PASSY_UI_TEXT("Try again?", "重试?"));
     } else {
-        furi_string_printf(secondary_str, "%04x\nTry again?", passy->last_sw);
+        furi_string_printf(secondary_str, "%04x\n%s", passy->last_sw, PASSY_UI_TEXT("Try again?", "重试?"));
     }
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", passy_scene_read_error_widget_callback, passy);
+        widget, GuiButtonTypeLeft, PASSY_UI_TEXT("Retry", "重试"), passy_scene_read_error_widget_callback, passy);
 
     widget_add_string_element(
         widget, 64, 5, AlignCenter, AlignCenter, FontPrimary, furi_string_get_cstr(primary_str));

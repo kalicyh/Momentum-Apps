@@ -40,15 +40,15 @@ ViewOrientation xremote_app_get_orientation(uint8_t orientation_index) {
 }
 
 const char* xremote_app_get_exit_str(XRemoteAppExit exit_behavior) {
-    return exit_behavior == XRemoteAppExitPress ? "Press" : "Hold";
+    return exit_behavior == XRemoteAppExitPress ? XREMOTE_UI_TEXT("Press", "按下") : XREMOTE_UI_TEXT("Hold", "长按");
 }
 
 const char* xremote_app_get_alt_names_str(uint8_t alt_names_index) {
-    return alt_names_index ? "On" : "Off";
+    return alt_names_index ? XREMOTE_UI_TEXT("On", "开") : XREMOTE_UI_TEXT("Off", "关");
 }
 
 const char* xremote_app_get_orientation_str(ViewOrientation view_orientation) {
-    return view_orientation == ViewOrientationHorizontal ? "Horizontal" : "Vertical";
+    return view_orientation == ViewOrientationHorizontal ? XREMOTE_UI_TEXT("Horizontal", "横向") : XREMOTE_UI_TEXT("Vertical", "纵向");
 }
 
 uint32_t xremote_app_get_orientation_index(ViewOrientation view_orientation) {
@@ -413,7 +413,7 @@ bool xremote_app_context_select_file(XRemoteAppContext* app_ctx, const char* ext
 
 const char* xremote_app_context_get_exit_str(XRemoteAppContext* app_ctx) {
     XRemoteAppExit exit_behavior = app_ctx->app_settings->exit_behavior;
-    return exit_behavior == XRemoteAppExitHold ? "Hold to exit" : "Press to exit";
+    return exit_behavior == XRemoteAppExitHold ? XREMOTE_UI_TEXT("Hold to exit", "长按退出") : XREMOTE_UI_TEXT("Press to exit", "按下退出");
 }
 
 void xremote_app_context_notify_led(XRemoteAppContext* app_ctx) {

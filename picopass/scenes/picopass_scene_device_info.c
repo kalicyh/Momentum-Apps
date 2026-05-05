@@ -42,7 +42,7 @@ void picopass_scene_device_info_on_enter(void* context) {
         furi_string_cat_printf(info_str, "SIO");
     } else if(pacs->bitLength == 0 || pacs->bitLength == 255) {
         // Neither of these are valid.  Indicates the block was all 0x00 or all 0xff
-        furi_string_cat_printf(info_str, "Invalid PACS");
+        furi_string_cat_printf(info_str, PICOPASS_UI_TEXT("Invalid PACS", "无效PACS"));
     } else {
         size_t bytesLength = 1 + pacs->bitLength / 8;
         furi_string_set(credential_str, "");
@@ -59,7 +59,7 @@ void picopass_scene_device_info_on_enter(void* context) {
     uint8_t crypt = card_data[PICOPASS_CONFIG_BLOCK_INDEX].data[7] & PICOPASS_FUSE_CRYPT10;
     bool unsecure = crypt == PICOPASS_FUSE_CRYPT0;
     if(unsecure) {
-        furi_string_cat_printf(key_str, "Unsecure card");
+        furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("Unsecure card", "未加密卡"));
     } else if(card_data[PICOPASS_SECURE_KD_BLOCK_INDEX].valid) {
         uint8_t key[PICOPASS_BLOCK_LEN] = {};
         loclass_iclass_calc_div_key(
@@ -67,16 +67,23 @@ void picopass_scene_device_info_on_enter(void* context) {
         bool standard =
             memcmp(card_data[PICOPASS_SECURE_KD_BLOCK_INDEX].data, key, PICOPASS_BLOCK_LEN) == 0;
         if(standard) {
-            furi_string_cat_printf(key_str, "Key: Standard");
+            furi_string_cat_printf(
+                key_str, PICOPASS_UI_TEXT("Key: Standard", "密钥: 标准"));
         } else {
-            furi_string_cat_printf(key_str, "Key: Not Standard");
+            furi_string_cat_printf(
+                key_str, PICOPASS_UI_TEXT("Key: Not Standard", "密钥: 非标准"));
         }
     } else {
-        furi_string_cat_printf(key_str, "No Key: used NR-MAC");
+        furi_string_cat_printf(
+            key_str, PICOPASS_UI_TEXT("No Key: used NR-MAC", "无密钥: 使用NR-MAC"));
     }
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Back", picopass_scene_device_info_widget_callback, picopass);
+        widget,
+        GuiButtonTypeLeft,
+        PICOPASS_UI_TEXT("Back", "返回"),
+        picopass_scene_device_info_widget_callback,
+        picopass);
 
     wiegand_message_t wiegand_msg = picopass_pacs_extract_wmo(pacs);
     size_t format_count = picopass_wiegand_format_count(&wiegand_msg);
@@ -84,13 +91,17 @@ void picopass_scene_device_info_on_enter(void* context) {
         widget_add_button_element(
             widget,
             GuiButtonTypeCenter,
-            "Parse",
+            PICOPASS_UI_TEXT("Parse", "解析"),
             picopass_scene_device_info_widget_callback,
             picopass);
     }
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Raw", picopass_scene_device_info_widget_callback, picopass);
+        widget,
+        GuiButtonTypeRight,
+        PICOPASS_UI_TEXT("Raw", "原始数据"),
+        picopass_scene_device_info_widget_callback,
+        picopass);
 
     widget_add_string_element(
         widget, 64, 5, AlignCenter, AlignCenter, FontSecondary, furi_string_get_cstr(csn_str));

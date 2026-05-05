@@ -18,7 +18,7 @@ void upython_cli(PipeSide* pipe, FuriString* args, void* ctx) {
     pipe_install_as_stdio(pipe);
 
     if(action != ActionNone) {
-        printf("%s is busy!\n", TAG);
+        printf("%s %s\n", TAG, UPYTHON_UI_TEXT("is busy!", "正忙!"));
 
         return;
     }

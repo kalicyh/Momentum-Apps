@@ -1,6 +1,12 @@
 #pragma once
 #include "structures.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define RFID_READER_UI_TEXT(en, zh) (zh)
+#else
+#define RFID_READER_UI_TEXT(en, zh) (en)
+#endif
+
 //Defining the UART parameters for communicating with the Raspberry Pi Zero 
 #define DEVICE_BAUDRATE 9600
 #define LINE_DELIMITER '\n'
@@ -12,19 +18,19 @@
 
 //Creating different messages used for display
 #define TAG "simultaneous_rfid_reader"
-#define WRITE_EPC_VAL "EPC Value"
-#define WRITE_RES_MEM "Reserved Memory"
-#define WRITE_USR_MEM "User Memory"
-#define WRITE_TID_MEM "TID Value"
-#define WRITE_EPC_OK "EPC Written!"
-#define WRITE_EPC_CANCELED "Write Canceled!"
-#define WRITE_EPC_FAIL "Write Failed!"
+#define WRITE_EPC_VAL RFID_READER_UI_TEXT("EPC Value", "EPC值")
+#define WRITE_RES_MEM RFID_READER_UI_TEXT("Reserved Memory", "保留存储")
+#define WRITE_USR_MEM RFID_READER_UI_TEXT("User Memory", "用户存储")
+#define WRITE_TID_MEM RFID_READER_UI_TEXT("TID Value", "TID值")
+#define WRITE_EPC_OK RFID_READER_UI_TEXT("EPC Written!", "写入成功!")
+#define WRITE_EPC_CANCELED RFID_READER_UI_TEXT("Write Canceled!", "写入取消!")
+#define WRITE_EPC_FAIL RFID_READER_UI_TEXT("Write Failed!", "写入失败!")
 
 //Content for the about screen
 #define UHF_RFID_VERSION_APP "1.1.2"
 #define UHF_RFID_MEM_DEVELOPER "@Haffnerriley"
 #define UHF_RFID_GITHUB "https://github.com/haffnerriley"
-#define UHF_RFID_NAME "\e#\e!       UHF RFID Reader        \e!\n"
+#define UHF_RFID_NAME RFID_READER_UI_TEXT("\e#\e!       UHF RFID Reader        \e!\n", "\e#\e!     UHF RFID 读写器         \e!\n")
 #define UHF_RFID_BLANK_INV "\e#\e!"
 #define YRM100X_MODULE 1
 #define M6E_NANO_MODULE 2

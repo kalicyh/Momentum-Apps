@@ -66,10 +66,10 @@ void unitemp_MainMenu_alloc(void) {
     //Reset all menu items
     variable_item_list_reset(variable_item_list);
 
-    variable_item_list_add(variable_item_list, "Add new sensor", 1, NULL, NULL);
-    variable_item_list_add(variable_item_list, "Settings", 1, NULL, NULL);
-    variable_item_list_add(variable_item_list, "Help", 1, NULL, NULL);
-    variable_item_list_add(variable_item_list, "About", 1, NULL, NULL);
+    variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Add new sensor", "添加传感器"), 1, NULL, NULL);
+    variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Settings", "设置"), 1, NULL, NULL);
+    variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Help", "帮助"), 1, NULL, NULL);
+    variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("About", "关于"), 1, NULL, NULL);
 
     //Adding a callback for pressing the middle button
     variable_item_list_set_enter_callback(variable_item_list, _enter_callback, app);

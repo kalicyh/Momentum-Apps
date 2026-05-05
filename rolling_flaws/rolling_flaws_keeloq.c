@@ -44,7 +44,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
             "Wrong MF.  Expected >%s< but got >%s<",
             rolling_flaws_setting_protocol_mf_name_get(model),
             furi_string_get_cstr(data->mf));
-        furi_string_set(model->status, "BAD MF");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("BAD MF", "\xe5\x8e\x82\xe5\x95\x86\xe9\x94\x99\xe8\xaf\xaf"));
         return false;
     }
 
@@ -54,13 +54,13 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
             "Wrong fix.  Expected >%08lX< but got >%08lX<",
             rolling_flaws_setting_fix_get(model),
             data->fix);
-        furi_string_set(model->status, "BAD FIX");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("BAD FIX", "\xe5\x9b\xba\xe5\xae\x9a\xe7\xa0\x81\xe9\x94\x99\xe8\xaf\xaf"));
         return false;
     }
 
     if((rolling_flaws_setting_fix_get(model) & 0xFFFFFFF) == 0) {
         FURI_LOG_I(TAG, "Fix is test. Not checking data.");
-        furi_string_set(model->status, "TEST");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("TEST", "\xe6\xb5\x8b\xe8\xaf\x95"));
         model->future_count = 0xFFFFFFFF;
         model->count = data->cnt;
         return true;
@@ -76,7 +76,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
 
                 if((data->enc & 0xFF) == 0) {
                     FURI_LOG_I(TAG, "Encrypted payload SN is zero.");
-                    furi_string_set(model->status, "SN 00");
+                    furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("SN 00", "SN 00"));
                     return false;
                 }
             }
@@ -90,7 +90,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
             uint32_t enc_sn = data->enc & mask;
             if(fix_sn != enc_sn) {
                 FURI_LOG_I(TAG, "SN does not match.  Fix: %08lX Enc: %08lX", fix_sn, enc_sn);
-                furi_string_set(model->status, "BAD SN");
+                furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("BAD SN", "SN \xe9\x94\x99\xe8\xaf\xaf"));
                 return false;
             } else {
                 FURI_LOG_I(TAG, "SN matches.  Fix: %08lX Enc: %08lX", fix_sn, enc_sn);
@@ -102,7 +102,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
     FURI_LOG_I(TAG, "Distance: %08lX", distance);
     if(distance == 0 && rolling_flaws_setting_replay_get(model)) {
         FURI_LOG_I(TAG, "Replay attack detected");
-        furi_string_set(model->status, "REPLAY");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("REPLAY", "\xe9\x87\x8d\xe6\x94\xbe"));
         model->future_count = 0xFFFFFFFF;
         model->count = data->cnt;
         return true;
@@ -110,7 +110,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
 
     if(rolling_flaws_setting_count_zero_get(model) && data->cnt == 0) {
         FURI_LOG_I(TAG, "Count zero allowed.");
-        furi_string_set(model->status, "COUNT0");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("COUNT0", "\xe8\xae\xa1\xe6\x95\xb00"));
         model->future_count = 0xFFFFFFFF;
         // We don't reset count in this case.
         return true;
@@ -122,7 +122,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
 
     if(distance <= rolling_flaws_setting_window_next_get(model)) {
         FURI_LOG_I(TAG, "Within next window");
-        furi_string_set(model->status, "NEXT");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("NEXT", "\xe4\xb8\x8b\xe4\xb8\x80\xe4\xb8\xaa"));
         model->future_count = 0xFFFFFFFF;
         model->count = data->cnt;
         return true;
@@ -133,7 +133,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
 
         if(model->future_count > 0xFFFF) {
             FURI_LOG_I(TAG, "Set future value to %08lX.", data->cnt);
-            furi_string_set(model->status, "FUTURE");
+            furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("FUTURE", "\xe6\x9c\xaa\xe6\x9d\xa5"));
             model->future_count = data->cnt;
             return false;
         }
@@ -141,7 +141,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
         uint32_t future_gap = get_forward_distance(model->future_count, data->cnt);
         if(future_gap > 0 && future_gap <= rolling_flaws_setting_window_future_gap_get(model)) {
             FURI_LOG_I(TAG, "Future gap accepted. Gap is %08lX", future_gap);
-            furi_string_set(model->status, "GAP");
+            furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("GAP", "\xe9\x97\xb4\xe9\x9a\x94"));
             model->future_count = 0xFFFFFFFF;
             model->count = data->cnt;
             return true;
@@ -149,7 +149,7 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
 
         if(future_gap == 0) {
             FURI_LOG_I(TAG, "Future gap is zero.  Set future value to %08lX.", data->cnt);
-            furi_string_set(model->status, "FUTURE");
+            furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("FUTURE", "\xe6\x9c\xaa\xe6\x9d\xa5"));
             model->future_count = data->cnt;
             return false;
         }
@@ -159,13 +159,13 @@ static bool is_open(RollingFlawsModel* model, KeeLoqData* data) {
             "Future gap too large.  %08lX > %08lX",
             future_gap,
             rolling_flaws_setting_window_future_gap_get(model));
-        furi_string_set(model->status, "BAD GAP");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("BAD GAP", "\xe9\x97\xb4\xe9\x9a\x94\xe9\x94\x99\xe8\xaf\xaf"));
         model->future_count = data->cnt;
         return false;
     }
 
     FURI_LOG_I(TAG, "Signal must be from the past (non-future).");
-    furi_string_set(model->status, "PAST");
+    furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("PAST", "\xe8\xbf\x87\xe5\x8e\xbb"));
     return false;
 }
 
@@ -219,7 +219,7 @@ void decode_keeloq(RollingFlawsModel* model, FuriString* buffer, bool sync) {
         model->future_count = 0xFFFFFFFF;
         model->opened = false;
         rolling_flaws_setting_protocol_custom_mf_set(model, data->mf);
-        furi_string_set(model->status, "SYNCED");
+        furi_string_set(model->status, ROLLING_FLAWS_UI_TEXT("SYNCED", "\xe5\xb7\xb2\xe5\x90\x8c\xe6\xad\xa5"));
     }
 
     keeloq_data_free(data);

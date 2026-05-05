@@ -1,5 +1,13 @@
 #pragma once
 
+#ifndef CHIEF_COOKER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CHIEF_COOKER_UI_TEXT(en, zh) (zh)
+#else
+#define CHIEF_COOKER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include "SettingsScreen.hpp"
 #include "lib/hardware/subghz/data/SubGhzReceivedDataStub.hpp"
 #include "lib/ui/view/ColumnOrientedListUiView.hpp"
@@ -73,7 +81,7 @@ public:
         menuView->SetColumnFonts(stationScreenColumnFonts);
         menuView->SetColumnAlignments(stationScreenColumnAlignments);
 
-        menuView->SetLeftButton("Conf", HANDLER_1ARG(&ScanStationsScreen::showConfig));
+        menuView->SetLeftButton(CHIEF_COOKER_UI_TEXT("Conf", "设置"), HANDLER_1ARG(&ScanStationsScreen::showConfig));
 
         subghz = new SubGhzModule(config->Frequency);
         subghz->SetReceiveHandler(HANDLER_1ARG(&ScanStationsScreen::receive));
@@ -88,7 +96,7 @@ public:
             updateUserCategory = false;
 
             if(category != NULL) {
-                menuView->SetRightButton("Delete category", HANDLER_1ARG(&ScanStationsScreen::deleteCategory));
+                menuView->SetRightButton(CHIEF_COOKER_UI_TEXT("Delete category", "删除分类"), HANDLER_1ARG(&ScanStationsScreen::deleteCategory));
             }
         } else {
             pagerReceiver->ReloadKnownStations();
@@ -96,12 +104,12 @@ public:
 
         if(receiveNew) {
             if(subghz->IsExternal()) {
-                menuView->SetNoElementCaption("Receiving via EXT...");
+                menuView->SetNoElementCaption(CHIEF_COOKER_UI_TEXT("Receiving via EXT...", "通过外接接收中..."));
             } else {
-                menuView->SetNoElementCaption("Receiving...");
+                menuView->SetNoElementCaption(CHIEF_COOKER_UI_TEXT("Receiving...", "接收中..."));
             }
         } else {
-            menuView->SetNoElementCaption("No stations found!");
+            menuView->SetNoElementCaption(CHIEF_COOKER_UI_TEXT("No stations found!", "未找到电台！"));
         }
 
         if(!receiveNew) {
@@ -135,8 +143,8 @@ private:
                 }
 
                 if(pagerData->GetIndex() == 0) { // add buttons after capturing the first transmission
-                    menuView->SetCenterButton("Actions", HANDLER_1ARG(&ScanStationsScreen::showActions));
-                    menuView->SetRightButton("Edit", HANDLER_1ARG(&ScanStationsScreen::editPagerMessage));
+                    menuView->SetCenterButton(CHIEF_COOKER_UI_TEXT("Actions", "操作"), HANDLER_1ARG(&ScanStationsScreen::showActions));
+                    menuView->SetRightButton(CHIEF_COOKER_UI_TEXT("Edit", "编辑"), HANDLER_1ARG(&ScanStationsScreen::editPagerMessage));
                 }
 
                 if(!receiveMode || scanForMoreButtonIndex == -1) {
@@ -162,9 +170,9 @@ private:
         if(index == scanForMoreButtonIndex) {
             if(column == 0) {
                 if(!receiveMode) {
-                    str->format("> Scan here for more");
+                    str->format(CHIEF_COOKER_UI_TEXT("> Scan here for more", "> 点此扫描更多"));
                 } else {
-                    str->format("Scanning...");
+                    str->format(CHIEF_COOKER_UI_TEXT("Scanning...", "扫描中..."));
                 }
             }
             return;
@@ -253,9 +261,9 @@ private:
 
     bool goBack() {
         if(receiveMode && menuView->GetElementsCount() > 0) {
-            DialogUiView* confirmGoBack = new DialogUiView("Really stop scan?", "You may loose captured signals");
-            confirmGoBack->AddLeftButton("No");
-            confirmGoBack->AddRightButton("Yes");
+            DialogUiView* confirmGoBack = new DialogUiView(CHIEF_COOKER_UI_TEXT("Really stop scan?", "确认停止扫描?"), CHIEF_COOKER_UI_TEXT("You may loose captured signals", "可能会丢失已捕获的信号"));
+            confirmGoBack->AddLeftButton(CHIEF_COOKER_UI_TEXT("No", "否"));
+            confirmGoBack->AddRightButton(CHIEF_COOKER_UI_TEXT("Yes", "是"));
             confirmGoBack->SetResultHandler(HANDLER_1ARG(&ScanStationsScreen::goBackConfirmationHandler));
             UiManager::GetInstance()->PushView(confirmGoBack);
             return false;
@@ -265,7 +273,7 @@ private:
 
     void deleteCategory(int) {
         AppFileSysytem().DeleteCategory(pagerReceiver->GetCurrentUserCategory());
-        menuView->SetRightButton("Deleted", NULL);
+        menuView->SetRightButton(CHIEF_COOKER_UI_TEXT("Deleted", "已删除"), NULL);
     }
 
     void goBackConfirmationHandler(DialogExResult dialogResult) {

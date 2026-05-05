@@ -1,6 +1,12 @@
 #include "flipchess.h"
 #include "helpers/flipchess_haptic.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHESS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHESS_UI_TEXT(en, zh) (en)
+#endif
+
 bool flipchess_custom_event_callback(void* context, uint32_t event) {
     furi_assert(context);
     FlipChess* app = context;
@@ -115,7 +121,7 @@ FlipChess* flipchess_app_alloc() {
         TEXT_BUFFER_SIZE,
         //clear default text
         true);
-    text_input_set_header_text(app->text_input, "Input");
+    text_input_set_header_text(app->text_input, FLIPCHESS_UI_TEXT("Input", "输入"));
     view_dispatcher_add_view(
         app->view_dispatcher, FlipChessViewIdTextInput, text_input_get_view(app->text_input));
 

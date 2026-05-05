@@ -76,7 +76,7 @@ void flipper_spi_terminal_scene_config_alloc(FlipperSPITerminalApp* app) {
         variable_item_list_get_view(app->config_screen.view));
 
     // Help
-    variable_item_list_add(app->config_screen.view, "Press OK for help", 0, NULL, NULL);
+    variable_item_list_add(app->config_screen.view, SPI_TERMINAL_UI_TEXT("Press OK for help", "按 OK 查看帮助"), 0, NULL, NULL);
 
     // MAKE SURE TO ADJUST THE SPI_TERM_HELP_TEXT_INDEX_OFFSET VALUE, IF YOU ADD A VALUE BEFORE THIS COMMENT!
 

@@ -127,7 +127,7 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
     if(ctx->state == DecodeStateShowSuccess) {
         // Success screen
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, "已解码!");
+        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("Decoded!", "已解码!"));
 
         // Checkmark animation
         int check_progress = ctx->result_display_counter * 3;
@@ -171,14 +171,14 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
         }
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, "信号匹配成功!");
+        canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("Signal matched!", "信号匹配成功!"));
         return;
     }
 
     if(ctx->state == DecodeStateShowFailure) {
         // Failure screen
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, "未匹配");
+        canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("No match", "未匹配"));
 
         // X animation
         int x_progress = ctx->result_display_counter * 3;
@@ -222,7 +222,7 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
             canvas_draw_str_aligned(
                 canvas, 64, 54, AlignCenter, AlignTop, furi_string_get_cstr(ctx->error_info));
         } else {
-            canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, "未知协议");
+            canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("Unknown protocol", "未知协议"));
         }
         return;
     }
@@ -232,7 +232,7 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
     // Title with occasional glitch
     canvas_set_font(canvas, FontPrimary);
     int glitch = (frame % 47 == 0) ? 1 : 0;
-    canvas_draw_str_aligned(canvas, 64 + glitch, 0, AlignCenter, AlignTop, "解码中");
+    canvas_draw_str_aligned(canvas, 64 + glitch, 0, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("Decoding", "解码中"));
 
     // Waveform visualization - original style with sinf
     int wave_y = 22;
@@ -298,17 +298,17 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
 
     // Status text
     canvas_set_font(canvas, FontSecondary);
-    const char* status_text = "Starting...";
+    const char* status_text = PROTOPIRATE_UI_TEXT("Starting...", "启动中...");
 
     switch(ctx->state) {
     case DecodeStateOpenFile:
-        status_text = "Opening file...";
+        status_text = PROTOPIRATE_UI_TEXT("Opening file...", "正在打开文件...");
         break;
     case DecodeStateReadHeader:
-        status_text = "Reading header...";
+        status_text = PROTOPIRATE_UI_TEXT("Reading header...", "正在读取头信息...");
         break;
     case DecodeStateStartingWorker:
-        status_text = "Counting timings...";
+        status_text = PROTOPIRATE_UI_TEXT("Counting timings...", "正在统计时序...");
         break;
     case DecodeStateDecodingRaw: {
         static char match_text[32];
@@ -316,12 +316,12 @@ static void protopirate_decode_draw_callback(Canvas* canvas, void* context) {
             snprintf(
                 match_text,
                 sizeof(match_text),
-                "%u  match%s",
+                "%u %s",
                 ctx->match_count,
-                ctx->match_count > 1 ? "es" : "");
+                PROTOPIRATE_UI_TEXT("matches", "个匹配"));
             status_text = match_text;
         } else {
-            status_text = "Decoding signal...";
+            status_text = PROTOPIRATE_UI_TEXT("Decoding signal...", "正在解码信号...");
         }
         break;
     }
@@ -362,10 +362,12 @@ static bool protopirate_decode_input_callback(InputEvent* event, void* context) 
                 g_decode_ctx->raw_reader = NULL;
             }
 
-            furi_string_set(g_decode_ctx->error_info, "Cancelled");
+            furi_string_set(
+                g_decode_ctx->error_info, PROTOPIRATE_UI_TEXT("Cancelled", "已取消"));
             g_decode_ctx->state = DecodeStateShowFailure;
             g_decode_ctx->result_display_counter = 0;
-            furi_string_set(g_decode_ctx->result, "Cancelled by user");
+            furi_string_set(
+                g_decode_ctx->result, PROTOPIRATE_UI_TEXT("Cancelled by user", "用户已取消"));
         }
         return true;
     }
@@ -608,8 +610,10 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
 
             if(!flipper_format_file_open_existing(ctx->ff, furi_string_get_cstr(ctx->file_path))) {
                 FURI_LOG_E(TAG, "OpenFile: Failed to open file");
-                furi_string_set(ctx->result, "Failed to open file");
-                furi_string_set(ctx->error_info, "File open failed");
+                furi_string_set(
+                    ctx->result, PROTOPIRATE_UI_TEXT("Failed to open file", "打开文件失败"));
+                furi_string_set(
+                    ctx->error_info, PROTOPIRATE_UI_TEXT("File open failed", "文件打开失败"));
                 close_file_handles(ctx);
                 ctx->state = DecodeStateShowFailure;
                 ctx->result_display_counter = 0;
@@ -631,22 +635,30 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
             do {
                 FURI_LOG_D(TAG, "ReadHeader: Reading header");
                 if(!flipper_format_read_header(ctx->ff, temp_str, &version)) {
-                    furi_string_set(ctx->result, "Invalid file format");
-                    furi_string_set(ctx->error_info, "Invalid header");
+                    furi_string_set(
+                        ctx->result, PROTOPIRATE_UI_TEXT("Invalid file format", "无效文件格式"));
+                    furi_string_set(
+                        ctx->error_info, PROTOPIRATE_UI_TEXT("Invalid header", "无效头信息"));
                     break;
                 }
 
                 FURI_LOG_D(TAG, "ReadHeader: Header type: %s", furi_string_get_cstr(temp_str));
                 if(furi_string_cmp_str(temp_str, "Flipper SubGhz RAW File") != 0) {
-                    furi_string_set(ctx->result, "Not a RAW SubGhz file");
-                    furi_string_set(ctx->error_info, "Not RAW SubGhz file");
+                    furi_string_set(
+                        ctx->result,
+                        PROTOPIRATE_UI_TEXT("Not a RAW SubGhz file", "非RAW SubGhz文件"));
+                    furi_string_set(
+                        ctx->error_info,
+                        PROTOPIRATE_UI_TEXT("Not RAW SubGhz file", "非RAW SubGhz文件"));
                     break;
                 }
 
                 FURI_LOG_D(TAG, "ReadHeader: Reading protocol");
                 if(!flipper_format_read_string(ctx->ff, "Protocol", ctx->protocol_name)) {
-                    furi_string_set(ctx->result, "Missing Protocol");
-                    furi_string_set(ctx->error_info, "No protocol field");
+                    furi_string_set(
+                        ctx->result, PROTOPIRATE_UI_TEXT("Missing Protocol", "缺少协议"));
+                    furi_string_set(
+                        ctx->error_info, PROTOPIRATE_UI_TEXT("No protocol field", "无协议字段"));
                     break;
                 }
 
@@ -692,7 +704,8 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
             } else {
                 FURI_LOG_W(TAG, "ReadHeader: Non-RAW protocol not supported");
                 close_file_handles(ctx);
-                furi_string_set(ctx->error_info, "Only RAW supported");
+                furi_string_set(
+                    ctx->error_info, PROTOPIRATE_UI_TEXT("Only RAW supported", "仅支持RAW格式"));
                 ctx->state = DecodeStateShowFailure;
                 ctx->result_display_counter = 0;
             }
@@ -823,8 +836,11 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
             furi_string_free(temp_str);
 
             if(!setup_ok) {
-                furi_string_set(ctx->result, "Failed to read file metadata");
-                furi_string_set(ctx->error_info, "Metadata read failed");
+                furi_string_set(
+                    ctx->result,
+                    PROTOPIRATE_UI_TEXT("Failed to read file metadata", "读取文件元数据失败"));
+                furi_string_set(
+                    ctx->error_info, PROTOPIRATE_UI_TEXT("Metadata read failed", "元数据读取失败"));
                 ctx->state = DecodeStateShowFailure;
                 ctx->result_display_counter = 0;
                 notification_message(app->notifications, &sequence_error);
@@ -839,8 +855,10 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
             ctx->raw_reader = raw_file_reader_alloc();
             if(!ctx->raw_reader) {
                 FURI_LOG_E(TAG, "Failed to allocate raw reader");
-                furi_string_set(ctx->result, "Memory allocation failed");
-                furi_string_set(ctx->error_info, "Out of memory");
+                furi_string_set(
+                    ctx->result, PROTOPIRATE_UI_TEXT("Memory allocation failed", "内存分配失败"));
+                furi_string_set(
+                    ctx->error_info, PROTOPIRATE_UI_TEXT("Out of memory", "内存不足"));
                 ctx->state = DecodeStateShowFailure;
                 ctx->result_display_counter = 0;
                 notification_message(app->notifications, &sequence_error);
@@ -854,8 +872,10 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
                 FURI_LOG_E(TAG, "Failed to open raw file");
                 raw_file_reader_free(ctx->raw_reader);
                 ctx->raw_reader = NULL;
-                furi_string_set(ctx->result, "Failed to open RAW file");
-                furi_string_set(ctx->error_info, "File open failed");
+                furi_string_set(
+                    ctx->result, PROTOPIRATE_UI_TEXT("Failed to open RAW file", "打开RAW文件失败"));
+                furi_string_set(
+                    ctx->error_info, PROTOPIRATE_UI_TEXT("File open failed", "文件打开失败"));
                 ctx->state = DecodeStateShowFailure;
                 ctx->result_display_counter = 0;
                 notification_message(app->notifications, &sequence_error);
@@ -900,13 +920,19 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
                     } else {
                         furi_string_printf(
                             ctx->result,
-                            "RAW Signal\n\n"
-                            "Freq: %lu.%02lu MHz\n\n"
-                            "No ProtoPirate protocol\n"
-                            "detected in signal.",
+                            PROTOPIRATE_UI_TEXT(
+                                "RAW Signal\n\n"
+                                "Freq: %lu.%02lu MHz\n\n"
+                                "No ProtoPirate protocol\n"
+                                "detected in signal.",
+                                "原始信号\n\n"
+                                "频率: %lu.%02lu MHz\n\n"
+                                "未检测到ProtoPirate协议\n"
+                                "存在于信号中。"),
                             ctx->frequency / 1000000,
                             (ctx->frequency % 1000000) / 10000);
-                        furi_string_set(ctx->error_info, "No protocol match");
+                        furi_string_set(
+                            ctx->error_info, PROTOPIRATE_UI_TEXT("No protocol match", "无协议匹配"));
                         ctx->state = DecodeStateShowFailure;
                         ctx->result_display_counter = 0;
                         notification_message(app->notifications, &sequence_error);
@@ -939,7 +965,7 @@ bool protopirate_scene_sub_decode_on_event(void* context, SceneManagerEvent even
                         widget_add_button_element(
                             app->widget,
                             GuiButtonTypeRight,
-                            "Save",
+                            PROTOPIRATE_UI_TEXT("Save", "保存"),
                             protopirate_scene_sub_decode_widget_callback,
                             app);
                     }

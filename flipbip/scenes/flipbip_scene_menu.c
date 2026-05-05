@@ -23,9 +23,9 @@ void flipbip_scene_menu_on_enter(void* context) {
     if(flipbip_has_file(FlipBipFileKey, NULL, false) &&
        flipbip_has_file(FlipBipFileDat, NULL, false)) {
         for(uint32_t coin_type = 0; coin_type < NUM_COINS; coin_type++) {
-            char wallet_menu_item[17] = "View      wallet";
+            char wallet_menu_item[19] = FLIPBIP_UI_TEXT("View      wallet", "查看      钱包");
             strncpy(
-                wallet_menu_item + 5,
+                wallet_menu_item + FLIPBIP_UI_TEXT(5, 7),
                 COIN_TEXT_ARRAY[coin_type][COIN_TEXT_LABEL],
                 strlen(COIN_TEXT_ARRAY[coin_type][COIN_TEXT_LABEL]));
             submenu_add_item(
@@ -38,14 +38,14 @@ void flipbip_scene_menu_on_enter(void* context) {
 
         submenu_add_item(
             app->submenu,
-            "Regenerate wallet",
+            FLIPBIP_UI_TEXT("Regenerate wallet", "重新生成钱包"),
             SubmenuIndexScene1Renew,
             flipbip_scene_menu_submenu_callback,
             app);
     } else {
         submenu_add_item(
             app->submenu,
-            "Generate new wallet",
+            FLIPBIP_UI_TEXT("Generate new wallet", "生成新钱包"),
             SubmenuIndexScene1New,
             flipbip_scene_menu_submenu_callback,
             app);
@@ -58,7 +58,7 @@ void flipbip_scene_menu_on_enter(void* context) {
         app);
 
     submenu_add_item(
-        app->submenu, "Settings", SubmenuIndexSettings, flipbip_scene_menu_submenu_callback, app);
+        app->submenu, FLIPBIP_UI_TEXT("Settings", "设置"), SubmenuIndexSettings, flipbip_scene_menu_submenu_callback, app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, FlipBipSceneMenu));

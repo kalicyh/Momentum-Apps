@@ -58,11 +58,11 @@ void gba_cartridge_startscreen_draw(Canvas* canvas, GBACartridgeStartscreenModel
     canvas_draw_icon(canvas, 0 /*128/2 - (42/2)*/, 64 / 2 - (64 / 2), &I_cartridge_gba_42x64);
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64 + 20, 6, AlignCenter, AlignTop, "Connect Malveke");
+    canvas_draw_str_aligned(canvas, 64 + 20, 6, AlignCenter, AlignTop, GBACARTRIDGE_UI_TEXT("Connect Malveke", "连接 Malveke"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64 + 20, 18, AlignCenter, AlignTop, "to the Flipper and");
-    canvas_draw_str_aligned(canvas, 64 + 20, 28, AlignCenter, AlignTop, "and Insert GBA");
-    canvas_draw_str_aligned(canvas, 64 + 20, 38, AlignCenter, AlignTop, "Cartridge");
+    canvas_draw_str_aligned(canvas, 64 + 20, 18, AlignCenter, AlignTop, GBACARTRIDGE_UI_TEXT("to the Flipper and", "到 Flipper 并"));
+    canvas_draw_str_aligned(canvas, 64 + 20, 28, AlignCenter, AlignTop, GBACARTRIDGE_UI_TEXT("and Insert GBA", "插入 GBA"));
+    canvas_draw_str_aligned(canvas, 64 + 20, 38, AlignCenter, AlignTop, GBACARTRIDGE_UI_TEXT("Cartridge", "卡带"));
     elements_button_center(canvas, "Ok");
 }
 

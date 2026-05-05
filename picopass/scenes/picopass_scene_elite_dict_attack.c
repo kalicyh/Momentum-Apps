@@ -13,9 +13,12 @@ enum {
 };
 
 const char* picopass_dict_name[] = {
-    [PicopassSceneEliteDictAttackDictEliteUser] = "Elite User Dictionary",
-    [PicopassSceneEliteDictAttackDictStandard] = "Standard System Dictionary",
-    [PicopassSceneEliteDictAttackDictElite] = "Elite System Dictionary",
+    [PicopassSceneEliteDictAttackDictEliteUser] =
+        PICOPASS_UI_TEXT("Elite User Dictionary", "Elite用户字典"),
+    [PicopassSceneEliteDictAttackDictStandard] =
+        PICOPASS_UI_TEXT("Standard System Dictionary", "标准系统字典"),
+    [PicopassSceneEliteDictAttackDictElite] =
+        PICOPASS_UI_TEXT("Elite System Dictionary", "Elite系统字典"),
 };
 
 static bool picopass_elite_dict_attack_change_dict(Picopass* picopass) {

@@ -18,11 +18,15 @@ void seos_scene_read_error_on_enter(void* context) {
 
     // Send notification
     notification_message(seos->notifications, &sequence_success);
-    FuriString* primary_str = furi_string_alloc_set("Read Errror");
-    FuriString* secondary_str = furi_string_alloc_set("Try again?");
+    FuriString* primary_str = furi_string_alloc_set(SEOS_UI_TEXT("Read Error", "读取错误"));
+    FuriString* secondary_str = furi_string_alloc_set(SEOS_UI_TEXT("Try again?", "重试?"));
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", seos_scene_read_error_widget_callback, seos);
+        widget,
+        GuiButtonTypeLeft,
+        SEOS_UI_TEXT("Retry", "重试"),
+        seos_scene_read_error_widget_callback,
+        seos);
 
     widget_add_string_element(
         widget, 64, 5, AlignCenter, AlignCenter, FontPrimary, furi_string_get_cstr(primary_str));

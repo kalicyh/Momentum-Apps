@@ -47,14 +47,14 @@ void totp_scene_authenticate_render(Canvas* const canvas, PluginState* plugin_st
             SCREEN_HEIGHT_CENTER - 10 + v_shift,
             AlignCenter,
             AlignCenter,
-            "Use arrow keys");
+            TOTP_UI_TEXT("Use arrow keys", "使用方向键"));
         canvas_draw_str_aligned(
             canvas,
             SCREEN_WIDTH_CENTER,
             SCREEN_HEIGHT_CENTER + 5 + v_shift,
             AlignCenter,
             AlignCenter,
-            "to setup new PIN");
+            TOTP_UI_TEXT("to setup new PIN", "设置新PIN码"));
     } else {
         canvas_draw_str_aligned(
             canvas,
@@ -62,7 +62,7 @@ void totp_scene_authenticate_render(Canvas* const canvas, PluginState* plugin_st
             SCREEN_HEIGHT_CENTER + v_shift,
             AlignCenter,
             AlignCenter,
-            "Use arrow keys to enter PIN");
+            TOTP_UI_TEXT("Use arrow keys to enter PIN", "使用方向键输入PIN码"));
     }
 
     if(scene_state->code_length > 0) {
@@ -148,10 +148,10 @@ bool totp_scene_authenticate_handle_event(
             scene_state->code_length = 0;
 
             DialogMessage* message = dialog_message_alloc();
-            dialog_message_set_buttons(message, "Try again", NULL, NULL);
+            dialog_message_set_buttons(message, TOTP_UI_TEXT("Try again", "重试"), NULL, NULL);
             dialog_message_set_header(
                 message,
-                "You entered\ninvalid PIN",
+                TOTP_UI_TEXT("You entered\ninvalid PIN", "PIN码无效"),
                 SCREEN_WIDTH_CENTER - 25,
                 SCREEN_HEIGHT_CENTER - 5,
                 AlignCenter,

@@ -138,7 +138,7 @@ bool alloc_variable_item_list(void *context, uint32_t view_id)
             }
             if (!app->variable_item_wifi_pass)
             {
-                app->variable_item_wifi_pass = variable_item_list_add(app->variable_item_list, "Password", 0, NULL, NULL);
+                app->variable_item_wifi_pass = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Password", "密码"), 0, NULL, NULL);
                 variable_item_set_current_value_text(app->variable_item_wifi_pass, "");
             }
             if (load_settings(ssid, sizeof(ssid), pass, sizeof(pass), username, sizeof(username), password, sizeof(password)))
@@ -166,12 +166,12 @@ bool alloc_variable_item_list(void *context, uint32_t view_id)
 
             if (!app->variable_item_game_download_world)
             {
-                app->variable_item_game_download_world = variable_item_list_add(app->variable_item_list, "Install Official World Pack", 0, NULL, NULL);
+                app->variable_item_game_download_world = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Install Official World Pack", "安装官方世界包"), 0, NULL, NULL);
                 variable_item_set_current_value_text(app->variable_item_game_download_world, "");
             }
             if (!app->variable_item_game_player_sprite)
             {
-                app->variable_item_game_player_sprite = variable_item_list_add(app->variable_item_list, "Weapon", 4, callback_player_on_change, NULL);
+                app->variable_item_game_player_sprite = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Weapon", "武器"), 4, callback_player_on_change, NULL);
                 variable_item_set_current_value_index(app->variable_item_game_player_sprite, 1);
                 variable_item_set_current_value_text(app->variable_item_game_player_sprite, player_sprite_choices[1]);
             }
@@ -183,31 +183,31 @@ bool alloc_variable_item_list(void *context, uint32_t view_id)
             }
             if (!app->variable_item_game_vgm_x)
             {
-                app->variable_item_game_vgm_x = variable_item_list_add(app->variable_item_list, "VGM Horizontal", 12, callback_vgm_x_change, NULL);
+                app->variable_item_game_vgm_x = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("VGM Horizontal", "VGM 水平"), 12, callback_vgm_x_change, NULL);
                 variable_item_set_current_value_index(app->variable_item_game_vgm_x, 2);
                 variable_item_set_current_value_text(app->variable_item_game_vgm_x, vgm_levels[2]);
             }
             if (!app->variable_item_game_vgm_y)
             {
-                app->variable_item_game_vgm_y = variable_item_list_add(app->variable_item_list, "VGM Vertical", 12, callback_vgm_y_change, NULL);
+                app->variable_item_game_vgm_y = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("VGM Vertical", "VGM 垂直"), 12, callback_vgm_y_change, NULL);
                 variable_item_set_current_value_index(app->variable_item_game_vgm_y, 2);
                 variable_item_set_current_value_text(app->variable_item_game_vgm_y, vgm_levels[2]);
             }
             if (!app->variable_item_game_screen_always_on)
             {
-                app->variable_item_game_screen_always_on = variable_item_list_add(app->variable_item_list, "Keep Screen On?", 2, callback_screen_on_change, NULL);
+                app->variable_item_game_screen_always_on = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Keep Screen On?", "常亮屏幕?"), 2, callback_screen_on_change, NULL);
                 variable_item_set_current_value_index(app->variable_item_game_screen_always_on, 1);
                 variable_item_set_current_value_text(app->variable_item_game_screen_always_on, yes_or_no_choices[1]);
             }
             if (!app->variable_item_game_sound_on)
             {
-                app->variable_item_game_sound_on = variable_item_list_add(app->variable_item_list, "Sound On?", 2, callback_sound_on_change, NULL);
+                app->variable_item_game_sound_on = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Sound On?", "开启音效?"), 2, callback_sound_on_change, NULL);
                 variable_item_set_current_value_index(app->variable_item_game_sound_on, 0);
                 variable_item_set_current_value_text(app->variable_item_game_sound_on, yes_or_no_choices[0]);
             }
             if (!app->variable_item_game_vibration_on)
             {
-                app->variable_item_game_vibration_on = variable_item_list_add(app->variable_item_list, "Vibration On?", 2, callback_vibration_on_change, NULL);
+                app->variable_item_game_vibration_on = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Vibration On?", "开启振动?"), 2, callback_vibration_on_change, NULL);
                 variable_item_set_current_value_index(app->variable_item_game_vibration_on, 0);
                 variable_item_set_current_value_text(app->variable_item_game_vibration_on, yes_or_no_choices[0]);
             }
@@ -221,7 +221,7 @@ bool alloc_variable_item_list(void *context, uint32_t view_id)
                 variable_item_set_current_value_index(app->variable_item_game_player_sprite, index);
                 variable_item_set_current_value_text(
                     app->variable_item_game_player_sprite,
-                    is_str(player_sprite_choices[index], "naked") ? "None" : player_sprite_choices[index]);
+                    is_str(player_sprite_choices[index], "naked") ? FLIP_WORLD_UI_TEXT("None", "无") : player_sprite_choices[index]);
             }
             char _game_fps[8];
             if (load_char("Game-FPS", _game_fps, sizeof(_game_fps)))
@@ -316,12 +316,12 @@ bool alloc_variable_item_list(void *context, uint32_t view_id)
             {
                 if (!app->variable_item_user_username)
                 {
-                    app->variable_item_user_username = variable_item_list_add(app->variable_item_list, "Username", 0, NULL, NULL);
+                    app->variable_item_user_username = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Username", "用户名"), 0, NULL, NULL);
                     variable_item_set_current_value_text(app->variable_item_user_username, "");
                 }
                 if (!app->variable_item_user_password)
                 {
-                    app->variable_item_user_password = variable_item_list_add(app->variable_item_list, "Password", 0, NULL, NULL);
+                    app->variable_item_user_password = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Password", "密码"), 0, NULL, NULL);
                     variable_item_set_current_value_text(app->variable_item_user_password, "");
                 }
                 if (load_settings(ssid, sizeof(ssid), pass, sizeof(pass), username, sizeof(username), password, sizeof(password)))
@@ -334,12 +334,12 @@ bool alloc_variable_item_list(void *context, uint32_t view_id)
             {
                 if (!app->variable_item_user_username)
                 {
-                    app->variable_item_user_username = variable_item_list_add(app->variable_item_list, "Username", 0, NULL, NULL);
+                    app->variable_item_user_username = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Username", "用户名"), 0, NULL, NULL);
                     variable_item_set_current_value_text(app->variable_item_user_username, "");
                 }
                 if (!app->variable_item_user_password)
                 {
-                    app->variable_item_user_password = variable_item_list_add(app->variable_item_list, "Password", 0, NULL, NULL);
+                    app->variable_item_user_password = variable_item_list_add(app->variable_item_list, FLIP_WORLD_UI_TEXT("Password", "密码"), 0, NULL, NULL);
                     variable_item_set_current_value_text(app->variable_item_user_password, "");
                 }
             }
@@ -360,17 +360,17 @@ bool alloc_submenu_other(void *context, uint32_t view_id)
     switch (view_id)
     {
     case FlipWorldViewSettings:
-        if (!easy_flipper_set_submenu(&app->submenu_other, FlipWorldViewSubmenuOther, "Settings", callback_to_submenu, &app->view_dispatcher))
+        if (!easy_flipper_set_submenu(&app->submenu_other, FlipWorldViewSubmenuOther, FLIP_WORLD_UI_TEXT("Settings", "设置"), callback_to_submenu, &app->view_dispatcher))
         {
             FURI_LOG_E(TAG, "Failed to allocate submenu settings");
             return false;
         }
         submenu_add_item(app->submenu_other, "WiFi", FlipWorldSubmenuIndexWiFiSettings, callback_submenu_choices, app);
-        submenu_add_item(app->submenu_other, "Game", FlipWorldSubmenuIndexGameSettings, callback_submenu_choices, app);
-        submenu_add_item(app->submenu_other, "User", FlipWorldSubmenuIndexUserSettings, callback_submenu_choices, app);
+        submenu_add_item(app->submenu_other, FLIP_WORLD_UI_TEXT("Game", "游戏"), FlipWorldSubmenuIndexGameSettings, callback_submenu_choices, app);
+        submenu_add_item(app->submenu_other, FLIP_WORLD_UI_TEXT("User", "用户"), FlipWorldSubmenuIndexUserSettings, callback_submenu_choices, app);
         return true;
     case FlipWorldViewLobby:
-        return easy_flipper_set_submenu(&app->submenu_other, FlipWorldViewSubmenuOther, "Lobbies", callback_to_submenu, &app->view_dispatcher);
+        return easy_flipper_set_submenu(&app->submenu_other, FlipWorldViewSubmenuOther, FLIP_WORLD_UI_TEXT("Lobbies", "大厅列表"), callback_to_submenu, &app->view_dispatcher);
     default:
         return false;
     }
@@ -382,7 +382,7 @@ bool alloc_game_submenu(void *context)
     furi_check(app);
     if (!app->submenu_game)
     {
-        if (!easy_flipper_set_submenu(&app->submenu_game, FlipWorldViewGameSubmenu, "Play", callback_to_submenu, &app->view_dispatcher))
+        if (!easy_flipper_set_submenu(&app->submenu_game, FlipWorldViewGameSubmenu, FLIP_WORLD_UI_TEXT("Play", "开始游戏"), callback_to_submenu, &app->view_dispatcher))
         {
             return false;
         }
@@ -390,7 +390,7 @@ bool alloc_game_submenu(void *context)
         {
             return false;
         }
-        submenu_add_item(app->submenu_game, "Story", FlipWorldSubmenuIndexStory, callback_submenu_choices, app);
+        submenu_add_item(app->submenu_game, FLIP_WORLD_UI_TEXT("Story", "剧情"), FlipWorldSubmenuIndexStory, callback_submenu_choices, app);
         submenu_add_item(app->submenu_game, "PvE", FlipWorldSubmenuIndexPvE, callback_submenu_choices, app);
         submenu_add_item(app->submenu_game, "PvP", FlipWorldSubmenuIndexPvP, callback_submenu_choices, app);
     }

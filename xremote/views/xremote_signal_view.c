@@ -18,9 +18,9 @@ static void xremote_signal_view_draw_callback(Canvas* canvas, void* context) {
 
     ViewOrientation orientation = app_ctx->app_settings->orientation;
     uint8_t y = orientation == ViewOrientationHorizontal ? 17 : 49;
-    const char* text = "Press any\nbutton on\nthe remote.";
+    const char* text = XREMOTE_UI_TEXT("Press any\nbutton on\nthe remote.", "按下遥控器\n上的任意\n按键");
 
-    xremote_canvas_draw_header(canvas, orientation, "Analyzer");
+    xremote_canvas_draw_header(canvas, orientation, XREMOTE_UI_TEXT("Analyzer", "分析器"));
     elements_multiline_text_aligned(canvas, 0, y, AlignLeft, AlignTop, text);
 
     const char* exit_str = xremote_app_context_get_exit_str(app_ctx);
@@ -35,7 +35,7 @@ static void xremote_signal_success_view_draw_callback(Canvas* canvas, void* cont
     XRemoteAppContext* app_ctx = xremote_signal_analyzer_get_app_context(analyzer);
     InfraredSignal* ir_signal = xremote_signal_analyzer_get_ir_signal(analyzer);
 
-    xremote_canvas_draw_header(canvas, app_ctx->app_settings->orientation, "IR Signal");
+    xremote_canvas_draw_header(canvas, app_ctx->app_settings->orientation, XREMOTE_UI_TEXT("IR Signal", "IR信号"));
     char signal_info[128];
 
     if(infrared_signal_is_raw(ir_signal)) {
@@ -67,15 +67,15 @@ static void xremote_signal_success_view_draw_callback(Canvas* canvas, void* cont
     if(app_ctx->app_settings->orientation == ViewOrientationHorizontal) {
         elements_multiline_text_aligned(canvas, 0, 17, AlignLeft, AlignTop, signal_info);
         xremote_canvas_draw_button_wide(
-            canvas, model->ok_pressed, 68, 26, "Send", XRemoteIconEnter);
+            canvas, model->ok_pressed, 68, 26, XREMOTE_UI_TEXT("Send", "发送"), XRemoteIconEnter);
         xremote_canvas_draw_button_wide(
-            canvas, model->back_pressed, 68, 44, "Retry", XRemoteIconBack);
+            canvas, model->back_pressed, 68, 44, XREMOTE_UI_TEXT("Retry", "重试"), XRemoteIconBack);
     } else {
         elements_multiline_text_aligned(canvas, 0, 39, AlignLeft, AlignTop, signal_info);
         xremote_canvas_draw_button_wide(
-            canvas, model->ok_pressed, 0, 88, "Send", XRemoteIconEnter);
+            canvas, model->ok_pressed, 0, 88, XREMOTE_UI_TEXT("Send", "发送"), XRemoteIconEnter);
         xremote_canvas_draw_button_wide(
-            canvas, model->back_pressed, 0, 106, "Retry", XRemoteIconBack);
+            canvas, model->back_pressed, 0, 106, XREMOTE_UI_TEXT("Retry", "重试"), XRemoteIconBack);
     }
 }
 

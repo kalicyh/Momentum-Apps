@@ -1,5 +1,13 @@
 #pragma once
 
+#ifndef CHIEF_COOKER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CHIEF_COOKER_UI_TEXT(en, zh) (zh)
+#else
+#define CHIEF_COOKER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include "SelectCategoryScreen.hpp"
 #include "lib/HandlerContext.hpp"
 #include "lib/String.hpp"
@@ -75,28 +83,28 @@ public:
 
         varItemList->AddItem(
             encodingItem = new UiVariableItem(
-                "Encoding", pager->decoder, receiver->decodersCount, HANDLER_1ARG(&EditPagerScreen::encodingValueChanged)
+                CHIEF_COOKER_UI_TEXT("Encoding", "编码"), pager->decoder, receiver->decodersCount, HANDLER_1ARG(&EditPagerScreen::encodingValueChanged)
             )
         );
 
-        varItemList->AddItem(stationItem = new UiVariableItem("Station", HANDLER_1ARG(&EditPagerScreen::stationValueChanged)));
-        varItemList->AddItem(pagerItem = new UiVariableItem("Pager", HANDLER_1ARG(&EditPagerScreen::pagerValueChanged)));
+        varItemList->AddItem(stationItem = new UiVariableItem(CHIEF_COOKER_UI_TEXT("Station", "电台"), HANDLER_1ARG(&EditPagerScreen::stationValueChanged)));
+        varItemList->AddItem(pagerItem = new UiVariableItem(CHIEF_COOKER_UI_TEXT("Pager", "呼机"), HANDLER_1ARG(&EditPagerScreen::pagerValueChanged)));
         updatePagerIsEditable();
 
         varItemList->AddItem(
             actionItem = new UiVariableItem(
-                "Action",
+                CHIEF_COOKER_UI_TEXT("Action", "动作"),
                 decoder->GetActionValue(pager->data),
                 decoder->GetActionsCount(),
                 HANDLER_1ARG(&EditPagerScreen::actionValueChanged)
             )
         );
 
-        varItemList->AddItem(hexItem = new UiVariableItem("HEX value", HANDLER_1ARG(&EditPagerScreen::hexValueChanged)));
-        varItemList->AddItem(protocolItem = new UiVariableItem("Protocol", protocol->GetSystemName()));
+        varItemList->AddItem(hexItem = new UiVariableItem(CHIEF_COOKER_UI_TEXT("HEX value", "HEX 值"), HANDLER_1ARG(&EditPagerScreen::hexValueChanged)));
+        varItemList->AddItem(protocolItem = new UiVariableItem(CHIEF_COOKER_UI_TEXT("Protocol", "协议"), protocol->GetSystemName()));
         varItemList->AddItem(
             frequencyItem = new UiVariableItem(
-                "Frequency", frequencyStr.format("%lu.%02lu", frequency / 1000000, (frequency % 1000000) / 10000)
+                CHIEF_COOKER_UI_TEXT("Frequency", "频率"), frequencyStr.format("%lu.%02lu", frequency / 1000000, (frequency % 1000000) / 10000)
             )
         );
         varItemList->AddItem(
@@ -106,17 +114,17 @@ public:
         );
         varItemList->AddItem(
             repeatsItem = new UiVariableItem(
-                "Signal Repeats", repeatsStr.format(pager->repeats == MAX_REPEATS ? "%d+" : "%d", pager->repeats)
+                CHIEF_COOKER_UI_TEXT("Signal Repeats", "信号重复次数"), repeatsStr.format(pager->repeats == MAX_REPEATS ? "%d+" : "%d", pager->repeats)
             )
         );
 
         if(canSave()) {
-            const char* saveAsItemName = isFromFile ? "Save / Rename" : "Save signal as...";
+            const char* saveAsItemName = isFromFile ? CHIEF_COOKER_UI_TEXT("Save / Rename", "保存 / 重命名") : CHIEF_COOKER_UI_TEXT("Save signal as...", "保存信号为...");
             saveAsItemIndex = varItemList->AddItem(saveAsItem = new UiVariableItem(saveAsItemName, ""));
         }
 
         if(canDelete()) {
-            deleteItemIndex = varItemList->AddItem(deleteItem = new UiVariableItem("Delete station", ""));
+            deleteItemIndex = varItemList->AddItem(deleteItem = new UiVariableItem(CHIEF_COOKER_UI_TEXT("Delete station", "删除电台"), ""));
         }
     }
 
@@ -147,9 +155,9 @@ private:
         if(index == saveAsItemIndex) {
             saveAs();
         } else if(index == deleteItemIndex) {
-            DialogUiView* removeConfirmation = new DialogUiView("Really delete?", currentStationName()->cstr());
-            removeConfirmation->AddLeftButton("Nope");
-            removeConfirmation->AddRightButton("Yup");
+            DialogUiView* removeConfirmation = new DialogUiView(CHIEF_COOKER_UI_TEXT("Really delete?", "确认删除?"), currentStationName()->cstr());
+            removeConfirmation->AddLeftButton(CHIEF_COOKER_UI_TEXT("Nope", "取消"));
+            removeConfirmation->AddRightButton(CHIEF_COOKER_UI_TEXT("Yup", "确认"));
             removeConfirmation->SetResultHandler(HANDLER_1ARG(&EditPagerScreen::confirmDelete));
 
             UiManager::GetInstance()->PushView(removeConfirmation);
@@ -176,7 +184,7 @@ private:
     }
 
     void saveAs() {
-        TextInputUiView* nameInputView = new TextInputUiView("Enter station name", NAME_MIN_LENGTH, NAME_MAX_LENGTH);
+        TextInputUiView* nameInputView = new TextInputUiView(CHIEF_COOKER_UI_TEXT("Enter station name", "输入电台名称"), NAME_MIN_LENGTH, NAME_MAX_LENGTH);
         String* name = currentStationName();
         if(name != NULL) {
             nameInputView->SetDefaultText(name);

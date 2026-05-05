@@ -4,6 +4,12 @@
 
 #include <gui/elements.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PICOPASS_UI_TEXT(en, zh) (zh)
+#else
+#define PICOPASS_UI_TEXT(en, zh) (en)
+#endif
+
 struct Loclass {
     View* view;
     LoclassCallback callback;
@@ -42,7 +48,7 @@ static void loclass_draw_callback(Canvas* canvas, void* model) {
     canvas_draw_str_aligned(
         canvas, 64, 45, AlignCenter, AlignBottom, furi_string_get_cstr(m->subheader));
 
-    elements_button_center(canvas, "Skip");
+    elements_button_center(canvas, PICOPASS_UI_TEXT("Skip", "跳过"));
 }
 
 static bool loclass_input_callback(InputEvent* event, void* context) {

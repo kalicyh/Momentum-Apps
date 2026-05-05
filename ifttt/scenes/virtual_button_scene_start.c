@@ -17,13 +17,13 @@ void virtual_button_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Send IFTTT command",
+        IFTTT_UI_TEXT("Send IFTTT command", "发送IFTTT指令"),
         VirtualButtonSubmenuIndexSendView,
         virtual_button_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "About",
+        IFTTT_UI_TEXT("About", "关于"),
         VirtualButtonSubmenuIndexAboutView,
         virtual_button_scene_start_submenu_callback,
         app);

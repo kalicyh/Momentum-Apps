@@ -631,38 +631,38 @@ static void render_callback(Canvas *const canvas, void *ctx)
 		snprintf(
 			draw_str,
 			sizeof(draw_str),
-			"Cracking: %d/%d - in prog.",
+			MFKEY_UI_TEXT("Cracking: %d/%d - in prog.", "破解: %d/%d - 进行中"),
 			program_state->num_completed,
 			program_state->total);
 		elements_progress_bar_with_text(canvas, 5, 18, 118, progress, draw_str);
 		snprintf(
 			draw_str,
 			sizeof(draw_str),
-			"Round: %d/%d - ETA %02d Sec",
+			MFKEY_UI_TEXT("Round: %d/%d - ETA %02d Sec", "轮次: %d/%d - 预计 %02d 秒"),
 			(program_state->search) + 1, // Zero indexed
 			256 / MSB_LIMIT,
 			program_state->eta_round);
 		elements_progress_bar_with_text(canvas, 5, 31, 118, eta_round, draw_str);
-		snprintf(draw_str, sizeof(draw_str), "Total ETA %03d Sec", program_state->eta_total);
+		snprintf(draw_str, sizeof(draw_str), MFKEY_UI_TEXT("Total ETA %03d Sec", "总预计 %03d 秒"), program_state->eta_total);
 		elements_progress_bar_with_text(canvas, 5, 44, 118, eta_total, draw_str);
 	}
 	else if (program_state->mfkey_state == DictionaryAttack)
 	{
 		snprintf(
-			draw_str, sizeof(draw_str), "Dict solves: %d (in progress)", program_state->cracked);
+			draw_str, sizeof(draw_str), MFKEY_UI_TEXT("Dict solves: %d (in progress)", "字典破解: %d (进行中)"), program_state->cracked);
 		canvas_draw_str_aligned(canvas, 10, 18, AlignLeft, AlignTop, draw_str);
-		snprintf(draw_str, sizeof(draw_str), "Keys in dict: %d", program_state->dict_count);
+		snprintf(draw_str, sizeof(draw_str), MFKEY_UI_TEXT("Keys in dict: %d", "字典密钥数: %d"), program_state->dict_count);
 		canvas_draw_str_aligned(canvas, 26, 28, AlignLeft, AlignTop, draw_str);
 	}
 	else if (program_state->mfkey_state == Complete)
 	{
 		// TODO: Scrollable list view to see cracked keys if user presses down
 		elements_progress_bar(canvas, 5, 18, 118, 1);
-		canvas_draw_str_aligned(canvas, 64, 31, AlignCenter, AlignTop, "Complete");
+		canvas_draw_str_aligned(canvas, 64, 31, AlignCenter, AlignTop, MFKEY_UI_TEXT("Complete", "完成"));
 		snprintf(
 			draw_str,
 			sizeof(draw_str),
-			"Keys added to user dict: %d",
+			MFKEY_UI_TEXT("Keys added to user dict: %d", "已添加到用户字典: %d"),
 			program_state->unique_cracked);
 		canvas_draw_str_aligned(canvas, 64, 41, AlignCenter, AlignTop, draw_str);
 		if (program_state->num_candidates > 0)
@@ -670,38 +670,38 @@ static void render_callback(Canvas *const canvas, void *ctx)
 			snprintf(
 				draw_str,
 				sizeof(draw_str),
-				"SEN key candidates: %d",
+				MFKEY_UI_TEXT("SEN key candidates: %d", "SEN 密钥候选: %d"),
 				program_state->num_candidates);
 			canvas_draw_str_aligned(canvas, 64, 51, AlignCenter, AlignTop, draw_str);
 		}
 	}
 	else if (program_state->mfkey_state == Ready)
 	{
-		canvas_draw_str_aligned(canvas, 50, 30, AlignLeft, AlignTop, "Ready");
-		elements_button_center(canvas, "Start");
-		elements_button_right(canvas, "Help");
+		canvas_draw_str_aligned(canvas, 50, 30, AlignLeft, AlignTop, MFKEY_UI_TEXT("Ready", "就绪"));
+		elements_button_center(canvas, MFKEY_UI_TEXT("Start", "开始"));
+		elements_button_right(canvas, MFKEY_UI_TEXT("Help", "帮助"));
 	}
 	else if (program_state->mfkey_state == Help)
 	{
-		canvas_draw_str_aligned(canvas, 7, 20, AlignLeft, AlignTop, "Collect nonces by reading");
-		canvas_draw_str_aligned(canvas, 7, 30, AlignLeft, AlignTop, "tag or reader in NFC app:");
+		canvas_draw_str_aligned(canvas, 7, 20, AlignLeft, AlignTop, MFKEY_UI_TEXT("Collect nonces by reading", "在 NFC 应用中通过读取"));
+		canvas_draw_str_aligned(canvas, 7, 30, AlignLeft, AlignTop, MFKEY_UI_TEXT("tag or reader in NFC app:", "标签或读卡器来收集 nonce:"));
 		canvas_draw_str_aligned(canvas, 7, 40, AlignLeft, AlignTop, "https://docs.flipper.net/");
 		canvas_draw_str_aligned(canvas, 7, 50, AlignLeft, AlignTop, "nfc/mfkey32");
 	}
 	else if (program_state->mfkey_state == Error)
 	{
-		canvas_draw_str_aligned(canvas, 50, 25, AlignLeft, AlignTop, "Error");
+		canvas_draw_str_aligned(canvas, 50, 25, AlignLeft, AlignTop, MFKEY_UI_TEXT("Error", "错误"));
 		if (program_state->err == MissingNonces)
 		{
-			canvas_draw_str_aligned(canvas, 25, 36, AlignLeft, AlignTop, "No nonces found");
+			canvas_draw_str_aligned(canvas, 25, 36, AlignLeft, AlignTop, MFKEY_UI_TEXT("No nonces found", "未找到 nonce"));
 		}
 		else if (program_state->err == ZeroNonces)
 		{
-			canvas_draw_str_aligned(canvas, 15, 36, AlignLeft, AlignTop, "Nonces already cracked");
+			canvas_draw_str_aligned(canvas, 15, 36, AlignLeft, AlignTop, MFKEY_UI_TEXT("Nonces already cracked", "Nonce 已破解"));
 		}
 		else if (program_state->err == InsufficientRAM)
 		{
-			canvas_draw_str_aligned(canvas, 35, 36, AlignLeft, AlignTop, "No free RAM");
+			canvas_draw_str_aligned(canvas, 35, 36, AlignLeft, AlignTop, MFKEY_UI_TEXT("No free RAM", "无可用内存"));
 		}
 		else
 		{

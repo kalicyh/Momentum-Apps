@@ -94,27 +94,27 @@ void wifi_marauder_make_app_folder(WifiMarauderApp* app) {
     furi_assert(app);
 
     if(!storage_simply_mkdir(app->storage, MARAUDER_APP_FOLDER)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\napp folder");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot create\napp folder", "无法创建\n应用文件夹"));
     }
 
     if(!storage_simply_mkdir(app->storage, MARAUDER_APP_FOLDER_PCAPS)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\npcaps folder");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot create\npcaps folder", "无法创建\npcaps 文件夹"));
     }
 
     if(!storage_simply_mkdir(app->storage, MARAUDER_APP_FOLDER_DUMPS)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\ndumps folder");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot create\ndumps folder", "无法创建\ndumps 文件夹"));
     }
 
     if(!storage_simply_mkdir(app->storage, MARAUDER_APP_FOLDER_LOGS)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\nlogs folder");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot create\nlogs folder", "无法创建\n日志文件夹"));
     }
 
     if(!storage_simply_mkdir(app->storage, MARAUDER_APP_FOLDER_SCRIPTS)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\nscripts folder");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot create\nscripts folder", "无法创建\n脚本文件夹"));
     }
 
     if(!storage_simply_mkdir(app->storage, MARAUDER_APP_FOLDER_HTML)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\nhtml folder");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot create\nhtml folder", "无法创建\nhtml 文件夹"));
     }
 }
 

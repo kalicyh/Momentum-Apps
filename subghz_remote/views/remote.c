@@ -1,6 +1,12 @@
 #include "remote.h"
 #include "../subghz_remote_app_i.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SUBREM_UI_TEXT(en, zh) (zh)
+#else
+#define SUBREM_UI_TEXT(en, zh) (en)
+#endif
+
 #include <input/input.h>
 #include <gui/elements.h>
 
@@ -54,18 +60,18 @@ void subrem_view_remote_update_data_labels(
                 labels[i] = furi_string_alloc();
                 path_extract_filename(sub_preset->file_path, labels[i], true);
             } else {
-                labels[i] = furi_string_alloc_set("Empty Label");
+                labels[i] = furi_string_alloc_set(SUBREM_UI_TEXT("Empty Label", "空标签"));
             }
             break;
 
         case SubRemLoadSubStateErrorNoFile:
-            labels[i] = furi_string_alloc_set("[X] Can't open file");
+            labels[i] = furi_string_alloc_set(SUBREM_UI_TEXT("[X] Can't open file", "[X] 无法打开文件"));
             break;
 
         case SubRemLoadSubStateErrorFreq:
         case SubRemLoadSubStateErrorMod:
         case SubRemLoadSubStateErrorProtocol:
-            labels[i] = furi_string_alloc_set("[X] Error in .sub file");
+            labels[i] = furi_string_alloc_set(SUBREM_UI_TEXT("[X] Error in .sub file", "[X] .sub文件错误"));
             break;
 
         default:
@@ -127,7 +133,7 @@ void subrem_view_remote_draw(Canvas* canvas, SubRemViewRemoteModel* model) {
         canvas_draw_rbox(canvas, 12, 0, 52 - 12, 13, 2);
         canvas_invert_color(canvas);
         canvas_draw_rframe(canvas, 12, 0, 52 - 12, 13, 2);
-        canvas_draw_str_aligned(canvas, 32, 3, AlignCenter, AlignTop, "Preview");
+        canvas_draw_str_aligned(canvas, 32, 3, AlignCenter, AlignTop, SUBREM_UI_TEXT("Preview", "预览"));
     } else {
         canvas_draw_icon(
             canvas,
@@ -205,10 +211,10 @@ void subrem_view_remote_draw(Canvas* canvas, SubRemViewRemoteModel* model) {
         }
     } else {
         canvas_draw_icon(canvas, 2, 128 - 11, &I_ButtonLeft_4x7);
-        canvas_draw_str_aligned(canvas, 8, 128 - 4, AlignLeft, AlignBottom, "Back");
+        canvas_draw_str_aligned(canvas, 8, 128 - 4, AlignLeft, AlignBottom, SUBREM_UI_TEXT("Back", "返回"));
 
         canvas_draw_icon(canvas, 58, 128 - 11, &I_ButtonRight_4x7);
-        canvas_draw_str_aligned(canvas, 56, 128 - 4, AlignRight, AlignBottom, "Save");
+        canvas_draw_str_aligned(canvas, 56, 128 - 4, AlignRight, AlignBottom, SUBREM_UI_TEXT("Save", "保存"));
     }
 }
 

@@ -1,10 +1,10 @@
 #include "../nfc_eink_app_i.h"
 
 static const char* nfc_eink_scene_settings_write_mode[] = {
-    "Strict",
-    "Size",
-    "Vendor",
-    "Free",
+    NFC_EINK_UI_TEXT("Strict", "严格"),
+    NFC_EINK_UI_TEXT("Size", "尺寸"),
+    NFC_EINK_UI_TEXT("Vendor", "厂商"),
+    NFC_EINK_UI_TEXT("Free", "自由"),
 };
 
 static const char* nfc_eink_scene_settings_invert_image[] = {
@@ -39,7 +39,7 @@ void nfc_eink_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Write mode",
+        NFC_EINK_UI_TEXT("Write mode", "写入模式"),
         COUNT_OF(nfc_eink_scene_settings_write_mode),
         nfc_eink_scene_settings_write_mode_change_callback,
         instance);
@@ -50,7 +50,7 @@ void nfc_eink_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Invert image",
+        NFC_EINK_UI_TEXT("Invert image", "反色图像"),
         COUNT_OF(nfc_eink_scene_settings_invert_image),
         nfc_eink_scene_settings_invert_image_change_callback,
         instance);

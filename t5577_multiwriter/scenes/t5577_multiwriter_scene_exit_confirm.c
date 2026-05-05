@@ -5,13 +5,13 @@ void t5577_multiwriter_scene_exit_confirm_on_enter(void* context) {
     Widget* widget = app->widget;
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Exit", t5577_multiwriter_widget_callback, app);
+        widget, GuiButtonTypeLeft, T5577_MULTIWRITER_UI_TEXT("Exit", "退出"), t5577_multiwriter_widget_callback, app);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Stay", t5577_multiwriter_widget_callback, app);
+        widget, GuiButtonTypeRight, T5577_MULTIWRITER_UI_TEXT("Stay", "留下"), t5577_multiwriter_widget_callback, app);
     widget_add_string_element(
-        widget, 64, 19, AlignCenter, AlignBottom, FontPrimary, "Exit to RFID Menu?");
+        widget, 64, 19, AlignCenter, AlignBottom, FontPrimary, T5577_MULTIWRITER_UI_TEXT("Exit to RFID Menu?", "退出到RFID菜单?"));
     widget_add_string_element(
-        widget, 64, 31, AlignCenter, AlignBottom, FontSecondary, "All unsaved data will be lost!");
+        widget, 64, 31, AlignCenter, AlignBottom, FontSecondary, T5577_MULTIWRITER_UI_TEXT("All unsaved data will be lost!", "所有未保存的数据将丢失!"));
 
     view_dispatcher_switch_to_view(app->view_dispatcher, LfRfidViewWidget);
 }

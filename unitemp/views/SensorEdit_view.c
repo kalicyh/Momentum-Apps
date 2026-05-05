@@ -88,7 +88,7 @@ static void _onewire_scan(void) {
             memset(ow_sensor->deviceID, 0, 8);
             ow_sensor->familyCode = 0;
             unitemp_onewire_bus_deinit(ow_sensor->bus);
-            variable_item_set_current_value_text(onewire_addr_item, "empty");
+            variable_item_set_current_value_text(onewire_addr_item, UNITEMP_UI_TEXT("empty", "空"));
             variable_item_set_current_value_text(
                 onewire_type_item, unitemp_onewire_sensor_getModel(editable_sensor));
             return;
@@ -123,7 +123,7 @@ static void _onewire_scan(void) {
         //And it doesn’t climb anymore(
         variable_item_set_current_value_text(onewire_addr_item, id_buff);
     } else {
-        variable_item_set_current_value_text(onewire_addr_item, "empty");
+        variable_item_set_current_value_text(onewire_addr_item, UNITEMP_UI_TEXT("empty", "空"));
     }
     variable_item_set_current_value_text(
         onewire_type_item, unitemp_onewire_sensor_getModel(editable_sensor));
@@ -293,12 +293,12 @@ void unitemp_SensorEdit_switch(Sensor* sensor) {
 
     //Sensor name
     sensor_name_item = variable_item_list_add(
-        variable_item_list, "Name", strlen(sensor->name) > 7 ? 1 : 2, _name_change_callback, NULL);
+        variable_item_list, UNITEMP_UI_TEXT("Name", "名称"), strlen(sensor->name) > 7 ? 1 : 2, _name_change_callback, NULL);
     variable_item_set_current_value_index(sensor_name_item, 0);
     variable_item_set_current_value_text(sensor_name_item, sensor->name);
 
     //Sensor type (not editable)
-    onewire_type_item = variable_item_list_add(variable_item_list, "Type", 1, NULL, NULL);
+    onewire_type_item = variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Type", "型号"), 1, NULL, NULL);
     variable_item_set_current_value_index(onewire_type_item, 0);
     variable_item_set_current_value_text(
         onewire_type_item,
@@ -306,7 +306,7 @@ void unitemp_SensorEdit_switch(Sensor* sensor) {
                                                 sensor->type->typename));
     //Temperature offset
     temp_offset_item = variable_item_list_add(
-        variable_item_list, "Temp. offset", 41, _offset_change_callback, NULL);
+        variable_item_list, UNITEMP_UI_TEXT("Temp. offset", "温度偏移"), 41, _offset_change_callback, NULL);
     variable_item_set_current_value_index(temp_offset_item, sensor->temp_offset + 20);
     snprintf(
         offset_buff, OFFSET_BUFF_SIZE, "%+1.1f", (double)(editable_sensor->temp_offset / 10.0));
@@ -347,7 +347,7 @@ void unitemp_SensorEdit_switch(Sensor* sensor) {
     if(sensor->type->interface == &I2C) {
         VariableItem* item = variable_item_list_add(
             variable_item_list,
-            "I2C address",
+            UNITEMP_UI_TEXT("I2C address", "I2C 地址"),
             (((I2CSensor*)sensor->instance)->maxI2CAdr >> 1) -
                 (((I2CSensor*)sensor->instance)->minI2CAdr >> 1) + 1,
             _i2caddr_change_callback,
@@ -363,10 +363,10 @@ void unitemp_SensorEdit_switch(Sensor* sensor) {
     //Device address on the one wire bus (for one wire sensors)
     if(sensor->type->interface == &ONE_WIRE) {
         onewire_addr_item = variable_item_list_add(
-            variable_item_list, "Address", 2, _onwire_addr_change_callback, NULL);
+            variable_item_list, UNITEMP_UI_TEXT("Address", "地址"), 2, _onwire_addr_change_callback, NULL);
         OneWireSensor* ow_sensor = sensor->instance;
         if(ow_sensor->familyCode == 0) {
-            variable_item_set_current_value_text(onewire_addr_item, "Scan");
+            variable_item_set_current_value_text(onewire_addr_item, UNITEMP_UI_TEXT("Scan", "扫描"));
         } else {
             snprintf(
                 app->buff,
@@ -382,10 +382,10 @@ void unitemp_SensorEdit_switch(Sensor* sensor) {
     // Has calibration
     if((sensor->type->datatype & UT_CALIBRATION) == UT_CALIBRATION) {
         calibration_item =
-            variable_item_list_add(variable_item_list, "Calibrate", 1, _calibrate_callback, NULL);
+            variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Calibrate", "校准"), 1, _calibrate_callback, NULL);
     }
 
-    variable_item_list_add(variable_item_list, "Save", 1, NULL, NULL);
+    variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Save", "保存"), 1, NULL, NULL);
     view_dispatcher_switch_to_view(app->view_dispatcher, VIEW_ID);
 }
 

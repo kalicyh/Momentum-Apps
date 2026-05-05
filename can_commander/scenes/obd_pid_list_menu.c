@@ -19,36 +19,36 @@ static void cancommander_scene_obd_pid_list_menu_callback(void* context, uint32_
 
 static void cancommander_scene_obd_pid_set_pid(App* app, const char* pid_token, const char* label) {
     app_args_set_key_value(app->args_obd_pid, sizeof(app->args_obd_pid), "pid", pid_token);
-    app_set_status(app, "OBD PID selected: %s", label);
+    app_set_status(app, CAN_COMMANDER_UI_TEXT("OBD PID selected: %s", "已选择 OBD PID: %s"), label);
 }
 
 void cancommander_scene_obd_pid_list_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "PID List");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("PID List", "PID 列表"));
 
     submenu_add_item(app->submenu, "RPM", ObdPidListRpm, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Speed", ObdPidListSpeed, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Speed", "车速"), ObdPidListSpeed, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Coolant Temp", ObdPidListCoolant, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Coolant Temp", "冷却液温度"), ObdPidListCoolant, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Throttle Position",
+        CAN_COMMANDER_UI_TEXT("Throttle Position", "节气门位置"),
         ObdPidListThrottle,
         cancommander_scene_obd_pid_list_menu_callback,
         app);
     submenu_add_item(
-        app->submenu, "Engine Load", ObdPidListLoad, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Engine Load", "发动机负载"), ObdPidListLoad, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Fuel Level", ObdPidListFuel, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Fuel Level", "燃油液位"), ObdPidListFuel, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Intake Temp", ObdPidListIat, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Intake Temp", "进气温度"), ObdPidListIat, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Barometric", ObdPidListBaro, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Barometric", "大气压力"), ObdPidListBaro, cancommander_scene_obd_pid_list_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Odometer", ObdPidListOdometer, cancommander_scene_obd_pid_list_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Odometer", "里程表"), ObdPidListOdometer, cancommander_scene_obd_pid_list_menu_callback, app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, cancommander_scene_obd_pid_list_menu));

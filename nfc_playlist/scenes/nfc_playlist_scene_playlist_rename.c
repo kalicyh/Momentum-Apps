@@ -46,7 +46,7 @@ void nfc_playlist_playlist_rename_scene_on_enter(void* context) {
    strcpy(nfc_playlist->views.text_input.output, furi_string_get_cstr(tmp_file_name));
    furi_string_free(tmp_file_name);
 
-   text_input_set_header_text(nfc_playlist->views.text_input.view, "Enter new file name");
+   text_input_set_header_text(nfc_playlist->views.text_input.view, NFC_PLAYLIST_UI_TEXT("Enter new file name", "输入新文件名"));
    text_input_set_minimum_length(nfc_playlist->views.text_input.view, 1);
    text_input_set_result_callback(
       nfc_playlist->views.text_input.view,

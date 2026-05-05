@@ -9,7 +9,7 @@ void xremote_scene_save_remote_on_enter(void* context) {
     TextInput* text_input = app->text_input;
     size_t enter_name_length = 0;
 
-    text_input_set_header_text(text_input, "Name the remote");
+    text_input_set_header_text(text_input, XREMOTE_UI_TEXT("Name the remote", "\xe5\x91\xbd\xe5\x90\x8d\xe9\x81\xa5\xe6\x8e\xa7\xe5\x99\xa8"));
     enter_name_length = XREMOTE_MAX_REMOTE_NAME_LENGTH;
 
     FuriString* folder_path;

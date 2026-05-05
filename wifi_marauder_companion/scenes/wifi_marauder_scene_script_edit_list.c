@@ -124,19 +124,19 @@ static void
     submenu_reset(app->submenu);
     submenu_add_item(
         app->submenu,
-        "[+] ADD ITEM",
+        WIFI_MARAUDER_UI_TEXT("[+] ADD ITEM", "[+] 添加项目"),
         99,
         wifi_marauder_scene_script_stage_edit_list_add_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "[*] SAVE ITEMS",
+        WIFI_MARAUDER_UI_TEXT("[*] SAVE ITEMS", "[*] 保存项目"),
         99,
         wifi_marauder_scene_script_stage_edit_list_save_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "[-] CLEAR LIST",
+        WIFI_MARAUDER_UI_TEXT("[-] CLEAR LIST", "[-] 清除列表"),
         99,
         wifi_marauder_scene_script_stage_edit_list_clear_callback,
         app);
@@ -153,19 +153,19 @@ void wifi_marauder_scene_script_stage_edit_list_on_enter(void* context) {
     }
     submenu_add_item(
         app->submenu,
-        "[+] ADD ITEM",
+        WIFI_MARAUDER_UI_TEXT("[+] ADD ITEM", "[+] 添加项目"),
         99,
         wifi_marauder_scene_script_stage_edit_list_add_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "[*] SAVE ITEMS",
+        WIFI_MARAUDER_UI_TEXT("[*] SAVE ITEMS", "[*] 保存项目"),
         99,
         wifi_marauder_scene_script_stage_edit_list_save_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "[-] CLEAR LIST",
+        WIFI_MARAUDER_UI_TEXT("[-] CLEAR LIST", "[-] 清除列表"),
         99,
         wifi_marauder_scene_script_stage_edit_list_clear_callback,
         app);

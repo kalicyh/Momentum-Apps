@@ -47,7 +47,7 @@ void saflip_scene_variable_key_info_variable_item_list_callback(void* context, u
 
     switch(index) {
     case 0: // Lock ID
-        number_input_set_header_text(app->number_input, "Lock ID");
+        number_input_set_header_text(app->number_input, SAFLIP_UI_TEXT("Lock ID", "锁号"));
         number_input_set_result_callback(
             app->number_input,
             saflip_scene_variable_keys_number_input_callback,
@@ -60,12 +60,12 @@ void saflip_scene_variable_key_info_variable_item_list_callback(void* context, u
 
     case 1: // Inhibit Others
         key->inhibit = !key->inhibit;
-        variable_item_set_current_value_text(item, key->inhibit ? "Yes" : "No");
+        variable_item_set_current_value_text(item, key->inhibit ? SAFLIP_UI_TEXT("Yes", "是") : SAFLIP_UI_TEXT("No", "否"));
         break;
 
     case 2: // Use Optional Feature
         key->use_optional = !key->use_optional;
-        variable_item_set_current_value_text(item, key->use_optional ? "Yes" : "No");
+        variable_item_set_current_value_text(item, key->use_optional ? SAFLIP_UI_TEXT("Yes", "是") : SAFLIP_UI_TEXT("No", "否"));
         break;
 
     case 3: // Creation
@@ -98,22 +98,22 @@ void saflip_scene_variable_key_info_on_enter(void* context) {
     variable_item_list_reset(app->variable_item_list);
     variable_item_list_set_selected_item(app->variable_item_list, 0);
 
-    furi_string_printf(temp_str, "Variable Key #%d", idx + 1);
+    furi_string_printf(temp_str, SAFLIP_UI_TEXT("Variable Key #%d", "可变密钥 #%d"), idx + 1);
     variable_item_list_set_header(app->variable_item_list, furi_string_get_cstr(temp_str));
     variable_item_list_set_enter_callback(
         app->variable_item_list, saflip_scene_variable_key_info_variable_item_list_callback, app);
 
-    var_item = variable_item_list_add(app->variable_item_list, "Lock ID", 1, NULL, NULL);
+    var_item = variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Lock ID", "锁号"), 1, NULL, NULL);
     furi_string_printf(temp_str, "%d", key.lock_id);
     variable_item_set_current_value_text(var_item, furi_string_get_cstr(temp_str));
 
-    var_item = variable_item_list_add(app->variable_item_list, "Inhibit Others?", 1, NULL, NULL);
-    variable_item_set_current_value_text(var_item, key.inhibit ? "Yes" : "No");
+    var_item = variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Inhibit Others?", "禁止其他?"), 1, NULL, NULL);
+    variable_item_set_current_value_text(var_item, key.inhibit ? SAFLIP_UI_TEXT("Yes", "是") : SAFLIP_UI_TEXT("No", "否"));
 
-    var_item = variable_item_list_add(app->variable_item_list, "Use Opt. Feat.?", 1, NULL, NULL);
-    variable_item_set_current_value_text(var_item, key.use_optional ? "Yes" : "No");
+    var_item = variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Use Opt. Feat.?", "使用可选功能?"), 1, NULL, NULL);
+    variable_item_set_current_value_text(var_item, key.use_optional ? SAFLIP_UI_TEXT("Yes", "是") : SAFLIP_UI_TEXT("No", "否"));
 
-    var_item = variable_item_list_add(app->variable_item_list, "Creation", 1, NULL, NULL);
+    var_item = variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Creation", "创建日期"), 1, NULL, NULL);
     furi_string_printf(
         temp_str,
         "%04d-%02d-%02d %02d:%02d",
@@ -124,7 +124,7 @@ void saflip_scene_variable_key_info_on_enter(void* context) {
         key.creation.minute);
     variable_item_set_current_value_text(var_item, furi_string_get_cstr(temp_str));
 
-    variable_item_list_add(app->variable_item_list, "Done", 0, NULL, NULL);
+    variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Done", "完成"), 0, NULL, NULL);
 
     furi_string_free(temp_str);
     view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewVariableItemList);

@@ -13,6 +13,7 @@
 
 #include "tunings.h"
 #include "instruments.h"
+#include "tuning_fork.h"
 
 #define VOLUME_STEP             0.1f
 #define DEFAULT_VOLUME          1.0f
@@ -326,17 +327,17 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     }
 
     canvas_set_font(canvas, FontSecondary);
-    elements_button_left(canvas, "Prev");
-    elements_button_right(canvas, "Next");
+    elements_button_left(canvas, TUNING_FORK_UI_TEXT("Prev", "上一个"));
+    elements_button_right(canvas, TUNING_FORK_UI_TEXT("Next", "下一个"));
 
     if(tuning_fork_state->page == NotesPage) {
         if(tuning_fork_state->playing) {
-            elements_button_center(canvas, "Stop");
+            elements_button_center(canvas, TUNING_FORK_UI_TEXT("Stop", "停止"));
         } else {
-            elements_button_center(canvas, "Play");
+            elements_button_center(canvas, TUNING_FORK_UI_TEXT("Play", "播放"));
         }
     } else {
-        elements_button_center(canvas, "Select");
+        elements_button_center(canvas, TUNING_FORK_UI_TEXT("Select", "选择"));
     }
 
     if(tuning_fork_state->page == NotesPage) {

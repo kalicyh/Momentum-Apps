@@ -57,7 +57,7 @@ void tpms_scene_relearn_config_on_enter(void *context)
 
     item = variable_item_list_add(
         var_item_list,
-        "Relearn 125kHz",
+        TPMS_UI_TEXT("Relearn 125kHz", "重学125kHz"),
         TPMSRelearnSettingNum,
         tpms_scene_relearn_setting_callback,
         app);
@@ -66,7 +66,7 @@ void tpms_scene_relearn_config_on_enter(void *context)
     variable_item_set_current_value_text(item, relearn_setting_text[app->relearn]);
 
     item = variable_item_list_add(
-        var_item_list, "Type", TPMSRelearnTypeNum, tpms_scene_relearn_type_callback, app);
+        var_item_list, TPMS_UI_TEXT("Type", "类型"), TPMSRelearnTypeNum, tpms_scene_relearn_type_callback, app);
     variable_item_set_current_value_index(item, app->relearn_type);
     variable_item_set_current_value_text(item, relearn_type_text[app->relearn_type]);
 

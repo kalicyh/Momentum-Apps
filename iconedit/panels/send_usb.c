@@ -87,12 +87,12 @@ void send_usb_start(IEIcon* icon, SendAsType send_as, bool current_frame_only) {
     sendModel.callback(sendModel.callback_context);
 
     sendModel.state = State_READY;
-    add_line("Ready to send?");
+    add_line(ICONEDIT_UI_TEXT("Ready to send?", "准备发送?"));
 }
 
 void send_usb_stop() {
     FURI_LOG_I(TAG, __FUNCTION__);
-    add_line("Stopping...");
+    add_line(ICONEDIT_UI_TEXT("Stopping...", "正在停止..."));
     for(int l = 0; l < MAX_LINES; l++) {
         if(sendModel.lines[l]) {
             free(sendModel.lines[l]);
@@ -132,14 +132,14 @@ void send_usb_send_filename() {
     send_usb_send_str(END_OF_DATA_STREAM);
     furi_string_free(filename);
 
-    add_line("Ready to send data?");
+    add_line(ICONEDIT_UI_TEXT("Ready to send data?", "准备发送数据?"));
     sendModel.state = State_READY;
     sendModel.filename_prompt = false;
 }
 
 void send_usb_send_icon() {
     FURI_LOG_I(TAG, __FUNCTION__);
-    add_line("Sending...");
+    add_line(ICONEDIT_UI_TEXT("Sending...", "正在发送..."));
     FuriString* icon_text = NULL;
     switch(sendModel.send_as) {
     case SendAsC:
@@ -160,7 +160,7 @@ void send_usb_send_icon() {
         } else {
             for(size_t f = 0; f < sendModel.icon->frame_count; f++) {
                 char progress[32];
-                snprintf(progress, 32, "Sending: %d/%d", f + 1, sendModel.icon->frame_count);
+                snprintf(progress, 32, ICONEDIT_UI_TEXT("Sending: %d/%d", "发送中: %d/%d"), f + 1, sendModel.icon->frame_count);
                 update_line(progress);
                 icon_text = png_file_generate_frame(sendModel.icon, f);
                 send_usb_send_str(furi_string_get_cstr(icon_text));
@@ -189,7 +189,7 @@ void send_usb_send_icon() {
 
     furi_hal_hid_kb_release_all();
 
-    add_line("Sent!");
+    add_line(ICONEDIT_UI_TEXT("Sent!", "已发送!"));
     sendModel.state = State_DONE;
 }
 
@@ -252,7 +252,7 @@ bool send_usb_input(InputEvent* event, void* context) {
                     send_usb_send_icon();
                 } else {
                     sendModel.state = State_FILENAME;
-                    add_line("Send filename?");
+                    add_line(ICONEDIT_UI_TEXT("Send filename?", "发送文件名?"));
                 }
                 break;
             case State_FILENAME:

@@ -17,13 +17,13 @@ void pocsag_pager_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Receive messages",
+        POCSAG_PAGER_UI_TEXT("Receive messages", "接收消息"),
         SubmenuIndexPOCSAGPagerReceiver,
         pocsag_pager_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "About",
+        POCSAG_PAGER_UI_TEXT("About", "关于"),
         SubmenuIndexPOCSAGPagerAbout,
         pocsag_pager_scene_start_submenu_callback,
         app);

@@ -33,7 +33,7 @@ void nfc_eink_scene_choose_screen_on_enter(void* context) {
     NfcEinkApp* instance = context;
     Submenu* submenu = instance->submenu;
 
-    submenu_set_header(submenu, "Choose Screen Type");
+    submenu_set_header(submenu, NFC_EINK_UI_TEXT("Choose Screen Type", "选择屏幕类型"));
 
     EinkScreenInfoArray_init(instance->arr);
     uint8_t cnt = nfc_eink_screen_info_filter_by_mode(instance);

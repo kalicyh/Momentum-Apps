@@ -523,10 +523,18 @@ int32_t dap_link_app(void* p) {
     if(furi_hal_usb_is_locked()) {
         DialogsApp* dialogs = furi_record_open(RECORD_DIALOGS);
         DialogMessage* message = dialog_message_alloc();
-        dialog_message_set_header(message, "Connection\nis active!", 3, 2, AlignLeft, AlignTop);
+        dialog_message_set_header(
+            message,
+            DAP_LINK_UI_TEXT("Connection\nis active!", "连接\n已建立!"),
+            3,
+            2,
+            AlignLeft,
+            AlignTop);
         dialog_message_set_text(
             message,
-            "Disconnect from\nPC or phone to\nuse this function.",
+            DAP_LINK_UI_TEXT(
+                "Disconnect from\nPC or phone to\nuse this function.",
+                "请断开\n电脑或手机\n以使用此功能."),
             3,
             30,
             AlignLeft,

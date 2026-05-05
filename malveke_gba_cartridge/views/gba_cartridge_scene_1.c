@@ -158,26 +158,26 @@ void gba_cartridge_scene_1_draw(Canvas* canvas, GameBoyCartridgeModel* model) {
     canvas_draw_str_aligned(canvas, 128 / 2, 1, AlignCenter, AlignTop, model->cart_title);
     // canvas_draw_str_aligned(canvas, 128 / 2, 1, AlignCenter, AlignTop, "Prueba"); //  title
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 20, "Game Code / REV");
+    canvas_draw_str(canvas, 2, 20, GBACARTRIDGE_UI_TEXT("Game Code / REV", "游戏代码 / 版本"));
     canvas_set_font(canvas, FontPrimary);
     // canvas_draw_str(canvas, 87, 20, "APSS-0");  //  serial
     canvas_draw_str_aligned(canvas, 126, 20, AlignRight, AlignBottom, model->cart_serial);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 30, "Boot Logo");
+    canvas_draw_str(canvas, 2, 30, GBACARTRIDGE_UI_TEXT("Boot Logo", "启动标志"));
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str_aligned(canvas, 126, 30, AlignRight, AlignBottom, model->cart_logo);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 40, "ROM Checksum");
+    canvas_draw_str(canvas, 2, 40, GBACARTRIDGE_UI_TEXT("ROM Checksum", "ROM 校验"));
     canvas_set_font(canvas, FontPrimary);
     // canvas_draw_str(canvas, 87, 40, "0X04C7"); //  checksum
     canvas_draw_str_aligned(canvas, 126, 39, AlignRight, AlignBottom, model->cart_checksum);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 50, "ROM Size");
+    canvas_draw_str(canvas, 2, 50, GBACARTRIDGE_UI_TEXT("ROM Size", "ROM 大小"));
     canvas_set_font(canvas, FontPrimary);
     // canvas_draw_str(canvas, 98, 49, "1 MiB"); //  ROMSize
     canvas_draw_str_aligned(canvas, 126, 49, AlignRight, AlignBottom, model->cart_ROMSize);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 60, "Save Type");
+    canvas_draw_str(canvas, 2, 60, GBACARTRIDGE_UI_TEXT("Save Type", "存档类型"));
     canvas_set_font(canvas, FontPrimary);
     // canvas_draw_str(canvas, 63, 60, "SRAM 32KiB"); //  RAMSize
     canvas_draw_str_aligned(canvas, 126, 59, AlignRight, AlignBottom, model->cart_RAMSize);
@@ -190,7 +190,7 @@ static void gba_cartridge_scene_1_model_init(GameBoyCartridgeModel* const model)
     // FuriString* cart_checksum;
     // FuriString* cart_ROMSize;
     // FuriString* cart_RAMSize;
-    model->cart_title = "Loading...";
+    model->cart_title = GBACARTRIDGE_UI_TEXT("Loading...", "加载中...");
     model->cart_serial = "";
     model->cart_checksum = "";
     model->cart_ROMSize = "";

@@ -17,17 +17,17 @@ namespace FTasks::List
 
         if constexpr (T == Scenes::EDIT_MENU)
         {
-            ctx->tmpBuffer = "Editing: " +  (*ctx->currentContainer)[ctx->currentNoteIndex].first;
+            ctx->tmpBuffer = std::string(TASKS_UI_TEXT("Editing: ", "编辑: ")) +  (*ctx->currentContainer)[ctx->currentNoteIndex].first;
             UNUSED(menu->setHeader(ctx->tmpBuffer.c_str())
-                           .addItem("Description",         Dialogs::DESCRIPTION,        callback, menu->application)
-                           .addItem((ctx->currentContainer == &ctx->containers.todo ? "Mark as done" : "Mark as not done"), Dialogs::DONE, callback, menu->application)
-                           .addItem("Rename",              Dialogs::RENAME,             callback, menu->application)
-                           .addItem("Edit description",    Dialogs::EDIT_DESCRIPTION,   callback, menu->application)
-                           .addItem("Delete",              Dialogs::DELETE,             callback, menu->application));
+                           .addItem(TASKS_UI_TEXT("Description", "描述"),         Dialogs::DESCRIPTION,        callback, menu->application)
+                           .addItem((ctx->currentContainer == &ctx->containers.todo ? TASKS_UI_TEXT("Mark as done", "标记完成") : TASKS_UI_TEXT("Mark as not done", "标记未完成")), Dialogs::DONE, callback, menu->application)
+                           .addItem(TASKS_UI_TEXT("Rename", "重命名"),              Dialogs::RENAME,             callback, menu->application)
+                           .addItem(TASKS_UI_TEXT("Edit description", "编辑描述"),    Dialogs::EDIT_DESCRIPTION,   callback, menu->application)
+                           .addItem(TASKS_UI_TEXT("Delete", "删除"),              Dialogs::DELETE,             callback, menu->application));
         }
         else
         {
-            UNUSED(menu->setHeader(ctx->currentContainer == &ctx->containers.todo ? "Tasks - TODO" : "Tasks - Done"));
+            UNUSED(menu->setHeader(ctx->currentContainer == &ctx->containers.todo ? TASKS_UI_TEXT("Tasks - TODO", "待办任务") : TASKS_UI_TEXT("Tasks - Done", "已完成"));
             for (size_t i = 0; i < ctx->currentContainer->size(); i++)
                 UNUSED(menu->addItem((*ctx->currentContainer)[i].first.c_str(), Scenes::POPUP + i, callback, menu->application));
         }
@@ -59,7 +59,7 @@ namespace FTasks::List
 
                 if (ctx->currentContainer == &ctx->containers.todo && ctx->currentNoteIndex == 0) // We're making a new note
                 {
-                    ctx->containers.todo.emplace_back("Task name", "Description");
+                    ctx->containers.todo.emplace_back(TASKS_UI_TEXT("Task name", "任务名称"), TASKS_UI_TEXT("Description", "描述"));
                     ctx->bMakingNewNote = true;
                     ctx->currentNoteIndex = ctx->containers.todo.size() - 1;
 

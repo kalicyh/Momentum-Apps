@@ -21,14 +21,14 @@ struct AppSettings {
 };
 
 static char* display_source_values[] = {
-    [FlipboardBlinkySourceAssets] = "Assets",
+    [FlipboardBlinkySourceAssets] = FLIPBOARD_UI_TEXT("Assets", "素材"),
     [FlipboardBlinkySourceFXBM] = "FXBM",
-    [FlipboardBlinkySourceText] = "TEXT"};
+    [FlipboardBlinkySourceText] = FLIPBOARD_UI_TEXT("TEXT", "文本")};
 
 static char* justification_values[] = {
-    [FlipboardBlinkyJustificationLeft] = "Left",
-    [FlipboardBlinkyJustificationCenter] = "Center",
-    [FlipboardBlinkyJustificationRight] = "Right"};
+    [FlipboardBlinkyJustificationLeft] = FLIPBOARD_UI_TEXT("Left", "左对齐"),
+    [FlipboardBlinkyJustificationCenter] = FLIPBOARD_UI_TEXT("Center", "居中"),
+    [FlipboardBlinkyJustificationRight] = FLIPBOARD_UI_TEXT("Right", "右对齐")};
 
 static void app_settings_populate(AppSettings* settings);
 static void app_settings_save(AppSettings* settings);
@@ -68,8 +68,12 @@ static void app_settings_item_clicked(void* context, uint32_t index) {
     }
     index -= 2;
 
-    char* header = "Enter Line x";
-    header[11] = '1' + index;
+    char header[32];
+    snprintf(
+        header,
+        sizeof(header),
+        FLIPBOARD_UI_TEXT("Enter Line %c", "输入第%c行"),
+        '1' + index);
     text_input_set_header_text(settings->text_input, header);
     text_input_get_view(settings->text_input);
     settings->buffer[0] = index;
@@ -95,24 +99,36 @@ static void app_settings_populate(AppSettings* settings) {
     variable_item_list_reset(settings->list);
 
     item = variable_item_list_add(
-        settings->list, "Display Source", 3, app_settings_display_source_changed, settings);
+        settings->list,
+        FLIPBOARD_UI_TEXT("Display Source", "显示源"),
+        3,
+        app_settings_display_source_changed,
+        settings);
     index = flipboard_blinky_get_source_index(settings->fbm);
     variable_item_set_current_value_index(item, index);
     variable_item_set_current_value_text(
         item, display_source_values[flipboard_blinky_source_order[index]]);
 
     item = variable_item_list_add(
-        settings->list, "Justification", 3, app_settings_justification_changed, settings);
+        settings->list,
+        FLIPBOARD_UI_TEXT("Justification", "对齐方式"),
+        3,
+        app_settings_justification_changed,
+        settings);
     index = flipboard_blinky_get_justification_index(settings->fbm);
     variable_item_set_current_value_index(item, index);
     variable_item_set_current_value_text(
         item, justification_values[flipboard_blinky_justification_order[index]]);
 
     if(flipboard_blinky_get_source(settings->fbm) == FlipboardBlinkySourceText) {
-        variable_item_list_add(settings->list, "Line 1", 0, NULL, NULL);
-        variable_item_list_add(settings->list, "Line 2", 0, NULL, NULL);
-        variable_item_list_add(settings->list, "Line 3", 0, NULL, NULL);
-        variable_item_list_add(settings->list, "Line 4", 0, NULL, NULL);
+        variable_item_list_add(
+            settings->list, FLIPBOARD_UI_TEXT("Line 1", "第1行"), 0, NULL, NULL);
+        variable_item_list_add(
+            settings->list, FLIPBOARD_UI_TEXT("Line 2", "第2行"), 0, NULL, NULL);
+        variable_item_list_add(
+            settings->list, FLIPBOARD_UI_TEXT("Line 3", "第3行"), 0, NULL, NULL);
+        variable_item_list_add(
+            settings->list, FLIPBOARD_UI_TEXT("Line 4", "第4行"), 0, NULL, NULL);
     }
 }
 

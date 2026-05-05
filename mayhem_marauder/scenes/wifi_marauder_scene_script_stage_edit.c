@@ -181,7 +181,7 @@ void wifi_marauder_scene_script_stage_edit_on_enter(void* context) {
         }
     }
 
-    variable_item_list_add(app->var_item_list, "[-] DELETE STAGE", 0, NULL, app);
+    variable_item_list_add(app->var_item_list, WIFI_MARAUDER_UI_TEXT("[-] DELETE STAGE", "[-] 删除阶段"), 0, NULL, app);
 
     variable_item_list_set_selected_item(
         var_item_list,

@@ -76,7 +76,7 @@ void scene_on_enter_key_display(void* context) {
             key[31]);
         crypto_explicit_bzero(key, sizeof(key));
     } else {
-        strcpy(state->key_hex_str, "No Key");
+        strcpy(state->key_hex_str, ESUBGHZ_CHAT_UI_TEXT("No Key", "无密钥"));
     }
 
     dialog_ex_reset(state->key_display);
@@ -85,10 +85,10 @@ void scene_on_enter_key_display(void* context) {
 
     dialog_ex_set_icon(state->key_display, 0, 0, NULL);
 
-    dialog_ex_set_left_button_text(state->key_display, "Back");
+    dialog_ex_set_left_button_text(state->key_display, ESUBGHZ_CHAT_UI_TEXT("Back", "返回"));
 
     if(state->encrypted) {
-        dialog_ex_set_center_button_text(state->key_display, "Share");
+        dialog_ex_set_center_button_text(state->key_display, ESUBGHZ_CHAT_UI_TEXT("Share", "分享"));
     }
 
     dialog_ex_set_result_callback(state->key_display, key_display_result_cb);

@@ -24,7 +24,7 @@ void seader_scene_read_config_card_success_on_enter(void* context) {
     // Send notification
     notification_message(seader->notifications, &sequence_success);
 
-    furi_string_set(config_card_str, "Config card read complete");
+    furi_string_set(config_card_str, SEADER_UI_TEXT("Config card read complete", "配置卡读取完成"));
 
     widget_add_string_element(
         widget,

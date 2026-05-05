@@ -23,6 +23,12 @@
 
 #define APPLICATION_NAME "ESubGhzChat"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ESUBGHZ_CHAT_UI_TEXT(en, zh) (zh)
+#else
+#define ESUBGHZ_CHAT_UI_TEXT(en, zh) (en)
+#endif
+
 #define DEFAULT_FREQ 433920000
 
 #define KEY_READ_POPUP_MS 3000

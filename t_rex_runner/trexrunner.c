@@ -10,6 +10,12 @@
 
 #include "t_rex_runner_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TREX_UI_TEXT(en, zh) (zh)
+#else
+#define TREX_UI_TEXT(en, zh) (en)
+#endif
+
 #define DINO_START_X 10
 #define DINO_START_Y 34 // 64 - 22 - BACKGROUND_H / 2 - 2
 
@@ -177,12 +183,12 @@ static void render_callback(Canvas* const canvas, void* ctx) {
 
         // Show score
         if(game_state->score == 0) canvas_set_font(canvas, FontSecondary);
-        snprintf(score_string, 12, "Score: %d", game_state->score);
+        snprintf(score_string, 12, TREX_UI_TEXT("Score: %d", "得分: %d"), game_state->score);
         canvas_draw_str_aligned(canvas, 85, 5, AlignLeft, AlignTop, score_string);
 
     } else {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, "You lost :c");
+        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignBottom, TREX_UI_TEXT("You lost :c", "游戏结束"));
     }
 
     furi_mutex_release(game_state->mutex);

@@ -3,6 +3,12 @@
 #include <furi.h>
 #include <furi_hal.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPPER_SHARE_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPPER_SHARE_UI_TEXT(en, zh) (en)
+#endif
+
 #include <gui/gui.h>
 #include <gui/elements.h>
 #include <gui/scene_manager.h>

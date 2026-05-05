@@ -68,9 +68,19 @@ void flipboard_view_flip_keyboard_draw(Canvas* canvas, void* model) {
             canvas_draw_xbm(canvas, x, (64 - h) / 2, w, h, fxbm_get_data(fbm->fxbm));
         } else {
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str(canvas, 0, 10, "FXBM file not found!");
+            canvas_draw_str(
+                canvas,
+                0,
+                10,
+                FLIPBOARD_UI_TEXT("FXBM file not found!", "未找到FXBM文件!"));
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 0, 30, "Save FXBM file on SD card at");
+            canvas_draw_str(
+                canvas,
+                0,
+                30,
+                FLIPBOARD_UI_TEXT(
+                    "Save FXBM file on SD card at",
+                    "请将FXBM文件保存到SD卡"));
             canvas_draw_str(canvas, 0, 40, "/apps_data/flipboard/");
             canvas_draw_str(canvas, 0, 50, "blinky.fxbm");
         }
@@ -100,7 +110,8 @@ void flipboard_view_flip_keyboard_draw(Canvas* canvas, void* model) {
         FuriString* str = furi_string_alloc();
         furi_string_printf(
             str,
-            "Speed:%lu    Effect:%d of %d",
+            FLIPBOARD_UI_TEXT(
+                "Speed:%lu    Effect:%d of %d", "速度:%lu    特效:%d/%d"),
             fbm->period_ms,
             fbm->effect_id,
             fbm->max_effect_id);

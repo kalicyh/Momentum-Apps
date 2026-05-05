@@ -1,3 +1,9 @@
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "FlipboardKeyboard"
 #define FLIPBOARD_APP_NAME "keyboard"
 #define FLIPBOARD_PRIMARY_ITEM_NAME "Flipboard Keyboard"
@@ -10,15 +16,26 @@
 // Uncomment the next line to automatically send messages 1-4 after keystrokes, unless keystrokes was Msg1-4...
 // #define FLIPBOARD_KEYBOARD_SEND_MESSAGES_AFTER_KEYSTROKES 1
 
-#define ABOUT_TEXT                             \
-    "Welcome to the Flipboard\n"               \
-    "keyboard 3.9 BLE+USB\n"                   \
-    "Optimized for FlipBoard\n"                \
-    "hardware, see link below\n"               \
-    "to order!\n"                              \
-    "Created by @MakeItHackin\n"               \
-    "and @CodeAllNight!\n"                     \
-    "https://discord.com/invite/NsjCvqwPAd\n"  \
-    "https://youtube.com/@MrDerekJamison\n"    \
-    "https://tindie.com/stores/MakeItHackin\n" \
-    "https://x.com/MakeItHackin"
+#define ABOUT_TEXT                                     \
+    FLIPBOARD_UI_TEXT(                                 \
+        "Welcome to the Flipboard\n"                  \
+        "keyboard 3.9 BLE+USB\n"                      \
+        "Optimized for FlipBoard\n"                   \
+        "hardware, see link below\n"                  \
+        "to order!\n"                                 \
+        "Created by @MakeItHackin\n"                  \
+        "and @CodeAllNight!\n"                        \
+        "https://discord.com/invite/NsjCvqwPAd\n"    \
+        "https://youtube.com/@MrDerekJamison\n"       \
+        "https://tindie.com/stores/MakeItHackin\n"    \
+        "https://x.com/MakeItHackin",                 \
+        "欢迎使用 Flipboard\n"                         \
+        "keyboard 3.9 BLE+USB\n"                      \
+        "专为 FlipBoard 硬件优化\n"                    \
+        "详见下方链接购买!\n"                          \
+        "作者 @MakeItHackin\n"                        \
+        "与 @CodeAllNight!\n"                         \
+        "https://discord.com/invite/NsjCvqwPAd\n"    \
+        "https://youtube.com/@MrDerekJamison\n"       \
+        "https://tindie.com/stores/MakeItHackin\n"    \
+        "https://x.com/MakeItHackin")

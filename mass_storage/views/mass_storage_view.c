@@ -32,7 +32,7 @@ static void mass_storage_draw_callback(Canvas* canvas, void* _model) {
 
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str_aligned(
-        canvas, canvas_width(canvas) / 2, 0, AlignCenter, AlignTop, "USB Mass Storage");
+        canvas, canvas_width(canvas) / 2, 0, AlignCenter, AlignTop, MASS_STORAGE_UI_TEXT("USB Mass Storage", "USB 大容量存储"));
 
     canvas_set_font(canvas, FontBatteryPercent);
     elements_string_fit_width(canvas, model->file_name, 89 - 2);

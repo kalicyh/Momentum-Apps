@@ -62,14 +62,14 @@ void subrem_scene_edit_menu_on_enter(void* context) {
     Widget* widget = app->widget;
 
     widget_add_string_element(
-        widget, 63, 12, AlignCenter, AlignBottom, FontPrimary, "Changes are not saved");
+        widget, 63, 12, AlignCenter, AlignBottom, FontPrimary, SUBREM_UI_TEXT("Changes are not saved", "更改未保存"));
     widget_add_string_element(
-        widget, 63, 32, AlignCenter, AlignBottom, FontPrimary, "do you want to exit?");
+        widget, 63, 32, AlignCenter, AlignBottom, FontPrimary, SUBREM_UI_TEXT("do you want to exit?", "是否退出?"));
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Yes", subrem_scene_edit_menu_widget_callback, app);
+        widget, GuiButtonTypeRight, SUBREM_UI_TEXT("Yes", "是"), subrem_scene_edit_menu_widget_callback, app);
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "No", subrem_scene_edit_menu_widget_callback, app);
+        widget, GuiButtonTypeLeft, SUBREM_UI_TEXT("No", "否"), subrem_scene_edit_menu_widget_callback, app);
 }
 
 bool subrem_scene_edit_menu_on_event(void* context, SceneManagerEvent event) {

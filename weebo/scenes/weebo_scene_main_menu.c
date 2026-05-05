@@ -18,10 +18,10 @@ void weebo_scene_main_menu_on_enter(void* context) {
     submenu_reset(submenu);
 
     submenu_add_item(
-        submenu, "Saved", SubmenuIndexSaved, weebo_scene_main_menu_submenu_callback, weebo);
+        submenu, WEEBO_UI_TEXT("Saved", "已保存"), SubmenuIndexSaved, weebo_scene_main_menu_submenu_callback, weebo);
     submenu_add_item(
         submenu,
-        "Acknowledgements",
+        WEEBO_UI_TEXT("Acknowledgements", "致谢"),
         SubmenuIndexAcknowledgements,
         weebo_scene_main_menu_submenu_callback,
         weebo);

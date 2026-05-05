@@ -21,7 +21,7 @@ static void show_locked_notification(UHFReaderApp* App) {
     
     Popup* popup = App->LockPopup;
     popup_reset(popup);
-    popup_set_header(popup, "Connect\nTo Reader\nFirst!", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, RFID_READER_UI_TEXT("Connect\nTo Reader\nFirst!", "请先连接\n读写器!"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_WarningDolphin_45x42);
     
     // Set timeout for 2 seconds
@@ -61,18 +61,18 @@ void view_config_alloc(UHFReaderApp* App) {
     //Initializing configuration setting variables
     App->Setting1Values[0] = 1;
     App->Setting1Values[1] = 2;
-    App->Setting1Names[0] = "Disconnected";
-    App->Setting1Names[1] = "Connected";
+    App->Setting1Names[0] = RFID_READER_UI_TEXT("Disconnected", "未连接");
+    App->Setting1Names[1] = RFID_READER_UI_TEXT("Connected", "已连接");
     App->ReaderConnected = false;
-    App->Setting1ConfigLabel = "Connection";
-    App->Setting2ConfigLabel = "Power Level";
-    App->Setting2EntryText = "Enter Value In Range 0-2700";
+    App->Setting1ConfigLabel = RFID_READER_UI_TEXT("Connection", "连接");
+    App->Setting2ConfigLabel = RFID_READER_UI_TEXT("Power Level", "功率");
+    App->Setting2EntryText = RFID_READER_UI_TEXT("Enter Value In Range 0-2700", "输入范围0-2700");
     App->Setting2DefaultValue = "1500";
     App->Setting3Values[0] = 1;
     App->Setting3Values[1] = 2;
-    App->Setting3Names[0] = "Internal";
-    App->Setting3Names[1] = "External";
-    App->Setting3ConfigLabel = "Antenna";
+    App->Setting3Names[0] = RFID_READER_UI_TEXT("Internal", "内置");
+    App->Setting3Names[1] = RFID_READER_UI_TEXT("External", "外置");
+    App->Setting3ConfigLabel = RFID_READER_UI_TEXT("Antenna", "天线");
 
     //Baud rate values (just for YRM100 Module for now!)
     App->SettingBaudValues[0] = 1;
@@ -81,7 +81,7 @@ void view_config_alloc(UHFReaderApp* App) {
     App->SettingBaudNames[0] = "9600";
     App->SettingBaudNames[2] = "384000";
     App->SettingBaudNames[1] = "115200";
-    App->SettingBaudConfigLabel = "Baud Rate";
+    App->SettingBaudConfigLabel = RFID_READER_UI_TEXT("Baud Rate", "波特率");
     App->UHFBaudRate = 115200;
 
     //Setting the module values for the config menu
@@ -91,14 +91,14 @@ void view_config_alloc(UHFReaderApp* App) {
     App->SettingModuleNames[0] = "M6e";
     App->SettingModuleNames[1] = "YRM100";
     App->SettingModuleNames[2] = "M7e";
-    App->SettingModuleConfigLabel = "UHF Module";
+    App->SettingModuleConfigLabel = RFID_READER_UI_TEXT("UHF Module", "UHF模块");
     App->UHFModuleType = M6E_NANO_MODULE;
     
     App->SettingSavingValues[0] = 1;
     App->SettingSavingValues[1] = 2;
-    App->SettingSavingNames[0] = "No";
-    App->SettingSavingNames[1] = "Yes";
-    App->SettingSavingConfigLabel = "Save on Write";
+    App->SettingSavingNames[0] = RFID_READER_UI_TEXT("No", "否");
+    App->SettingSavingNames[1] = RFID_READER_UI_TEXT("Yes", "是");
+    App->SettingSavingConfigLabel = RFID_READER_UI_TEXT("Save on Write", "写入时保存");
     App->UHFSaveType = NO_SAVE_ON_WRITE;
     
     //Setting the available regions
@@ -112,12 +112,12 @@ void view_config_alloc(UHFReaderApp* App) {
     App->SettingRegionNames[2] = "Korea";
     App->SettingRegionNames[3] = "China 800";
     App->SettingRegionNames[4] = "China 900";
-    App->SettingRegionConfigLabel = "Region";
+    App->SettingRegionConfigLabel = RFID_READER_UI_TEXT("Region", "区域");
     App->UHFRegionType = USA_REGION;
 
     //Setting the config menu labels for the default read access password
-    App->ReadAccessPasswordLabel = strdup("Default AP");
-    App->AccessPasswordPlaceHolder = strdup("Enter Access Password!");
+    App->ReadAccessPasswordLabel = strdup(RFID_READER_UI_TEXT("Default AP", "默认AP"));
+    App->AccessPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Access Password!", "输入访问密码!"));
     App->DefaultAccessPassword = strdup("00000000");
 
     // Add setting 1 to variable item list
@@ -162,7 +162,7 @@ void view_config_alloc(UHFReaderApp* App) {
         App->VariableItemListConfig, App->Setting2ConfigLabel, 1, NULL, NULL);
     variable_item_list_set_enter_callback(
         App->VariableItemListConfig, uhf_reader_setting_item_clicked, App);
-    variable_item_set_current_value_text(App->Setting2Item, "LOCKED");
+    variable_item_set_current_value_text(App->Setting2Item, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
     
 
     App->BaudSelection = variable_item_list_add(
@@ -175,7 +175,7 @@ void view_config_alloc(UHFReaderApp* App) {
     //Default index for the baud selection option
     App->SettingBaudIndex = 2;
     variable_item_set_current_value_index(App->BaudSelection, App->SettingBaudIndex);
-    variable_item_set_current_value_text(App->BaudSelection, "LOCKED");
+    variable_item_set_current_value_text(App->BaudSelection, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
 
     
     App->RegionSelection = variable_item_list_add(
@@ -188,14 +188,14 @@ void view_config_alloc(UHFReaderApp* App) {
     //Default index for the baud selection option
     App->SettingRegionIndex = 0;
     variable_item_set_current_value_index(App->RegionSelection, App->SettingRegionIndex);
-    variable_item_set_current_value_text(App->RegionSelection, "LOCKED");
+    variable_item_set_current_value_text(App->RegionSelection, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
     //Default access password input for reading and writing to the tag, or locking
     App->DefaultAccessPwdStr = furi_string_alloc_set(App->DefaultAccessPassword);
     App->SettingApPwdItem = variable_item_list_add(
         App->VariableItemListConfig,  App->ReadAccessPasswordLabel, 1, NULL, NULL);
     variable_item_list_set_enter_callback(
         App->VariableItemListConfig, uhf_reader_setting_item_clicked, App);
-    variable_item_set_current_value_text(App->SettingApPwdItem, "LOCKED");
+    variable_item_set_current_value_text(App->SettingApPwdItem, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
     VariableItem* SavingSelection = variable_item_list_add(
         App->VariableItemListConfig,
         App->SettingSavingConfigLabel,
@@ -220,7 +220,7 @@ void view_config_alloc(UHFReaderApp* App) {
     //Default index for the antenna selection option
     App->Setting3Index = 0;
     variable_item_set_current_value_index(App->AntennaSelection, App->Setting3Index);
-    variable_item_set_current_value_text(App->AntennaSelection, "LOCKED");
+    variable_item_set_current_value_text(App->AntennaSelection, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
     //Setting previous callback
     view_set_previous_callback(
         variable_item_list_get_view(App->VariableItemListConfig),
@@ -302,11 +302,11 @@ void uhf_reader_setting_1_change(VariableItem* Item) {
         for(size_t i = 0; i < App->num_items; i++) {
             App->item_locks[i].locked = true;
         }
-        variable_item_set_current_value_text(App->Setting2Item, "LOCKED");
-        variable_item_set_current_value_text(App->BaudSelection, "LOCKED");
-        variable_item_set_current_value_text(App->RegionSelection, "LOCKED");
-        variable_item_set_current_value_text(App->SettingApPwdItem, "LOCKED");
-        variable_item_set_current_value_text(App->AntennaSelection, "LOCKED");
+        variable_item_set_current_value_text(App->Setting2Item, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
+        variable_item_set_current_value_text(App->BaudSelection, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
+        variable_item_set_current_value_text(App->RegionSelection, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
+        variable_item_set_current_value_text(App->SettingApPwdItem, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
+        variable_item_set_current_value_text(App->AntennaSelection, RFID_READER_UI_TEXT("LOCKED", "已锁定"));
     }
 
     //Setting the current setting value for both the read and write screens

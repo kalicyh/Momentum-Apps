@@ -69,9 +69,9 @@ void flipper_share_scene_send_on_enter(void* context) {
     app->file_reading_state = state;
 
     // Setup dialog to show progress
-    dialog_ex_set_header(app->dialog_show_file, "Sending...", 64, 10, AlignCenter, AlignCenter);
-    dialog_ex_set_text(app->dialog_show_file, "Starting...", 64, 32, AlignCenter, AlignCenter);
-    dialog_ex_set_left_button_text(app->dialog_show_file, "Cancel");
+    dialog_ex_set_header(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Sending...", "发送中..."), 64, 10, AlignCenter, AlignCenter);
+    dialog_ex_set_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Starting...", "启动中..."), 64, 32, AlignCenter, AlignCenter);
+    dialog_ex_set_left_button_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Cancel", "取消"));
     dialog_ex_set_right_button_text(app->dialog_show_file, NULL); // Skip right button
 
     // Setup callback for dialog buttons
@@ -113,9 +113,9 @@ static void update_timer_callback(void* context) {
     if(state) {
         if(state->reading_complete) {
             snprintf(
-                progress_text, sizeof(progress_text), "Complete! %lu bytes read", state->counter);
+                progress_text, sizeof(progress_text), FLIPPER_SHARE_UI_TEXT("Complete! %lu bytes read", "完成! 已读取 %lu 字节"), state->counter);
 
-            dialog_ex_set_right_button_text(app->dialog_show_file, "OK");
+            dialog_ex_set_right_button_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("OK", "确定"));
         } else {
             // Print filename and size
             const char* prefix = "";

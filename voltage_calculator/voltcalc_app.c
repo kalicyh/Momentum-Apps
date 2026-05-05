@@ -7,6 +7,12 @@
 #include <gui/modules/submenu.h>
 #include <gui/modules/text_input.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define VOLTCALC_UI_TEXT(en, zh) (zh)
+#else
+#define VOLTCALC_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "voltcalc_app"
 #define TEXT_INPUT_SIZE 11
 
@@ -173,12 +179,12 @@ void voltcalc_scenes_main_menu_scene_on_enter(void* context) {
 	//UNUSED (context);
 	App* app = context;
 	submenu_reset(app->submenu);
-	submenu_set_header(app->submenu, "Voltage Calculator");
-	submenu_add_item(app->submenu, "Voltage", VoltcalcScenesMainMenuSceneVoltage, voltcalc_scenes_menu_callback, app);
-	submenu_add_item(app->submenu, "Resistance", VoltcalcScenesMainMenuSceneResistance, voltcalc_scenes_menu_callback, app);
-	submenu_add_item(app->submenu, "Current", VoltcalcScenesMainMenuSceneCurrent, voltcalc_scenes_menu_callback, app);
-	submenu_add_item(app->submenu, "Calculate", VoltcalcScenesMainMenuSceneCalculate, voltcalc_scenes_menu_callback, app);
-	submenu_add_item(app->submenu, "About", VoltcalcScenesMainMenuSceneAbout, voltcalc_scenes_menu_callback, app);
+	submenu_set_header(app->submenu, VOLTCALC_UI_TEXT("Voltage Calculator", "电压计算器"));
+	submenu_add_item(app->submenu, VOLTCALC_UI_TEXT("Voltage", "电压"), VoltcalcScenesMainMenuSceneVoltage, voltcalc_scenes_menu_callback, app);
+	submenu_add_item(app->submenu, VOLTCALC_UI_TEXT("Resistance", "电阻"), VoltcalcScenesMainMenuSceneResistance, voltcalc_scenes_menu_callback, app);
+	submenu_add_item(app->submenu, VOLTCALC_UI_TEXT("Current", "电流"), VoltcalcScenesMainMenuSceneCurrent, voltcalc_scenes_menu_callback, app);
+	submenu_add_item(app->submenu, VOLTCALC_UI_TEXT("Calculate", "计算"), VoltcalcScenesMainMenuSceneCalculate, voltcalc_scenes_menu_callback, app);
+	submenu_add_item(app->submenu, VOLTCALC_UI_TEXT("About", "关于"), VoltcalcScenesMainMenuSceneAbout, voltcalc_scenes_menu_callback, app);
 	view_dispatcher_switch_to_view(app->view_dispatcher, VoltcalcScenesSubmenuView);
 }
 
@@ -246,7 +252,7 @@ void voltcalc_scenes_voltage_scene_on_enter(void* context) {
 	bool clear_text = true;
 	strcpy(app->buffer, app->V); // Copy the result from the keyboard into our context
 	text_input_reset(app->text_input);
-	text_input_set_header_text(app->text_input, "Enter voltage:");
+	text_input_set_header_text(app->text_input, VOLTCALC_UI_TEXT("Enter voltage:", "输入电压:"));
 	text_input_set_result_callback(
 		app->text_input,
 		voltcalc_scenes_voltage_callback,
@@ -283,7 +289,7 @@ void voltcalc_scenes_resistance_scene_on_enter(void* context) {
 	bool clear_text = true;
 	strcpy(app->buffer, app->R); // Copy the value from the keyboard into our context
 	text_input_reset(app->text_input);
-	text_input_set_header_text(app->text_input, "Enter resistance:");
+	text_input_set_header_text(app->text_input, VOLTCALC_UI_TEXT("Enter resistance:", "输入电阻:"));
 	text_input_set_result_callback(
 		app->text_input,
 		voltcalc_scenes_resistance_callback,
@@ -321,7 +327,7 @@ void voltcalc_scenes_current_scene_on_enter(void* context) {
 	bool clear_text = true;
 	strcpy(app->buffer, app->I); // Copy the value from the keyboard into our context.
 	text_input_reset(app->text_input);
-	text_input_set_header_text(app->text_input, "Enter current:");
+	text_input_set_header_text(app->text_input, VOLTCALC_UI_TEXT("Enter current:", "输入电流:"));
 	text_input_set_result_callback(
 		app->text_input,
 		voltcalc_scenes_current_callback,
@@ -359,21 +365,21 @@ void voltcalc_scenes_calculate_scene_on_enter(void* context) {
 	widget_reset(app->widget);
 	FuriString* message = furi_string_alloc(); // for concat?
 
-	furi_string_printf(message, "Voltage: %s", app->V);
+	furi_string_printf(message, VOLTCALC_UI_TEXT("Voltage: %s", "电压: %s"), app->V);
 	widget_add_string_element(
 		app->widget, 
 		5, 5, 
 		AlignLeft, AlignCenter, 
 		FontPrimary,
 		furi_string_get_cstr(message));
-	furi_string_printf(message, "Resistance: %s", app->R);
+	furi_string_printf(message, VOLTCALC_UI_TEXT("Resistance: %s", "电阻: %s"), app->R);
 	widget_add_string_element(
 		app->widget, 
 		5, 15, 
 		AlignLeft, AlignCenter, 
 		FontPrimary,
 		furi_string_get_cstr(message));
-	furi_string_printf(message, "Current: %s", app->I);
+	furi_string_printf(message, VOLTCALC_UI_TEXT("Current: %s", "电流: %s"), app->I);
 	widget_add_string_element(
 		app->widget, 
 		5, 25, 
@@ -405,7 +411,9 @@ void voltcalc_scenes_about_scene_on_enter(void* context) {
 	widget_reset(app->widget);
 	widget_add_text_scroll_element(
 		app->widget, 1, 1, 128, 64,
-		"\e#About\n\nVRI Calculator\n\nEnter at least two values\nand the app will solve the\nthird. Use '_' for a\ndecimal.\n\n(c) Andrew Diamond\n\nSpecial thanks to Derek\nJamison for his flipper\ntutorials.\n https://github.com/jamisonderek\n\nA large thank you to the\nrest of the F0 developer\ncommunity that have taken\nthe time to help others\nwith their knowledge.\n");
+		VOLTCALC_UI_TEXT(
+			"\e#About\n\nVRI Calculator\n\nEnter at least two values\nand the app will solve the\nthird. Use '_' for a\ndecimal.\n\n(c) Andrew Diamond\n\nSpecial thanks to Derek\nJamison for his flipper\ntutorials.\n https://github.com/jamisonderek\n\nA large thank you to the\nrest of the F0 developer\ncommunity that have taken\nthe time to help others\nwith their knowledge.\n",
+			"\e#关于\n\nVRI 计算器\n\n输入至少两个值\n应用将计算第三个值。\n使用 '_' 作为小数点。\n\n(c) Andrew Diamond\n\n特别感谢 Derek\nJamison 的 Flipper\n教程。\n https://github.com/jamisonderek\n\n非常感谢 F0 开发者\n社区中所有花时间\n帮助他人的成员。\n"));
 	view_dispatcher_switch_to_view(app->view_dispatcher, VoltcalcScenesWidgetView);
 }
 

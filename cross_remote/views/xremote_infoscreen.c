@@ -27,14 +27,14 @@ void xremote_infoscreen_draw(Canvas* canvas, XRemoteInfoscreenModel* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "Cross Remote");
+    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Cross Remote", "Cross Remote"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, "Chain IR and SubGhz");
-    canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignTop, "Commands");
+    canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Chain IR and SubGhz", "\xe4\xb8\xb2\xe8\x81\x94 IR \xe4\xb8\x8e SubGhz"));
+    canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Commands", "\xe5\x91\xbd\xe4\xbb\xa4"));
 
-    snprintf(buffer, sizeof(buffer), "Version: %s", XREMOTE_VERSION);
+    snprintf(buffer, sizeof(buffer), XREMOTE_UI_TEXT("Version: %s", "\xe7\x89\x88\xe6\x9c\xac: %s"), XREMOTE_VERSION);
     canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignTop, buffer);
-    elements_button_center(canvas, "Back");
+    elements_button_center(canvas, XREMOTE_UI_TEXT("Back", "\xe8\xbf\x94\xe5\x9b\x9e"));
 }
 
 static void xremote_infoscreen_model_init(XRemoteInfoscreenModel* const model) {

@@ -15,12 +15,12 @@ void nfc_magic_scene_wipe_fail_on_enter(void* context) {
     notification_message(instance->notifications, &sequence_error);
 
     widget_add_icon_element(widget, 83, 22, &I_WarningDolphinFlip_45x42);
-    widget_add_string_element(widget, 64, 0, AlignCenter, AlignTop, FontPrimary, "Failed to Wipe");
+    widget_add_string_element(widget, 64, 0, AlignCenter, AlignTop, FontPrimary, NFC_MAGIC_UI_TEXT("Failed to Wipe", "擦除失败"));
     widget_add_string_multiline_element(
-        widget, 0, 13, AlignLeft, AlignTop, FontSecondary, "Something went\nwrong while wiping");
+        widget, 0, 13, AlignLeft, AlignTop, FontSecondary, NFC_MAGIC_UI_TEXT("Something went\nwrong while wiping", "擦除过程中\n发生错误"));
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", nfc_magic_scene_wipe_fail_widget_callback, instance);
+        widget, GuiButtonTypeLeft, NFC_MAGIC_UI_TEXT("Retry", "重试"), nfc_magic_scene_wipe_fail_widget_callback, instance);
 
     // Setup and start worker
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewWidget);

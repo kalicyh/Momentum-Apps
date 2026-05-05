@@ -104,12 +104,12 @@ void cancommander_scene_custom_inject_load_slots_menu_on_enter(void* context) {
     cancommander_scene_custom_inject_set_list_scan();
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Load Slots");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Load Slots", "加载槽位"));
 
     if(cancommander_custom_inject_set_count == 0U) {
         submenu_add_item(
             app->submenu,
-            "No saved slot sets",
+            CAN_COMMANDER_UI_TEXT("No saved slot sets", "无已保存的槽位组"),
             0xFFU,
             cancommander_scene_custom_inject_load_slots_menu_callback,
             app);

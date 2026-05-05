@@ -14,7 +14,7 @@ void seader_scene_apdu_runner_on_enter(void* context) {
     Seader* seader = context;
     // Setup view
     Popup* popup = seader->popup;
-    popup_set_header(popup, "APDU Runner", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEADER_UI_TEXT("APDU Runner", "APDU运行器"), 68, 30, AlignLeft, AlignTop);
 
     // TODO: Make icon for interaction with SAM
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinSend_97x61);
@@ -53,11 +53,11 @@ bool seader_scene_apdu_runner_on_event(void* context, SceneManagerEvent event) {
             consumed = true;
         } else if(event.event == SeaderWorkerEventAPDURunnerSuccess) {
             notification_message(seader->notifications, &sequence_success);
-            popup_set_header(popup, "APDU Runner\nSuccess", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, SEADER_UI_TEXT("APDU Runner\nSuccess", "APDU运行器\n成功"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeaderWorkerEventAPDURunnerError) {
             notification_message(seader->notifications, &sequence_error);
-            popup_set_header(popup, "APDU Runner\nError", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, SEADER_UI_TEXT("APDU Runner\nError", "APDU运行器\n错误"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

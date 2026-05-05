@@ -45,7 +45,7 @@ static void cancommander_scene_tools_monitor_open_tool_args(
         args,
         args_size,
         title,
-        "Start",
+        CAN_COMMANDER_UI_TEXT("Start", "启动"),
         cancommander_scene_tools_monitor_start_pending,
         cancommander_scene_monitor);
 
@@ -56,47 +56,47 @@ void cancommander_scene_tools_monitor_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Monitor & Discovery");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Monitor & Discovery", "监测与发现"));
 
     submenu_add_item(
         app->submenu,
-        "Read All Frames",
+        CAN_COMMANDER_UI_TEXT("Read All Frames", "读取所有帧"),
         ToolsMonitorReadAll,
         cancommander_scene_tools_monitor_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Filter & Read Frames",
+        CAN_COMMANDER_UI_TEXT("Filter & Read Frames", "过滤读取帧"),
         ToolsMonitorFiltered,
         cancommander_scene_tools_monitor_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Unique IDs",
+        CAN_COMMANDER_UI_TEXT("Unique IDs", "唯一 ID"),
         ToolsMonitorUniqueIds,
         cancommander_scene_tools_monitor_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Bit Tracker",
+        CAN_COMMANDER_UI_TEXT("Bit Tracker", "位追踪器"),
         ToolsMonitorBittrack,
         cancommander_scene_tools_monitor_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Auto Reverse Engineer",
+        CAN_COMMANDER_UI_TEXT("Auto Reverse Engineer", "自动逆向工程"),
         ToolsMonitorReverseAuto,
         cancommander_scene_tools_monitor_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Value Tracker",
+        CAN_COMMANDER_UI_TEXT("Value Tracker", "值追踪器"),
         ToolsMonitorValtrack,
         cancommander_scene_tools_monitor_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "CAN Speed Test",
+        CAN_COMMANDER_UI_TEXT("CAN Speed Test", "CAN 速度测试"),
         ToolsMonitorSpeed,
         cancommander_scene_tools_monitor_menu_callback,
         app);
@@ -126,7 +126,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "read_all",
             app->args_read_all,
             sizeof(app->args_read_all),
-            "Read All");
+            CAN_COMMANDER_UI_TEXT("Read All", "读取全部"));
         return true;
 
     case ToolsMonitorFiltered:
@@ -136,7 +136,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "filtered",
             app->args_filtered,
             sizeof(app->args_filtered),
-            "Read Filtered Frames");
+            CAN_COMMANDER_UI_TEXT("Read Filtered Frames", "读取过滤帧"));
         return true;
 
     case ToolsMonitorUniqueIds:
@@ -146,7 +146,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "unique_ids",
             app->args_unique_ids,
             sizeof(app->args_unique_ids),
-            "Unique IDs Tool");
+            CAN_COMMANDER_UI_TEXT("Unique IDs Tool", "唯一 ID 工具"));
         return true;
 
     case ToolsMonitorBittrack:
@@ -156,7 +156,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "bittrack",
             app->args_bittrack,
             sizeof(app->args_bittrack),
-            "Bit Tracker");
+            CAN_COMMANDER_UI_TEXT("Bit Tracker", "位追踪器"));
         return true;
 
     case ToolsMonitorReverseAuto:
@@ -166,7 +166,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "reverse(auto)",
             app->args_reverse_auto,
             sizeof(app->args_reverse_auto),
-            "Auto Reverse Engineer");
+            CAN_COMMANDER_UI_TEXT("Auto Reverse Engineer", "自动逆向工程"));
         return true;
 
     case ToolsMonitorValtrack:
@@ -176,7 +176,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "valtrack",
             app->args_valtrack,
             sizeof(app->args_valtrack),
-            "Value Tracker");
+            CAN_COMMANDER_UI_TEXT("Value Tracker", "值追踪器"));
         return true;
 
     case ToolsMonitorSpeed:
@@ -186,7 +186,7 @@ bool cancommander_scene_tools_monitor_menu_on_event(void* context, SceneManagerE
             "speed",
             app->args_speed,
             sizeof(app->args_speed),
-            "CAN Speed Test");
+            CAN_COMMANDER_UI_TEXT("CAN Speed Test", "CAN 速度测试"));
         return true;
 
     default:

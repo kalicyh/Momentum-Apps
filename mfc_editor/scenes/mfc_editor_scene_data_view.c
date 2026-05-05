@@ -30,20 +30,20 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
         if(memcmp(
                iso14443_3a_data->uid, mf_classic_data->block[0].data, iso14443_3a_data->uid_len)) {
             // ISO-14443 UID does not match first bytes of block 0
-            furi_string_cat_printf(instance->data_view_text, "\nBlock 0 does not match UID!\n(");
+            furi_string_cat_printf(instance->data_view_text, MFC_EDITOR_UI_TEXT("\nBlock 0 does not match UID!\n(", "\n块 0 与 UID 不匹配!\n("));
             mfc_editor_furi_string_render_bytes(
                 instance->data_view_text,
                 mf_classic_data->block[0].data,
                 iso14443_3a_data->uid_len);
             furi_string_push_back(instance->data_view_text, ')');
-            dialog_ex_set_center_button_text(dialog_ex, "Fix");
+            dialog_ex_set_center_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Fix", "修复"));
         }
 
         if(mf_classic_is_block_read(mf_classic_data, 0)) {
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         }
     } else if(block_view == MfcEditorBlockViewBCC) {
-        dialog_ex_set_header(dialog_ex, "Block Check Character", 63, 3, AlignCenter, AlignTop);
+        dialog_ex_set_header(dialog_ex, MFC_EDITOR_UI_TEXT("Block Check Character", "块校验字符"), 63, 3, AlignCenter, AlignTop);
 
         uint8_t stored_bcc = mf_classic_data->block[0].data[4];
         uint8_t calculated_bcc =
@@ -52,22 +52,22 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
         if(mf_classic_is_block_read(mf_classic_data, 0)) {
             furi_string_printf(
                 instance->data_view_text,
-                "Stored BCC: %02X\nActual BCC: %02X",
+                MFC_EDITOR_UI_TEXT("Stored BCC: %02X\nActual BCC: %02X", "存储BCC: %02X\n实际BCC: %02X"),
                 stored_bcc,
                 calculated_bcc);
 
             if(stored_bcc != calculated_bcc) {
-                furi_string_cat(instance->data_view_text, "\n(Mismatch!)");
-                dialog_ex_set_center_button_text(dialog_ex, "Fix");
+                furi_string_cat(instance->data_view_text, MFC_EDITOR_UI_TEXT("\n(Mismatch!)", "\n(不匹配!)"));
+                dialog_ex_set_center_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Fix", "修复"));
             }
         } else {
             furi_string_printf(
                 instance->data_view_text,
-                "Actual BCC: %02X\nStored BCC is unavailable\nas Block 0 has not been read.",
+                MFC_EDITOR_UI_TEXT("Actual BCC: %02X\nStored BCC is unavailable\nas Block 0 has not been read.", "实际BCC: %02X\n存储的BCC不可用\n因为块 0 未被读取。"),
                 calculated_bcc);
         }
     } else if(block_view == MfcEditorBlockViewManufacturerBytes) {
-        dialog_ex_set_header(dialog_ex, "Manufacturer Bytes", 63, 3, AlignCenter, AlignTop);
+        dialog_ex_set_header(dialog_ex, MFC_EDITOR_UI_TEXT("Manufacturer Bytes", "制造商字节"), 63, 3, AlignCenter, AlignTop);
 
         if(mf_classic_is_block_read(mf_classic_data, 0)) {
             // Skip BCC byte (not present on 7B UID cards)
@@ -84,36 +84,36 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
                 mf_classic_data->block[0].data + start_index + line_len,
                 byte_num - line_len);
 
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         } else {
             furi_string_set(
-                instance->data_view_text, "Data unavailable.\nBlock 0 has not been read.");
+                instance->data_view_text, MFC_EDITOR_UI_TEXT("Data unavailable.\nBlock 0 has not been read.", "数据不可用。\n块 0 未被读取。"));
         }
     } else if(block_view == MfcEditorBlockViewKeyA) {
-        dialog_ex_set_header(dialog_ex, "Key A", 63, 3, AlignCenter, AlignTop);
+        dialog_ex_set_header(dialog_ex, MFC_EDITOR_UI_TEXT("Key A", "密钥 A"), 63, 3, AlignCenter, AlignTop);
 
         if(mf_classic_is_key_found(mf_classic_data, instance->current_sector, MfClassicKeyTypeA)) {
             MfClassicSectorTrailer* sector_trailer =
                 mf_classic_get_sector_trailer_by_sector(mf_classic_data, instance->current_sector);
             mfc_editor_furi_string_render_bytes(
                 instance->data_view_text, sector_trailer->key_a.data, MF_CLASSIC_KEY_SIZE);
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         } else {
             furi_string_set(
-                instance->data_view_text, "Key A has not been found\nfor this sector.");
+                instance->data_view_text, MFC_EDITOR_UI_TEXT("Key A has not been found\nfor this sector.", "未找到该扇区的密钥 A。"));
         }
     } else if(block_view == MfcEditorBlockViewKeyB) {
-        dialog_ex_set_header(dialog_ex, "Key B", 63, 3, AlignCenter, AlignTop);
+        dialog_ex_set_header(dialog_ex, MFC_EDITOR_UI_TEXT("Key B", "密钥 B"), 63, 3, AlignCenter, AlignTop);
 
         if(mf_classic_is_key_found(mf_classic_data, instance->current_sector, MfClassicKeyTypeB)) {
             MfClassicSectorTrailer* sector_trailer =
                 mf_classic_get_sector_trailer_by_sector(mf_classic_data, instance->current_sector);
             mfc_editor_furi_string_render_bytes(
                 instance->data_view_text, sector_trailer->key_b.data, MF_CLASSIC_KEY_SIZE);
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         } else {
             furi_string_set(
-                instance->data_view_text, "Key B has not been found\nfor this sector.");
+                instance->data_view_text, MFC_EDITOR_UI_TEXT("Key B has not been found\nfor this sector.", "未找到该扇区的密钥 B。"));
         }
     } else if(block_view == MfcEditorBlockViewAccessBits) {
         uint8_t sector_trailer_num =
@@ -121,7 +121,7 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
 
         if(mf_classic_is_block_read(mf_classic_data, sector_trailer_num)) {
             furi_string_printf(
-                instance->data_view_header, "Access Bits (Block %u)", instance->current_block);
+                instance->data_view_header, MFC_EDITOR_UI_TEXT("Access Bits (Block %u)", "访问位 (块 %u)"), instance->current_block);
             dialog_ex_set_header(
                 dialog_ex,
                 furi_string_get_cstr(instance->data_view_header),
@@ -146,7 +146,7 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
             if(access_bits.bits != access_bits.check_bits) {
                 furi_string_cat(
                     instance->data_view_text,
-                    "Access Bits are invalid.\nEntire sector inaccessible.");
+                    MFC_EDITOR_UI_TEXT("Access Bits are invalid.\nEntire sector inaccessible.", "访问位无效。\n整个扇区不可访问。"));
             } else if(instance->current_block == sector_trailer_num) {
                 furi_string_cat(
                     instance->data_view_text, access_sector_trailer_labels[access_bits.bits]);
@@ -155,18 +155,18 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
                     instance->data_view_text, access_data_block_labels[access_bits.bits]);
             }
 
-            dialog_ex_set_center_button_text(dialog_ex, "Next");
-            dialog_ex_set_left_button_text(dialog_ex, "Prev");
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_center_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Next", "下一个"));
+            dialog_ex_set_left_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Prev", "上一个"));
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         } else {
-            dialog_ex_set_header(dialog_ex, "Access Bits", 63, 3, AlignCenter, AlignTop);
+            dialog_ex_set_header(dialog_ex, MFC_EDITOR_UI_TEXT("Access Bits", "访问位"), 63, 3, AlignCenter, AlignTop);
             furi_string_printf(
                 instance->data_view_text,
-                "Access Bits unavailable.\nBlock %u has not been read.",
+                MFC_EDITOR_UI_TEXT("Access Bits unavailable.\nBlock %u has not been read.", "访问位不可用。\n块 %u 未被读取。"),
                 sector_trailer_num);
         }
     } else if(block_view == MfcEditorBlockViewUserByte) {
-        dialog_ex_set_header(dialog_ex, "User Byte", 63, 3, AlignCenter, AlignTop);
+        dialog_ex_set_header(dialog_ex, MFC_EDITOR_UI_TEXT("User Byte", "用户字节"), 63, 3, AlignCenter, AlignTop);
 
         uint8_t sector_trailer_num =
             mf_classic_get_sector_trailer_num_by_sector(instance->current_sector);
@@ -174,18 +174,18 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
         if(mf_classic_is_block_read(mf_classic_data, sector_trailer_num)) {
             furi_string_printf(
                 instance->data_view_text,
-                "Free byte between\nAccess Bits and Key B:\n%02X",
+                MFC_EDITOR_UI_TEXT("Free byte between\nAccess Bits and Key B:\n%02X", "访问位与密钥 B之间的\n自由字节:\n%02X"),
                 mf_classic_data->block[sector_trailer_num].data[9]);
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         } else {
             furi_string_printf(
                 instance->data_view_text,
-                "Data unavailable.\nBlock %u has not been read.",
+                MFC_EDITOR_UI_TEXT("Data unavailable.\nBlock %u has not been read.", "数据不可用。\n块 %u 未被读取。"),
                 sector_trailer_num);
         }
     } else {
         uint8_t current_block = instance->current_block;
-        furi_string_printf(instance->data_view_header, "Block %u Data", current_block);
+        furi_string_printf(instance->data_view_header, MFC_EDITOR_UI_TEXT("Block %u Data", "块 %u 数据"), current_block);
         dialog_ex_set_header(
             dialog_ex,
             furi_string_get_cstr(instance->data_view_header),
@@ -210,10 +210,10 @@ void mfc_editor_scene_data_view_update_display(MfcEditorApp* instance) {
                 instance->data_view_text,
                 block_data + MF_CLASSIC_BLOCK_SIZE / 2,
                 MF_CLASSIC_BLOCK_SIZE / 2);
-            dialog_ex_set_right_button_text(dialog_ex, "Edit");
+            dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Edit", "编辑"));
         } else {
             furi_string_set(
-                instance->data_view_text, "Data unavailable.\nBlock has not been fully read.");
+                instance->data_view_text, MFC_EDITOR_UI_TEXT("Data unavailable.\nBlock has not been fully read.", "数据不可用。\n块未被完整读取。"));
         }
     }
 

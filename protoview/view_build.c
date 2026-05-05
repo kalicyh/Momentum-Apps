@@ -48,9 +48,9 @@ static void select_prev_decoder(ProtoViewApp* app) {
 static void render_view_select_decoder(Canvas* const canvas, ProtoViewApp* app) {
     BuildViewPrivData* privdata = app->view_privdata;
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 9, "Signal creator");
+    canvas_draw_str(canvas, 0, 9, PROTOVIEW_UI_TEXT("Signal creator", "信号创建器"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 19, "up/down: select, ok: choose");
+    canvas_draw_str(canvas, 0, 19, PROTOVIEW_UI_TEXT("up/down: select, ok: choose", "上下选择 确认确定"));
 
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str_aligned(
@@ -75,7 +75,7 @@ static void render_view_set_fields(Canvas* const canvas, ProtoViewApp* app) {
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 1, 9, buf);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 1, 19, "up/down: next field, ok: edit");
+    canvas_draw_str(canvas, 1, 19, PROTOVIEW_UI_TEXT("up/down: next field, ok: edit", "上下切换 确认编辑"));
 
     /* Write the field name, type, current content. */
     canvas_set_color(canvas, ColorBlack);
@@ -94,7 +94,7 @@ static void render_view_set_fields(Canvas* const canvas, ProtoViewApp* app) {
     canvas_draw_str_aligned(canvas, 63, 45, AlignCenter, AlignCenter, buf);
 
     /* Footer instructions. */
-    canvas_draw_str(canvas, 0, 62, "Long ok: create, < > incr/decr");
+    canvas_draw_str(canvas, 0, 62, PROTOVIEW_UI_TEXT("Long ok: create, < > incr/decr", "长按创建 左右增减"));
 }
 
 /* Render the build message view. */
@@ -148,7 +148,7 @@ static void text_input_done_callback(void* context) {
            privdata->fieldset->fields[privdata->cur_field],
            privdata->user_value,
            strlen(privdata->user_value)) == false) {
-        ui_show_alert(app, "Invalid value", 1500);
+        ui_show_alert(app, PROTOVIEW_UI_TEXT("Invalid value", "无效值"), 1500);
     }
 
     free(privdata->user_value);
@@ -210,7 +210,7 @@ static void process_input_set_fields(ProtoViewApp* app, InputEvent input) {
                 // accepted as the current signal.
             scan_for_signal(app, rs, 5);
             raw_samples_free(rs);
-            ui_show_alert(app, "Done: press back key", 3000);
+            ui_show_alert(app, PROTOVIEW_UI_TEXT("Done: press back key", "完成 按返回键"), 3000);
         }
     }
 }

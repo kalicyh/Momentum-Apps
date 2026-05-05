@@ -27,19 +27,27 @@ void seos_scene_main_menu_on_enter(void* context) {
     submenu_reset(submenu);
 
     submenu_add_item(
-        submenu, "Saved", SubmenuIndexSaved, seos_scene_main_menu_submenu_callback, seos);
-    submenu_add_item(
-        submenu, "Read NFC", SubmenuIndexRead, seos_scene_main_menu_submenu_callback, seos);
+        submenu,
+        SEOS_UI_TEXT("Saved", "已保存"),
+        SubmenuIndexSaved,
+        seos_scene_main_menu_submenu_callback,
+        seos);
     submenu_add_item(
         submenu,
-        "Start BLE Reader",
+        SEOS_UI_TEXT("Read NFC", "读取 NFC"),
+        SubmenuIndexRead,
+        seos_scene_main_menu_submenu_callback,
+        seos);
+    submenu_add_item(
+        submenu,
+        SEOS_UI_TEXT("Start BLE Reader", "启动 BLE 读取"),
         SubmenuIndexBLEReader,
         seos_scene_main_menu_submenu_callback,
         seos);
     if(seos->has_external_ble) {
         submenu_add_item(
             submenu,
-            "Scanners >",
+            SEOS_UI_TEXT("Scanners >", "扫描器 >"),
             SubmenuIndexScannerMenu,
             seos_scene_main_menu_submenu_callback,
             seos);
@@ -60,7 +68,7 @@ void seos_scene_main_menu_on_enter(void* context) {
     if(storage_dir_exists(seos->credential->storage, SEADER_PATH)) {
         submenu_add_item(
             submenu,
-            "Saved (Seader)",
+            SEOS_UI_TEXT("Saved (Seader)", "已保存 (Seader)"),
             SubmenuIndexSavedSeader,
             seos_scene_main_menu_submenu_callback,
             seos);
@@ -71,16 +79,23 @@ void seos_scene_main_menu_on_enter(void* context) {
         snprintf(
             keys_label,
             sizeof(keys_label),
-            "Keys > (%s)",
+            SEOS_UI_TEXT("Keys > (%s)", "密钥 > (%s)"),
             furi_string_get_cstr(seos->active_key_file));
     } else {
-        snprintf(keys_label, sizeof(keys_label), "Keys > (zero)");
+        snprintf(
+            keys_label,
+            sizeof(keys_label),
+            SEOS_UI_TEXT("Keys > (zero)", "密钥 > (零)"));
     }
     submenu_add_item(
         submenu, keys_label, SubmenuIndexKeys, seos_scene_main_menu_submenu_callback, seos);
 
     submenu_add_item(
-        submenu, "About", SubmenuIndexAbout, seos_scene_main_menu_submenu_callback, seos);
+        submenu,
+        SEOS_UI_TEXT("About", "关于"),
+        SubmenuIndexAbout,
+        seos_scene_main_menu_submenu_callback,
+        seos);
 
     submenu_set_selected_item(
         seos->submenu, scene_manager_get_scene_state(seos->scene_manager, SeosSceneMainMenu));

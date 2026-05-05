@@ -249,14 +249,14 @@ static void _draw_view_noSensors(Canvas* canvas) {
     canvas_draw_rframe(canvas, 0, 0, 128, 63, 7);
     canvas_draw_rframe(canvas, 0, 0, 128, 64, 7);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 63, 10, AlignCenter, AlignCenter, "No sensors found");
+    canvas_draw_str_aligned(canvas, 63, 10, AlignCenter, AlignCenter, UNITEMP_UI_TEXT("No sensors found", "未找到传感器"));
     canvas_set_font(canvas, FontSecondary);
     const uint8_t x = 65, y = 32;
     canvas_draw_rframe(canvas, x - 4, y - 11, 54, 33, 3);
     canvas_draw_rframe(canvas, x - 4, y - 11, 54, 34, 3);
-    canvas_draw_str(canvas, x, y, "To add the");
-    canvas_draw_str(canvas, x, y + 9, "new sensor");
-    canvas_draw_str(canvas, x, y + 18, "press OK");
+    canvas_draw_str(canvas, x, y, UNITEMP_UI_TEXT("To add the", "按OK键"));
+    canvas_draw_str(canvas, x, y + 9, UNITEMP_UI_TEXT("new sensor", "添加新"));
+    canvas_draw_str(canvas, x, y + 18, UNITEMP_UI_TEXT("press OK", "传感器"));
 
     canvas_draw_icon(canvas, x + 37, y + 10, &I_Ok_btn_9x9);
 }
@@ -315,7 +315,7 @@ static void _draw_carousel_values(Canvas* canvas) {
             snprintf(
                 app->buff,
                 BUFF_SIZE,
-                "Waiting for module on pin %d",
+                UNITEMP_UI_TEXT("Waiting for module on pin %d", "等待引脚 %d 上的模块"),
                 ((SingleWireSensor*)unitemp_sensor_getActive(generalview_sensor_index)->instance)
                     ->gpio->num);
         }
@@ -323,15 +323,15 @@ static void _draw_carousel_values(Canvas* canvas) {
             snprintf(
                 app->buff,
                 BUFF_SIZE,
-                "Waiting for module on pin %d",
+                UNITEMP_UI_TEXT("Waiting for module on pin %d", "等待引脚 %d 上的模块"),
                 ((OneWireSensor*)unitemp_sensor_getActive(generalview_sensor_index)->instance)
                     ->bus->gpio->num);
         }
         if(unitemp_sensor_getActive(generalview_sensor_index)->type->interface == &I2C) {
-            snprintf(app->buff, BUFF_SIZE, "Waiting for module on I2C pins");
+            snprintf(app->buff, BUFF_SIZE, UNITEMP_UI_TEXT("Waiting for module on I2C pins", "等待 I2C 引脚上的模块"));
         }
         if(unitemp_sensor_getActive(generalview_sensor_index)->type->interface == &SPI) {
-            snprintf(app->buff, BUFF_SIZE, "Waiting for module on SPI pins");
+            snprintf(app->buff, BUFF_SIZE, UNITEMP_UI_TEXT("Waiting for module on SPI pins", "等待 SPI 引脚上的模块"));
         }
         canvas_draw_str_aligned(canvas, 64, 19, AlignCenter, AlignCenter, app->buff);
         return;
@@ -408,7 +408,7 @@ static void _draw_carousel_values(Canvas* canvas) {
 //TODO: Optimize information output
 static void _draw_carousel_info(Canvas* canvas) {
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 10, 23, "Type:");
+    canvas_draw_str(canvas, 10, 23, UNITEMP_UI_TEXT("Type:", "型号:"));
 
     if(unitemp_sensor_getActive(generalview_sensor_index)->type->interface == &ONE_WIRE) {
         OneWireSensor* s = unitemp_sensor_getActive(generalview_sensor_index)->instance;
@@ -455,9 +455,9 @@ static void _draw_carousel_info(Canvas* canvas) {
 
     if(unitemp_sensor_getActive(generalview_sensor_index)->type->interface == &SPI) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 10, 35, "MISO pin:");
-        canvas_draw_str(canvas, 10, 46, "CS pin:");
-        canvas_draw_str(canvas, 10, 58, "SCK pin:");
+        canvas_draw_str(canvas, 10, 35, UNITEMP_UI_TEXT("MISO pin:", "MISO 引脚:"));
+        canvas_draw_str(canvas, 10, 46, UNITEMP_UI_TEXT("CS pin:", "CS 引脚:"));
+        canvas_draw_str(canvas, 10, 58, UNITEMP_UI_TEXT("SCK pin:", "SCK 引脚:"));
 
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(
@@ -474,9 +474,9 @@ static void _draw_carousel_info(Canvas* canvas) {
 
     if(unitemp_sensor_getActive(generalview_sensor_index)->type->interface == &I2C) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 10, 35, "I2C addr:");
-        canvas_draw_str(canvas, 10, 46, "SDA pin:");
-        canvas_draw_str(canvas, 10, 58, "SCL pin:");
+        canvas_draw_str(canvas, 10, 35, UNITEMP_UI_TEXT("I2C addr:", "I2C 地址:"));
+        canvas_draw_str(canvas, 10, 46, UNITEMP_UI_TEXT("SDA pin:", "SDA 引脚:"));
+        canvas_draw_str(canvas, 10, 58, UNITEMP_UI_TEXT("SCL pin:", "SCL 引脚:"));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(
             canvas, 41, 23, unitemp_sensor_getActive(generalview_sensor_index)->type->typename);

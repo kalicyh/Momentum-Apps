@@ -3,11 +3,23 @@
 #include <src/include/pokemon_data.h>
 #include <src/include/pokemon_attribute.h>
 
-static const char* gender_str[] = {
+static const char* gender_str_en[] = {
     "Unknown",
     "Female",
     "Male",
 };
+
+static const char* gender_str_zh[] = {
+    "未知",
+    "雌性",
+    "雄性",
+};
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GENDER_STR gender_str_zh
+#else
+#define GENDER_STR gender_str_en
+#endif
 
 /* This returns a string pointer if the gender is static, NULL if it is not and
  * the gender needs to be calculated.
@@ -15,12 +27,12 @@ static const char* gender_str[] = {
 const char* pokemon_gender_is_static(PokemonData* pdata, uint8_t ratio) {
     switch(ratio) {
     case 0xFF:
-        return gender_str[0];
+        return GENDER_STR[0];
     case 0xFE:
-        return gender_str[1];
+        return GENDER_STR[1];
     case 0x00:
         if(pokemon_stat_get(pdata, STAT_NUM, NONE) != 0xEB) { // Tyrogue can be either gender
-            return gender_str[2];
+            return GENDER_STR[2];
         }
         break;
     default:
@@ -47,9 +59,9 @@ const char* pokemon_gender_get(PokemonData* pdata) {
      */
     atk_iv = pokemon_stat_get(pdata, STAT_ATK_IV, NONE);
     if(atk_iv * 17 <= ratio)
-        return gender_str[1];
+        return GENDER_STR[1];
     else
-        return gender_str[2];
+        return GENDER_STR[2];
 }
 
 void pokemon_gender_set(PokemonData* pdata, Gender gender) {
@@ -86,23 +98,36 @@ void pokemon_gender_set(PokemonData* pdata, Gender gender) {
     pokemon_stat_set(pdata, STAT_ATK_IV, NONE, atk_iv);
 }
 
-static const char* pokerus_states[] = {
+static const char* pokerus_states_en[] = {
     "Clean",
     "Infected",
     "Cured",
     "",
 };
 
+static const char* pokerus_states_zh[] = {
+    "未感染",
+    "已感染",
+    "已治愈",
+    "",
+};
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define POKERUS_STATES pokerus_states_zh
+#else
+#define POKERUS_STATES pokerus_states_en
+#endif
+
 const char* pokerus_get_status_str(PokemonData* pdata) {
     uint8_t pokerus;
 
     pokerus = pokemon_stat_get(pdata, STAT_POKERUS, NONE);
 
-    if(pokerus == 0x00) return pokerus_states[0];
+    if(pokerus == 0x00) return POKERUS_STATES[0];
 
-    if((pokerus & 0x0f) != 0x00) return pokerus_states[1];
+    if((pokerus & 0x0f) != 0x00) return POKERUS_STATES[1];
 
-    return pokerus_states[2];
+    return POKERUS_STATES[2];
 }
 
 void pokerus_set_strain(PokemonData* pdata, uint8_t strain) {

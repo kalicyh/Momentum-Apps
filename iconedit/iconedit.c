@@ -111,7 +111,7 @@ bool iconedit_input_process_event(InputEvent* event, void* context) {
         if(!consumed) {
             if(app->dirty) {
                 app->panel = Panel_Dialog;
-                dialog_setup("Unsaved changes, exit?", Dialog_OK_CANCEL, iconedit_user_exit, app);
+                dialog_setup(ICONEDIT_UI_TEXT("Unsaved changes, exit?", "未保存的更改，退出?"), Dialog_OK_CANCEL, iconedit_user_exit, app);
             } else {
                 app->running = false;
             }

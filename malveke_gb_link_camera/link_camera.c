@@ -2,6 +2,12 @@
 #include <gui/elements.h>
 #include <malveke_gb_link_camera_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define LINKCAMERA_UI_TEXT(en, zh) (zh)
+#else
+#define LINKCAMERA_UI_TEXT(en, zh) (en)
+#endif
+
 QRCode qrcode;
 uint8_t qrcodeData[((((4 * 8 + 17) * (4 * 8 + 17)) + 7) / 8)];
 
@@ -22,23 +28,23 @@ static void view_draw_callback(Canvas* canvas, void* _model) {
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 2, 20, "[MALVEKE] Flipper GB Cam");
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 2, 30, "Password");
+        canvas_draw_str(canvas, 2, 30, LINKCAMERA_UI_TEXT("Password", "密码"));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 2, 40, "12345678");
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 2, 50, "Host");
+        canvas_draw_str(canvas, 2, 50, LINKCAMERA_UI_TEXT("Host", "主机"));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 2, 60, model->ip);
     } else {
         canvas_draw_icon(canvas, 60, 7, &I_malveke_67x49);
         canvas_set_font(canvas, FontSecondary);
 
-        canvas_draw_str(canvas, 4, 25, "Connect");
+        canvas_draw_str(canvas, 4, 25, LINKCAMERA_UI_TEXT("Connect", "连接"));
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str(canvas, 4, 35, "MALVEKE");
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 4, 44, "into Flipper");
+        canvas_draw_str(canvas, 4, 44, LINKCAMERA_UI_TEXT("into Flipper", "到 Flipper"));
         elements_button_center(canvas, "Ok");
     }
 }

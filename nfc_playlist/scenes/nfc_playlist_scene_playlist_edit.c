@@ -19,70 +19,70 @@ static void nfc_playlist_playlist_edit_scene_menu_callback(void* context, uint32
 void nfc_playlist_playlist_edit_scene_on_enter(void* context) {
    NfcPlaylist* nfc_playlist = context;
 
-   submenu_set_header(nfc_playlist->views.submenu, "Edit Playlist");
+   submenu_set_header(nfc_playlist->views.submenu, NFC_PLAYLIST_UI_TEXT("Edit Playlist", "编辑播放列表"));
 
    bool playlist_path_empty = furi_string_empty(nfc_playlist->worker_info.settings->playlist_path);
 
    submenu_add_item(
       nfc_playlist->views.submenu,
-      "Create Playlist",
+      NFC_PLAYLIST_UI_TEXT("Create Playlist", "创建播放列表"),
       NfcPlaylistPlaylistEdit_CreatePlaylist,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist);
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "Delete Playlist",
+      NFC_PLAYLIST_UI_TEXT("Delete Playlist", "删除播放列表"),
       NfcPlaylistPlaylistEdit_DeletePlaylist,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist,
       playlist_path_empty,
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "Rename Playlist",
+      NFC_PLAYLIST_UI_TEXT("Rename Playlist", "重命名播放列表"),
       NfcPlaylistPlaylistEdit_RenamePlaylist,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist,
       playlist_path_empty,
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "Add NFC Item",
+      NFC_PLAYLIST_UI_TEXT("Add NFC Item", "添加 NFC 项目"),
       NfcPlaylistPlaylistEdit_AddNfcItem,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist,
       playlist_path_empty,
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "Remove NFC Item",
+      NFC_PLAYLIST_UI_TEXT("Remove NFC Item", "移除 NFC 项目"),
       NfcPlaylistPlaylistEdit_RemoveNfcItem,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist,
       playlist_path_empty,
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "Move NFC Item",
+      NFC_PLAYLIST_UI_TEXT("Move NFC Item", "移动 NFC 项目"),
       NfcPlaylistPlaylistEdit_MoveNfcItem,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist,
       playlist_path_empty,
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "View Playlist Content",
+      NFC_PLAYLIST_UI_TEXT("View Playlist Content", "查看播放列表内容"),
       NfcPlaylistPlaylistEdit_ViewPlaylistContent,
       nfc_playlist_playlist_edit_scene_menu_callback,
       nfc_playlist,
       playlist_path_empty,
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    view_dispatcher_switch_to_view(nfc_playlist->view_dispatcher, NfcPlaylistView_Submenu);
 }

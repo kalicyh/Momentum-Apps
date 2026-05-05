@@ -178,10 +178,10 @@ static void calculate_timing_stats(TimingTunerContext* ctx) {
 
 static void timing_tuner_draw_listening(Canvas* canvas, TimingTunerContext* ctx) {
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "时序调谐");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("Timing Tuner", "时序调谐"));
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, "正在监听信号...");
+    canvas_draw_str_aligned(canvas, 64, 18, AlignCenter, AlignTop, PROTOPIRATE_UI_TEXT("Listening for signals...", "正在监听信号..."));
 
     int wave_y = 38;
     ctx->animation_frame++;
@@ -209,7 +209,7 @@ static void timing_tuner_draw_listening(Canvas* canvas, TimingTunerContext* ctx)
     char rssi_str[24];
     snprintf(rssi_str, sizeof(rssi_str), "%.0f", (double)ctx->rssi);
     canvas_draw_str_aligned(canvas, 127, 62, AlignRight, AlignBottom, rssi_str);
-    elements_button_left(canvas, "配置");
+    elements_button_left(canvas, PROTOPIRATE_UI_TEXT("Config", "配置"));
 }
 
 // Get a specific line of content
@@ -239,91 +239,172 @@ static bool
     if(ctx->timing_info) {
         switch(line_idx) {
         case 0:
-            snprintf(buf, buf_size, "协议定义:");
+            snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("Protocol Definition:", "协议定义:"));
             return true;
         case 1:
-            snprintf(buf, buf_size, "  短脉冲: %lu us", ctx->timing_info->te_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Pulse: %lu us", "  短脉冲: %lu us"),
+                ctx->timing_info->te_short);
             return true;
         case 2:
-            snprintf(buf, buf_size, "  长脉冲: %lu us", ctx->timing_info->te_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Pulse: %lu us", "  长脉冲: %lu us"),
+                ctx->timing_info->te_long);
             return true;
         case 3:
-            snprintf(buf, buf_size, "  Tolerance: +/-%lu us", ctx->timing_info->te_delta);
+            snprintf(
+                buf, buf_size, PROTOPIRATE_UI_TEXT("  Tolerance: +/-%lu us", "  容差: +/-%lu us"), ctx->timing_info->te_delta);
             return true;
         case 4:
             buf[0] = '\0';
             return true;
         case 5:
-            snprintf(buf, buf_size, "RECEIVED SIGNAL:");
+            snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("RECEIVED SIGNAL:", "接收信号:"));
             return true;
         case 6:
-            snprintf(buf, buf_size, "  Short Avg: %ld us", ctx->avg_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Avg: %ld us", "  短平均: %ld us"),
+                ctx->avg_short);
             return true;
         case 7:
-            snprintf(buf, buf_size, "  Short Min: %ld us", ctx->min_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Min: %ld us", "  短最小: %ld us"),
+                ctx->min_short);
             return true;
         case 8:
-            snprintf(buf, buf_size, "  Short Max: %ld us", ctx->max_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Max: %ld us", "  短最大: %ld us"),
+                ctx->max_short);
             return true;
         case 9:
-            snprintf(buf, buf_size, "  Short Samples: %zu", ctx->short_count);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Samples: %zu", "  短采样数: %zu"),
+                ctx->short_count);
             return true;
         case 10:
-            snprintf(buf, buf_size, "  Long Avg: %ld us", ctx->avg_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Avg: %ld us", "  长平均: %ld us"),
+                ctx->avg_long);
             return true;
         case 11:
-            snprintf(buf, buf_size, "  Long Min: %ld us", ctx->min_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Min: %ld us", "  长最小: %ld us"),
+                ctx->min_long);
             return true;
         case 12:
-            snprintf(buf, buf_size, "  Long Max: %ld us", ctx->max_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Max: %ld us", "  长最大: %ld us"),
+                ctx->max_long);
             return true;
         case 13:
-            snprintf(buf, buf_size, "  Long Samples: %zu", ctx->long_count);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Samples: %zu", "  长采样数: %zu"),
+                ctx->long_count);
             return true;
         case 14:
             buf[0] = '\0';
             return true;
         case 15:
-            snprintf(buf, buf_size, "ANALYSIS:");
+            snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("ANALYSIS:", "分析:"));
             return true;
         case 16:
-            snprintf(buf, buf_size, "  Short Diff: %+ld us", short_diff);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Diff: %+ld us", "  短差异: %+ld us"),
+                short_diff);
             return true;
         case 17:
-            snprintf(buf, buf_size, "  Long Diff: %+ld us", long_diff);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Diff: %+ld us", "  长差异: %+ld us"),
+                long_diff);
             return true;
         case 18:
-            snprintf(buf, buf_size, "  Short Jitter: %ld us", short_jitter);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Jitter: %ld us", "  短抖动: %ld us"),
+                short_jitter);
             return true;
         case 19:
-            snprintf(buf, buf_size, "  Long Jitter: %ld us", long_jitter);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Jitter: %ld us", "  长抖动: %ld us"),
+                long_jitter);
             return true;
         case 20:
             buf[0] = '\0';
             return true;
         case 21:
-            snprintf(buf, buf_size, "CONCLUSION:");
+            snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("CONCLUSION:", "结论:"));
             return true;
         case 22:
             if(short_exact) {
-                snprintf(buf, buf_size, "  Short: EXCELLENT");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("  Short: EXCELLENT", "  短脉冲: 优秀"));
             } else if(short_ok) {
-                snprintf(buf, buf_size, "  Short: OK (%+ld)", short_diff);
+                snprintf(
+                    buf,
+                    buf_size,
+                    PROTOPIRATE_UI_TEXT("  Short: OK (%+ld)", "  短脉冲: 良好 (%+ld)"),
+                    short_diff);
             } else if(short_diff > 0) {
-                snprintf(buf, buf_size, "  Short: HIGH by %ld", short_diff);
+                snprintf(
+                    buf,
+                    buf_size,
+                    PROTOPIRATE_UI_TEXT("  Short: HIGH by %ld", "  短脉冲: 偏高 %ld"),
+                    short_diff);
             } else {
-                snprintf(buf, buf_size, "  Short: LOW by %ld", -short_diff);
+                snprintf(
+                    buf,
+                    buf_size,
+                    PROTOPIRATE_UI_TEXT("  Short: LOW by %ld", "  短脉冲: 偏低 %ld"),
+                    -short_diff);
             }
             return true;
         case 23:
             if(long_exact) {
-                snprintf(buf, buf_size, "  Long: EXCELLENT");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("  Long: EXCELLENT", "  长脉冲: 优秀"));
             } else if(long_ok) {
-                snprintf(buf, buf_size, "  Long: OK (%+ld)", long_diff);
+                snprintf(
+                    buf,
+                    buf_size,
+                    PROTOPIRATE_UI_TEXT("  Long: OK (%+ld)", "  长脉冲: 良好 (%+ld)"),
+                    long_diff);
             } else if(long_diff > 0) {
-                snprintf(buf, buf_size, "  Long: HIGH by %ld", long_diff);
+                snprintf(
+                    buf,
+                    buf_size,
+                    PROTOPIRATE_UI_TEXT("  Long: HIGH by %ld", "  长脉冲: 偏高 %ld"),
+                    long_diff);
             } else {
-                snprintf(buf, buf_size, "  Long: LOW by %ld", -long_diff);
+                snprintf(
+                    buf,
+                    buf_size,
+                    PROTOPIRATE_UI_TEXT("  Long: LOW by %ld", "  长脉冲: 偏低 %ld"),
+                    -long_diff);
             }
             return true;
         case 24:
@@ -331,18 +412,18 @@ static bool
             return true;
         case 25:
             if(short_exact && long_exact) {
-                snprintf(buf, buf_size, "Timing matches fob!");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("Timing matches fob!", "时序匹配遥控器!"));
             } else if(short_ok && long_ok) {
-                snprintf(buf, buf_size, "Within tolerance.");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("Within tolerance.", "在容差范围内。"));
             } else {
-                snprintf(buf, buf_size, "NEEDS ADJUSTMENT:");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("NEEDS ADJUSTMENT:", "需要调整:"));
             }
             return true;
         case 26:
             if(short_exact && long_exact) {
-                snprintf(buf, buf_size, "No changes needed.");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("No changes needed.", "无需更改。"));
             } else if(short_ok && long_ok) {
-                snprintf(buf, buf_size, "Consider fine-tuning.");
+                snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("Consider fine-tuning.", "建议微调。"));
             } else if(!short_ok && !long_ok) {
                 snprintf(buf, buf_size, "te_short=%ld", ctx->avg_short);
             } else if(!short_ok) {
@@ -362,7 +443,8 @@ static bool
             buf[0] = '\0';
             return true;
         case 29:
-            snprintf(buf, buf_size, "OK:Retry  <:Config");
+            snprintf(
+                buf, buf_size, PROTOPIRATE_UI_TEXT("OK:Retry  <:Config", "确定:重试  <:配置"));
             return true;
         default:
             return false;
@@ -371,58 +453,100 @@ static bool
         // No timing reference
         switch(line_idx) {
         case 0:
-            snprintf(buf, buf_size, "NO PROTOCOL REFERENCE");
+            snprintf(
+                buf, buf_size, PROTOPIRATE_UI_TEXT("NO PROTOCOL REFERENCE", "无协议参考"));
             return true;
         case 1:
             buf[0] = '\0';
             return true;
         case 2:
-            snprintf(buf, buf_size, "RECEIVED SIGNAL:");
+            snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("RECEIVED SIGNAL:", "接收信号:"));
             return true;
         case 3:
-            snprintf(buf, buf_size, "  Short Avg: %ld us", ctx->avg_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Avg: %ld us", "  短平均: %ld us"),
+                ctx->avg_short);
             return true;
         case 4:
-            snprintf(buf, buf_size, "  Short Min: %ld us", ctx->min_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Min: %ld us", "  短最小: %ld us"),
+                ctx->min_short);
             return true;
         case 5:
-            snprintf(buf, buf_size, "  Short Max: %ld us", ctx->max_short);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Max: %ld us", "  短最大: %ld us"),
+                ctx->max_short);
             return true;
         case 6:
-            snprintf(buf, buf_size, "  Short Samples: %zu", ctx->short_count);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Short Samples: %zu", "  短采样数: %zu"),
+                ctx->short_count);
             return true;
         case 7:
-            snprintf(buf, buf_size, "  Long Avg: %ld us", ctx->avg_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Avg: %ld us", "  长平均: %ld us"),
+                ctx->avg_long);
             return true;
         case 8:
-            snprintf(buf, buf_size, "  Long Min: %ld us", ctx->min_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Min: %ld us", "  长最小: %ld us"),
+                ctx->min_long);
             return true;
         case 9:
-            snprintf(buf, buf_size, "  Long Max: %ld us", ctx->max_long);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Max: %ld us", "  长最大: %ld us"),
+                ctx->max_long);
             return true;
         case 10:
-            snprintf(buf, buf_size, "  Long Samples: %zu", ctx->long_count);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("  Long Samples: %zu", "  长采样数: %zu"),
+                ctx->long_count);
             return true;
         case 11:
             buf[0] = '\0';
             return true;
         case 12:
-            snprintf(buf, buf_size, "Short Jitter: %ld us", short_jitter);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("Short Jitter: %ld us", "短抖动: %ld us"),
+                short_jitter);
             return true;
         case 13:
-            snprintf(buf, buf_size, "Long Jitter: %ld us", long_jitter);
+            snprintf(
+                buf,
+                buf_size,
+                PROTOPIRATE_UI_TEXT("Long Jitter: %ld us", "长抖动: %ld us"),
+                long_jitter);
             return true;
         case 14:
             buf[0] = '\0';
             return true;
         case 15:
-            snprintf(buf, buf_size, "Add to protocol_items.c");
+            snprintf(buf, buf_size, PROTOPIRATE_UI_TEXT("Add to protocol_items.c", "添加到protocol_items.c"));
             return true;
         case 16:
             buf[0] = '\0';
             return true;
         case 17:
-            snprintf(buf, buf_size, "OK:Retry  <:Config");
+            snprintf(
+                buf, buf_size, PROTOPIRATE_UI_TEXT("OK:Retry  <:Config", "确定:重试  <:配置"));
             return true;
         default:
             return false;

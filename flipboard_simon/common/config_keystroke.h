@@ -307,8 +307,21 @@ uint16_t keystroke_values[] = {
  *  the index of the keystroke in the keystroke_names array.
  * @note     The VariableItemList has a max size of 255 entries.
 */
+#ifndef FLIPBOARD_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 char* keystroke_names[] = {
-    "None",      "Delay",   "Msg 1",       "Msg 2",       "Msg 3",     "Msg 4",
+    FLIPBOARD_UI_TEXT("None", "无"),
+    FLIPBOARD_UI_TEXT("Delay", "延迟"),
+    FLIPBOARD_UI_TEXT("Msg 1", "消息1"),
+    FLIPBOARD_UI_TEXT("Msg 2", "消息2"),
+    FLIPBOARD_UI_TEXT("Msg 3", "消息3"),
+    FLIPBOARD_UI_TEXT("Msg 4", "消息4"),
 
     "L-CTRL",    "R-CTRL",  "L-SHIFT",     "R-SHIFT",     "L-ALT",     "R-ALT",   "L-WIN",
     "R-WIN",

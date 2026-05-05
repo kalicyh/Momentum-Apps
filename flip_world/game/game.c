@@ -148,10 +148,10 @@ static void thanks(Canvas *canvas, void *context)
 {
     UNUSED(context);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 35, 8, "Saving game");
+    canvas_draw_str(canvas, 35, 8, FLIP_WORLD_UI_TEXT("Saving game", "保存游戏中"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 50, "Please wait while your");
-    canvas_draw_str(canvas, 0, 60, "game is saved.");
+    canvas_draw_str(canvas, 0, 50, FLIP_WORLD_UI_TEXT("Please wait while your", "游戏保存中，"));
+    canvas_draw_str(canvas, 0, 60, FLIP_WORLD_UI_TEXT("game is saved.", "请稍候..."));
 }
 
 /*
@@ -189,7 +189,7 @@ static void game_stop(void *ctx)
 
     if (!game_context->ended_early)
     {
-        easy_flipper_dialog("Game Over", "Thanks for playing FlipWorld!\nHit BACK then wait for\nthe game to save.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Game Over", "游戏结束"), FLIP_WORLD_UI_TEXT("Thanks for playing FlipWorld!\nHit BACK then wait for\nthe game to save.", "感谢游玩 FlipWorld!\n按返回键后等待\n游戏保存。"));
     }
     else
     {
@@ -197,28 +197,28 @@ static void game_stop(void *ctx)
         switch (game_context->end_reason)
         {
         case GAME_END_MEMORY:
-            snprintf(message, sizeof(message), "Ran out of memory so the\ngame ended early. There were\n%zu bytes free.\n\nHit BACK to exit.", heap_size);
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("Ran out of memory so the\ngame ended early. There were\n%zu bytes free.\n\nHit BACK to exit.", "内存不足，游戏提前结束。\n剩余 %zu 字节。\n\n按返回键退出。"), heap_size);
             break;
         case GAME_END_TUTORIAL_INCOMPLETE:
-            snprintf(message, sizeof(message), "The tutorial is not complete.\nPlease finish the tutorial to\nsave your game.\n\nHit BACK to exit.");
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("The tutorial is not complete.\nPlease finish the tutorial to\nsave your game.\n\nHit BACK to exit.", "教程未完成。\n请完成教程以保存游戏。\n\n按返回键退出。"));
             break;
         case GAME_END_PVP_REQUIREMENT:
-            snprintf(message, sizeof(message), "You need to be level 10 to\nplay PvP.\n\nHit BACK to exit.");
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("You need to be level 10 to\nplay PvP.\n\nHit BACK to exit.", "需要达到 10 级\n才能进行 PvP。\n\n按返回键退出。"));
             break;
         case GAME_END_PVP_ENEMY_DEAD:
-            snprintf(message, sizeof(message), "You have defeated the enemy!\n\nHit BACK to exit.");
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("You have defeated the enemy!\n\nHit BACK to exit.", "你已击败敌人!\n\n按返回键退出。"));
             break;
         case GAME_END_PVP_PLAYER_DEAD:
-            snprintf(message, sizeof(message), "You have been defeated!\n\nHit BACK to exit.");
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("You have been defeated!\n\nHit BACK to exit.", "你已被击败!\n\n按返回键退出。"));
             break;
         case GAME_END_NETWORK:
-            snprintf(message, sizeof(message), "Network error. Please check\nyour connection and try again.\n\nHit BACK to exit.");
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("Network error. Please check\nyour connection and try again.\n\nHit BACK to exit.", "网络错误。请检查连接\n后重试。\n\n按返回键退出。"));
             break;
         case GAME_END_APP:
-            snprintf(message, sizeof(message), "App error.\n\nHit BACK to exit.");
+            snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("App error.\n\nHit BACK to exit.", "应用错误。\n\n按返回键退出。"));
             break;
         };
-        easy_flipper_dialog("Game Over", message);
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Game Over", "游戏结束"), message);
     }
 
     PlayerContext *player_context = malloc(sizeof(PlayerContext));
@@ -252,7 +252,7 @@ static void game_stop(void *ctx)
             furi_delay_ms(tick_count);
         }
 
-        easy_flipper_dialog("Game Saved", "Hit BACK to exit.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Game Saved", "游戏已保存"), FLIP_WORLD_UI_TEXT("Hit BACK to exit.", "按返回键退出。"));
 
         flip_world_show_submenu();
 

@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define POCSAG_PAGER_UI_TEXT(en, zh) (zh)
+#else
+#define POCSAG_PAGER_UI_TEXT(en, zh) (en)
+#endif
+
 #include "helpers/pocsag_pager_types.h"
 #include "helpers/radio_device_loader.h"
 

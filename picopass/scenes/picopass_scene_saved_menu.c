@@ -36,12 +36,20 @@ void picopass_scene_saved_menu_on_enter(void* context) {
     bool has_sio = SE || SR;
 
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, picopass_scene_saved_menu_submenu_callback, picopass);
-    submenu_add_item(
-        submenu, "Write", SubmenuIndexWrite, picopass_scene_saved_menu_submenu_callback, picopass);
+        submenu,
+        PICOPASS_UI_TEXT("Info", "信息"),
+        SubmenuIndexInfo,
+        picopass_scene_saved_menu_submenu_callback,
+        picopass);
     submenu_add_item(
         submenu,
-        "Emulate",
+        PICOPASS_UI_TEXT("Write", "写入"),
+        SubmenuIndexWrite,
+        picopass_scene_saved_menu_submenu_callback,
+        picopass);
+    submenu_add_item(
+        submenu,
+        PICOPASS_UI_TEXT("Emulate", "模拟"),
         SubmenuIndexEmulate,
         picopass_scene_saved_menu_submenu_callback,
         picopass);
@@ -49,7 +57,7 @@ void picopass_scene_saved_menu_on_enter(void* context) {
     if(!is_saved) {
         submenu_add_item(
             submenu,
-            "Save",
+            PICOPASS_UI_TEXT("Save", "保存"),
             SubmenuIndexSave,
             picopass_scene_saved_menu_submenu_callback,
             picopass);
@@ -58,7 +66,7 @@ void picopass_scene_saved_menu_on_enter(void* context) {
     if(secured && has_sio) {
         submenu_add_item(
             submenu,
-            "Save in Seader fmt",
+            PICOPASS_UI_TEXT("Save in Seader fmt", "保存为Seader格式"),
             SubmenuIndexSaveAsSeader,
             picopass_scene_saved_menu_submenu_callback,
             picopass);
@@ -75,7 +83,7 @@ void picopass_scene_saved_menu_on_enter(void* context) {
         if(SR) {
             submenu_add_item(
                 submenu,
-                "Save as Legacy",
+                PICOPASS_UI_TEXT("Save as Legacy", "保存为Legacy"),
                 SubmenuIndexSaveLegacy,
                 picopass_scene_saved_menu_submenu_callback,
                 picopass);
@@ -85,13 +93,13 @@ void picopass_scene_saved_menu_on_enter(void* context) {
     if(is_saved) {
         submenu_add_item(
             submenu,
-            "Rename",
+            PICOPASS_UI_TEXT("Rename", "重命名"),
             SubmenuIndexRename,
             picopass_scene_saved_menu_submenu_callback,
             picopass);
         submenu_add_item(
             submenu,
-            "Delete",
+            PICOPASS_UI_TEXT("Delete", "删除"),
             SubmenuIndexDelete,
             picopass_scene_saved_menu_submenu_callback,
             picopass);

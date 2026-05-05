@@ -7,6 +7,12 @@
 #include "gpio_item.h"
 #include "zeitraffer_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TIMELAPSE_UI_TEXT(en, zh) (zh)
+#else
+#define TIMELAPSE_UI_TEXT(en, zh) (en)
+#endif
+
 #define CONFIG_FILE_PATH APP_DATA_PATH("timelapse.conf")
 
 // Часть кода покрадена из https://github.com/zmactep/flipperzero-hello-world
@@ -45,27 +51,27 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     canvas_set_font(canvas, FontPrimary);
     switch(Count) {
     case -1:
-        snprintf(temp_str, sizeof(temp_str), "Set: BULB %li sec", Time);
+        snprintf(temp_str, sizeof(temp_str), TIMELAPSE_UI_TEXT("Set: BULB %li sec", "设置: BULB %li 秒"), Time);
         break;
     case 0:
-        snprintf(temp_str, sizeof(temp_str), "Set: infinite, %li sec", Time);
+        snprintf(temp_str, sizeof(temp_str), TIMELAPSE_UI_TEXT("Set: infinite, %li sec", "设置: 无限, %li 秒"), Time);
         break;
     default:
-        snprintf(temp_str, sizeof(temp_str), "Set: %li frames, %li sec", Count, Time);
+        snprintf(temp_str, sizeof(temp_str), TIMELAPSE_UI_TEXT("Set: %li frames, %li sec", "设置: %li 帧, %li 秒"), Count, Time);
     }
     canvas_draw_str(canvas, 3, 15, temp_str);
-    snprintf(temp_str, sizeof(temp_str), "Left: %li frames, %li sec", WorkCount, WorkTime);
+    snprintf(temp_str, sizeof(temp_str), TIMELAPSE_UI_TEXT("Left: %li frames, %li sec", "剩余: %li 帧, %li 秒"), WorkCount, WorkTime);
     canvas_draw_str(canvas, 3, 35, temp_str);
 
     switch(Backlight) {
     case 1:
-        canvas_draw_str(canvas, 13, 55, "ON");
+        canvas_draw_str(canvas, 13, 55, TIMELAPSE_UI_TEXT("ON", "开"));
         break;
     case 2:
-        canvas_draw_str(canvas, 13, 55, "OFF");
+        canvas_draw_str(canvas, 13, 55, TIMELAPSE_UI_TEXT("OFF", "关"));
         break;
     default:
-        canvas_draw_str(canvas, 13, 55, "AUTO");
+        canvas_draw_str(canvas, 13, 55, TIMELAPSE_UI_TEXT("AUTO", "自动"));
     }
 
     if(Work) {
@@ -83,10 +89,10 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     canvas_draw_icon(canvas, 3, 48, &I_Pin_star_7x7);
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 65, 55, "F");
+    canvas_draw_str(canvas, 65, 55, TIMELAPSE_UI_TEXT("F", "帧"));
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 85, 55, "S");
+    canvas_draw_str(canvas, 85, 55, TIMELAPSE_UI_TEXT("S", "秒"));
 
     //canvas_draw_icon(canvas, 59, 48, &I_ButtonLeft_4x7);
     //canvas_draw_icon(canvas, 72, 48, &I_ButtonRight_4x7);

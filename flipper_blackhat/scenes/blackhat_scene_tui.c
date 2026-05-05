@@ -6,7 +6,7 @@ static void blackhat_scene_tui_draw_callback(Canvas* canvas, void* context)
     UNUSED(context);
     canvas_clear(canvas);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 12, "Press the button to exit.");
+    canvas_draw_str(canvas, 2, 12, blackhat_UI_TEXT("Press the button to exit.", "按按钮退出。"));
 }
 
 static bool blackhat_scene_tui_input_callback(InputEvent* event, void* context)

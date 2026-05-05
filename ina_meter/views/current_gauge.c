@@ -19,6 +19,14 @@
 
 #include <gui/elements.h>
 
+#ifndef INA_METER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define INA_METER_UI_TEXT(en, zh) (zh)
+#else
+#define INA_METER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 typedef enum {
     CurrentGaugeRange_A,
     CurrentGaugeRange_mA,
@@ -106,8 +114,8 @@ static void current_gauge_draw_callback(Canvas* canvas, void* _model) {
     // Buttons
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
-    elements_button_left(canvas, "Config");
-    elements_button_right(canvas, "Log");
+    elements_button_left(canvas, INA_METER_UI_TEXT("Config", "设置"));
+    elements_button_right(canvas, INA_METER_UI_TEXT("Log", "日志"));
 
     furi_string_free(value_text);
 }

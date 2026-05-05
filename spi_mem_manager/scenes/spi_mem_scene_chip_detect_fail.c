@@ -17,20 +17,20 @@ void spi_mem_scene_chip_detect_fail_on_enter(void* context) {
     widget_add_button_element(
         app->widget,
         GuiButtonTypeCenter,
-        "Retry",
+        SPI_MEM_UI_TEXT("Retry", "重试"),
         spi_mem_scene_chip_detect_fail_widget_callback,
         app);
     widget_add_string_element(
-        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, "Detected");
+        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("Detected", "检测到"));
     widget_add_string_element(
-        app->widget, 64, 20, AlignCenter, AlignBottom, FontPrimary, "unknown SPI chip");
-    furi_string_printf(str, "Vendor\nid: 0x%02X", spi_mem_chip_get_vendor_id(app->chip_info));
+        app->widget, 64, 20, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("unknown SPI chip", "未知 SPI 芯片"));
+    furi_string_printf(str, "%s\nid: 0x%02X", SPI_MEM_UI_TEXT("Vendor", "厂商"), spi_mem_chip_get_vendor_id(app->chip_info));
     widget_add_string_multiline_element(
         app->widget, 18, 44, AlignCenter, AlignBottom, FontSecondary, furi_string_get_cstr(str));
-    furi_string_printf(str, "Type\nid: 0x%02X", spi_mem_chip_get_type_id(app->chip_info));
+    furi_string_printf(str, "%s\nid: 0x%02X", SPI_MEM_UI_TEXT("Type", "类型"), spi_mem_chip_get_type_id(app->chip_info));
     widget_add_string_multiline_element(
         app->widget, 64, 44, AlignCenter, AlignBottom, FontSecondary, furi_string_get_cstr(str));
-    furi_string_printf(str, "Capacity\nid: 0x%02X", spi_mem_chip_get_capacity_id(app->chip_info));
+    furi_string_printf(str, "%s\nid: 0x%02X", SPI_MEM_UI_TEXT("Capacity", "容量"), spi_mem_chip_get_capacity_id(app->chip_info));
     widget_add_string_multiline_element(
         app->widget, 108, 44, AlignCenter, AlignBottom, FontSecondary, furi_string_get_cstr(str));
     furi_string_free(str);

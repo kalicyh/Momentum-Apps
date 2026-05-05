@@ -1,4 +1,5 @@
 #include "../dap_gui_i.h"
+#include "../../dap_link.h"
 
 #define DAP_VERSION_APP "0.1.0"
 #define DAP_DEVELOPED   "Dr_Zlo"
@@ -9,21 +10,26 @@ void dap_scene_about_on_enter(void* context) {
 
     FuriString* temp_str;
     temp_str = furi_string_alloc();
-    furi_string_printf(temp_str, "\e#%s\n", "Information");
+    furi_string_printf(temp_str, "\e#%s\n", DAP_LINK_UI_TEXT("Information", "信息"));
 
-    furi_string_cat_printf(temp_str, "Version: %s\n", DAP_VERSION_APP);
-    furi_string_cat_printf(temp_str, "Developed by: %s\n", DAP_DEVELOPED);
+    furi_string_cat_printf(temp_str, "%s %s\n", DAP_LINK_UI_TEXT("Version:", "版本:"), DAP_VERSION_APP);
+    furi_string_cat_printf(
+        temp_str, "%s %s\n", DAP_LINK_UI_TEXT("Developed by:", "开发者:"), DAP_DEVELOPED);
     furi_string_cat_printf(temp_str, "Github: %s\n\n", DAP_GITHUB);
 
-    furi_string_cat_printf(temp_str, "\e#%s\n", "Description");
+    furi_string_cat_printf(temp_str, "\e#%s\n", DAP_LINK_UI_TEXT("Description", "描述"));
     furi_string_cat_printf(
-        temp_str, "CMSIS-DAP debugger\nbased on Free-DAP\nThanks to Alex Taradov\n\n");
+        temp_str,
+        DAP_LINK_UI_TEXT(
+            "CMSIS-DAP debugger\nbased on Free-DAP\nThanks to Alex Taradov\n\n",
+            "CMSIS-DAP 调试器\n基于 Free-DAP\n感谢 Alex Taradov\n\n"));
 
     furi_string_cat_printf(
         temp_str,
-        "Supported protocols:\n"
+        "%s\n"
         "SWD, JTAG, UART\n"
-        "DAP v1 (cmsis_backend hid), DAP v2 (cmsis_backend usb_bulk), VCP\n");
+        "DAP v1 (cmsis_backend hid), DAP v2 (cmsis_backend usb_bulk), VCP\n",
+        DAP_LINK_UI_TEXT("Supported protocols:", "支持的协议:"));
 
     widget_add_text_box_element(
         app->widget,

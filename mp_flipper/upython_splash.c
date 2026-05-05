@@ -41,8 +41,8 @@ bool upython_confirm_exit_action() {
 
     DialogMessage* message = dialog_message_alloc();
 
-    dialog_message_set_text(message, "Close uPython?", 64, 32, AlignCenter, AlignCenter);
-    dialog_message_set_buttons(message, "Yes", NULL, "No");
+    dialog_message_set_text(message, UPYTHON_UI_TEXT("Close uPython?", "关闭 uPython?"), 64, 32, AlignCenter, AlignCenter);
+    dialog_message_set_buttons(message, UPYTHON_UI_TEXT("Yes", "是"), NULL, UPYTHON_UI_TEXT("No", "否"));
 
     DialogMessageButton button = dialog_message_show(dialogs, message);
 
@@ -92,10 +92,10 @@ Action upython_splash_screen() {
     canvas_set_font(canvas, FontSecondary);
 
     canvas_draw_icon(canvas, 65, 53, &I_Pin_back_arrow_10x8);
-    canvas_draw_str_aligned(canvas, 78, 54, AlignLeft, AlignTop, "Exit");
+    canvas_draw_str_aligned(canvas, 78, 54, AlignLeft, AlignTop, UPYTHON_UI_TEXT("Exit", "退出"));
 
     canvas_draw_icon(canvas, 98, 54, &I_ButtonCenter_7x7);
-    canvas_draw_str_aligned(canvas, 107, 54, AlignLeft, AlignTop, "Open");
+    canvas_draw_str_aligned(canvas, 107, 54, AlignLeft, AlignTop, UPYTHON_UI_TEXT("Open", "打开"));
 
     canvas_commit(canvas);
 

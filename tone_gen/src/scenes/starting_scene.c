@@ -45,14 +45,14 @@ void scene_on_enter_starting_scene(void* context) {
     // * these icons do not have a framerate (resulting in a division by zero)
     menu_add_item(
         menuView->viewData,
-        "Play Tone",
+        TONE_GEN_UI_TEXT("Play Tone", "播放音调"),
         &A_play_button,
         ToneGenAppMenuSelection_Play,
         menu_callback_starting_scene,
         app);
     menu_add_item(
         menuView->viewData,
-        "Adjust Tone",
+        TONE_GEN_UI_TEXT("Adjust Tone", "调节音调"),
         &A_settings_button,
         ToneGenAppMenuSelection_Adjust,
         menu_callback_starting_scene,

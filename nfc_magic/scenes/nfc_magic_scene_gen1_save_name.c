@@ -19,7 +19,7 @@ void nfc_magic_scene_gen1_save_name_on_enter(void* context) {
         instance->text_store, NFC_MAGIC_APP_TEXT_STORE_SIZE, NFC_MAGIC_APP_FILENAME_PREFIX);
     furi_string_set(folder_path, NFC_APP_FOLDER);
 
-    text_input_set_header_text(text_input, "Name the card");
+    text_input_set_header_text(text_input, NFC_MAGIC_UI_TEXT("Name the card", "命名卡片"));
     text_input_set_result_callback(
         text_input,
         nfc_magic_scene_gen1_save_name_text_input_done_callback,

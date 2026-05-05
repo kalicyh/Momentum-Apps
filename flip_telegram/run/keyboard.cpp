@@ -2,6 +2,14 @@
 #include "font/font.h"
 #include <string.h>
 
+#ifndef flip_telegram_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define flip_telegram_UI_TEXT(en, zh) (zh)
+#else
+#define flip_telegram_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 Keyboard::Keyboard()
 {
     reset();
@@ -119,7 +127,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         canvas_draw_rbox(canvas, 3, func_y - 7, 30, 9, 1);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_str(canvas, 10, func_y, "SPACE");
+    canvas_draw_str(canvas, 10, func_y, flip_telegram_UI_TEXT("SPACE", "空格"));
     canvas_set_color(canvas, ColorBlack);
 
     // Backspace
@@ -129,7 +137,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         canvas_draw_rbox(canvas, 35, func_y - 7, 20, 9, 1);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_str(canvas, 38, func_y, "DEL");
+    canvas_draw_str(canvas, 38, func_y, flip_telegram_UI_TEXT("DEL", "删除"));
     canvas_set_color(canvas, ColorBlack);
 
     // Shift/Mode
@@ -157,7 +165,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         {
             canvas_draw_rbox(canvas, 79, func_y - 7, 20, 9, 1);
             canvas_set_color(canvas, ColorWhite);
-            canvas_draw_str(canvas, 82, func_y, "CAPS");
+            canvas_draw_str(canvas, 82, func_y, flip_telegram_UI_TEXT("CAPS", "大写"));
             canvas_set_color(canvas, ColorBlack);
         }
         else if (caps_lock)
@@ -165,12 +173,12 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
             // When caps lock is on but not selected, draw with inverted colors
             canvas_draw_rbox(canvas, 79, func_y - 7, 20, 9, 1);
             canvas_set_color(canvas, ColorWhite);
-            canvas_draw_str(canvas, 82, func_y, "CAPS");
+            canvas_draw_str(canvas, 82, func_y, flip_telegram_UI_TEXT("CAPS", "大写"));
             canvas_set_color(canvas, ColorBlack);
         }
         else
         {
-            canvas_draw_str(canvas, 82, func_y, "CAPS");
+            canvas_draw_str(canvas, 82, func_y, flip_telegram_UI_TEXT("CAPS", "大写"));
         }
     }
 
@@ -181,7 +189,7 @@ void Keyboard::draw(Canvas *canvas, const char *title, const char *current_text)
         canvas_draw_rbox(canvas, 101, func_y - 7, 25, 9, 1);
         canvas_set_color(canvas, ColorWhite);
     }
-    canvas_draw_str(canvas, 105, func_y, "DONE");
+    canvas_draw_str(canvas, 105, func_y, flip_telegram_UI_TEXT("DONE", "完成"));
     canvas_set_color(canvas, ColorBlack);
 
     // Draw title at the bottom

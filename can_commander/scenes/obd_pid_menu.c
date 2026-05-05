@@ -24,24 +24,24 @@ void cancommander_scene_obd_pid_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "OBD2 Live Data");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("OBD2 Live Data", "OBD2 实时数据"));
 
-    submenu_add_item(app->submenu, "PID List", ObdPidPidList, cancommander_scene_obd_pid_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("PID List", "PID 列表"), ObdPidPidList, cancommander_scene_obd_pid_menu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Live PID Config",
+        CAN_COMMANDER_UI_TEXT("Live PID Config", "实时 PID 配置"),
         ObdPidLiveConfig,
         cancommander_scene_obd_pid_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Start Live PID",
+        CAN_COMMANDER_UI_TEXT("Start Live PID", "启动实时 PID"),
         ObdPidStartLive,
         cancommander_scene_obd_pid_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Advanced Args",
+        CAN_COMMANDER_UI_TEXT("Advanced Args", "高级参数"),
         ObdPidAdvancedArgs,
         cancommander_scene_obd_pid_menu_callback,
         app);
@@ -71,7 +71,7 @@ bool cancommander_scene_obd_pid_menu_on_event(void* context, SceneManagerEvent e
             app,
             app->args_obd_pid,
             sizeof(app->args_obd_pid),
-            "Live PID Config");
+            CAN_COMMANDER_UI_TEXT("Live PID Config", "实时 PID 配置"));
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
         return true;
 
@@ -87,8 +87,8 @@ bool cancommander_scene_obd_pid_menu_on_event(void* context, SceneManagerEvent e
             app,
             app->args_obd_pid,
             sizeof(app->args_obd_pid),
-            "OBD PID Args",
-            "Start",
+            CAN_COMMANDER_UI_TEXT("OBD PID Args", "OBD PID 参数"),
+            CAN_COMMANDER_UI_TEXT("Start", "启动"),
             cancommander_scene_obd_pid_start_apply,
             cancommander_scene_monitor);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);

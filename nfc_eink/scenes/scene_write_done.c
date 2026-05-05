@@ -12,7 +12,7 @@ void nfc_eink_scene_write_done_on_enter(void* context) {
     // Setup view
     Popup* popup = instance->popup;
     popup_set_icon(popup, 48, 6, &I_DolphinDone_80x58);
-    popup_set_header(popup, "Done!", 5, 22, AlignLeft, AlignBottom);
+    popup_set_header(popup, NFC_EINK_UI_TEXT("Done!", "完成!"), 5, 22, AlignLeft, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, instance);
     popup_set_callback(popup, nfc_eink_scene_write_done_popup_callback);

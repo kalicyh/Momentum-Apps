@@ -3,6 +3,12 @@
 #include <furi.h>
 #include <gui/gui.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CAN_COMMANDER_UI_TEXT(en, zh) (zh)
+#else
+#define CAN_COMMANDER_UI_TEXT(en, zh) (en)
+#endif
+
 #include <gui/modules/submenu.h>
 #include <gui/modules/byte_input.h>
 #include <gui/modules/text_box.h>

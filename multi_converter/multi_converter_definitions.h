@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MULTI_CONVERTER_UI_TEXT(en, zh) (zh)
+#else
+#define MULTI_CONVERTER_UI_TEXT(en, zh) (en)
+#endif
+
 #define MULTI_CONVERTER_NUMBER_DIGITS 9
 
 typedef enum {
@@ -63,7 +69,7 @@ struct MultiConverterUnit {
     uint8_t allow_comma;
     uint8_t allow_negative;
     uint8_t max_number_keys;
-    char mini_name[4];
+    char mini_name[8];
     char name[12];
     void (*convert_function)(MultiConverterState* const);
     uint8_t (*allowed_function)(MultiConverterUnitType);

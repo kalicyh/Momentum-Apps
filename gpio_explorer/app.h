@@ -12,6 +12,12 @@
 #include "gpio_explorer_submenu_index_enum.h"
 #include "gpio_explorer_view_enum.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_EXPLORER_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_EXPLORER_UI_TEXT(en, zh) (en)
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// Defines and Macros /////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,10 +30,10 @@
 #define DEFAULT_BAUD_RATE    115200
 #define ON                   1
 #define OFF                  0
-#define PIN_R_CONFIG_LABEL   "RGB R Pin"
-#define PIN_G_CONFIG_LABEL   "RGB G Pin"
-#define PIN_B_CONFIG_LABEL   "RGB B Pin"
-#define PIN_LED_CONFIG_LABEL "LED Pin"
+#define PIN_R_CONFIG_LABEL   GPIO_EXPLORER_UI_TEXT("RGB R Pin", "RGB R 引脚")
+#define PIN_G_CONFIG_LABEL   GPIO_EXPLORER_UI_TEXT("RGB G Pin", "RGB G 引脚")
+#define PIN_B_CONFIG_LABEL   GPIO_EXPLORER_UI_TEXT("RGB B Pin", "RGB B 引脚")
+#define PIN_LED_CONFIG_LABEL GPIO_EXPLORER_UI_TEXT("LED Pin", "LED 引脚")
 #define DEFAULT_LED_PIN      0
 #define DEFAULT_RGB_R_PIN    5
 #define DEFAULT_RGB_G_PIN    4
@@ -39,8 +45,13 @@
 
 static const char* const rgb_setting_pins[] =
     {"PA7", "PA6", "PA4", "PB3", "PB2", "PC3", "PC1", "PC0"};
-static const char* const rgb_colors[] =
-    {"White", "Red", "Green", "Blue", "Purple", "Yellow", "Cyan"};
+static const char* const rgb_colors[] = {GPIO_EXPLORER_UI_TEXT("White", "白色"),
+                                         GPIO_EXPLORER_UI_TEXT("Red", "红色"),
+                                         GPIO_EXPLORER_UI_TEXT("Green", "绿色"),
+                                         GPIO_EXPLORER_UI_TEXT("Blue", "蓝色"),
+                                         GPIO_EXPLORER_UI_TEXT("Purple", "紫色"),
+                                         GPIO_EXPLORER_UI_TEXT("Yellow", "黄色"),
+                                         GPIO_EXPLORER_UI_TEXT("Cyan", "青色")};
 static const GpioPin* const pins[] = {
     &gpio_ext_pa7,
     &gpio_ext_pa6,

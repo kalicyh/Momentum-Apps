@@ -58,9 +58,9 @@ bool uhf_scene_module_info_on_event(void* ctx, SceneManagerEvent event) {
                 furi_string_reset(temp_str);
                 M100Module* module = uhf_app->worker->module;
                 widget_add_string_element(
-                    uhf_app->widget, 64, 5, AlignCenter, AlignCenter, FontPrimary, "Module Info");
+                    uhf_app->widget, 64, 5, AlignCenter, AlignCenter, FontPrimary, UHF_UI_TEXT("Module Info", "模块信息"));
                 // hardware info
-                furi_string_cat_str(temp_str, "HW Version: ");
+                furi_string_cat_str(temp_str, UHF_UI_TEXT("HW Version: ", "硬件版本: "));
                 furi_string_cat_str(temp_str, module->info->hw_version);
                 widget_add_string_element(
                     uhf_app->widget,
@@ -72,7 +72,7 @@ bool uhf_scene_module_info_on_event(void* ctx, SceneManagerEvent event) {
                     furi_string_get_cstr(temp_str));
                 furi_string_reset(temp_str);
                 // software info
-                furi_string_cat_str(temp_str, "SW Version: ");
+                furi_string_cat_str(temp_str, UHF_UI_TEXT("SW Version: ", "软件版本: "));
                 furi_string_cat_str(temp_str, module->info->sw_version);
                 widget_add_string_element(
                     uhf_app->widget,
@@ -84,7 +84,7 @@ bool uhf_scene_module_info_on_event(void* ctx, SceneManagerEvent event) {
                     furi_string_get_cstr(temp_str));
                 furi_string_reset(temp_str);
                 // manufacturer info
-                furi_string_cat_str(temp_str, "Manufacturer: ");
+                furi_string_cat_str(temp_str, UHF_UI_TEXT("Manufacturer: ", "制造商: "));
                 furi_string_cat_str(temp_str, module->info->manufacturer);
                 widget_add_string_element(
                     uhf_app->widget,
@@ -98,7 +98,7 @@ bool uhf_scene_module_info_on_event(void* ctx, SceneManagerEvent event) {
                 widget_add_button_element(
                     uhf_app->widget,
                     GuiButtonTypeRight,
-                    "Continue",
+                    UHF_UI_TEXT("Continue", "继续"),
                     uhf_scene_module_info_widget_callback,
                     uhf_app);
             } else {
@@ -109,7 +109,7 @@ bool uhf_scene_module_info_on_event(void* ctx, SceneManagerEvent event) {
                     AlignCenter,
                     AlignCenter,
                     FontPrimary,
-                    "No UHF Module found");
+                    UHF_UI_TEXT("No UHF Module found", "未找到 UHF 模块"));
                 widget_add_string_multiline_element(
                     uhf_app->widget,
                     64,
@@ -117,17 +117,17 @@ bool uhf_scene_module_info_on_event(void* ctx, SceneManagerEvent event) {
                     AlignCenter,
                     AlignCenter,
                     FontSecondary,
-                    "Please refer to the git@frux-c/uhf_rfid for help.");
+                    UHF_UI_TEXT("Please refer to the git@frux-c/uhf_rfid for help.", "请参考 git@frux-c/uhf_rfid 获取帮助。"));
                 widget_add_button_element(
                     uhf_app->widget,
                     GuiButtonTypeLeft,
-                    "Retry",
+                    UHF_UI_TEXT("Retry", "重试"),
                     uhf_scene_module_info_widget_callback,
                     uhf_app);
                 widget_add_button_element(
                     uhf_app->widget,
                     GuiButtonTypeRight,
-                    "Skip",
+                    UHF_UI_TEXT("Skip", "跳过"),
                     uhf_scene_module_info_widget_callback,
                     uhf_app);
             }

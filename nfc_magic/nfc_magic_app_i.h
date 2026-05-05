@@ -56,6 +56,12 @@
 #define NFC_MAGIC_APP_FILENAME_PREFIX       "NFC"
 #define NFC_MAGIC_APP_BYTE_INPUT_STORE_SIZE (4)
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_MAGIC_UI_TEXT(en, zh) (zh)
+#else
+#define NFC_MAGIC_UI_TEXT(en, zh) (en)
+#endif
+
 enum NfcMagicAppCustomEvent {
     // Reserve first 100 events for button types and indexes, starting from 0
     NfcMagicAppCustomEventReserved = 100,

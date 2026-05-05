@@ -1,4 +1,5 @@
 #include "laser_tag_view.h"
+#include "laser_tag_app.h"
 #include <furi.h>
 #include <gui/elements.h>
 
@@ -23,18 +24,18 @@ static void laser_tag_view_draw_callback(Canvas* canvas, void* model) {
     canvas_set_color(canvas, ColorBlack);
 
     canvas_draw_str_aligned(
-        canvas, 5, 10, AlignLeft, AlignBottom, m->team == TeamRed ? "Team: Red" : "Team: Blue");
+        canvas, 5, 10, AlignLeft, AlignBottom, m->team == TeamRed ? LASER_TAG_UI_TEXT("Team: Red", "队伍: 红队") : LASER_TAG_UI_TEXT("Team: Blue", "队伍: 蓝队"));
 
-    canvas_draw_str_aligned(canvas, 5, 25, AlignLeft, AlignBottom, "Health:");
+    canvas_draw_str_aligned(canvas, 5, 25, AlignLeft, AlignBottom, LASER_TAG_UI_TEXT("Health:", "生命:"));
     canvas_draw_frame(canvas, 55, 20, 60, 10);
     canvas_draw_box(canvas, 56, 21, (58 * m->health) / 100, 8);
 
-    canvas_draw_str_aligned(canvas, 5, 40, AlignLeft, AlignBottom, "Ammo:");
+    canvas_draw_str_aligned(canvas, 5, 40, AlignLeft, AlignBottom, LASER_TAG_UI_TEXT("Ammo:", "弹药:"));
     canvas_draw_frame(canvas, 55, 35, 60, 10);
     canvas_draw_box(canvas, 56, 36, (58 * m->ammo) / 100, 8);
 
     if(m->ammo == 0) {
-        canvas_draw_str_aligned(canvas, 5, 55, AlignLeft, AlignBottom, "Press 'Down' to Reload");
+        canvas_draw_str_aligned(canvas, 5, 55, AlignLeft, AlignBottom, LASER_TAG_UI_TEXT("Press 'Down' to Reload", "按 下 重新装弹"));
     }
 
     uint32_t minutes = m->game_time / 60;
@@ -43,7 +44,7 @@ static void laser_tag_view_draw_callback(Canvas* canvas, void* model) {
     canvas_draw_str_aligned(canvas, 5, 60, AlignLeft, AlignBottom, furi_string_get_cstr(str));
 
     if(m->game_over) {
-        canvas_draw_str_aligned(canvas, 5, 75, AlignLeft, AlignBottom, "GAME OVER");
+        canvas_draw_str_aligned(canvas, 5, 75, AlignLeft, AlignBottom, LASER_TAG_UI_TEXT("GAME OVER", "游戏结束"));
     }
 
     furi_string_free(str);

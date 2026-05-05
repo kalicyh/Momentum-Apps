@@ -14,7 +14,7 @@ void nfc_maker_scene_contact_mail_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Enter Mail Address:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Enter Mail Address:", "输入邮箱地址:"));
 
     strlcpy(app->mail_buf, "johnsmith@email.com", sizeof(app->mail_buf));
 

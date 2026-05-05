@@ -21,6 +21,12 @@
 #include "raw_samples.h"
 #include "helpers/radio_device_loader.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PROTOVIEW_UI_TEXT(en, zh) (zh)
+#else
+#define PROTOVIEW_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "ProtoView"
 
 #define PROTOVIEW_RAW_VIEW_DEFAULT_SCALE 100 // 100us is 1 pixel by default

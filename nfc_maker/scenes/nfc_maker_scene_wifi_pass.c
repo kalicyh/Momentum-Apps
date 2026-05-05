@@ -14,7 +14,7 @@ void nfc_maker_scene_wifi_pass_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Enter WiFi Password:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Enter WiFi Password:", "输入 WiFi 密码:"));
 
     strlcpy(app->small_buf2, "244466666", sizeof(app->small_buf2));
 

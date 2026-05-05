@@ -17,11 +17,11 @@ void uhf_scene_saved_menu_on_enter(void* context) {
     Submenu* submenu = uhf_app->submenu;
 
     submenu_add_item(
-        submenu, "Delete", SubmenuIndexDelete, uhf_scene_saved_menu_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Delete", "删除"), SubmenuIndexDelete, uhf_scene_saved_menu_submenu_callback, uhf_app);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, uhf_scene_saved_menu_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Info", "信息"), SubmenuIndexInfo, uhf_scene_saved_menu_submenu_callback, uhf_app);
     submenu_add_item(
-        submenu, "Write", SubmenuIndexWrite, uhf_scene_saved_menu_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Write", "写入"), SubmenuIndexWrite, uhf_scene_saved_menu_submenu_callback, uhf_app);
 
     submenu_set_selected_item(
         uhf_app->submenu,

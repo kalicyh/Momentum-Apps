@@ -15,7 +15,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
     canvas_set_color(canvas, ColorBlack);
     canvas_draw_box(canvas, 100, 52, 28, 12);
     canvas_set_color(canvas, ColorWhite);
-    canvas_draw_str_aligned(canvas, 114, 58, AlignCenter, AlignCenter, "OK");
+    canvas_draw_str_aligned(canvas, 114, 58, AlignCenter, AlignCenter, BARCODE_GEN_UI_TEXT("OK", "确定"));
 }
 
 static bool app_input_callback(InputEvent* input_event, void* ctx) {

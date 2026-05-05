@@ -1,3 +1,9 @@
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define key_copier_UI_TEXT(en, zh) (zh)
+#else
+#define key_copier_UI_TEXT(en, zh) (en)
+#endif
+
 #include "key_copier_icons.h"
 #include "key_formats.h"
 #include <applications/services/dialogs/dialogs.h>

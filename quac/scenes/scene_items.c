@@ -79,7 +79,7 @@ void scene_items_on_enter(void* context) {
         // Add a bogus item - this lets the user still access the Action menu to import, etc
         action_menu_add_item(
             menu,
-            "<Empty, Hold Right>",
+            QUAC_UI_TEXT("<Empty, Hold Right>", "<空, 长按右键>"),
             EMPTY_ACTION_INDEX,
             scene_items_item_callback,
             ActionMenuItemTypeGroup,
@@ -90,7 +90,7 @@ void scene_items_on_enter(void* context) {
     if(app->depth == 0) {
         action_menu_add_item(
             menu,
-            "Settings",
+            QUAC_UI_TEXT("Settings", "设置"),
             item_view_size, // last item!
             scene_items_item_callback,
             ActionMenuItemTypeSettings,

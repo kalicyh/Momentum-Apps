@@ -9,16 +9,16 @@
 void render_view_settings(Canvas* const canvas, ProtoViewApp* app) {
     canvas_set_font(canvas, FontPrimary);
     if(app->current_view == ViewFrequencySettings)
-        canvas_draw_str_with_border(canvas, 1, 10, "Frequency", ColorWhite, ColorBlack);
+        canvas_draw_str_with_border(canvas, 1, 10, PROTOVIEW_UI_TEXT("Frequency", "频率"), ColorWhite, ColorBlack);
     else
-        canvas_draw_str(canvas, 1, 10, "Frequency");
+        canvas_draw_str(canvas, 1, 10, PROTOVIEW_UI_TEXT("Frequency", "频率"));
 
     if(app->current_view == ViewModulationSettings)
-        canvas_draw_str_with_border(canvas, 70, 10, "Modulation", ColorWhite, ColorBlack);
+        canvas_draw_str_with_border(canvas, 70, 10, PROTOVIEW_UI_TEXT("Modulation", "调制"), ColorWhite, ColorBlack);
     else
-        canvas_draw_str(canvas, 70, 10, "Modulation");
+        canvas_draw_str(canvas, 70, 10, PROTOVIEW_UI_TEXT("Modulation", "调制"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 10, 61, "Use up and down to modify");
+    canvas_draw_str(canvas, 10, 61, PROTOVIEW_UI_TEXT("Use up and down to modify", "上下键修改"));
 
     if(app->txrx->debug_timer_sampling)
         canvas_draw_str(canvas, 3, 52, "(DEBUG timer sampling is ON)");

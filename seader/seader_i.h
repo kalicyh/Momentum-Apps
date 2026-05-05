@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SEADER_UI_TEXT(en, zh) (zh)
+#else
+#define SEADER_UI_TEXT(en, zh) (en)
+#endif
+
 #define ASN_EMIT_DEBUG 0
 
 #include <stdlib.h> // malloc

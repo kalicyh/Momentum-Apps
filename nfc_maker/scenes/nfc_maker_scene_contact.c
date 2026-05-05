@@ -14,7 +14,7 @@ void nfc_maker_scene_contact_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Enter First Name:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Enter First Name:", "输入名:"));
 
     strlcpy(app->small_buf1, "John", sizeof(app->small_buf1));
 

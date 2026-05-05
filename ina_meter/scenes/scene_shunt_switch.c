@@ -34,10 +34,12 @@ static void popup_callback(void* context) {
 void scene_shunt_switch_on_enter(void* context) {
     App* app = (App*)context;
 
-    popup_set_header(app->popup, "Shunt resistor changed", 0, 0, AlignLeft, AlignTop);
+    popup_set_header(app->popup, INA_METER_UI_TEXT("Shunt resistor changed", "分流电阻已切换"), 0, 0, AlignLeft, AlignTop);
     popup_set_text(
         app->popup,
-        "Please verify that the\nconnected shunt resistor\nmatches the selected value.",
+        INA_METER_UI_TEXT(
+            "Please verify that the\nconnected shunt resistor\nmatches the selected value.",
+            "请确认连接的分流电阻\n与所选阻值匹配"),
         64,
         24,
         AlignCenter,

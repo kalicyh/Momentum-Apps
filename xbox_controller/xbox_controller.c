@@ -64,12 +64,12 @@ XboxController* xbox_controller_app_alloc() {
         app->submenu, "Xbox One", XboxControllerSubmenuIndexXboxOne, usb_hid_submenu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Media",
+        UI_TEXT("Media", "媒体"),
         XboxControllerSubmenuIndexMediaController,
         usb_hid_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, "Power", XboxControllerSubmenuIndexPower, usb_hid_submenu_callback, app);
+        app->submenu, UI_TEXT("Power", "电源"), XboxControllerSubmenuIndexPower, usb_hid_submenu_callback, app);
     view_set_previous_callback(submenu_get_view(app->submenu), usb_hid_exit);
     view_dispatcher_add_view(
         app->view_dispatcher, UsbHidViewSubmenu, submenu_get_view(app->submenu));

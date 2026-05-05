@@ -230,10 +230,10 @@ bool save_as_input(InputEvent* event, void* context) {
                 break;
             }
             if(save_successful) {
-                dialog_info_dialog(app, "File saved!", Panel_File);
+                dialog_info_dialog(app, ICONEDIT_UI_TEXT("File saved!", "文件已保存!"), Panel_File);
                 app->dirty = false;
             } else {
-                dialog_info_dialog(app, "Failed to save!", Panel_File);
+                dialog_info_dialog(app, ICONEDIT_UI_TEXT("Failed to save!", "保存失败!"), Panel_File);
             }
             consumed = false;
             break;

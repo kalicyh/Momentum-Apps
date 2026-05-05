@@ -251,7 +251,7 @@ void ac_remote_scene_midea_on_enter(void* context) {
         ac_remote_scene_universal_common_item_callback_long,
         context);
 
-    ac_remote_panel_add_label(ac_remote_panel, 0, 6, 11, FontPrimary, "AC remote");
+    ac_remote_panel_add_label(ac_remote_panel, 0, 6, 11, FontPrimary, MIDEA_AC_REMOTE_UI_TEXT("AC remote", "空调遥控"));
 
     ac_remote_displayed_temperature(&ac_remote->app_state, buffer, sizeof(buffer));
     ac_remote_panel_add_label(ac_remote_panel, label_temperature, 4, 82, FontKeyboard, buffer);

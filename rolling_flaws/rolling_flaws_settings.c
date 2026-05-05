@@ -71,7 +71,7 @@ void rolling_flaws_setting_protocol_custom_mf_set(RollingFlawsModel* model, Furi
 }
 
 bool setting_replay_values[] = {false, true};
-char* setting_replay_names[] = {"No", "Yes"};
+char* setting_replay_names[] = {ROLLING_FLAWS_UI_TEXT("No", "\xe5\x90\xa6"), ROLLING_FLAWS_UI_TEXT("Yes", "\xe6\x98\xaf")};
 void rolling_flaws_setting_replay_change(VariableItem* item) {
     RollingFlaws* app = variable_item_get_context(item);
     rolling_flaws_setting_change(item, setting_replay_names, &app->model->replay_index);
@@ -114,7 +114,7 @@ uint32_t rolling_flaws_setting_window_future_gap_get(RollingFlawsModel* model) {
 }
 
 bool setting_sn_zero_values[] = {false, true};
-char* setting_sn_zero_names[] = {"No", "Yes"};
+char* setting_sn_zero_names[] = {ROLLING_FLAWS_UI_TEXT("No", "\xe5\x90\xa6"), ROLLING_FLAWS_UI_TEXT("Yes", "\xe6\x98\xaf")};
 void rolling_flaws_setting_sn_zero_change(VariableItem* item) {
     RollingFlaws* app = variable_item_get_context(item);
     rolling_flaws_setting_change(item, setting_sn_zero_names, &app->model->sn_zero_index);
@@ -135,7 +135,7 @@ uint8_t rolling_flaws_setting_sn_bits_get(RollingFlawsModel* model) {
 }
 
 bool setting_count_zero_values[] = {false, true};
-char* setting_count_zero_names[] = {"No", "Yes"};
+char* setting_count_zero_names[] = {ROLLING_FLAWS_UI_TEXT("No", "\xe5\x90\xa6"), ROLLING_FLAWS_UI_TEXT("Yes", "\xe6\x98\xaf")};
 void rolling_flaws_setting_count_zero_change(VariableItem* item) {
     RollingFlaws* app = variable_item_get_context(item);
     rolling_flaws_setting_change(item, setting_sn_zero_names, &app->model->count_zero_index);
@@ -151,7 +151,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
     VariableItem* item;
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Frequency",
+        ROLLING_FLAWS_UI_TEXT("Frequency", "\xe9\xa2\x91\xe7\x8e\x87"),
         COUNT_OF(setting_frequency_names),
         rolling_flaws_setting_frequency_change,
         app);
@@ -162,7 +162,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Protocol",
+        ROLLING_FLAWS_UI_TEXT("Protocol", "\xe5\x8d\x8f\xe8\xae\xae"),
         COUNT_OF(setting_protocol_names),
         rolling_flaws_setting_protocol_change,
         app);
@@ -173,7 +173,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Fix [Btn+SN]",
+        ROLLING_FLAWS_UI_TEXT("Fix [Btn+SN]", "\xe5\x9b\xba\xe5\xae\x9a\xe7\xa0\x81 [\xe6\x8c\x89\xe9\x92\xae+\xe5\xba\x8f\xe5\x88\x97\xe5\x8f\xb7]"),
         COUNT_OF(setting_fix_names),
         rolling_flaws_setting_fix_change,
         app);
@@ -184,7 +184,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Replay attack",
+        ROLLING_FLAWS_UI_TEXT("Replay attack", "\xe9\x87\x8d\xe6\x94\xbe\xe6\x94\xbb\xe5\x87\xbb"),
         COUNT_OF(setting_replay_names),
         rolling_flaws_setting_replay_change,
         app);
@@ -194,7 +194,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Window [next]",
+        ROLLING_FLAWS_UI_TEXT("Window [next]", "\xe7\xaa\x97\xe5\x8f\xa3 [\xe4\xb8\x8b\xe4\xb8\x80\xe4\xb8\xaa]"),
         COUNT_OF(setting_window_next_names),
         rolling_flaws_setting_window_next_change,
         app);
@@ -205,7 +205,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Window [future]",
+        ROLLING_FLAWS_UI_TEXT("Window [future]", "\xe7\xaa\x97\xe5\x8f\xa3 [\xe6\x9c\xaa\xe6\x9d\xa5]"),
         COUNT_OF(setting_window_future_names),
         rolling_flaws_setting_window_future_change,
         app);
@@ -216,7 +216,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Window [gap]",
+        ROLLING_FLAWS_UI_TEXT("Window [gap]", "\xe7\xaa\x97\xe5\x8f\xa3 [\xe9\x97\xb4\xe9\x9a\x94]"),
         COUNT_OF(setting_window_future_gap_names),
         rolling_flaws_setting_window_future_gap_change,
         app);
@@ -227,7 +227,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "SN00/cfw*",
+        ROLLING_FLAWS_UI_TEXT("SN00/cfw*", "SN00/\xe8\x87\xaa\xe5\xae\x9a\xe4\xb9\x89*"),
         COUNT_OF(setting_sn_zero_names),
         rolling_flaws_setting_sn_zero_change,
         app);
@@ -237,7 +237,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "SN bits/cfw*",
+        ROLLING_FLAWS_UI_TEXT("SN bits/cfw*", "SN \xe4\xbd\x8d\xe6\x95\xb0/\xe8\x87\xaa\xe5\xae\x9a\xe4\xb9\x89*"),
         COUNT_OF(setting_sn_bits_names),
         rolling_flaws_setting_sn_bits_change,
         app);
@@ -247,7 +247,7 @@ void rolling_flaw_populate_variable_item_list(RollingFlaws* app) {
 
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Count 0 opens",
+        ROLLING_FLAWS_UI_TEXT("Count 0 opens", "\xe8\xae\xa1\xe6\x95\xb0 0 \xe8\xa7\x86\xe4\xb8\xba\xe5\xbc\x80\xe5\x90\xaf"),
         COUNT_OF(setting_count_zero_names),
         rolling_flaws_setting_count_zero_change,
         app);

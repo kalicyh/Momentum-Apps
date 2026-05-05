@@ -16,19 +16,19 @@ void spi_mem_scene_delete_confirm_on_enter(void* context) {
     FuriString* file_name = furi_string_alloc();
     FuriString* message = furi_string_alloc();
     path_extract_filename(app->file_path, file_name, true);
-    furi_string_printf(message, "\e#Delete %s?\e#", furi_string_get_cstr(file_name));
+    furi_string_printf(message, "\e#%s %s?\e#", SPI_MEM_UI_TEXT("Delete", "删除"), furi_string_get_cstr(file_name));
     widget_add_text_box_element(
         app->widget, 0, 0, 128, 27, AlignCenter, AlignCenter, furi_string_get_cstr(message), true);
     widget_add_button_element(
         app->widget,
         GuiButtonTypeLeft,
-        "Cancel",
+        SPI_MEM_UI_TEXT("Cancel", "取消"),
         spi_mem_scene_delete_confirm_widget_callback,
         app);
     widget_add_button_element(
         app->widget,
         GuiButtonTypeRight,
-        "Delete",
+        SPI_MEM_UI_TEXT("Delete", "删除"),
         spi_mem_scene_delete_confirm_widget_callback,
         app);
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewWidget);

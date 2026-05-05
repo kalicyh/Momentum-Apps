@@ -17,7 +17,7 @@ void spi_mem_scene_read_set_random_filename(SPIMemApp* app) {
 void spi_mem_scene_read_filename_on_enter(void* context) {
     SPIMemApp* app = context;
     spi_mem_scene_read_set_random_filename(app);
-    text_input_set_header_text(app->text_input, "Name the dump");
+    text_input_set_header_text(app->text_input, SPI_MEM_UI_TEXT("Name the dump", "命名转储文件"));
     text_input_set_result_callback(
         app->text_input,
         spi_mem_scene_read_filename_view_result_callback,

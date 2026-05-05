@@ -31,7 +31,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexParse]) {
         submenu_add_item(
             submenu,
-            "Parse",
+            PICOPASS_UI_TEXT("Parse", "解析"),
             SubmenuIndexParse,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -46,12 +46,16 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     }
     if(included[SubmenuIndexSave]) {
         submenu_add_item(
-            submenu, "Save", SubmenuIndexSave, picopass_scene_card_menu_submenu_callback, picopass);
+            submenu,
+            PICOPASS_UI_TEXT("Save", "保存"),
+            SubmenuIndexSave,
+            picopass_scene_card_menu_submenu_callback,
+            picopass);
     }
     if(included[SubmenuIndexSaveLegacy]) {
         submenu_add_item(
             submenu,
-            "Save as Legacy",
+            PICOPASS_UI_TEXT("Save as Legacy", "保存为Legacy"),
             SubmenuIndexSaveLegacy,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -67,7 +71,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexSaveAsSeader]) {
         submenu_add_item(
             submenu,
-            "Save in Seader fmt",
+            PICOPASS_UI_TEXT("Save in Seader fmt", "保存为Seader格式"),
             SubmenuIndexSaveAsSeader,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -75,7 +79,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexSavePartial]) {
         submenu_add_item(
             submenu,
-            "Save Partial",
+            PICOPASS_UI_TEXT("Save Partial", "保存部分"),
             SubmenuIndexSavePartial,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -83,7 +87,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexChangeKey]) {
         submenu_add_item(
             submenu,
-            "Change Key",
+            PICOPASS_UI_TEXT("Change Key", "更换密钥"),
             SubmenuIndexChangeKey,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -91,7 +95,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexWrite]) {
         submenu_add_item(
             submenu,
-            "Write",
+            PICOPASS_UI_TEXT("Write", "写入"),
             SubmenuIndexWrite,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -99,7 +103,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexEmulate]) {
         submenu_add_item(
             submenu,
-            "Emulate",
+            PICOPASS_UI_TEXT("Emulate", "模拟"),
             SubmenuIndexEmulate,
             picopass_scene_card_menu_submenu_callback,
             picopass);

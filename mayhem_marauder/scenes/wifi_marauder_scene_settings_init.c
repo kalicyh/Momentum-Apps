@@ -22,30 +22,36 @@ void wifi_marauder_scene_settings_init_setup_widget(WifiMarauderApp* app) {
     widget_reset(widget);
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "No", wifi_marauder_scene_settings_init_widget_callback, app);
+        widget, GuiButtonTypeLeft, WIFI_MARAUDER_UI_TEXT("No", "否"), wifi_marauder_scene_settings_init_widget_callback, app);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Yes", wifi_marauder_scene_settings_init_widget_callback, app);
+        widget, GuiButtonTypeRight, WIFI_MARAUDER_UI_TEXT("Yes", "是"), wifi_marauder_scene_settings_init_widget_callback, app);
 
     if(app->which_prompt == PROMPT_PCAPS) {
-        widget_add_string_element(widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Save pcaps?");
+        widget_add_string_element(widget, 0, 0, AlignLeft, AlignTop, FontPrimary, WIFI_MARAUDER_UI_TEXT("Save pcaps?", "保存 pcap?"));
         widget_add_text_scroll_element(
             widget,
             0,
             12,
             128,
             38,
-            "With compatible marauder\nfirmware, you can choose to\nsave captures (pcaps) to the\nflipper sd card here:\n" MARAUDER_APP_FOLDER_USER_PCAPS
-            "\n\nYou can change this setting in the app at any time. Would\nyou like to enable this feature now?");
+            WIFI_MARAUDER_UI_TEXT(
+                "With compatible marauder\nfirmware, you can choose to\nsave captures (pcaps) to the\nflipper sd card here:\n" MARAUDER_APP_FOLDER_USER_PCAPS
+                "\n\nYou can change this setting in the app at any time. Would\nyou like to enable this feature now?",
+                "使用兼容的 Marauder\n固件，您可以选择将\n捕获 (pcap) 保存到\nFlipper SD 卡:\n" MARAUDER_APP_FOLDER_USER_PCAPS
+                "\n\n您可以随时在应用中更改此设置。\n是否现在启用此功能?"));
     } else {
-        widget_add_string_element(widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Save logs?");
+        widget_add_string_element(widget, 0, 0, AlignLeft, AlignTop, FontPrimary, WIFI_MARAUDER_UI_TEXT("Save logs?", "保存日志?"));
         widget_add_text_scroll_element(
             widget,
             0,
             12,
             128,
             38,
-            "This app supports saving text\nlogs of console output to the\nflipper sd card here:\n" MARAUDER_APP_FOLDER_USER_LOGS
-            "\n\nYou can change this setting in the app at any time. Would\nyou like to enable this feature now?");
+            WIFI_MARAUDER_UI_TEXT(
+                "This app supports saving text\nlogs of console output to the\nflipper sd card here:\n" MARAUDER_APP_FOLDER_USER_LOGS
+                "\n\nYou can change this setting in the app at any time. Would\nyou like to enable this feature now?",
+                "此应用支持将控制台输出的\n文本日志保存到 Flipper\nSD 卡:\n" MARAUDER_APP_FOLDER_USER_LOGS
+                "\n\n您可以随时在应用中更改此设置。\n是否现在启用此功能?"));
     }
 }
 
@@ -90,7 +96,7 @@ bool wifi_marauder_scene_settings_init_on_event(void* context, SceneManagerEvent
                 const char* ok = app->ok_to_save_pcaps ? Y : N;
                 storage_file_write(app->save_pcap_setting_file, ok, sizeof(ok));
             } else {
-                dialog_message_show_storage_error(app->dialogs, "Cannot save settings");
+                dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot save settings", "无法保存设置"));
             }
             storage_file_close(app->save_pcap_setting_file);
             // same scene, different-looking widget
@@ -105,7 +111,7 @@ bool wifi_marauder_scene_settings_init_on_event(void* context, SceneManagerEvent
                 const char* ok = app->ok_to_save_logs ? Y : N;
                 storage_file_write(app->save_logs_setting_file, ok, sizeof(ok));
             } else {
-                dialog_message_show_storage_error(app->dialogs, "Cannot save settings");
+                dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot save settings", "无法保存设置"));
             }
             storage_file_close(app->save_logs_setting_file);
             // go back to start scene (main menu)

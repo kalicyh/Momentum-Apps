@@ -8,8 +8,8 @@ enum SettingsIndex {
 };
 
 const char* const haptic_text[2] = {
-    "OFF",
-    "ON",
+    MEAL_PAGER_UI_TEXT("OFF", "关"),
+    MEAL_PAGER_UI_TEXT("ON", "开"),
 };
 const uint32_t haptic_value[2] = {
     Meal_PagerHapticOff,
@@ -31,8 +31,8 @@ const uint32_t pager_type_value[4] = {
 };
 
 const char* const speaker_text[2] = {
-    "OFF",
-    "ON",
+    MEAL_PAGER_UI_TEXT("OFF", "关"),
+    MEAL_PAGER_UI_TEXT("ON", "开"),
 };
 const uint32_t speaker_value[2] = {
     Meal_PagerSpeakerOff,
@@ -40,8 +40,8 @@ const uint32_t speaker_value[2] = {
 };
 
 const char* const led_text[2] = {
-    "OFF",
-    "ON",
+    MEAL_PAGER_UI_TEXT("OFF", "关"),
+    MEAL_PAGER_UI_TEXT("ON", "开"),
 };
 const uint32_t led_value[2] = {
     Meal_PagerLedOff,
@@ -49,8 +49,8 @@ const uint32_t led_value[2] = {
 };
 
 const char* const settings_text[2] = {
-    "OFF",
-    "ON",
+    MEAL_PAGER_UI_TEXT("OFF", "关"),
+    MEAL_PAGER_UI_TEXT("ON", "开"),
 };
 const uint32_t settings_value[2] = {
     Meal_PagerSettingsOff,
@@ -141,7 +141,7 @@ void meal_pager_scene_settings_on_enter(void* context) {
 
     // Pager Type
     item = variable_item_list_add(
-        app->variable_item_list, "Pager Type:", 4, meal_pager_scene_settings_set_pager_type, app);
+        app->variable_item_list, MEAL_PAGER_UI_TEXT("Pager Type:", "呼机类型:"), 4, meal_pager_scene_settings_set_pager_type, app);
     value_index = value_index_uint32(app->pager_type, pager_type_value, 4);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, pager_type_text[value_index]);
@@ -149,7 +149,7 @@ void meal_pager_scene_settings_on_enter(void* context) {
     // First Station
     item = variable_item_list_add(
         app->variable_item_list,
-        "First Station",
+        MEAL_PAGER_UI_TEXT("First Station", "首基站"),
         1,
         meal_pager_scene_settings_set_first_station,
         app);
@@ -159,7 +159,7 @@ void meal_pager_scene_settings_on_enter(void* context) {
     // Last Station
     item = variable_item_list_add(
         app->variable_item_list,
-        "Last Station",
+        MEAL_PAGER_UI_TEXT("Last Station", "末基站"),
         1,
         meal_pager_scene_settings_set_last_station,
         app);
@@ -168,19 +168,19 @@ void meal_pager_scene_settings_on_enter(void* context) {
 
     // First Pager
     item = variable_item_list_add(
-        app->variable_item_list, "First Pager", 1, meal_pager_scene_settings_set_first_pager, app);
+        app->variable_item_list, MEAL_PAGER_UI_TEXT("First Pager", "首呼机"), 1, meal_pager_scene_settings_set_first_pager, app);
     snprintf(app->first_pager_char, 20, "%lu", app->first_pager);
     variable_item_set_current_value_text(item, app->first_pager_char);
 
     // Last Pager
     item = variable_item_list_add(
-        app->variable_item_list, "Last Pager", 1, meal_pager_scene_settings_set_last_pager, app);
+        app->variable_item_list, MEAL_PAGER_UI_TEXT("Last Pager", "末呼机"), 1, meal_pager_scene_settings_set_last_pager, app);
     snprintf(app->last_pager_char, 20, "%lu", app->last_pager);
     variable_item_set_current_value_text(item, app->last_pager_char);
 
     // Repeat Attacks
     item = variable_item_list_add(
-        app->variable_item_list, "Signal Repeat", 11, meal_pager_scene_settings_set_repeats, app);
+        app->variable_item_list, MEAL_PAGER_UI_TEXT("Signal Repeat", "信号重复"), 11, meal_pager_scene_settings_set_repeats, app);
     variable_item_set_current_value_index(item, app->repeats);
     snprintf(app->repeats_char, 20, "%lu", app->repeats);
     variable_item_set_current_value_text(item, app->repeats_char);
@@ -201,7 +201,7 @@ void meal_pager_scene_settings_on_enter(void* context) {
 
     // LED Effects on/off
     item = variable_item_list_add(
-        app->variable_item_list, "LED FX:", 2, meal_pager_scene_settings_set_led, app);
+        app->variable_item_list, MEAL_PAGER_UI_TEXT("LED FX:", "LED 效果:"), 2, meal_pager_scene_settings_set_led, app);
     value_index = value_index_uint32(app->led, led_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, led_text[value_index]);
@@ -209,7 +209,7 @@ void meal_pager_scene_settings_on_enter(void* context) {
     // Save Settings to File
     item = variable_item_list_add(
         app->variable_item_list,
-        "Save Settings",
+        MEAL_PAGER_UI_TEXT("Save Settings", "保存设置"),
         2,
         meal_pager_scene_settings_set_save_settings,
         app);

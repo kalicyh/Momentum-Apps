@@ -20,17 +20,17 @@ void weebo_scene_saved_menu_on_enter(void* context) {
     submenu_reset(submenu);
 
     submenu_add_item(
-        submenu, "Write", SubmenuIndexWrite, weebo_scene_saved_menu_submenu_callback, weebo);
+        submenu, WEEBO_UI_TEXT("Write", "写入"), SubmenuIndexWrite, weebo_scene_saved_menu_submenu_callback, weebo);
     submenu_add_item(
-        submenu, "Emulate", SubmenuIndexEmulate, weebo_scene_saved_menu_submenu_callback, weebo);
+        submenu, WEEBO_UI_TEXT("Emulate", "模拟"), SubmenuIndexEmulate, weebo_scene_saved_menu_submenu_callback, weebo);
     submenu_add_item(
         submenu,
-        "Duplicate",
+        WEEBO_UI_TEXT("Duplicate", "复制"),
         SubmenuIndexDuplicate,
         weebo_scene_saved_menu_submenu_callback,
         weebo);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, weebo_scene_saved_menu_submenu_callback, weebo);
+        submenu, WEEBO_UI_TEXT("Info", "信息"), SubmenuIndexInfo, weebo_scene_saved_menu_submenu_callback, weebo);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(weebo->scene_manager, WeeboSceneSavedMenu));

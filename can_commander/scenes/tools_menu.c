@@ -19,25 +19,25 @@ void cancommander_scene_tools_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Monitor & Discovery",
+        CAN_COMMANDER_UI_TEXT("Monitor & Discovery", "监测与发现"),
         ToolsMonitorDiscovery,
         cancommander_scene_tools_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Control & Injection",
+        CAN_COMMANDER_UI_TEXT("Control & Injection", "控制与注入"),
         ToolsControlInjection,
         cancommander_scene_tools_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Vehicle Diagnostics",
+        CAN_COMMANDER_UI_TEXT("Vehicle Diagnostics", "车辆诊断"),
         ToolsVehicleDiagnostics,
         cancommander_scene_tools_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "DBC & Databases",
+        CAN_COMMANDER_UI_TEXT("DBC & Databases", "DBC 与数据库"),
         ToolsDbcDatabases,
         cancommander_scene_tools_menu_callback,
         app);

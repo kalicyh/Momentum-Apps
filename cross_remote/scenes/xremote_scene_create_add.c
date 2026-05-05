@@ -34,7 +34,7 @@ void xremote_scene_create_add_on_enter(void* context) {
 
     button_menu_add_item(
         button_menu,
-        "Infrared",
+        XREMOTE_UI_TEXT("Infrared", "\xe7\xba\xa2\xe5\xa4\x96"),
         ButtonIndexIr,
         xremote_create_add_callback,
         ButtonMenuItemTypeCommon,
@@ -42,7 +42,7 @@ void xremote_scene_create_add_on_enter(void* context) {
 
     button_menu_add_item(
         button_menu,
-        "SubGhz",
+        XREMOTE_UI_TEXT("SubGhz", "SubGhz"),
         ButtonIndexSubghz,
         xremote_create_add_callback,
         ButtonMenuItemTypeCommon,
@@ -50,13 +50,13 @@ void xremote_scene_create_add_on_enter(void* context) {
 
     button_menu_add_item(
         button_menu,
-        "Pause",
+        XREMOTE_UI_TEXT("Pause", "\xe6\x9a\x82\xe5\x81\x9c"),
         ButtonIndexPause,
         xremote_create_add_callback,
         ButtonMenuItemTypeCommon,
         context);
 
-    button_menu_set_header(button_menu, "Choose Type");
+    button_menu_set_header(button_menu, XREMOTE_UI_TEXT("Choose Type", "\xe9\x80\x89\xe6\x8b\xa9\xe7\xb1\xbb\xe5\x9e\x8b"));
     const int16_t button_index =
         (signed)scene_manager_get_scene_state(scene_manager, XRemoteViewIdCreateAdd);
     button_menu_set_selected_item(button_menu, button_index);

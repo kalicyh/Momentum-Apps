@@ -16,6 +16,12 @@
 
 #include <dolphin/dolphin.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif
+
 // this should be used as global state
 // we can store different things here
 typedef struct {

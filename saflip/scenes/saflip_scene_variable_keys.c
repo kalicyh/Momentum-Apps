@@ -49,9 +49,9 @@ void saflip_scene_variable_keys_submenu_callback(void* context, InputType type, 
         }
     } else if(type == InputTypeLong && index < app->variable_keys) {
         // Prompt to remove variable key
-        dialog_ex_set_header(app->dialog, "Remove variable key?", 64, 12, AlignCenter, AlignTop);
-        dialog_ex_set_left_button_text(app->dialog, "Cancel");
-        dialog_ex_set_right_button_text(app->dialog, "Remove");
+        dialog_ex_set_header(app->dialog, SAFLIP_UI_TEXT("Remove variable key?", "删除可变密钥?"), 64, 12, AlignCenter, AlignTop);
+        dialog_ex_set_left_button_text(app->dialog, SAFLIP_UI_TEXT("Cancel", "取消"));
+        dialog_ex_set_right_button_text(app->dialog, SAFLIP_UI_TEXT("Remove", "删除"));
         dialog_ex_set_result_callback(app->dialog, saflip_scene_variable_keys_dialog_callback);
         dialog_ex_set_context(app->dialog, app);
         view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewDialog);
@@ -87,26 +87,26 @@ void saflip_scene_variable_keys_on_enter(void* context) {
 
     submenu_add_item_ex(
         app->submenu,
-        "Add variable key...",
+        SAFLIP_UI_TEXT("Add variable key...", "添加可变密钥..."),
         app->variable_keys,
         saflip_scene_variable_keys_submenu_callback,
         app);
 
     switch(app->variable_keys_optional_function) {
     case VariableKeysOptionalFunctionNone:
-        furi_string_printf(label, "Optional Function: None");
+        furi_string_printf(label, SAFLIP_UI_TEXT("Optional Function: None", "可选功能: 无"));
         break;
     case VariableKeysOptionalFunctionLevelInhibit:
-        furi_string_printf(label, "Opt. Func: Level Inhibit");
+        furi_string_printf(label, SAFLIP_UI_TEXT("Opt. Func: Level Inhibit", "可选功能: 级别禁止"));
         break;
     case VariableKeysOptionalFunctionElectLockUnlock:
-        furi_string_printf(label, "Opt. Func: Elec. Un/Lock");
+        furi_string_printf(label, SAFLIP_UI_TEXT("Opt. Func: Elec. Un/Lock", "可选功能: 电子锁/解锁"));
         break;
     case VariableKeysOptionalFunctionLatchUnlatch:
-        furi_string_printf(label, "Opt. Func: Latch/UnLatch");
+        furi_string_printf(label, SAFLIP_UI_TEXT("Opt. Func: Latch/UnLatch", "可选功能: 锁舌/解锁"));
         break;
     default:
-        furi_string_printf(label, "Opt. Func: Unknown");
+        furi_string_printf(label, SAFLIP_UI_TEXT("Opt. Func: Unknown", "可选功能: 未知"));
     }
     submenu_add_item_ex(
         app->submenu,

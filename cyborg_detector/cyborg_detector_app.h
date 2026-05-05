@@ -4,6 +4,12 @@
 #include <gui/view_port.h>
 #include <furi_hal_nfc.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CYBORG_UI_TEXT(en, zh) (zh)
+#else
+#define CYBORG_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     Gui* gui;
     ViewPort* view_port;

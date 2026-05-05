@@ -158,7 +158,7 @@ void protopirate_scene_receiver_info_on_enter(void* context) {
         widget_add_button_element(
             app->widget,
             GuiButtonTypeLeft,
-            "Emulate",
+            PROTOPIRATE_UI_TEXT("Emulate", "模拟"),
             protopirate_scene_receiver_info_widget_callback,
             app);
     }
@@ -168,7 +168,7 @@ void protopirate_scene_receiver_info_on_enter(void* context) {
     widget_add_button_element(
         app->widget,
         GuiButtonTypeRight,
-        "Save",
+        PROTOPIRATE_UI_TEXT("Save", "保存"),
         protopirate_scene_receiver_info_widget_callback,
         app);
 

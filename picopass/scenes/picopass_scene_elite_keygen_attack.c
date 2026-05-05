@@ -88,7 +88,8 @@ void picopass_scene_elite_keygen_attack_on_enter(void* context) {
     picopass->dict_attack_ctx.card_detected = false;
     picopass->dict_attack_ctx.total_keys = PICOPASS_SCENE_ELITE_KEYGEN_ATTACK_LIMIT;
     picopass->dict_attack_ctx.current_key = 0;
-    picopass->dict_attack_ctx.name = "Elite Keygen Attack";
+    picopass->dict_attack_ctx.name =
+        PICOPASS_UI_TEXT("Elite Keygen Attack", "Elite密钥生成攻击");
     scene_manager_set_scene_state(picopass->scene_manager, PicopassSceneEliteKeygenAttack, state);
 
     // Setup view

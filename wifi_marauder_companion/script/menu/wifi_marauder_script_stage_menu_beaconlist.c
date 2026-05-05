@@ -40,18 +40,18 @@ void wifi_marauder_script_stage_menu_beaconlist_load(WifiMarauderScriptStageMenu
     stage_menu->items = malloc(3 * sizeof(WifiMarauderScriptMenuItem));
 
     stage_menu->items[0] = (WifiMarauderScriptMenuItem){
-        .name = strdup("SSIDs"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("SSIDs", "SSID 列表")),
         .type = WifiMarauderScriptMenuItemTypeListString,
         .num_options = 1,
         .select_callback = wifi_marauder_beaconlist_stage_ssids_select_callback};
     stage_menu->items[1] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Generate random"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Generate random", "随机生成")),
         .type = WifiMarauderScriptMenuItemTypeNumber,
         .num_options = 1,
         .setup_callback = wifi_marauder_beaconlist_stage_random_ssids_setup_callback,
         .select_callback = wifi_marauder_beaconlist_stage_random_ssids_select_callback};
     stage_menu->items[2] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Timeout"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Timeout", "超时")),
         .type = WifiMarauderScriptMenuItemTypeNumber,
         .num_options = 1,
         .setup_callback = wifi_marauder_beaconlist_stage_timeout_setup_callback,

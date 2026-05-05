@@ -1,5 +1,13 @@
 #include "../mag_i.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 void mag_scene_save_success_on_enter(void* context) {
     Mag* mag = context;
     Popup* popup = mag->popup;
@@ -9,7 +17,7 @@ void mag_scene_save_success_on_enter(void* context) {
     mag_text_store_clear(mag);
 
     popup_set_icon(popup, 36, 5, &I_DolphinDone_80x58);
-    popup_set_header(popup, "Saved!", 5, 7, AlignLeft, AlignTop);
+    popup_set_header(popup, MAGSPOOF_UI_TEXT("Saved!", "已保存!"), 5, 7, AlignLeft, AlignTop);
     popup_set_context(popup, mag);
     popup_set_callback(popup, mag_popup_timeout_callback);
     popup_set_timeout(popup, 1500);

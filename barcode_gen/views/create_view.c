@@ -102,7 +102,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
 
     draw_menu_item(
         canvas,
-        "Type",
+        BARCODE_GEN_UI_TEXT("Type", "类型"),
         type_obj->name,
         TypeMenuItem * LINE_HEIGHT + startY,
         selected_type > 0,
@@ -111,7 +111,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
 
     draw_menu_item(
         canvas,
-        "Name",
+        BARCODE_GEN_UI_TEXT("Name", "名称"),
         furi_string_empty(create_view_model->file_name) ?
             "--" :
             furi_string_get_cstr(create_view_model->file_name),
@@ -122,7 +122,7 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
 
     draw_menu_item(
         canvas,
-        "Data",
+        BARCODE_GEN_UI_TEXT("Data", "数据"),
         furi_string_empty(create_view_model->barcode_data) ?
             "--" :
             furi_string_get_cstr(create_view_model->barcode_data),
@@ -133,14 +133,14 @@ static void app_draw_callback(Canvas* canvas, void* ctx) {
 
     draw_button(
         canvas,
-        "Save",
+        BARCODE_GEN_UI_TEXT("Save", "保存"),
         SaveMenuButton * LINE_HEIGHT + startY,
         selected_menu_item == SaveMenuButton);
 
     if(create_view_model->mode == EditMode) {
         draw_button(
             canvas,
-            "Delete",
+            BARCODE_GEN_UI_TEXT("Delete", "删除"),
             DeleteMenuButton * LINE_HEIGHT + startY,
             selected_menu_item == DeleteMenuButton);
     }
@@ -232,7 +232,7 @@ static bool app_input_callback(InputEvent* input_event, void* ctx) {
                     TEXT_BUFFER_SIZE - BARCODE_EXTENSION_LENGTH, //remove the barcode length
                     //clear default text
                     false);text_input_set_header_text(
-                    create_view_object->barcode_app->text_input, "File Name");
+                    create_view_object->barcode_app->text_input, BARCODE_GEN_UI_TEXT("File Name", "文件名"));
                 text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, false);
                 text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, false);
                 view_dispatcher_switch_to_view(create_view_object->barcode_app->view_dispatcher, TextInputView);
@@ -254,7 +254,7 @@ static bool app_input_callback(InputEvent* input_event, void* ctx) {
                     TEXT_BUFFER_SIZE,
                     //clear default text
                     false);text_input_set_header_text(
-                    create_view_object->barcode_app->text_input, "Barcode Data");
+                    create_view_object->barcode_app->text_input, BARCODE_GEN_UI_TEXT("Barcode Data", "条码数据"));
                 text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, true);
                 text_input_show_illegal_symbols(create_view_object->barcode_app->text_input, true);
                 view_dispatcher_switch_to_view(create_view_object->barcode_app->view_dispatcher, TextInputView);
@@ -355,9 +355,9 @@ void remove_barcode(CreateView* create_view_object) {
         MessageViewModel * model,
         {
             if(success) {
-                model->message = "File Deleted";
+                model->message = BARCODE_GEN_UI_TEXT("File Deleted", "文件已删除");
             } else {
-                model->message = "Could not delete file";
+                model->message = BARCODE_GEN_UI_TEXT("Could not delete file", "无法删除文件");
             }
         },
         true);
@@ -468,9 +468,9 @@ void save_barcode(CreateView* create_view_object) {
         MessageViewModel * model,
         {
             if(success) {
-                model->message = "File Saved!";
+                model->message = BARCODE_GEN_UI_TEXT("File Saved!", "文件已保存！");
             } else {
-                model->message = "A saving error has occurred";
+                model->message = BARCODE_GEN_UI_TEXT("A saving error has occurred", "保存时发生错误");
             }
         },
         true);

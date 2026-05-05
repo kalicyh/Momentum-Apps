@@ -30,14 +30,14 @@ void nfc_apdu_runner_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Load Script",
+        NFC_APDU_RUNNER_UI_TEXT("Load Script", "加载脚本"),
         NfcApduRunnerStartSubmenuIndexLoadFile,
         nfc_apdu_runner_start_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "About",
+        NFC_APDU_RUNNER_UI_TEXT("About", "关于"),
         NfcApduRunnerStartSubmenuIndexAbout,
         nfc_apdu_runner_start_submenu_callback,
         app);

@@ -21,7 +21,7 @@ void nfc_eink_scene_save_name_on_enter(void* context) {
         path_extract_dirname(furi_string_get_cstr(instance->file_path), folder_path);
     }
 
-    text_input_set_header_text(text_input, "Name the screen");
+    text_input_set_header_text(text_input, NFC_EINK_UI_TEXT("Name the screen", "命名屏幕"));
     text_input_set_result_callback(
         text_input,
         nfc_eink_text_input_callback,

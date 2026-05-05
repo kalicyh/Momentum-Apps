@@ -72,12 +72,12 @@ static void media_controller_view_draw_callback(Canvas* canvas, void* context) {
     MediaControllerViewModel* model = context;
 
     canvas_set_font(canvas, FontPrimary);
-    elements_multiline_text_aligned(canvas, 0, 0, AlignLeft, AlignTop, "Media");
+    elements_multiline_text_aligned(canvas, 0, 0, AlignLeft, AlignTop, UI_TEXT("Media", "媒体"));
 
     canvas_set_font(canvas, FontSecondary);
 
     canvas_draw_icon(canvas, 0, 12, &I_Pin_back_arrow_10x8);
-    canvas_draw_str(canvas, 12, 20, "Hold");
+    canvas_draw_str(canvas, 12, 20, UI_TEXT("Hold", "长按"));
 
     media_controller_view_draw_arrow_button(
         canvas, model->up_pressed, 23, 74, CanvasDirectionBottomToTop);
@@ -91,10 +91,10 @@ static void media_controller_view_draw_callback(Canvas* canvas, void* context) {
     int buttons_post = 30;
     // Ok
     media_controller_draw_wide_button(
-        canvas, model->ok_pressed, 0, buttons_post, "Play", &I_Ok_btn_9x9);
+        canvas, model->ok_pressed, 0, buttons_post, UI_TEXT("Play", "播放"), &I_Ok_btn_9x9);
     // Back
     media_controller_draw_wide_button(
-        canvas, model->back_pressed, 0, buttons_post + 19, "Mute", &I_Pin_back_arrow_10x8);
+        canvas, model->back_pressed, 0, buttons_post + 19, UI_TEXT("Mute", "静音"), &I_Pin_back_arrow_10x8);
 }
 
 static void

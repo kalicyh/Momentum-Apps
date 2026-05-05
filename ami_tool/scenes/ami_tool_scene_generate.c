@@ -231,16 +231,16 @@ static bool ami_tool_scene_generate_find_game_callback(
 
 static void ami_tool_scene_generate_show_root_menu(AmiToolApp* app) {
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Generate Amiibo");
+    submenu_set_header(app->submenu, AMI_TOOL_UI_TEXT("Generate Amiibo", "生成 Amiibo"));
     submenu_add_item(
         app->submenu,
-        "Select by Name",
+        AMI_TOOL_UI_TEXT("Select by Name", "按名称选择"),
         AmiToolGenerateRootMenuIndexByName,
         ami_tool_scene_generate_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Select by Games",
+        AMI_TOOL_UI_TEXT("Select by Games", "按游戏选择"),
         AmiToolGenerateRootMenuIndexByGames,
         ami_tool_scene_generate_submenu_callback,
         app);
@@ -254,7 +254,7 @@ static void ami_tool_scene_generate_show_root_menu(AmiToolApp* app) {
 
 static void ami_tool_scene_generate_show_platform_menu(AmiToolApp* app) {
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Choose Platform");
+    submenu_set_header(app->submenu, AMI_TOOL_UI_TEXT("Choose Platform", "选择平台"));
     for(size_t platform = 0; platform < AmiToolGeneratePlatformCount; platform++) {
         submenu_add_item(
             app->submenu,
@@ -272,7 +272,8 @@ static void ami_tool_scene_generate_show_games_menu(AmiToolApp* app) {
     ami_tool_generate_clear_amiibo_cache(app);
     ami_tool_scene_generate_clear_selected_game(app);
     furi_string_printf(
-        app->text_box_store, "%s Games", ami_tool_scene_generate_platform_label(app->generate_platform));
+        app->text_box_store, "%s%s", ami_tool_scene_generate_platform_label(app->generate_platform),
+        AMI_TOOL_UI_TEXT(" Games", " 游戏"));
     submenu_set_header(app->submenu, furi_string_get_cstr(app->text_box_store));
 
     AmiToolGenerateListBuildContext ctx = {
@@ -286,7 +287,8 @@ static void ami_tool_scene_generate_show_games_menu(AmiToolApp* app) {
     if(!file_ok) {
         furi_string_printf(
             app->text_box_store,
-            "Unable to read the %s game list.\n\nEnsure the assets folder is installed.",
+            AMI_TOOL_UI_TEXT("Unable to read the %s game list.\n\nEnsure the assets folder is installed.",
+                             "无法读取 %s 游戏列表。\n\n请确保已安装资源文件夹。"),
             ami_tool_scene_generate_platform_label(app->generate_platform));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStatePlatformMenu);
@@ -297,7 +299,8 @@ static void ami_tool_scene_generate_show_games_menu(AmiToolApp* app) {
     if(app->generate_game_count == 0) {
         furi_string_printf(
             app->text_box_store,
-            "No games found for %s.\n\nUpdate or regenerate your assets.",
+            AMI_TOOL_UI_TEXT("No games found for %s.\n\nUpdate or regenerate your assets.",
+                             "未找到 %s 的游戏。\n\n请更新或重新生成资源。"),
             ami_tool_scene_generate_platform_label(app->generate_platform));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStatePlatformMenu);
@@ -462,7 +465,7 @@ static bool ami_tool_scene_generate_fill_page_names(AmiToolApp* app) {
             if(fallback && fallback[0] != '\0') {
                 furi_string_set(app->generate_page_names[i], fallback);
             } else {
-                furi_string_set(app->generate_page_names[i], "Unknown Amiibo");
+                furi_string_set(app->generate_page_names[i], AMI_TOOL_UI_TEXT("Unknown Amiibo", "未知 Amiibo"));
             }
         }
     }
@@ -588,7 +591,8 @@ static void ami_tool_scene_generate_show_name_menu(AmiToolApp* app) {
     if(!ami_tool_scene_generate_show_cached_amiibo_menu(app)) {
         furi_string_set(
             app->text_box_store,
-            "No Amiibo names available.\n\nUpdate amiibo_name.dat and try again.");
+            AMI_TOOL_UI_TEXT("No Amiibo names available.\n\nUpdate amiibo_name.dat and try again.",
+                             "没有可用的 Amiibo 名称。\n\n请更新 amiibo_name.dat 后重试。"));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStateRootMenu);
     }
@@ -635,7 +639,7 @@ static bool ami_tool_scene_generate_show_cached_amiibo_menu(AmiToolApp* app) {
     if(app->generate_page_offset > 0) {
         submenu_add_item(
             app->submenu,
-            "< Previous Page",
+            AMI_TOOL_UI_TEXT("< Previous Page", "< 上一页"),
             AMI_TOOL_GENERATE_MENU_INDEX_PREV_PAGE,
             ami_tool_scene_generate_submenu_callback,
             app);
@@ -654,7 +658,7 @@ static bool ami_tool_scene_generate_show_cached_amiibo_menu(AmiToolApp* app) {
     if((app->generate_page_offset + page_entries) < app->generate_amiibo_count) {
         submenu_add_item(
             app->submenu,
-            "Next Page >",
+            AMI_TOOL_UI_TEXT("Next Page >", "下一页 >"),
             AMI_TOOL_GENERATE_MENU_INDEX_NEXT_PAGE,
             ami_tool_scene_generate_submenu_callback,
             app);
@@ -711,7 +715,8 @@ static void ami_tool_scene_generate_show_amiibo_menu(AmiToolApp* app, size_t gam
     if(!found) {
         furi_string_printf(
             app->text_box_store,
-            "Unable to find the selected game.\n\nReturn to the list and try again.");
+            AMI_TOOL_UI_TEXT("Unable to find the selected game.\n\nReturn to the list and try again.",
+                             "无法找到所选游戏。\n\n请返回列表重试。"));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStateGameList);
         furi_string_free(game_name);
@@ -727,7 +732,8 @@ static void ami_tool_scene_generate_show_amiibo_menu(AmiToolApp* app, size_t gam
     if(!ami_tool_scene_generate_show_cached_amiibo_menu(app)) {
         furi_string_set(
             app->text_box_store,
-            "Unable to load Amiibo list for the selected game.\n\nUpdate your assets.");
+            AMI_TOOL_UI_TEXT("Unable to load Amiibo list for the selected game.\n\nUpdate your assets.",
+                             "无法加载所选游戏的 Amiibo 列表。\n\n请更新资源。"));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStateGameList);
         furi_string_free(game_name);
@@ -792,7 +798,8 @@ static void ami_tool_scene_generate_show_amiibo_placeholder(AmiToolApp* app, siz
     if(amiibo_index >= app->generate_amiibo_count) {
         furi_string_printf(
             app->text_box_store,
-            "Unknown Amiibo selection.\n\nReturn to the previous menu.");
+            AMI_TOOL_UI_TEXT("Unknown Amiibo selection.\n\nReturn to the previous menu.",
+                             "未知 Amiibo 选择。\n\n请返回上一级菜单。"));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStateAmiiboList);
         return;
@@ -810,7 +817,8 @@ static void ami_tool_scene_generate_show_amiibo_placeholder(AmiToolApp* app, siz
         if(!ami_tool_scene_generate_load_page_entries(app)) {
             furi_string_set(
                 app->text_box_store,
-                "Unable to load Amiibo data.\n\nReturn to the previous menu.");
+                AMI_TOOL_UI_TEXT("Unable to load Amiibo data.\n\nReturn to the previous menu.",
+                                 "无法加载 Amiibo 数据。\n\n请返回上一级菜单。"));
             ami_tool_scene_generate_commit_text_view(
                 app, AmiToolGenerateStateMessage, AmiToolGenerateStateAmiiboList);
             return;
@@ -830,7 +838,8 @@ static void ami_tool_scene_generate_show_amiibo_placeholder(AmiToolApp* app, siz
     FuriString* id_str = app->generate_page_ids[local_index];
     if(!id_str || furi_string_empty(id_str)) {
         furi_string_set(
-            app->text_box_store, "No Amiibo ID available.\n\nReturn to the previous menu.");
+            app->text_box_store, AMI_TOOL_UI_TEXT("No Amiibo ID available.\n\nReturn to the previous menu.",
+                                                   "没有可用的 Amiibo ID。\n\n请返回上一级菜单。"));
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStateAmiiboList);
         return;
@@ -847,7 +856,8 @@ static void ami_tool_scene_generate_show_amiibo_placeholder(AmiToolApp* app, siz
     if(!ami_tool_scene_generate_prepare_dump(app, id_hex)) {
         furi_string_printf(
             app->text_box_store,
-            "Unable to generate Amiibo dump.\n\nID: %s",
+            AMI_TOOL_UI_TEXT("Unable to generate Amiibo dump.\n\nID: %s",
+                             "无法生成 Amiibo 数据。\n\nID: %s"),
             id_hex[0] ? id_hex : "Unknown");
         ami_tool_scene_generate_commit_text_view(
             app, AmiToolGenerateStateMessage, AmiToolGenerateStateAmiiboList);
@@ -1105,7 +1115,8 @@ bool ami_tool_scene_generate_on_event(void* context, SceneManagerEvent event) {
         case AmiToolEventInfoActionEmulate:
             if(!ami_tool_info_start_emulation(app)) {
                 ami_tool_info_show_action_message(
-                    app, "Unable to start emulation.\nGenerate or read an Amiibo first.");
+                    app, AMI_TOOL_UI_TEXT("Unable to start emulation.\nGenerate or read an Amiibo first.",
+                                          "无法启动模拟。\n请先生成或读取 Amiibo。"));
             }
             return true;
         case AmiToolEventInfoActionUsage:
@@ -1114,21 +1125,24 @@ bool ami_tool_scene_generate_on_event(void* context, SceneManagerEvent event) {
         case AmiToolEventInfoActionChangeUid:
             if(!ami_tool_info_change_uid(app)) {
                 ami_tool_info_show_action_message(
-                    app, "Unable to change UID.\nInstall key_retail.bin and try again.");
+                    app, AMI_TOOL_UI_TEXT("Unable to change UID.\nInstall key_retail.bin and try again.",
+                                          "无法更改 UID。\n请安装 key_retail.bin 后重试。"));
             }
             return true;
         case AmiToolEventInfoActionWriteTag:
             if(!ami_tool_info_write_to_tag(app)) {
                 ami_tool_info_show_action_message(
                     app,
-                    "Unable to write tag.\nUse a blank NTAG215 and make\nsure key_retail.bin is installed.");
+                    AMI_TOOL_UI_TEXT("Unable to write tag.\nUse a blank NTAG215 and make\nsure key_retail.bin is installed.",
+                                     "无法写入标签。\n请使用空白 NTAG215 并确保\n已安装 key_retail.bin。"));
             }
             return true;
         case AmiToolEventInfoActionSaveToStorage:
             if(!ami_tool_info_save_to_storage(app)) {
                 ami_tool_info_show_action_message(
                     app,
-                    "Unable to save Amiibo.\nGenerate or read one first\nand check storage access.");
+                    AMI_TOOL_UI_TEXT("Unable to save Amiibo.\nGenerate or read one first\nand check storage access.",
+                                     "无法保存 Amiibo。\n请先生成或读取一个\n并检查存储访问权限。"));
             }
             return true;
         case AmiToolEventUsagePrevPage:

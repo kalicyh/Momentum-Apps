@@ -1,6 +1,12 @@
 #include "malveke_gb_emulator.h"
 #include <malveke_gb_emulator_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GBEMULATOR_UI_TEXT(en, zh) (zh)
+#else
+#define GBEMULATOR_UI_TEXT(en, zh) (en)
+#endif
+
 static void malveke_gb_emulator_view_draw_callback(Canvas* canvas, void* _model) {
     UartDumpModel* model = _model;
 
@@ -23,11 +29,11 @@ static void malveke_gb_emulator_view_draw_callback(Canvas* canvas, void* _model)
         canvas_draw_icon(canvas, 60, 7, &I_malveke_67x49);
         canvas_set_font(canvas, FontSecondary);
 
-        canvas_draw_str(canvas, 4, 25, "Connect");
+        canvas_draw_str(canvas, 4, 25, GBEMULATOR_UI_TEXT("Connect", "连接"));
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str(canvas, 4, 35, "MALVEKE");
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 4, 44, "into Flipper");
+        canvas_draw_str(canvas, 4, 44, GBEMULATOR_UI_TEXT("into Flipper", "到 Flipper"));
         elements_button_center(canvas, "Ok");
         // canvas_set_font(canvas, FontPrimary);
         // canvas_draw_str(canvas, 8, 28, "GAME BOY");

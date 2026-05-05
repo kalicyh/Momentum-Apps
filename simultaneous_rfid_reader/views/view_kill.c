@@ -189,7 +189,7 @@ void uhf_reader_kill_password_updated(void* context) {
             Redraw);
     }
     Popup* PopupLock = App->LockPopup;
-    popup_set_header(PopupLock, "Setting\nKill\nPassword", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(PopupLock, RFID_READER_UI_TEXT("Setting\nKill\nPassword", "设置\n销毁\n密码"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(PopupLock, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     free(tempBuffer);
@@ -206,7 +206,7 @@ void uhf_reader_kill_confirm_password_updated(void* context) {
     bool Redraw = true;
     Popup* PopupLock = App->LockPopup;
     popup_reset(PopupLock);
-    popup_set_header(PopupLock, "Killing\nUHF\nTag!", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(PopupLock, RFID_READER_UI_TEXT("Killing\nUHF\nTag!", "正在\n销毁\n标签!"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(PopupLock, 0, 3, &I_RFIDDolphinReceive_97x61);
     notification_message(App->Notifications, &uhf_sequence_blink_start_cyan);
     // Temporary buffer to hold the converted string
@@ -389,11 +389,11 @@ void kill_confirm_menu_alloc(UHFReaderApp* App) {
 void view_kill_alloc(UHFReaderApp* App) {
     //Allocate the submenu for the kill menu
     App->SubmenuKillActions = submenu_alloc();
-    submenu_set_header(App->SubmenuKillActions, "Kill Tag Options: ");
+    submenu_set_header(App->SubmenuKillActions, RFID_READER_UI_TEXT("Kill Tag Options: ", "销毁标签选项: "));
 
     //Creating placeholders for the views used for the kill feature
-    App->KillPasswordPlaceHolder = strdup("Enter Kill Password!");
-    App->KillConfirmPasswordPlaceHolder = strdup("Confirm Kill Password!");
+    App->KillPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Kill Password!", "输入销毁密码!"));
+    App->KillConfirmPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Confirm Kill Password!", "确认销毁密码!"));
     App->DefaultKillPassword = strdup("00000000");
 
     //Allocate the kill input views
@@ -401,13 +401,13 @@ void view_kill_alloc(UHFReaderApp* App) {
     kill_confirm_menu_alloc(App);
     submenu_add_item(
         App->SubmenuKillActions,
-        "Set Kill Password",
+        RFID_READER_UI_TEXT("Set Kill Password", "设置销毁密码"),
         UHFReaderSubmenuIndexSetKillPwd,
         uhf_reader_submenu_kill_callback,
         App);
     submenu_add_item(
         App->SubmenuKillActions,
-        "Kill Tag (Permanent)",
+        RFID_READER_UI_TEXT("Kill Tag (Permanent)", "销毁标签(永久)"),
         UHFReaderSubmenuIndexKillTag,
         uhf_reader_submenu_kill_callback,
         App);

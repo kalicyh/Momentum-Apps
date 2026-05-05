@@ -1,4 +1,5 @@
 #include "dap_main_view.h"
+#include "../../dap_link.h"
 #include "dap_link_icons.h"
 #include <gui/elements.h>
 
@@ -29,7 +30,7 @@ static void dap_main_view_draw_callback(Canvas* canvas, void* _model) {
     DapMainViewModel* model = _model;
     UNUSED(model);
     canvas_clear(canvas);
-    elements_button_left(canvas, "Config");
+    elements_button_left(canvas, DAP_LINK_UI_TEXT("Config", "配置"));
 
     canvas_set_color(canvas, ColorBlack);
     canvas_draw_box(canvas, 0, 0, 127, 11);
@@ -38,11 +39,11 @@ static void dap_main_view_draw_callback(Canvas* canvas, void* _model) {
     const char* header_string;
     if(model->usb_connected) {
         if(model->version == DapMainViewVersionV1) {
-            header_string = "DAP Link V1 Connected";
+            header_string = DAP_LINK_UI_TEXT("DAP Link V1 Connected", "DAP Link V1 已连接");
         } else if(model->version == DapMainViewVersionV2) {
-            header_string = "DAP Link V2 Connected";
+            header_string = DAP_LINK_UI_TEXT("DAP Link V2 Connected", "DAP Link V2 已连接");
         } else {
-            header_string = "DAP Link Connected";
+            header_string = DAP_LINK_UI_TEXT("DAP Link Connected", "DAP Link 已连接");
         }
     } else {
         header_string = "DAP Link";
@@ -87,10 +88,15 @@ static void dap_main_view_draw_callback(Canvas* canvas, void* _model) {
 
     canvas_draw_line(canvas, 44, 52, 123, 52);
     if(model->baudrate == 0) {
-        canvas_draw_str(canvas, 45, 62, "Baud: ????");
+        canvas_draw_str(canvas, 45, 62, DAP_LINK_UI_TEXT("Baud: ????", "波特率: ????"));
     } else {
-        char baudrate_str[18];
-        snprintf(baudrate_str, 18, "Baud: %lu", model->baudrate);
+        char baudrate_str[24];
+        snprintf(
+            baudrate_str,
+            sizeof(baudrate_str),
+            "%s %lu",
+            DAP_LINK_UI_TEXT("Baud:", "波特率:"),
+            model->baudrate);
         canvas_draw_str(canvas, 45, 62, baudrate_str);
     }
 }

@@ -6,7 +6,7 @@
 #include <src/scenes/include/pokemon_scene.h>
 #include <src/include/pokemon_attribute.h>
 
-static const char* strains[] = {
+static const char* strains_en[] = {
     "None",
     "A",
     "B",
@@ -14,6 +14,21 @@ static const char* strains[] = {
     "D",
     "",
 };
+
+static const char* strains_zh[] = {
+    "无",
+    "A",
+    "B",
+    "C",
+    "D",
+    "",
+};
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define POKERUS_STRAINS strains_zh
+#else
+#define POKERUS_STRAINS strains_en
+#endif
 
 struct pokerus_itemlist {
     VariableItem* strain;
@@ -28,7 +43,7 @@ static void select_strain_callback(VariableItem* item) {
     PokemonFap* pokemon_fap = variable_item_get_context(item);
 
     /* Need to set the new text from the mangled index */
-    variable_item_set_current_value_text(item, strains[index]);
+    variable_item_set_current_value_text(item, POKERUS_STRAINS[index]);
 
     /* demangle the index to the value we need to set in trade struct */
     if(index == 0)
@@ -66,10 +81,10 @@ static void select_pokerus_rebuild_list(PokemonFap* pokemon_fap) {
     variable_item_list_reset(pokemon_fap->variable_item_list);
 
     pokerus.strain = variable_item_list_add(
-        pokemon_fap->variable_item_list, "Strain:", 5, select_strain_callback, pokemon_fap);
+        pokemon_fap->variable_item_list, POKEMON_UI_TEXT("Strain:", "毒株:"), 5, select_strain_callback, pokemon_fap);
     pokerus.days = variable_item_list_add(
         pokemon_fap->variable_item_list,
-        "Days remain:",
+        POKEMON_UI_TEXT("Days remain:", "剩余天数:"),
         (strain == 0 ? 0 : 16),
         select_days_callback,
         pokemon_fap);
@@ -126,7 +141,7 @@ static void select_pokerus_rebuild_list(PokemonFap* pokemon_fap) {
     daystring = furi_string_alloc_printf("%d", days);
 
     variable_item_set_current_value_index(pokerus.strain, strain);
-    variable_item_set_current_value_text(pokerus.strain, strains[strain]);
+    variable_item_set_current_value_text(pokerus.strain, POKERUS_STRAINS[strain]);
 
     variable_item_set_current_value_index(pokerus.days, (strain == 0 ? 0 : days));
     variable_item_set_current_value_text(pokerus.days, furi_string_get_cstr(daystring));

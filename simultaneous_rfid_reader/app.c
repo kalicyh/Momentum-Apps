@@ -46,15 +46,15 @@ void uhf_reader_submenu_callback(void* context, uint32_t index) {
 */
 void main_menu_alloc(UHFReaderApp* App) {
     App->Submenu = submenu_alloc();
-    submenu_set_header(App->Submenu, "UHF RFID Reader");
+    submenu_set_header(App->Submenu, RFID_READER_UI_TEXT("UHF RFID Reader", "UHF RFID 读写器"));
     submenu_add_item(
-        App->Submenu, "Read", UHFReaderSubmenuIndexRead, uhf_reader_submenu_callback, App);
+        App->Submenu, RFID_READER_UI_TEXT("Read", "读取"), UHFReaderSubmenuIndexRead, uhf_reader_submenu_callback, App);
     submenu_add_item(
-        App->Submenu, "Saved", UHFReaderSubmenuIndexSaved, uhf_reader_submenu_callback, App);
+        App->Submenu, RFID_READER_UI_TEXT("Saved", "已保存"), UHFReaderSubmenuIndexSaved, uhf_reader_submenu_callback, App);
     submenu_add_item(
-        App->Submenu, "Configure", UHFReaderSubmenuIndexConfig, uhf_reader_submenu_callback, App);
+        App->Submenu, RFID_READER_UI_TEXT("Configure", "配置"), UHFReaderSubmenuIndexConfig, uhf_reader_submenu_callback, App);
     submenu_add_item(
-        App->Submenu, "About", UHFReaderSubmenuIndexAbout, uhf_reader_submenu_callback, App);
+        App->Submenu, RFID_READER_UI_TEXT("About", "关于"), UHFReaderSubmenuIndexAbout, uhf_reader_submenu_callback, App);
     view_set_previous_callback(
         submenu_get_view(App->Submenu), uhf_reader_navigation_exit_callback);
     view_dispatcher_add_view(

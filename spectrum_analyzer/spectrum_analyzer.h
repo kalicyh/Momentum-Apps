@@ -82,3 +82,9 @@
 /* Modulation references */
 #define DEFAULT_MODULATION 0
 #define NARROW_MODULATION  1
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SPECTRUM_ANALYZER_UI_TEXT(en, zh) (zh)
+#else
+#define SPECTRUM_ANALYZER_UI_TEXT(en, zh) (en)
+#endif

@@ -25,7 +25,7 @@ void uart_terminal_scene_text_input_on_enter(void* context) {
     // Setup view
     TextInput* text_input = app->text_input;
     // Add help message to header
-    text_input_set_header_text(text_input, "Send new morse message");
+    text_input_set_header_text(text_input, MORSEFLASH_UI_TEXT("Send new morse message", "发送新摩尔斯消息"));
     text_input_set_result_callback(
         text_input,
         uart_terminal_scene_text_input_callback,

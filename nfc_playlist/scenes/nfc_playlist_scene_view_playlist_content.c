@@ -16,7 +16,7 @@ void nfc_playlist_view_playlist_content_scene_on_enter(void* context) {
          64,
          AlignCenter,
          AlignCenter,
-         "\ePlaylist is empty\n\n\n\nPress back\e",
+         NFC_PLAYLIST_UI_TEXT("\ePlaylist is empty\n\n\n\nPress back\e", "\e播放列表为空\n\n\n\n按返回键\e"),
          false);
    } else if(file_stream_open(
                 stream,
@@ -47,7 +47,7 @@ void nfc_playlist_view_playlist_content_scene_on_enter(void* context) {
          64,
          AlignCenter,
          AlignCenter,
-         "\eFailed to open playlist\n\n\n\nPress back\e",
+         NFC_PLAYLIST_UI_TEXT("\eFailed to open playlist\n\n\n\nPress back\e", "\e打开播放列表失败\n\n\n\n按返回键\e"),
          false);
    }
 

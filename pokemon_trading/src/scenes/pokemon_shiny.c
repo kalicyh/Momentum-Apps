@@ -19,10 +19,10 @@ void pokemon_scene_select_shiny_on_enter(void* context) {
     submenu_reset(pokemon_fap->submenu);
 
     submenu_add_item(
-        pokemon_fap->submenu, "Shiny", 1, select_shiny_selected_callback, pokemon_fap);
+        pokemon_fap->submenu, POKEMON_UI_TEXT("Shiny", "闪光"), 1, select_shiny_selected_callback, pokemon_fap);
 
     submenu_add_item(
-        pokemon_fap->submenu, "Not Shiny", 0, select_shiny_selected_callback, pokemon_fap);
+        pokemon_fap->submenu, POKEMON_UI_TEXT("Not Shiny", "非闪光"), 0, select_shiny_selected_callback, pokemon_fap);
 }
 
 bool pokemon_scene_select_shiny_on_event(void* context, SceneManagerEvent event) {

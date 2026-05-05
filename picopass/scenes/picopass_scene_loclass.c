@@ -36,7 +36,8 @@ void picopass_scene_loclass_on_enter(void* context) {
 
     loclass_set_callback(picopass->loclass, picopass_loclass_result_callback, picopass);
     loclass_set_header(picopass->loclass, "Loclass");
-    loclass_set_subheader(picopass->loclass, "Hold To Reader");
+    loclass_set_subheader(
+        picopass->loclass, PICOPASS_UI_TEXT("Hold To Reader", "贴近读卡器"));
 
     picopass_blink_emulate_start(picopass);
     view_dispatcher_switch_to_view(picopass->view_dispatcher, PicopassViewLoclass);
@@ -62,7 +63,9 @@ void picopass_scene_loclass_on_enter(void* context) {
             picopass->listener, picopass_scene_loclass_listener_callback, picopass);
     } else {
         loclass_set_num_macs(picopass->loclass, 255);
-        loclass_set_header(picopass->loclass, "Error Opening Log File");
+        loclass_set_header(
+            picopass->loclass,
+            PICOPASS_UI_TEXT("Error Opening Log File", "打开日志文件失败"));
         picopass_listener_free(picopass->listener);
         picopass->listener = NULL;
     }
@@ -82,7 +85,9 @@ bool picopass_scene_loclass_on_event(void* context, SceneManagerEvent event) {
             }
             consumed = true;
         } else if(event.event == PicopassCustomEventLoclassGotStandardKey) {
-            loclass_set_header(picopass->loclass, "Loclass (Got Std Key)");
+            loclass_set_header(
+                picopass->loclass,
+                PICOPASS_UI_TEXT("Loclass (Got Std Key)", "Loclass (获取标准密钥)"));
             notification_message(picopass->notifications, &sequence_error);
             consumed = true;
         } else if(event.event == PicopassCustomEventViewExit) {

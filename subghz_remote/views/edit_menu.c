@@ -2,6 +2,12 @@
 #include "../subghz_remote_app_i.h"
 #include "../helpers/subrem_custom_button_info.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SUBREM_UI_TEXT(en, zh) (zh)
+#else
+#define SUBREM_UI_TEXT(en, zh) (en)
+#endif
+
 #include <input/input.h>
 #include <gui/elements.h>
 
@@ -50,7 +56,7 @@ void subrem_view_edit_menu_add_data_to_show(
             if(!furi_string_empty(label)) {
                 furi_string_set(model->label, label);
             } else {
-                furi_string_set(model->label, "Empty label");
+                furi_string_set(model->label, SUBREM_UI_TEXT("Empty label", "空标签"));
             }
             furi_string_set(model->file_path, path);
             if(button != ButtonOK && !furi_string_empty(path)) {
@@ -81,9 +87,9 @@ void subrem_view_edit_menu_draw(Canvas* canvas, SubRemViewEditMenuModel* model) 
 
     // Draw bottom btn
     canvas_set_font(canvas, FontSecondary);
-    elements_button_left(canvas, "Back");
-    elements_button_center(canvas, "Edit");
-    elements_button_right(canvas, "Save");
+    elements_button_left(canvas, SUBREM_UI_TEXT("Back", "返回"));
+    elements_button_center(canvas, SUBREM_UI_TEXT("Edit", "编辑"));
+    elements_button_right(canvas, SUBREM_UI_TEXT("Save", "保存"));
 
     // Draw top frame
     canvas_draw_line(canvas, 1, 0, 125, 0);
@@ -96,23 +102,23 @@ void subrem_view_edit_menu_draw(Canvas* canvas, SubRemViewEditMenuModel* model) 
     canvas_set_font(canvas, FontPrimary);
     switch(model->chosen) {
     case SubRemSubKeyNameUp:
-        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, "UP");
+        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, SUBREM_UI_TEXT("UP", "上"));
         break;
 
     case SubRemSubKeyNameDown:
-        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, "DOWN");
+        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, SUBREM_UI_TEXT("DOWN", "下"));
         break;
 
     case SubRemSubKeyNameLeft:
-        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, "LEFT");
+        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, SUBREM_UI_TEXT("LEFT", "左"));
         break;
 
     case SubRemSubKeyNameRight:
-        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, "RIGHT");
+        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, SUBREM_UI_TEXT("RIGHT", "右"));
         break;
 
     case SubRemSubKeyNameOk:
-        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, "OK");
+        canvas_draw_str(canvas, 3, FRAME_HEIGHT - 2, SUBREM_UI_TEXT("OK", "确认"));
         break;
 
     default:
@@ -129,7 +135,7 @@ void subrem_view_edit_menu_draw(Canvas* canvas, SubRemViewEditMenuModel* model) 
         FRAME_HEIGHT,
         AlignCenter,
         AlignBottom,
-        furi_string_empty(model->label) ? "Empty label" : furi_string_get_cstr(model->label),
+        furi_string_empty(model->label) ? SUBREM_UI_TEXT("Empty label", "空标签") : furi_string_get_cstr(model->label),
         true);
 
     // Draw arrow
@@ -156,23 +162,23 @@ void subrem_view_edit_menu_draw(Canvas* canvas, SubRemViewEditMenuModel* model) 
             false);
     } else if(furi_string_empty(model->file_path)) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 1, FRAME_HEIGHT * 2 - 2, "Button not set");
+        canvas_draw_str(canvas, 1, FRAME_HEIGHT * 2 - 2, SUBREM_UI_TEXT("Button not set", "按键未设置"));
     } else {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 1, FRAME_HEIGHT * 2 - 2, "ERR:");
+        canvas_draw_str(canvas, 1, FRAME_HEIGHT * 2 - 2, SUBREM_UI_TEXT("ERR:", "错误:"));
         canvas_set_font(canvas, FontSecondary);
         switch(model->sub_state) {
         case SubRemLoadSubStateErrorNoFile:
-            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, "File not found");
+            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, SUBREM_UI_TEXT("File not found", "文件未找到"));
             break;
         case SubRemLoadSubStateErrorFreq:
-            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, "Bad frequency");
+            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, SUBREM_UI_TEXT("Bad frequency", "频率错误"));
             break;
         case SubRemLoadSubStateErrorMod:
-            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, "Bad modulation");
+            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, SUBREM_UI_TEXT("Bad modulation", "调制方式错误"));
             break;
         case SubRemLoadSubStateErrorProtocol:
-            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, "Unsupported protocol");
+            canvas_draw_str(canvas, 26, FRAME_HEIGHT * 2 - 2, SUBREM_UI_TEXT("Unsupported protocol", "不支持的协议"));
             break;
 
         default:

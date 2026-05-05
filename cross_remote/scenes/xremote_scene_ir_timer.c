@@ -16,7 +16,7 @@ void xremote_scene_ir_timer_on_enter(void* context) {
     char str[50];
     int32_t min_value = 0;
     int32_t max_value = 9999;
-    snprintf(str, sizeof(str), "Transmit in ms (%ld - %ld)", min_value, max_value);
+    snprintf(str, sizeof(str), XREMOTE_UI_TEXT("Transmit in ms (%ld - %ld)", "\xe5\x8f\x91\xe9\x80\x81\xe6\x97\xb6\xe9\x97\xb4(ms)(%ld-%ld)"), min_value, max_value);
     CrossRemoteItem* item = xremote_cross_remote_get_item(app->cross_remote, app->edit_item);
 
     number_input_set_header_text(number_input, str);

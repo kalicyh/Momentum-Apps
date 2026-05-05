@@ -3,6 +3,14 @@
 #include <toolbox/path.h>
 #include <flipper_format/flipper_format.h>
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define TAG "MagDevice"
 
 static const char* mag_file_header = "Flipper Mag device";
@@ -104,7 +112,8 @@ static bool mag_device_save_file(
     } while(0);
 
     if(!saved) {
-        dialog_message_show_storage_error(mag_dev->dialogs, "Cannot save\nfile");
+        dialog_message_show_storage_error(
+            mag_dev->dialogs, MAGSPOOF_UI_TEXT("Cannot save\nfile", "无法保存\n文件"));
     }
 
     furi_string_free(temp_str);
@@ -164,11 +173,15 @@ bool mag_device_load_data(MagDevice* mag_dev, FuriString* path, bool show_dialog
 
     if((!parsed) && (show_dialog)) {
         if(deprecated_version) {
-            dialog_message_show_storage_error(mag_dev->dialogs, "File format\ndeprecated");
+            dialog_message_show_storage_error(
+                mag_dev->dialogs,
+                MAGSPOOF_UI_TEXT("File format\ndeprecated", "文件格式\n已过时"));
         } else if(!data_read) {
-            dialog_message_show_storage_error(mag_dev->dialogs, "Cannot read\ndata");
+            dialog_message_show_storage_error(
+                mag_dev->dialogs, MAGSPOOF_UI_TEXT("Cannot read\ndata", "无法读取\n数据"));
         } else {
-            dialog_message_show_storage_error(mag_dev->dialogs, "Cannot parse\nfile");
+            dialog_message_show_storage_error(
+                mag_dev->dialogs, MAGSPOOF_UI_TEXT("Cannot parse\nfile", "无法解析\n文件"));
         }
     }
 
@@ -224,7 +237,8 @@ bool mag_device_delete(MagDevice* mag_dev, bool use_load_path) {
     } while(false);
 
     if(!deleted) {
-        dialog_message_show_storage_error(mag_dev->dialogs, "Cannot remove\nfile");
+        dialog_message_show_storage_error(
+            mag_dev->dialogs, MAGSPOOF_UI_TEXT("Cannot remove\nfile", "无法删除\n文件"));
     }
 
     furi_string_free(file_path);

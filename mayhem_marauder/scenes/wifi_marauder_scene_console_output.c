@@ -92,13 +92,13 @@ void wifi_marauder_scene_console_output_on_enter(void* context) {
         app->text_box_store_strlen = 0;
         // Help message
         if(0 == strncmp("help", app->selected_tx_string, strlen("help"))) {
-            const char* help_msg = "Marauder companion " WIFI_MARAUDER_APP_VERSION "\n";
+            const char* help_msg = WIFI_MARAUDER_UI_TEXT("Marauder companion ", "Marauder 伴侣 ") WIFI_MARAUDER_APP_VERSION "\n";
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
         }
         // Stopscan message
         if(app->show_stopscan_tip) {
-            const char* help_msg = "Press BACK to send stopscan\n";
+            const char* help_msg = WIFI_MARAUDER_UI_TEXT("Press BACK to send stopscan\n", "按返回键发送 stopscan\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
         }
@@ -140,10 +140,10 @@ void wifi_marauder_scene_console_output_on_enter(void* context) {
                        app->log_file, app->log_file_path, FSAM_WRITE, FSOM_CREATE_ALWAYS)) {
                     app->is_writing_log = true;
                 } else {
-                    dialog_message_show_storage_error(app->dialogs, "Cannot open log file");
+                    dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot open log file", "无法打开日志文件"));
                 }
             } else {
-                dialog_message_show_storage_error(app->dialogs, "Cannot resolve log path");
+                dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot resolve log path", "无法解析日志路径"));
             }
         }
 
@@ -162,7 +162,7 @@ void wifi_marauder_scene_console_output_on_enter(void* context) {
             if(sequential_file_open(app->storage, app->capture_file, folder, prefix, extension)) {
                 app->is_writing_pcap = true;
             } else {
-                dialog_message_show_storage_error(app->dialogs, "Cannot open capture file");
+                dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot open capture file", "无法打开捕获文件"));
             }
         }
 

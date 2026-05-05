@@ -15,7 +15,7 @@ void nfc_magic_scene_write_confirm_on_enter(void* context) {
     NfcMagicApp* instance = context;
     Widget* widget = instance->widget;
 
-    widget_add_string_element(widget, 3, 0, AlignLeft, AlignTop, FontPrimary, "Risky operation");
+    widget_add_string_element(widget, 3, 0, AlignLeft, AlignTop, FontPrimary, NFC_MAGIC_UI_TEXT("Risky operation", "风险操作"));
     widget_add_text_box_element(
         widget,
         0,
@@ -24,16 +24,16 @@ void nfc_magic_scene_write_confirm_on_enter(void* context) {
         54,
         AlignLeft,
         AlignTop,
-        "Writing to this card will change manufacturer block. On some cards it may not be rewritten",
+        NFC_MAGIC_UI_TEXT("Writing to this card will change manufacturer block. On some cards it may not be rewritten", "写入此卡将修改制造商块. 部分卡片可能无法重写"),
         false);
     widget_add_button_element(
         widget,
         GuiButtonTypeCenter,
-        "Continue",
+        NFC_MAGIC_UI_TEXT("Continue", "继续"),
         nfc_magic_scene_write_confirm_widget_callback,
         instance);
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Back", nfc_magic_scene_write_confirm_widget_callback, instance);
+        widget, GuiButtonTypeLeft, NFC_MAGIC_UI_TEXT("Back", "返回"), nfc_magic_scene_write_confirm_widget_callback, instance);
 
     // Setup and start worker
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewWidget);

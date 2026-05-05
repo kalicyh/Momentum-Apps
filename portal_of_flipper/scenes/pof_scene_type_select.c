@@ -19,13 +19,13 @@ void pof_scene_type_select_on_enter(void* context) {
     submenu_reset(pof->submenu);
     submenu_add_item(
     submenu,
-    "Emulate Xbox 360",
+    UI_TEXT("Emulate Xbox 360", "模拟 Xbox 360"),
     SubmenuIndexSwapXbox360,
     pof_scene_type_select_submenu_callback,
     pof);
     submenu_add_item(
     submenu,
-    "Emulate HID",
+    UI_TEXT("Emulate HID", "模拟 HID"),
     SubmenuIndexSwapHid,
     pof_scene_type_select_submenu_callback,
     pof);

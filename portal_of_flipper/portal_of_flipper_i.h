@@ -17,6 +17,12 @@
 #include "helpers/pof_usb.h"
 #include "virtual_portal.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct PoFApp PoFApp;
 
 struct PoFApp {

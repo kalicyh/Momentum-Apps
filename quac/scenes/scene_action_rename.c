@@ -25,7 +25,7 @@ void scene_action_rename_on_enter(void* context) {
 
     Item* item = ItemArray_get(app->items_view->items, app->selected_item);
 
-    text_input_set_header_text(text, "Enter new name:");
+    text_input_set_header_text(text, QUAC_UI_TEXT("Enter new name:", "输入新名称:"));
 
     FuriString* file_name = furi_string_alloc();
     char ext[MAX_EXT_LEN] = {0};
@@ -86,7 +86,7 @@ bool scene_action_rename_on_event(void* context, SceneManagerEvent event) {
                 FURI_LOG_E(
                     TAG, "Rename file failed! %s", filesystem_api_error_get_desc(fs_result));
                 FuriString* error_msg = furi_string_alloc_printf(
-                    "Rename failed!\nError: %s", filesystem_api_error_get_desc(fs_result));
+                    QUAC_UI_TEXT("Rename failed!\nError: %s", "重命名失败!\n错误: %s"), filesystem_api_error_get_desc(fs_result));
                 dialog_message_show_storage_error(app->dialog, furi_string_get_cstr(error_msg));
                 furi_string_free(error_msg);
             }

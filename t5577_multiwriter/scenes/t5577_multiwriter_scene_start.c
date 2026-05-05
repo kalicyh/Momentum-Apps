@@ -19,19 +19,19 @@ void t5577_multiwriter_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Write first key",
+        T5577_MULTIWRITER_UI_TEXT("Write first key", "写入第一把钥匙"),
         SubmenuIndexWriteFirstKey,
         t5577_multiwriter_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Write second key",
+        T5577_MULTIWRITER_UI_TEXT("Write second key", "写入第二把钥匙"),
         SubmenuIndexWriteSecondKey,
         t5577_multiwriter_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Write third key",
+        T5577_MULTIWRITER_UI_TEXT("Write third key", "写入第三把钥匙"),
         SubmenuIndexWriteThirdKey,
         t5577_multiwriter_scene_start_submenu_callback,
         app);

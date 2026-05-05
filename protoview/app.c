@@ -289,7 +289,7 @@ int32_t protoview_app_entry(void* p) {
                 } else {
                     /* If we are in the main app view, warn the user
                      * they needs to long press to really quit. */
-                    ui_show_alert(app, "Long press to exit", 1000);
+                    ui_show_alert(app, PROTOVIEW_UI_TEXT("Long press to exit", "长按退出"), 1000);
                 }
             } else if(input.type == InputTypeLong && input.key == InputKeyBack) {
                 app->running = 0;
@@ -360,7 +360,7 @@ int32_t protoview_app_entry(void* p) {
             /* Setup the text input view. The different parameters are set
              * in the app structure by the view that wanted to show the
              * input text. The callback, buffer and buffer len must be set.  */
-            text_input_set_header_text(app->text_input, "Save signal filename");
+            text_input_set_header_text(app->text_input, PROTOVIEW_UI_TEXT("Save signal filename", "保存信号文件名"));
             text_input_set_result_callback(
                 app->text_input,
                 app->text_input_done_callback,

@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define flip_telegram_UI_TEXT(en, zh) (zh)
+#else
+#define flip_telegram_UI_TEXT(en, zh) (en)
+#endif
+
 #include "font/font.h"
 #include "easy_flipper/easy_flipper.h"
 #include "flipper_http/flipper_http.h"

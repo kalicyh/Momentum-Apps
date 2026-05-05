@@ -1,4 +1,5 @@
 #include "uhf_device.h"
+#include "uhf_app_i.h"
 #include <toolbox/path.h>
 #include <flipper_format/flipper_format.h>
 #include <uhf_rfid_icons.h>
@@ -87,7 +88,7 @@ static bool uhf_device_save_file(
     } while(0);
 
     if(!saved) {
-        dialog_message_show_storage_error(dev->dialogs, "Can not save\nfile");
+        dialog_message_show_storage_error(dev->dialogs, UHF_UI_TEXT("Can not save\nfile", "无法保存\n文件"));
     }
     furi_string_free(temp_str);
     flipper_format_free(file);
@@ -165,9 +166,9 @@ static bool uhf_device_load_data(UHFDevice* dev, FuriString* path, bool show_dia
 
     if((!parsed) && (show_dialog)) {
         if(deprecated_version) {
-            dialog_message_show_storage_error(dev->dialogs, "File format deprecated");
+            dialog_message_show_storage_error(dev->dialogs, UHF_UI_TEXT("File format deprecated", "文件格式已过时"));
         } else {
-            dialog_message_show_storage_error(dev->dialogs, "Can not parse\nfile");
+            dialog_message_show_storage_error(dev->dialogs, UHF_UI_TEXT("Can not parse\nfile", "无法解析\n文件"));
         }
     }
     uhf_tag_wrapper_set_tag(dev->uhf_tag_wrapper, uhf_tag);
@@ -232,7 +233,7 @@ bool uhf_device_delete(UHFDevice* dev, bool use_load_path) {
     } while(0);
 
     if(!deleted) {
-        dialog_message_show_storage_error(dev->dialogs, "Can not remove file");
+        dialog_message_show_storage_error(dev->dialogs, UHF_UI_TEXT("Can not remove file", "无法删除文件"));
     }
 
     furi_string_free(file_path);

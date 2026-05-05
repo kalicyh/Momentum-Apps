@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define free_roam_UI_TEXT(en, zh) (zh)
+#else
+#define free_roam_UI_TEXT(en, zh) (en)
+#endif
+
 #include <gui/gui.h>
 #include <gui/view.h>
 #include <gui/view_dispatcher.h>

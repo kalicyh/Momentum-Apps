@@ -81,7 +81,7 @@ void gb_cartridge_scene_4_draw(Canvas* canvas, GameBoyCartridgeROMWriteModel* mo
     snprintf(
         progressText,
         sizeof(progressText),
-        "%d%% Write ROM... GB: %s",
+        GBCARTRIDGE_UI_TEXT("%d%% Write ROM... GB: %s", "%d%% 写入 ROM... GB: %s"),
         progress,
         model->gameboy_rom_option_selected_text);
     canvas_draw_str_aligned(canvas, 128 / 2, 0, AlignCenter, AlignTop, progressText);
@@ -95,7 +95,7 @@ void gb_cartridge_scene_4_draw(Canvas* canvas, GameBoyCartridgeROMWriteModel* mo
     snprintf(
         total_rom_str,
         sizeof(total_rom_str),
-        "of %.2lf MiB",
+        GBCARTRIDGE_UI_TEXT("of %.2lf MiB", "共 %.2lf MiB"),
         (double)(model->total_rom / 1024.0 / 1024.0));
 
     char transfered_rom_str[20];
@@ -138,7 +138,7 @@ void gb_cartridge_scene_4_draw(Canvas* canvas, GameBoyCartridgeROMWriteModel* mo
             100); // Pinta las primeras 10 cajas de negro
     // free(totalText);
 
-    elements_button_center(canvas, "Write");
+    elements_button_center(canvas, GBCARTRIDGE_UI_TEXT("Write", "写入"));
 }
 
 static void gb_cartridge_scene_4_model_init(GameBoyCartridgeROMWriteModel* const model) {

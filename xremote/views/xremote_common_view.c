@@ -341,7 +341,8 @@ void xremote_canvas_draw_exit_footer(Canvas* canvas, ViewOrientation orient, con
         xremote_canvas_draw_icon(canvas, 6, 124, XRemoteIconBack);
         elements_multiline_text_aligned(canvas, 12, 128, AlignLeft, AlignBottom, text);
     } else {
-        uint8_t x = strncmp(text, "Hold", 4) ? 71 : 76;
+        uint8_t tw = canvas_string_width(canvas, text);
+        uint8_t x = 128 - tw - 8;
         xremote_canvas_draw_icon(canvas, x, 60, XRemoteIconBack);
         elements_multiline_text_aligned(canvas, 128, 64, AlignRight, AlignBottom, text);
     }

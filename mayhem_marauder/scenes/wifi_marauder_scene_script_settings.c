@@ -6,7 +6,10 @@ enum ScriptSettingsOption {
     ScriptSettingsOptionEnableLed
 };
 
-const char* option_values[3] = {"No", "Yes", "Default"};
+const char* option_values[3] = {
+    WIFI_MARAUDER_UI_TEXT("No", "否"),
+    WIFI_MARAUDER_UI_TEXT("Yes", "是"),
+    WIFI_MARAUDER_UI_TEXT("Default", "默认")};
 
 static void wifi_marauder_scene_script_settings_enter_callback(void* context, uint32_t index) {
     WifiMarauderApp* app = context;
@@ -44,7 +47,7 @@ void wifi_marauder_scene_script_settings_on_enter(void* context) {
         app->var_item_list, wifi_marauder_scene_script_settings_enter_callback, app);
 
     // Script repeat option
-    VariableItem* repeat_item = variable_item_list_add(app->var_item_list, "Repeat", 1, NULL, app);
+    VariableItem* repeat_item = variable_item_list_add(app->var_item_list, WIFI_MARAUDER_UI_TEXT("Repeat", "重复"), 1, NULL, app);
     char repeat_str[32];
     snprintf(repeat_str, sizeof(repeat_str), "%d", app->script->repeat);
     variable_item_set_current_value_text(repeat_item, repeat_str);
@@ -52,7 +55,7 @@ void wifi_marauder_scene_script_settings_on_enter(void* context) {
     // Save PCAP option
     VariableItem* save_pcap_item = variable_item_list_add(
         app->var_item_list,
-        "Save PCAP",
+        WIFI_MARAUDER_UI_TEXT("Save PCAP", "保存 PCAP"),
         3,
         wifi_marauder_scene_script_settings_change_callback,
         app);
@@ -62,7 +65,7 @@ void wifi_marauder_scene_script_settings_on_enter(void* context) {
     // Enable board LED option
     VariableItem* enable_led_item = variable_item_list_add(
         app->var_item_list,
-        "Enable LED",
+        WIFI_MARAUDER_UI_TEXT("Enable LED", "启用 LED"),
         3,
         wifi_marauder_scene_script_settings_change_callback,
         app);

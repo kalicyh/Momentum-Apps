@@ -13,16 +13,16 @@ typedef struct {
     XRemoteAppContext* app_ctx;
 } XRemoteSettingsContext;
 
-#define XREMOTE_ORIENTATION_TEXT "Orientation"
+#define XREMOTE_ORIENTATION_TEXT XREMOTE_UI_TEXT("Orientation", "屏幕方向")
 #define XREMOTE_ORIENTATION_MAX  2
 
-#define XREMOTE_EXIT_BEHAVIOR_TEXT "Exit Apps"
+#define XREMOTE_EXIT_BEHAVIOR_TEXT XREMOTE_UI_TEXT("Exit Apps", "退出方式")
 #define XREMOTE_EXIT_BEHAVIOR_MAX  2
 
-#define XREMOTE_REPEAT_TEXT "IR Msg Repeat"
+#define XREMOTE_REPEAT_TEXT XREMOTE_UI_TEXT("IR Msg Repeat", "红外重复次数")
 #define XREMOTE_REPEAT_MAX  128
 
-#define XREMOTE_ALT_NAMES_TEXT "Alt Names"
+#define XREMOTE_ALT_NAMES_TEXT XREMOTE_UI_TEXT("Alt Names", "别名匹配")
 #define XREMOTE_ALT_NAMES_MAX  2
 
 static uint32_t xremote_settings_view_exit_callback(void* context) {

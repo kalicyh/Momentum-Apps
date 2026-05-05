@@ -12,13 +12,13 @@ void passy_scene_delete_on_enter(void* context) {
 
     // Setup Custom Widget view
     char temp_str[64];
-    snprintf(temp_str, sizeof(temp_str), "\e#Delete MRZ info?\e#");
+    snprintf(temp_str, sizeof(temp_str), "\e#%s\e#", PASSY_UI_TEXT("Delete MRZ info?", "删除MRZ信息?"));
     widget_add_text_box_element(
         passy->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, temp_str, false);
     widget_add_button_element(
-        passy->widget, GuiButtonTypeLeft, "Back", passy_scene_delete_widget_callback, passy);
+        passy->widget, GuiButtonTypeLeft, PASSY_UI_TEXT("Back", "返回"), passy_scene_delete_widget_callback, passy);
     widget_add_button_element(
-        passy->widget, GuiButtonTypeRight, "Delete", passy_scene_delete_widget_callback, passy);
+        passy->widget, GuiButtonTypeRight, PASSY_UI_TEXT("Delete", "删除"), passy_scene_delete_widget_callback, passy);
 
     view_dispatcher_switch_to_view(passy->view_dispatcher, PassyViewWidget);
 }

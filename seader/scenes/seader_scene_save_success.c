@@ -13,7 +13,7 @@ void seader_scene_save_success_on_enter(void* context) {
     // Setup view
     Popup* popup = seader->popup;
     popup_set_icon(popup, 36, 5, &I_DolphinSaved_92x58);
-    popup_set_header(popup, "Saved!", 13, 22, AlignLeft, AlignBottom);
+    popup_set_header(popup, SEADER_UI_TEXT("Saved!", "已保存!"), 13, 22, AlignLeft, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, seader);
     popup_set_callback(popup, seader_scene_save_success_popup_callback);

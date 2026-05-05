@@ -112,13 +112,13 @@ static bool cancommander_scene_custom_inject_apply_bytes_to_slot(App* app) {
 
     bool selected[8] = {0};
     if(!cancommander_scene_custom_inject_parse_bytes_list(app->custom_inject_edit_bytes, selected)) {
-        app_set_status(app, "Bytes list invalid (use 0..7 comma-separated)");
+        app_set_status(app, CAN_COMMANDER_UI_TEXT("Bytes list invalid (use 0..7 comma-separated)", "字节列表无效 (使用 0..7 逗号分隔)"));
         return false;
     }
 
     uint8_t value_bytes[8] = {0};
     if(!cancommander_scene_custom_inject_parse_hex_bytes(app->custom_inject_edit_value_hex, value_bytes)) {
-        app_set_status(app, "Value must be 8 bytes hex");
+        app_set_status(app, CAN_COMMANDER_UI_TEXT("Value must be 8 bytes hex", "值必须为8字节十六进制"));
         return false;
     }
 
@@ -148,7 +148,7 @@ static bool cancommander_scene_custom_inject_apply_bytes_to_slot(App* app) {
     app_args_set_key_value(slot_args, sizeof(app->args_custom_inject_slots[0]), "sig", "0");
     app_args_set_key_value(slot_args, sizeof(app->args_custom_inject_slots[0]), "ext", "0");
     app_custom_inject_save(app);
-    app_set_status(app, "Set Bytes saved for slot %u", (unsigned)(slot_index + 1U));
+    app_set_status(app, CAN_COMMANDER_UI_TEXT("Set Bytes saved for slot %u", "槽位 %u 字节设置已保存"), (unsigned)(slot_index + 1U));
     return true;
 }
 
@@ -156,23 +156,23 @@ void cancommander_scene_custom_inject_bytes_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Set Bytes");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Set Bytes", "设置字节"));
 
     submenu_add_item(
         app->submenu,
-        "Bytes to Inject",
+        CAN_COMMANDER_UI_TEXT("Bytes to Inject", "注入字节"),
         CustomInjectBytesToInject,
         cancommander_scene_custom_inject_bytes_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Value",
+        CAN_COMMANDER_UI_TEXT("Value", "值"),
         CustomInjectBytesValue,
         cancommander_scene_custom_inject_bytes_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Save",
+        CAN_COMMANDER_UI_TEXT("Save", "保存"),
         CustomInjectBytesSave,
         cancommander_scene_custom_inject_bytes_menu_callback,
         app);
@@ -200,7 +200,7 @@ bool cancommander_scene_custom_inject_bytes_menu_on_event(void* context, SceneMa
             app,
             app->custom_inject_edit_bytes,
             sizeof(app->custom_inject_edit_bytes),
-            "Bytes (0,1,5)");
+            CAN_COMMANDER_UI_TEXT("Bytes (0,1,5)", "字节 (0,1,5)"));
         scene_manager_next_scene(app->scene_manager, cancommander_scene_text_input);
         return true;
 
@@ -209,7 +209,7 @@ bool cancommander_scene_custom_inject_bytes_menu_on_event(void* context, SceneMa
             app,
             app->custom_inject_edit_value_hex,
             sizeof(app->custom_inject_edit_value_hex),
-            "Value");
+            CAN_COMMANDER_UI_TEXT("Value", "值"));
         app->input_use_byte_input = true;
         app->input_hex_mode = AppHexInputBytes;
         app->input_hex_count = 8U;

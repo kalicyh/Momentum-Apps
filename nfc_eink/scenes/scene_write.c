@@ -42,9 +42,15 @@ static void nfc_eink_write_callback(NfcEinkScreenEventType type, void* context) 
 
 static void nfc_eink_scene_write_show_waiting(const NfcEinkApp* instance) {
     popup_reset(instance->popup);
-    popup_set_header(instance->popup, "Waiting", 97, 15, AlignCenter, AlignTop);
+    popup_set_header(
+        instance->popup, NFC_EINK_UI_TEXT("Waiting", "等待中"), 97, 15, AlignCenter, AlignTop);
     popup_set_text(
-        instance->popup, "Apply eink next\nto Flipper's back", 94, 27, AlignCenter, AlignTop);
+        instance->popup,
+        NFC_EINK_UI_TEXT("Apply eink next\nto Flipper's back", "将墨水屏贴近\nFlipper背面"),
+        94,
+        27,
+        AlignCenter,
+        AlignTop);
     popup_set_icon(instance->popup, 0, 8, &I_NFC_manual_60x50);
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcEinkViewPopup);
 }
@@ -52,7 +58,9 @@ static void nfc_eink_scene_write_show_waiting(const NfcEinkApp* instance) {
 static void nfc_eink_scene_write_show_writing_data(const NfcEinkApp* instance) {
     eink_progress_reset(instance->eink_progress);
     FuriString* str = furi_string_alloc_printf(
-        "\e#Writting...\n\e#%s", nfc_eink_screen_get_name(instance->screen));
+        "\e#%s\n\e#%s",
+        NFC_EINK_UI_TEXT("Writting...", "写入中..."),
+        nfc_eink_screen_get_name(instance->screen));
 
     eink_progress_set_header(instance->eink_progress, furi_string_get_cstr(str));
 
@@ -70,9 +78,15 @@ static void nfc_eink_scene_write_show_updating(const NfcEinkApp* instance) {
 
     if(state != NfcEinkAppSceneWriteStateUpdatingScreen) {
         popup_reset(instance->popup);
-        popup_set_header(instance->popup, "Updating...", 80, 15, AlignCenter, AlignTop);
+        popup_set_header(
+            instance->popup, NFC_EINK_UI_TEXT("Updating...", "更新中..."), 80, 15, AlignCenter, AlignTop);
         popup_set_text(
-            instance->popup, "Wait until\nupdate complete", 75, 30, AlignCenter, AlignTop);
+            instance->popup,
+            NFC_EINK_UI_TEXT("Wait until\nupdate complete", "等待更新完成"),
+            75,
+            30,
+            AlignCenter,
+            AlignTop);
         popup_set_icon(instance->popup, 5, 11, &I_ArrowC_1_36x36);
         view_dispatcher_switch_to_view(instance->view_dispatcher, NfcEinkViewPopup);
     }

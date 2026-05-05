@@ -1,6 +1,13 @@
 #pragma once
 
 #include <furi.h>
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ROLLING_FLAWS_UI_TEXT(en, zh) (zh)
+#else
+#define ROLLING_FLAWS_UI_TEXT(en, zh) (en)
+#endif
+
 #include <gui/modules/submenu.h>
 #include <gui/modules/widget.h>
 #include <gui/modules/variable_item_list.h>

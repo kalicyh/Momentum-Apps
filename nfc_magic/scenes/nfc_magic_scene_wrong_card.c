@@ -18,7 +18,7 @@ void nfc_magic_scene_wrong_card_on_enter(void* context) {
 
     widget_add_icon_element(widget, 84, 22, &I_WarningDolphinFlip_45x42);
     widget_add_string_element(
-        widget, 1, 4, AlignLeft, AlignTop, FontPrimary, "This is wrong card");
+        widget, 1, 4, AlignLeft, AlignTop, FontPrimary, NFC_MAGIC_UI_TEXT("This is wrong card", "卡片错误"));
     widget_add_string_multiline_element(
         widget,
         1,
@@ -26,9 +26,9 @@ void nfc_magic_scene_wrong_card_on_enter(void* context) {
         AlignLeft,
         AlignTop,
         FontSecondary,
-        "Writing this file is\nnot supported for\nthis magic card.");
+        NFC_MAGIC_UI_TEXT("Writing this file is\nnot supported for\nthis magic card.", "此魔术卡不支持\n写入此文件."));
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", nfc_magic_scene_wrong_card_widget_callback, instance);
+        widget, GuiButtonTypeLeft, NFC_MAGIC_UI_TEXT("Retry", "重试"), nfc_magic_scene_wrong_card_widget_callback, instance);
 
     // Setup and start worker
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewWidget);

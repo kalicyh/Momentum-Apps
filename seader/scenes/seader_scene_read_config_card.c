@@ -13,7 +13,7 @@ void seader_scene_read_config_card_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seader->popup;
-    popup_set_header(popup, "Detecting\nConfig\ncard", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEADER_UI_TEXT("Detecting\nConfig\ncard", "正在检测\n配置\n卡片"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     // Start worker

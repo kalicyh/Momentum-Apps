@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SUBGHZ_PLAYLIST_CREATOR_UI_TEXT(en, zh) (zh)
+#else
+#define SUBGHZ_PLAYLIST_CREATOR_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h>
 #include <gui/gui.h>
 #include <gui/view.h>

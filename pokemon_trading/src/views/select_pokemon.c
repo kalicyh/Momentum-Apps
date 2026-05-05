@@ -49,10 +49,10 @@ static void select_pokemon_render_callback(Canvas* canvas, void* model) {
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(canvas, 58, 38, AlignLeft, AlignTop, pokedex_num);
     elements_frame(canvas, 55, 0, 71, 18);
-    canvas_draw_str_aligned(canvas, 90, 5, AlignCenter, AlignTop, "Select Pokemon");
+    canvas_draw_str_aligned(canvas, 90, 5, AlignCenter, AlignTop, POKEMON_UI_TEXT("Select Pokemon", "选择宝可梦"));
 
     canvas_set_font(canvas, FontPrimary);
-    elements_button_center(canvas, "OK");
+    elements_button_center(canvas, POKEMON_UI_TEXT("OK", "确定"));
 }
 
 static bool select_pokemon_input_callback(InputEvent* event, void* context) {

@@ -11,7 +11,7 @@ void seader_scene_virtual_credential_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seader->popup;
-    popup_set_header(popup, "Processing\nvirtual\npicopass", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEADER_UI_TEXT("Processing\nvirtual\npicopass", "处理\n虚拟\nPicopass"), 68, 30, AlignLeft, AlignTop);
 
     // Start worker
     seader->credential->type = SeaderCredentialTypeVirtual;

@@ -4,6 +4,12 @@
 #include <furi.h>
 #include <furi_hal_resources.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_READER_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_READER_UI_TEXT(en, zh) (en)
+#endif
+
 #define GPIO_ITEM_COUNT 8
 #define GPIO_PULL_COUNT 3
 
@@ -29,9 +35,9 @@ typedef struct {
 } GpioPullMode;
 
 static const GpioPullMode gpio_pull_mode[3] = {
-    {"high impedence", GpioPullNo},
-    {"pull up", GpioPullUp},
-    {"pull down", GpioPullDown},
+    {GPIO_READER_UI_TEXT("high impedence", "高阻态"), GpioPullNo},
+    {GPIO_READER_UI_TEXT("pull up", "上拉"), GpioPullUp},
+    {GPIO_READER_UI_TEXT("pull down", "下拉"), GpioPullDown},
 };
 
 const char* gpio_item_get_pin_name(uint8_t index);

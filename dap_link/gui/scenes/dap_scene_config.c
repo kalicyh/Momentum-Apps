@@ -1,8 +1,11 @@
 #include "../dap_gui_i.h"
+#include "../../dap_link.h"
 
 static const char* swd_pins[] = {[DapSwdPinsPA7PA6] = "2,3", [DapSwdPinsPA14PA13] = "10,12"};
 static const char* uart_pins[] = {[DapUartTypeUSART1] = "13,14", [DapUartTypeLPUART1] = "15,16"};
-static const char* uart_swap[] = {[DapUartTXRXNormal] = "No", [DapUartTXRXSwap] = "Yes"};
+static const char* uart_swap[] = {
+    [DapUartTXRXNormal] = DAP_LINK_UI_TEXT("No", "否"),
+    [DapUartTXRXSwap] = DAP_LINK_UI_TEXT("Yes", "是")};
 
 static void swd_pins_cb(VariableItem* item) {
     DapGuiApp* app = variable_item_get_context(item);
@@ -58,22 +61,35 @@ void dap_scene_config_on_enter(void* context) {
     DapConfig* config = dap_app_get_config(app->dap_app);
 
     item = variable_item_list_add(
-        var_item_list, "SWC SWD Pins", COUNT_OF(swd_pins), swd_pins_cb, app);
+        var_item_list,
+        DAP_LINK_UI_TEXT("SWC SWD Pins", "SWC SWD 引脚"),
+        COUNT_OF(swd_pins),
+        swd_pins_cb,
+        app);
     variable_item_set_current_value_index(item, config->swd_pins);
     variable_item_set_current_value_text(item, swd_pins[config->swd_pins]);
 
-    item =
-        variable_item_list_add(var_item_list, "UART Pins", COUNT_OF(uart_pins), uart_pins_cb, app);
+    item = variable_item_list_add(
+        var_item_list,
+        DAP_LINK_UI_TEXT("UART Pins", "UART 引脚"),
+        COUNT_OF(uart_pins),
+        uart_pins_cb,
+        app);
     variable_item_set_current_value_index(item, config->uart_pins);
     variable_item_set_current_value_text(item, uart_pins[config->uart_pins]);
 
     item = variable_item_list_add(
-        var_item_list, "Swap TX RX", COUNT_OF(uart_swap), uart_swap_cb, app);
+        var_item_list,
+        DAP_LINK_UI_TEXT("Swap TX RX", "交换 TX RX"),
+        COUNT_OF(uart_swap),
+        uart_swap_cb,
+        app);
     variable_item_set_current_value_index(item, config->uart_swap);
     variable_item_set_current_value_text(item, uart_swap[config->uart_swap]);
 
-    variable_item_list_add(var_item_list, "Help and Pinout", 0, NULL, NULL);
-    variable_item_list_add(var_item_list, "About", 0, NULL, NULL);
+    variable_item_list_add(
+        var_item_list, DAP_LINK_UI_TEXT("Help and Pinout", "帮助与引脚"), 0, NULL, NULL);
+    variable_item_list_add(var_item_list, DAP_LINK_UI_TEXT("About", "关于"), 0, NULL, NULL);
 
     variable_item_list_set_selected_item(
         var_item_list, scene_manager_get_scene_state(app->scene_manager, DapSceneConfig));

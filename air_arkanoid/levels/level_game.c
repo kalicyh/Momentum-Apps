@@ -166,7 +166,7 @@ static void block_collision(Entity* self, Entity* other, GameManager* manager, v
 
         if(level_entity_count(level, &block_desc) == 0) {
             LevelMessageContext* message_context = level_context_get(game->levels.message);
-            furi_string_set(message_context->message, "You win!");
+            furi_string_set(message_context->message, UI_TEXT("You win!", "胜利！"));
             game_manager_next_level_set(manager, game->levels.message);
         }
     }

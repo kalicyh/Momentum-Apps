@@ -20,6 +20,12 @@
 #include <strings.h>
 #include <ctype.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CANTOOLS_UI_TEXT(en, zh) (zh)
+#else
+#define CANTOOLS_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG               "dbc_app"
 #define TEXT_INPUT_SIZE   32
 #define VEHICLE_INFO_SIZE 64
@@ -219,7 +225,7 @@ typedef struct {
 
 static bool validate_required(const char* value, const char* label, FuriString* error) {
     if(!value || value[0] == '\0') {
-        furi_string_printf(error, "%s is required.", label);
+        furi_string_printf(error, CANTOOLS_UI_TEXT("%s is required.", "%s 为必填项。"), label);
         return false;
     }
     return true;
@@ -265,7 +271,7 @@ static bool validate_can_id(App* app, const char* value, FuriString* error) {
     if(!validate_required(value, "CAN ID", error)) return false;
     uint32_t can_id = 0;
     if(!parse_uint32_str(value, &can_id) || can_id > 0x1FFFFFFF) {
-        furi_string_set(error, "CAN ID must be 0x0..0x1FFFFFFF.");
+        furi_string_set(error, CANTOOLS_UI_TEXT("CAN ID must be 0x0..0x1FFFFFFF.", "CAN ID 必须为 0x0..0x1FFFFFFF。"));
         return false;
     }
     return true;
@@ -276,7 +282,7 @@ static bool validate_start_bit(App* app, const char* value, FuriString* error) {
     int32_t start_bit = 0;
     if(!validate_required(value, "Start bit", error)) return false;
     if(!parse_int32_str(value, &start_bit) || start_bit < 0 || start_bit > 63) {
-        furi_string_set(error, "Start bit must be 0..63.");
+        furi_string_set(error, CANTOOLS_UI_TEXT("Start bit must be 0..63.", "起始位必须为 0..63。"));
         return false;
     }
     return true;
@@ -287,12 +293,12 @@ static bool validate_bit_length(App* app, const char* value, FuriString* error) 
     int32_t start_bit = 0;
     if(!validate_required(value, "Bit length", error)) return false;
     if(!parse_int32_str(value, &bit_length) || bit_length < 1 || bit_length > 64) {
-        furi_string_set(error, "Bit length must be 1..64.");
+        furi_string_set(error, CANTOOLS_UI_TEXT("Bit length must be 1..64.", "位长度必须为 1..64。"));
         return false;
     }
     if(parse_int32_str(app->start_bit, &start_bit)) {
         if(start_bit + bit_length > 64) {
-            furi_string_set(error, "Start bit + length must be <= 64.");
+            furi_string_set(error, CANTOOLS_UI_TEXT("Start bit + length must be <= 64.", "起始位 + 长度必须 <= 64。"));
             return false;
         }
     }
@@ -305,7 +311,7 @@ static bool validate_endianness(App* app, const char* value, FuriString* error) 
     char c = value[0];
     if(!(c == '0' || c == '1' || c == 'l' || c == 'L' || c == 'b' || c == 'B' || c == 'm' ||
          c == 'M' || c == 'i' || c == 'I')) {
-        furi_string_set(error, "Use 0/1, b/l (big/little).");
+        furi_string_set(error, CANTOOLS_UI_TEXT("Use 0/1, b/l (big/little).", "使用 0/1 或 b/l (大端/小端)。"));
         return false;
     }
     return true;
@@ -317,7 +323,7 @@ static bool validate_signedness(App* app, const char* value, FuriString* error) 
     char c = value[0];
     if(!(c == 's' || c == 'S' || c == 'u' || c == 'U' || c == '+' || c == '-' || c == '0' ||
          c == '1')) {
-        furi_string_set(error, "Use s/u or +/-.");
+        furi_string_set(error, CANTOOLS_UI_TEXT("Use s/u or +/-.", "使用 s/u 或 +/-。"));
         return false;
     }
     return true;
@@ -327,7 +333,7 @@ static bool validate_optional_number(App* app, const char* value, FuriString* er
     UNUSED(app);
     if(!value || value[0] == '\0') return true;
     if(!parse_float_str(value)) {
-        furi_string_set(error, "Enter a valid number.");
+        furi_string_set(error, CANTOOLS_UI_TEXT("Enter a valid number.", "请输入有效数字。"));
         return false;
     }
     return true;
@@ -343,8 +349,8 @@ static bool validate_optional_text(App* app, const char* value, FuriString* erro
 static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
     [DbcFieldSignalName] =
         {
-            .menu_label = "Signal name",
-            .input_header = "Signal name:",
+            .menu_label = CANTOOLS_UI_TEXT("Signal name", "信号名称"),
+            .input_header = CANTOOLS_UI_TEXT("Signal name:", "信号名称:"),
             .offset = offsetof(App, signal_name),
             .scene = CantoolsScenesSignalNameScene,
             .next_scene = CantoolsScenesCanIdScene,
@@ -353,7 +359,7 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
     [DbcFieldCanId] =
         {
             .menu_label = "CAN ID",
-            .input_header = "CAN ID (dec/0x):",
+            .input_header = CANTOOLS_UI_TEXT("CAN ID (dec/0x):", "CAN ID (十进制/0x):"),
             .offset = offsetof(App, can_id),
             .scene = CantoolsScenesCanIdScene,
             .next_scene = CantoolsScenesStartBitScene,
@@ -361,8 +367,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldStartBit] =
         {
-            .menu_label = "Start bit",
-            .input_header = "Start bit (0-63):",
+            .menu_label = CANTOOLS_UI_TEXT("Start bit", "起始位"),
+            .input_header = CANTOOLS_UI_TEXT("Start bit (0-63):", "起始位 (0-63):"),
             .offset = offsetof(App, start_bit),
             .scene = CantoolsScenesStartBitScene,
             .next_scene = CantoolsScenesBitLengthScene,
@@ -370,8 +376,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldBitLength] =
         {
-            .menu_label = "Bit length",
-            .input_header = "Bit length (1-64):",
+            .menu_label = CANTOOLS_UI_TEXT("Bit length", "位长度"),
+            .input_header = CANTOOLS_UI_TEXT("Bit length (1-64):", "位长度 (1-64):"),
             .offset = offsetof(App, bit_length),
             .scene = CantoolsScenesBitLengthScene,
             .next_scene = CantoolsScenesEndiannessScene,
@@ -379,8 +385,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldEndianness] =
         {
-            .menu_label = "Endianness",
-            .input_header = "Endianness (0=BE/1=LE):",
+            .menu_label = CANTOOLS_UI_TEXT("Endianness", "字节序"),
+            .input_header = CANTOOLS_UI_TEXT("Endianness (0=BE/1=LE):", "字节序 (0=大端/1=小端):"),
             .offset = offsetof(App, endianness),
             .scene = CantoolsScenesEndiannessScene,
             .next_scene = CantoolsScenesSignedScene,
@@ -388,8 +394,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldSignedness] =
         {
-            .menu_label = "Signed?",
-            .input_header = "Signed? (s/u):",
+            .menu_label = CANTOOLS_UI_TEXT("Signed?", "有符号?"),
+            .input_header = CANTOOLS_UI_TEXT("Signed? (s/u):", "有符号? (s/u):"),
             .offset = offsetof(App, signedness),
             .scene = CantoolsScenesSignedScene,
             .next_scene = CantoolsScenesOffsetScene,
@@ -397,8 +403,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldOffset] =
         {
-            .menu_label = "Offset",
-            .input_header = "Offset (use '_' for .):",
+            .menu_label = CANTOOLS_UI_TEXT("Offset", "偏移量"),
+            .input_header = CANTOOLS_UI_TEXT("Offset (use '_' for .):", "偏移量 (用'_'代替小数点):"),
             .offset = offsetof(App, offset),
             .scene = CantoolsScenesOffsetScene,
             .next_scene = CantoolsScenesScalarScene,
@@ -406,8 +412,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldScalar] =
         {
-            .menu_label = "Scalar",
-            .input_header = "Scalar (use '_' for .):",
+            .menu_label = CANTOOLS_UI_TEXT("Scalar", "系数"),
+            .input_header = CANTOOLS_UI_TEXT("Scalar (use '_' for .):", "系数 (用'_'代替小数点):"),
             .offset = offsetof(App, scalar),
             .scene = CantoolsScenesScalarScene,
             .next_scene = CantoolsScenesUnitScene,
@@ -415,8 +421,8 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
         },
     [DbcFieldUnit] =
         {
-            .menu_label = "Unit",
-            .input_header = "Unit (e.g. kph):",
+            .menu_label = CANTOOLS_UI_TEXT("Unit", "单位"),
+            .input_header = CANTOOLS_UI_TEXT("Unit (e.g. kph):", "单位 (如 kph):"),
             .offset = offsetof(App, unit),
             .scene = CantoolsScenesUnitScene,
             .next_scene = CantoolsScenesMinScene,
@@ -425,7 +431,7 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
     [DbcFieldMin] =
         {
             .menu_label = "Min",
-            .input_header = "Min (use '_' for .):",
+            .input_header = CANTOOLS_UI_TEXT("Min (use '_' for .):", "最小值 (用'_'代替小数点):"),
             .offset = offsetof(App, min_val),
             .scene = CantoolsScenesMinScene,
             .next_scene = CantoolsScenesMaxScene,
@@ -434,7 +440,7 @@ static const DbcFieldConfig dbc_field_configs[DbcFieldCount] = {
     [DbcFieldMax] =
         {
             .menu_label = "Max",
-            .input_header = "Max (use '_' for .):",
+            .input_header = CANTOOLS_UI_TEXT("Max (use '_' for .):", "最大值 (用'_'代替小数点):"),
             .offset = offsetof(App, max_val),
             .scene = CantoolsScenesMaxScene,
             .next_scene = CantoolsScenesCalculateScene,
@@ -450,7 +456,7 @@ static void cantools_show_message(App* app, const char* header, const char* text
     DialogMessage* message = dialog_message_alloc();
     dialog_message_set_header(message, header, 64, 0, AlignCenter, AlignTop);
     dialog_message_set_text(message, text, 64, 24, AlignCenter, AlignTop);
-    dialog_message_set_buttons(message, NULL, "OK", NULL);
+    dialog_message_set_buttons(message, NULL, CANTOOLS_UI_TEXT("OK", "确认"), NULL);
     dialog_message_show(app->dialogs, message);
     dialog_message_free(message);
 }
@@ -1068,7 +1074,7 @@ static void dbc_sort_signals(App* app) {
 // Save "current" fields from App into SD, then reload all into memory
 static void dbc_save_current_and_reload(App* app) {
     if(app->active_dbc_index < 0) {
-        cantools_show_message(app, "No DBC file", "Select or create a DBC file first.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("No DBC file", "无 DBC 文件"), CANTOOLS_UI_TEXT("Select or create a DBC file first.", "请先选择或创建 DBC 文件。"));
         return;
     }
 
@@ -1103,14 +1109,14 @@ static void dbc_save_current_and_reload(App* app) {
 
     if(!updated) {
         if(app->signal_count >= MAX_SIGNALS) {
-            cantools_show_message(app, "Error", "Signal limit reached.");
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Error", "错误"), CANTOOLS_UI_TEXT("Signal limit reached.", "已达信号数量上限。"));
             return;
         }
         app->signals[app->signal_count++] = tmp;
     }
 
     if(!dbc_write_file(app)) {
-        cantools_show_message(app, "Error", "Failed to save DBC file.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("Error", "错误"), CANTOOLS_UI_TEXT("Failed to save DBC file.", "保存 DBC 文件失败。"));
         return;
     }
 
@@ -1176,7 +1182,7 @@ static bool dbc_validate_all(App* app) {
     FuriString* error = furi_string_alloc();
     for(uint8_t i = 0; i < DbcFieldCount; i++) {
         if(!dbc_validate_field(app, (DbcFieldId)i, error)) {
-            cantools_show_message(app, "Invalid input", furi_string_get_cstr(error));
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Invalid input", "输入无效"), furi_string_get_cstr(error));
             furi_string_free(error);
             return false;
         }
@@ -1302,29 +1308,29 @@ void Cantools_scenes_main_menu_scene_on_enter(void* context) {
     App* app = context;
     app->editing = false;
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "CAN Tools");
+    submenu_set_header(app->submenu, CANTOOLS_UI_TEXT("CAN Tools", "CAN 工具"));
 
     submenu_add_item(
         app->submenu,
-        "DBC Maker",
+        CANTOOLS_UI_TEXT("DBC Maker", "DBC 制作"),
         CantoolsScenesMainMenuSceneDbcMaker,
         Cantools_scenes_main_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "View DBC",
+        CANTOOLS_UI_TEXT("View DBC", "查看 DBC"),
         CantoolsScenesMainMenuSceneViewDbc,
         Cantools_scenes_main_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Decode Data",
+        CANTOOLS_UI_TEXT("Decode Data", "解码数据"),
         CantoolsScenesMainMenuSceneDecodeData,
         Cantools_scenes_main_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "DBC Files",
+        CANTOOLS_UI_TEXT("DBC Files", "DBC 文件"),
         CantoolsScenesMainMenuSceneDbcFiles,
         Cantools_scenes_main_menu_callback,
         app);
@@ -1380,13 +1386,13 @@ void Cantools_scenes_dbc_file_menu_callback(void* context, uint32_t index) {
 void Cantools_scenes_dbc_file_list_scene_on_enter(void* context) {
     App* app = context;
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "DBC Files");
+    submenu_set_header(app->submenu, CANTOOLS_UI_TEXT("DBC Files", "DBC 文件"));
 
     dbc_scan_files(app);
 
     submenu_add_item(
         app->submenu,
-        "Create DBC",
+        CANTOOLS_UI_TEXT("Create DBC", "创建 DBC"),
         CANTOOLS_EVENT_DBC_CREATE,
         Cantools_scenes_dbc_file_menu_callback,
         app);
@@ -1428,7 +1434,7 @@ bool Cantools_scenes_dbc_file_list_scene_on_event(void* context, SceneManagerEve
                 if(dbc_set_active_file(app, (int)idx)) {
                     scene_manager_next_scene(app->scene_manager, CantoolsScenesMainMenuScene);
                 } else {
-                    cantools_show_message(app, "Error", "Failed to load DBC file.");
+                    cantools_show_message(app, CANTOOLS_UI_TEXT("Error", "错误"), CANTOOLS_UI_TEXT("Failed to load DBC file.", "加载 DBC 文件失败。"));
                 }
                 return true;
             }
@@ -1469,7 +1475,7 @@ static void cantools_simple_text_input_on_enter(
 void Cantools_scenes_dbc_file_name_scene_on_enter(void* context) {
     App* app = context;
     cantools_simple_text_input_on_enter(
-        app, "DBC file name:", app->dbc_file_name, cantools_dbc_name_input_callback);
+        app, CANTOOLS_UI_TEXT("DBC file name:", "DBC 文件名:"), app->dbc_file_name, cantools_dbc_name_input_callback);
 }
 
 bool Cantools_scenes_dbc_file_name_scene_on_event(void* context, SceneManagerEvent event) {
@@ -1477,7 +1483,7 @@ bool Cantools_scenes_dbc_file_name_scene_on_event(void* context, SceneManagerEve
     if(event.type == SceneManagerEventTypeCustom && event.event == CANTOOLS_EVENT_DBC_NAME_SAVE) {
         strlcpy(app->dbc_file_name, app->buffer, sizeof(app->dbc_file_name));
         if(app->dbc_file_name[0] == '\0') {
-            cantools_show_message(app, "Invalid name", "Enter a file name.");
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Invalid name", "无效名称"), CANTOOLS_UI_TEXT("Enter a file name.", "请输入文件名。"));
             return true;
         }
         dbc_sanitize_file_name(app->dbc_file_name, sizeof(app->dbc_file_name));
@@ -1499,7 +1505,7 @@ static bool dbc_create_file(App* app) {
     FileInfo info;
     if(storage_common_stat(storage, path, &info) == FSE_OK) {
         furi_record_close(RECORD_STORAGE);
-        cantools_show_message(app, "Error", "File already exists.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("Error", "错误"), CANTOOLS_UI_TEXT("File already exists.", "文件已存在。"));
         return false;
     }
 
@@ -1532,7 +1538,7 @@ cleanup:
 void Cantools_scenes_vehicle_info_scene_on_enter(void* context) {
     App* app = context;
     cantools_simple_text_input_on_enter(
-        app, "Vehicle (make/model/year):", app->vehicle_info, cantools_vehicle_info_input_callback);
+        app, CANTOOLS_UI_TEXT("Vehicle (make/model/year):", "车辆 (品牌/型号/年份):"), app->vehicle_info, cantools_vehicle_info_input_callback);
 }
 
 bool Cantools_scenes_vehicle_info_scene_on_event(void* context, SceneManagerEvent event) {
@@ -1568,12 +1574,12 @@ void Cantools_scenes_dbc_maker_menu_callback(void* context, uint32_t index) {
 void Cantools_scenes_dbc_maker_menu_scene_on_enter(void* context) {
     App* app = context;
     if(app->active_dbc_index < 0) {
-        cantools_show_message(app, "No DBC file", "Select or create a DBC file first.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("No DBC file", "无 DBC 文件"), CANTOOLS_UI_TEXT("Select or create a DBC file first.", "请先选择或创建 DBC 文件。"));
         scene_manager_next_scene(app->scene_manager, CantoolsScenesDbcFileListScene);
         return;
     }
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, app->editing ? "Edit Signal" : "DBC Maker");
+    submenu_set_header(app->submenu, app->editing ? CANTOOLS_UI_TEXT("Edit Signal", "编辑信号") : CANTOOLS_UI_TEXT("DBC Maker", "DBC 制作"));
 
     FuriString* label = furi_string_alloc();
     for(uint8_t i = 0; i < DbcFieldCount; i++) {
@@ -1588,13 +1594,13 @@ void Cantools_scenes_dbc_maker_menu_scene_on_enter(void* context) {
     furi_string_free(label);
     submenu_add_item(
         app->submenu,
-        "Generate & Save",
+        CANTOOLS_UI_TEXT("Generate & Save", "生成并保存"),
         CantoolsDbcMakerMenuGenerate,
         Cantools_scenes_dbc_maker_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Reset defaults",
+        CANTOOLS_UI_TEXT("Reset defaults", "恢复默认"),
         CantoolsDbcMakerMenuResetDefaults,
         Cantools_scenes_dbc_maker_menu_callback,
         app);
@@ -1656,7 +1662,7 @@ static bool
        event.event == CANTOOLS_EVENT_TEXT_INPUT_SAVE) {
         FuriString* error = furi_string_alloc();
         if(!dbc_field_configs[field_id].validator(app, app->buffer, error)) {
-            cantools_show_message(app, "Invalid input", furi_string_get_cstr(error));
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Invalid input", "输入无效"), furi_string_get_cstr(error));
             furi_string_free(error);
             return true;
         }
@@ -1699,7 +1705,7 @@ void Cantools_scenes_calculate_scene_on_enter(void* context) {
     widget_reset(app->widget);
 
     if(app->active_dbc_index < 0) {
-        cantools_show_message(app, "No DBC file", "Select or create a DBC file first.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("No DBC file", "无 DBC 文件"), CANTOOLS_UI_TEXT("Select or create a DBC file first.", "请先选择或创建 DBC 文件。"));
         scene_manager_next_scene(app->scene_manager, CantoolsScenesDbcFileListScene);
         return;
     }
@@ -1755,7 +1761,7 @@ void Cantools_scenes_view_dbc_list_scene_on_enter(void* context) {
     App* app = context;
 
     if(app->active_dbc_index < 0) {
-        cantools_show_message(app, "No DBC file", "Select or create a DBC file first.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("No DBC file", "无 DBC 文件"), CANTOOLS_UI_TEXT("Select or create a DBC file first.", "请先选择或创建 DBC 文件。"));
         scene_manager_next_scene(app->scene_manager, CantoolsScenesDbcFileListScene);
         return;
     }
@@ -1770,7 +1776,8 @@ void Cantools_scenes_view_dbc_list_scene_on_enter(void* context) {
             1,
             128,
             64,
-            "No signals defined.\n\nUse DBC Maker to add\nsignals first.");
+            CANTOOLS_UI_TEXT("No signals defined.\n\nUse DBC Maker to add\nsignals first.",
+                             "未定义信号。\n\n请使用 DBC 制作\n添加信号。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, CantoolsScenesWidgetView);
     } else {
         submenu_reset(app->submenu);
@@ -1778,10 +1785,10 @@ void Cantools_scenes_view_dbc_list_scene_on_enter(void* context) {
         if(file_name[0]) {
             submenu_set_header(app->submenu, file_name);
         } else {
-            submenu_set_header(app->submenu, "Saved DBC signals");
+            submenu_set_header(app->submenu, CANTOOLS_UI_TEXT("Saved DBC signals", "已保存的 DBC 信号"));
         }
-        const char* sort_label = (app->sort_mode == CantoolsSortByCanId) ? "Sort: CAN ID" :
-                                                                           "Sort: Name";
+        const char* sort_label = (app->sort_mode == CantoolsSortByCanId) ? CANTOOLS_UI_TEXT("Sort: CAN ID", "排序: CAN ID") :
+                                                                           CANTOOLS_UI_TEXT("Sort: Name", "排序: 名称");
         submenu_add_item(
             app->submenu,
             sort_label,
@@ -1793,7 +1800,7 @@ void Cantools_scenes_view_dbc_list_scene_on_enter(void* context) {
         for(uint8_t i = 0; i < app->signal_count; i++) {
             const char* name = app->signals[i].signal_name;
             if(!name || strlen(name) == 0) {
-                name = "(unnamed)";
+                name = CANTOOLS_UI_TEXT("(unnamed)", "(未命名)");
             }
             furi_string_printf(label, "%s (%s)", name, app->signals[i].can_id);
             submenu_add_item(
@@ -1842,22 +1849,22 @@ void Cantools_scenes_signal_actions_menu_callback(void* context, uint32_t index)
 void Cantools_scenes_signal_actions_scene_on_enter(void* context) {
     App* app = context;
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Signal actions");
+    submenu_set_header(app->submenu, CANTOOLS_UI_TEXT("Signal actions", "信号操作"));
     submenu_add_item(
         app->submenu,
-        "View details",
+        CANTOOLS_UI_TEXT("View details", "查看详情"),
         CantoolsSignalActionView,
         Cantools_scenes_signal_actions_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Edit",
+        CANTOOLS_UI_TEXT("Edit", "编辑"),
         CantoolsSignalActionEdit,
         Cantools_scenes_signal_actions_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Delete",
+        CANTOOLS_UI_TEXT("Delete", "删除"),
         CantoolsSignalActionDelete,
         Cantools_scenes_signal_actions_menu_callback,
         app);
@@ -1868,7 +1875,7 @@ bool Cantools_scenes_signal_actions_scene_on_event(void* context, SceneManagerEv
     App* app = context;
     if(event.type == SceneManagerEventTypeCustom) {
         if(app->selected_signal_index < 0 || app->selected_signal_index >= app->signal_count) {
-            cantools_show_message(app, "Error", "Invalid signal selection.");
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Error", "错误"), CANTOOLS_UI_TEXT("Invalid signal selection.", "信号选择无效。"));
             scene_manager_next_scene(app->scene_manager, CantoolsScenesViewDbcListScene);
             return true;
         }
@@ -1884,9 +1891,9 @@ bool Cantools_scenes_signal_actions_scene_on_event(void* context, SceneManagerEv
             return true;
         case CantoolsSignalActionDelete: {
             DialogMessage* message = dialog_message_alloc();
-            dialog_message_set_header(message, "Delete signal?", 64, 0, AlignCenter, AlignTop);
+            dialog_message_set_header(message, CANTOOLS_UI_TEXT("Delete signal?", "删除信号?"), 64, 0, AlignCenter, AlignTop);
             dialog_message_set_text(message, sig->signal_name, 64, 20, AlignCenter, AlignTop);
-            dialog_message_set_buttons(message, "Cancel", NULL, "Delete");
+            dialog_message_set_buttons(message, CANTOOLS_UI_TEXT("Cancel", "取消"), NULL, CANTOOLS_UI_TEXT("Delete", "删除"));
             DialogMessageButton result = dialog_message_show(app->dialogs, message);
             dialog_message_free(message);
             if(result == DialogMessageButtonRight) {
@@ -1898,7 +1905,7 @@ bool Cantools_scenes_signal_actions_scene_on_event(void* context, SceneManagerEv
                     app->signal_count--;
                 }
                 if(!dbc_write_file(app)) {
-                    cantools_show_message(app, "Error", "Failed to update DBC file.");
+                    cantools_show_message(app, CANTOOLS_UI_TEXT("Error", "错误"), CANTOOLS_UI_TEXT("Failed to update DBC file.", "更新 DBC 文件失败。"));
                 } else if(app->active_dbc_index >= 0) {
                     dbc_load_file(app, app->dbc_files[app->active_dbc_index].path);
                 }
@@ -1926,11 +1933,11 @@ void Cantools_scenes_view_dbc_detail_scene_on_enter(void* context) {
     widget_reset(app->widget);
 
     if(app->selected_signal_index < 0 || app->selected_signal_index >= app->signal_count) {
-        widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, "Invalid signal index.");
+        widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, CANTOOLS_UI_TEXT("Invalid signal index.", "信号索引无效。"));
     } else {
         DbcSignal* sig = &app->signals[app->selected_signal_index];
         if(!sig->used) {
-            widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, "Empty signal slot.");
+            widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, CANTOOLS_UI_TEXT("Empty signal slot.", "空信号槽。"));
         } else {
             FuriString* dbc = furi_string_alloc();
             format_dbc_entry(
@@ -1994,21 +2001,21 @@ static void cantools_decode_dlc_input_callback(void* context) {
 void Cantools_scenes_decode_data_scene_on_enter(void* context) {
     App* app = context;
     if(app->active_dbc_index < 0) {
-        cantools_show_message(app, "No DBC file", "Select or create a DBC file first.");
+        cantools_show_message(app, CANTOOLS_UI_TEXT("No DBC file", "无 DBC 文件"), CANTOOLS_UI_TEXT("Select or create a DBC file first.", "请先选择或创建 DBC 文件。"));
         scene_manager_next_scene(app->scene_manager, CantoolsScenesDbcFileListScene);
         return;
     }
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Decode Data");
+    submenu_set_header(app->submenu, CANTOOLS_UI_TEXT("Decode Data", "解码数据"));
     submenu_add_item(
         app->submenu,
-        "Manual frame",
+        CANTOOLS_UI_TEXT("Manual frame", "手动帧"),
         CANTOOLS_EVENT_DECODE_MANUAL,
         Cantools_scenes_view_dbc_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Decode log",
+        CANTOOLS_UI_TEXT("Decode log", "解码日志"),
         CANTOOLS_EVENT_DECODE_LOG,
         Cantools_scenes_view_dbc_menu_callback,
         app);
@@ -2041,7 +2048,7 @@ void Cantools_scenes_decode_manual_can_id_scene_on_enter(void* context) {
         strlcpy(app->decode_can_id_text, "0x", sizeof(app->decode_can_id_text));
     }
     cantools_simple_text_input_on_enter(
-        app, "CAN ID (dec/0x):", app->decode_can_id_text, cantools_decode_canid_input_callback);
+        app, CANTOOLS_UI_TEXT("CAN ID (dec/0x):", "CAN ID (十进制/0x):"), app->decode_can_id_text, cantools_decode_canid_input_callback);
 }
 
 bool Cantools_scenes_decode_manual_can_id_scene_on_event(void* context, SceneManagerEvent event) {
@@ -2051,7 +2058,7 @@ bool Cantools_scenes_decode_manual_can_id_scene_on_event(void* context, SceneMan
         strlcpy(app->decode_can_id_text, app->buffer, sizeof(app->decode_can_id_text));
         uint32_t can_id = 0;
         if(!parse_uint32_str(app->decode_can_id_text, &can_id) || can_id > 0x1FFFFFFF) {
-            cantools_show_message(app, "Invalid CAN ID", "Use 0x0..0x1FFFFFFF.");
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Invalid CAN ID", "CAN ID 无效"), CANTOOLS_UI_TEXT("Use 0x0..0x1FFFFFFF.", "使用 0x0..0x1FFFFFFF。"));
             return true;
         }
         app->decode_can_id = can_id;
@@ -2071,7 +2078,7 @@ void Cantools_scenes_decode_manual_dlc_scene_on_enter(void* context) {
         strlcpy(app->decode_dlc_text, "8", sizeof(app->decode_dlc_text));
     }
     cantools_simple_text_input_on_enter(
-        app, "DLC (0-8):", app->decode_dlc_text, cantools_decode_dlc_input_callback);
+        app, CANTOOLS_UI_TEXT("DLC (0-8):", "DLC (0-8):"), app->decode_dlc_text, cantools_decode_dlc_input_callback);
 }
 
 bool Cantools_scenes_decode_manual_dlc_scene_on_event(void* context, SceneManagerEvent event) {
@@ -2081,7 +2088,7 @@ bool Cantools_scenes_decode_manual_dlc_scene_on_event(void* context, SceneManage
         strlcpy(app->decode_dlc_text, app->buffer, sizeof(app->decode_dlc_text));
         int32_t dlc = 0;
         if(!parse_int32_str(app->decode_dlc_text, &dlc) || dlc < 0 || dlc > 8) {
-            cantools_show_message(app, "Invalid DLC", "DLC must be 0..8.");
+            cantools_show_message(app, CANTOOLS_UI_TEXT("Invalid DLC", "DLC 无效"), CANTOOLS_UI_TEXT("DLC must be 0..8.", "DLC 必须为 0..8。"));
             return true;
         }
         app->decode_dlc = (uint8_t)dlc;
@@ -2104,7 +2111,7 @@ void Cantools_scenes_decode_manual_data_scene_on_enter(void* context) {
     App* app = context;
     uint8_t len = app->decode_data_len;
     if(len == 0 || len > 8) len = 8;
-    cantools_decode_byte_input_on_enter(app, "Data bytes:", app->decode_data_bytes, len);
+    cantools_decode_byte_input_on_enter(app, CANTOOLS_UI_TEXT("Data bytes:", "数据字节:"), app->decode_data_bytes, len);
 }
 
 bool Cantools_scenes_decode_manual_data_scene_on_event(void* context, SceneManagerEvent event) {
@@ -2131,7 +2138,7 @@ void Cantools_scenes_decode_result_scene_on_enter(void* context) {
 
     if(app->signal_count == 0) {
         widget_add_text_scroll_element(
-            app->widget, 1, 1, 128, 64, "No signals saved.\nAdd DBC signals first.");
+            app->widget, 1, 1, 128, 64, CANTOOLS_UI_TEXT("No signals saved.\nAdd DBC signals first.", "未保存信号。\n请先添加 DBC 信号。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, CantoolsScenesWidgetView);
         return;
     }
@@ -2159,7 +2166,7 @@ void Cantools_scenes_decode_result_scene_on_enter(void* context) {
     }
 
     if(!matched) {
-        furi_string_cat_str(result, "No matching signals.");
+        furi_string_cat_str(result, CANTOOLS_UI_TEXT("No matching signals.", "无匹配信号。"));
     }
 
     widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, furi_string_get_cstr(result));
@@ -2180,7 +2187,7 @@ void Cantools_scenes_decode_result_scene_on_exit(void* context) {
 void Cantools_scenes_decode_log_scene_on_enter(void* context) {
     App* app = context;
     widget_reset(app->widget);
-    widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, "Decode log\n\nComing soon...");
+    widget_add_text_scroll_element(app->widget, 1, 1, 128, 64, CANTOOLS_UI_TEXT("Decode log\n\nComing soon...", "解码日志\n\n即将推出..."));
     view_dispatcher_switch_to_view(app->view_dispatcher, CantoolsScenesWidgetView);
 }
 

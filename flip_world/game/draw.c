@@ -61,9 +61,9 @@ static void draw_menu(GameManager *manager, Canvas *canvas)
     if (game_context->game_mode == GAME_MODE_STORY && game_context->story_step < STORY_TUTORIAL_STEPS)
     {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 45, 15, "Tutorial");
+        canvas_draw_str(canvas, 45, 15, FLIP_WORLD_UI_TEXT("Tutorial", "教程"));
         canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
-        canvas_draw_str(canvas, 24, 35, "Press BACK to exit");
+        canvas_draw_str(canvas, 24, 35, FLIP_WORLD_UI_TEXT("Press BACK to exit", "按返回键退出"));
     }
     else
     {
@@ -78,10 +78,10 @@ static void draw_menu(GameManager *manager, Canvas *canvas)
             char level[32];
             char strength[32];
 
-            snprintf(level, sizeof(level), "Level   : %ld", player_context->level);
-            snprintf(health, sizeof(health), "Health  : %ld", player_context->health);
-            snprintf(xp, sizeof(xp), "XP      : %ld", player_context->xp);
-            snprintf(strength, sizeof(strength), "Strength: %ld", player_context->strength);
+            snprintf(level, sizeof(level), FLIP_WORLD_UI_TEXT("Level   : %ld", "等级  : %ld"), player_context->level);
+            snprintf(health, sizeof(health), FLIP_WORLD_UI_TEXT("Health  : %ld", "生命  : %ld"), player_context->health);
+            snprintf(xp, sizeof(xp), FLIP_WORLD_UI_TEXT("XP      : %ld", "经验  : %ld"), player_context->xp);
+            snprintf(strength, sizeof(strength), FLIP_WORLD_UI_TEXT("Strength: %ld", "力量  : %ld"), player_context->strength);
             canvas_set_font(canvas, FontPrimary);
             canvas_draw_str(canvas, 7, 16, player_context->username);
             canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
@@ -93,9 +93,9 @@ static void draw_menu(GameManager *manager, Canvas *canvas)
             // draw a box around the selected option
             canvas_draw_frame(canvas, 80, 18, 36, 30);
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str(canvas, 86, 30, "Info");
+            canvas_draw_str(canvas, 86, 30, FLIP_WORLD_UI_TEXT("Info", "信息"));
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 86, 42, "More");
+            canvas_draw_str(canvas, 86, 42, FLIP_WORLD_UI_TEXT("More", "更多"));
             break;
         case GAME_MENU_MORE:
             // draw settings
@@ -119,9 +119,9 @@ static void draw_menu(GameManager *manager, Canvas *canvas)
             // draw a box around the selected option
             canvas_draw_frame(canvas, 80, 18, 36, 30);
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 86, 30, "Info");
+            canvas_draw_str(canvas, 86, 30, FLIP_WORLD_UI_TEXT("Info", "信息"));
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str(canvas, 86, 42, "More");
+            canvas_draw_str(canvas, 86, 42, FLIP_WORLD_UI_TEXT("More", "更多"));
             break;
         case GAME_MENU_NPC:
             // draw NPC dialog

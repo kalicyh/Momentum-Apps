@@ -195,7 +195,7 @@ bool app_custom_event_callback(void* context, uint32_t event) {
         memset(&app->enrollment_card, 0, sizeof(NfcCard));
         app->enrollment_state = EnrollmentStateName;
         text_input_reset(app->text_input);
-        text_input_set_header_text(app->text_input, "Enter Card Name");
+        text_input_set_header_text(app->text_input, NFC_LOGIN_UI_TEXT("Enter Card Name", "输入卡片名称"));
         text_input_set_result_callback(
             app->text_input,
             app_text_input_result_callback,
@@ -212,8 +212,8 @@ bool app_custom_event_callback(void* context, uint32_t event) {
         widget_reset(app->widget);
         widget_add_icon_element(app->widget, 2, 6, &I_Scanning_123x52);
         widget_add_icon_element(app->widget, 124, 56, &I_ButtonRight_4x7);
-        widget_add_string_element(app->widget, 117, 56, AlignRight, AlignTop, FontSecondary, "Manual");
-        widget_add_string_element(app->widget, 0, 56, AlignRight, AlignTop, FontSecondary, "Back=Cancel");
+        widget_add_string_element(app->widget, 117, 56, AlignRight, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Manual", "手动"));
+        widget_add_string_element(app->widget, 0, 56, AlignRight, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Back=Cancel", "返回=取消"));
         app_switch_to_view(app, ViewWidget);
         app->widget_state = 1;
         if(!app->enrollment_scanning) {
@@ -231,7 +231,7 @@ bool app_custom_event_callback(void* context, uint32_t event) {
         app->enrollment_state = EnrollmentStatePassword;
         memset(app->enrollment_card.password, 0, sizeof(app->enrollment_card.password));
         text_input_reset(app->text_input);
-        text_input_set_header_text(app->text_input, "Enter Password");
+        text_input_set_header_text(app->text_input, NFC_LOGIN_UI_TEXT("Enter Password", "输入密码"));
         text_input_set_result_callback(
             app->text_input,
             app_text_input_result_callback,
@@ -256,16 +256,20 @@ bool app_custom_event_callback(void* context, uint32_t event) {
         }
         app->widget_state = 3;
         widget_reset(app->widget);
-        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Edit Card");
+        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Edit Card", "编辑卡片"));
         {
-            const char* items[] = {"Name", "Password", "UID (scan)", "Delete"};
+            const char* items[] = {
+                NFC_LOGIN_UI_TEXT("Name", "名称"),
+                NFC_LOGIN_UI_TEXT("Password", "密码"),
+                NFC_LOGIN_UI_TEXT("UID (scan)", "UID(扫描)"),
+                NFC_LOGIN_UI_TEXT("Delete", "删除")};
             for(size_t i = 0; i < 4; i++) {
                 char line[32];
                 snprintf(line, sizeof(line), "%s %s", (i == app->edit_menu_index) ? ">" : " ", items[i]);
                 widget_add_string_element(app->widget, 0, 12 + i * 12, AlignLeft, AlignTop, FontSecondary, line);
             }
         }
-        widget_add_string_element(app->widget, 0, 60, AlignLeft, AlignTop, FontSecondary, "Back=List");
+        widget_add_string_element(app->widget, 0, 60, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Back=List", "返回=列表"));
         app_switch_to_view(app, ViewWidget);
         return true;
     case EventManualUidEntry:
@@ -281,7 +285,7 @@ bool app_custom_event_callback(void* context, uint32_t event) {
         // Set up byte input for UID entry - allow up to MAX_UID_LEN bytes
         app->enrollment_card.uid_len = MAX_UID_LEN; // Allow full length, user can enter less
         memset(app->enrollment_card.uid, 0, sizeof(app->enrollment_card.uid));
-        byte_input_set_header_text(app->byte_input, "Enter UID (hex)");
+        byte_input_set_header_text(app->byte_input, NFC_LOGIN_UI_TEXT("Enter UID (hex)", "输入UID(hex)"));
         byte_input_set_result_callback(
             app->byte_input,
             app_enroll_uid_byte_input_done,

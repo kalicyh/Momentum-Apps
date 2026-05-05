@@ -38,11 +38,11 @@ void nfc_playlist_nfc_remove_scene_on_enter(void* context) {
 
    selected_line = nfc_playlist->worker_info.settings->playlist_length;
 
-   variable_item_list_set_header(nfc_playlist->views.variable_item_list, "Remove Nfc Item");
+   variable_item_list_set_header(nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Remove Nfc Item", "移除 NFC 项目"));
 
    VariableItem* line_selector = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Select Line",
+      NFC_PLAYLIST_UI_TEXT("Select Line", "选择行"),
       nfc_playlist->worker_info.settings->playlist_length,
       nfc_playlist_nfc_remove_options_change_callback,
       nfc_playlist);
@@ -56,14 +56,14 @@ void nfc_playlist_nfc_remove_scene_on_enter(void* context) {
    variable_item_set_locked(
       line_selector,
       nfc_playlist->worker_info.settings->playlist_length == 0 ? true : false,
-      "Playlist\nis empty");
+      NFC_PLAYLIST_UI_TEXT("Playlist\nis empty", "播放列表\n为空"));
 
    VariableItem* remove_button =
-      variable_item_list_add(nfc_playlist->views.variable_item_list, "Remove Line", 0, NULL, NULL);
+      variable_item_list_add(nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Remove Line", "移除行"), 0, NULL, NULL);
    variable_item_set_locked(
       remove_button,
       nfc_playlist->worker_info.settings->playlist_length == 0 ? true : false,
-      "Playlist\nis empty");
+      NFC_PLAYLIST_UI_TEXT("Playlist\nis empty", "播放列表\n为空"));
 
    variable_item_list_set_enter_callback(
       nfc_playlist->views.variable_item_list,

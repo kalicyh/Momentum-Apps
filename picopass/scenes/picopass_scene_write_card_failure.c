@@ -16,19 +16,19 @@ void picopass_scene_write_card_failure_widget_callback(
 void picopass_scene_write_card_failure_on_enter(void* context) {
     Picopass* picopass = context;
     Widget* widget = picopass->widget;
-    FuriString* str = furi_string_alloc_set("Write Failure!");
+    FuriString* str = furi_string_alloc_set(PICOPASS_UI_TEXT("Write Failure!", "写入失败!"));
 
     widget_add_button_element(
         widget,
         GuiButtonTypeLeft,
-        "Retry",
+        PICOPASS_UI_TEXT("Retry", "重试"),
         picopass_scene_write_card_failure_widget_callback,
         picopass);
 
     widget_add_button_element(
         widget,
         GuiButtonTypeRight,
-        "Menu",
+        PICOPASS_UI_TEXT("Menu", "菜单"),
         picopass_scene_write_card_failure_widget_callback,
         picopass);
 

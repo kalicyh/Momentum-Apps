@@ -17,13 +17,13 @@ void nfc_magic_scene_gen4_actions_menu_on_enter(void* context) {
     Submenu* submenu = instance->submenu;
     submenu_add_item(
         submenu,
-        "Auth With Password",
+        NFC_MAGIC_UI_TEXT("Auth With Password", "密码认证"),
         SubmenuIndexAuthenticate,
         nfc_magic_scene_gen4_actions_menu_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Set Default Config",
+        NFC_MAGIC_UI_TEXT("Set Default Config", "恢复默认配置"),
         SubmenuIndexSetDefaultConfig,
         nfc_magic_scene_gen4_actions_menu_submenu_callback,
         instance);

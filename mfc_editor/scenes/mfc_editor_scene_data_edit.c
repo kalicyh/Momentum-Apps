@@ -21,7 +21,7 @@ void mfc_editor_scene_data_edit_on_enter(void* context) {
         scene_manager_get_scene_state(instance->scene_manager, MfcEditorSceneDataView);
 
     if(block_view == MfcEditorBlockViewUID) {
-        byte_input_set_header_text(byte_input, "Enter new UID");
+        byte_input_set_header_text(byte_input, MFC_EDITOR_UI_TEXT("Enter new UID", "输入新 UID"));
 
         instance->edit_buffer = malloc(iso14443_3a_data->uid_len);
         memcpy(instance->edit_buffer, iso14443_3a_data->uid, iso14443_3a_data->uid_len);
@@ -34,7 +34,7 @@ void mfc_editor_scene_data_edit_on_enter(void* context) {
             instance->edit_buffer,
             iso14443_3a_data->uid_len);
     } else if(block_view == MfcEditorBlockViewManufacturerBytes) {
-        byte_input_set_header_text(byte_input, "Enter new Manufacturer Bytes");
+        byte_input_set_header_text(byte_input, MFC_EDITOR_UI_TEXT("Enter new Manufacturer Bytes", "输入新制造商字节"));
 
         // Skip BCC byte (not present on 7B UID cards)
         bool skip_byte = iso14443_3a_data->uid_len == 4;
@@ -54,7 +54,7 @@ void mfc_editor_scene_data_edit_on_enter(void* context) {
             instance->edit_buffer,
             byte_num);
     } else if(block_view == MfcEditorBlockViewKeyA) {
-        byte_input_set_header_text(byte_input, "Enter new Key A");
+        byte_input_set_header_text(byte_input, MFC_EDITOR_UI_TEXT("Enter new Key A", "输入新密钥 A"));
 
         instance->edit_buffer = malloc(MF_CLASSIC_KEY_SIZE);
         memcpy(
@@ -71,7 +71,7 @@ void mfc_editor_scene_data_edit_on_enter(void* context) {
             instance->edit_buffer,
             MF_CLASSIC_KEY_SIZE);
     } else if(block_view == MfcEditorBlockViewKeyB) {
-        byte_input_set_header_text(byte_input, "Enter new Key B");
+        byte_input_set_header_text(byte_input, MFC_EDITOR_UI_TEXT("Enter new Key B", "输入新密钥 B"));
 
         instance->edit_buffer = malloc(MF_CLASSIC_KEY_SIZE);
         memcpy(
@@ -88,7 +88,7 @@ void mfc_editor_scene_data_edit_on_enter(void* context) {
             instance->edit_buffer,
             MF_CLASSIC_KEY_SIZE);
     } else if(block_view == MfcEditorBlockViewUserByte) {
-        byte_input_set_header_text(byte_input, "Enter new User Byte");
+        byte_input_set_header_text(byte_input, MFC_EDITOR_UI_TEXT("Enter new User Byte", "输入新用户字节"));
 
         instance->edit_buffer = malloc(1);
         instance->edit_buffer[0] =
@@ -103,7 +103,7 @@ void mfc_editor_scene_data_edit_on_enter(void* context) {
             instance->edit_buffer,
             1);
     } else {
-        byte_input_set_header_text(byte_input, "Enter new block content");
+        byte_input_set_header_text(byte_input, MFC_EDITOR_UI_TEXT("Enter new block content", "输入新块内容"));
 
         instance->edit_buffer = malloc(MF_CLASSIC_BLOCK_SIZE);
         memcpy(

@@ -19,7 +19,7 @@ void seos_scene_read_success_on_enter(void* context) {
 
     dolphin_deed(DolphinDeedNfcReadSuccess);
 
-    FuriString* primary_str = furi_string_alloc_set("SIO Captured");
+    FuriString* primary_str = furi_string_alloc_set(SEOS_UI_TEXT("SIO Captured", "SIO 已捕获"));
     FuriString* secondary_str_label = furi_string_alloc();
     FuriString* secondary_str_value = furi_string_alloc();
     FuriString* details_str = furi_string_alloc();
@@ -46,10 +46,18 @@ void seos_scene_read_success_on_enter(void* context) {
     }
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Save", seos_scene_read_success_widget_callback, seos);
+        widget,
+        GuiButtonTypeLeft,
+        SEOS_UI_TEXT("Save", "保存"),
+        seos_scene_read_success_widget_callback,
+        seos);
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Emulate", seos_scene_read_success_widget_callback, seos);
+        widget,
+        GuiButtonTypeRight,
+        SEOS_UI_TEXT("Emulate", "模拟"),
+        seos_scene_read_success_widget_callback,
+        seos);
 
     widget_add_string_element(
         widget, 64, 5, AlignCenter, AlignCenter, FontPrimary, furi_string_get_cstr(primary_str));

@@ -11,6 +11,12 @@
 
 #include "usb_midi.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MIDI_UI_TEXT(en, zh) (zh)
+#else
+#define MIDI_UI_TEXT(en, zh) (en)
+#endif
+
 static void draw_callback(Canvas* canvas, void* ctx) {
     furi_assert(ctx);
     UsbMidiApp* app = (UsbMidiApp*)ctx;
@@ -19,9 +25,9 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     if(app->current_note.note >= 0) {
         int note = app->current_note.note % 12;
         int octave = app->current_note.note / 12 + 1;
-        snprintf(note_line, 32, "Playing note: %s%d", NOTES[note], octave);
+        snprintf(note_line, 32, "%s%s%d", MIDI_UI_TEXT("Playing note: ", "正在播放: "), NOTES[note], octave);
     } else {
-        strcpy(note_line, "No note");
+        strcpy(note_line, MIDI_UI_TEXT("No note", "无音符"));
     }
 
     canvas_set_font(canvas, FontPrimary);

@@ -62,13 +62,13 @@ static void show_popup(SubGhzPlaylistCreator* app, const char* header, const cha
 
 static void create_playlist_file(SubGhzPlaylistCreator* app) {
     if(!storage_simply_mkdir(app->storage, PLAYLIST_DIRECTORY)) {
-        show_popup(app, "Error", "Failed to create directory");
+        show_popup(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Error", "错误"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Failed to create directory", "创建目录失败"));
         scene_menu_show(app);
         return;
     }
     File* file = storage_file_alloc(app->storage);
     if(!file) {
-        show_popup(app, "Error", "Failed to alloc file");
+        show_popup(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Error", "错误"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Failed to alloc file", "文件分配失败"));
         scene_menu_show(app);
         return;
     }
@@ -76,16 +76,16 @@ static void create_playlist_file(SubGhzPlaylistCreator* app) {
         const char* header = "# SubGhz Playlist\n";
         if(storage_file_write(file, header, strlen(header)) == strlen(header)) {
             storage_file_close(file);
-            show_popup(app, "Success", "File created!");
+            show_popup(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Success", "成功"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("File created!", "文件已创建!"));
             scene_playlist_edit_show(app);
             storage_file_free(file);
             return;
         } else {
             storage_file_close(file);
-            show_popup(app, "Error", "Failed to write file");
+            show_popup(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Error", "错误"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Failed to write file", "写入文件失败"));
         }
     } else {
-        show_popup(app, "Error", "Failed to open file");
+        show_popup(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Error", "错误"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Failed to open file", "打开文件失败"));
     }
     storage_file_free(file);
     scene_menu_show(app);
@@ -161,7 +161,7 @@ static void subghz_playlist_creator_submenu_callback(void* context, uint32_t ind
 static void subghz_playlist_creator_text_input_callback(void* context) {
     SubGhzPlaylistCreator* app = context;
     if(strlen(app->text_buffer) == 0) {
-        show_popup(app, "Error", "Name cannot be empty");
+        show_popup(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Error", "错误"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Name cannot be empty", "名称不能为空"));
         return;
     }
     furi_string_set_str(app->playlist_name, app->text_buffer);
@@ -170,10 +170,10 @@ static void subghz_playlist_creator_text_input_callback(void* context) {
     bool exists = storage_file_exists(app->storage, furi_string_get_cstr(app->playlist_path));
     storage_file_free(file);
     if(exists) {
-        dialog_ex_set_header(app->dialog, "File exists", 64, 0, AlignCenter, AlignTop);
-        dialog_ex_set_text(app->dialog, "Overwrite?", 64, 32, AlignCenter, AlignCenter);
-        dialog_ex_set_left_button_text(app->dialog, "No");
-        dialog_ex_set_right_button_text(app->dialog, "Yes");
+        dialog_ex_set_header(app->dialog, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("File exists", "文件已存在"), 64, 0, AlignCenter, AlignTop);
+        dialog_ex_set_text(app->dialog, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Overwrite?", "覆盖?"), 64, 32, AlignCenter, AlignCenter);
+        dialog_ex_set_left_button_text(app->dialog, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("No", "否"));
+        dialog_ex_set_right_button_text(app->dialog, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Yes", "是"));
         dialog_ex_set_result_callback(app->dialog, subghz_playlist_creator_dialog_callback);
         dialog_ex_set_context(app->dialog, app);
         scene_dialog_show(app);
@@ -250,11 +250,11 @@ SubGhzPlaylistCreator* subghz_playlist_creator_alloc(void) {
     view_dispatcher_set_event_callback_context(app->view_dispatcher, app);
     view_dispatcher_set_custom_event_callback(app->view_dispatcher, subghz_playlist_creator_custom_callback);
     view_dispatcher_set_navigation_event_callback(app->view_dispatcher, subghz_playlist_creator_back_event_callback);
-    popup_set_header(app->popup, "SubGhz Playlist Creator", 64, 26, AlignCenter, AlignCenter);
+    popup_set_header(app->popup, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("SubGhz Playlist Creator", "SubGhz 播放列表创建器"), 64, 26, AlignCenter, AlignCenter);
     FURI_LOG_D(TAG, "Set popup header");
-    popup_set_text(app->popup, "Welcome!", 64, 40, AlignCenter, AlignCenter);
+    popup_set_text(app->popup, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Welcome!", "欢迎!"), 64, 40, AlignCenter, AlignCenter);
     FURI_LOG_D(TAG, "Set popup text");
-    text_input_set_header_text(app->text_input, "Enter playlist name");
+    text_input_set_header_text(app->text_input, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Enter playlist name", "输入播放列表名称"));
     FURI_LOG_D(TAG, "Set text input header");
     text_input_set_result_callback(
         app->text_input,
@@ -264,13 +264,13 @@ SubGhzPlaylistCreator* subghz_playlist_creator_alloc(void) {
         MAX_TEXT_LENGTH,
         true);
     FURI_LOG_D(TAG, "Set text input result callback");
-    submenu_add_item(app->submenu, "Create", 0, subghz_playlist_creator_submenu_callback, app);
+    submenu_add_item(app->submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Create", "创建"), 0, subghz_playlist_creator_submenu_callback, app);
     FURI_LOG_D(TAG, "Added submenu item 0");
-    submenu_add_item(app->submenu, "Edit", 1, subghz_playlist_creator_submenu_callback, app);
+    submenu_add_item(app->submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Edit", "编辑"), 1, subghz_playlist_creator_submenu_callback, app);
     FURI_LOG_D(TAG, "Added submenu item 1");
     submenu_add_item(app->submenu, "", 99, NULL, NULL); // blank line
     FURI_LOG_D(TAG, "Added submenu item 99");
-    submenu_add_item(app->submenu, "Exit", 2, subghz_playlist_creator_submenu_callback, app);
+    submenu_add_item(app->submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Exit", "退出"), 2, subghz_playlist_creator_submenu_callback, app);
     FURI_LOG_D(TAG, "Added submenu item 2");
 
     return app;

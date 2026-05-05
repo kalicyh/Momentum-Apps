@@ -64,7 +64,7 @@ void boilerplate_scene_2_draw(Canvas* canvas, BoilerplateScene2Model* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 21, 13, "Export All Photos");
+    canvas_draw_str(canvas, 21, 13, GBPHOTO_UI_TEXT("Export All Photos", "导出全部照片"));
     canvas_set_font(canvas, FontPrimary);
 
     char totalText[32];

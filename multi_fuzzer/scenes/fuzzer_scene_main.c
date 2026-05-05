@@ -112,7 +112,7 @@ bool fuzzer_scene_main_on_event(void* context, SceneManagerEvent event) {
 
                 if(!loading_ok) {
                     // error
-                    fuzzer_scene_main_show_error(app, "Default dictionary\nis empty");
+                    fuzzer_scene_main_show_error(app, FUZZER_UI_TEXT("Default dictionary\nis empty", "默认字典\n为空"));
                 }
                 break;
 
@@ -153,12 +153,12 @@ bool fuzzer_scene_main_on_event(void* context, SceneManagerEvent event) {
                         break;
 
                     case FuzzerWorkerLoadKeyStateBadFile:
-                        fuzzer_scene_main_show_error(app, "Cant load\nor broken file");
+                        fuzzer_scene_main_show_error(app, FUZZER_UI_TEXT("Cant load\nor broken file", "无法加载\n或文件损坏"));
                         FURI_LOG_E(TAG, "Cant load or broken file");
                         break;
 
                     case FuzzerWorkerLoadKeyStateUnsuportedProto:
-                        fuzzer_scene_main_show_error(app, "Unsupported protocol");
+                        fuzzer_scene_main_show_error(app, FUZZER_UI_TEXT("Unsupported protocol", "不支持的协议"));
                         FURI_LOG_E(TAG, "Unsupported protocol");
                         break;
                     }
@@ -172,14 +172,14 @@ bool fuzzer_scene_main_on_event(void* context, SceneManagerEvent event) {
                     loading_ok = fuzzer_worker_init_attack_file_dict(
                         app->worker, app->fuzzer_state.proto_index, app->file_path);
                     if(!loading_ok) {
-                        fuzzer_scene_main_show_error(app, "Incorrect key format\nor length");
+                        fuzzer_scene_main_show_error(app, FUZZER_UI_TEXT("Incorrect key format\nor length", "密钥格式\n或长度不正确"));
                         // error
                     }
                 }
                 break;
 
             default:
-                fuzzer_scene_main_show_error(app, "Unsuported attack");
+                fuzzer_scene_main_show_error(app, FUZZER_UI_TEXT("Unsuported attack", "不支持的攻击"));
                 break;
             }
 

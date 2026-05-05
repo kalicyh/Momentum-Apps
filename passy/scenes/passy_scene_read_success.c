@@ -41,15 +41,15 @@ void passy_scene_read_success_on_enter(void* context) {
             }
 
             if(dg1->mrz.buf[0] == 'I' && dg1->mrz.buf[1] == 'P') {
-                furi_string_cat_printf(str, "Passport card (IP)\n");
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Passport card (IP)\n", "护照卡 (IP)\n"));
             } else if(dg1->mrz.buf[0] == 'I') {
-                furi_string_cat_printf(str, "ID Card (I)\n");
+                furi_string_cat_printf(str, PASSY_UI_TEXT("ID Card (I)\n", "身份证 (I)\n"));
             } else if(dg1->mrz.buf[0] == 'P') {
-                furi_string_cat_printf(str, "Passport book (P)\n");
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Passport book (P)\n", "护照本 (P)\n"));
             } else if(dg1->mrz.buf[0] == 'A') {
-                furi_string_cat_printf(str, "Residency Permit (A)\n");
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Residency Permit (A)\n", "居留许可 (A)\n"));
             } else {
-                furi_string_cat_printf(str, "Unknown (%c%c)\n", dg1->mrz.buf[0], dg1->mrz.buf[1]);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Unknown (%c%c)\n", "未知 (%c%c)\n"), dg1->mrz.buf[0], dg1->mrz.buf[1]);
             }
 
             uint8_t td_variant = 0;
@@ -84,16 +84,16 @@ void passy_scene_read_success_on_enter(void* context) {
                 char* row_1 = (char*)dg1->mrz.buf + 0;
                 char* row_2 = (char*)dg1->mrz.buf + 44;
 
-                furi_string_cat_printf(str, "Issuing state: %.3s\n", row_1 + 2);
-                furi_string_cat_printf(str, "Nationality: %.3s\n", row_2 + 10);
-                furi_string_cat_printf(str, "Name: %s\n", name);
-                furi_string_cat_printf(str, "Doc Number: %.9s\n", row_2);
-                furi_string_cat_printf(str, "DoB: %.6s\n", row_2 + 13);
-                furi_string_cat_printf(str, "Sex: %.1s\n", row_2 + 20);
-                furi_string_cat_printf(str, "Expiry: %.6s\n", row_2 + 21);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Issuing state: %.3s\n", "签发国: %.3s\n"), row_1 + 2);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Nationality: %.3s\n", "国籍: %.3s\n"), row_2 + 10);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Name: %s\n", "姓名: %s\n"), name);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Doc Number: %.9s\n", "证件号码: %.9s\n"), row_2);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("DoB: %.6s\n", "出生日期: %.6s\n"), row_2 + 13);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Sex: %.1s\n", "性别: %.1s\n"), row_2 + 20);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Expiry: %.6s\n", "有效期: %.6s\n"), row_2 + 21);
 
                 furi_string_cat_printf(str, "\n");
-                furi_string_cat_printf(str, "Raw data:\n");
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Raw data:\n", "原始数据:\n"));
                 furi_string_cat_printf(str, "%.44s\n", row_1);
                 furi_string_cat_printf(str, "%.44s\n", row_2);
             } else if(td_variant == 1) { // ID form factor
@@ -101,16 +101,16 @@ void passy_scene_read_success_on_enter(void* context) {
                 char* row_2 = (char*)dg1->mrz.buf + 30;
                 char* row_3 = (char*)dg1->mrz.buf + 60;
 
-                furi_string_cat_printf(str, "Issuing state: %.3s\n", row_1 + 2);
-                furi_string_cat_printf(str, "Nationality: %.3s\n", row_2 + 15);
-                furi_string_cat_printf(str, "Name: %s\n", name);
-                furi_string_cat_printf(str, "Doc Number: %.9s\n", row_1 + 5);
-                furi_string_cat_printf(str, "DoB: %.6s\n", row_2);
-                furi_string_cat_printf(str, "Sex: %.1s\n", row_2 + 7);
-                furi_string_cat_printf(str, "Expiry: %.6s\n", row_2 + 8);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Issuing state: %.3s\n", "签发国: %.3s\n"), row_1 + 2);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Nationality: %.3s\n", "国籍: %.3s\n"), row_2 + 15);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Name: %s\n", "姓名: %s\n"), name);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Doc Number: %.9s\n", "证件号码: %.9s\n"), row_1 + 5);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("DoB: %.6s\n", "出生日期: %.6s\n"), row_2);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Sex: %.1s\n", "性别: %.1s\n"), row_2 + 7);
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Expiry: %.6s\n", "有效期: %.6s\n"), row_2 + 8);
 
                 furi_string_cat_printf(str, "\n");
-                furi_string_cat_printf(str, "Raw data:\n");
+                furi_string_cat_printf(str, PASSY_UI_TEXT("Raw data:\n", "原始数据:\n"));
                 furi_string_cat_printf(str, "%.30s\n", row_1);
                 furi_string_cat_printf(str, "%.30s\n", row_2);
                 furi_string_cat_printf(str, "%.30s\n", row_3);
@@ -125,7 +125,7 @@ void passy_scene_read_success_on_enter(void* context) {
         dg1 = 0;
 
     } else if(passy->read_type == PassyReadDG2 || passy->read_type == PassyReadDG7) {
-        furi_string_cat_printf(str, "Saved to disk in apps_data/passy/...\n");
+        furi_string_cat_printf(str, PASSY_UI_TEXT("Saved to disk in apps_data/passy/...\n", "已保存到 apps_data/passy/...\n"));
     } else {
         char display[9]; // 4 byte header in hex + NULL
         memset(display, 0, sizeof(display));
@@ -136,8 +136,8 @@ void passy_scene_read_success_on_enter(void* context) {
                 "%02X",
                 bit_buffer_get_data(passy->dg_header)[i]);
         }
-        furi_string_cat_printf(str, "Unparsed file\n");
-        furi_string_cat_printf(str, "File header: %s\n", display);
+        furi_string_cat_printf(str, PASSY_UI_TEXT("Unparsed file\n", "未解析文件\n"));
+        furi_string_cat_printf(str, PASSY_UI_TEXT("File header: %s\n", "文件头: %s\n"), display);
     }
     text_box_set_font(passy->text_box, TextBoxFontText);
     text_box_set_text(passy->text_box, furi_string_get_cstr(passy->text_box_store));

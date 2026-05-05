@@ -43,7 +43,7 @@ static void select_type_callback(VariableItem* item) {
 void pokemon_scene_select_type_on_enter(void* context) {
     PokemonFap* pokemon_fap = (PokemonFap*)context;
     VariableItem* vitype[2];
-    char* strings[2] = {"Type 1:", "Type 2:"};
+    char* strings[2] = {POKEMON_UI_TEXT("Type 1:", "属性 1:"), POKEMON_UI_TEXT("Type 2:", "属性 2:")};
     int type;
     int num_types = namedlist_cnt(pokemon_fap->pdata->type_list);
     int pos;

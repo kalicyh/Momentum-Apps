@@ -33,10 +33,10 @@ void boilerplate_startscreen_draw(Canvas* canvas, BoilerplateStartscreenModel* m
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "GAME BOY PHOTO");
     canvas_set_custom_u8g2_font(canvas, u8g2_font_5x7_mf);
-    canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignTop, "SELECT A '.SAV' FILE ");
-    canvas_draw_str_aligned(canvas, 64, 38, AlignCenter, AlignTop, "FROM GB CAMERA TO PROCEED");
+    canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignTop, GBPHOTO_UI_TEXT("SELECT A '.SAV' FILE", "选择 '.SAV' 文件"));
+    canvas_draw_str_aligned(canvas, 64, 38, AlignCenter, AlignTop, GBPHOTO_UI_TEXT("FROM GB CAMERA TO PROCEED", "从 GB 相机导入"));
     canvas_set_font(canvas, FontSecondary);
-    elements_button_center(canvas, "Start");
+    elements_button_center(canvas, GBPHOTO_UI_TEXT("Start", "开始"));
 }
 
 static void boilerplate_startscreen_model_init(BoilerplateStartscreenModel* const model) {

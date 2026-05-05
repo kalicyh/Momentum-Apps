@@ -9,10 +9,14 @@ void nfc_maker_scene_wifi_auth_on_enter(void* context) {
     NfcMaker* app = context;
     Submenu* submenu = app->submenu;
 
-    submenu_set_header(submenu, "Authentication Type:");
+    submenu_set_header(submenu, NFC_MAKER_UI_TEXT("Authentication Type:", "认证类型:"));
 
     submenu_add_item(
-        submenu, "Open", WifiAuthenticationOpen, nfc_maker_scene_wifi_auth_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("Open", "开放"),
+        WifiAuthenticationOpen,
+        nfc_maker_scene_wifi_auth_submenu_callback,
+        app);
 
     submenu_add_item(
         submenu,
@@ -44,7 +48,7 @@ void nfc_maker_scene_wifi_auth_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Shared",
+        NFC_MAKER_UI_TEXT("Shared", "共享"),
         WifiAuthenticationShared,
         nfc_maker_scene_wifi_auth_submenu_callback,
         app);

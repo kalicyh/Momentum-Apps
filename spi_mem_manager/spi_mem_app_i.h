@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SPI_MEM_UI_TEXT(en, zh) (zh)
+#else
+#define SPI_MEM_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h>
 #include <furi_hal_spi.h>
 #include <furi_hal_spi_config.h>

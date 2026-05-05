@@ -1,5 +1,13 @@
 #include "../mag_i.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 void mag_scene_under_construction_on_enter(void* context) {
     Mag* mag = context;
     Widget* widget = mag->widget;
@@ -7,9 +15,10 @@ void mag_scene_under_construction_on_enter(void* context) {
     FuriString* tmp_str;
     tmp_str = furi_string_alloc();
 
-    widget_add_button_element(widget, GuiButtonTypeLeft, "Back", mag_widget_callback, mag);
+    widget_add_button_element(
+        widget, GuiButtonTypeLeft, MAGSPOOF_UI_TEXT("Back", "返回"), mag_widget_callback, mag);
 
-    furi_string_printf(tmp_str, "Under construction!");
+    furi_string_printf(tmp_str, "%s", MAGSPOOF_UI_TEXT("Under construction!", "建设中!"));
     widget_add_string_element(
         widget, 64, 4, AlignCenter, AlignTop, FontPrimary, furi_string_get_cstr(tmp_str));
     furi_string_reset(tmp_str);

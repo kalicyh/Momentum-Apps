@@ -163,7 +163,7 @@ static uint8_t
 
         VariableItem* item = variable_item_list_add(
             action_config->item_list,
-            "Keystroke",
+            FLIPBOARD_UI_TEXT("Keystroke", "按键"),
             COUNT_OF(keystroke_names),
             keystroke_changed,
             action_model);
@@ -180,7 +180,7 @@ static uint8_t
 
         item = variable_item_list_add(
             action_config->item_list,
-            "Count",
+            FLIPBOARD_UI_TEXT("Count", "次数"),
             COUNT_OF(keystroke_count_names),
             keystroke_count_changed,
             action_model);
@@ -277,10 +277,10 @@ static void item_message_clicked(ActionModel* action_model, uint8_t message_numb
 
     text_input_set_header_text(
         action_config->text_input,
-        (message_number == 0) ? "Enter message 1" :
-        (message_number == 1) ? "Enter message 2" :
-        (message_number == 2) ? "Enter message 3" :
-                                "Enter message 4");
+        (message_number == 0) ? FLIPBOARD_UI_TEXT("Enter message 1", "输入消息 1") :
+        (message_number == 1) ? FLIPBOARD_UI_TEXT("Enter message 2", "输入消息 2") :
+        (message_number == 2) ? FLIPBOARD_UI_TEXT("Enter message 3", "输入消息 3") :
+                                FLIPBOARD_UI_TEXT("Enter message 4", "输入消息 4"));
     if(action_model_get_message(action_model, message_number)) {
         strncpy(
             action_model_get_temp_buffer(action_model),
@@ -402,7 +402,7 @@ static void populate_variable_item_list(ActionConfig* action_config, ActionModel
         populate_variable_item_list_color(
             action_config,
             action_model,
-            "Press color",
+            FLIPBOARD_UI_TEXT("Press color", "按下颜色"),
             color_down_changed,
             action_model_get_color_down(action_model));
         item_index++;
@@ -412,7 +412,7 @@ static void populate_variable_item_list(ActionConfig* action_config, ActionModel
         populate_variable_item_list_color(
             action_config,
             action_model,
-            "Release color",
+            FLIPBOARD_UI_TEXT("Release color", "释放颜色"),
             color_up_changed,
             action_model_get_color_up(action_model));
         item_index++;
@@ -422,7 +422,7 @@ static void populate_variable_item_list(ActionConfig* action_config, ActionModel
         populate_variable_item_list_frequency(
             action_config,
             action_model,
-            "Music note",
+            FLIPBOARD_UI_TEXT("Music note", "音符"),
             tone_changed,
             action_model_get_frequency(action_model));
         item_index++;
@@ -431,7 +431,8 @@ static void populate_variable_item_list(ActionConfig* action_config, ActionModel
     if(flipboard_model_get_action_model_fields(action_config->model) &
        ActionModelFieldKeystrokes) {
         item_index += populate_variable_item_list_keystrokes(action_config, action_model);
-        variable_item_list_add(action_config->item_list, "Add Keystroke", 0, NULL, NULL);
+        variable_item_list_add(
+            action_config->item_list, FLIPBOARD_UI_TEXT("Add Keystroke", "添加按键"), 0, NULL, NULL);
         variable_item_list_set_enter_callback(
             action_config->item_list, item_clicked, action_model);
         action_model_set_keystroke_index(action_model, item_index);
@@ -439,7 +440,8 @@ static void populate_variable_item_list(ActionConfig* action_config, ActionModel
     }
 
     if(flipboard_model_get_action_model_fields(action_config->model) & ActionModelFieldMessage) {
-        variable_item_list_add(action_config->item_list, "Message 1", 0, NULL, NULL);
+        variable_item_list_add(
+            action_config->item_list, FLIPBOARD_UI_TEXT("Message 1", "消息 1"), 0, NULL, NULL);
         variable_item_list_set_enter_callback(
             action_config->item_list, item_clicked, action_model);
         action_model_set_message_index(action_model, item_index);
@@ -447,21 +449,24 @@ static void populate_variable_item_list(ActionConfig* action_config, ActionModel
     }
 
     if(flipboard_model_get_action_model_fields(action_config->model) & ActionModelFieldMessage) {
-        variable_item_list_add(action_config->item_list, "Message 2", 0, NULL, NULL);
+        variable_item_list_add(
+            action_config->item_list, FLIPBOARD_UI_TEXT("Message 2", "消息 2"), 0, NULL, NULL);
         variable_item_list_set_enter_callback(
             action_config->item_list, item_clicked, action_model);
         item_index++;
     }
 
     if(flipboard_model_get_action_model_fields(action_config->model) & ActionModelFieldMessage) {
-        variable_item_list_add(action_config->item_list, "Message 3", 0, NULL, NULL);
+        variable_item_list_add(
+            action_config->item_list, FLIPBOARD_UI_TEXT("Message 3", "消息 3"), 0, NULL, NULL);
         variable_item_list_set_enter_callback(
             action_config->item_list, item_clicked, action_model);
         item_index++;
     }
 
     if(flipboard_model_get_action_model_fields(action_config->model) & ActionModelFieldMessage) {
-        variable_item_list_add(action_config->item_list, "Message 4", 0, NULL, NULL);
+        variable_item_list_add(
+            action_config->item_list, FLIPBOARD_UI_TEXT("Message 4", "消息 4"), 0, NULL, NULL);
         variable_item_list_set_enter_callback(
             action_config->item_list, item_clicked, action_model);
         item_index++;
@@ -539,13 +544,17 @@ ActionConfig* action_config_alloc(
     bool single = flipboard_model_get_single_button_mode(model);
 
     for(int i = 1; i < 16;) {
-        furi_string_printf(action_name, "Action %d (", i);
+        furi_string_printf(
+            action_name,
+            FLIPBOARD_UI_TEXT("Action %d (", "动作 %d ("),
+            i);
         if(i == 15) {
-            furi_string_cat_printf(action_name, "all buttons");
+            furi_string_cat_printf(action_name, FLIPBOARD_UI_TEXT("all buttons", "所有按键"));
         } else {
-            furi_string_cat_printf(action_name, "button");
+            furi_string_cat_printf(
+                action_name, FLIPBOARD_UI_TEXT("button", "按键"));
             if(i != 1 && i != 2 && i != 4 && i != 8) {
-                furi_string_cat_printf(action_name, "s");
+                furi_string_cat_printf(action_name, FLIPBOARD_UI_TEXT("s", ""));
             }
             furi_string_cat_printf(action_name, " ");
             int btn = 0;
@@ -588,7 +597,8 @@ ActionConfig* action_config_alloc(
             i++;
         }
     }
-    submenu_set_header(action_config->menu_actions, "Configure Action");
+    submenu_set_header(
+        action_config->menu_actions, FLIPBOARD_UI_TEXT("Configure Action", "配置动作"));
 
     return action_config;
 }

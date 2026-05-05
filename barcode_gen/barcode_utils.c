@@ -1,5 +1,13 @@
 #include "barcode_utils.h"
 
+#ifndef BARCODE_GEN_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BARCODE_GEN_UI_TEXT(en, zh) (zh)
+#else
+#define BARCODE_GEN_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 BarcodeTypeObj* barcode_type_objs[NUMBER_OF_BARCODE_TYPES] = {NULL};
 
 void init_types() {
@@ -103,45 +111,61 @@ BarcodeTypeObj* get_type(FuriString* type_string) {
 const char* get_error_code_name(ErrorCode error_code) {
     switch(error_code) {
     case WrongNumberOfDigits:
-        return "Wrong # Of Characters";
+        return BARCODE_GEN_UI_TEXT("Wrong # Of Characters", "字符数量错误");
     case InvalidCharacters:
-        return "Invalid Characters";
+        return BARCODE_GEN_UI_TEXT("Invalid Characters", "无效字符");
     case UnsupportedType:
-        return "Unsupported Type";
+        return BARCODE_GEN_UI_TEXT("Unsupported Type", "不支持的类型");
     case FileOpening:
-        return "File Opening Error";
+        return BARCODE_GEN_UI_TEXT("File Opening Error", "文件打开错误");
     case InvalidFileData:
-        return "Invalid File Data";
+        return BARCODE_GEN_UI_TEXT("Invalid File Data", "无效的文件数据");
     case MissingEncodingTable:
-        return "Missing Encoding Table";
+        return BARCODE_GEN_UI_TEXT("Missing Encoding Table", "缺少编码表");
     case EncodingTableError:
-        return "Encoding Table Error";
+        return BARCODE_GEN_UI_TEXT("Encoding Table Error", "编码表错误");
     case OKCode:
         return "OK";
     default:
-        return "Unknown Code";
+        return BARCODE_GEN_UI_TEXT("Unknown Code", "未知错误");
     };
 }
 
 const char* get_error_code_message(ErrorCode error_code) {
     switch(error_code) {
     case WrongNumberOfDigits:
-        return "The barcode has too many or\ntoo few characters.";
+        return BARCODE_GEN_UI_TEXT(
+            "The barcode has too many or\ntoo few characters.",
+            "条码的字符数量\n过多或过少");
     case InvalidCharacters:
-        return "The barcode data has invalid\ncharacters";
+        return BARCODE_GEN_UI_TEXT(
+            "The barcode data has invalid\ncharacters",
+            "条码数据包含无效字符");
     case UnsupportedType:
-        return "This barcode type is not\nsupported by this application";
+        return BARCODE_GEN_UI_TEXT(
+            "This barcode type is not\nsupported by this application",
+            "此应用程序不支持\n该条码类型");
     case FileOpening:
-        return "The barcode file could not\nbe opened";
+        return BARCODE_GEN_UI_TEXT(
+            "The barcode file could not\nbe opened",
+            "无法打开条码文件");
     case InvalidFileData:
-        return "File data contains incorrect\ninformation";
+        return BARCODE_GEN_UI_TEXT(
+            "File data contains incorrect\ninformation",
+            "文件数据包含\n不正确的信息");
     case MissingEncodingTable:
-        return "The encoding table files are\nmissing. Please redownload \nthis app, or consult the \ngithub readme";
+        return BARCODE_GEN_UI_TEXT(
+            "The encoding table files are\nmissing. Please redownload \nthis app, or consult the \ngithub readme",
+            "编码表文件缺失。\n请重新下载此应用\n或查阅github说明");
     case EncodingTableError:
-        return "Either the characters you\nentered are incorrect or there\nis a problem with the\nencoding table";
+        return BARCODE_GEN_UI_TEXT(
+            "Either the characters you\nentered are incorrect or there\nis a problem with the\nencoding table",
+            "您输入的字符不正确\n或编码表存在问题");
     case OKCode:
         return "OK";
     default:
-        return "Could not read barcode data";
+        return BARCODE_GEN_UI_TEXT(
+            "Could not read barcode data",
+            "无法读取条码数据");
     };
 }

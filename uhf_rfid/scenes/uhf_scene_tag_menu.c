@@ -16,9 +16,9 @@ void uhf_scene_tag_menu_on_enter(void* ctx) {
     Submenu* submenu = uhf_app->submenu;
 
     submenu_add_item(
-        submenu, "Save", SubmenuIndexSave, uhf_scene_tag_menu_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Save", "保存"), SubmenuIndexSave, uhf_scene_tag_menu_submenu_callback, uhf_app);
     submenu_add_item(
-        submenu, "Change Key", SubmenuIndexChangeKey, uhf_scene_tag_menu_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Change Key", "修改密钥"), SubmenuIndexChangeKey, uhf_scene_tag_menu_submenu_callback, uhf_app);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(uhf_app->scene_manager, UHFSceneTagMenu));

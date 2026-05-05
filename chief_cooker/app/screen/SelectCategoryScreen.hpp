@@ -1,5 +1,13 @@
 #pragma once
 
+#ifndef CHIEF_COOKER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CHIEF_COOKER_UI_TEXT(en, zh) (zh)
+#else
+#define CHIEF_COOKER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include "app/AppFileSystem.hpp"
 #include "lib/ui/UiManager.hpp"
 #include "lib/ui/view/SubMenuUiView.hpp"
@@ -26,15 +34,15 @@ public:
         this->categoryType = categoryType;
         this->categorySelectedHandler = categorySelectedHandler;
 
-        menu = new SubMenuUiView("Select category");
+        menu = new SubMenuUiView(CHIEF_COOKER_UI_TEXT("Select category", "选择分类"));
         menu->SetOnDestroyHandler(HANDLER(&SelectCategoryScreen::destory));
 
         if(canCreateNew) {
-            menu->AddItem("+ Create NEW", HANDLER_1ARG(&SelectCategoryScreen::createNew));
+            menu->AddItem(CHIEF_COOKER_UI_TEXT("+ Create NEW", "+ 新建"), HANDLER_1ARG(&SelectCategoryScreen::createNew));
         }
 
         if(categoryType == User) {
-            menu->AddItem("<Default/Uncategorized>", [categoryType, categorySelectedHandler](uint32_t) {
+            menu->AddItem(CHIEF_COOKER_UI_TEXT("<Default/Uncategorized>", "<默认/未分类>"), [categoryType, categorySelectedHandler](uint32_t) {
                 return categorySelectedHandler(categoryType, NULL);
             });
         }
@@ -56,7 +64,7 @@ private:
             return;
         }
         if(nameInput == NULL) {
-            nameInput = new TextInputUiView("Enter category name", MIN_CAT_NAME_LENGTH, MAX_CAT_NAME_LENGTH);
+            nameInput = new TextInputUiView(CHIEF_COOKER_UI_TEXT("Enter category name", "输入分类名称"), MIN_CAT_NAME_LENGTH, MAX_CAT_NAME_LENGTH);
             nameInput->SetOnDestroyHandler([this]() { this->nameInput = NULL; });
             nameInput->SetResultHandler(HANDLER_1ARG(&SelectCategoryScreen::addAndSelectCategory));
         }

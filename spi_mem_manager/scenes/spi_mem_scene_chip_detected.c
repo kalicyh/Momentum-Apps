@@ -22,7 +22,7 @@ static void spi_mem_scene_chip_detected_print_chip_info(Widget* widget, SPIMemCh
         spi_mem_chip_get_vendor_name(chip_info));
     widget_add_string_element(
         widget, 40, 20, AlignLeft, AlignTop, FontSecondary, spi_mem_chip_get_model_name(chip_info));
-    furi_string_printf(tmp_string, "Size: %zu KB", spi_mem_chip_get_size(chip_info) / 1024);
+    furi_string_printf(tmp_string, "%s %zu KB", SPI_MEM_UI_TEXT("Size:", "大小:"), spi_mem_chip_get_size(chip_info) / 1024);
     widget_add_string_element(
         widget, 40, 28, AlignLeft, AlignTop, FontSecondary, furi_string_get_cstr(tmp_string));
     furi_string_free(tmp_string);
@@ -30,10 +30,10 @@ static void spi_mem_scene_chip_detected_print_chip_info(Widget* widget, SPIMemCh
 
 static void spi_mem_scene_chip_detect_draw_next_button(SPIMemApp* app) {
     FuriString* str = furi_string_alloc();
-    if(app->mode == SPIMemModeRead) furi_string_printf(str, "%s", "Read");
-    if(app->mode == SPIMemModeWrite) furi_string_printf(str, "%s", "Write");
-    if(app->mode == SPIMemModeErase) furi_string_printf(str, "%s", "Erase");
-    if(app->mode == SPIMemModeCompare) furi_string_printf(str, "%s", "Check");
+    if(app->mode == SPIMemModeRead) furi_string_printf(str, "%s", SPI_MEM_UI_TEXT("Read", "读取"));
+    if(app->mode == SPIMemModeWrite) furi_string_printf(str, "%s", SPI_MEM_UI_TEXT("Write", "写入"));
+    if(app->mode == SPIMemModeErase) furi_string_printf(str, "%s", SPI_MEM_UI_TEXT("Erase", "擦除"));
+    if(app->mode == SPIMemModeCompare) furi_string_printf(str, "%s", SPI_MEM_UI_TEXT("Check", "校验"));
     widget_add_button_element(
         app->widget,
         GuiButtonTypeRight,
@@ -62,11 +62,11 @@ static void spi_mem_scene_chip_detected_set_next_scene(SPIMemApp* app) {
 void spi_mem_scene_chip_detected_on_enter(void* context) {
     SPIMemApp* app = context;
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Retry", spi_mem_scene_chip_detected_widget_callback, app);
+        app->widget, GuiButtonTypeLeft, SPI_MEM_UI_TEXT("Retry", "重试"), spi_mem_scene_chip_detected_widget_callback, app);
     spi_mem_scene_chip_detect_draw_next_button(app);
     widget_add_icon_element(app->widget, 0, 12, &I_Dip8_32x36);
     widget_add_string_element(
-        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, "Detected SPI chip");
+        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("Detected SPI chip", "已检测到 SPI 芯片"));
     spi_mem_scene_chip_detected_print_chip_info(app->widget, app->chip_info);
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewWidget);
 }

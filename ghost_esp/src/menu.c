@@ -105,73 +105,73 @@ static void ir_send_button_from_file(AppState* state, uint32_t button_index);
 
 // Sniff command definitions
 static const SniffCommandDef sniff_commands[] = {
-    {"< Sniff WPS >", "capture -wps\n", "wps_capture"},
-    {"< Sniff Raw Packets >", "capture -raw\n", "raw_capture"},
-    {"< Sniff Probes >", "capture -p\n", "probe_capture"},
-    {"< Sniff Deauth >", "capture -deauth\n", "deauth_capture"},
-    {"< Sniff Beacons >", "capture -beacon\n", "beacon_capture"},
-    {"< Sniff EAPOL >", "capture -eapol\n", "eapol_capture"},
-    {"< Sniff Pwn >", "capture -pwn\n", "pwn_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff WPS >", "< 嗅探 WPS >"), "capture -wps\n", "wps_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff Raw Packets >", "< 嗅探原始数据包 >"), "capture -raw\n", "raw_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff Probes >", "< 嗅探探测帧 >"), "capture -p\n", "probe_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff Deauth >", "< 嗅探断连帧 >"), "capture -deauth\n", "deauth_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff Beacons >", "< 嗅探信标帧 >"), "capture -beacon\n", "beacon_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff EAPOL >", "< 嗅探 EAPOL >"), "capture -eapol\n", "eapol_capture"},
+    {GHOST_ESP_UI_TEXT("< Sniff Pwn >", "< 嗅探 Pwn >"), "capture -pwn\n", "pwn_capture"},
 };
 
 // Beacon spam command definitions
 static const CyclingMenuDef beacon_spam_commands[] = {
-    {"< Beacon Spam (List) >",
+    {GHOST_ESP_UI_TEXT("< Beacon Spam (List) >", "< 信标洪流 (列表) >"),
      "beaconspam -l\n",
-     "Beacon Spam (List)",
-     "Spam SSIDs from list.",
+     GHOST_ESP_UI_TEXT("Beacon Spam (List)", "信标洪流 (列表)"),
+     GHOST_ESP_UI_TEXT("Spam SSIDs from list.", "使用列表中的 SSID 发送。"),
      false,
      NULL},
-    {"< Beacon Spam (Random) >",
+    {GHOST_ESP_UI_TEXT("< Beacon Spam (Random) >", "< 信标洪流 (随机) >"),
      "beaconspam -r\n",
-     "Beacon Spam (Random)",
-     "Spam random SSIDs.",
+     GHOST_ESP_UI_TEXT("Beacon Spam (Random)", "信标洪流 (随机)"),
+     GHOST_ESP_UI_TEXT("Spam random SSIDs.", "发送随机 SSID。"),
      false,
      NULL},
-    {"< Beacon Spam (Rickroll) >",
+    {GHOST_ESP_UI_TEXT("< Beacon Spam (Rickroll) >", "< 信标洪流 (Rickroll) >"),
      "beaconspam -rr\n",
-     "Beacon Spam (Rickroll)",
-     "Spam Rickroll SSIDs.",
+     GHOST_ESP_UI_TEXT("Beacon Spam (Rickroll)", "信标洪流 (Rickroll)"),
+     GHOST_ESP_UI_TEXT("Spam Rickroll SSIDs.", "发送 Rickroll SSID。"),
      false,
      NULL},
-    {"< Beacon Spam (Custom) >",
+    {GHOST_ESP_UI_TEXT("< Beacon Spam (Custom) >", "< 信标洪流 (自定义) >"),
      "beaconspam",
-     "Beacon Spam (Custom)",
-     "Spam custom SSID.",
+     GHOST_ESP_UI_TEXT("Beacon Spam (Custom)", "信标洪流 (自定义)"),
+     GHOST_ESP_UI_TEXT("Spam custom SSID.", "发送自定义 SSID。"),
      true,
-     "SSID Name"},
+     GHOST_ESP_UI_TEXT("SSID Name", "SSID 名称")},
 };
 
 // BLE spam command definitions
 static const CyclingMenuDef ble_spam_commands[] = {
-    {"< BLE Spam (Apple) >",
+    {GHOST_ESP_UI_TEXT("< BLE Spam (Apple) >", "< BLE 洪流 (Apple) >"),
      "blespam -apple\n",
-     "BLE Spam (Apple)",
-     "Spam Apple BLE devices.",
+     GHOST_ESP_UI_TEXT("BLE Spam (Apple)", "BLE 洪流 (Apple)"),
+     GHOST_ESP_UI_TEXT("Spam Apple BLE devices.", "发送 Apple BLE 设备广播。"),
      false,
      NULL},
-    {"< BLE Spam (Microsoft) >",
+    {GHOST_ESP_UI_TEXT("< BLE Spam (Microsoft) >", "< BLE 洪流 (Microsoft) >"),
      "blespam -ms\n",
-     "BLE Spam (Microsoft)",
-     "Spam Microsoft BLE devices.",
+     GHOST_ESP_UI_TEXT("BLE Spam (Microsoft)", "BLE 洪流 (Microsoft)"),
+     GHOST_ESP_UI_TEXT("Spam Microsoft BLE devices.", "发送 Microsoft BLE 设备广播。"),
      false,
      NULL},
-    {"< BLE Spam (Samsung) >",
+    {GHOST_ESP_UI_TEXT("< BLE Spam (Samsung) >", "< BLE 洪流 (Samsung) >"),
      "blespam -samsung\n",
-     "BLE Spam (Samsung)",
-     "Spam Samsung BLE devices.",
+     GHOST_ESP_UI_TEXT("BLE Spam (Samsung)", "BLE 洪流 (Samsung)"),
+     GHOST_ESP_UI_TEXT("Spam Samsung BLE devices.", "发送 Samsung BLE 设备广播。"),
      false,
      NULL},
-    {"< BLE Spam (Google) >",
+    {GHOST_ESP_UI_TEXT("< BLE Spam (Google) >", "< BLE 洪流 (Google) >"),
      "blespam -google\n",
-     "BLE Spam (Google)",
-     "Spam Google BLE devices.",
+     GHOST_ESP_UI_TEXT("BLE Spam (Google)", "BLE 洪流 (Google)"),
+     GHOST_ESP_UI_TEXT("Spam Google BLE devices.", "发送 Google BLE 设备广播。"),
      false,
      NULL},
-    {"< BLE Spam (Random) >",
+    {GHOST_ESP_UI_TEXT("< BLE Spam (Random) >", "< BLE 洪流 (随机) >"),
      "blespam -random\n",
-     "BLE Spam (Random)",
-     "Spam random BLE devices.",
+     GHOST_ESP_UI_TEXT("BLE Spam (Random)", "BLE 洪流 (随机)"),
+     GHOST_ESP_UI_TEXT("Spam random BLE devices.", "发送随机 BLE 设备广播。"),
      false,
      NULL},
 };
@@ -179,77 +179,80 @@ static const CyclingMenuDef ble_spam_commands[] = {
 static size_t current_rgb_index = 0;
 
 static const CyclingMenuDef rgbmode_commands[] = {
-    {"< LED: Rainbow >", "rgbmode rainbow\n", "LED: Rainbow", "Cycle rainbow colors.", false, NULL},
-    {"< LED: Police >", "rgbmode police\n", "LED: Police", "Police light effect.", false, NULL},
-    {"< LED: Strobe >", "rgbmode strobe\n", "LED: Strobe", "Strobe light effect.", false, NULL},
-    {"< LED: Off >", "rgbmode off\n", "LED: Off", "Turn off LED.", false, NULL},
-    {"< LED: Red >", "rgbmode red\n", "LED: Red", "Set LED to red.", false, NULL},
-    {"< LED: Green >", "rgbmode green\n", "LED: Green", "Set LED to green.", false, NULL},
-    {"< LED: Blue >", "rgbmode blue\n", "LED: Blue", "Set LED to blue.", false, NULL},
-    {"< LED: Yellow >", "rgbmode yellow\n", "LED: Yellow", "Set LED to yellow.", false, NULL},
-    {"< LED: Purple >", "rgbmode purple\n", "LED: Purple", "Set LED to purple.", false, NULL},
-    {"< LED: Cyan >", "rgbmode cyan\n", "LED: Cyan", "Set LED to cyan.", false, NULL},
-    {"< LED: Orange >", "rgbmode orange\n", "LED: Orange", "Set LED to orange.", false, NULL},
-    {"< LED: White >", "rgbmode white\n", "LED: White", "Set LED to white.", false, NULL},
-    {"< LED: Pink >", "rgbmode pink\n", "LED: Pink", "Set LED to pink.", false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Rainbow >", "< LED: 彩虹 >"), "rgbmode rainbow\n", GHOST_ESP_UI_TEXT("LED: Rainbow", "LED: 彩虹"), GHOST_ESP_UI_TEXT("Cycle rainbow colors.", "循环彩虹色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Police >", "< LED: 警灯 >"), "rgbmode police\n", GHOST_ESP_UI_TEXT("LED: Police", "LED: 警灯"), GHOST_ESP_UI_TEXT("Police light effect.", "警灯闪烁效果。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Strobe >", "< LED: 频闪 >"), "rgbmode strobe\n", GHOST_ESP_UI_TEXT("LED: Strobe", "LED: 频闪"), GHOST_ESP_UI_TEXT("Strobe light effect.", "频闪灯效果。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Off >", "< LED: 关闭 >"), "rgbmode off\n", GHOST_ESP_UI_TEXT("LED: Off", "LED: 关闭"), GHOST_ESP_UI_TEXT("Turn off LED.", "关闭 LED。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Red >", "< LED: 红色 >"), "rgbmode red\n", GHOST_ESP_UI_TEXT("LED: Red", "LED: 红色"), GHOST_ESP_UI_TEXT("Set LED to red.", "设置 LED 为红色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Green >", "< LED: 绿色 >"), "rgbmode green\n", GHOST_ESP_UI_TEXT("LED: Green", "LED: 绿色"), GHOST_ESP_UI_TEXT("Set LED to green.", "设置 LED 为绿色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Blue >", "< LED: 蓝色 >"), "rgbmode blue\n", GHOST_ESP_UI_TEXT("LED: Blue", "LED: 蓝色"), GHOST_ESP_UI_TEXT("Set LED to blue.", "设置 LED 为蓝色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Yellow >", "< LED: 黄色 >"), "rgbmode yellow\n", GHOST_ESP_UI_TEXT("LED: Yellow", "LED: 黄色"), GHOST_ESP_UI_TEXT("Set LED to yellow.", "设置 LED 为黄色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Purple >", "< LED: 紫色 >"), "rgbmode purple\n", GHOST_ESP_UI_TEXT("LED: Purple", "LED: 紫色"), GHOST_ESP_UI_TEXT("Set LED to purple.", "设置 LED 为紫色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Cyan >", "< LED: 青色 >"), "rgbmode cyan\n", GHOST_ESP_UI_TEXT("LED: Cyan", "LED: 青色"), GHOST_ESP_UI_TEXT("Set LED to cyan.", "设置 LED 为青色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Orange >", "< LED: 橙色 >"), "rgbmode orange\n", GHOST_ESP_UI_TEXT("LED: Orange", "LED: 橙色"), GHOST_ESP_UI_TEXT("Set LED to orange.", "设置 LED 为橙色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: White >", "< LED: 白色 >"), "rgbmode white\n", GHOST_ESP_UI_TEXT("LED: White", "LED: 白色"), GHOST_ESP_UI_TEXT("Set LED to white.", "设置 LED 为白色。"), false, NULL},
+    {GHOST_ESP_UI_TEXT("< LED: Pink >", "< LED: 粉色 >"), "rgbmode pink\n", GHOST_ESP_UI_TEXT("LED: Pink", "LED: 粉色"), GHOST_ESP_UI_TEXT("Set LED to pink.", "设置 LED 为粉色。"), false, NULL},
 };
 
 static const CyclingMenuDef wifi_scan_modes[] = {
-    {"< Scan: (APs) >", "scanap\n", "WiFi AP Scanner", "Scans for WiFi APs...", false, NULL},
-    {"< Scan: (APs Live) >",
+    {GHOST_ESP_UI_TEXT("< Scan: (APs) >", "< 扫描: (AP) >"), "scanap\n", GHOST_ESP_UI_TEXT("WiFi AP Scanner", "WiFi AP 扫描"), GHOST_ESP_UI_TEXT("Scans for WiFi APs...", "扫描 WiFi AP..."), false, NULL},
+    {GHOST_ESP_UI_TEXT("< Scan: (APs Live) >", "< 扫描: (AP 实时) >"),
      "scanap -live\n",
-     "Live AP Scanner",
-     "Continuously updates as APs are found\n- SSID names\n- Signal levels\n- "
-     "Security type\n- Channel info\n",
+     GHOST_ESP_UI_TEXT("Live AP Scanner", "实时 AP 扫描"),
+     GHOST_ESP_UI_TEXT(
+         "Continuously updates as APs are found\n- SSID names\n- Signal levels\n- "
+         "Security type\n- Channel info\n",
+         "发现 AP 时持续更新\n- SSID 名称\n- 信号强度\n- "
+         "安全类型\n- 信道信息\n"),
      false,
      NULL},
-    {"< Scan: (Stations) >", "scansta\n", "Station Scanner", "Scans for clients...", false, NULL},
-    {"< Scan: (AP+STA) >", "scanall\n", "Scan All", "Combined AP/Station scan...", false, NULL},
+    {GHOST_ESP_UI_TEXT("< Scan: (Stations) >", "< 扫描: (站点) >"), "scansta\n", GHOST_ESP_UI_TEXT("Station Scanner", "站点扫描"), GHOST_ESP_UI_TEXT("Scans for clients...", "扫描客户端..."), false, NULL},
+    {GHOST_ESP_UI_TEXT("< Scan: (AP+STA) >", "< 扫描: (AP+STA) >"), "scanall\n", GHOST_ESP_UI_TEXT("Scan All", "全部扫描"), GHOST_ESP_UI_TEXT("Combined AP/Station scan...", "AP/站点联合扫描..."), false, NULL},
 };
 
 static const CyclingMenuDef wifi_list_modes[] = {
-    {"< List: (APs) >",
+    {GHOST_ESP_UI_TEXT("< List: (APs) >", "< 列表: (AP) >"),
      "list -a\n",
-     "List Access Points",
-     "Shows list of APs found during last scan.",
+     GHOST_ESP_UI_TEXT("List Access Points", "AP 列表"),
+     GHOST_ESP_UI_TEXT("Shows list of APs found during last scan.", "显示上次扫描到的 AP 列表。"),
      false,
      NULL},
-    {"< List: (Stations) >",
+    {GHOST_ESP_UI_TEXT("< List: (Stations) >", "< 列表: (站点) >"),
      "list -s\n",
-     "List Stations",
-     "Shows list of clients found during last scan.",
+     GHOST_ESP_UI_TEXT("List Stations", "站点列表"),
+     GHOST_ESP_UI_TEXT("Shows list of clients found during last scan.", "显示上次扫描到的客户端列表。"),
      false,
      NULL},
 };
 
 static const CyclingMenuDef wifi_select_modes[] = {
-    {"< Select: (AP) >",
+    {GHOST_ESP_UI_TEXT("< Select: (AP) >", "< 选择: (AP) >"),
      "select -a",
-     "Select Access Point",
-     "Select an AP by number from the scanned list.",
+     GHOST_ESP_UI_TEXT("Select Access Point", "选择 AP"),
+     GHOST_ESP_UI_TEXT("Select an AP by number from the scanned list.", "从扫描列表中按编号选择 AP。"),
      true,
-     "AP Number"},
-    {"< Select: (Station) >",
+     GHOST_ESP_UI_TEXT("AP Number", "AP 编号")},
+    {GHOST_ESP_UI_TEXT("< Select: (Station) >", "< 选择: (站点) >"),
      "select -s",
-     "Select Station",
-     "Target a station by number from the scan list for attacks.",
+     GHOST_ESP_UI_TEXT("Select Station", "选择站点"),
+     GHOST_ESP_UI_TEXT("Target a station by number from the scan list for attacks.", "从扫描列表中按编号选择站点进行攻击。"),
      true,
-     "Station Number"},
+     GHOST_ESP_UI_TEXT("Station Number", "站点编号")},
 };
 
 static const CyclingMenuDef wifi_listen_modes[] = {
-    {"< Listen Probes (Hop) >",
+    {GHOST_ESP_UI_TEXT("< Listen Probes (Hop) >", "< 监听探测 (跳频) >"),
      "listenprobes\n",
-     "Listen for Probes",
-     "Listen for and log probe requests\nwhile hopping channels.",
+     GHOST_ESP_UI_TEXT("Listen for Probes", "监听探测帧"),
+     GHOST_ESP_UI_TEXT("Listen for and log probe requests\nwhile hopping channels.", "跳频监听并记录探测请求。"),
      false,
      NULL},
-    {"< Listen Probes (Chan) >",
+    {GHOST_ESP_UI_TEXT("< Listen Probes (Chan) >", "< 监听探测 (定频) >"),
      "listenprobes",
-     "Listen on Channel",
-     "Listen for probe requests on a\nspecific channel.",
+     GHOST_ESP_UI_TEXT("Listen on Channel", "定频监听"),
+     GHOST_ESP_UI_TEXT("Listen for probe requests on a\nspecific channel.", "在指定信道上监听探测请求。"),
      true,
-     "Channel (1-165)"},
+     GHOST_ESP_UI_TEXT("Channel (1-165)", "信道 (1-165)")},
 };
 
 static size_t current_sniff_index = 0;
@@ -263,19 +266,19 @@ static size_t current_wifi_listen_index = 0;
 // WiFi menu command definitions
 static const MenuCommand wifi_scanning_commands[] = {
     {
-        .label = "< Scan: (APs) >", // Initial label
+        .label = GHOST_ESP_UI_TEXT("< Scan: (APs) >", "< 扫描: (AP) >"),
         .command = wifi_scan_modes[0].command,
         .details_header = wifi_scan_modes[0].details_header,
         .details_text = wifi_scan_modes[0].details_text,
     },
     {
-        .label = "< List: (APs) >", // Initial label
+        .label = GHOST_ESP_UI_TEXT("< List: (APs) >", "< 列表: (AP) >"),
         .command = wifi_list_modes[0].command,
         .details_header = wifi_list_modes[0].details_header,
         .details_text = wifi_list_modes[0].details_text,
     },
     {
-        .label = "< Select: (AP) >", // Initial label
+        .label = GHOST_ESP_UI_TEXT("< Select: (AP) >", "< 选择: (AP) >"),
         .command = wifi_select_modes[0].command,
         .needs_input = wifi_select_modes[0].needs_input,
         .input_text = wifi_select_modes[0].input_text,
@@ -283,7 +286,7 @@ static const MenuCommand wifi_scanning_commands[] = {
         .details_text = wifi_select_modes[0].details_text,
     },
     {
-        .label = "< Listen Probes (Hop) >", // Initial label
+        .label = GHOST_ESP_UI_TEXT("< Listen Probes (Hop) >", "< 监听探测 (跳频) >"),
         .command = wifi_listen_modes[0].command,
         .needs_input = wifi_listen_modes[0].needs_input,
         .input_text = wifi_listen_modes[0].input_text,
@@ -291,1150 +294,1553 @@ static const MenuCommand wifi_scanning_commands[] = {
         .details_text = wifi_listen_modes[0].details_text,
     },
     {
-        .label = "Pineapple Detect",
+        .label = GHOST_ESP_UI_TEXT("Pineapple Detect", "Pineapple 检测"),
         .command = "pineap\n",
-        .details_header = "Pineapple Detection",
-        .details_text = "Detects WiFi Pineapple devices\n",
+        .details_header = GHOST_ESP_UI_TEXT("Pineapple Detection", "Pineapple 检测"),
+        .details_text = GHOST_ESP_UI_TEXT("Detects WiFi Pineapple devices\n", "检测 WiFi Pineapple 设备\n"),
     },
     {
-        .label = "Stop Pineapple Detect",
+        .label = GHOST_ESP_UI_TEXT("Stop Pineapple Detect", "停止 Pineapple 检测"),
         .command = "pineap -s\n",
-        .details_header = "Stop Pineapple Detect",
-        .details_text = "Stops Pineapple detection mode.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Pineapple Detect", "停止 Pineapple 检测"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops Pineapple detection mode.", "停止 Pineapple 检测模式。"),
     },
     {
-        .label = "Channel Congestion",
+        .label = GHOST_ESP_UI_TEXT("Channel Congestion", "信道拥塞"),
         .command = "congestion\n",
-        .details_header = "Channel Congestion",
-        .details_text = "Display Wi-Fi channel\n"
-                        "congestion chart.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Channel Congestion", "信道拥塞"),
+        .details_text = GHOST_ESP_UI_TEXT("Display Wi-Fi channel\ncongestion chart.\n", "显示 WiFi 信道\n拥塞图表。\n"),
     },
     {
-        .label = "Scan Ports",
+        .label = GHOST_ESP_UI_TEXT("Scan Ports", "端口扫描"),
         .command = "scanports",
         .needs_input = true,
-        .input_text = "local or IP [options]",
-        .details_header = "Port Scanner",
-        .details_text = "Scan ports on local net\n"
-                        "or specific IP.\n"
-                        "Options: -C, -A, range\n"
-                        "Ex: local -C\n"
-                        "Ex: 192.168.1.1 80-1000",
+        .input_text = GHOST_ESP_UI_TEXT("local or IP [options]", "local 或 IP [选项]"),
+        .details_header = GHOST_ESP_UI_TEXT("Port Scanner", "端口扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Scan ports on local net\n"
+            "or specific IP.\n"
+            "Options: -C, -A, range\n"
+            "Ex: local -C\n"
+            "Ex: 192.168.1.1 80-1000",
+            "扫描本地网络或指定 IP 的端口。\n"
+            "选项: -C, -A, 范围\n"
+            "例: local -C\n"
+            "例: 192.168.1.1 80-1000"),
     },
     {
-        .label = "ARP Scan",
+        .label = GHOST_ESP_UI_TEXT("ARP Scan", "ARP 扫描"),
         .command = "scanarp\n",
-        .details_header = "ARP Scan",
-        .details_text = "Initiates an ARP scan on the local network to discover hosts:\n"
-                        "- Sends ARP requests across the subnet\n"
-                        "- Shows responding IP/MAC pairs\n"
-                        "Requires WiFi connection.\n",
+        .details_header = GHOST_ESP_UI_TEXT("ARP Scan", "ARP 扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Initiates an ARP scan on the local network to discover hosts:\n"
+            "- Sends ARP requests across the subnet\n"
+            "- Shows responding IP/MAC pairs\n"
+            "Requires WiFi connection.\n",
+            "在本地网络发起 ARP 扫描发现主机:\n"
+            "- 发送 ARP 请求到子网\n"
+            "- 显示响应的 IP/MAC 对\n"
+            "需要 WiFi 连接。\n"),
     },
     {
-        .label = "Scan SSH",
+        .label = GHOST_ESP_UI_TEXT("Scan SSH", "SSH 扫描"),
         .command = "scanssh",
         .needs_input = true,
         .input_text = "IP",
-        .details_header = "SSH Scan",
-        .details_text = "Initiate an SSH port/service scan against the target IP:\n"
-                        "- Provide an IP address (e.g., 192.168.1.10)\n"
-                        "- Scans common SSH ports and reports responses\n"
-                        "- Requires network connectivity\n\n",
+        .details_header = GHOST_ESP_UI_TEXT("SSH Scan", "SSH 扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Initiate an SSH port/service scan against the target IP:\n"
+            "- Provide an IP address (e.g., 192.168.1.10)\n"
+            "- Scans common SSH ports and reports responses\n"
+            "- Requires network connectivity\n\n",
+            "对目标 IP 进行 SSH 端口/服务扫描:\n"
+            "- 输入 IP 地址 (如 192.168.1.10)\n"
+            "- 扫描常用 SSH 端口并报告响应\n"
+            "- 需要网络连接\n\n"),
     },
     {
-        .label = "Full Environment Sweep",
+        .label = GHOST_ESP_UI_TEXT("Full Environment Sweep", "全面环境扫描"),
         .command = "sweep\n",
-        .details_header = "Environment Sweep",
-        .details_text = "Full sweep: WiFi APs, stations,\n"
-                        "and BLE devices.\n"
-                        "Saves CSV report to SD.\n"
-                        "Uses default timing for scan.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Environment Sweep", "环境扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Full sweep: WiFi APs, stations,\n"
+            "and BLE devices.\n"
+            "Saves CSV report to SD.\n"
+            "Uses default timing for scan.\n",
+            "全面扫描: WiFi AP、站点\n"
+            "和 BLE 设备。\n"
+            "保存 CSV 报告到 SD 卡。\n"
+            "使用默认扫描间隔。\n"),
     },
     {
-        .label = "Combined AP+STA Scan",
+        .label = GHOST_ESP_UI_TEXT("Combined AP+STA Scan", "AP+STA 联合扫描"),
         .command = "scanall",
         .needs_input = true,
-        .input_text = "Seconds",
-        .details_header = "Scan All",
-        .details_text = "Combined AP and station scan\n"
-                        "with summary report.\n"
-                        "Optionally specify duration.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Seconds", "秒数"),
+        .details_header = GHOST_ESP_UI_TEXT("Scan All", "全部扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Combined AP and station scan\n"
+            "with summary report.\n"
+            "Optionally specify duration.\n",
+            "AP 和站点联合扫描\n"
+            "并生成汇总报告。\n"
+            "可指定扫描时长。\n"),
     },
     {
-        .label = "Track Selected AP",
+        .label = GHOST_ESP_UI_TEXT("Track Selected AP", "追踪选定 AP"),
         .command = "trackap\n",
-        .details_header = "Track AP Signal",
-        .details_text = "Track selected AP signal\n"
-                        "strength (RSSI) in real-time.\n"
-                        "Select an AP first.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Track AP Signal", "追踪 AP 信号"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Track selected AP signal\n"
+            "strength (RSSI) in real-time.\n"
+            "Select an AP first.\n",
+            "实时追踪选定 AP 的\n"
+            "信号强度 (RSSI)。\n"
+            "请先选择一个 AP。\n"),
     },
     {
-        .label = "Track Selected Station",
+        .label = GHOST_ESP_UI_TEXT("Track Selected Station", "追踪选定站点"),
         .command = "tracksta\n",
-        .details_header = "Track Station Signal",
-        .details_text = "Track selected station signal\n"
-                        "strength (RSSI) in real-time.\n"
-                        "Select a station first.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Track Station Signal", "追踪站点信号"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Track selected station signal\n"
+            "strength (RSSI) in real-time.\n"
+            "Select a station first.\n",
+            "实时追踪选定站点的\n"
+            "信号强度 (RSSI)。\n"
+            "请先选择一个站点。\n"),
     },
     {
-        .label = "Stop Listen Probes",
+        .label = GHOST_ESP_UI_TEXT("Stop Listen Probes", "停止监听探测"),
         .command = "listenprobes stop\n",
-        .details_header = "Stop Listening",
-        .details_text = "Stops the probe listener.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Listening", "停止监听"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops the probe listener.", "停止探测帧监听器。"),
     },
     {
-        .label = "Stop Scan",
+        .label = GHOST_ESP_UI_TEXT("Stop Scan", "停止扫描"),
         .command = "stopscan\n",
-        .details_header = "Stop Scan",
-        .details_text = "Stops AP or Station scan.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Scan", "停止扫描"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops AP or Station scan.", "停止 AP 或站点扫描。"),
     },
 };
 
 static const MenuCommand wifi_capture_commands[] = {
     {
-        .label = "< Sniff WPS >",
+        .label = GHOST_ESP_UI_TEXT("< Sniff WPS >", "< 嗅探 WPS >"),
         .command = "capture -wps\n",
         .capture_prefix = "wps_capture",
         .file_ext = "pcap",
         .folder = GHOST_ESP_APP_FOLDER_PCAPS,
-        .details_header = "Variable Sniff",
-        .details_text = "Use Left/Right to change:\n"
-                        "- WPS traffic\n"
-                        "- Raw packets\n"
-                        "- Probe requests\n"
-                        "- Deauth frames\n"
-                        "- Beacon frames\n"
-                        "- EAPOL/Handshakes\n",
+        .details_header = GHOST_ESP_UI_TEXT("Variable Sniff", "切换嗅探模式"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Use Left/Right to change:\n"
+            "- WPS traffic\n"
+            "- Raw packets\n"
+            "- Probe requests\n"
+            "- Deauth frames\n"
+            "- Beacon frames\n"
+            "- EAPOL/Handshakes\n",
+            "左右键切换模式:\n"
+            "- WPS 流量\n"
+            "- 原始数据包\n"
+            "- 探测请求\n"
+            "- 断连帧\n"
+            "- 信标帧\n"
+            "- EAPOL/握手\n"),
     },
 };
 
 static const MenuCommand wifi_attack_commands[] = {
     {
-        .label = "< Beacon Spam (List) >",
+        .label = GHOST_ESP_UI_TEXT("< Beacon Spam (List) >", "< 信标洪流 (列表) >"),
         .command = "beaconspam -l\n",
         .needs_input = false,
-        .input_text = "SSID Name",
-        .details_header = "Variable Beacon Spam",
-        .details_text = "Use Left/Right to change:\n"
-                        "- List mode\n"
-                        "- Random names\n"
-                        "- Rickroll mode\n"
-                        "- Custom SSID\n"
-                        "Range: ~50-100m\n",
+        .input_text = GHOST_ESP_UI_TEXT("SSID Name", "SSID 名称"),
+        .details_header = GHOST_ESP_UI_TEXT("Variable Beacon Spam", "切换信标洪流模式"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Use Left/Right to change:\n"
+            "- List mode\n"
+            "- Random names\n"
+            "- Rickroll mode\n"
+            "- Custom SSID\n"
+            "Range: ~50-100m\n",
+            "左右键切换模式:\n"
+            "- 列表模式\n"
+            "- 随机名称\n"
+            "- Rickroll 模式\n"
+            "- 自定义 SSID\n"
+            "范围: ~50-100m\n"),
     },
     {
-        .label = "Deauth",
+        .label = GHOST_ESP_UI_TEXT("Deauth", "断连攻击"),
         .command = "attack -d\n",
-        .details_header = "Deauth Attack",
-        .details_text = "Sends deauth frames to\n"
-                        "disconnect clients from\n"
-                        "selected network.\n"
-                        "Range: ~50-100m\n",
+        .details_header = GHOST_ESP_UI_TEXT("Deauth Attack", "断连攻击"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Sends deauth frames to\n"
+            "disconnect clients from\n"
+            "selected network.\n"
+            "Range: ~50-100m\n",
+            "发送断连帧使客户端\n"
+            "从选定网络断开。\n"
+            "范围: ~50-100m\n"),
     },
     {
-        .label = "EAPOL Logoff",
+        .label = GHOST_ESP_UI_TEXT("EAPOL Logoff", "EAPOL 注销"),
         .command = "attack -e\n",
-        .details_header = "EAPOL Logoff Attack",
-        .details_text = "Sends EAPOL logoff frames to\n"
-                        "disconnect clients.",
+        .details_header = GHOST_ESP_UI_TEXT("EAPOL Logoff Attack", "EAPOL 注销攻击"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Sends EAPOL logoff frames to\n"
+            "disconnect clients.",
+            "发送 EAPOL 注销帧\n"
+            "断开客户端连接。"),
     },
     {
-        .label = "SAE Handshake Flood",
+        .label = GHOST_ESP_UI_TEXT("SAE Handshake Flood", "SAE 握手洪流"),
         .command = "saeflood",
         .needs_input = true,
         .input_text = "SAE PSK",
-        .details_header = "SAE Flood Attack",
-        .details_text = "Floods WPA3 networks with\nSAE handshakes using the\n"
-                        "provided PSK. Select a\nWPA3 AP first.",
+        .details_header = GHOST_ESP_UI_TEXT("SAE Flood Attack", "SAE 洪流攻击"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Floods WPA3 networks with\nSAE handshakes using the\n"
+            "provided PSK. Select a\nWPA3 AP first.",
+            "使用提供的 PSK 向 WPA3\n网络发送 SAE 握手洪流。\n请先选择一个 WPA3 AP。"),
     },
     {
-        .label = "Stop SAE Flood",
+        .label = GHOST_ESP_UI_TEXT("Stop SAE Flood", "停止 SAE 洪流"),
         .command = "stopsaeflood\n",
-        .details_header = "Stop SAE Flood",
-        .details_text = "Stops active SAE flood and\n"
-                        "password spray attacks.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop SAE Flood", "停止 SAE 洪流"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops active SAE flood and\n"
+            "password spray attacks.",
+            "停止 SAE 洪流和\n"
+            "密码喷射攻击。"),
     },
     {
-        .label = "SAE Flood Help",
+        .label = GHOST_ESP_UI_TEXT("SAE Flood Help", "SAE 洪流帮助"),
         .command = "saefloodhelp\n",
-        .details_header = "SAE Flood Help",
-        .details_text = "Shows usage guidance for\n"
-                        "SAE flood operations.",
+        .details_header = GHOST_ESP_UI_TEXT("SAE Flood Help", "SAE 洪流帮助"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Shows usage guidance for\n"
+            "SAE flood operations.",
+            "显示 SAE 洪流操作\n"
+            "使用指南。"),
     },
     {
-        .label = "Karma Start",
+        .label = GHOST_ESP_UI_TEXT("Karma Start", "Karma 启动"),
         .command = "karma start\n",
-        .details_header = "Karma Rogue AP",
-        .details_text = "Replies to probe requests\n"
-                        "with saved SSIDs.",
+        .details_header = GHOST_ESP_UI_TEXT("Karma Rogue AP", "Karma 伪 AP"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Replies to probe requests\n"
+            "with saved SSIDs.",
+            "使用已保存的 SSID\n"
+            "响应探测请求。"),
     },
     {
-        .label = "Karma Start (Custom)",
+        .label = GHOST_ESP_UI_TEXT("Karma Start (Custom)", "Karma 启动 (自定义)"),
         .command = "karma start",
         .needs_input = true,
         .input_text = "SSID [SSID...]",
-        .details_header = "Karma Rogue AP (Custom)",
-        .details_text = "Replies to probe requests\n"
-                        "using SSIDs you provide\n"
-                        "or saved entries.",
+        .details_header = GHOST_ESP_UI_TEXT("Karma Rogue AP (Custom)", "Karma 伪 AP (自定义)"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Replies to probe requests\n"
+            "using SSIDs you provide\n"
+            "or saved entries.",
+            "使用你提供的 SSID\n"
+            "或已保存的条目\n"
+            "响应探测请求。"),
     },
     {
-        .label = "Karma Stop",
+        .label = GHOST_ESP_UI_TEXT("Karma Stop", "Karma 停止"),
         .command = "karma stop\n",
-        .details_header = "Stop Karma Rogue AP",
-        .details_text = "Stops the active Karma\n"
-                        "rogue AP responder.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Karma Rogue AP", "停止 Karma 伪 AP"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops the active Karma\n"
+            "rogue AP responder.",
+            "停止 Karma 伪 AP\n"
+            "响应器。"),
     },
     {
-        .label = "DHCP Starve Start",
+        .label = GHOST_ESP_UI_TEXT("DHCP Starve Start", "DHCP 耗尽启动"),
         .command = "dhcpstarve",
         .needs_input = true,
         .input_text = "start [threads]",
-        .details_header = "DHCP Starve Attack",
-        .details_text = "Exhausts DHCP server's IP pool.\n"
-                        "Input: start [threads]\n"
-                        "e.g., 'start' or 'start 5'",
+        .details_header = GHOST_ESP_UI_TEXT("DHCP Starve Attack", "DHCP 耗尽攻击"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Exhausts DHCP server's IP pool.\n"
+            "Input: start [threads]\n"
+            "e.g., 'start' or 'start 5'",
+            "耗尽 DHCP 服务器的 IP 池。\n"
+            "输入: start [线程数]\n"
+            "例: 'start' 或 'start 5'"),
     },
     {
-        .label = "DHCP Starve Stop",
+        .label = GHOST_ESP_UI_TEXT("DHCP Starve Stop", "DHCP 耗尽停止"),
         .command = "dhcpstarve stop\n",
-        .details_header = "Stop DHCP Starve",
-        .details_text = "Stops the DHCP starvation attack.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop DHCP Starve", "停止 DHCP 耗尽"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops the DHCP starvation attack.", "停止 DHCP 耗尽攻击。"),
     },
     {
-        .label = "Stop Deauth/SAE/EAPOL",
+        .label = GHOST_ESP_UI_TEXT("Stop Deauth/SAE/EAPOL", "停止断连/SAE/EAPOL"),
         .command = "stopdeauth\n",
-        .details_header = "Stop Attacks",
-        .details_text = "Stops Deauth, SAE Flood,\n"
-                        "and EAPOL Logoff attacks.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Attacks", "停止攻击"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops Deauth, SAE Flood,\n"
+            "and EAPOL Logoff attacks.",
+            "停止断连、SAE 洪流\n"
+            "和 EAPOL 注销攻击。"),
     },
     {
-        .label = "Add SSID to Beacon List",
+        .label = GHOST_ESP_UI_TEXT("Add SSID to Beacon List", "添加 SSID 到信标列表"),
         .command = "beaconadd",
         .needs_input = true,
         .input_text = "SSID",
-        .details_header = "Add to Beacon List",
-        .details_text = "Add an SSID to the list used\n"
-                        "by Beacon List Spam.",
+        .details_header = GHOST_ESP_UI_TEXT("Add to Beacon List", "添加到信标列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Add an SSID to the list used\n"
+            "by Beacon List Spam.",
+            "添加 SSID 到信标洪流列表。"),
     },
     {
-        .label = "Remove SSID from Beacon List",
+        .label = GHOST_ESP_UI_TEXT("Remove SSID from Beacon List", "从信标列表移除 SSID"),
         .command = "beaconremove",
         .needs_input = true,
         .input_text = "SSID",
-        .details_header = "Remove from Beacon List",
-        .details_text = "Remove an SSID from the\n"
-                        "beacon spam list.",
+        .details_header = GHOST_ESP_UI_TEXT("Remove from Beacon List", "从信标列表移除"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Remove an SSID from the\n"
+            "beacon spam list.",
+            "从信标洪流列表中移除 SSID。"),
     },
     {
-        .label = "Clear Beacon List",
+        .label = GHOST_ESP_UI_TEXT("Clear Beacon List", "清空信标列表"),
         .command = "beaconclear\n",
-        .details_header = "Clear Beacon List",
-        .details_text = "Clears all SSIDs from the\n"
-                        "beacon spam list.",
+        .details_header = GHOST_ESP_UI_TEXT("Clear Beacon List", "清空信标列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Clears all SSIDs from the\n"
+            "beacon spam list.",
+            "清空信标洪流列表中的所有 SSID。"),
     },
     {
-        .label = "Show Beacon List",
+        .label = GHOST_ESP_UI_TEXT("Show Beacon List", "显示信标列表"),
         .command = "beaconshow\n",
-        .details_header = "Show Beacon List",
-        .details_text = "Displays all SSIDs in the\n"
-                        "beacon spam list.",
+        .details_header = GHOST_ESP_UI_TEXT("Show Beacon List", "显示信标列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Displays all SSIDs in the\n"
+            "beacon spam list.",
+            "显示信标洪流列表中的所有 SSID。"),
     },
     {
-        .label = "Start Beacon List Spam",
+        .label = GHOST_ESP_UI_TEXT("Start Beacon List Spam", "启动信标列表洪流"),
         .command = "beaconspamlist\n",
-        .details_header = "Beacon List Spam",
-        .details_text = "Starts beacon spam using the\n"
-                        "custom list of SSIDs.",
+        .details_header = GHOST_ESP_UI_TEXT("Beacon List Spam", "信标列表洪流"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Starts beacon spam using the\n"
+            "custom list of SSIDs.",
+            "使用自定义 SSID 列表\n"
+            "启动信标洪流。"),
     },
     {
-        .label = "Stop Beacon Spam",
+        .label = GHOST_ESP_UI_TEXT("Stop Beacon Spam", "停止信标洪流"),
         .command = "stopspam\n",
-        .details_header = "Stop Beacon Spam",
-        .details_text = "Stops any active beacon spam.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Beacon Spam", "停止信标洪流"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops any active beacon spam.", "停止所有信标洪流。"),
     },
 };
 
 static const MenuCommand wifi_network_commands[] = {
     {
-        .label = "Evil Portal",
+        .label = GHOST_ESP_UI_TEXT("Evil Portal", "Evil Portal"),
         .command = "startportal",
         .needs_input = true,
-        .input_text = "<filepath> <SSID> <PSK (leave blank for open)>",
-        .details_header = "Evil Portal",
-        .details_text = "Captive portal for\n"
-                        "credential harvest.\n"
-                        "Configure in WebUI:\n"
-                        "- Portal settings\n"
-                        "- Landing page\n",
+        .input_text = GHOST_ESP_UI_TEXT("<filepath> <SSID> <PSK (leave blank for open)>", "<路径> <SSID> <PSK (留空为开放)>"),
+        .details_header = GHOST_ESP_UI_TEXT("Evil Portal", "Evil Portal"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Captive portal for\n"
+            "credential harvest.\n"
+            "Configure in WebUI:\n"
+            "- Portal settings\n"
+            "- Landing page\n",
+            "用于凭证捕获的\n"
+            "强制门户。\n"
+            "在 WebUI 中配置:\n"
+            "- 门户设置\n"
+            "- 落地页\n"),
     },
     {
-        .label = "List Portals",
+        .label = GHOST_ESP_UI_TEXT("List Portals", "门户列表"),
         .command = "listportals\n",
-        .details_header = "List Portals",
-        .details_text = "Show all available HTML portals\non the SD card.",
+        .details_header = GHOST_ESP_UI_TEXT("List Portals", "门户列表"),
+        .details_text = GHOST_ESP_UI_TEXT("Show all available HTML portals\non the SD card.", "显示 SD 卡上所有可用的 HTML 门户。"),
     },
     {
-        .label = "Set Evil Portal HTML",
+        .label = GHOST_ESP_UI_TEXT("Set Evil Portal HTML", "设置 Evil Portal HTML"),
         .command = "set_evil_portal_html",
         .needs_input = true,
-        .input_text = "HTML File",
-        .details_header = "Set Evil Portal HTML",
-        .details_text = "Select and send an HTML\n"
-                        "file to the ESP32 for\n"
-                        "the evil portal.\n\n",
+        .input_text = GHOST_ESP_UI_TEXT("HTML File", "HTML 文件"),
+        .details_header = GHOST_ESP_UI_TEXT("Set Evil Portal HTML", "设置 Evil Portal HTML"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Select and send an HTML\n"
+            "file to the ESP32 for\n"
+            "the evil portal.\n\n",
+            "选择并发送 HTML 文件\n"
+            "到 ESP32 用于\n"
+            "Evil Portal。\n\n"),
     },
     {
-        .label = "Clear Evil Portal HTML",
+        .label = GHOST_ESP_UI_TEXT("Clear Evil Portal HTML", "清除 Evil Portal HTML"),
         .command = "evilportal -c clear\n",
-        .details_header = "Clear Evil Portal",
-        .details_text = "Restores the default portal\n"
-                        "landing page on the ESP.",
+        .details_header = GHOST_ESP_UI_TEXT("Clear Evil Portal", "清除 Evil Portal"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Restores the default portal\n"
+            "landing page on the ESP.",
+            "恢复 ESP 上的默认\n"
+            "门户落地页。"),
     },
     {
-        .label = "Connect To WiFi",
+        .label = GHOST_ESP_UI_TEXT("Connect To WiFi", "连接 WiFi"),
         .command = "connect",
         .needs_input = true,
         .input_text = "SSID",
-        .details_header = "WiFi Connect",
-        .details_text = "Connect ESP to WiFi:\n"
-                        "Enter SSID followed by password.\n\n",
+        .details_header = GHOST_ESP_UI_TEXT("WiFi Connect", "WiFi 连接"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Connect ESP to WiFi:\n"
+            "Enter SSID followed by password.\n\n",
+            "连接 ESP 到 WiFi:\n"
+            "输入 SSID 和密码。\n\n"),
     },
     {
-        .label = "Connect to Saved WiFi",
+        .label = GHOST_ESP_UI_TEXT("Connect to Saved WiFi", "连接已保存 WiFi"),
         .command = "connect\n",
-        .details_header = "Connect (Saved)",
-        .details_text = "Connect to the previously saved WiFi credentials on the ESP.\n"
-                        "No input required.\n\n",
+        .details_header = GHOST_ESP_UI_TEXT("Connect (Saved)", "连接 (已保存)"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Connect to the previously saved WiFi credentials on the ESP.\n"
+            "No input required.\n\n",
+            "使用 ESP 上已保存的 WiFi 凭据连接。\n"
+            "无需输入。\n\n"),
     },
     {
-        .label = "Disconnect WiFi",
+        .label = GHOST_ESP_UI_TEXT("Disconnect WiFi", "断开 WiFi"),
         .command = "disconnect\n",
-        .details_header = "Disconnect",
-        .details_text = "Disconnects from the current WiFi network on the ESP.\n"
-                        "No input required.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Disconnect", "断开连接"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Disconnects from the current WiFi network on the ESP.\n"
+            "No input required.\n",
+            "断开 ESP 当前的 WiFi 连接。\n"
+            "无需输入。\n"),
     },
     {
-        .label = "Cast Random Video",
+        .label = GHOST_ESP_UI_TEXT("Cast Random Video", "投送随机视频"),
         .command = "dialconnect\n",
         .needs_confirmation = true,
-        .confirm_header = "Cast Video",
-        .confirm_text = "Make sure you've connected\nto WiFi first via "
-                        "the\n'Connect to WiFi' option.\n",
-        .details_header = "Video Cast",
-        .details_text = "Casts random videos\n"
-                        "to nearby Cast/DIAL\n"
-                        "enabled devices.\n"
-                        "Range: ~50m\n\n",
+        .confirm_header = GHOST_ESP_UI_TEXT("Cast Video", "投送视频"),
+        .confirm_text = GHOST_ESP_UI_TEXT(
+            "Make sure you've connected\nto WiFi first via "
+            "the\n'Connect to WiFi' option.\n",
+            "请确保已通过\n'连接 WiFi' 选项\n连接到 WiFi。\n"),
+        .details_header = GHOST_ESP_UI_TEXT("Video Cast", "视频投送"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Casts random videos\n"
+            "to nearby Cast/DIAL\n"
+            "enabled devices.\n"
+            "Range: ~50m\n\n",
+            "向附近的 Cast/DIAL\n"
+            "设备投送随机视频。\n"
+            "范围: ~50m\n\n"),
     },
     {
-        .label = "Printer Power",
+        .label = GHOST_ESP_UI_TEXT("Printer Power", "打印机电源"),
         .command = "powerprinter\n",
         .needs_confirmation = true,
-        .confirm_header = "Printer Power",
-        .confirm_text = "You need to configure\n settings in the WebUI\n for "
-                        "this command.\n",
-        .details_header = "WiFi Printer",
-        .details_text = "Control power state\n"
-                        "of network printers.\n"
-                        "Configure in WebUI:\n"
-                        "- Printer IP/Port\n"
-                        "- Protocol type\n\n",
+        .confirm_header = GHOST_ESP_UI_TEXT("Printer Power", "打印机电源"),
+        .confirm_text = GHOST_ESP_UI_TEXT(
+            "You need to configure\n settings in the WebUI\n for "
+            "this command.\n",
+            "需要在 WebUI 中\n配置设置才能\n使用此命令。\n"),
+        .details_header = GHOST_ESP_UI_TEXT("WiFi Printer", "WiFi 打印机"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Control power state\n"
+            "of network printers.\n"
+            "Configure in WebUI:\n"
+            "- Printer IP/Port\n"
+            "- Protocol type\n\n",
+            "控制网络打印机的\n"
+            "电源状态。\n"
+            "在 WebUI 中配置:\n"
+            "- 打印机 IP/端口\n"
+            "- 协议类型\n\n"),
     },
     {
-        .label = "Scan Local Network",
+        .label = GHOST_ESP_UI_TEXT("Scan Local Network", "扫描本地网络"),
         .command = "scanlocal\n",
         .needs_confirmation = true,
-        .confirm_header = "Local Network Scan",
-        .confirm_text = "Make sure you've connected\nto WiFi first via "
-                        "the\n'Connect to WiFi' option.\n",
-        .details_header = "Network Scanner",
-        .details_text = "Scans local network for:\n"
-                        "- Printers\n"
-                        "- Smart devices\n"
-                        "- Cast devices\n"
-                        "- Requires WiFi connection\n\n",
+        .confirm_header = GHOST_ESP_UI_TEXT("Local Network Scan", "本地网络扫描"),
+        .confirm_text = GHOST_ESP_UI_TEXT(
+            "Make sure you've connected\nto WiFi first via "
+            "the\n'Connect to WiFi' option.\n",
+            "请确保已通过\n'连接 WiFi' 选项\n连接到 WiFi。\n"),
+        .details_header = GHOST_ESP_UI_TEXT("Network Scanner", "网络扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Scans local network for:\n"
+            "- Printers\n"
+            "- Smart devices\n"
+            "- Cast devices\n"
+            "- Requires WiFi connection\n\n",
+            "扫描本地网络中的:\n"
+            "- 打印机\n"
+            "- 智能设备\n"
+            "- Cast 设备\n"
+            "- 需要 WiFi 连接\n\n"),
     },
     {
-        .label = "Set WebUI Creds",
+        .label = GHOST_ESP_UI_TEXT("Set WebUI Creds", "设置 WebUI 凭据"),
         .command = "apcred",
         .needs_input = true,
         .input_text = "MySSID MyPassword",
-        .details_header = "Set AP Credentials",
-        .details_text = "Set custom WebUI AP:\n"
-                        "Format:\nMySSID MyPassword\n"
-                        "Example: GhostNet,spooky123\n",
+        .details_header = GHOST_ESP_UI_TEXT("Set AP Credentials", "设置 AP 凭据"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set custom WebUI AP:\n"
+            "Format:\nMySSID MyPassword\n"
+            "Example: GhostNet,spooky123\n",
+            "设置自定义 WebUI AP:\n"
+            "格式:\nMySSID MyPassword\n"
+            "例: GhostNet,spooky123\n"),
     },
     {
-        .label = "Reset WebUI Creds",
+        .label = GHOST_ESP_UI_TEXT("Reset WebUI Creds", "重置 WebUI 凭据"),
         .command = "apcred -r\n",
         .needs_confirmation = true,
-        .confirm_header = "Reset AP Credentials",
-        .confirm_text = "Reset WebUI AP to\n"
-                        "default credentials?\n"
-                        "SSID: GhostNet\n"
-                        "Password: GhostNet\n",
-        .details_header = "Reset AP Credentials",
-        .details_text = "Restores default WebUI AP:\n"
-                        "SSID: GhostNet\n"
-                        "Password: GhostNet\n"
-                        "Requires ESP reboot\n",
+        .confirm_header = GHOST_ESP_UI_TEXT("Reset AP Credentials", "重置 AP 凭据"),
+        .confirm_text = GHOST_ESP_UI_TEXT(
+            "Reset WebUI AP to\n"
+            "default credentials?\n"
+            "SSID: GhostNet\n"
+            "Password: GhostNet\n",
+            "将 WebUI AP 恢复为\n"
+            "默认凭据？\n"
+            "SSID: GhostNet\n"
+            "密码: GhostNet\n"),
+        .details_header = GHOST_ESP_UI_TEXT("Reset AP Credentials", "重置 AP 凭据"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Restores default WebUI AP:\n"
+            "SSID: GhostNet\n"
+            "Password: GhostNet\n"
+            "Requires ESP reboot\n",
+            "恢复默认 WebUI AP:\n"
+            "SSID: GhostNet\n"
+            "密码: GhostNet\n"
+            "需要重启 ESP\n"),
     },
     {
-        .label = "Stop Evil Portal",
+        .label = GHOST_ESP_UI_TEXT("Stop Evil Portal", "停止 Evil Portal"),
         .command = "stopportal\n",
-        .details_header = "Stop Evil Portal",
-        .details_text = "Stops the Evil Portal.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Evil Portal", "停止 Evil Portal"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops the Evil Portal.", "停止 Evil Portal。"),
     },
     {
-        .label = "TP-Link Smart Plug",
+        .label = GHOST_ESP_UI_TEXT("TP-Link Smart Plug", "TP-Link 智能插座"),
         .command = "tplinktest",
         .needs_input = true,
         .input_text = "on | off | loop",
-        .details_header = "TP-Link Control",
-        .details_text = "Control TP-Link smart plugs\n"
-                        "on the local network.",
+        .details_header = GHOST_ESP_UI_TEXT("TP-Link Control", "TP-Link 控制"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Control TP-Link smart plugs\n"
+            "on the local network.",
+            "控制本地网络上的\n"
+            "TP-Link 智能插座。"),
     },
 };
 
 static const MenuCommand wifi_settings_commands[] = {
     {
-        .label = "< LED: Rainbow >",
+        .label = GHOST_ESP_UI_TEXT("< LED: Rainbow >", "< LED: 彩虹 >"),
         .command = "rgbmode rainbow\n",
-        .confirm_header = "LED Effects",
-        .details_header = "LED Effects",
-        .details_text = "Control LED effects:\n"
-                        "- rainbow, police, strobe, off, or fixed colors\n"
-                        "Cycle with Left/Right to select an effect\n",
+        .confirm_header = GHOST_ESP_UI_TEXT("LED Effects", "LED 效果"),
+        .details_header = GHOST_ESP_UI_TEXT("LED Effects", "LED 效果"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Control LED effects:\n"
+            "- rainbow, police, strobe, off, or fixed colors\n"
+            "Cycle with Left/Right to select an effect\n",
+            "控制 LED 效果:\n"
+            "- 彩虹、警灯、频闪、关闭或固定颜色\n"
+            "左右键切换效果\n"),
     },
     {
-        .label = "Set RGB Pins",
+        .label = GHOST_ESP_UI_TEXT("Set RGB Pins", "设置 RGB 引脚"),
         .command = "setrgbpins",
         .needs_input = true,
         .input_text = "<red> <green> <blue>",
-        .details_header = "Set RGB Pins",
-        .details_text = "Change RGB LED pins.\n"
-                        "Requires restart.\n"
-                        "Use same value for all\n"
-                        "pins for single-pin LED.",
+        .details_header = GHOST_ESP_UI_TEXT("Set RGB Pins", "设置 RGB 引脚"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Change RGB LED pins.\n"
+            "Requires restart.\n"
+            "Use same value for all\n"
+            "pins for single-pin LED.",
+            "更改 RGB LED 引脚。\n"
+            "需要重启。\n"
+            "单引脚 LED 使用\n"
+            "相同值。"),
     },
     {
-        .label = "Chip Info",
+        .label = GHOST_ESP_UI_TEXT("Chip Info", "芯片信息"),
         .command = "chipinfo\n",
-        .details_header = "Chip Info",
-        .details_text = "Displays chip information from the ESP\n",
+        .details_header = GHOST_ESP_UI_TEXT("Chip Info", "芯片信息"),
+        .details_text = GHOST_ESP_UI_TEXT("Displays chip information from the ESP\n", "显示 ESP 芯片信息\n"),
     },
     {
-        .label = "Show SD Pin Config",
+        .label = GHOST_ESP_UI_TEXT("Show SD Pin Config", "显示 SD 引脚配置"),
         .command = "sd_config",
-        .details_header = "SD Pin Config",
-        .details_text = "Show current SD GPIO\n"
-                        "pin configuration for\n"
-                        "MMC and SPI modes.",
+        .details_header = GHOST_ESP_UI_TEXT("SD Pin Config", "SD 引脚配置"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Show current SD GPIO\n"
+            "pin configuration for\n"
+            "MMC and SPI modes.",
+            "显示当前 SD GPIO\n"
+            "引脚配置 (MMC 和 SPI 模式)。"),
     },
     {
-        .label = "Set SD Pins (MMC)",
+        .label = GHOST_ESP_UI_TEXT("Set SD Pins (MMC)", "设置 SD 引脚 (MMC)"),
         .command = "sd_pins_mmc",
         .needs_input = true,
         .input_text = "<clk> <cmd> <d0..d3>",
-        .details_header = "Set SD Pins (MMC)",
-        .details_text = "Set GPIO pins for SDMMC.\n"
-                        "Requires restart.\n"
-                        "Only if firmware built\n"
-                        "for SDMMC mode.",
+        .details_header = GHOST_ESP_UI_TEXT("Set SD Pins (MMC)", "设置 SD 引脚 (MMC)"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set GPIO pins for SDMMC.\n"
+            "Requires restart.\n"
+            "Only if firmware built\n"
+            "for SDMMC mode.",
+            "设置 SDMMC 的 GPIO 引脚。\n"
+            "需要重启。\n"
+            "仅适用于 SDMMC 模式\n"
+            "编译的固件。"),
     },
     {
-        .label = "Set SD Pins (SPI)",
+        .label = GHOST_ESP_UI_TEXT("Set SD Pins (SPI)", "设置 SD 引脚 (SPI)"),
         .command = "sd_pins_spi",
         .needs_input = true,
         .input_text = "<cs> <clk> <miso> <mosi>",
-        .details_header = "Set SD Pins (SPI)",
-        .details_text = "Set GPIO pins for SPI.\n"
-                        "Requires restart.\n"
-                        "Only if firmware built\n"
-                        "for SPI mode.",
+        .details_header = GHOST_ESP_UI_TEXT("Set SD Pins (SPI)", "设置 SD 引脚 (SPI)"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set GPIO pins for SPI.\n"
+            "Requires restart.\n"
+            "Only if firmware built\n"
+            "for SPI mode.",
+            "设置 SPI 的 GPIO 引脚。\n"
+            "需要重启。\n"
+            "仅适用于 SPI 模式\n"
+            "编译的固件。"),
     },
     {
-        .label = "Save SD Pin Config",
+        .label = GHOST_ESP_UI_TEXT("Save SD Pin Config", "保存 SD 引脚配置"),
         .command = "sd_save_config",
         .needs_confirmation = true,
-        .confirm_header = "Save SD Config",
-        .confirm_text = "Save current SD pin\n"
-                        "config to SD card?\n"
-                        "Requires SD mounted.",
-        .details_header = "Save SD Pin Config",
-        .details_text = "Save current SD pin\n"
-                        "config (both modes) to\n"
-                        "SD card (sd_config.conf).",
+        .confirm_header = GHOST_ESP_UI_TEXT("Save SD Config", "保存 SD 配置"),
+        .confirm_text = GHOST_ESP_UI_TEXT(
+            "Save current SD pin\n"
+            "config to SD card?\n"
+            "Requires SD mounted.",
+            "保存当前 SD 引脚\n"
+            "配置到 SD 卡？\n"
+            "需要 SD 卡已挂载。"),
+        .details_header = GHOST_ESP_UI_TEXT("Save SD Pin Config", "保存 SD 引脚配置"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Save current SD pin\n"
+            "config (both modes) to\n"
+            "SD card (sd_config.conf).",
+            "保存当前 SD 引脚配置\n"
+            "(两种模式) 到 SD 卡\n"
+            "(sd_config.conf)。"),
     },
     {
-        .label = "Set Timezone",
+        .label = GHOST_ESP_UI_TEXT("Set Timezone", "设置时区"),
         .command = "timezone",
         .needs_input = true,
         .input_text = "TZ String",
-        .details_header = "Set Timezone",
-        .details_text = "Set timezone for the clock.\n"
-                        "e.g. 'EST5EDT,M3.2.0,M11.1.0'",
+        .details_header = GHOST_ESP_UI_TEXT("Set Timezone", "设置时区"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set timezone for the clock.\n"
+            "e.g. 'EST5EDT,M3.2.0,M11.1.0'",
+            "设置时钟时区。\n"
+            "例: 'EST5EDT,M3.2.0,M11.1.0'"),
     },
     {
-        .label = "Set Web Auth",
+        .label = GHOST_ESP_UI_TEXT("Set Web Auth", "设置 Web 认证"),
         .command = "webauth",
         .needs_input = true,
         .input_text = "on | off",
-        .details_header = "Set Web Auth",
-        .details_text = "Enable or disable Web\n"
-                        "UI authentication.",
+        .details_header = GHOST_ESP_UI_TEXT("Set Web Auth", "设置 Web 认证"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Enable or disable Web\n"
+            "UI authentication.",
+            "启用或禁用 Web UI 认证。"),
     },
     {
-        .label = "Set WiFi Country",
+        .label = GHOST_ESP_UI_TEXT("Set WiFi Country", "设置 WiFi 国家"),
         .command = "setcountry",
         .needs_input = true,
-        .input_text = "Country Code (e.g. US)",
-        .details_header = "Set WiFi Country",
-        .details_text = "Set the WiFi country code.\n"
-                        "May require ESP32-C5.",
+        .input_text = GHOST_ESP_UI_TEXT("Country Code (e.g. US)", "国家代码 (如 CN)"),
+        .details_header = GHOST_ESP_UI_TEXT("Set WiFi Country", "设置 WiFi 国家"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set the WiFi country code.\n"
+            "May require ESP32-C5.",
+            "设置 WiFi 国家代码。\n"
+            "可能需要 ESP32-C5。"),
     },
     {
-        .label = "Set RGB Profile",
+        .label = GHOST_ESP_UI_TEXT("Set RGB Profile", "设置 RGB 配置"),
         .command = "setrgbmode",
         .needs_input = true,
         .input_text = "normal|rainbow|stealth",
-        .details_header = "Set RGB Profile",
-        .details_text = "Save the default LED mode\n"
-                        "used after reboot.",
+        .details_header = GHOST_ESP_UI_TEXT("Set RGB Profile", "设置 RGB 配置"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Save the default LED mode\n"
+            "used after reboot.",
+            "保存重启后使用的\n"
+            "默认 LED 模式。"),
     },
     {
-        .label = "Set NeoPixel Brightness",
+        .label = GHOST_ESP_UI_TEXT("Set NeoPixel Brightness", "设置 NeoPixel 亮度"),
         .command = "setneopixelbrightness",
         .needs_input = true,
         .input_text = "0-100",
-        .details_header = "NeoPixel Brightness",
-        .details_text = "Adjust NeoPixel brightness\n"
-                        "from 0 to 100%.",
+        .details_header = GHOST_ESP_UI_TEXT("NeoPixel Brightness", "NeoPixel 亮度"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Adjust NeoPixel brightness\n"
+            "from 0 to 100%.",
+            "调整 NeoPixel 亮度\n"
+            "范围 0 到 100%。"),
     },
     {
-        .label = "Get NeoPixel Brightness",
+        .label = GHOST_ESP_UI_TEXT("Get NeoPixel Brightness", "获取 NeoPixel 亮度"),
         .command = "getneopixelbrightness\n",
-        .details_header = "NeoPixel Brightness",
-        .details_text = "Displays the current NeoPixel\n"
-                        "brightness level.",
+        .details_header = GHOST_ESP_UI_TEXT("NeoPixel Brightness", "NeoPixel 亮度"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Displays the current NeoPixel\n"
+            "brightness level.",
+            "显示当前 NeoPixel 亮度。"),
     },
     {
-        .label = "Set RGB LED Count",
+        .label = GHOST_ESP_UI_TEXT("Set RGB LED Count", "设置 RGB LED 数量"),
         .command = "setrgbcount",
         .needs_input = true,
         .input_text = "1-512",
-        .details_header = "Set RGB LED Count",
-        .details_text = "Set the number of RGB LEDs\n"
-                        "connected (1-512).\n"
-                        "Effects will span the correct\n"
-                        "length. Reinitializes if pins\n"
-                        "are already configured.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Set RGB LED Count", "设置 RGB LED 数量"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set the number of RGB LEDs\n"
+            "connected (1-512).\n"
+            "Effects will span the correct\n"
+            "length. Reinitializes if pins\n"
+            "are already configured.\n",
+            "设置连接的 RGB LED 数量 (1-512)。\n"
+            "效果将覆盖正确长度。\n"
+            "如引脚已配置则重新初始化。\n"),
     },
     {
-        .label = "Settings List",
+        .label = GHOST_ESP_UI_TEXT("Settings List", "设置列表"),
         .command = "settings list\n",
-        .details_header = "List Settings",
-        .details_text = "Shows available configuration\n"
-                        "keys and descriptions.",
+        .details_header = GHOST_ESP_UI_TEXT("List Settings", "设置列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Shows available configuration\n"
+            "keys and descriptions.",
+            "显示可用的配置键和说明。"),
     },
     {
-        .label = "Settings Help",
+        .label = GHOST_ESP_UI_TEXT("Settings Help", "设置帮助"),
         .command = "settings help\n",
-        .details_header = "Settings Help",
-        .details_text = "Displays CLI usage for\n"
-                        "settings commands.",
+        .details_header = GHOST_ESP_UI_TEXT("Settings Help", "设置帮助"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Displays CLI usage for\n"
+            "settings commands.",
+            "显示设置命令的 CLI 用法。"),
     },
     {
-        .label = "Settings Get",
+        .label = GHOST_ESP_UI_TEXT("Settings Get", "获取设置"),
         .command = "settings get",
         .needs_input = true,
         .input_text = "Key",
-        .details_header = "Get Setting",
-        .details_text = "Read the current value for\n"
-                        "a configuration key.",
+        .details_header = GHOST_ESP_UI_TEXT("Get Setting", "获取设置"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Read the current value for\n"
+            "a configuration key.",
+            "读取配置键的当前值。"),
     },
     {
-        .label = "Settings Set",
+        .label = GHOST_ESP_UI_TEXT("Settings Set", "设置值"),
         .command = "settings set",
         .needs_input = true,
         .input_text = "Key Value",
-        .details_header = "Set Setting",
-        .details_text = "Update a configuration key\n"
-                        "with a new value.",
+        .details_header = GHOST_ESP_UI_TEXT("Set Setting", "设置值"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Update a configuration key\n"
+            "with a new value.",
+            "更新配置键的值。"),
     },
     {
-        .label = "Settings Reset (Key)",
+        .label = GHOST_ESP_UI_TEXT("Settings Reset (Key)", "重置设置 (键)"),
         .command = "settings reset",
         .needs_input = true,
         .input_text = "Key",
-        .details_header = "Reset Setting",
-        .details_text = "Reset a specific configuration\n"
-                        "key to defaults.",
+        .details_header = GHOST_ESP_UI_TEXT("Reset Setting", "重置设置"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Reset a specific configuration\n"
+            "key to defaults.",
+            "将指定配置键恢复默认值。"),
     },
     {
-        .label = "Settings Reset (All)",
+        .label = GHOST_ESP_UI_TEXT("Settings Reset (All)", "重置所有设置"),
         .command = "settings reset\n",
-        .details_header = "Reset Settings",
-        .details_text = "Restore all configuration\n"
-                        "keys to defaults.",
+        .details_header = GHOST_ESP_UI_TEXT("Reset Settings", "重置设置"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Restore all configuration\n"
+            "keys to defaults.",
+            "将所有配置键恢复默认值。"),
     },
     {
-        .label = "Show Help",
+        .label = GHOST_ESP_UI_TEXT("Show Help", "显示帮助"),
         .command = "help\n",
-        .details_header = "Help",
-        .details_text = "Show complete command list.",
+        .details_header = GHOST_ESP_UI_TEXT("Help", "帮助"),
+        .details_text = GHOST_ESP_UI_TEXT("Show complete command list.", "显示完整命令列表。"),
     },
     {
-        .label = "Reboot Device",
+        .label = GHOST_ESP_UI_TEXT("Reboot Device", "重启设备"),
         .command = "reboot\n",
         .needs_confirmation = true,
-        .confirm_header = "Reboot Device",
-        .confirm_text = "Are you sure you want to reboot?",
-        .details_header = "Reboot",
-        .details_text = "Restart the ESP device.",
+        .confirm_header = GHOST_ESP_UI_TEXT("Reboot Device", "重启设备"),
+        .confirm_text = GHOST_ESP_UI_TEXT("Are you sure you want to reboot?", "确定要重启吗？"),
+        .details_header = GHOST_ESP_UI_TEXT("Reboot", "重启"),
+        .details_text = GHOST_ESP_UI_TEXT("Restart the ESP device.", "重启 ESP 设备。"),
     },
     {
-        .label = "Enable/Disable AP",
+        .label = GHOST_ESP_UI_TEXT("Enable/Disable AP", "启用/禁用 AP"),
         .command = "apenable",
         .needs_input = true,
         .input_text = "on | off",
-        .details_header = "AP Enable/Disable",
-        .details_text = "Enable or disable the Access Point\nacross reboots.",
+        .details_header = GHOST_ESP_UI_TEXT("AP Enable/Disable", "AP 启用/禁用"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Enable or disable the Access Point\nacross reboots.",
+            "启用或禁用 AP (重启后保持)。"),
     },
     {
-        .label = "Show Chip Info",
+        .label = GHOST_ESP_UI_TEXT("Show Chip Info", "显示芯片信息"),
         .command = "chipinfo\n",
-        .details_header = "Chip Info",
-        .details_text = "Show chip and memory info.",
+        .details_header = GHOST_ESP_UI_TEXT("Chip Info", "芯片信息"),
+        .details_text = GHOST_ESP_UI_TEXT("Show chip and memory info.", "显示芯片和内存信息。"),
     },
 };
 
 static const MenuCommand wifi_stop_command = {
-    .label = "Stop All WiFi",
+    .label = GHOST_ESP_UI_TEXT("Stop All WiFi", "停止所有 WiFi"),
     .command = "stop\n",
-    .details_header = "Stop WiFi Operations",
-    .details_text = "Stops all active WiFi\n"
-                    "operations including:\n"
-                    "- Scanning\n"
-                    "- Beacon Spam\n"
-                    "- Deauth Attacks\n"
-                    "- Packet Captures\n"
-                    "- Evil Portal\n",
+    .details_header = GHOST_ESP_UI_TEXT("Stop WiFi Operations", "停止 WiFi 操作"),
+    .details_text = GHOST_ESP_UI_TEXT(
+        "Stops all active WiFi\n"
+        "operations including:\n"
+        "- Scanning\n"
+        "- Beacon Spam\n"
+        "- Deauth Attacks\n"
+        "- Packet Captures\n"
+        "- Evil Portal\n",
+        "停止所有 WiFi 操作:\n"
+        "- 扫描\n"
+        "- 信标洪流\n"
+        "- 断连攻击\n"
+        "- 数据包捕获\n"
+        "- Evil Portal\n"),
 };
 
 static const MenuCommand status_idle_commands[] = {
     {
-        .label = "Life (Game of Life)",
+        .label = GHOST_ESP_UI_TEXT("Life (Game of Life)", "生命游戏"),
         .command = "statusidle set life\n",
-        .details_header = "Life Animation",
-        .details_text = "Set idle status display to\n"
-                        "Game of Life animation.",
+        .details_header = GHOST_ESP_UI_TEXT("Life Animation", "生命游戏动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "Game of Life animation.",
+            "设置待机显示为\n"
+            "生命游戏动画。"),
     },
     {
-        .label = "Ghost (Sprite)",
+        .label = GHOST_ESP_UI_TEXT("Ghost (Sprite)", "幽灵"),
         .command = "statusidle set ghost\n",
-        .details_header = "Ghost Animation",
-        .details_text = "Set idle status display to\n"
-                        "ghost sprite animation.",
+        .details_header = GHOST_ESP_UI_TEXT("Ghost Animation", "幽灵动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "ghost sprite animation.",
+            "设置待机显示为\n"
+            "幽灵精灵动画。"),
     },
     {
-        .label = "Starfield",
+        .label = GHOST_ESP_UI_TEXT("Starfield", "星空"),
         .command = "statusidle set starfield\n",
-        .details_header = "Starfield Animation",
-        .details_text = "Set idle status display to\n"
-                        "starfield effect.",
+        .details_header = GHOST_ESP_UI_TEXT("Starfield Animation", "星空动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "starfield effect.",
+            "设置待机显示为\n"
+            "星空效果。"),
     },
     {
         .label = "HUD",
         .command = "statusidle set hud\n",
-        .details_header = "HUD Animation",
-        .details_text = "Set idle status display to\n"
-                        "HUD-style overlay.",
+        .details_header = GHOST_ESP_UI_TEXT("HUD Animation", "HUD 动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "HUD-style overlay.",
+            "设置待机显示为\n"
+            "HUD 风格叠加。"),
     },
     {
-        .label = "Matrix",
+        .label = GHOST_ESP_UI_TEXT("Matrix", "矩阵"),
         .command = "statusidle set matrix\n",
-        .details_header = "Matrix Animation",
-        .details_text = "Set idle status display to\n"
-                        "Matrix-style rain effect.",
+        .details_header = GHOST_ESP_UI_TEXT("Matrix Animation", "矩阵动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "Matrix-style rain effect.",
+            "设置待机显示为\n"
+            "矩阵雨效果。"),
     },
     {
-        .label = "Multiple Ghosts",
+        .label = GHOST_ESP_UI_TEXT("Multiple Ghosts", "多幽灵"),
         .command = "statusidle set ghosts\n",
-        .details_header = "Ghosts Animation",
-        .details_text = "Set idle status display to\n"
-                        "floating ghosts effect.",
+        .details_header = GHOST_ESP_UI_TEXT("Ghosts Animation", "幽灵动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "floating ghosts effect.",
+            "设置待机显示为\n"
+            "漂浮幽灵效果。"),
     },
     {
-        .label = "Spiral",
+        .label = GHOST_ESP_UI_TEXT("Spiral", "螺旋"),
         .command = "statusidle set spiral\n",
-        .details_header = "Spiral Animation",
-        .details_text = "Set idle status display to\n"
-                        "spiral pattern effect.",
+        .details_header = GHOST_ESP_UI_TEXT("Spiral Animation", "螺旋动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "spiral pattern effect.",
+            "设置待机显示为\n"
+            "螺旋图案效果。"),
     },
     {
-        .label = "Falling Leaves",
+        .label = GHOST_ESP_UI_TEXT("Falling Leaves", "落叶"),
         .command = "statusidle set leaves\n",
-        .details_header = "Falling Leaves Animation",
-        .details_text = "Set idle status display to\n"
-                        "falling leaves effect.",
+        .details_header = GHOST_ESP_UI_TEXT("Falling Leaves Animation", "落叶动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "falling leaves effect.",
+            "设置待机显示为\n"
+            "落叶效果。"),
     },
     {
-        .label = "Bouncing Text",
+        .label = GHOST_ESP_UI_TEXT("Bouncing Text", "弹跳文字"),
         .command = "statusidle set bouncing\n",
-        .details_header = "Bouncing Text Animation",
-        .details_text = "Set idle status display to\n"
-                        "bouncing text effect.",
+        .details_header = GHOST_ESP_UI_TEXT("Bouncing Text Animation", "弹跳文字动画"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set idle status display to\n"
+            "bouncing text effect.",
+            "设置待机显示为\n"
+            "弹跳文字效果。"),
     },
 };
 
 // BLE menu command definitions
 static const MenuCommand ble_scanning_commands[] = {
     {
-        .label = "Skimmer Detection",
+        .label = GHOST_ESP_UI_TEXT("Skimmer Detection", "刷卡器检测"),
         .command = "capture -skimmer\n",
         .capture_prefix = "skimmer_scan",
         .file_ext = "pcap",
         .folder = GHOST_ESP_APP_FOLDER_PCAPS,
-        .details_header = "Skimmer Scanner",
-        .details_text = "Detects potential\n"
-                        "card skimmers by\n"
-                        "analyzing BLE\n"
-                        "signatures and\n"
-                        "known patterns.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Skimmer Scanner", "刷卡器扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Detects potential\n"
+            "card skimmers by\n"
+            "analyzing BLE\n"
+            "signatures and\n"
+            "known patterns.\n",
+            "通过分析 BLE 签名\n"
+            "和已知模式检测\n"
+            "潜在的银行卡\n"
+            "刷卡器。\n"),
     },
     {
-        .label = "Find the Flippers",
+        .label = GHOST_ESP_UI_TEXT("Find the Flippers", "查找 Flipper"),
         .command = "blescan -f\n",
-        .details_header = "Flipper Scanner",
-        .details_text = "Scans for Flippers:\n"
-                        "- Device name\n"
-                        "- BT address\n"
-                        "- Signal level\n"
-                        "Range: ~50m\n",
+        .details_header = GHOST_ESP_UI_TEXT("Flipper Scanner", "Flipper 扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Scans for Flippers:\n"
+            "- Device name\n"
+            "- BT address\n"
+            "- Signal level\n"
+            "Range: ~50m\n",
+            "扫描 Flipper 设备:\n"
+            "- 设备名称\n"
+            "- 蓝牙地址\n"
+            "- 信号强度\n"
+            "范围: ~50m\n"),
     },
     {
-        .label = "AirTag Scanner",
+        .label = GHOST_ESP_UI_TEXT("AirTag Scanner", "AirTag 扫描"),
         .command = "blescan -a\n",
-        .details_header = "AirTag Scanner",
-        .details_text = "Detects nearby Apple\n"
-                        "AirTags and shows:\n"
-                        "- Device ID\n"
-                        "- Signal strength\n"
-                        "- Last seen time\n",
+        .details_header = GHOST_ESP_UI_TEXT("AirTag Scanner", "AirTag 扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Detects nearby Apple\n"
+            "AirTags and shows:\n"
+            "- Device ID\n"
+            "- Signal strength\n"
+            "- Last seen time\n",
+            "检测附近的 Apple\n"
+            "AirTag 并显示:\n"
+            "- 设备 ID\n"
+            "- 信号强度\n"
+            "- 最后发现时间\n"),
     },
     {
-        .label = "List AirTags",
+        .label = GHOST_ESP_UI_TEXT("List AirTags", "AirTag 列表"),
         .command = "listairtags\n",
-        .details_header = "List AirTags",
-        .details_text = "List discovered AirTags.",
+        .details_header = GHOST_ESP_UI_TEXT("List AirTags", "AirTag 列表"),
+        .details_text = GHOST_ESP_UI_TEXT("List discovered AirTags.", "列出已发现的 AirTag。"),
     },
     {
-        .label = "Select AirTag",
+        .label = GHOST_ESP_UI_TEXT("Select AirTag", "选择 AirTag"),
         .command = "select -airtag",
         .needs_input = true,
-        .input_text = "AirTag Number",
-        .details_header = "Select AirTag",
-        .details_text = "Target an AirTag by number\nfrom the scan list.",
+        .input_text = GHOST_ESP_UI_TEXT("AirTag Number", "AirTag 编号"),
+        .details_header = GHOST_ESP_UI_TEXT("Select AirTag", "选择 AirTag"),
+        .details_text = GHOST_ESP_UI_TEXT("Target an AirTag by number\nfrom the scan list.", "从扫描列表中按编号选择 AirTag。"),
     },
     {
-        .label = "List Flippers",
+        .label = GHOST_ESP_UI_TEXT("List Flippers", "Flipper 列表"),
         .command = "listflippers\n",
-        .details_header = "List Flippers",
-        .details_text = "List discovered Flipper Devices\n"
-                        "in range.",
+        .details_header = GHOST_ESP_UI_TEXT("List Flippers", "Flipper 列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "List discovered Flipper Devices\n"
+            "in range.",
+            "列出范围内发现的 Flipper 设备。"),
     },
     {
-        .label = "Select Flipper to Track",
+        .label = GHOST_ESP_UI_TEXT("Select Flipper to Track", "选择 Flipper 追踪"),
         .command = "selectflipper",
         .needs_input = true,
-        .input_text = "Flipper Number",
-        .details_header = "Select Flipper to Track",
-        .details_text = "Select a Flipper by number to track RSSI strength.",
+        .input_text = GHOST_ESP_UI_TEXT("Flipper Number", "Flipper 编号"),
+        .details_header = GHOST_ESP_UI_TEXT("Select Flipper to Track", "选择 Flipper 追踪"),
+        .details_text = GHOST_ESP_UI_TEXT("Select a Flipper by number to track RSSI strength.", "按编号选择 Flipper 追踪 RSSI 信号强度。"),
     },
     {
-        .label = "Scan GATT Devices",
+        .label = GHOST_ESP_UI_TEXT("Scan GATT Devices", "扫描 GATT 设备"),
         .command = "blescan -g\n",
-        .details_header = "GATT Device Scanner",
-        .details_text = "Scan for connectable BLE\n"
-                        "devices for GATT enumeration.\n"
-                        "Shows device addresses and\n"
-                        "connection capability.\n",
+        .details_header = GHOST_ESP_UI_TEXT("GATT Device Scanner", "GATT 设备扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Scan for connectable BLE\n"
+            "devices for GATT enumeration.\n"
+            "Shows device addresses and\n"
+            "connection capability.\n",
+            "扫描可连接的 BLE 设备\n"
+            "进行 GATT 枚举。\n"
+            "显示设备地址和\n"
+            "连接能力。\n"),
     },
     {
-        .label = "List GATT Devices",
+        .label = GHOST_ESP_UI_TEXT("List GATT Devices", "GATT 设备列表"),
         .command = "listgatt\n",
-        .details_header = "List GATT Devices",
-        .details_text = "List discovered GATT devices\n"
-                        "with tracker type detection.\n",
+        .details_header = GHOST_ESP_UI_TEXT("List GATT Devices", "GATT 设备列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "List discovered GATT devices\n"
+            "with tracker type detection.\n",
+            "列出已发现的 GATT 设备\n"
+            "并检测追踪器类型。\n"),
     },
     {
-        .label = "Select GATT Device",
+        .label = GHOST_ESP_UI_TEXT("Select GATT Device", "选择 GATT 设备"),
         .command = "selectgatt",
         .needs_input = true,
-        .input_text = "Device Index",
-        .details_header = "Select GATT Device",
-        .details_text = "Select a GATT device by index\n"
-                        "for enumeration or tracking.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Device Index", "设备索引"),
+        .details_header = GHOST_ESP_UI_TEXT("Select GATT Device", "选择 GATT 设备"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Select a GATT device by index\n"
+            "for enumeration or tracking.\n",
+            "按索引选择 GATT 设备\n"
+            "进行枚举或追踪。\n"),
     },
     {
-        .label = "Enumerate GATT Services",
+        .label = GHOST_ESP_UI_TEXT("Enumerate GATT Services", "枚举 GATT 服务"),
         .command = "enumgatt\n",
-        .details_header = "Enumerate GATT",
-        .details_text = "Connect to selected device\n"
-                        "and enumerate its GATT\n"
-                        "services, characteristics,\n"
-                        "and descriptors.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Enumerate GATT", "枚举 GATT"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Connect to selected device\n"
+            "and enumerate its GATT\n"
+            "services, characteristics,\n"
+            "and descriptors.\n",
+            "连接到选定设备并\n"
+            "枚举其 GATT 服务、\n"
+            "特征和描述符。\n"),
     },
     {
-        .label = "Track GATT Device",
+        .label = GHOST_ESP_UI_TEXT("Track GATT Device", "追踪 GATT 设备"),
         .command = "trackgatt\n",
-        .details_header = "Track GATT Device",
-        .details_text = "Track selected GATT device\n"
-                        "using real-time RSSI signal\n"
-                        "strength monitoring.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Track GATT Device", "追踪 GATT 设备"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Track selected GATT device\n"
+            "using real-time RSSI signal\n"
+            "strength monitoring.\n",
+            "使用实时 RSSI 信号\n"
+            "强度监测追踪选定的\n"
+            "GATT 设备。\n"),
     },
     {
-        .label = "View All BLE Traffic",
+        .label = GHOST_ESP_UI_TEXT("View All BLE Traffic", "查看所有 BLE 流量"),
         .command = "blescan -r\n",
-        .details_header = "BLE Raw Traffic",
-        .details_text = "View all Bluetooth Low Energy\ntraffic in range.",
+        .details_header = GHOST_ESP_UI_TEXT("BLE Raw Traffic", "BLE 原始流量"),
+        .details_text = GHOST_ESP_UI_TEXT("View all Bluetooth Low Energy\ntraffic in range.", "查看范围内所有 BLE 流量。"),
     },
     {
-        .label = "Stop BLE Scanning",
+        .label = GHOST_ESP_UI_TEXT("Stop BLE Scanning", "停止 BLE 扫描"),
         .command = "blescan -s\n",
-        .details_header = "Stop BLE Scan",
-        .details_text = "Stops any active BLE scanning.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop BLE Scan", "停止 BLE 扫描"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops any active BLE scanning.", "停止所有 BLE 扫描。"),
     },
 };
 
 static const MenuCommand ble_capture_commands[] = {
     {
-        .label = "BLE Raw Capture",
+        .label = GHOST_ESP_UI_TEXT("BLE Raw Capture", "BLE 原始捕获"),
         .command = "capture -ble\n",
         .capture_prefix = "ble_raw_capture",
         .file_ext = "pcap",
         .folder = GHOST_ESP_APP_FOLDER_PCAPS,
-        .details_header = "BLE Raw Capture",
-        .details_text = "Captures raw BLE\n"
-                        "traffic and data.\n"
-                        "Range: ~10-30m\n",
+        .details_header = GHOST_ESP_UI_TEXT("BLE Raw Capture", "BLE 原始捕获"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Captures raw BLE\n"
+            "traffic and data.\n"
+            "Range: ~10-30m\n",
+            "捕获 BLE 原始\n"
+            "流量和数据。\n"
+            "范围: ~10-30m\n"),
     },
 };
 
 static const MenuCommand ble_attack_commands[] = {
     {
-        .label = "< BLE Spam (Apple) >",
+        .label = GHOST_ESP_UI_TEXT("< BLE Spam (Apple) >", "< BLE 洪流 (Apple) >"),
         .command = "blespam -apple\n",
-        .details_header = "Variable BLE Spam",
-        .details_text = "Use Left/Right to change:\n"
-                        "- Apple device spam\n"
-                        "- Microsoft Swift Pair\n"
-                        "- Samsung Galaxy Watch\n"
-                        "- Google Fast Pair\n"
-                        "- Random spam (all types)\n"
-                        "Range: ~50m\n",
+        .details_header = GHOST_ESP_UI_TEXT("Variable BLE Spam", "切换 BLE 洪流模式"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Use Left/Right to change:\n"
+            "- Apple device spam\n"
+            "- Microsoft Swift Pair\n"
+            "- Samsung Galaxy Watch\n"
+            "- Google Fast Pair\n"
+            "- Random spam (all types)\n"
+            "Range: ~50m\n",
+            "左右键切换模式:\n"
+            "- Apple 设备广播\n"
+            "- Microsoft Swift Pair\n"
+            "- Samsung Galaxy Watch\n"
+            "- Google Fast Pair\n"
+            "- 随机广播 (全部类型)\n"
+            "范围: ~50m\n"),
     },
     {
-        .label = "Spoof Selected AirTag",
+        .label = GHOST_ESP_UI_TEXT("Spoof Selected AirTag", "伪装选定 AirTag"),
         .command = "spoofairtag\n",
-        .details_header = "Spoof AirTag",
-        .details_text = "Spoof the selected AirTag.",
+        .details_header = GHOST_ESP_UI_TEXT("Spoof AirTag", "伪装 AirTag"),
+        .details_text = GHOST_ESP_UI_TEXT("Spoof the selected AirTag.", "伪装选定的 AirTag。"),
     },
     {
-        .label = "Stop BLE Spam",
+        .label = GHOST_ESP_UI_TEXT("Stop BLE Spam", "停止 BLE 洪流"),
         .command = "blespam -s\n",
-        .details_header = "Stop BLE Spam",
-        .details_text = "Stops BLE advertisement\n"
-                        "spam attacks.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop BLE Spam", "停止 BLE 洪流"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops BLE advertisement\n"
+            "spam attacks.",
+            "停止 BLE 广播洪流攻击。"),
     },
     {
-        .label = "Stop AirTag Spoof",
+        .label = GHOST_ESP_UI_TEXT("Stop AirTag Spoof", "停止 AirTag 伪装"),
         .command = "stopspoof\n",
-        .details_header = "Stop Spoofing",
-        .details_text = "Stops AirTag spoofing.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Spoofing", "停止伪装"),
+        .details_text = GHOST_ESP_UI_TEXT("Stops AirTag spoofing.", "停止 AirTag 伪装。"),
     },
 };
 
 static const MenuCommand ble_stop_command = {
-    .label = "Stop All BLE",
+    .label = GHOST_ESP_UI_TEXT("Stop All BLE", "停止所有 BLE"),
     .command = "stop\n",
-    .details_header = "Stop BLE Operations",
-    .details_text = "Stops all active BLE\n"
-                    "operations including:\n"
-                    "- BLE Scanning\n"
-                    "- Skimmer Detection\n"
-                    "- Packet Captures\n"
-                    "- Device Detection\n",
+    .details_header = GHOST_ESP_UI_TEXT("Stop BLE Operations", "停止 BLE 操作"),
+    .details_text = GHOST_ESP_UI_TEXT(
+        "Stops all active BLE\n"
+        "operations including:\n"
+        "- BLE Scanning\n"
+        "- Skimmer Detection\n"
+        "- Packet Captures\n"
+        "- Device Detection\n",
+        "停止所有 BLE 操作:\n"
+        "- BLE 扫描\n"
+        "- 刷卡器检测\n"
+        "- 数据包捕获\n"
+        "- 设备检测\n"),
 };
 
 // GPS menu command definitions
 static const MenuCommand gps_commands[] = {
     {
-        .label = "GPS Info",
+        .label = GHOST_ESP_UI_TEXT("GPS Info", "GPS 信息"),
         .command = "gpsinfo\n",
-        .details_header = "GPS Information",
-        .details_text = "Shows GPS details:\n"
-                        "- Position (Lat/Long)\n"
-                        "- Altitude & Speed\n"
-                        "- Direction & Quality\n"
-                        "- Satellite Status\n",
+        .details_header = GHOST_ESP_UI_TEXT("GPS Information", "GPS 信息"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Shows GPS details:\n"
+            "- Position (Lat/Long)\n"
+            "- Altitude & Speed\n"
+            "- Direction & Quality\n"
+            "- Satellite Status\n",
+            "显示 GPS 详情:\n"
+            "- 位置 (经纬度)\n"
+            "- 海拔和速度\n"
+            "- 方向和质量\n"
+            "- 卫星状态\n"),
     },
     {
-        .label = "Set GPS Pin",
+        .label = GHOST_ESP_UI_TEXT("Set GPS Pin", "设置 GPS 引脚"),
         .command = "gpspin",
         .needs_input = true,
-        .input_text = "Pin Number",
-        .details_header = "Set GPS RX Pin",
-        .details_text = "Set the GPS RX pin for\n"
-                        "external GPS modules.\n"
-                        "Setting persists to NVS.\n"
-                        "Restart GPS commands to apply.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Pin Number", "引脚编号"),
+        .details_header = GHOST_ESP_UI_TEXT("Set GPS RX Pin", "设置 GPS RX 引脚"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Set the GPS RX pin for\n"
+            "external GPS modules.\n"
+            "Setting persists to NVS.\n"
+            "Restart GPS commands to apply.\n",
+            "设置外部 GPS 模块的\n"
+            "GPS RX 引脚。\n"
+            "设置保存到 NVS。\n"
+            "重启 GPS 命令生效。\n"),
     },
     {
-        .label = "View GPS Pin",
+        .label = GHOST_ESP_UI_TEXT("View GPS Pin", "查看 GPS 引脚"),
         .command = "gpspin\n",
-        .details_header = "View GPS RX Pin",
-        .details_text = "Shows current GPS RX pin\n"
-                        "configuration for external\n"
-                        "GPS modules.\n",
+        .details_header = GHOST_ESP_UI_TEXT("View GPS RX Pin", "查看 GPS RX 引脚"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Shows current GPS RX pin\n"
+            "configuration for external\n"
+            "GPS modules.\n",
+            "显示外部 GPS 模块的\n"
+            "当前 GPS RX 引脚配置。\n"),
     },
     {
-        .label = "Start Wardriving",
+        .label = GHOST_ESP_UI_TEXT("Start Wardriving", "开始 WiFi Wardrive"),
         .command = "startwd\n",
         .capture_prefix = "wardrive_wifi",
         .file_ext = "csv",
         .folder = GHOST_ESP_APP_FOLDER_WARDRIVE,
-        .details_header = "Wardrive Mode",
-        .details_text = "Maps WiFi networks:\n"
-                        "- Network info\n"
-                        "- GPS location\n"
-                        "- Signal levels\n"
-                        "Saves as CSV\n",
+        .details_header = GHOST_ESP_UI_TEXT("Wardrive Mode", "Wardrive 模式"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Maps WiFi networks:\n"
+            "- Network info\n"
+            "- GPS location\n"
+            "- Signal levels\n"
+            "Saves as CSV\n",
+            "绘制 WiFi 网络地图:\n"
+            "- 网络信息\n"
+            "- GPS 位置\n"
+            "- 信号强度\n"
+            "保存为 CSV\n"),
     },
     {
-        .label = "BLE Wardriving",
+        .label = GHOST_ESP_UI_TEXT("BLE Wardriving", "BLE Wardrive"),
         .command = "blewardriving\n",
         .capture_prefix = "wardrive_ble",
         .file_ext = "csv",
         .folder = GHOST_ESP_APP_FOLDER_WARDRIVE,
-        .details_header = "BLE Wardriving",
-        .details_text = "Maps BLE devices:\n"
-                        "- Device info\n"
-                        "- GPS location\n"
-                        "- Signal levels\n"
-                        "Saves as CSV\n",
+        .details_header = GHOST_ESP_UI_TEXT("BLE Wardriving", "BLE Wardrive"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Maps BLE devices:\n"
+            "- Device info\n"
+            "- GPS location\n"
+            "- Signal levels\n"
+            "Saves as CSV\n",
+            "绘制 BLE 设备地图:\n"
+            "- 设备信息\n"
+            "- GPS 位置\n"
+            "- 信号强度\n"
+            "保存为 CSV\n"),
     },
     {
-        .label = "Stop BLE Wardriving",
+        .label = GHOST_ESP_UI_TEXT("Stop BLE Wardriving", "停止 BLE Wardrive"),
         .command = "blewardriving -s\n",
-        .details_header = "Stop BLE Wardrive",
-        .details_text = "Stops BLE wardriving capture\n"
-                        "and logging.",
+        .details_header = GHOST_ESP_UI_TEXT("Stop BLE Wardrive", "停止 BLE Wardrive"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops BLE wardriving capture\n"
+            "and logging.",
+            "停止 BLE Wardrive 捕获和记录。"),
     },
     {
-        .label = "Stop All GPS",
+        .label = GHOST_ESP_UI_TEXT("Stop All GPS", "停止所有 GPS"),
         .command = "stop\n",
-        .details_header = "Stop GPS Operations",
-        .details_text = "Stops all active GPS\n"
-                        "operations including:\n"
-                        "- GPS Info Updates\n"
-                        "- WiFi Wardriving\n"
-                        "- BLE Wardriving\n",
+        .details_header = GHOST_ESP_UI_TEXT("Stop GPS Operations", "停止 GPS 操作"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops all active GPS\n"
+            "operations including:\n"
+            "- GPS Info Updates\n"
+            "- WiFi Wardriving\n"
+            "- BLE Wardriving\n",
+            "停止所有 GPS 操作:\n"
+            "- GPS 信息更新\n"
+            "- WiFi Wardrive\n"
+            "- BLE Wardrive\n"),
     },
 };
 
 // Aerial Detector menu command definitions - all in one menu
 static const MenuCommand aerial_commands[] = {
     {
-        .label = "Start Scan (30s)",
+        .label = GHOST_ESP_UI_TEXT("Start Scan (30s)", "开始扫描 (30秒)"),
         .command = "aerialscan 30\n",
-        .details_header = "Scan for Drones",
-        .details_text = "Scans for aerial devices:\n"
-                        "- OpenDroneID (WiFi/BLE)\n"
-                        "- DJI drones\n"
-                        "- Drone networks\n"
-                        "Phase 1: WiFi (all channels)\n"
-                        "Phase 2: BLE\n"
-                        "Duration: 30 seconds\n",
+        .details_header = GHOST_ESP_UI_TEXT("Scan for Drones", "扫描无人机"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Scans for aerial devices:\n"
+            "- OpenDroneID (WiFi/BLE)\n"
+            "- DJI drones\n"
+            "- Drone networks\n"
+            "Phase 1: WiFi (all channels)\n"
+            "Phase 2: BLE\n"
+            "Duration: 30 seconds\n",
+            "扫描飞行设备:\n"
+            "- OpenDroneID (WiFi/BLE)\n"
+            "- DJI 无人机\n"
+            "- 无人机网络\n"
+            "阶段1: WiFi (全信道)\n"
+            "阶段2: BLE\n"
+            "持续时间: 30 秒\n"),
     },
     {
-        .label = "Quick Scan (15s)",
+        .label = GHOST_ESP_UI_TEXT("Quick Scan (15s)", "快速扫描 (15秒)"),
         .command = "aerialscan 15\n",
-        .details_header = "Quick Scan",
-        .details_text = "Fast 15 second scan for\n"
-                        "nearby aerial devices.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Quick Scan", "快速扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Fast 15 second scan for\n"
+            "nearby aerial devices.\n",
+            "快速扫描 15 秒\n"
+            "查找附近飞行设备。\n"),
     },
     {
-        .label = "Extended Scan (60s)",
+        .label = GHOST_ESP_UI_TEXT("Extended Scan (60s)", "扩展扫描 (60秒)"),
         .command = "aerialscan 60\n",
-        .details_header = "Extended Scan",
-        .details_text = "Extended 60 second scan\n"
-                        "for maximum coverage.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Extended Scan", "扩展扫描"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Extended 60 second scan\n"
+            "for maximum coverage.\n",
+            "扩展扫描 60 秒\n"
+            "最大覆盖范围。\n"),
     },
     {
-        .label = "List Detected Drones",
+        .label = GHOST_ESP_UI_TEXT("List Detected Drones", "列出检测到的无人机"),
         .command = "aeriallist\n",
-        .details_header = "Detected Devices",
-        .details_text = "Lists all detected aerial\n"
-                        "devices with:\n"
-                        "- Device ID & Type\n"
-                        "- GPS coordinates\n"
-                        "- Altitude & Speed\n"
-                        "- Operator location\n"
-                        "- RSSI signal\n",
+        .details_header = GHOST_ESP_UI_TEXT("Detected Devices", "检测到的设备"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Lists all detected aerial\n"
+            "devices with:\n"
+            "- Device ID & Type\n"
+            "- GPS coordinates\n"
+            "- Altitude & Speed\n"
+            "- Operator location\n"
+            "- RSSI signal\n",
+            "列出所有检测到的飞行设备:\n"
+            "- 设备 ID 和类型\n"
+            "- GPS 坐标\n"
+            "- 海拔和速度\n"
+            "- 操作者位置\n"
+            "- RSSI 信号\n"),
     },
     {
-        .label = "Track Drone by Index",
+        .label = GHOST_ESP_UI_TEXT("Track Drone by Index", "按索引追踪无人机"),
         .command = "aerialtrack",
         .needs_input = true,
-        .input_text = "Device Index",
-        .details_header = "Track Drone",
-        .details_text = "Track specific drone by\n"
-                        "index from aeriallist.\n"
-                        "Shows real-time updates\n"
-                        "for selected device.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Device Index", "设备索引"),
+        .details_header = GHOST_ESP_UI_TEXT("Track Drone", "追踪无人机"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Track specific drone by\n"
+            "index from aeriallist.\n"
+            "Shows real-time updates\n"
+            "for selected device.\n",
+            "按索引追踪特定无人机。\n"
+            "显示选定设备的\n"
+            "实时更新。\n"),
     },
     {
-        .label = "Track Drone by MAC",
+        .label = GHOST_ESP_UI_TEXT("Track Drone by MAC", "按 MAC 追踪无人机"),
         .command = "aerialtrack",
         .needs_input = true,
         .input_text = "MAC Address",
-        .details_header = "Track by MAC",
-        .details_text = "Track specific drone by\n"
-                        "MAC address.\n"
-                        "Format: aa:bb:cc:dd:ee:ff\n",
+        .details_header = GHOST_ESP_UI_TEXT("Track by MAC", "按 MAC 追踪"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Track specific drone by\n"
+            "MAC address.\n"
+            "Format: aa:bb:cc:dd:ee:ff\n",
+            "按 MAC 地址追踪\n"
+            "特定无人机。\n"
+            "格式: aa:bb:cc:dd:ee:ff\n"),
     },
     {
-        .label = "Spoof Test Drone",
+        .label = GHOST_ESP_UI_TEXT("Spoof Test Drone", "测试伪装无人机"),
         .command = "aerialspoof\n",
-        .details_header = "Test Spoof",
-        .details_text = "Broadcasts test RemoteID:\n"
-                        "ID: GHOST-TEST\n"
-                        "Location: San Francisco\n"
-                        "Altitude: 100m\n"
-                        "Status: Airborne\n\n"
-                        "Note: WiFi suspended\n"
-                        "during BLE broadcast\n",
+        .details_header = GHOST_ESP_UI_TEXT("Test Spoof", "测试伪装"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Broadcasts test RemoteID:\n"
+            "ID: GHOST-TEST\n"
+            "Location: San Francisco\n"
+            "Altitude: 100m\n"
+            "Status: Airborne\n\n"
+            "Note: WiFi suspended\n"
+            "during BLE broadcast\n",
+            "广播测试 RemoteID:\n"
+            "ID: GHOST-TEST\n"
+            "位置: San Francisco\n"
+            "海拔: 100m\n"
+            "状态: 飞行中\n\n"
+            "注意: BLE 广播期间\n"
+            "WiFi 暂停\n"),
     },
     {
-        .label = "Custom Spoof",
+        .label = GHOST_ESP_UI_TEXT("Custom Spoof", "自定义伪装"),
         .command = "aerialspoof",
         .needs_input = true,
         .input_text = "ID Lat Lon Alt",
-        .details_header = "Custom Spoof",
-        .details_text = "Broadcast custom RemoteID.\n"
-                        "Format:\n"
-                        "DRONE-ID lat lon alt\n\n"
-                        "Example:\n"
-                        "GHOST-1 40.7128 -74.0060 100\n",
+        .details_header = GHOST_ESP_UI_TEXT("Custom Spoof", "自定义伪装"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Broadcast custom RemoteID.\n"
+            "Format:\n"
+            "DRONE-ID lat lon alt\n\n"
+            "Example:\n"
+            "GHOST-1 40.7128 -74.0060 100\n",
+            "广播自定义 RemoteID。\n"
+            "格式:\n"
+            "DRONE-ID 纬度 经度 海拔\n\n"
+            "例:\n"
+            "GHOST-1 40.7128 -74.0060 100\n"),
     },
     {
-        .label = "Stop Spoofing",
+        .label = GHOST_ESP_UI_TEXT("Stop Spoofing", "停止伪装"),
         .command = "aerialspoofstop\n",
-        .details_header = "Stop Spoofing",
-        .details_text = "Stops RemoteID broadcast\n"
-                        "and restores WiFi.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Spoofing", "停止伪装"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops RemoteID broadcast\n"
+            "and restores WiFi.\n",
+            "停止 RemoteID 广播\n"
+            "并恢复 WiFi。\n"),
     },
     {
-        .label = "Stop All",
+        .label = GHOST_ESP_UI_TEXT("Stop All", "全部停止"),
         .command = "aerialstop\n",
-        .details_header = "Stop All Operations",
-        .details_text = "Stops all active aerial\n"
-                        "operations including:\n"
-                        "- Scanning\n"
-                        "- Tracking\n"
-                        "- Spoofing\n",
+        .details_header = GHOST_ESP_UI_TEXT("Stop All Operations", "停止所有操作"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops all active aerial\n"
+            "operations including:\n"
+            "- Scanning\n"
+            "- Tracking\n"
+            "- Spoofing\n",
+            "停止所有飞行操作:\n"
+            "- 扫描\n"
+            "- 追踪\n"
+            "- 伪装\n"),
     },
 };
 
 // IR menu command definitions
 static const MenuCommand ir_commands[] = {
     {
-        .label = "Browse IR Remotes",
+        .label = GHOST_ESP_UI_TEXT("Browse IR Remotes", "浏览红外遥控器"),
         .command = "ir list\n",
-        .details_header = "Browse IR Remotes",
-        .details_text = "Browse IR remotes on ESP\n",
+        .details_header = GHOST_ESP_UI_TEXT("Browse IR Remotes", "浏览红外遥控器"),
+        .details_text = GHOST_ESP_UI_TEXT("Browse IR remotes on ESP\n", "浏览 ESP 上的红外遥控器\n"),
     },
     {
-        .label = "Browse Universals",
+        .label = GHOST_ESP_UI_TEXT("Browse Universals", "浏览万能遥控"),
         .command = "ir universals list\n",
-        .details_header = "Browse Universals",
-        .details_text = "Browse built-in universal IR\n",
+        .details_header = GHOST_ESP_UI_TEXT("Browse Universals", "浏览万能遥控"),
+        .details_text = GHOST_ESP_UI_TEXT("Browse built-in universal IR\n", "浏览内置万能红外遥控\n"),
     },
     {
-        .label = "Send from Flipper",
+        .label = GHOST_ESP_UI_TEXT("Send from Flipper", "从 Flipper 发送"),
         .command = "send_ir_file",
-        .details_header = "Send from Flipper",
-        .details_text = "Browse Flipper IR files and\nsend signals to ESP.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Send from Flipper", "从 Flipper 发送"),
+        .details_text = GHOST_ESP_UI_TEXT("Browse Flipper IR files and\nsend signals to ESP.\n", "浏览 Flipper 红外文件\n并发送信号到 ESP。\n"),
     },
     {
-        .label = "IR Learn (Auto File)",
+        .label = GHOST_ESP_UI_TEXT("IR Learn (Auto File)", "红外学习 (自动文件)"),
         .command = "ir learn\n",
-        .details_header = "Learn IR (Auto)",
-        .details_text = "Capture IR signal (10s wait).\n"
-                        "Auto-create a new IR file.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Learn IR (Auto)", "红外学习 (自动)"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Capture IR signal (10s wait).\n"
+            "Auto-create a new IR file.\n",
+            "捕获红外信号 (等待10秒)。\n"
+            "自动创建新的红外文件。\n"),
     },
     {
-        .label = "IR Learn (Path)",
+        .label = GHOST_ESP_UI_TEXT("IR Learn (Path)", "红外学习 (指定路径)"),
         .command = "ir learn",
         .needs_input = true,
-        .input_text = "Path (optional)",
-        .details_header = "Learn IR (Path)",
-        .details_text = "Capture IR signal (10s wait).\n"
-                        "Leave blank to auto-create,\n"
-                        "or specify path to append.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Path (optional)", "路径 (可选)"),
+        .details_header = GHOST_ESP_UI_TEXT("Learn IR (Path)", "红外学习 (路径)"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Capture IR signal (10s wait).\n"
+            "Leave blank to auto-create,\n"
+            "or specify path to append.\n",
+            "捕获红外信号 (等待10秒)。\n"
+            "留空自动创建，\n"
+            "或指定路径追加。\n"),
     },
     {
-        .label = "IR Receive",
+        .label = GHOST_ESP_UI_TEXT("IR Receive", "红外接收"),
         .command = "ir rx",
         .needs_input = true,
-        .input_text = "Timeout (default 60)",
-        .details_header = "Receive IR",
-        .details_text = "Wait for single IR signal.\n"
-                        "Prints decoded or RAW data.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Timeout (default 60)", "超时 (默认60)"),
+        .details_header = GHOST_ESP_UI_TEXT("Receive IR", "红外接收"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Wait for single IR signal.\n"
+            "Prints decoded or RAW data.\n",
+            "等待单个红外信号。\n"
+            "打印解码或原始数据。\n"),
     },
     {
-        .label = "IR List Files (Raw)",
+        .label = GHOST_ESP_UI_TEXT("IR List Files (Raw)", "红外文件列表 (原始)"),
         .command = "ir list\n",
-        .details_header = "List IR Files",
-        .details_text = "List all .ir/.json files in\n"
-                        "remote directories.\n",
+        .details_header = GHOST_ESP_UI_TEXT("List IR Files", "红外文件列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "List all .ir/.json files in\n"
+            "remote directories.\n",
+            "列出遥控器目录中的\n"
+            "所有 .ir/.json 文件。\n"),
     },
     {
-        .label = "IR Show File (Raw)",
+        .label = GHOST_ESP_UI_TEXT("IR Show File (Raw)", "红外文件内容 (原始)"),
         .command = "ir show",
         .needs_input = true,
-        .input_text = "Path or Index",
-        .details_header = "Show IR File",
-        .details_text = "Display signals from an IR file.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Path or Index", "路径或索引"),
+        .details_header = GHOST_ESP_UI_TEXT("Show IR File", "显示红外文件"),
+        .details_text = GHOST_ESP_UI_TEXT("Display signals from an IR file.\n", "显示红外文件中的信号。\n"),
     },
     {
-        .label = "IR Send (Raw)",
+        .label = GHOST_ESP_UI_TEXT("IR Send (Raw)", "红外发送 (原始)"),
         .command = "ir send",
         .needs_input = true,
-        .input_text = "Index [Button]",
-        .details_header = "Send IR (Raw)",
-        .details_text = "Transmit using raw indices.\n",
+        .input_text = GHOST_ESP_UI_TEXT("Index [Button]", "索引 [按键]"),
+        .details_header = GHOST_ESP_UI_TEXT("Send IR (Raw)", "红外发送 (原始)"),
+        .details_text = GHOST_ESP_UI_TEXT("Transmit using raw indices.\n", "使用原始索引发送。\n"),
     },
     {
-        .label = "IR Dazzler Start",
+        .label = GHOST_ESP_UI_TEXT("IR Dazzler Start", "红外眩目器启动"),
         .command = "ir dazzler\n",
-        .details_header = "IR Dazzler Start",
-        .details_text = "Start continuous IR dazzler flood.\n",
+        .details_header = GHOST_ESP_UI_TEXT("IR Dazzler Start", "红外眩目器启动"),
+        .details_text = GHOST_ESP_UI_TEXT("Start continuous IR dazzler flood.\n", "启动持续红外眩目器。\n"),
     },
     {
-        .label = "IR Dazzler Stop",
+        .label = GHOST_ESP_UI_TEXT("IR Dazzler Stop", "红外眩目器停止"),
         .command = "ir dazzler stop\n",
-        .details_header = "IR Dazzler Stop",
-        .details_text = "Stop continuous IR dazzler flood.\n",
+        .details_header = GHOST_ESP_UI_TEXT("IR Dazzler Stop", "红外眩目器停止"),
+        .details_text = GHOST_ESP_UI_TEXT("Stop continuous IR dazzler flood.\n", "停止持续红外眩目器。\n"),
     },
     {
-        .label = "Stop IR",
+        .label = GHOST_ESP_UI_TEXT("Stop IR", "停止红外"),
         .command = "stop\n",
-        .details_header = "Stop IR",
-        .details_text = "Stop all active IR operations.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Stop IR", "停止红外"),
+        .details_text = GHOST_ESP_UI_TEXT("Stop all active IR operations.\n", "停止所有红外操作。\n"),
     },
 };
 
@@ -1861,7 +2267,7 @@ static void ir_show_remotes_menu(AppState* state) {
     if(!state || !state->ir_remotes_menu) return;
 
     submenu_reset(state->ir_remotes_menu);
-    submenu_set_header(state->ir_remotes_menu, "IR Remotes");
+    submenu_set_header(state->ir_remotes_menu, GHOST_ESP_UI_TEXT("IR Remotes", "红外遥控器"));
 
     uint32_t selected = 0;
     for(size_t i = 0; i < state->ir_remote_count; i++) {
@@ -1885,9 +2291,9 @@ static void ir_show_buttons_menu(AppState* state) {
 
     submenu_reset(state->ir_buttons_menu);
     if(state->ir_universal_buttons_mode) {
-        submenu_set_header(state->ir_buttons_menu, "Universal Buttons");
+        submenu_set_header(state->ir_buttons_menu, GHOST_ESP_UI_TEXT("Universal Buttons", "万能遥控按键"));
     } else {
-        submenu_set_header(state->ir_buttons_menu, "IR Buttons");
+        submenu_set_header(state->ir_buttons_menu, GHOST_ESP_UI_TEXT("IR Buttons", "红外按键"));
     }
 
     for(size_t i = 0; i < state->ir_signal_count; i++) {
@@ -1907,7 +2313,7 @@ static void ir_show_universals_menu(AppState* state) {
     if(!state || !state->ir_universals_menu) return;
 
     submenu_reset(state->ir_universals_menu);
-    submenu_set_header(state->ir_universals_menu, "IR Universals");
+    submenu_set_header(state->ir_universals_menu, GHOST_ESP_UI_TEXT("IR Universals", "红外万能遥控"));
 
     for(size_t i = 0; i < state->ir_universal_count; i++) {
         const char* label = state->ir_universals[i].name;
@@ -1926,8 +2332,8 @@ static void ir_show_error(AppState* state, const char* text) {
     if(!state || !state->confirmation_view) return;
 
     state->previous_view = state->current_view;
-    confirmation_view_set_header(state->confirmation_view, "IR Error");
-    confirmation_view_set_text(state->confirmation_view, text ? text : "IR error");
+    confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("IR Error", "红外错误"));
+    confirmation_view_set_text(state->confirmation_view, text ? text : GHOST_ESP_UI_TEXT("IR error", "红外错误"));
     confirmation_view_set_ok_callback(state->confirmation_view, app_info_ok_callback, state);
     confirmation_view_set_cancel_callback(state->confirmation_view, app_info_ok_callback, state);
     view_dispatcher_switch_to_view(state->view_dispatcher, 7);
@@ -2088,7 +2494,7 @@ static void show_result_dialog(AppState* state, const char* header, const char* 
     if(!state || !state->confirmation_view) return;
 
     state->previous_view = state->current_view;
-    confirmation_view_set_header(state->confirmation_view, header ? header : "Result");
+    confirmation_view_set_header(state->confirmation_view, header ? header : GHOST_ESP_UI_TEXT("Result", "结果"));
     confirmation_view_set_text(state->confirmation_view, text ? text : "");
     confirmation_view_set_ok_callback(state->confirmation_view, app_info_ok_callback, state);
     confirmation_view_set_cancel_callback(state->confirmation_view, app_info_ok_callback, state);
@@ -2127,17 +2533,17 @@ static bool handle_ir_command_feedback_ex(
 
     if(is_uni_sendall) {
         state->previous_view = state->current_view;
-        confirmation_view_set_header(state->confirmation_view, "Universal send");
-        confirmation_view_set_text(state->confirmation_view, "Universal sending...\nOK = Stop");
+        confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("Universal send", "万能遥控发送"));
+        confirmation_view_set_text(state->confirmation_view, GHOST_ESP_UI_TEXT("Universal sending...\nOK = Stop", "万能遥控发送中...\n按OK停止"));
         confirmation_view_set_ok_callback(state->confirmation_view, ir_sweep_stop_callback, state);
         confirmation_view_set_cancel_callback(
             state->confirmation_view, app_info_ok_callback, state);
         view_dispatcher_switch_to_view(state->view_dispatcher, 7);
         state->current_view = 7;
     } else if(is_dazzler) {
-        show_result_dialog(state, "IR Dazzler", "Working...");
+        show_result_dialog(state, GHOST_ESP_UI_TEXT("IR Dazzler", "红外眩目器"), GHOST_ESP_UI_TEXT("Working...", "工作中..."));
     } else {
-        show_result_dialog(state, "IR", "Transmitting...");
+        show_result_dialog(state, GHOST_ESP_UI_TEXT("IR", "红外"), GHOST_ESP_UI_TEXT("Transmitting...", "发送中..."));
     }
 
     char buffer[512];
@@ -2182,23 +2588,23 @@ static bool handle_ir_command_feedback_ex(
                     if(strncmp(code, "STARTED", 7) == 0) {
                         strncpy(
                             message,
-                            "Dazzler started successfully",
+                            GHOST_ESP_UI_TEXT("Dazzler started successfully", "眩目器启动成功"),
                             sizeof(state->confirmation_message) - 1);
                     } else if(strncmp(code, "FAILED", 6) == 0) {
                         strncpy(
-                            message, "Dazzler failed", sizeof(state->confirmation_message) - 1);
+                            message, GHOST_ESP_UI_TEXT("Dazzler failed", "眩目器启动失败"), sizeof(state->confirmation_message) - 1);
                     } else if(strncmp(code, "ALREADY_RUNNING", 15) == 0) {
                         strncpy(
                             message,
-                            "Dazzler is already running",
+                            GHOST_ESP_UI_TEXT("Dazzler is already running", "眩目器已在运行"),
                             sizeof(state->confirmation_message) - 1);
                     } else if(strncmp(code, "STOPPING", 8) == 0) {
                         strncpy(
-                            message, "Stopped dazzler.", sizeof(state->confirmation_message) - 1);
+                            message, GHOST_ESP_UI_TEXT("Stopped dazzler.", "眩目器已停止。"), sizeof(state->confirmation_message) - 1);
                     } else if(strncmp(code, "NOT_RUNNING", 11) == 0) {
                         strncpy(
                             message,
-                            "Dazzler is not running",
+                            GHOST_ESP_UI_TEXT("Dazzler is not running", "眩目器未运行"),
                             sizeof(state->confirmation_message) - 1);
                     } else {
                         snprintf(
@@ -2298,7 +2704,7 @@ static bool handle_ir_command_feedback_ex(
             }
 
             if(is_inline && strstr(line, "IR inline parse failed")) {
-                strncpy(message, "Inline parse failed", sizeof(state->confirmation_message) - 1);
+                strncpy(message, GHOST_ESP_UI_TEXT("Inline parse failed", "内联解析失败"), sizeof(state->confirmation_message) - 1);
                 message[sizeof(state->confirmation_message) - 1] = '\0';
                 start = timeout_ms + start;
                 break;
@@ -2317,7 +2723,8 @@ static bool handle_ir_command_feedback_ex(
                         snprintf(
                             message,
                             sizeof(state->confirmation_message),
-                            "Send OK%s%s",
+                            "%s%s%s",
+                            GHOST_ESP_UI_TEXT("Send OK", "发送成功"),
                             "\n",
                             summary);
                         start = timeout_ms + start;
@@ -2326,21 +2733,21 @@ static bool handle_ir_command_feedback_ex(
                 }
                 if(strstr(line, "send FAIL") || strstr(line, "status: FAIL") ||
                    strstr(line, "status FAIL") || strstr(line, "status: ERROR")) {
-                    strncpy(message, "Send failed", sizeof(state->confirmation_message) - 1);
+                    strncpy(message, GHOST_ESP_UI_TEXT("Send failed", "发送失败"), sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
                     break;
                 }
                 if(strstr(line, "failed to read list")) {
                     strncpy(
-                        message, "Failed to read list", sizeof(state->confirmation_message) - 1);
+                        message, GHOST_ESP_UI_TEXT("Failed to read list", "读取列表失败"), sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
                     break;
                 }
                 if(strstr(line, "no signals in")) {
                     strncpy(
-                        message, "No signals in list", sizeof(state->confirmation_message) - 1);
+                        message, GHOST_ESP_UI_TEXT("No signals in list", "列表中无信号"), sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
                     break;
@@ -2348,7 +2755,7 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "remote index out of range")) {
                     strncpy(
                         message,
-                        "Remote index out of range",
+                        GHOST_ESP_UI_TEXT("Remote index out of range", "遥控器索引超出范围"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
@@ -2357,7 +2764,7 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "index out of range")) {
                     strncpy(
                         message,
-                        "Button index out of range",
+                        GHOST_ESP_UI_TEXT("Button index out of range", "按键索引超出范围"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
@@ -2366,7 +2773,7 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "invalid universal index")) {
                     strncpy(
                         message,
-                        "Invalid universal index",
+                        GHOST_ESP_UI_TEXT("Invalid universal index", "无效的万能遥控索引"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
@@ -2376,7 +2783,7 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "universal sendall already running")) {
                     strncpy(
                         message,
-                        "Universal send already running; use 'stop' to cancel.",
+                        GHOST_ESP_UI_TEXT("Universal send already running; use 'stop' to cancel.", "万能遥控发送已在运行; 使用 'stop' 取消。"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
@@ -2387,7 +2794,7 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "no builtin signals named")) {
                     strncpy(
                         message,
-                        "No builtin signals with that name.",
+                        GHOST_ESP_UI_TEXT("No builtin signals with that name.", "没有该名称的内置信号。"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
@@ -2396,7 +2803,7 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "no signals named")) {
                     strncpy(
                         message,
-                        "No file signals with that name.",
+                        GHOST_ESP_UI_TEXT("No file signals with that name.", "没有该名称的文件信号。"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
                     start = timeout_ms + start;
@@ -2405,10 +2812,10 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "universal sendall finished")) {
                     strncpy(
                         message,
-                        "Universal send finished.",
+                        GHOST_ESP_UI_TEXT("Universal send finished.", "万能遥控发送完成。"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
-                    confirmation_view_set_header(state->confirmation_view, "Universal send");
+                    confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("Universal send", "万能遥控发送"));
                     confirmation_view_set_text(state->confirmation_view, message);
                     confirmation_view_set_ok_callback(
                         state->confirmation_view, app_info_ok_callback, state);
@@ -2420,10 +2827,10 @@ static bool handle_ir_command_feedback_ex(
                 if(strstr(line, "universal sendall stopped")) {
                     strncpy(
                         message,
-                        "Universal send stopped.",
+                        GHOST_ESP_UI_TEXT("Universal send stopped.", "万能遥控发送已停止。"),
                         sizeof(state->confirmation_message) - 1);
                     message[sizeof(state->confirmation_message) - 1] = '\0';
-                    confirmation_view_set_header(state->confirmation_view, "Universal send");
+                    confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("Universal send", "万能遥控发送"));
                     confirmation_view_set_text(state->confirmation_view, message);
                     confirmation_view_set_ok_callback(
                         state->confirmation_view, app_info_ok_callback, state);
@@ -2439,25 +2846,25 @@ static bool handle_ir_command_feedback_ex(
     }
 
     if(!message[0] && saw_ok) {
-        strncpy(message, "Send OK", sizeof(state->confirmation_message) - 1);
+        strncpy(message, GHOST_ESP_UI_TEXT("Send OK", "发送成功"), sizeof(state->confirmation_message) - 1);
         message[sizeof(state->confirmation_message) - 1] = '\0';
     }
 
     if(message[0]) {
-        if(strncmp(message, "Send OK", 7) == 0) {
-            const char* body = message + 7;
+        if(strncmp(message, GHOST_ESP_UI_TEXT("Send OK", "发送成功"), strlen(GHOST_ESP_UI_TEXT("Send OK", "发送成功"))) == 0) {
+            const char* body = message + strlen(GHOST_ESP_UI_TEXT("Send OK", "发送成功"));
             if(*body == '\n') body++;
-            confirmation_view_set_header(state->confirmation_view, "Sent Successfully");
+            confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("Sent Successfully", "发送成功"));
             confirmation_view_set_text(state->confirmation_view, body);
         } else {
             confirmation_view_set_text(state->confirmation_view, message);
         }
     } else if(have_output) {
         char display[256];
-        snprintf(display, sizeof(display), "No match.\nRaw:\n%.180s", raw_buffer);
+        snprintf(display, sizeof(display), "%s\nRaw:\n%.180s", GHOST_ESP_UI_TEXT("No match.", "无匹配。"), raw_buffer);
         confirmation_view_set_text(state->confirmation_view, display);
     } else {
-        confirmation_view_set_text(state->confirmation_view, "No response from ESP.");
+        confirmation_view_set_text(state->confirmation_view, GHOST_ESP_UI_TEXT("No response from ESP.", "ESP 无响应。"));
     }
 
     return true;
@@ -2478,7 +2885,7 @@ static void text_input_result_callback(void* context) {
         input_state->connect_input_stage = 2;
         if(input_state->input_buffer) memset(input_state->input_buffer, 0, INPUT_BUFFER_SIZE);
         text_input_reset(input_state->text_input);
-        text_input_set_header_text(input_state->text_input, "PASSWORD");
+        text_input_set_header_text(input_state->text_input, GHOST_ESP_UI_TEXT("PASSWORD", "密码"));
         text_input_set_result_callback(
             input_state->text_input,
             text_input_result_callback,
@@ -2538,7 +2945,7 @@ static void send_ir_file(AppState* state) {
 
     if(!ir_index_buttons_from_file(state)) {
         state->ir_file_buttons_mode = false;
-        ir_show_error(state, "No IR buttons found.");
+        ir_show_error(state, GHOST_ESP_UI_TEXT("No IR buttons found.", "未找到红外按键。"));
         return;
     }
 
@@ -2635,12 +3042,14 @@ static void execute_menu_command(AppState* state, const MenuCommand* command) {
     }
     if(!uart_is_esp_connected(state->uart_context)) {
         state->previous_view = state->current_view;
-        confirmation_view_set_header(state->confirmation_view, "Connection Error");
+        confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("Connection Error", "连接错误"));
         confirmation_view_set_text(
             state->confirmation_view,
-            "No response from ESP!\nIs a command running?\nRestart the "
-            "app.\nRestart ESP.\nCheck UART Pins.\nReflash if issues persist.\nYou "
-            "can disable this check in the settings menu.\n\n");
+            GHOST_ESP_UI_TEXT(
+                "No response from ESP!\nIs a command running?\nRestart the "
+                "app.\nRestart ESP.\nCheck UART Pins.\nReflash if issues persist.\nYou "
+                "can disable this check in the settings menu.\n\n",
+                "ESP 无响应！\n是否有命令在运行？\n请重启应用。\n重启 ESP。\n检查 UART 引脚。\n如仍有问题请重新刷写。\n可在设置菜单中禁用此检测。\n\n"));
         confirmation_view_set_ok_callback(state->confirmation_view, error_callback, state);
         confirmation_view_set_cancel_callback(state->confirmation_view, error_callback, state);
 
@@ -2662,7 +3071,7 @@ static void execute_menu_command(AppState* state, const MenuCommand* command) {
         state->previous_view = state->current_view;
         text_input_reset(state->text_input);
         if(state->input_buffer) memset(state->input_buffer, 0, INPUT_BUFFER_SIZE);
-        text_input_set_header_text(state->text_input, "SSID");
+        text_input_set_header_text(state->text_input, GHOST_ESP_UI_TEXT("SSID", "SSID"));
         text_input_set_result_callback(
             state->text_input,
             text_input_result_callback,
@@ -2764,7 +3173,7 @@ static void execute_menu_command(AppState* state, const MenuCommand* command) {
             // Save current view for proper back navigation
             state->previous_view = state->current_view;
             text_input_reset(state->text_input);
-            text_input_set_header_text(state->text_input, "SSID Name");
+            text_input_set_header_text(state->text_input, GHOST_ESP_UI_TEXT("SSID Name", "SSID 名称"));
             text_input_set_result_callback(
                 state->text_input,
                 text_input_result_callback,
@@ -2931,7 +3340,7 @@ void show_wifi_scanning_menu(AppState* state) {
         state,
         wifi_scanning_commands,
         COUNT_OF(wifi_scanning_commands),
-        "Scanning & Probing",
+        GHOST_ESP_UI_TEXT("Scanning & Probing", "扫描与探测"),
         state->wifi_scanning_menu,
         10);
 
@@ -2954,7 +3363,7 @@ void show_wifi_capture_menu(AppState* state) {
         state,
         wifi_capture_commands,
         COUNT_OF(wifi_capture_commands),
-        "Packet Capture",
+        GHOST_ESP_UI_TEXT("Packet Capture", "数据包捕获"),
         state->wifi_capture_menu,
         11);
 }
@@ -2964,7 +3373,7 @@ void show_wifi_attack_menu(AppState* state) {
         state,
         wifi_attack_commands,
         COUNT_OF(wifi_attack_commands),
-        "Attacks",
+        GHOST_ESP_UI_TEXT("Attacks", "攻击"),
         state->wifi_attack_menu,
         12);
 
@@ -2978,7 +3387,7 @@ void show_wifi_network_menu(AppState* state) {
         state,
         wifi_network_commands,
         COUNT_OF(wifi_network_commands),
-        "Portal & Network",
+        GHOST_ESP_UI_TEXT("Portal & Network", "门户与网络"),
         state->wifi_network_menu,
         13);
 }
@@ -2988,7 +3397,7 @@ void show_wifi_settings_menu(AppState* state) {
         state,
         wifi_settings_commands,
         COUNT_OF(wifi_settings_commands),
-        "Settings & Hardware",
+        GHOST_ESP_UI_TEXT("Settings & Hardware", "设置与硬件"),
         state->wifi_settings_menu,
         14);
 
@@ -3002,7 +3411,7 @@ void show_status_idle_menu(AppState* state) {
         state,
         status_idle_commands,
         COUNT_OF(status_idle_commands),
-        "Select an animation",
+        GHOST_ESP_UI_TEXT("Select an animation", "选择动画"),
         state->status_idle_menu,
         40);
 }
@@ -3012,7 +3421,7 @@ void show_ble_scanning_menu(AppState* state) {
         state,
         ble_scanning_commands,
         COUNT_OF(ble_scanning_commands),
-        "Scanning & Detection",
+        GHOST_ESP_UI_TEXT("Scanning & Detection", "扫描与检测"),
         state->ble_scanning_menu,
         20);
 }
@@ -3022,7 +3431,7 @@ void show_ble_capture_menu(AppState* state) {
         state,
         ble_capture_commands,
         COUNT_OF(ble_capture_commands),
-        "Packet Capture",
+        GHOST_ESP_UI_TEXT("Packet Capture", "数据包捕获"),
         state->ble_capture_menu,
         21);
 }
@@ -3032,7 +3441,7 @@ void show_ble_attack_menu(AppState* state) {
         state,
         ble_attack_commands,
         COUNT_OF(ble_attack_commands),
-        "Attacks & Spoofing",
+        GHOST_ESP_UI_TEXT("Attacks & Spoofing", "攻击与欺骗"),
         state->ble_attack_menu,
         22);
 
@@ -3043,12 +3452,12 @@ void show_ble_attack_menu(AppState* state) {
 
 void show_wifi_menu(AppState* state) {
     submenu_reset(state->wifi_menu);
-    submenu_set_header(state->wifi_menu, "WiFi Commands");
-    submenu_add_item(state->wifi_menu, "Scanning & Probing > ", 0, submenu_callback, state);
-    submenu_add_item(state->wifi_menu, "Packet Capture > ", 1, submenu_callback, state);
-    submenu_add_item(state->wifi_menu, "Attacks > ", 2, submenu_callback, state);
-    submenu_add_item(state->wifi_menu, "Evil Portal & Network >", 3, submenu_callback, state);
-    submenu_add_item(state->wifi_menu, "Aerial Detector >", 4, submenu_callback, state);
+    submenu_set_header(state->wifi_menu, GHOST_ESP_UI_TEXT("WiFi Commands", "WiFi 命令"));
+    submenu_add_item(state->wifi_menu, GHOST_ESP_UI_TEXT("Scanning & Probing > ", "扫描与探测 > "), 0, submenu_callback, state);
+    submenu_add_item(state->wifi_menu, GHOST_ESP_UI_TEXT("Packet Capture > ", "数据包捕获 > "), 1, submenu_callback, state);
+    submenu_add_item(state->wifi_menu, GHOST_ESP_UI_TEXT("Attacks > ", "攻击 > "), 2, submenu_callback, state);
+    submenu_add_item(state->wifi_menu, GHOST_ESP_UI_TEXT("Evil Portal & Network >", "邪恶门户与网络 >"), 3, submenu_callback, state);
+    submenu_add_item(state->wifi_menu, GHOST_ESP_UI_TEXT("Aerial Detector >", "信号检测器 >"), 4, submenu_callback, state);
     submenu_add_item(state->wifi_menu, wifi_stop_command.label, 5, submenu_callback, state);
     // Restore last selected WiFi category
     submenu_set_selected_item(state->wifi_menu, state->last_wifi_category_index);
@@ -3062,17 +3471,17 @@ void show_aerial_menu(AppState* state) {
         state,
         aerial_commands,
         COUNT_OF(aerial_commands),
-        "Aerial Detector:",
+        GHOST_ESP_UI_TEXT("Aerial Detector:", "信号检测器:"),
         state->aerial_menu,
         15);
 }
 
 void show_ble_menu(AppState* state) {
     submenu_reset(state->ble_menu);
-    submenu_set_header(state->ble_menu, "BLE Commands");
-    submenu_add_item(state->ble_menu, "Scanning & Detection >", 0, submenu_callback, state);
-    submenu_add_item(state->ble_menu, "Packet Capture >", 1, submenu_callback, state);
-    submenu_add_item(state->ble_menu, "Attacks & Spoofing >", 2, submenu_callback, state);
+    submenu_set_header(state->ble_menu, GHOST_ESP_UI_TEXT("BLE Commands", "蓝牙命令"));
+    submenu_add_item(state->ble_menu, GHOST_ESP_UI_TEXT("Scanning & Detection >", "扫描与检测 >"), 0, submenu_callback, state);
+    submenu_add_item(state->ble_menu, GHOST_ESP_UI_TEXT("Packet Capture >", "数据包捕获 >"), 1, submenu_callback, state);
+    submenu_add_item(state->ble_menu, GHOST_ESP_UI_TEXT("Attacks & Spoofing >", "攻击与欺骗 >"), 2, submenu_callback, state);
     submenu_add_item(state->ble_menu, ble_stop_command.label, 3, submenu_callback, state);
     // Restore last selected BLE category
     submenu_set_selected_item(state->ble_menu, state->last_ble_category_index);
@@ -3083,11 +3492,11 @@ void show_ble_menu(AppState* state) {
 
 void show_gps_menu(AppState* state) {
     state->came_from_settings = false;
-    show_menu(state, gps_commands, COUNT_OF(gps_commands), "GPS Commands:", state->gps_menu, 3);
+    show_menu(state, gps_commands, COUNT_OF(gps_commands), GHOST_ESP_UI_TEXT("GPS Commands:", "GPS 命令:"), state->gps_menu, 3);
 }
 
 void show_ir_menu(AppState* state) {
-    show_menu(state, ir_commands, COUNT_OF(ir_commands), "IR Commands:", state->ir_menu, 30);
+    show_menu(state, ir_commands, COUNT_OF(ir_commands), GHOST_ESP_UI_TEXT("IR Commands:", "红外命令:"), state->ir_menu, 30);
 }
 
 // Menu command handlers
@@ -3185,14 +3594,14 @@ void handle_ir_menu(AppState* state, uint32_t index) {
         if(ir_query_and_parse_list(state)) {
             ir_show_remotes_menu(state);
         } else {
-            ir_show_error(state, "No IR remotes found.");
+            ir_show_error(state, GHOST_ESP_UI_TEXT("No IR remotes found.", "未找到红外遥控器。"));
         }
         break;
     case 1:
         if(ir_query_and_parse_universals(state)) {
             ir_show_universals_menu(state);
         } else {
-            ir_show_error(state, "No universal signals found.");
+            ir_show_error(state, GHOST_ESP_UI_TEXT("No universal signals found.", "未找到万能遥控信号。"));
         }
         break;
     default:
@@ -3290,7 +3699,7 @@ void submenu_callback(void* context, uint32_t index) {
             if(ir_query_and_parse_show(state, state->ir_current_remote_index)) {
                 ir_show_buttons_menu(state);
             } else {
-                ir_show_error(state, "No IR buttons found.");
+                ir_show_error(state, GHOST_ESP_UI_TEXT("No IR buttons found.", "未找到红外按键。"));
             }
         }
         break;
@@ -3335,7 +3744,7 @@ void submenu_callback(void* context, uint32_t index) {
             if(ir_query_and_parse_universal_buttons(state, state->ir_current_universal_file)) {
                 ir_show_buttons_menu(state);
             } else {
-                ir_show_error(state, "No universal buttons found.");
+                ir_show_error(state, GHOST_ESP_UI_TEXT("No universal buttons found.", "未找到万能遥控按键。"));
             }
         }
         break;
@@ -3353,33 +3762,57 @@ static void show_menu_help(void* context, uint32_t index) {
     state->previous_view = state->current_view;
 
     // Define help text with essential actions only
-    const char* help_text = "=== Controls ===\n"
-                            "Hold [Ok]\n"
-                            "    Show command details\n"
-                            "Back button returns to\n"
-                            "previous menu\n"
-                            "\n"
-                            "=== File Locations ===\n"
-                            "/apps_data/ghost_esp/\n"
-                            "\n"
-                            "\n"
-                            "=== Tips ===\n"
-                            "- One capture at a time\n"
-                            "- Hold OK on any command\n"
-                            "  to see range & details\n"
-                            "\n"
-                            "=== Settings ===\n"
-                            "Configure options in\n"
-                            "SET menu including:\n"
-                            "- Auto-stop behavior\n"
-                            "- LED settings\n"
-                            "\n"
-                            "Join the Discord\n"
-                            "for support and\n"
-                            "to stay updated!\n";
+    const char* help_text =
+        GHOST_ESP_UI_TEXT("=== Controls ===\n"
+                          "Hold [Ok]\n"
+                          "    Show command details\n"
+                          "Back button returns to\n"
+                          "previous menu\n"
+                          "\n"
+                          "=== File Locations ===\n"
+                          "/apps_data/ghost_esp/\n"
+                          "\n"
+                          "\n"
+                          "=== Tips ===\n"
+                          "- One capture at a time\n"
+                          "- Hold OK on any command\n"
+                          "  to see range & details\n"
+                          "\n"
+                          "=== Settings ===\n"
+                          "Configure options in\n"
+                          "SET menu including:\n"
+                          "- Auto-stop behavior\n"
+                          "- LED settings\n"
+                          "\n"
+                          "Join the Discord\n"
+                          "for support and\n"
+                          "to stay updated!\n",
+                          "=== 操作 ===\n"
+                          "长按 [Ok]\n"
+                          "    显示命令详情\n"
+                          "返回键回到\n"
+                          "上一级菜单\n"
+                          "\n"
+                          "=== 文件位置 ===\n"
+                          "/apps_data/ghost_esp/\n"
+                          "\n"
+                          "\n"
+                          "=== 提示 ===\n"
+                          "- 同时只能捕获一项\n"
+                          "- 长按OK查看\n"
+                          "  命令范围与详情\n"
+                          "\n"
+                          "=== 设置 ===\n"
+                          "在SET菜单中配置:\n"
+                          "- 自动停止行为\n"
+                          "- LED 设置\n"
+                          "\n"
+                          "加入 Discord\n"
+                          "获取支持和\n"
+                          "最新更新!\n");
 
     // Set header and help text in the confirmation view
-    confirmation_view_set_header(state->confirmation_view, "Quick Help");
+    confirmation_view_set_header(state->confirmation_view, GHOST_ESP_UI_TEXT("Quick Help", "快速帮助"));
     confirmation_view_set_text(state->confirmation_view, help_text);
 
     // Set callbacks for user actions
@@ -3674,8 +4107,10 @@ bool text_view_input_handler(InputEvent* event, void* context) {
                 state->text_box_pause_hint_shown = true;
                 show_result_dialog(
                     state,
-                    "Tip",
-                    "Scroll paused.\nPress Right arrow to resume.\nPress OK to send stop.");
+                    GHOST_ESP_UI_TEXT("Tip", "提示"),
+                    GHOST_ESP_UI_TEXT(
+                        "Scroll paused.\nPress Right arrow to resume.\nPress OK to send stop.",
+                        "滚动已暂停。\n按右键恢复。\n按OK发送停止。"));
             }
         }
 

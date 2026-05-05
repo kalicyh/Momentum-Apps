@@ -151,7 +151,7 @@ void tpms_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Frequency:",
+        TPMS_UI_TEXT("Frequency:", "频率:"),
         subghz_setting_get_frequency_count(app->setting),
         tpms_scene_receiver_config_set_frequency,
         app);
@@ -169,7 +169,7 @@ void tpms_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Hopping:",
+        TPMS_UI_TEXT("Hopping:", "跳频:"),
         HOPPING_COUNT,
         tpms_scene_receiver_config_set_hopping_running,
         app);
@@ -180,7 +180,7 @@ void tpms_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Modulation:",
+        TPMS_UI_TEXT("Modulation:", "调制:"),
         subghz_setting_get_preset_count(app->setting),
         tpms_scene_receiver_config_set_preset,
         app);
@@ -190,7 +190,7 @@ void tpms_scene_receiver_config_on_enter(void* context) {
     variable_item_set_current_value_text(
         item, subghz_setting_get_preset_name(app->setting, value_index));
 
-    variable_item_list_add(app->variable_item_list, "Lock Keyboard", 1, NULL, NULL);
+    variable_item_list_add(app->variable_item_list, TPMS_UI_TEXT("Lock Keyboard", "锁定键盘"), 1, NULL, NULL);
     variable_item_list_set_enter_callback(
         app->variable_item_list, tpms_scene_receiver_config_var_list_enter_callback, app);
 

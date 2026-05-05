@@ -77,30 +77,30 @@ void scene_on_enter_key_menu(void* context) {
 
     menu_add_item(
         state->menu,
-        "No encryption",
+        ESUBGHZ_CHAT_UI_TEXT("No encryption", "无加密"),
         &I_chat_14px,
         ESubGhzChatKeyMenuItems_NoEncryption,
         key_menu_cb,
         state);
     menu_add_item(
         state->menu,
-        "Password",
+        ESUBGHZ_CHAT_UI_TEXT("Password", "密码"),
         &I_keyboard_14px,
         ESubGhzChatKeyMenuItems_Password,
         key_menu_cb,
         state);
     menu_add_item(
-        state->menu, "Hex Key", &I_hex_14px, ESubGhzChatKeyMenuItems_HexKey, key_menu_cb, state);
+        state->menu, ESUBGHZ_CHAT_UI_TEXT("Hex Key", "十六进制密钥"), &I_hex_14px, ESubGhzChatKeyMenuItems_HexKey, key_menu_cb, state);
     menu_add_item(
         state->menu,
-        "Generate Key",
+        ESUBGHZ_CHAT_UI_TEXT("Generate Key", "生成密钥"),
         &I_u2f_14px,
         ESubGhzChatKeyMenuItems_GenKey,
         key_menu_cb,
         state);
     menu_add_item(
         state->menu,
-        "Read Key from NFC",
+        ESUBGHZ_CHAT_UI_TEXT("Read Key from NFC", "从 NFC 读取密钥"),
         &I_Nfc_14px,
         ESubGhzChatKeyMenuItems_ReadKeyFromNfc,
         key_menu_cb,

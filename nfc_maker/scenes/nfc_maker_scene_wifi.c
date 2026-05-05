@@ -14,7 +14,7 @@ void nfc_maker_scene_wifi_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Enter WiFi SSID:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Enter WiFi SSID:", "输入 WiFi SSID:"));
 
     strlcpy(app->small_buf1, "Bill Wi the Science Fi", sizeof(app->small_buf1));
 

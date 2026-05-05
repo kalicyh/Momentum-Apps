@@ -15,7 +15,7 @@ void picopass_scene_key_input_on_enter(void* context) {
     Picopass* picopass = context;
 
     ByteInput* byte_input = picopass->byte_input;
-    byte_input_set_header_text(byte_input, "Enter The Key In Hex");
+    byte_input_set_header_text(byte_input, PICOPASS_UI_TEXT("Enter The Key In Hex", "输入十六进制密钥"));
     byte_input_set_result_callback(
         byte_input,
         picopass_scene_key_input_text_input_callback,

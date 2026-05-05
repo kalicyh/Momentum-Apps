@@ -32,7 +32,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         canvas_height(canvas) / 10,
         AlignCenter,
         AlignCenter,
-        "GPIO reader");
+        GPIO_READER_UI_TEXT("GPIO reader", "GPIO读取器"));
 
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(

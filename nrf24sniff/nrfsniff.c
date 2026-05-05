@@ -10,6 +10,12 @@
 
 #include "stdstring.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif
+
 #define LOGITECH_MAX_CHANNEL 85
 #define COUNT_THRESHOLD      2
 #define DEFAULT_SAMPLE_TIME  4000
@@ -34,12 +40,12 @@ typedef struct {
     FuriMutex* mutex;
 } PluginState;
 
-char rate_text_fmt[] = "Transfer rate: %dMbps";
-char sample_text_fmt[] = "Sample Time: %d ms";
-char channel_text_fmt[] = "Channel: %d    Sniffing: %s";
-char preamble_text_fmt[] = "Preamble: %02X";
-char sniff_text_fmt[] = "Found: %d       Unique: %u";
-char addresses_header_text[] = "Address,rate";
+char rate_text_fmt[] = UI_TEXT("Transfer rate: %dMbps", "传输速率: %dMbps");
+char sample_text_fmt[] = UI_TEXT("Sample Time: %d ms", "采样时间: %d ms");
+char channel_text_fmt[] = UI_TEXT("Channel: %d    Sniffing: %s", "信道: %d    嗅探: %s");
+char preamble_text_fmt[] = UI_TEXT("Preamble: %02X", "前导码: %02X");
+char sniff_text_fmt[] = UI_TEXT("Found: %d       Unique: %u", "已发现: %d       唯一: %u");
+char addresses_header_text[] = UI_TEXT("Address,rate", "地址,速率");
 char sniffed_address_fmt[] = "%s,%d";
 char rate_text[46];
 char channel_text[38];
@@ -102,7 +108,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     furi_mutex_acquire(plugin_state->mutex, FuriWaitForever);
 
     uint8_t rate = 2;
-    char sniffing[] = "Yes";
+    char sniffing[] = UI_TEXT("Yes", "是");
 
     // border around the edge of the screen
     canvas_draw_frame(canvas, 0, 0, 128, 64);
@@ -110,7 +116,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
 
     if(target_rate == 0) rate = 1;
 
-    if(!sniffing_state) strcpy(sniffing, "No");
+    if(!sniffing_state) strcpy(sniffing, UI_TEXT("No", "否"));
 
     snprintf(rate_text, sizeof(rate_text), rate_text_fmt, (int)rate);
     snprintf(channel_text, sizeof(channel_text), channel_text_fmt, (int)target_channel, sniffing);

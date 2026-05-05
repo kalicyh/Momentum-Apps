@@ -92,7 +92,7 @@ static void
 
     if(!model->td_emt_cursor) {
         canvas_set_font(canvas, FontSecondary);
-        snprintf(temp_str, sizeof(temp_str), "Time delay:");
+        snprintf(temp_str, sizeof(temp_str), FUZZER_UI_TEXT("Time delay:", "延迟:"));
         canvas_draw_str_aligned(canvas, LEFT_RIGHT_OFFSET, y, AlignLeft, AlignBottom, temp_str);
         crt = canvas_string_width(canvas, temp_str);
 
@@ -104,7 +104,7 @@ static void
 
         canvas_set_font(canvas, FontSecondary);
         snprintf(
-            temp_str, sizeof(temp_str), "EmT: %d.%d", model->emu_time / 10, model->emu_time % 10);
+            temp_str, sizeof(temp_str), FUZZER_UI_TEXT("EmT: %d.%d", "模拟: %d.%d"), model->emu_time / 10, model->emu_time % 10);
         canvas_draw_str_aligned(
             canvas, 128 - LEFT_RIGHT_OFFSET, y, AlignRight, AlignBottom, temp_str);
     } else {
@@ -112,7 +112,7 @@ static void
         snprintf(
             temp_str,
             sizeof(temp_str),
-            "TD: %d.%d",
+            FUZZER_UI_TEXT("TD: %d.%d", "延迟: %d.%d"),
             model->time_delay / 10,
             model->time_delay % 10);
 
@@ -125,7 +125,7 @@ static void
         crt = canvas_string_width(canvas, temp_str);
 
         canvas_set_font(canvas, FontSecondary);
-        snprintf(temp_str, sizeof(temp_str), "Emulation time:");
+        snprintf(temp_str, sizeof(temp_str), FUZZER_UI_TEXT("Emulation time:", "模拟时间:"));
         canvas_draw_str_aligned(
             canvas, 128 - LEFT_RIGHT_OFFSET - crt - 3, y, AlignRight, AlignBottom, temp_str);
     }
@@ -140,7 +140,7 @@ static void fuzzer_view_attack_draw_time_delays_str(Canvas* canvas, FuzzerViewAt
     snprintf(
         temp_str,
         sizeof(temp_str),
-        "TD: %d.%d Emt: %d.%d",
+        FUZZER_UI_TEXT("TD: %d.%d Emt: %d.%d", "延迟: %d.%d 模拟: %d.%d"),
         model->time_delay / 10,
         model->time_delay % 10,
         model->emu_time / 10,
@@ -154,26 +154,26 @@ static void fuzzer_view_attack_draw_time_delays_str(Canvas* canvas, FuzzerViewAt
 
 static void fuzzer_view_attack_draw_idle(Canvas* canvas, FuzzerViewAttackModel* model) {
     if(model->td_emt_cursor) {
-        elements_button_center(canvas, "Start");
-        elements_button_left(canvas, "EmT -");
-        elements_button_right(canvas, "+ EmT");
+        elements_button_center(canvas, FUZZER_UI_TEXT("Start", "开始"));
+        elements_button_left(canvas, FUZZER_UI_TEXT("EmT -", "模拟 -"));
+        elements_button_right(canvas, FUZZER_UI_TEXT("+ EmT", "+ 模拟"));
     } else {
-        elements_button_center(canvas, "Start");
-        elements_button_left(canvas, "TD -");
-        elements_button_right(canvas, "+ TD");
+        elements_button_center(canvas, FUZZER_UI_TEXT("Start", "开始"));
+        elements_button_left(canvas, FUZZER_UI_TEXT("TD -", "延迟 -"));
+        elements_button_right(canvas, FUZZER_UI_TEXT("+ TD", "+ 延迟"));
     }
 }
 
 static void fuzzer_view_attack_draw_running(Canvas* canvas, FuzzerViewAttackModel* model) {
     UNUSED(model);
-    elements_button_left(canvas, "Stop");
-    elements_button_center(canvas, "Pause");
+    elements_button_left(canvas, FUZZER_UI_TEXT("Stop", "停止"));
+    elements_button_center(canvas, FUZZER_UI_TEXT("Pause", "暂停"));
 }
 
 static void fuzzer_view_attack_draw_end(Canvas* canvas, FuzzerViewAttackModel* model) {
     UNUSED(model);
     // elements_button_center(canvas, "Restart"); // Reset
-    elements_button_left(canvas, "Exit");
+    elements_button_left(canvas, FUZZER_UI_TEXT("Exit", "退出"));
 }
 
 void fuzzer_view_attack_draw(Canvas* canvas, FuzzerViewAttackModel* model) {
@@ -192,30 +192,30 @@ void fuzzer_view_attack_draw(Canvas* canvas, FuzzerViewAttackModel* model) {
 
     case FuzzerAttackStateAttacking:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, LEFT_RIGHT_OFFSET, LINE_2_Y, "Attacking");
+        canvas_draw_str(canvas, LEFT_RIGHT_OFFSET, LINE_2_Y, FUZZER_UI_TEXT("Attacking", "攻击中"));
         fuzzer_view_attack_draw_time_delays_str(canvas, model);
 
         break;
 
     case FuzzerAttackStateEmulating:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, LINE_2_Y, AlignCenter, AlignBottom, "Emulating:");
+        canvas_draw_str_aligned(canvas, 64, LINE_2_Y, AlignCenter, AlignBottom, FUZZER_UI_TEXT("Emulating:", "模拟中:"));
 
         break;
 
     case FuzzerAttackStatePause:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, LEFT_RIGHT_OFFSET, LINE_2_Y, "Paused");
+        canvas_draw_str(canvas, LEFT_RIGHT_OFFSET, LINE_2_Y, FUZZER_UI_TEXT("Paused", "已暂停"));
 
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_icon_ex(canvas, 62, LINE_2_Y - 9, &I_Pin_arrow_up_7x9, IconRotation180);
         canvas_draw_icon(canvas, 69, LINE_2_Y - 9, &I_Pin_arrow_up_7x9);
-        canvas_draw_str(canvas, 79, LINE_2_Y, "Change UID");
+        canvas_draw_str(canvas, 79, LINE_2_Y, FUZZER_UI_TEXT("Change UID", "切换UID"));
         break;
 
     case FuzzerAttackStateEnd:
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, LINE_2_Y, AlignCenter, AlignBottom, "Attack is over");
+        canvas_draw_str_aligned(canvas, 64, LINE_2_Y, AlignCenter, AlignBottom, FUZZER_UI_TEXT("Attack is over", "攻击完成"));
 
         break;
 
@@ -243,9 +243,9 @@ void fuzzer_view_attack_draw(Canvas* canvas, FuzzerViewAttackModel* model) {
     } else if(model->attack_state == FuzzerAttackStateIdle) {
         fuzzer_view_attack_draw_idle(canvas, model);
     } else if(model->attack_state == FuzzerAttackStatePause) {
-        elements_button_left(canvas, "Back");
-        elements_button_right(canvas, "Save");
-        elements_button_center(canvas, "Emu");
+        elements_button_left(canvas, FUZZER_UI_TEXT("Back", "返回"));
+        elements_button_right(canvas, FUZZER_UI_TEXT("Save", "保存"));
+        elements_button_center(canvas, FUZZER_UI_TEXT("Emu", "模拟"));
     } else if(model->attack_state == FuzzerAttackStateEnd) {
         fuzzer_view_attack_draw_end(canvas, model);
     }

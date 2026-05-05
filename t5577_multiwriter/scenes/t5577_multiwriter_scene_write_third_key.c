@@ -23,7 +23,7 @@ void t5577_multiwriter_scene_write_third_key_on_enter(void* context) {
     LfRfid* app = context;
     Popup* popup = app->popup;
 
-    popup_set_header(popup, "Writing", 89, 30, AlignCenter, AlignTop);
+    popup_set_header(popup, T5577_MULTIWRITER_UI_TEXT("Writing", "写入中"), 89, 30, AlignCenter, AlignTop);
     if(!furi_string_empty(app->file_name)) {
         popup_set_text(popup, furi_string_get_cstr(app->file_name), 89, 43, AlignCenter, AlignTop);
     } else {
@@ -68,18 +68,18 @@ bool t5577_multiwriter_scene_write_third_key_on_event(void* context, SceneManage
             consumed = true;
         } else if(event.event == LfRfidEventWriteProtocolCannotBeWritten) {
             popup_set_icon(popup, 72, 17, &I_WarningDolphinFlip_45x42);
-            popup_set_header(popup, "Error", 64, 3, AlignCenter, AlignTop);
-            popup_set_text(popup, "This protocol\ncannot be written", 3, 17, AlignLeft, AlignTop);
+            popup_set_header(popup, T5577_MULTIWRITER_UI_TEXT("Error", "错误"), 64, 3, AlignCenter, AlignTop);
+            popup_set_text(popup, T5577_MULTIWRITER_UI_TEXT("This protocol\ncannot be written", "此协议\n无法写入"), 3, 17, AlignLeft, AlignTop);
             notification_message(app->notifications, &sequence_blink_start_red);
             consumed = true;
         } else if(
             (event.event == LfRfidEventWriteFobCannotBeWritten) ||
             (event.event == LfRfidEventWriteTooLongToWrite)) {
             popup_set_icon(popup, 72, 17, &I_WarningDolphinFlip_45x42);
-            popup_set_header(popup, "Still trying to write...", 64, 3, AlignCenter, AlignTop);
+            popup_set_header(popup, T5577_MULTIWRITER_UI_TEXT("Still trying to write...", "仍在尝试写入..."), 64, 3, AlignCenter, AlignTop);
             popup_set_text(
                 popup,
-                "Make sure this\ncard is writable\nand not\nprotected.",
+                T5577_MULTIWRITER_UI_TEXT("Make sure this\ncard is writable\nand not\nprotected.", "请确保此卡片\n可写入\n且未被保护。"),
                 3,
                 17,
                 AlignLeft,

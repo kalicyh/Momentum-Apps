@@ -77,7 +77,7 @@ static const char* picopass_create_cred_type_name(uint8_t type) {
     case CreateCredTypeIclassLegacyStandard:
         return "iClass-Std";
     default:
-        return "Unknown";
+        return PICOPASS_UI_TEXT("Unknown", "未知");
     }
 }
 
@@ -199,7 +199,7 @@ static bool picopass_create_numeric_validator(const char* text, FuriString* erro
     for(const char* p = text; *p; p++) {
         if((*p < '0') || (*p > '9')) {
             if(error) {
-                furi_string_set(error, "Digits only");
+                furi_string_set(error, PICOPASS_UI_TEXT("Digits only", "仅限数字"));
             }
             return false;
         }
@@ -216,28 +216,41 @@ static void picopass_scene_create_update_menu(Picopass* picopass) {
     snprintf(
         label,
         sizeof(label),
-        "Cred Type: %s",
+        PICOPASS_UI_TEXT("Cred Type: %s", "凭据类型: %s"),
         picopass_create_cred_type_name(create_state.cred_type));
     submenu_add_item(
         submenu, label, CreateMenuCredentialType, picopass_scene_create_submenu_callback, picopass);
 
     snprintf(
-        label, sizeof(label), "Format: %s", picopass_wiegand_format_name(create_state.format));
+        label,
+        sizeof(label),
+        PICOPASS_UI_TEXT("Format: %s", "格式: %s"),
+        picopass_wiegand_format_name(create_state.format));
     submenu_add_item(
         submenu, label, CreateMenuFormat, picopass_scene_create_submenu_callback, picopass);
 
     snprintf(
-        label, sizeof(label), "Facility Code: %lu", (unsigned long)create_state.facility_code);
+        label,
+        sizeof(label),
+        PICOPASS_UI_TEXT("Facility Code: %lu", "设施代码: %lu"),
+        (unsigned long)create_state.facility_code);
     submenu_add_item(
         submenu, label, CreateMenuFacility, picopass_scene_create_submenu_callback, picopass);
 
     snprintf(
-        label, sizeof(label), "Card Number: %llu", (unsigned long long)create_state.card_number);
+        label,
+        sizeof(label),
+        PICOPASS_UI_TEXT("Card Number: %llu", "卡号: %llu"),
+        (unsigned long long)create_state.card_number);
     submenu_add_item(
         submenu, label, CreateMenuCard, picopass_scene_create_submenu_callback, picopass);
 
     submenu_add_item(
-        submenu, "Run", CreateMenuRun, picopass_scene_create_submenu_callback, picopass);
+        submenu,
+        PICOPASS_UI_TEXT("Run", "执行"),
+        CreateMenuRun,
+        picopass_scene_create_submenu_callback,
+        picopass);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(picopass->scene_manager, PicopassSceneCreate));
@@ -357,7 +370,7 @@ bool picopass_scene_create_on_event(void* context, SceneManagerEvent event) {
             picopass_scene_create_start_input(
                 picopass,
                 PicopassCreateFieldFacility,
-                "Facility Code (dec)",
+                PICOPASS_UI_TEXT("Facility Code (dec)", "设施代码 (十进制)"),
                 create_state.facility_code,
                 true);
             consumed = true;
@@ -367,7 +380,7 @@ bool picopass_scene_create_on_event(void* context, SceneManagerEvent event) {
             picopass_scene_create_start_input(
                 picopass,
                 PicopassCreateFieldCard,
-                "Card Number (dec)",
+                PICOPASS_UI_TEXT("Card Number (dec)", "卡号 (十进制)"),
                 create_state.card_number,
                 true);
             consumed = true;

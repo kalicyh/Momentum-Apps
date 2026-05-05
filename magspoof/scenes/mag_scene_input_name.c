@@ -21,7 +21,9 @@ void mag_scene_input_name_on_enter(void* context) {
         path_extract_dirname(furi_string_get_cstr(mag->file_path), folder_path);
     }
 
-    text_input_set_header_text(text_input, "Name the card");
+    text_input_set_header_text(
+        text_input,
+        MAGSPOOF_UI_TEXT("Name the card", "命名卡片"));
     text_input_set_result_callback(
         text_input,
         mag_text_input_callback,

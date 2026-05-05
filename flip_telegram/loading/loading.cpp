@@ -60,23 +60,23 @@ void Loading::drawSpinner()
 
     // draw time elapsed in milliseconds
     canvas_set_font_custom(canvas, FONT_SIZE_SMALL);
-    canvas_draw_str(canvas, 0, 60, "Time Elapsed:");
+    canvas_draw_str(canvas, 0, 60, flip_telegram_UI_TEXT("Time Elapsed:", "已用时间:"));
     char timeStr[16];
     int seconds = timeElapsed / 10000;
     if (seconds < 60)
     {
         if (seconds <= 1)
         {
-            snprintf(timeStr, sizeof(timeStr), "%u second", seconds);
+            snprintf(timeStr, sizeof(timeStr), flip_telegram_UI_TEXT("%u second", "%u 秒"), seconds);
         }
         else
         {
-            snprintf(timeStr, sizeof(timeStr), "%u seconds", seconds);
+            snprintf(timeStr, sizeof(timeStr), flip_telegram_UI_TEXT("%u seconds", "%u 秒"), seconds);
         }
     }
     else
     {
-        snprintf(timeStr, sizeof(timeStr), "%u minutes", seconds / 60);
+        snprintf(timeStr, sizeof(timeStr), flip_telegram_UI_TEXT("%u minutes", "%u 分钟"), seconds / 60);
     }
     canvas_draw_str(canvas, 90, 60, timeStr);
 }

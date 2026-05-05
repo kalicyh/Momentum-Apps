@@ -116,7 +116,7 @@ static void key_read_popup_set_state(ESubGhzChatState* state, KeyReadPopupState 
     if(new_state == KeyReadPopupState_Detecting) {
         popup_reset(state->nfc_popup);
         popup_disable_timeout(state->nfc_popup);
-        popup_set_text(state->nfc_popup, "Tap Flipper\n to sender", 97, 24, AlignCenter, AlignTop);
+        popup_set_text(state->nfc_popup, ESUBGHZ_CHAT_UI_TEXT("Tap Flipper\n to sender", "将 Flipper\n贴近发送方"), 97, 24, AlignCenter, AlignTop);
         popup_set_icon(state->nfc_popup, 0, 8, &I_NFC_manual_60x50);
         notification_message(state->notification, &sequence_blink_start_cyan);
     } else if(new_state == KeyReadPopupState_Reading) {
@@ -124,8 +124,8 @@ static void key_read_popup_set_state(ESubGhzChatState* state, KeyReadPopupState 
         popup_disable_timeout(state->nfc_popup);
         popup_set_header(
             state->nfc_popup,
-            "Reading key\nDon't "
-            "move...",
+            ESUBGHZ_CHAT_UI_TEXT("Reading key\nDon't "
+            "move...", "正在读取密钥\n请勿移动..."),
             85,
             24,
             AlignCenter,
@@ -136,8 +136,8 @@ static void key_read_popup_set_state(ESubGhzChatState* state, KeyReadPopupState 
         nfc_worker_stop(state->nfc_worker);
 
         popup_reset(state->nfc_popup);
-        popup_set_header(state->nfc_popup, "Failure!", 64, 2, AlignCenter, AlignTop);
-        popup_set_text(state->nfc_popup, "Failed\nto read\nkey.", 78, 16, AlignLeft, AlignTop);
+        popup_set_header(state->nfc_popup, ESUBGHZ_CHAT_UI_TEXT("Failure!", "失败!"), 64, 2, AlignCenter, AlignTop);
+        popup_set_text(state->nfc_popup, ESUBGHZ_CHAT_UI_TEXT("Failed\nto read\nkey.", "读取密钥\n失败."), 78, 16, AlignLeft, AlignTop);
         popup_set_icon(state->nfc_popup, 21, 13, &I_dolph_cry_49x54);
 
         popup_set_timeout(state->nfc_popup, KEY_READ_POPUP_MS);
@@ -150,7 +150,7 @@ static void key_read_popup_set_state(ESubGhzChatState* state, KeyReadPopupState 
         nfc_worker_stop(state->nfc_worker);
 
         popup_reset(state->nfc_popup);
-        popup_set_header(state->nfc_popup, "Key\nread!", 13, 22, AlignLeft, AlignBottom);
+        popup_set_header(state->nfc_popup, ESUBGHZ_CHAT_UI_TEXT("Key\nread!", "密钥\n已读取!"), 13, 22, AlignLeft, AlignBottom);
         popup_set_icon(state->nfc_popup, 36, 5, &I_DolphinDone_80x58);
 
         popup_set_timeout(state->nfc_popup, KEY_READ_POPUP_MS);

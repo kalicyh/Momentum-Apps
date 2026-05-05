@@ -78,16 +78,16 @@ void pokemon_scene_gen_on_enter(void* context) {
     submenu_reset(pokemon_fap->submenu);
 
     snprintf(
-        buf, sizeof(buf), "Pokemon:   %s", table_stat_name_get(pdata->pokemon_table, pkmn_num));
+        buf, sizeof(buf), "%s%s", POKEMON_UI_TEXT("Pokemon:   ", "宝可梦:   "), table_stat_name_get(pdata->pokemon_table, pkmn_num));
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneSelect, scene_change_from_main_cb, pokemon_fap);
 
     pokemon_name_get(pdata, STAT_NICKNAME, name_buf, sizeof(name_buf));
-    snprintf(buf, sizeof(buf), "Nickname:  %s", name_buf);
+    snprintf(buf, sizeof(buf), "%s%s", POKEMON_UI_TEXT("Nickname:  ", "昵称:  "), name_buf);
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneNickname, scene_change_from_main_cb, pokemon_fap);
 
-    snprintf(buf, sizeof(buf), "Level:           %d", pokemon_stat_get(pdata, STAT_LEVEL, NONE));
+    snprintf(buf, sizeof(buf), "%s%d", POKEMON_UI_TEXT("Level:           ", "等级:           "), pokemon_stat_get(pdata, STAT_LEVEL, NONE));
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneLevel, scene_change_from_main_cb, pokemon_fap);
 
@@ -95,7 +95,8 @@ void pokemon_scene_gen_on_enter(void* context) {
         snprintf(
             buf,
             sizeof(buf),
-            "Held Item:   %s",
+            "%s%s",
+            POKEMON_UI_TEXT("Held Item:   ", "携带道具:   "),
             namedlist_name_get_index(
                 pdata->item_list, pokemon_stat_get(pdata, STAT_HELD_ITEM, NONE)));
         submenu_add_item(
@@ -104,7 +105,7 @@ void pokemon_scene_gen_on_enter(void* context) {
 
     submenu_add_item(
         pokemon_fap->submenu,
-        "Select Moves",
+        POKEMON_UI_TEXT("Select Moves", "选择招式"),
         PokemonSceneMove,
         scene_change_from_main_cb,
         pokemon_fap);
@@ -112,7 +113,7 @@ void pokemon_scene_gen_on_enter(void* context) {
     if(pdata->gen == GEN_I) {
         submenu_add_item(
             pokemon_fap->submenu,
-            "Select Types",
+            POKEMON_UI_TEXT("Select Types", "选择属性"),
             PokemonSceneType,
             scene_change_from_main_cb,
             pokemon_fap);
@@ -127,20 +128,20 @@ void pokemon_scene_gen_on_enter(void* context) {
 
     if(pdata->gen == GEN_II) {
         snprintf(
-            buf, sizeof(buf), "Shiny:             %s", pokemon_is_shiny(pdata) ? "Yes" : "No");
+            buf, sizeof(buf), "%s%s", POKEMON_UI_TEXT("Shiny:             ", "闪光:             "), pokemon_is_shiny(pdata) ? POKEMON_UI_TEXT("Yes", "是") : POKEMON_UI_TEXT("No", "否"));
         submenu_add_item(
             pokemon_fap->submenu, buf, PokemonSceneShiny, scene_change_from_main_cb, pokemon_fap);
 
-        snprintf(buf, sizeof(buf), "Gender:         %s", pokemon_gender_get(pdata));
+        snprintf(buf, sizeof(buf), "%s%s", POKEMON_UI_TEXT("Gender:         ", "性别:         "), pokemon_gender_get(pdata));
         submenu_add_item(
             pokemon_fap->submenu, buf, PokemonSceneGender, scene_change_from_main_cb, pokemon_fap);
 
-        snprintf(buf, sizeof(buf), "Pokerus:       %s", pokerus_get_status_str(pdata));
+        snprintf(buf, sizeof(buf), "%s%s", POKEMON_UI_TEXT("Pokerus:       ", "宝可病毒:       "), pokerus_get_status_str(pdata));
         submenu_add_item(
             pokemon_fap->submenu, buf, PokemonScenePokerus, scene_change_from_main_cb, pokemon_fap);
 
         if(pokemon_stat_get(pdata, STAT_NUM, NONE) == 0xC8) { // Unown
-            snprintf(buf, sizeof(buf), "Unown Form: %c", unown_form_get(pdata));
+            snprintf(buf, sizeof(buf), "%s%c", POKEMON_UI_TEXT("Unown Form: ", "未知图腾形态: "), unown_form_get(pdata));
             submenu_add_item(
                 pokemon_fap->submenu,
                 buf,
@@ -150,18 +151,18 @@ void pokemon_scene_gen_on_enter(void* context) {
         }
     }
 
-    snprintf(buf, sizeof(buf), "OT ID#:          %05d", pokemon_stat_get(pdata, STAT_OT_ID, NONE));
+    snprintf(buf, sizeof(buf), "%s%05d", POKEMON_UI_TEXT("OT ID#:          ", "训练师ID:          "), pokemon_stat_get(pdata, STAT_OT_ID, NONE));
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneOTID, scene_change_from_main_cb, pokemon_fap);
 
     pokemon_name_get(pdata, STAT_OT_NAME, name_buf, sizeof(name_buf));
-    snprintf(buf, sizeof(buf), "OT Name:      %s", name_buf);
+    snprintf(buf, sizeof(buf), "%s%s", POKEMON_UI_TEXT("OT Name:      ", "训练师名:      "), name_buf);
     submenu_add_item(
         pokemon_fap->submenu, buf, PokemonSceneOTName, scene_change_from_main_cb, pokemon_fap);
 
     submenu_add_item(
         pokemon_fap->submenu,
-        "Trade PKMN",
+        POKEMON_UI_TEXT("Trade PKMN", "交换宝可梦"),
         PokemonSceneTrade,
         scene_change_from_main_cb,
         pokemon_fap);
@@ -169,7 +170,7 @@ void pokemon_scene_gen_on_enter(void* context) {
     if(trade_connected(pokemon_fap->trade)) {
         submenu_add_item(
             pokemon_fap->submenu,
-            "Reset Connection",
+            POKEMON_UI_TEXT("Reset Connection", "重置连接"),
             PokemonSceneResetConfirm,
             scene_change_from_main_cb,
             pokemon_fap);

@@ -64,7 +64,7 @@ void nfc_rfid_detector_view_field_presence_draw(
         canvas_draw_icon(canvas, 0, 16, &I_Modern_reader_18x34);
         canvas_draw_icon(canvas, 22, 12, &I_Move_flipper_26x39);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 56, 36, "Touch the reader");
+        canvas_draw_str(canvas, 56, 36, NFC_RFID_DETECTOR_UI_TEXT("Touch the reader", "触碰读卡器"));
     } else {
         if(model->nfc_field) {
             canvas_set_font(canvas, FontPrimary);
@@ -82,7 +82,7 @@ void nfc_rfid_detector_view_field_presence_draw(
             char str[16];
             snprintf(str, sizeof(str), "%.02f kHz", (double)model->rfid_frequency / 1000);
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str(canvas, 76, 10, "LF RFID");
+            canvas_draw_str(canvas, 76, 10, NFC_RFID_DETECTOR_UI_TEXT("LF RFID", "低频RFID"));
             canvas_draw_icon(
                 canvas,
                 71,

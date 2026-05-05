@@ -1,7 +1,7 @@
 #include "../uhf_app_i.h"
 #include "../uhf_module.h"
 
-char* yes_no[] = {"No", "Yes"};
+char* yes_no[] = {UHF_UI_TEXT("No", "否"), UHF_UI_TEXT("Yes", "是")};
 
 void uhf_settings_set_module_baudrate(VariableItem* item) {
     M100Module* module = variable_item_get_context(item);
@@ -123,7 +123,7 @@ void uhf_scene_settings_on_enter(void* ctx) {
     snprintf(text_buf, sizeof(text_buf), "%lu", uhf_module->uart->baudrate);
     item = variable_item_list_add(
         variable_item_list,
-        "Baudrate:",
+        UHF_UI_TEXT("Baudrate:", "波特率:"),
         BAUD_RATES_COUNT,
         uhf_settings_set_module_baudrate,
         uhf_module);
@@ -135,7 +135,7 @@ void uhf_scene_settings_on_enter(void* ctx) {
     value_index = uhf_settings_get_module_power_index(uhf_module);
     item = variable_item_list_add(
         variable_item_list,
-        "Power(DBM):",
+        UHF_UI_TEXT("Power(DBM):", "功率(DBM):"),
         POWER_DBM_COUNT,
         uhf_settings_set_module_powerdb,
         uhf_module);
@@ -147,7 +147,7 @@ void uhf_scene_settings_on_enter(void* ctx) {
     value_index = uhf_settings_get_module_working_region_index(uhf_module);
     item = variable_item_list_add(
         variable_item_list,
-        "Region:",
+        UHF_UI_TEXT("Region:", "区域:"),
         WORKING_REGIONS_COUNT,
         uhf_settings_set_module_working_region,
         uhf_module);
@@ -159,25 +159,25 @@ void uhf_scene_settings_on_enter(void* ctx) {
     // Add write modes
     value_index = m100_is_write_mask_enabled(uhf_module, WRITE_EPC) ? 1 : 0;
     item = variable_item_list_add(
-        variable_item_list, "Write EPC:", 2, uhf_settings_set_epc_write_mask, uhf_module);
+        variable_item_list, UHF_UI_TEXT("Write EPC:", "写入 EPC:"), 2, uhf_settings_set_epc_write_mask, uhf_module);
     variable_item_set_current_value_text(item, yes_no[value_index]);
     variable_item_set_current_value_index(item, value_index);
 
     value_index = m100_is_write_mask_enabled(uhf_module, WRITE_TID) ? 1 : 0;
     item = variable_item_list_add(
-        variable_item_list, "Write TID:", 2, uhf_settings_set_tid_write_mask, uhf_module);
+        variable_item_list, UHF_UI_TEXT("Write TID:", "写入 TID:"), 2, uhf_settings_set_tid_write_mask, uhf_module);
     variable_item_set_current_value_text(item, yes_no[value_index]);
     variable_item_set_current_value_index(item, value_index);
 
     value_index = m100_is_write_mask_enabled(uhf_module, WRITE_USER) ? 1 : 0;
     item = variable_item_list_add(
-        variable_item_list, "Write User:", 2, uhf_settings_set_user_write_mask, uhf_module);
+        variable_item_list, UHF_UI_TEXT("Write User:", "写入 USER:"), 2, uhf_settings_set_user_write_mask, uhf_module);
     variable_item_set_current_value_text(item, yes_no[value_index]);
     variable_item_set_current_value_index(item, value_index);
 
     value_index = m100_is_write_mask_enabled(uhf_module, WRITE_RFU) ? 1 : 0;
     item = variable_item_list_add(
-        variable_item_list, "Write RFU:", 2, uhf_settings_set_rfu_write_mask, uhf_module);
+        variable_item_list, UHF_UI_TEXT("Write RFU:", "写入 RFU:"), 2, uhf_settings_set_rfu_write_mask, uhf_module);
     variable_item_set_current_value_text(item, yes_no[value_index]);
     variable_item_set_current_value_index(item, value_index);
 }

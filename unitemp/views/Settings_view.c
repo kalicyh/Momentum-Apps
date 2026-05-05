@@ -23,11 +23,11 @@ static View* view;
 //List
 static VariableItemList* variable_item_list;
 
-static const char states[2][9] = {"Auto", "Infinity"};
+static const char states[2][9] = {UNITEMP_UI_TEXT("Auto", "自动"), UNITEMP_UI_TEXT("Infinity", "常亮")};
 static const char temp_units[UT_TEMP_COUNT][3] = {"*C", "*F"};
-static const char humidity_units[UT_HUMIDITY_COUNT][12] = {"Relative", "Dewpoint"};
+static const char humidity_units[UT_HUMIDITY_COUNT][12] = {UNITEMP_UI_TEXT("Relative", "相对"), UNITEMP_UI_TEXT("Dewpoint", "露点")};
 static const char pressure_units[UT_PRESSURE_COUNT][6] = {"mmHg", "inHg", "kPa", "hPa"};
-static const char heat_index_bool[2][4] = {"OFF", "ON"};
+static const char heat_index_bool[2][4] = {UNITEMP_UI_TEXT("OFF", "关"), UNITEMP_UI_TEXT("ON", "开")};
 
 //List item - infinite highlight
 VariableItem* infinity_backlight_item;
@@ -120,15 +120,15 @@ void unitemp_Settings_alloc(void) {
     variable_item_list_reset(variable_item_list);
 
     infinity_backlight_item = variable_item_list_add(
-        variable_item_list, "Backlight time", UT_TEMP_COUNT, _setting_change_callback, app);
+        variable_item_list, UNITEMP_UI_TEXT("Backlight time", "背光时长"), UT_TEMP_COUNT, _setting_change_callback, app);
     temperature_unit_item =
-        variable_item_list_add(variable_item_list, "Temp. unit", 2, _setting_change_callback, app);
+        variable_item_list_add(variable_item_list, UNITEMP_UI_TEXT("Temp. unit", "温度单位"), 2, _setting_change_callback, app);
     humidity_unit_item = variable_item_list_add(
-        variable_item_list, "Humidity unit", UT_HUMIDITY_COUNT, _setting_change_callback, app);
+        variable_item_list, UNITEMP_UI_TEXT("Humidity unit", "湿度单位"), UT_HUMIDITY_COUNT, _setting_change_callback, app);
     pressure_unit_item = variable_item_list_add(
-        variable_item_list, "Press. unit", UT_PRESSURE_COUNT, _setting_change_callback, app);
+        variable_item_list, UNITEMP_UI_TEXT("Press. unit", "气压单位"), UT_PRESSURE_COUNT, _setting_change_callback, app);
     heat_index_item = variable_item_list_add(
-        variable_item_list, "Calc. heat index", 2, _setting_change_callback, app);
+        variable_item_list, UNITEMP_UI_TEXT("Calc. heat index", "计算热指数"), 2, _setting_change_callback, app);
 
     //Adding a callback for pressing the middle button
     variable_item_list_set_enter_callback(variable_item_list, _enter_callback, app);

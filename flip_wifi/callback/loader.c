@@ -65,43 +65,43 @@ static void loader_error_draw(Canvas *canvas, DataLoaderModel *model)
         if (strstr(model->fhttp->last_response, "[ERROR] Not connected to Wifi. Failed to reconnect.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接 WiFi。"));
+            canvas_draw_str(canvas, 0, 50, FLIP_WIFI_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(canvas, 0, 60, FLIP_WIFI_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(model->fhttp->last_response, "[ERROR] Failed to connect to Wifi.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Not connected to Wifi.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("[ERROR] Not connected to Wifi.", "[错误] 未连接 WiFi。"));
+            canvas_draw_str(canvas, 0, 50, FLIP_WIFI_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(canvas, 0, 60, FLIP_WIFI_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(model->fhttp->last_response, "[ERROR] GET request failed or returned empty data.") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] WiFi error.");
-            canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-            canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+            canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("[ERROR] WiFi error.", "[错误] WiFi 错误。"));
+            canvas_draw_str(canvas, 0, 50, FLIP_WIFI_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+            canvas_draw_str(canvas, 0, 60, FLIP_WIFI_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
         }
         else if (strstr(model->fhttp->last_response, "[PONG]") != NULL)
         {
             canvas_clear(canvas);
-            canvas_draw_str(canvas, 0, 10, "[STATUS]Connecting to AP...");
+            canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("[STATUS]Connecting to AP...", "[状态] 正在连接 AP..."));
         }
         else
         {
             canvas_clear(canvas);
             FURI_LOG_E(TAG, "Received an error: %s", model->fhttp->last_response);
-            canvas_draw_str(canvas, 0, 10, "[ERROR] Unusual error...");
-            canvas_draw_str(canvas, 0, 60, "Press BACK and retry.");
+            canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("[ERROR] Unusual error...", "[错误] 异常错误..."));
+            canvas_draw_str(canvas, 0, 60, FLIP_WIFI_UI_TEXT("Press BACK and retry.", "按 BACK 重试。"));
         }
     }
     else
     {
         canvas_clear(canvas);
-        canvas_draw_str(canvas, 0, 10, "[ERROR] Unknown error.");
-        canvas_draw_str(canvas, 0, 50, "Update your WiFi settings.");
-        canvas_draw_str(canvas, 0, 60, "Press BACK to return.");
+        canvas_draw_str(canvas, 0, 10, FLIP_WIFI_UI_TEXT("[ERROR] Unknown error.", "[错误] 未知错误。"));
+        canvas_draw_str(canvas, 0, 50, FLIP_WIFI_UI_TEXT("Update your WiFi settings.", "请更新 WiFi 设置。"));
+        canvas_draw_str(canvas, 0, 60, FLIP_WIFI_UI_TEXT("Press BACK to return.", "按 BACK 返回。"));
     }
 }
 
@@ -295,12 +295,12 @@ void loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == INACTIVE)
     {
-        canvas_draw_str(canvas, 0, 7, "Wifi Dev Board disconnected.");
-        canvas_draw_str(canvas, 0, 17, "Please connect to the board.");
-        canvas_draw_str(canvas, 0, 32, "If your board is connected,");
-        canvas_draw_str(canvas, 0, 42, "make sure you have flashed");
-        canvas_draw_str(canvas, 0, 52, "your WiFi Devboard with the");
-        canvas_draw_str(canvas, 0, 62, "latest FlipperHTTP flash.");
+        canvas_draw_str(canvas, 0, 7, FLIP_WIFI_UI_TEXT("Wifi Dev Board disconnected.", "WiFi 开发板已断开。"));
+        canvas_draw_str(canvas, 0, 17, FLIP_WIFI_UI_TEXT("Please connect to the board.", "请连接开发板。"));
+        canvas_draw_str(canvas, 0, 32, FLIP_WIFI_UI_TEXT("If your board is connected,", "如已连接，请确认已"));
+        canvas_draw_str(canvas, 0, 42, FLIP_WIFI_UI_TEXT("make sure you have flashed", "为 WiFi 开发板刷入"));
+        canvas_draw_str(canvas, 0, 52, FLIP_WIFI_UI_TEXT("your WiFi Devboard with the", "最新 FlipperHTTP 固件。"));
+        canvas_draw_str(canvas, 0, 62, FLIP_WIFI_UI_TEXT("latest FlipperHTTP flash.", ""));
         return;
     }
 
@@ -311,7 +311,7 @@ void loader_draw_callback(Canvas *canvas, void *model)
     }
 
     canvas_draw_str(canvas, 0, 7, title);
-    canvas_draw_str(canvas, 0, 17, "Loading...");
+    canvas_draw_str(canvas, 0, 17, FLIP_WIFI_UI_TEXT("Loading...", "加载中..."));
 
     if (data_state == DataStateInitial)
     {
@@ -320,25 +320,25 @@ void loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == SENDING)
     {
-        canvas_draw_str(canvas, 0, 27, "Fetching...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WIFI_UI_TEXT("Fetching...", "获取中..."));
         return;
     }
 
     if (http_state == RECEIVING || data_state == DataStateRequested)
     {
-        canvas_draw_str(canvas, 0, 27, "Receiving...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WIFI_UI_TEXT("Receiving...", "接收中..."));
         return;
     }
 
     if (http_state == IDLE && data_state == DataStateReceived)
     {
-        canvas_draw_str(canvas, 0, 27, "Processing...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WIFI_UI_TEXT("Processing...", "处理中..."));
         return;
     }
 
     if (http_state == IDLE && data_state == DataStateParsed)
     {
-        canvas_draw_str(canvas, 0, 27, "Processed...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WIFI_UI_TEXT("Processed...", "处理完成..."));
         return;
     }
 }

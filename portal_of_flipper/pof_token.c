@@ -4,6 +4,12 @@
 #include <portal_of_flipper_icons.h>
 #include "pof_token.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "PoFToken"
 
 static uint8_t pof_token_sector_0_key[] = {0x4b, 0x0b, 0x20, 0x10, 0x7c, 0xcb};
@@ -28,7 +34,7 @@ void pof_token_set_name(PoFToken* pof_token, const char* name) {
 }
 
 static bool pof_token_load_data(PoFToken* pof_token, FuriString* path, bool show_dialog) {
-    FuriString* reason = furi_string_alloc_set("Couldn't load file");
+    FuriString* reason = furi_string_alloc_set(UI_TEXT("Couldn't load file", "无法加载文件"));
 
     if(pof_token->loading_cb) {
         pof_token->loading_cb(pof_token->loading_cb_ctx, true);
@@ -40,19 +46,19 @@ static bool pof_token_load_data(PoFToken* pof_token, FuriString* path, bool show
 
         NfcProtocol protocol = nfc_device_get_protocol(nfc_device);
         if(protocol != NfcProtocolMfClassic) {
-            furi_string_printf(reason, "Not Mifare Classic");
+            furi_string_printf(reason, UI_TEXT("Not Mifare Classic", "非 Mifare Classic"));
             break;
         }
 
         const MfClassicData* data = nfc_device_get_data(nfc_device, NfcProtocolMfClassic);
         if(!mf_classic_is_card_read(data)) {
-            furi_string_printf(reason, "Incomplete data");
+            furi_string_printf(reason, UI_TEXT("Incomplete data", "数据不完整"));
             break;
         }
 
         MfClassicKey key = mf_classic_get_key(data, 0, MfClassicKeyTypeA);
         if(memcmp(key.data, pof_token_sector_0_key, MF_CLASSIC_KEY_SIZE) != 0) {
-            furi_string_printf(reason, "Wrong key");
+            furi_string_printf(reason, UI_TEXT("Wrong key", "密钥错误"));
             break;
         }
 

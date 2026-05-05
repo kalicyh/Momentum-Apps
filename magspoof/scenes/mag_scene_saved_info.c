@@ -20,10 +20,13 @@ void mag_scene_saved_info_on_enter(void* context) {
 
         furi_string_cat_printf(
             tmp_str,
-            "Track %d:%s%s%s",
+            "%s %d:%s%s%s",
+            MAGSPOOF_UI_TEXT("Track", "磁道"),
             (i + 1),
             furi_string_empty(trackstr) ? "  " : "\n",
-            furi_string_empty(trackstr) ? "< empty >" : furi_string_get_cstr(trackstr),
+            furi_string_empty(trackstr)
+                ? MAGSPOOF_UI_TEXT("< empty >", "< 空 >")
+                : furi_string_get_cstr(trackstr),
             (i + 1 == MAG_DEV_TRACKS) ? "" : "\n\n");
     }
 

@@ -14,6 +14,12 @@
 
 #include "FlipperZeroWiFiModuleDefines.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WIFI_SCANNER_UI_TEXT(en, zh) (zh)
+#else
+#define WIFI_SCANNER_UI_TEXT(en, zh) (en)
+#endif
+
 #define WIFI_APP_DEBUG 0
 
 #if WIFI_APP_DEBUG
@@ -405,7 +411,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
         case Undefined: {
             canvas_set_font(canvas, FontPrimary);
 
-            const char* strError = "Something wrong";
+            const char* strError = WIFI_SCANNER_UI_TEXT("Something wrong", "出现错误");
             canvas_draw_str(
                 canvas,
                 (128 / 2) - (canvas_string_width(canvas, strError) / 2),
@@ -418,7 +424,8 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
             if(!app->m_wifiModuleAttached) {
                 canvas_set_font(canvas, FontSecondary);
 
-                const char* strConnectModule = "Attach WiFi scanner module";
+                const char* strConnectModule =
+                    WIFI_SCANNER_UI_TEXT("Attach WiFi scanner module", "请连接WiFi扫描模块");
                 canvas_draw_str(
                     canvas,
                     (128 / 2) - (canvas_string_width(canvas, strConnectModule) / 2),
@@ -432,7 +439,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
             if(!app->m_wifiModuleInitialized) {
                 canvas_set_font(canvas, FontPrimary);
 
-                const char* strInitializing = "Initializing...";
+                const char* strInitializing = WIFI_SCANNER_UI_TEXT("Initializing...", "正在初始化...");
                 canvas_draw_str(
                     canvas,
                     (128 / 2) - (canvas_string_width(canvas, strInitializing) / 2),
@@ -456,7 +463,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
                 offsetX,
                 offsetY,
                 app->m_currentAccesspointDescription.m_isHidden ?
-                    "(Hidden SSID)" :
+                    WIFI_SCANNER_UI_TEXT("(Hidden SSID)", "(隐藏SSID)") :
                     furi_string_get_cstr(app->m_currentAccesspointDescription.m_accessPointName));
 
             offsetY += fontHeight;
@@ -593,7 +600,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
 
             canvas_set_custom_u8g2_font(canvas, u8g2_font_7x13B_tr);
             //canvas_set_font(canvas, FontPrimary);
-            const char* message = "Scanning";
+            const char* message = WIFI_SCANNER_UI_TEXT("Scanning", "扫描中");
             canvas_draw_str(
                 canvas, 128 / 2 - canvas_string_width(canvas, message) / 2, 55, message);
         } break;
@@ -626,7 +633,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
 
             canvas_set_custom_u8g2_font(canvas, u8g2_font_7x13B_tr);
             //canvas_set_font(canvas, FontPrimary);
-            const char* message = "Monitor Mode";
+            const char* message = WIFI_SCANNER_UI_TEXT("Monitor Mode", "监测模式");
             canvas_draw_str(
                 canvas, 128 / 2 - canvas_string_width(canvas, message) / 2, 55, message);
         } break;

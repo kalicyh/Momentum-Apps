@@ -79,7 +79,7 @@ static void xbox_controller_view_draw_callback(Canvas* canvas, void* context) {
     canvas_set_font(canvas, FontSecondary);
 
     canvas_draw_icon(canvas, 0, 12, &I_Pin_back_arrow_10x8);
-    canvas_draw_str(canvas, 12, 20, "Hold");
+    canvas_draw_str(canvas, 12, 20, UI_TEXT("Hold", "长按"));
 
     xbox_controller_view_draw_arrow_button(
         canvas, model->up_pressed, 23, 74, CanvasDirectionBottomToTop);

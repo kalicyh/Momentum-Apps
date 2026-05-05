@@ -1,16 +1,26 @@
 #include "../mag_i.h"
 #include "../helpers/mag_helpers.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define TAG "MagSceneEmulate"
 
 void cat_trackstr(FuriString* str, uint8_t calls, uint8_t i, FuriString* trackstr) {
     furi_string_cat_printf(
         str,
-        "%sTrack %d:%s%s\n",
+        "%s%s %d:%s%s\n",
         (calls == 0) ? "" : "\n", // if first line, don't prepend a "\n"
+        MAGSPOOF_UI_TEXT("Track", "磁道"),
         (i + 1),
         furi_string_empty(trackstr) ? "  " : "\n",
-        furi_string_empty(trackstr) ? "< empty >" : furi_string_get_cstr(trackstr));
+        furi_string_empty(trackstr) ? MAGSPOOF_UI_TEXT("< empty >", "< 空 >")
+                                    : furi_string_get_cstr(trackstr));
 }
 
 void mag_scene_emulate_on_enter(void* context) {
@@ -57,8 +67,10 @@ void mag_scene_emulate_on_enter(void* context) {
 
     widget_add_text_scroll_element(widget, 0, 15, 128, 49, furi_string_get_cstr(tmp_str));
 
-    widget_add_button_element(widget, GuiButtonTypeLeft, "Config", mag_widget_callback, mag);
-    widget_add_button_element(widget, GuiButtonTypeRight, "Send", mag_widget_callback, mag);
+    widget_add_button_element(
+        widget, GuiButtonTypeLeft, MAGSPOOF_UI_TEXT("Config", "配置"), mag_widget_callback, mag);
+    widget_add_button_element(
+        widget, GuiButtonTypeRight, MAGSPOOF_UI_TEXT("Send", "发送"), mag_widget_callback, mag);
     view_dispatcher_switch_to_view(mag->view_dispatcher, MagViewWidget);
     furi_string_free(tmp_str);
 }

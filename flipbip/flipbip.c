@@ -4,9 +4,9 @@
 #include <memzero.h>
 #include <bip39.h>
 
-#define MNEMONIC_MENU_DEFAULT "Import mnemonic seed"
-#define MNEMONIC_MENU_SUCCESS "Import seed (success)"
-#define MNEMONIC_MENU_FAILURE "Import seed (failed!)"
+#define MNEMONIC_MENU_DEFAULT FLIPBIP_UI_TEXT("Import mnemonic seed", "导入助记词种子")
+#define MNEMONIC_MENU_SUCCESS FLIPBIP_UI_TEXT("Import seed (success)", "导入种子（成功）")
+#define MNEMONIC_MENU_FAILURE FLIPBIP_UI_TEXT("Import seed (failed!)", "导入种子（失败！）")
 
 bool flipbip_custom_event_callback(void* context, uint32_t event) {
     furi_assert(context);
@@ -167,11 +167,11 @@ FlipBip* flipbip_app_alloc() {
     app->renew_dialog = dialog_ex_alloc();
     dialog_ex_set_result_callback(app->renew_dialog, flipbip_scene_renew_dialog_callback);
     dialog_ex_set_context(app->renew_dialog, app);
-    dialog_ex_set_left_button_text(app->renew_dialog, "No");
-    dialog_ex_set_right_button_text(app->renew_dialog, "Yes");
+    dialog_ex_set_left_button_text(app->renew_dialog, FLIPBIP_UI_TEXT("No", "否"));
+    dialog_ex_set_right_button_text(app->renew_dialog, FLIPBIP_UI_TEXT("Yes", "是"));
     dialog_ex_set_header(
         app->renew_dialog,
-        "Current wallet\nwill be deleted!\nProceed?",
+        FLIPBIP_UI_TEXT("Current wallet\nwill be deleted!\nProceed?", "当前钱包\n将被删除！\n是否继续？"),
         16,
         12,
         AlignLeft,

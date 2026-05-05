@@ -54,13 +54,14 @@ game_over_render(Entity* self,
 
     canvas_draw_sprite(canvas, entity_context->logo_sprite, x, y);
 
-    char score_str[12] = {};
-    snprintf(score_str, sizeof(score_str), "SCORE: %ld", entity_context->score);
+    char score_str[24] = {};
+    snprintf(score_str, sizeof(score_str), "%s%ld", UI_TEXT("SCORE: ", "得分: "), entity_context->score);
 
-    char best_score_str[10] = {};
+    char best_score_str[24] = {};
     snprintf(best_score_str,
              sizeof(best_score_str),
-             "BEST: %ld",
+             "%s%ld",
+             UI_TEXT("BEST: ", "最高: "),
              entity_context->max_score);
 
     canvas_set_color(canvas, ColorBlack);

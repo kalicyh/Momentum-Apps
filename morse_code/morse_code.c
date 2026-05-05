@@ -7,6 +7,12 @@
 #include <furi_hal.h>
 #include <string.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MORSE_CODE_UI_TEXT(en, zh) (zh)
+#else
+#define MORSE_CODE_UI_TEXT(en, zh) (en)
+#endif
+
 static const float MORSE_CODE_VOLUMES[] = {0, .25, .5, .75, 1};
 
 typedef struct {
@@ -45,12 +51,12 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     canvas_draw_box(canvas, vol_bar_x_pos, vol_bar_y_pos + (64 - volume_h), 4, volume_h);
 
     //dit bpms
-    FuriString* ditbpm = furi_string_alloc_printf("Dit: %ld ms", morse_code->model->dit_delta);
+    FuriString* ditbpm = furi_string_alloc_printf(MORSE_CODE_UI_TEXT("Dit: %ld ms", "点: %ld ms"), morse_code->model->dit_delta);
     canvas_draw_str_aligned(canvas, 0, 10, AlignLeft, AlignCenter, furi_string_get_cstr(ditbpm));
     furi_string_free(ditbpm);
 
     //button info
-    elements_button_center(canvas, "Press/Hold");
+    elements_button_center(canvas, MORSE_CODE_UI_TEXT("Press/Hold", "按/按住"));
     furi_mutex_release(morse_code->model_mutex);
 }
 

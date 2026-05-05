@@ -1,6 +1,14 @@
 #include "app.h"
 #include "app_config.h"
 
+#ifndef FLIPBOARD_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include <devices/devices.h>
 
 /**
@@ -43,7 +51,7 @@ static void flipboard_view_flip_signal_draw(Canvas* canvas, void* model) {
     canvas_draw_icon(canvas, 67, 19, icon3);
     canvas_draw_icon(canvas, 98, 19, icon4);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 33, 60, "ACTION:");
+    canvas_draw_str(canvas, 33, 60, FLIPBOARD_UI_TEXT("ACTION:", "动作:"));
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 84, 60, furi_string_get_cstr(action_text));
 

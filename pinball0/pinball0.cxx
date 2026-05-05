@@ -247,12 +247,12 @@ static void pinball_draw_callback(Canvas* const canvas, void* ctx) {
     } break;
     case GM_Settings: {
         // TODO: like... do better here. maybe vector of settings strings, etc
-        canvas_draw_str_aligned(canvas, 2, 10, AlignLeft, AlignTop, "SETTINGS");
+        canvas_draw_str_aligned(canvas, 2, 10, AlignLeft, AlignTop, PINBALL_UI_TEXT("SETTINGS", "设置"));
 
         int x = 55;
         int y = 30;
 
-        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignTop, "Sound");
+        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignTop, PINBALL_UI_TEXT("Sound", "声音"));
         canvas_draw_circle(canvas, x, y + 3, 4);
         if(pb->settings.sound_enabled) {
             canvas_draw_disc(canvas, x, y + 3, 2);
@@ -272,7 +272,7 @@ static void pinball_draw_callback(Canvas* const canvas, void* ctx) {
         }
         y += 12;
 
-        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignTop, "Vibrate");
+        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignTop, PINBALL_UI_TEXT("Vibrate", "振动"));
         canvas_draw_circle(canvas, x, y + 3, 4);
         if(pb->settings.vibrate_enabled) {
             canvas_draw_disc(canvas, x, y + 3, 2);
@@ -282,7 +282,7 @@ static void pinball_draw_callback(Canvas* const canvas, void* ctx) {
         }
         y += 12;
 
-        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignTop, "Debug");
+        canvas_draw_str_aligned(canvas, 10, y, AlignLeft, AlignTop, PINBALL_UI_TEXT("Debug", "调试"));
         canvas_draw_circle(canvas, x, y + 3, 4);
         if(pb->settings.debug_mode) {
             canvas_draw_disc(canvas, x, y + 3, 2);

@@ -23,6 +23,12 @@
 
 #define TAG "GBPHOTO"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GBPHOTO_UI_TEXT(en, zh) (zh)
+#else
+#define GBPHOTO_UI_TEXT(en, zh) (en)
+#endif
+
 #define MALVEKE_APP_RAM_EXTENSION ".sav"
 
 #define MALVEKE_APP_FOLDER_USER "apps_data/malveke"

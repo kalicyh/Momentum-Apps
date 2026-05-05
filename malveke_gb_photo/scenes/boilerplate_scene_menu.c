@@ -19,13 +19,13 @@ void boilerplate_scene_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Photo Viewer",
+        GBPHOTO_UI_TEXT("Photo Viewer", "照片查看器"),
         SubmenuIndexScene1,
         boilerplate_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Export All",
+        GBPHOTO_UI_TEXT("Export All", "全部导出"),
         SubmenuIndexScene2,
         boilerplate_scene_menu_submenu_callback,
         app);
@@ -33,7 +33,7 @@ void boilerplate_scene_menu_on_enter(void* context) {
     // submenu_add_item(app->submenu, "Scene 4 (File Browser)", SubmenuIndexScene4, boilerplate_scene_menu_submenu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Settings",
+        GBPHOTO_UI_TEXT("Settings", "设置"),
         SubmenuIndexSettings,
         boilerplate_scene_menu_submenu_callback,
         app);

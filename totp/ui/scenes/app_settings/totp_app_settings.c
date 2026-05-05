@@ -20,10 +20,21 @@
 
 #define FONT_TEST_STR_LENGTH (7)
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+static const char* YES_NO_LIST[] = {"否", "是"};
+static const char* TOKEN_GROUPING_LIST[] = {"否", "2", "3"};
+static const char* AUTOMATION_LIST[] = {
+    "无",
+    "USB"
+#ifdef TOTP_BADBT_AUTOMATION_ENABLED
+    ,
+    "蓝牙",
+    "蓝牙+USB"
+#endif
+};
+#else
 static const char* YES_NO_LIST[] = {"NO", "YES"};
 static const char* TOKEN_GROUPING_LIST[] = {"NO", "2", "3"};
-static const uint8_t TOKEN_GROUPING_LIST_VALUES[] = {0, 2, 3};
-static const uint8_t TOKEN_GROUPING_LIST_VALUES_INDEXES[] = {0, 0, 1, 2};
 static const char* AUTOMATION_LIST[] = {
     "None",
     "USB"
@@ -33,6 +44,9 @@ static const char* AUTOMATION_LIST[] = {
     "BT and USB"
 #endif
 };
+#endif
+static const uint8_t TOKEN_GROUPING_LIST_VALUES[] = {0, 2, 3};
+static const uint8_t TOKEN_GROUPING_LIST_VALUES_INDEXES[] = {0, 0, 1, 2};
 static const char* FONT_TEST_STR = "0123BCD";
 
 typedef enum {
@@ -141,13 +155,13 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
     if(scene_state->selected_control < FontSelect) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(
-            canvas, 0, 0 - scene_state->y_offset, AlignLeft, AlignTop, "Timezone offset");
+            canvas, 0, 0 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Timezone offset", "时区偏移"));
         canvas_set_font(canvas, FontSecondary);
 
         char tmp_str[4];
         two_digit_to_str(scene_state->tz_offset_hours, &tmp_str[0]);
         canvas_draw_str_aligned(
-            canvas, 0, 17 - scene_state->y_offset, AlignLeft, AlignTop, "Hours:");
+            canvas, 0, 17 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Hours:", "小时:"));
         ui_control_select_render(
             canvas,
             36,
@@ -158,7 +172,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
 
         two_digit_to_str(scene_state->tz_offset_minutes, &tmp_str[0]);
         canvas_draw_str_aligned(
-            canvas, 0, 35 - scene_state->y_offset, AlignLeft, AlignTop, "Minutes:");
+            canvas, 0, 35 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Minutes:", "分钟:"));
         ui_control_select_render(
             canvas,
             36,
@@ -170,7 +184,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
     } else if(scene_state->selected_control < SoundSwitch) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(
-            canvas, 0, 64 - scene_state->y_offset, AlignLeft, AlignTop, "Font");
+            canvas, 0, 64 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Font", "字体"));
         canvas_set_font(canvas, FontSecondary);
 
         const FontInfo* const font = scene_state->active_font;
@@ -192,11 +206,11 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
     } else if(scene_state->selected_control < AutomationSwitch) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(
-            canvas, 0, 128 - scene_state->y_offset, AlignLeft, AlignTop, "Notifications");
+            canvas, 0, 128 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Notifications", "通知"));
         canvas_set_font(canvas, FontSecondary);
 
         canvas_draw_str_aligned(
-            canvas, 0, 145 - scene_state->y_offset, AlignLeft, AlignTop, "Sound:");
+            canvas, 0, 145 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Sound:", "声音:"));
         ui_control_select_render(
             canvas,
             36,
@@ -206,7 +220,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
             scene_state->selected_control == SoundSwitch);
 
         canvas_draw_str_aligned(
-            canvas, 0, 163 - scene_state->y_offset, AlignLeft, AlignTop, "Vibro:");
+            canvas, 0, 163 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Vibro:", "震动:"));
         ui_control_select_render(
             canvas,
             36,
@@ -217,7 +231,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
     } else if(scene_state->selected_control < SplitTokenIntoGroupsSelect) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(
-            canvas, 0, 192 - scene_state->y_offset, AlignLeft, AlignTop, "Automation");
+            canvas, 0, 192 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Automation", "自动化"));
         canvas_set_font(canvas, FontSecondary);
 
         int group_offset = 0;
@@ -229,7 +243,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
                 209 - scene_state->y_offset - group_offset,
                 AlignLeft,
                 AlignTop,
-                "Method:");
+                TOTP_UI_TEXT("Method:", "方式:"));
             ui_control_select_render(
                 canvas,
                 36,
@@ -251,7 +265,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
                 227 - scene_state->y_offset - group_offset,
                 AlignLeft,
                 AlignTop,
-                "Layout:");
+                TOTP_UI_TEXT("Layout:", "布局:"));
 
             ui_control_select_render(
                 canvas,
@@ -267,7 +281,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
 #endif
 
         canvas_draw_str_aligned(
-            canvas, 0, 245 - scene_state->y_offset - group_offset, AlignLeft, AlignTop, "Delay:");
+            canvas, 0, 245 - scene_state->y_offset - group_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Delay:", "延迟:"));
 
         ui_control_select_render(
             canvas,
@@ -285,7 +299,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
                 263 - scene_state->y_offset - group_offset,
                 AlignLeft,
                 AlignTop,
-                "BT Profile:");
+                TOTP_UI_TEXT("BT Profile:", "蓝牙配置:"));
 
             char profile_index_formatted[4];
             snprintf(profile_index_formatted, 4, "%d", scene_state->badbt_profile_index);
@@ -301,11 +315,11 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
 #endif
     } else {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 0, 256 - scene_state->y_offset, AlignLeft, AlignTop, "UI");
+        canvas_draw_str_aligned(canvas, 0, 256 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("UI", "界面"));
         canvas_set_font(canvas, FontSecondary);
 
         canvas_draw_str_aligned(
-            canvas, 0, 273 - scene_state->y_offset, AlignLeft, AlignTop, "Digit grouping:");
+            canvas, 0, 273 - scene_state->y_offset, AlignLeft, AlignTop, TOTP_UI_TEXT("Digit grouping:", "数字分组:"));
 
         ui_control_select_render(
             canvas,
@@ -321,7 +335,7 @@ void totp_scene_app_settings_render(Canvas* const canvas, const PluginState* plu
             306 - scene_state->y_offset,
             48,
             13,
-            "Confirm",
+            TOTP_UI_TEXT("Confirm", "确认"),
             scene_state->selected_control == ConfirmButton);
     }
 

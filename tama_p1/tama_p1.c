@@ -323,7 +323,7 @@ static void draw_mini(Canvas* const canvas) {
 
 static void draw_menu(Canvas* const canvas) {
     canvas_draw_frame(canvas, 0, 0, 128, 64);
-    canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignCenter, "Menu");
+    canvas_draw_str_aligned(canvas, 64, 6, AlignCenter, AlignCenter, TAMA_UI_TEXT("Menu", "菜单"));
     canvas_draw_line(canvas, 0, 10, 128, 10);
     draw_mini(canvas);
     // draw_mini(canvas, 34, 84);
@@ -371,19 +371,19 @@ static void draw_menu(Canvas* const canvas) {
     }
     switch(layout_mode) {
     case 0:
-        canvas_draw_str(canvas, 12, 20, "Layout: Landscape (small)");
+        canvas_draw_str(canvas, 12, 20, TAMA_UI_TEXT("Layout: Landscape (small)", "布局: 横屏(小)"));
         break;
     case 1:
-        canvas_draw_str(canvas, 12, 20, "Layout: Landscape (big)");
+        canvas_draw_str(canvas, 12, 20, TAMA_UI_TEXT("Layout: Landscape (big)", "布局: 横屏(大)"));
         break;
     case 2:
-        canvas_draw_str(canvas, 12, 20, "Layout: Landscape (full)");
+        canvas_draw_str(canvas, 12, 20, TAMA_UI_TEXT("Layout: Landscape (full)", "布局: 横屏(全)"));
         break;
     case 3:
-        canvas_draw_str(canvas, 12, 20, "Layout: Portrait =>");
+        canvas_draw_str(canvas, 12, 20, TAMA_UI_TEXT("Layout: Portrait =>", "布局: 竖屏 =>"));
         break;
     case 4:
-        canvas_draw_str(canvas, 12, 20, "Layout: Portrait <=");
+        canvas_draw_str(canvas, 12, 20, TAMA_UI_TEXT("Layout: Portrait <=", "布局: 竖屏 <="));
         break;
     default:
         canvas_draw_str(canvas, 12, 20, "Layout: ???");
@@ -394,13 +394,13 @@ static void draw_menu(Canvas* const canvas) {
     //     canvas_draw_str(canvas, 12, 30, "Speed: 0x");
     //     break;
     case 1:
-        canvas_draw_str(canvas, 12, 30, "Speed: 1x");
+        canvas_draw_str(canvas, 12, 30, TAMA_UI_TEXT("Speed: 1x", "速度: 1x"));
         break;
     case 2:
-        canvas_draw_str(canvas, 12, 30, "Speed:  2x");
+        canvas_draw_str(canvas, 12, 30, TAMA_UI_TEXT("Speed:  2x", "速度:  2x"));
         break;
     case 4:
-        canvas_draw_str(canvas, 12, 30, "Speed:   4x (max)");
+        canvas_draw_str(canvas, 12, 30, TAMA_UI_TEXT("Speed:   4x (max)", "速度:   4x(最大)"));
         break;
     default:
         canvas_draw_str(canvas, 12, 30, "Speed ??x");
@@ -411,9 +411,9 @@ static void draw_menu(Canvas* const canvas) {
     canvas_draw_str(canvas, 55, 40, "B");
     canvas_draw_str(canvas, 65, 40, "C");
 
-    canvas_draw_str(canvas, 12, 60, "Close");
-    canvas_draw_str(canvas, 44, 60, "Save");
-    canvas_draw_str(canvas, 75, 60, "Save & Exit");
+    canvas_draw_str(canvas, 12, 60, TAMA_UI_TEXT("Close", "关闭"));
+    canvas_draw_str(canvas, 44, 60, TAMA_UI_TEXT("Save", "保存"));
+    canvas_draw_str(canvas, 75, 60, TAMA_UI_TEXT("Save & Exit", "保存并退出"));
 }
 
 static void tama_p1_draw_callback(Canvas* const canvas, void* cb_ctx) {
@@ -424,10 +424,10 @@ static void tama_p1_draw_callback(Canvas* const canvas, void* cb_ctx) {
 
     if(g_ctx->rom == NULL) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 30, 30, "No ROM");
+        canvas_draw_str(canvas, 30, 30, TAMA_UI_TEXT("No ROM", "无 ROM"));
     } else if(g_ctx->halted) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 30, 30, "Halted");
+        canvas_draw_str(canvas, 30, 30, TAMA_UI_TEXT("Halted", "已停止"));
     } else {
         if(in_menu) {
             // switch(layout_mode)

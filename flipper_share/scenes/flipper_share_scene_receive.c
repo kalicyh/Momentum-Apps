@@ -92,7 +92,7 @@ static void progress_view_draw_callback(Canvas* canvas, void* context) {
     // Header
     canvas_set_font(canvas, FontPrimary);
     canvas_set_color(canvas, ColorBlack);
-    elements_multiline_text_aligned(canvas, 64, 4, AlignCenter, AlignTop, "Receiving...");
+    elements_multiline_text_aligned(canvas, 64, 4, AlignCenter, AlignTop, FLIPPER_SHARE_UI_TEXT("Receiving...", "接收中..."));
 
     // Filename (basename) g.r_file_name and g.r_file_size
     canvas_set_font(canvas, FontSecondary);
@@ -101,7 +101,7 @@ static void progress_view_draw_callback(Canvas* canvas, void* context) {
     elements_multiline_text_aligned(canvas, 64, 20, AlignCenter, AlignTop, name_line);
 
     // Show progress percent as text above bar
-    snprintf(name_line, sizeof(name_line), "Progress: %u%%", (unsigned int)percent);
+    snprintf(name_line, sizeof(name_line), FLIPPER_SHARE_UI_TEXT("Progress: %u%%", "进度: %u%%"), (unsigned int)percent);
     elements_multiline_text_aligned(canvas, 64, 36, AlignCenter, AlignTop, name_line);
 
     // Progress bar frame and fill
@@ -192,9 +192,9 @@ void flipper_share_scene_receive_on_enter(void* context) {
     app->file_reading_state = state;
 
     // Setup dialog to show progress (use same UI as send scene so buttons appear)
-    dialog_ex_set_header(app->dialog_show_file, "Receiving...", 64, 10, AlignCenter, AlignCenter);
-    dialog_ex_set_text(app->dialog_show_file, "Waiting for announce...", 64, 32, AlignCenter, AlignCenter);
-    dialog_ex_set_left_button_text(app->dialog_show_file, "Back");
+    dialog_ex_set_header(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Receiving...", "接收中..."), 64, 10, AlignCenter, AlignCenter);
+    dialog_ex_set_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Waiting for announce...", "等待广播..."), 64, 32, AlignCenter, AlignCenter);
+    dialog_ex_set_left_button_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Back", "返回"));
     dialog_ex_set_right_button_text(app->dialog_show_file, NULL);
 
     dialog_ex_set_context(app->dialog_show_file, app);
@@ -231,11 +231,11 @@ static void update_timer_callback(void* context) {
             
         if(state->reading_complete) {
             if (g.r_is_success) {
-                dialog_ex_set_header(app->dialog_show_file, "Success!", 64, 10, AlignCenter, AlignCenter);
+                dialog_ex_set_header(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Success!", "成功!"), 64, 10, AlignCenter, AlignCenter);
             } else {
-                dialog_ex_set_header(app->dialog_show_file, "Hash failed", 64, 10, AlignCenter, AlignCenter);
+                dialog_ex_set_header(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Hash failed", "哈希校验失败"), 64, 10, AlignCenter, AlignCenter);
             }
-            snprintf(progress_text, sizeof(progress_text), "Saved to:\n%.*s", 64, g.r_file_path);
+            snprintf(progress_text, sizeof(progress_text), FLIPPER_SHARE_UI_TEXT("Saved to:\n%.*s", "已保存至:\n%.*s"), 64, g.r_file_path);
             // dialog_ex_set_right_button_text(app->dialog_show_file, "OK");
             
             // If completed and still showing progress view, switch back to dialog
@@ -273,7 +273,7 @@ static void update_timer_callback(void* context) {
                     FURI_LOG_I(TAG, "Updating progress model: %u%%", (unsigned int)state->counter);
                 }, true);
             } else {
-                snprintf(progress_text, sizeof(progress_text), "Waiting for announce...");
+                snprintf(progress_text, sizeof(progress_text), FLIPPER_SHARE_UI_TEXT("Waiting for announce...", "等待广播..."));
                 
                 // If we're no longer locked but the progress view is active, switch back to dialog
                 if(progress_view_active) {

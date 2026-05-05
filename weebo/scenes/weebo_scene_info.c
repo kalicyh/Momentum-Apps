@@ -10,18 +10,18 @@ void weebo_scene_info_on_enter(void* context) {
     FuriString* str = weebo->text_box_store;
     FuriString* name = furi_string_alloc();
 
-    furi_string_cat_printf(str, "Info:\n");
+    furi_string_cat_printf(str, WEEBO_UI_TEXT("Info:\n", "信息:\n"));
     if(weebo_get_figure_name(weebo, name)) {
         furi_string_cat_printf(str, "%s\n", furi_string_get_cstr(name));
     } else {
-        furi_string_cat_printf(str, "Unknown\n");
+        furi_string_cat_printf(str, WEEBO_UI_TEXT("Unknown\n", "未知\n"));
     }
-    furi_string_cat_printf(str, "ID: %04x\n", weebo_get_figure_id(weebo));
+    furi_string_cat_printf(str, WEEBO_UI_TEXT("ID: %04x\n", "编号: %04x\n"), weebo_get_figure_id(weebo));
     if(weebo_get_figure_form(weebo, name)) {
-        furi_string_cat_printf(str, "Form: %s\n", furi_string_get_cstr(name));
+        furi_string_cat_printf(str, WEEBO_UI_TEXT("Form: %s\n", "形态: %s\n"), furi_string_get_cstr(name));
     }
     if(weebo_get_figure_series(weebo, name)) {
-        furi_string_cat_printf(str, "Series: %s\n", furi_string_get_cstr(name));
+        furi_string_cat_printf(str, WEEBO_UI_TEXT("Series: %s\n", "系列: %s\n"), furi_string_get_cstr(name));
     }
 
     furi_string_free(name);

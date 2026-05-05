@@ -12,7 +12,7 @@ typedef enum {
 static void ami_tool_scene_main_menu_show_error(AmiToolApp* app, const char* message) {
     furi_assert(app);
     if(!message) {
-        message = "Unknown error";
+        message = AMI_TOOL_UI_TEXT("Unknown error", "未知错误");
     }
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, message);
@@ -32,13 +32,13 @@ static bool ami_tool_scene_main_menu_require_key(AmiToolApp* app) {
     case AmiToolRetailKeyStatusOk:
         return true;
     case AmiToolRetailKeyStatusNotFound:
-        ami_tool_scene_main_menu_show_error(app, "key_retail.bin file does not exist");
+        ami_tool_scene_main_menu_show_error(app, AMI_TOOL_UI_TEXT("key_retail.bin file does not exist", "key_retail.bin 文件不存在"));
         break;
     case AmiToolRetailKeyStatusInvalidSize:
-        ami_tool_scene_main_menu_show_error(app, "key_retail.bin file data error");
+        ami_tool_scene_main_menu_show_error(app, AMI_TOOL_UI_TEXT("key_retail.bin file data error", "key_retail.bin 文件数据错误"));
         break;
     default:
-        ami_tool_scene_main_menu_show_error(app, "key_retail.bin file read error");
+        ami_tool_scene_main_menu_show_error(app, AMI_TOOL_UI_TEXT("key_retail.bin file read error", "key_retail.bin 文件读取错误"));
         break;
     }
     return false;
@@ -76,14 +76,14 @@ void ami_tool_scene_main_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Read",
+        AMI_TOOL_UI_TEXT("Read", "读取"),
         AmiToolMainMenuIndexRead,
         ami_tool_scene_main_menu_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Generate",
+        AMI_TOOL_UI_TEXT("Generate", "生成"),
         AmiToolMainMenuIndexGenerate,
         ami_tool_scene_main_menu_submenu_callback,
         app);
@@ -97,14 +97,14 @@ void ami_tool_scene_main_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Saved",
+        AMI_TOOL_UI_TEXT("Saved", "已保存"),
         AmiToolMainMenuIndexSaved,
         ami_tool_scene_main_menu_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Exit",
+        AMI_TOOL_UI_TEXT("Exit", "退出"),
         AmiToolMainMenuIndexExit,
         ami_tool_scene_main_menu_submenu_callback,
         app);

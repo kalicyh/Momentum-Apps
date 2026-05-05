@@ -1,6 +1,14 @@
 #include "../mag_i.h"
 #include "../mag_device.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 void mag_scene_delete_confirm_on_enter(void* context) {
     Mag* mag = context;
     Widget* widget = mag->widget;
@@ -15,8 +23,10 @@ void mag_scene_delete_confirm_on_enter(void* context) {
 
     widget_add_text_box_element(
         widget, 0, 0, 128, 27, AlignCenter, AlignCenter, furi_string_get_cstr(tmp_str), true);
-    widget_add_button_element(widget, GuiButtonTypeLeft, "Cancel", mag_widget_callback, mag);
-    widget_add_button_element(widget, GuiButtonTypeRight, "Delete", mag_widget_callback, mag);
+    widget_add_button_element(
+        widget, GuiButtonTypeLeft, MAGSPOOF_UI_TEXT("Cancel", "取消"), mag_widget_callback, mag);
+    widget_add_button_element(
+        widget, GuiButtonTypeRight, MAGSPOOF_UI_TEXT("Delete", "删除"), mag_widget_callback, mag);
 
     view_dispatcher_switch_to_view(mag->view_dispatcher, MagViewWidget);
 

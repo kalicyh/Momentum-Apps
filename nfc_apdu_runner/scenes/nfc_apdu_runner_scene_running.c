@@ -32,10 +32,10 @@ static void show_error_popup(NfcApduRunner* app, const char* message) {
 static void show_waiting_popup(NfcApduRunner* app) {
     Popup* popup = app->popup;
     popup_reset(popup);
-    popup_set_header(popup, "NFC APDU Runner", 64, 0, AlignCenter, AlignTop);
+    popup_set_header(popup, NFC_APDU_RUNNER_UI_TEXT("NFC APDU Runner", "NFC APDU 运行器"), 64, 0, AlignCenter, AlignTop);
     popup_set_text(
         popup,
-        "Waiting for card...\nPlace card on Flipper's back",
+        NFC_APDU_RUNNER_UI_TEXT("Waiting for card...\nPlace card on Flipper's back", "等待卡片...\n请将卡片放到 Flipper 背面"),
         64,
         32,
         AlignCenter,
@@ -49,9 +49,9 @@ static void show_waiting_popup(NfcApduRunner* app) {
 static void show_running_popup(NfcApduRunner* app) {
     Popup* popup = app->popup;
     popup_reset(popup);
-    popup_set_header(popup, "Running APDU commands", 64, 0, AlignCenter, AlignTop);
+    popup_set_header(popup, NFC_APDU_RUNNER_UI_TEXT("Running APDU commands", "运行 APDU 命令"), 64, 0, AlignCenter, AlignTop);
     popup_set_text(
-        popup, "Please wait...\nDo not remove the card", 64, 32, AlignCenter, AlignCenter);
+        popup, NFC_APDU_RUNNER_UI_TEXT("Please wait...\nDo not remove the card", "请稍候...\n请勿移开卡片"), 64, 32, AlignCenter, AlignCenter);
     popup_set_timeout(popup, 0);
     popup_set_context(popup, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, NfcApduRunnerViewPopup);
@@ -66,7 +66,7 @@ void nfc_apdu_runner_scene_running_on_enter(void* context) {
     // 确保文件路径有效
     if(furi_string_empty(app->file_path)) {
         FURI_LOG_E("APDU_DEBUG", "文件路径为空");
-        show_error_popup(app, "Invalid file path");
+        show_error_popup(app, NFC_APDU_RUNNER_UI_TEXT("Invalid file path", "无效的文件路径"));
         return;
     }
     FURI_LOG_I("APDU_DEBUG", "文件路径: %s", furi_string_get_cstr(app->file_path));
@@ -74,7 +74,7 @@ void nfc_apdu_runner_scene_running_on_enter(void* context) {
     // 显示正在运行的弹出窗口
     FURI_LOG_I("APDU_DEBUG", "显示加载脚本弹窗");
     popup_reset(popup);
-    popup_set_text(popup, "Loading script...\nPlease wait", 89, 44, AlignCenter, AlignCenter);
+    popup_set_text(popup, NFC_APDU_RUNNER_UI_TEXT("Loading script...\nPlease wait", "加载脚本...\n请稍候"), 89, 44, AlignCenter, AlignCenter);
     popup_set_timeout(popup, 0);
     popup_set_context(popup, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, NfcApduRunnerViewPopup);
@@ -85,7 +85,7 @@ void nfc_apdu_runner_scene_running_on_enter(void* context) {
 
     if(app->script == NULL) {
         FURI_LOG_E("APDU_DEBUG", "解析脚本文件失败");
-        show_error_popup(app, "Failed to parse script file");
+        show_error_popup(app, NFC_APDU_RUNNER_UI_TEXT("Failed to parse script file", "解析脚本文件失败"));
         return;
     }
     FURI_LOG_I("APDU_DEBUG", "脚本解析成功, 卡类型: %d", app->script->card_type);
@@ -93,7 +93,7 @@ void nfc_apdu_runner_scene_running_on_enter(void* context) {
     // 检查卡类型是否支持
     if(app->script->card_type == CardTypeUnknown) {
         FURI_LOG_E("APDU_DEBUG", "不支持的卡类型");
-        show_error_popup(app, "Unsupported card type");
+        show_error_popup(app, NFC_APDU_RUNNER_UI_TEXT("Unsupported card type", "不支持的卡类型"));
         return;
     }
     FURI_LOG_I("APDU_DEBUG", "卡类型支持");
@@ -143,7 +143,7 @@ bool nfc_apdu_runner_scene_running_on_event(void* context, SceneManagerEvent eve
                 show_error_popup(app, error_message);
             } else {
                 show_error_popup(
-                    app, "Failed to detect card or run APDU commands\nCheck the log for details");
+                    app, NFC_APDU_RUNNER_UI_TEXT("Failed to detect card or run APDU commands\nCheck the log for details", "检测卡片或执行 APDU 命令失败\n请查看日志了解详情"));
             }
 
             consumed = true;
@@ -161,7 +161,7 @@ bool nfc_apdu_runner_scene_running_on_event(void* context, SceneManagerEvent eve
             const char* error_message = nfc_worker_get_error_message(app->worker);
             if(!error_message) {
                 // 只有在没有错误信息的情况下才显示用户取消的消息
-                show_error_popup(app, "Operation cancelled by user");
+                show_error_popup(app, NFC_APDU_RUNNER_UI_TEXT("Operation cancelled by user", "操作已由用户取消"));
             }
 
             consumed = true;

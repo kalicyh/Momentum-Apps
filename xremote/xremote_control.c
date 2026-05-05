@@ -70,17 +70,17 @@ XRemoteApp* xremote_control_alloc(XRemoteAppContext* app_ctx) {
     xremote_app_submenu_alloc(app, XRemoteViewIRSubmenu, xremote_control_submenu_exit_callback);
 
     xremote_app_submenu_add(
-        app, "General", XRemoteViewIRGeneral, xremote_control_submenu_callback);
+        app, XREMOTE_UI_TEXT("General", "通用"), XRemoteViewIRGeneral, xremote_control_submenu_callback);
     xremote_app_submenu_add(
-        app, "Control", XRemoteViewIRControl, xremote_control_submenu_callback);
+        app, XREMOTE_UI_TEXT("Control", "控制"), XRemoteViewIRControl, xremote_control_submenu_callback);
     xremote_app_submenu_add(
-        app, "Navigation", XRemoteViewIRNavigation, xremote_control_submenu_callback);
+        app, XREMOTE_UI_TEXT("Navigation", "导航"), XRemoteViewIRNavigation, xremote_control_submenu_callback);
     xremote_app_submenu_add(
-        app, "Playback", XRemoteViewIRPlayback, xremote_control_submenu_callback);
+        app, XREMOTE_UI_TEXT("Playback", "播放"), XRemoteViewIRPlayback, xremote_control_submenu_callback);
     xremote_app_submenu_add(
-        app, "Custom", XRemoteViewIRCustomPage, xremote_control_submenu_callback);
+        app, XREMOTE_UI_TEXT("Custom", "自定义"), XRemoteViewIRCustomPage, xremote_control_submenu_callback);
     xremote_app_submenu_add(
-        app, "Edit", XRemoteViewIRCustomEditPage, xremote_control_submenu_callback);
+        app, XREMOTE_UI_TEXT("Edit", "编辑"), XRemoteViewIRCustomEditPage, xremote_control_submenu_callback);
 
     return app;
 }

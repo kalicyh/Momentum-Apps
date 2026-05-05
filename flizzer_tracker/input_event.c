@@ -179,7 +179,7 @@ void submenu_callback(void* context, uint32_t index) {
         }
 
         case SUBMENU_PATTERN_SAVE_SONG: {
-            text_input_set_header_text(tracker->text_input, "Song filename:");
+            text_input_set_header_text(tracker->text_input, FLIZZER_TRACKER_UI_TEXT("Song filename:", "歌曲文件名:"));
             memset(&tracker->filename, 0, FILE_NAME_LEN);
             text_input_set_result_callback(
                 tracker->text_input,
@@ -257,7 +257,7 @@ void submenu_callback(void* context, uint32_t index) {
         }
 
         case SUBMENU_INSTRUMENT_SAVE: {
-            text_input_set_header_text(tracker->text_input, "Instrument filename:");
+            text_input_set_header_text(tracker->text_input, FLIZZER_TRACKER_UI_TEXT("Instrument filename:", "乐器文件名:"));
             memset(&tracker->filename, 0, FILE_NAME_LEN);
             text_input_set_result_callback(
                 tracker->text_input,

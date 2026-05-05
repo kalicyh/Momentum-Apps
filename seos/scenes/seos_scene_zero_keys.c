@@ -14,8 +14,9 @@ void seos_scene_zero_keys_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seos->popup;
-    popup_set_header(popup, "NO KEYS", 64, 16, AlignCenter, AlignTop);
-    popup_set_text(popup, "Using all zero keys", 64, 36, AlignCenter, AlignTop);
+    popup_set_header(popup, SEOS_UI_TEXT("NO KEYS", "无密钥"), 64, 16, AlignCenter, AlignTop);
+    popup_set_text(
+        popup, SEOS_UI_TEXT("Using all zero keys", "使用全零密钥"), 64, 36, AlignCenter, AlignTop);
     popup_set_timeout(popup, 5 * 1000);
     popup_set_context(popup, seos);
     popup_set_callback(popup, seos_scene_zero_keys_popup_callback);

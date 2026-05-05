@@ -16,7 +16,7 @@ static void cyborg_detector_draw_callback(Canvas* canvas, void* context) {
 
     // Draw the "CYBORG DETECTOR" text at the top, centered
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "CYBORG DETECTOR");
+    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, CYBORG_UI_TEXT("CYBORG DETECTOR", "仿生人探测器"));
 
     // Draw a target in the center
     canvas_draw_circle(canvas, 64, 32, 10); // Outer circle
@@ -26,7 +26,7 @@ static void cyborg_detector_draw_callback(Canvas* canvas, void* context) {
 
     // Draw the "Scanning..." text at the bottom, centered
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignBottom, "Scanning...");
+    canvas_draw_str_aligned(canvas, 64, 54, AlignCenter, AlignBottom, CYBORG_UI_TEXT("Scanning...", "扫描中..."));
 }
 
 static void cyborg_detector_input_callback(InputEvent* input_event, void* context) {

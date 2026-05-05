@@ -1,6 +1,12 @@
 #include "gb_live_camera.h"
 #include <malveke_gb_live_camera_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define LIVECAMERA_UI_TEXT(en, zh) (zh)
+#else
+#define LIVECAMERA_UI_TEXT(en, zh) (en)
+#endif
+
 static void gb_live_camera_view_draw_callback(Canvas* canvas, void* _model) {
     UartDumpModel* model = _model;
 
@@ -13,11 +19,11 @@ static void gb_live_camera_view_draw_callback(Canvas* canvas, void* _model) {
         canvas_draw_str(canvas, 8, 28, "GAME BOY");
         canvas_draw_icon(canvas, 76, 8, &I_gbcam_48x49);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 8, 18, "WAITING");
+        canvas_draw_str(canvas, 8, 18, LIVECAMERA_UI_TEXT("WAITING", "等待中"));
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 8, 38, "CAMERA...");
+        canvas_draw_str(canvas, 8, 38, LIVECAMERA_UI_TEXT("CAMERA...", "摄像头..."));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 9, 47, "Insert Cartridge");
+        canvas_draw_str(canvas, 9, 47, LIVECAMERA_UI_TEXT("Insert Cartridge", "插入卡带"));
         elements_button_center(canvas, "Ok");
     } else {
         for(size_t p = 0; p < FRAME_BUFFER_LENGTH; ++p) {

@@ -26,7 +26,7 @@ void uhf_scene_read_tag_success_on_enter(void* ctx) {
     notification_message(uhf_app->notifications, &sequence_success);
 
     widget_add_string_element(
-        uhf_app->widget, 32, 5, AlignLeft, AlignCenter, FontPrimary, "Read Success");
+        uhf_app->widget, 32, 5, AlignLeft, AlignCenter, FontPrimary, UHF_UI_TEXT("Read Success", "读取成功"));
 
     widget_add_string_element(uhf_app->widget, 3, 18, AlignLeft, AlignCenter, FontPrimary, "PC :");
 
@@ -63,13 +63,13 @@ void uhf_scene_read_tag_success_on_enter(void* ctx) {
     widget_add_button_element(
         uhf_app->widget,
         GuiButtonTypeRight,
-        "More",
+        UHF_UI_TEXT("More", "更多"),
         uhf_scene_read_card_success_widget_callback,
         uhf_app);
     widget_add_button_element(
         uhf_app->widget,
         GuiButtonTypeLeft,
-        "Exit",
+        UHF_UI_TEXT("Exit", "退出"),
         uhf_scene_read_card_success_widget_callback,
         uhf_app);
     view_dispatcher_switch_to_view(uhf_app->view_dispatcher, UHFViewWidget);

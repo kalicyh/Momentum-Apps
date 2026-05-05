@@ -8,6 +8,12 @@
 #include <furi_hal.h>
 #include <slotmachine_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SLOTS_UI_TEXT(en, zh) (zh)
+#else
+#define SLOTS_UI_TEXT(en, zh) (en)
+#endif
+
 const Icon* slot_frames[] = {&I_x2, &I_x3, &I_x4, &I_x2_2, &I_x5};
 
 const uint8_t slot_coef[] = {2, 3, 4, 2, 5};
@@ -151,7 +157,7 @@ void slotmachine_draw_callback(Canvas* canvas, void* ctx) {
     furi_check(furi_mutex_acquire(slotmachine->model_mutex, FuriWaitForever) == FuriStatusOk);
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 2, 10, "Slots");
+    canvas_draw_str(canvas, 2, 10, SLOTS_UI_TEXT("Slots", "老虎机"));
     const Icon* litl_icon = &I_little_coin;
     canvas_draw_icon(canvas, 30, 3, litl_icon);
 
@@ -166,24 +172,24 @@ void slotmachine_draw_callback(Canvas* canvas, void* ctx) {
 
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 40, 10, moneyStr);
-    canvas_draw_str(canvas, 2, canvas_height(canvas) - 3, "Bet:");
+    canvas_draw_str(canvas, 2, canvas_height(canvas) - 3, SLOTS_UI_TEXT("Bet:", "下注:"));
     canvas_draw_str(canvas, 20, canvas_height(canvas) - 3, betStr);
     canvas_draw_str(canvas, 75, 10, highscoresStr);
 
     if(slotmachine->winview) {
         char winamountStr[30];
-        snprintf(winamountStr, sizeof(winamountStr), "You win: $%.2f!", slotmachine->winamount);
+        snprintf(winamountStr, sizeof(winamountStr), SLOTS_UI_TEXT("You win: $%.2f!", "赢了: $%.2f!"), slotmachine->winamount);
 
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str(canvas, 2, 35, winamountStr);
-        drawButton(canvas, 95, 52, "Ok", false);
+        drawButton(canvas, 95, 52, SLOTS_UI_TEXT("Ok", "确定"), false);
 
         furi_mutex_release(slotmachine->model_mutex);
         return;
     } else if(slotmachine->loseview) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 2, 35, "You lose ;(");
-        drawButton(canvas, 95, 52, "Ok", false);
+        canvas_draw_str(canvas, 2, 35, SLOTS_UI_TEXT("You lose ;(", "你输了 ;("));
+        drawButton(canvas, 95, 52, SLOTS_UI_TEXT("Ok", "确定"), false);
 
         furi_mutex_release(slotmachine->model_mutex);
         return;
@@ -222,7 +228,7 @@ void slotmachine_draw_callback(Canvas* canvas, void* ctx) {
             slot_frames[slotmachine->columns[i]->value]);
     }
     draw_container(canvas);
-    drawButton(canvas, 90, 52, "Spin", checkIsSpinning(slotmachine));
+    drawButton(canvas, 90, 52, SLOTS_UI_TEXT("Spin", "旋转"), checkIsSpinning(slotmachine));
 
     furi_mutex_release(slotmachine->model_mutex);
 }

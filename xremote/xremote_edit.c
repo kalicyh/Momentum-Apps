@@ -120,25 +120,25 @@ static XRemoteEditContext* xremote_edit_context_alloc(XRemoteAppButtons* buttons
 
     /* Add press items to the variable list */
     xremote_edit_list_add_item(
-        context, "Ok press", buttons->custom_ok, xremote_edit_ok_press_changed);
+        context, XREMOTE_UI_TEXT("Ok press", "确认按下"), buttons->custom_ok, xremote_edit_ok_press_changed);
     xremote_edit_list_add_item(
-        context, "Up press", buttons->custom_up, xremote_edit_up_press_changed);
+        context, XREMOTE_UI_TEXT("Up press", "上按下"), buttons->custom_up, xremote_edit_up_press_changed);
     xremote_edit_list_add_item(
-        context, "Down press", buttons->custom_down, xremote_edit_down_press_changed);
+        context, XREMOTE_UI_TEXT("Down press", "下按下"), buttons->custom_down, xremote_edit_down_press_changed);
     xremote_edit_list_add_item(
-        context, "Left press", buttons->custom_left, xremote_edit_left_press_changed);
+        context, XREMOTE_UI_TEXT("Left press", "左按下"), buttons->custom_left, xremote_edit_left_press_changed);
     xremote_edit_list_add_item(
-        context, "Right press", buttons->custom_right, xremote_edit_right_press_changed);
+        context, XREMOTE_UI_TEXT("Right press", "右按下"), buttons->custom_right, xremote_edit_right_press_changed);
     xremote_edit_list_add_item(
-        context, "Ok hold", buttons->custom_ok_hold, xremote_edit_ok_hold_changed);
+        context, XREMOTE_UI_TEXT("Ok hold", "确认长按"), buttons->custom_ok_hold, xremote_edit_ok_hold_changed);
     xremote_edit_list_add_item(
-        context, "Up hold", buttons->custom_up_hold, xremote_edit_up_hold_changed);
+        context, XREMOTE_UI_TEXT("Up hold", "上长按"), buttons->custom_up_hold, xremote_edit_up_hold_changed);
     xremote_edit_list_add_item(
-        context, "Down hold", buttons->custom_down_hold, xremote_edit_down_hold_changed);
+        context, XREMOTE_UI_TEXT("Down hold", "下长按"), buttons->custom_down_hold, xremote_edit_down_hold_changed);
     xremote_edit_list_add_item(
-        context, "Left hold", buttons->custom_left_hold, xremote_edit_left_hold_changed);
+        context, XREMOTE_UI_TEXT("Left hold", "左长按"), buttons->custom_left_hold, xremote_edit_left_hold_changed);
     xremote_edit_list_add_item(
-        context, "Right hold", buttons->custom_right_hold, xremote_edit_right_hold_changed);
+        context, XREMOTE_UI_TEXT("Right hold", "右长按"), buttons->custom_right_hold, xremote_edit_right_hold_changed);
 
     return context;
 }

@@ -23,30 +23,30 @@ void nfc_playlist_main_menu_scene_on_enter(void* context) {
 
    submenu_add_lockable_item(
       nfc_playlist->views.submenu,
-      "Start",
+      NFC_PLAYLIST_UI_TEXT("Start", "开始"),
       NfcPlaylistMainMenu_Start,
       nfc_playlist_main_menu_scene_menu_callback,
       nfc_playlist,
       furi_string_empty(nfc_playlist->worker_info.settings->playlist_path),
-      "No\nplaylist\nselected");
+      NFC_PLAYLIST_UI_TEXT("No\nplaylist\nselected", "未选择\n播放列表"));
 
    submenu_add_item(
       nfc_playlist->views.submenu,
-      "Select playlist",
+      NFC_PLAYLIST_UI_TEXT("Select playlist", "选择播放列表"),
       NfcPlaylistMainMenu_PlaylistSelect,
       nfc_playlist_main_menu_scene_menu_callback,
       nfc_playlist);
 
    submenu_add_item(
       nfc_playlist->views.submenu,
-      "Edit playlist",
+      NFC_PLAYLIST_UI_TEXT("Edit playlist", "编辑播放列表"),
       NfcPlaylistMainMenu_FileEdit,
       nfc_playlist_main_menu_scene_menu_callback,
       nfc_playlist);
 
    submenu_add_item(
       nfc_playlist->views.submenu,
-      "Settings",
+      NFC_PLAYLIST_UI_TEXT("Settings", "设置"),
       NfcPlaylistMainMenu_Settings,
       nfc_playlist_main_menu_scene_menu_callback,
       nfc_playlist);

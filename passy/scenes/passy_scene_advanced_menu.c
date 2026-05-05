@@ -102,7 +102,7 @@ void passy_scene_advanced_menu_on_enter(void* context) {
             continue;
         }
         FuriString* dg_name = furi_string_alloc();
-        furi_string_printf(dg_name, "Read %s", dg_names[dg_id]);
+        furi_string_printf(dg_name, PASSY_UI_TEXT("Read %s", "读取 %s"), dg_names[dg_id]);
         submenu_add_item(
             submenu,
             furi_string_get_cstr(dg_name),

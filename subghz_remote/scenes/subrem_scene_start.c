@@ -15,7 +15,7 @@ void subrem_scene_start_on_enter(void* context) {
     Submenu* submenu = app->submenu;
     submenu_add_item(
         submenu,
-        "Open Map File",
+        SUBREM_UI_TEXT("Open Map File", "打开映射文件"),
         SubmenuIndexSubRemOpenMapFile,
         subrem_scene_start_submenu_callback,
         app);
@@ -29,27 +29,27 @@ void subrem_scene_start_on_enter(void* context) {
 #endif
     submenu_add_item(
         submenu,
-        "Edit Map File",
+        SUBREM_UI_TEXT("Edit Map File", "编辑映射文件"),
         SubmenuIndexSubRemEditMapFile,
         subrem_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "New Map File",
+        SUBREM_UI_TEXT("New Map File", "新建映射文件"),
         SubmenuIndexSubRemNewMapFile,
         subrem_scene_start_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "Set Default",
+        SUBREM_UI_TEXT("Set Default", "设为默认"),
         SubmenuIndexSubRemSetDefault,
         subrem_scene_start_submenu_callback,
         app);
     if(subrem_has_default_path()) {
         submenu_add_item(
             submenu,
-            "Clear Default",
+            SUBREM_UI_TEXT("Clear Default", "清除默认"),
             SubmenuIndexSubRemClearDefault,
             subrem_scene_start_submenu_callback,
             app);

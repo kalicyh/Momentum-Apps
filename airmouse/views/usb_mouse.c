@@ -1,4 +1,5 @@
 #include "usb_mouse.h"
+#include "../air_mouse.h"
 #include "../tracking/main_loop.h"
 
 #include <furi.h>
@@ -16,9 +17,9 @@ static void usb_mouse_draw_callback(Canvas* canvas, void* context) {
     UNUSED(context);
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 10, "USB Mouse mode");
+    canvas_draw_str(canvas, 0, 10, AIRMOUSE_UI_TEXT("USB Mouse mode", "USB 鼠标模式"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 63, "Hold [back] to exit");
+    canvas_draw_str(canvas, 0, 63, AIRMOUSE_UI_TEXT("Hold [back] to exit", "长按[返回]退出"));
 }
 
 #define MOUSE_SCROLL 2

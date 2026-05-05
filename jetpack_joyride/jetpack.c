@@ -19,6 +19,12 @@
 
 #define TAG "Jetpack Game"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define JETPACK_UI_TEXT(en, zh) (zh)
+#else
+#define JETPACK_UI_TEXT(en, zh) (en)
+#endif
+
 #define SAVING_FILENAME APP_DATA_PATH("jetpack.save")
 static GameState* global_state;
 
@@ -198,18 +204,18 @@ static void jetpack_game_render_callback(Canvas* const canvas, void* ctx) {
         char buffer[64];
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignTop, "You flew");
+        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignTop, JETPACK_UI_TEXT("You flew", "飞行距离"));
 
         snprintf(
             buffer,
             sizeof(buffer),
-            game_state->new_highscore ? "%u m (new best)" : "%u m",
+            game_state->new_highscore ? JETPACK_UI_TEXT("%u m (new best)", "%u米(新纪录)") : "%u m",
             game_state->distance / 10);
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(canvas, 64, 16, AlignCenter, AlignTop, buffer);
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignTop, "and collected");
+        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignTop, JETPACK_UI_TEXT("and collected", "收集金币"));
 
         snprintf(buffer, sizeof(buffer), "$%u", game_state->total_coins);
         canvas_set_font(canvas, FontPrimary);
@@ -218,7 +224,7 @@ static void jetpack_game_render_callback(Canvas* const canvas, void* ctx) {
         snprintf(
             buffer,
             sizeof(buffer),
-            "Best: %u m, Tot: $%u",
+            JETPACK_UI_TEXT("Best: %u m, Tot: $%u", "最佳: %u米, 总计: $%u"),
             save_game.max_distance / 10,
             save_game.total_coins);
         canvas_set_font(canvas, FontSecondary);

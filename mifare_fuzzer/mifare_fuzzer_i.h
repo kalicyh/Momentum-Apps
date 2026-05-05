@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MIFARE_FUZZER_UI_TEXT(en, zh) (zh)
+#else
+#define MIFARE_FUZZER_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h>
 #include <furi_hal.h>
 

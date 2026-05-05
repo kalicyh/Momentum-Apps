@@ -125,45 +125,45 @@ static void spectrum_analyzer_render_callback(Canvas* const canvas, void* ctx) {
     }
 
     if(model->mode_change) {
-        char temp_mode_str[12];
+        const char* temp_mode_str;
         switch(model->width) {
         case NARROW:
-            strncpy(temp_mode_str, "NARROW", 12);
+            temp_mode_str = SPECTRUM_ANALYZER_UI_TEXT("NARROW", "窄");
             break;
         case ULTRANARROW:
-            strncpy(temp_mode_str, "ULTRANARROW", 12);
+            temp_mode_str = SPECTRUM_ANALYZER_UI_TEXT("ULTRANARROW", "极窄");
             break;
         case PRECISE:
-            strncpy(temp_mode_str, "PRECISE", 12);
+            temp_mode_str = SPECTRUM_ANALYZER_UI_TEXT("PRECISE", "精确");
             break;
         case ULTRAWIDE:
-            strncpy(temp_mode_str, "ULTRAWIDE", 12);
+            temp_mode_str = SPECTRUM_ANALYZER_UI_TEXT("ULTRAWIDE", "极宽");
             break;
         default:
-            strncpy(temp_mode_str, "WIDE", 12);
+            temp_mode_str = SPECTRUM_ANALYZER_UI_TEXT("WIDE", "宽");
             break;
         }
 
         // Current mode label
         char tmp_str[21];
-        snprintf(tmp_str, 21, "Mode: %s", temp_mode_str);
+        snprintf(tmp_str, 21, SPECTRUM_ANALYZER_UI_TEXT("Mode: %s", "模式: %s"), temp_mode_str);
         canvas_draw_str_aligned(canvas, 127, 4, AlignRight, AlignTop, tmp_str);
     }
 
     if(model->modulation_change) {
-        char temp_mod_str[12];
+        const char* temp_mod_str;
         switch(model->modulation) {
         case NARROW_MODULATION:
-            strncpy(temp_mod_str, "NARROW", 12);
+            temp_mod_str = SPECTRUM_ANALYZER_UI_TEXT("NARROW", "窄");
             break;
         default:
-            strncpy(temp_mod_str, "DEFAULT", 12);
+            temp_mod_str = SPECTRUM_ANALYZER_UI_TEXT("DEFAULT", "默认");
             break;
         }
 
         // Current modulation label
         char tmp_str[27];
-        snprintf(tmp_str, 27, "Modulation: %s", temp_mod_str);
+        snprintf(tmp_str, 27, SPECTRUM_ANALYZER_UI_TEXT("Modulation: %s", "调制: %s"), temp_mod_str);
         canvas_draw_str_aligned(canvas, 127, 4, AlignRight, AlignTop, tmp_str);
     }
 
@@ -200,7 +200,7 @@ static void spectrum_analyzer_render_callback(Canvas* const canvas, void* ctx) {
         snprintf(
             temp_str,
             36,
-            "Peak: %3.2f Mhz %3.1f dbm",
+            SPECTRUM_ANALYZER_UI_TEXT("Peak: %3.2f Mhz %3.1f dbm", "峰值: %3.2f Mhz %3.1f dbm"),
             ((double)(model->channel0_frequency + (model->max_rssi_channel * model->spacing)) /
              1000000),
             (double)model->max_rssi);

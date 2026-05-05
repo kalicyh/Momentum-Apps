@@ -52,13 +52,13 @@ void xremote_scene_create_on_enter(void* context) {
 
     button_menu_add_item(
         button_menu,
-        "Save",
+        XREMOTE_UI_TEXT("Save", "\xe4\xbf\x9d\xe5\xad\x98"),
         ButtonIndexSave,
         xremote_create_callback,
         ButtonMenuItemTypeControl,
         context);
 
-    button_menu_set_header(button_menu, "Add Cmd");
+    button_menu_set_header(button_menu, XREMOTE_UI_TEXT("Add Cmd", "\xe6\xb7\xbb\xe5\x8a\xa0\xe5\x91\xbd\xe4\xbb\xa4"));
     const int16_t button_index =
         (signed)scene_manager_get_scene_state(app->scene_manager, XRemoteViewIdCreate);
     button_menu_set_selected_item(button_menu, button_index);

@@ -105,13 +105,13 @@ void FlipTelegramRun::drawFeed(Canvas *canvas)
     else
     {
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 0, 10, "No messages found!");
+        canvas_draw_str(canvas, 0, 10, flip_telegram_UI_TEXT("No messages found!", "未找到消息!"));
     }
 }
 
 void FlipTelegramRun::drawMainMenuView(Canvas *canvas)
 {
-    const char *menuItems[] = {"Send", "View"};
+    const char *menuItems[] = {flip_telegram_UI_TEXT("Send", "发送"), flip_telegram_UI_TEXT("View", "查看")};
     drawMenu(canvas, (uint8_t)currentMenuIndex, menuItems, 2);
 }
 
@@ -314,13 +314,13 @@ void FlipTelegramRun::drawMessageView(Canvas *canvas)
     switch (messageStatus)
     {
     case MessageSuccess:
-        canvas_draw_str(canvas, 0, 10, "Message sent!");
+        canvas_draw_str(canvas, 0, 10, flip_telegram_UI_TEXT("Message sent!", "消息已发送!"));
         break;
     case MessageRequestError:
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 0, 10, "Message request failed!");
-        canvas_draw_str(canvas, 0, 50, "Check your network, token,");
-        canvas_draw_str(canvas, 0, 60, "Chat Id, and try again later!");
+        canvas_draw_str(canvas, 0, 10, flip_telegram_UI_TEXT("Message request failed!", "消息发送失败!"));
+        canvas_draw_str(canvas, 0, 50, flip_telegram_UI_TEXT("Check your network, token,", "请检查网络、令牌、"));
+        canvas_draw_str(canvas, 0, 60, flip_telegram_UI_TEXT("Chat Id, and try again later!", "聊天 ID，稍后重试!"));
         break;
     case MessageKeyboard:
         if (!keyboard)
@@ -329,7 +329,7 @@ void FlipTelegramRun::drawMessageView(Canvas *canvas)
         }
         if (keyboard)
         {
-            keyboard->draw(canvas, "Enter message:");
+            keyboard->draw(canvas, flip_telegram_UI_TEXT("Enter message:", "输入消息:"));
         }
         break;
     case MessageSending:
@@ -342,7 +342,7 @@ void FlipTelegramRun::drawMessageView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Sending...");
+                loading->setText(flip_telegram_UI_TEXT("Sending...", "发送中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -383,7 +383,7 @@ void FlipTelegramRun::drawMessageView(Canvas *canvas)
         }
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Sending message...");
+        canvas_draw_str(canvas, 0, 10, flip_telegram_UI_TEXT("Sending message...", "发送消息中..."));
         break;
     }
 }
@@ -399,9 +399,9 @@ void FlipTelegramRun::drawViewingView(Canvas *canvas)
         break;
     case ViewingRequestError:
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 0, 10, "Message fetch failed!");
-        canvas_draw_str(canvas, 0, 50, "Check your network, token,");
-        canvas_draw_str(canvas, 0, 60, "and try again later!");
+        canvas_draw_str(canvas, 0, 10, flip_telegram_UI_TEXT("Message fetch failed!", "获取消息失败!"));
+        canvas_draw_str(canvas, 0, 50, flip_telegram_UI_TEXT("Check your network, token,", "请检查网络和令牌，"));
+        canvas_draw_str(canvas, 0, 60, flip_telegram_UI_TEXT("and try again later!", "稍后重试!"));
         break;
     case ViewingWaiting:
         if (!loadingStarted)
@@ -418,7 +418,7 @@ void FlipTelegramRun::drawViewingView(Canvas *canvas)
             loadingStarted = true;
             if (loading)
             {
-                loading->setText("Fetching...");
+                loading->setText(flip_telegram_UI_TEXT("Fetching...", "获取中..."));
             }
         }
         if (!this->httpRequestIsFinished())
@@ -745,7 +745,7 @@ void FlipTelegramRun::drawViewingView(Canvas *canvas)
         }
         break;
     default:
-        canvas_draw_str(canvas, 0, 10, "Fetching messages...");
+        canvas_draw_str(canvas, 0, 10, flip_telegram_UI_TEXT("Fetching messages...", "获取消息中..."));
         break;
     }
 }

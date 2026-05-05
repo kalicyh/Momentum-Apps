@@ -43,17 +43,17 @@ void uhf_reader_view_read_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, "           Read Menu:");
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT("           Read Menu:", "           读取菜单:"));
     canvas_set_font(canvas, FontSecondary);
 
     //Displaying the current number of UHF Tags read
     furi_string_printf(XStr, "%ld", MyModel->NumEpcsRead);
-    canvas_draw_str(canvas, 4, 33, "# EPCs:");
+    canvas_draw_str(canvas, 4, 33, RFID_READER_UI_TEXT("# EPCs:", "# EPC:"));
     canvas_draw_str(canvas, 45, 33, furi_string_get_cstr(XStr));
 
     //Displaying the index of the current tag being viewed
     furi_string_printf(XStr, "%ld", MyModel->CurEpcIndex);
-    canvas_draw_str(canvas, 70, 33, "Cur Tag:");
+    canvas_draw_str(canvas, 70, 33, RFID_READER_UI_TEXT("Cur Tag:", "当前标签:"));
     canvas_draw_str(canvas, 115, 33, furi_string_get_cstr(XStr));
 
     //Displaying the CRC
@@ -94,11 +94,11 @@ void uhf_reader_view_read_draw_callback(Canvas* canvas, void* model) {
 
     if(!MyModel->IsReading) {
         //Display the Prev and Next buttons if the app isn't reading
-        elements_button_left(canvas, "Prev");
-        elements_button_center(canvas, "Start");
-        elements_button_right(canvas, "Next");
+        elements_button_left(canvas, RFID_READER_UI_TEXT("Prev", "上一个"));
+        elements_button_center(canvas, RFID_READER_UI_TEXT("Start", "开始"));
+        elements_button_right(canvas, RFID_READER_UI_TEXT("Next", "下一个"));
     } else {
-        elements_button_center(canvas, "Stop");
+        elements_button_center(canvas, RFID_READER_UI_TEXT("Stop", "停止"));
     }
     furi_string_free(XStr);
 }
@@ -272,7 +272,7 @@ bool uhf_reader_view_read_input_callback(InputEvent* event, void* context) {
         // Handle short press for save menu
         if(event->type == InputTypeShort) {
             //Setting the text input header
-            text_input_set_header_text(App->SaveInput, "Save EPC");
+            text_input_set_header_text(App->SaveInput, RFID_READER_UI_TEXT("Save EPC", "保存EPC"));
             bool Redraw = false;
             with_view_model(
                 App->ViewRead,
@@ -689,7 +689,7 @@ void view_read_alloc(UHFReaderApp* App) {
     view_allocate_model(App->ViewRead, ViewModelTypeLockFree, sizeof(UHFReaderConfigModel));
     UHFReaderConfigModel* Model = view_get_model(App->ViewRead);
     FuriString* EpcValueDefault = furi_string_alloc();
-    furi_string_set_str(EpcValueDefault, "Press Read");
+    furi_string_set_str(EpcValueDefault, RFID_READER_UI_TEXT("Press Read", "按OK读取"));
 
     //Setting default values for the view model
     Model->Setting1Index = App->Setting1Index;
@@ -700,9 +700,9 @@ void view_read_alloc(UHFReaderApp* App) {
     Model->Setting3Value = furi_string_alloc_set(App->Setting3Names[App->Setting3Index]);
     Model->Pc = furi_string_alloc_set("XXXX");
     Model->Crc = furi_string_alloc_set("XXXX");
-    Model->EpcName = furi_string_alloc_set("Enter name");
+    Model->EpcName = furi_string_alloc_set(RFID_READER_UI_TEXT("Enter name", "输入名称"));
     Model->ScrollOffset = 0;
-    Model->ScrollingText = "Press Read";
+    Model->ScrollingText = RFID_READER_UI_TEXT("Press Read", "按OK读取");
     Model->EpcValue = EpcValueDefault;
     Model->CurEpcIndex = 1;
     Model->NumEpcsRead = 0;

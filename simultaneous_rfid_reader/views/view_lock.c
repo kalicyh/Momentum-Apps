@@ -135,7 +135,7 @@ void uhf_reader_access_password_updated(void* context) {
     }
     //Switch to the popup
     Popup* PopupLock = App->LockPopup;
-    popup_set_header(PopupLock, "Setting\nAccess\nPassword", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(PopupLock, RFID_READER_UI_TEXT("Setting\nAccess\nPassword", "设置\n访问\n密码"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(PopupLock, 0, 3, &I_RFIDDolphinReceive_97x61);
     view_dispatcher_switch_to_view(App->ViewDispatcher, UHFReaderViewLockPopup);
 }
@@ -160,15 +160,15 @@ uint32_t uhf_reader_navigation_lock_exit_callback(void* context) {
 const char* get_lock_bank_type_string(LockType type) {
     switch(type) {
     case Lock:
-        return "Locking";
+        return RFID_READER_UI_TEXT("Locking", "锁定中");
     case Unlock:
-        return "Unlocking";
+        return RFID_READER_UI_TEXT("Unlocking", "解锁中");
     case PermaUnlock:
-        return "Perma Unlocking";
+        return RFID_READER_UI_TEXT("Perma Unlocking", "永久解锁中");
     case PermaLock:
-        return "Perma Locking";
+        return RFID_READER_UI_TEXT("Perma Locking", "永久锁定中");
     default:
-        return "Unknown";
+        return RFID_READER_UI_TEXT("Unknown", "未知");
     }
 }
 
@@ -181,21 +181,21 @@ const char* get_lock_bank_type_string(LockType type) {
 const char* get_memory_bank_string(BankType bank) {
     switch(bank) {
     case ReservedBank:
-        return "Reserved\nBank";
+        return RFID_READER_UI_TEXT("Reserved\nBank", "保留\n区");
     case EPCBank:
-        return "EPC\nBank";
+        return RFID_READER_UI_TEXT("EPC\nBank", "EPC\n区");
     case TIDBank:
-        return "TID\nBank";
+        return RFID_READER_UI_TEXT("TID\nBank", "TID\n区");
     case UserBank:
-        return "User\nBank";
+        return RFID_READER_UI_TEXT("User\nBank", "用户\n区");
     case KillPwd:
-        return "Kill\nPassword";
+        return RFID_READER_UI_TEXT("Kill\nPassword", "销毁\n密码");
     case AccessPwd:
-        return "Access\nPassword";
+        return RFID_READER_UI_TEXT("Access\nPassword", "访问\n密码");
     case FileZero:
-        return "User\nBank";
+        return RFID_READER_UI_TEXT("User\nBank", "用户\n区");
     default:
-        return "Unknown\nBank";
+        return RFID_READER_UI_TEXT("Unknown\nBank", "未知\n区");
     }
 }
 /**
@@ -311,38 +311,38 @@ void uhf_reader_setting_lock_action_change(VariableItem* Item) {
 */
 void view_lock_alloc(UHFReaderApp* App) {
     //Setting variables
-    App->SettingApLabel = "Set AP";
-    App->SetAccessPasswordPlaceHolder = strdup("Enter Access Password!");
+    App->SettingApLabel = RFID_READER_UI_TEXT("Set AP", "设置AP");
+    App->SetAccessPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Access Password!", "输入访问密码!"));
     App->SettingApDefaultPassword = strdup("00000000");
 
     //Options for different banks to lock following the Gen2 Protocol Standard https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf
-    App->SettingLockBankConfigLabel = "Memory Bank";
+    App->SettingLockBankConfigLabel = RFID_READER_UI_TEXT("Memory Bank", "存储区");
     App->SettingLockBankValues[0] = 1;
     App->SettingLockBankValues[1] = 2;
     App->SettingLockBankValues[2] = 3;
     App->SettingLockBankValues[3] = 4;
     App->SettingLockBankValues[4] = 5;
-    App->SettingLockBankNames[0] = "Kill";
+    App->SettingLockBankNames[0] = RFID_READER_UI_TEXT("Kill", "销毁");
     App->SettingLockBankNames[1] = "AP";
     App->SettingLockBankNames[2] = "EPC";
     App->SettingLockBankNames[3] = "TID";
-    App->SettingLockBankNames[4] = "User";
+    App->SettingLockBankNames[4] = RFID_READER_UI_TEXT("User", "用户");
     App->DefaultLockBank = KillPwd;
 
     //Options for the lock mode
-    App->SettingLockActionConfigLabel = "Lock Mode";
+    App->SettingLockActionConfigLabel = RFID_READER_UI_TEXT("Lock Mode", "锁定模式");
     App->SettingLockActionValues[0] = 1;
     App->SettingLockActionValues[1] = 2;
     App->SettingLockActionValues[2] = 3;
     App->SettingLockActionValues[3] = 4;
-    App->SettingLockActionNames[0] = "Unlock";
-    App->SettingLockActionNames[1] = "Perm-U";
-    App->SettingLockActionNames[2] = "Lock";
-    App->SettingLockActionNames[3] = "Perm-L";
+    App->SettingLockActionNames[0] = RFID_READER_UI_TEXT("Unlock", "解锁");
+    App->SettingLockActionNames[1] = RFID_READER_UI_TEXT("Perm-U", "永久解锁");
+    App->SettingLockActionNames[2] = RFID_READER_UI_TEXT("Lock", "锁定");
+    App->SettingLockActionNames[3] = RFID_READER_UI_TEXT("Perm-L", "永久锁定");
     App->DefaultLockType = Unlock;
     //The Button for executing the desired lock command and storing the output
-    App->SettingLockExecuteConfigLabel = "Execute";
-    App->SettingLockExecuteResult = strdup("Press Me!");
+    App->SettingLockExecuteConfigLabel = RFID_READER_UI_TEXT("Execute", "执行");
+    App->SettingLockExecuteResult = strdup(RFID_READER_UI_TEXT("Press Me!", "按此执行!"));
 
     //Allocating the set access password menu
     access_password_menu_alloc(App);

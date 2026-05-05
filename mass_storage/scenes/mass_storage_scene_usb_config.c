@@ -247,20 +247,20 @@ void mass_storage_scene_usb_config_on_enter(void* context) {
     }
 
     // Setup menu items
-    variable_item_list_add(var_list, "SCSI Vendor ID", 0, NULL, NULL);
-    variable_item_list_add(var_list, "SCSI Product ID", 0, NULL, NULL);
-    variable_item_list_add(var_list, "SCSI Revision", 0, NULL, NULL);
-    variable_item_list_add(var_list, "SCSI Serial", 0, NULL, NULL);
-    variable_item_list_add(var_list, "USB Manufacturer", 0, NULL, NULL);
-    variable_item_list_add(var_list, "USB Product", 0, NULL, NULL);
-    variable_item_list_add(var_list, "USB Serial", 0, NULL, NULL);
-    variable_item_list_add(var_list, "USB Vendor ID", 0, NULL, NULL);
-    variable_item_list_add(var_list, "USB Product ID", 0, NULL, NULL);
-    variable_item_list_add(var_list, "Save Config", 0, NULL, NULL);
-    variable_item_list_add(var_list, "Reset to Defaults", 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("SCSI Vendor ID", "SCSI 厂商 ID"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("SCSI Product ID", "SCSI 产品 ID"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("SCSI Revision", "SCSI 版本"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("SCSI Serial", "SCSI 序列号"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("USB Manufacturer", "USB 制造商"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("USB Product", "USB 产品"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("USB Serial", "USB 序列号"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("USB Vendor ID", "USB 厂商 ID"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("USB Product ID", "USB 产品 ID"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("Save Config", "保存配置"), 0, NULL, NULL);
+    variable_item_list_add(var_list, MASS_STORAGE_UI_TEXT("Reset to Defaults", "恢复默认"), 0, NULL, NULL);
 
     variable_item_list_set_enter_callback(var_list, config_item_selected_callback, app);
-    variable_item_list_set_header(var_list, "USB Configuration");
+    variable_item_list_set_header(var_list, MASS_STORAGE_UI_TEXT("USB Configuration", "USB 配置"));
 
     update_config_display(app);
 
@@ -403,7 +403,7 @@ bool mass_storage_scene_usb_config_on_event(void* context, SceneManagerEvent eve
             }
 
             // Setup and show text input
-            text_input_set_header_text(app->text_input, "Enter Value");
+            text_input_set_header_text(app->text_input, MASS_STORAGE_UI_TEXT("Enter Value", "输入数值"));
             text_input_set_result_callback(
                 app->text_input,
                 text_input_result_callback,

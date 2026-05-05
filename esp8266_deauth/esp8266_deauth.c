@@ -16,6 +16,12 @@
 
 #include "FlipperZeroWiFiDeauthModuleDefines.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define DEAUTH_UI_TEXT(en, zh) (zh)
+#else
+#define DEAUTH_UI_TEXT(en, zh) (en)
+#endif
+
 #define UART_CH (momentum_settings.uart_esp_channel)
 
 #define DEAUTH_APP_DEBUG 0
@@ -155,7 +161,7 @@ static void esp8266_deauth_module_render_callback(Canvas* const canvas, void* ct
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
 
-        const char* strInitializing = "Something wrong";
+        const char* strInitializing = DEAUTH_UI_TEXT("Something wrong", "出现错误");
         canvas_draw_str(
             canvas,
             (128 / 2) - (canvas_string_width(canvas, strInitializing) / 2),
@@ -169,7 +175,7 @@ static void esp8266_deauth_module_render_callback(Canvas* const canvas, void* ct
             canvas_clear(canvas);
             canvas_set_font(canvas, FontSecondary);
 
-            const char* strInitializing = "Attach WiFi Deauther module";
+            const char* strInitializing = DEAUTH_UI_TEXT("Attach WiFi Deauther module", "请连接WiFi解除认证模块");
             canvas_draw_str(
                 canvas,
                 (128 / 2) - (canvas_string_width(canvas, strInitializing) / 2),
@@ -185,7 +191,7 @@ static void esp8266_deauth_module_render_callback(Canvas* const canvas, void* ct
         if(!app->m_wifiDeauthModuleInitialized) {
             canvas_set_font(canvas, FontPrimary);
 
-            const char* strInitializing = "Initializing...";
+            const char* strInitializing = DEAUTH_UI_TEXT("Initializing...", "初始化中...");
             canvas_draw_str(
                 canvas,
                 (128 / 2) - (canvas_string_width(canvas, strInitializing) / 2),

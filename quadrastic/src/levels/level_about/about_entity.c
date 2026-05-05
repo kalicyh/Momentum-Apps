@@ -74,19 +74,19 @@ about_render(Entity* self,
                             first_line_y,
                             AlignCenter,
                             AlignTop,
-                            "Developed by Ivan Barsukov");
+                            UI_TEXT("Developed by Ivan Barsukov", "开发者: Ivan Barsukov"));
     canvas_draw_str_aligned(canvas,
                             64,
                             first_line_y + font_height,
                             AlignCenter,
                             AlignTop,
-                            "Inspired by David Martinez");
+                            UI_TEXT("Inspired by David Martinez", "灵感: David Martinez"));
     canvas_draw_str_aligned(canvas,
                             64,
                             first_line_y + font_height * 2,
                             AlignCenter,
                             AlignTop,
-                            "Graphics by DarKaoz");
+                            UI_TEXT("Graphics by DarKaoz", "美术: DarKaoz"));
 
     // Draw link
     canvas_draw_str_aligned(

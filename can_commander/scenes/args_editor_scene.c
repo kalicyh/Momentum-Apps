@@ -10,14 +10,14 @@ typedef struct {
 } ArgChoice;
 
 static const ArgChoice kBusChoices[] = {
-    {.value = "can0", .label = "Bus 0"},
-    {.value = "can1", .label = "Bus 1"},
-    {.value = "both", .label = "Both"},
+    {.value = "can0", .label = CAN_COMMANDER_UI_TEXT("Bus 0", "总线 0")},
+    {.value = "can1", .label = CAN_COMMANDER_UI_TEXT("Bus 1", "总线 1")},
+    {.value = "both", .label = CAN_COMMANDER_UI_TEXT("Both", "双总线")},
 };
 
 static const ArgChoice kBoolChoices[] = {
-    {.value = "0", .label = "Off"},
-    {.value = "1", .label = "On"},
+    {.value = "0", .label = CAN_COMMANDER_UI_TEXT("Off", "关")},
+    {.value = "1", .label = CAN_COMMANDER_UI_TEXT("On", "开")},
 };
 
 static const ArgChoice kOrderChoices[] = {
@@ -26,18 +26,18 @@ static const ArgChoice kOrderChoices[] = {
 };
 
 static const ArgChoice kSignChoices[] = {
-    {.value = "u", .label = "Unsigned"},
-    {.value = "s", .label = "Signed"},
+    {.value = "u", .label = CAN_COMMANDER_UI_TEXT("Unsigned", "无符号")},
+    {.value = "s", .label = CAN_COMMANDER_UI_TEXT("Signed", "有符号")},
 };
 
 static const ArgChoice kModeListenChoices[] = {
-    {.value = "normal", .label = "Normal"},
-    {.value = "listen", .label = "Listen"},
+    {.value = "normal", .label = CAN_COMMANDER_UI_TEXT("Normal", "正常")},
+    {.value = "listen", .label = CAN_COMMANDER_UI_TEXT("Listen", "监听")},
 };
 
 static const ArgChoice kModeReverseChoices[] = {
-    {.value = "auto", .label = "Auto"},
-    {.value = "read", .label = "Read"},
+    {.value = "auto", .label = CAN_COMMANDER_UI_TEXT("Auto", "自动")},
+    {.value = "read", .label = CAN_COMMANDER_UI_TEXT("Read", "读取")},
 };
 
 static bool value_is_trueish(const char* value) {
@@ -220,9 +220,9 @@ static void args_editor_parse(App* app) {
         memset(action, 0, sizeof(AppArgItem));
         strncpy(
             action->key,
-            app->args_editor_apply_label ? app->args_editor_apply_label : "Apply",
+            app->args_editor_apply_label ? app->args_editor_apply_label : CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             sizeof(action->key) - 1U);
-        strncpy(action->value, "Run", sizeof(action->value) - 1U);
+        strncpy(action->value, CAN_COMMANDER_UI_TEXT("Run", "执行"), sizeof(action->value) - 1U);
         action->type = AppArgValueAction;
         app->args_editor_count++;
     }
@@ -503,7 +503,7 @@ void cancommander_scene_args_editor_on_enter(void* context) {
     if(app->args_editor_title) {
         variable_item_list_set_header(app->var_list, app->args_editor_title);
     } else {
-        variable_item_list_set_header(app->var_list, "Args");
+        variable_item_list_set_header(app->var_list, CAN_COMMANDER_UI_TEXT("Args", "参数"));
     }
 
     if(app->args_editor_selected_index >= app->args_editor_count) {

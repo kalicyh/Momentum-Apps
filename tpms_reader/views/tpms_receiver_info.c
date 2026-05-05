@@ -56,7 +56,7 @@ void tpms_view_receiver_info_draw(Canvas* canvas, TPMSReceiverInfoModel* model) 
 
     if(model->generic->battery_low != TPMS_NO_BATT) {
         snprintf(
-            buffer, sizeof(buffer), "Batt: %s", (!model->generic->battery_low ? "ok" : "low"));
+            buffer, sizeof(buffer), TPMS_UI_TEXT("Batt: %s", "电池: %s"), (!model->generic->battery_low ? TPMS_UI_TEXT("ok", "正常") : TPMS_UI_TEXT("low", "低")));
         canvas_draw_str_aligned(canvas, 126, 17, AlignRight, AlignCenter, buffer);
     }
 
@@ -117,10 +117,10 @@ void tpms_view_receiver_info_draw(Canvas* canvas, TPMSReceiverInfoModel* model) 
             }
 
             if(model->curr_ts % 2 == 0) {
-                canvas_draw_str_aligned(canvas, 106, 51, AlignLeft, AlignCenter, "Old");
+                canvas_draw_str_aligned(canvas, 106, 51, AlignLeft, AlignCenter, TPMS_UI_TEXT("Old", "过期"));
             } else {
                 if(cnt_min >= 59) {
-                    canvas_draw_str_aligned(canvas, 106, 51, AlignLeft, AlignCenter, "Old");
+                    canvas_draw_str_aligned(canvas, 106, 51, AlignLeft, AlignCenter, TPMS_UI_TEXT("Old", "过期"));
                 } else {
                     snprintf(buffer, sizeof(buffer), "%dm", cnt_min);
                     canvas_draw_str_aligned(canvas, 115, 51, AlignCenter, AlignCenter, buffer);

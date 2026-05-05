@@ -32,7 +32,7 @@ void nfc_playlist_name_new_playlist_scene_on_enter(void* context) {
    NfcPlaylist* nfc_playlist = context;
 
    nfc_playlist->views.text_input.output = malloc(MAX_PLAYLIST_NAME_LEN + 1);
-   text_input_set_header_text(nfc_playlist->views.text_input.view, "Enter file name");
+   text_input_set_header_text(nfc_playlist->views.text_input.view, NFC_PLAYLIST_UI_TEXT("Enter file name", "输入文件名"));
    text_input_set_minimum_length(nfc_playlist->views.text_input.view, 1);
    text_input_set_result_callback(
       nfc_playlist->views.text_input.view,

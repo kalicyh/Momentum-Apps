@@ -22,7 +22,7 @@ void picopass_scene_save_name_on_enter(void* context) {
     } else {
         picopass_text_store_set(picopass, picopass->dev->dev_name);
     }
-    text_input_set_header_text(text_input, "Name the card");
+    text_input_set_header_text(text_input, PICOPASS_UI_TEXT("Name the card", "命名卡片"));
     text_input_set_result_callback(
         text_input,
         picopass_scene_save_name_text_input_callback,

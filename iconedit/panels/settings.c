@@ -19,11 +19,11 @@ void settings_draw(Canvas* canvas, void* context) {
 
     int y = 18;
     // Canvas scale: Auto, 1x, 2x, 3x, .. 10x
-    canvas_draw_str_aligned(canvas, 3, y, AlignLeft, AlignTop, "Canvas Scale");
+    canvas_draw_str_aligned(canvas, 3, y, AlignLeft, AlignTop, ICONEDIT_UI_TEXT("Canvas Scale", "画布缩放"));
     size_t cw = canvas_width(canvas);
     char buf[8] = {0};
     if(app->settings.canvas_scale == 0) {
-        snprintf(buf, 8, "%s", "Auto");
+        snprintf(buf, 8, "%s", ICONEDIT_UI_TEXT("Auto", "自动"));
     } else {
         snprintf(buf, 8, "%dx", app->settings.canvas_scale);
     }
@@ -43,14 +43,14 @@ void settings_draw(Canvas* canvas, void* context) {
 
     y += 13;
     // Draw Cursor Guides: On / Off
-    canvas_draw_str_aligned(canvas, 3, y, AlignLeft, AlignTop, "Cursor Guides");
+    canvas_draw_str_aligned(canvas, 3, y, AlignLeft, AlignTop, ICONEDIT_UI_TEXT("Cursor Guides", "光标参考线"));
     canvas_draw_str_aligned(
         canvas,
         cw - (cw / 4),
         y,
         AlignCenter,
         AlignTop,
-        app->settings.draw_cursor_guides ? "On" : "Off");
+        app->settings.draw_cursor_guides ? ICONEDIT_UI_TEXT("On", "开") : ICONEDIT_UI_TEXT("Off", "关"));
 
     if(app->panel == Panel_Settings && settingsModel.selected_item == Setting_Draw_Cursor_Guides) {
         if(app->settings.draw_cursor_guides) {

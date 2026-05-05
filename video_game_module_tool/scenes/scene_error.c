@@ -19,17 +19,17 @@ void scene_error_on_enter(void* context) {
 
     widget_add_icon_element(app->widget, 83, 22, &I_WarningDolphinFlip_45x42);
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Retry", scene_error_button_callback, app);
+        app->widget, GuiButtonTypeLeft, VGM_UI_TEXT("Retry", "重试"), scene_error_button_callback, app);
     widget_add_string_element(
-        app->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, "Installation Failed!");
+        app->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, VGM_UI_TEXT("Installation Failed!", "安装失败!"));
 
     const char* error_msg;
     if(app->flasher_error == FlasherErrorBadFile) {
-        error_msg = "This file is\ncorrupted or\nunsupported";
+        error_msg = VGM_UI_TEXT("This file is\ncorrupted or\nunsupported", "文件已损坏\n或不支持");
     } else if(app->flasher_error == FlasherErrorDisconnect) {
-        error_msg = "The module was\ndisconnected\nduring the update";
+        error_msg = VGM_UI_TEXT("The module was\ndisconnected\nduring the update", "更新过程中\n模块已断开");
     } else if(app->flasher_error == FlasherErrorUnknown) {
-        error_msg = "An unknown error\nhas occurred";
+        error_msg = VGM_UI_TEXT("An unknown error\nhas occurred", "发生未知错误");
     } else {
         furi_crash();
     }

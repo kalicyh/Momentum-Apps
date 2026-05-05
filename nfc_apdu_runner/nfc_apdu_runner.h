@@ -32,6 +32,12 @@
 #include <toolbox/hex.h>
 #include <toolbox/path.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_APDU_RUNNER_UI_TEXT(en, zh) (zh)
+#else
+#define NFC_APDU_RUNNER_UI_TEXT(en, zh) (en)
+#endif
+
 #define APP_DIRECTORY_PATH "/ext/apps_data/nfc_apdu_runner"
 #define FILE_EXTENSION     ".apduscr"
 #define RESPONSE_EXTENSION ".apdures"

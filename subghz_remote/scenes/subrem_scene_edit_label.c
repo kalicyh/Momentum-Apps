@@ -45,7 +45,7 @@ void subrem_scene_edit_label_on_enter(void* context) {
     }
 
     TextInput* text_input = app->text_input;
-    text_input_set_header_text(text_input, "Label name");
+    text_input_set_header_text(text_input, SUBREM_UI_TEXT("Label name", "标签名称"));
     text_input_set_result_callback(
         text_input,
         subrem_scene_edit_label_text_input_callback,
@@ -57,14 +57,14 @@ void subrem_scene_edit_label_on_enter(void* context) {
     text_input_set_minimum_length(app->text_input, 0);
 #endif
     widget_add_string_element(
-        app->widget, 63, 12, AlignCenter, AlignCenter, FontPrimary, "Empty Label Name");
+        app->widget, 63, 12, AlignCenter, AlignCenter, FontPrimary, SUBREM_UI_TEXT("Empty Label Name", "标签名称为空"));
     widget_add_string_element(
-        app->widget, 63, 32, AlignCenter, AlignCenter, FontSecondary, "Continue?");
+        app->widget, 63, 32, AlignCenter, AlignCenter, FontSecondary, SUBREM_UI_TEXT("Continue?", "是否继续?"));
 
     widget_add_button_element(
-        app->widget, GuiButtonTypeCenter, "Ok", subrem_scene_edit_label_widget_callback, app);
+        app->widget, GuiButtonTypeCenter, SUBREM_UI_TEXT("Ok", "确认"), subrem_scene_edit_label_widget_callback, app);
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Back", subrem_scene_edit_label_widget_callback, app);
+        app->widget, GuiButtonTypeLeft, SUBREM_UI_TEXT("Back", "返回"), subrem_scene_edit_label_widget_callback, app);
 
     scene_manager_set_scene_state(
         app->scene_manager, SubRemSceneEditLabel, SubRemSceneEditLabelStateTextInput);

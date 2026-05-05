@@ -12,7 +12,7 @@ void menu_callback_settings_scene(void* context, uint32_t index) {
 }
 
 static uint8_t wave_option_values[] = {SINE, SQUARE};
-static char* wave_option_names[] = {"Sine", "Square"};
+static char* wave_option_names[] = {TONE_GEN_UI_TEXT("Sine", "正弦"), TONE_GEN_UI_TEXT("Square", "方波")};
 static void wave_type_option_change(VariableItem* item) {
     struct AppContext_t* app = variable_item_get_context(item);
     uint8_t index = variable_item_get_current_value_index(item);
@@ -63,7 +63,7 @@ void scene_on_enter_settings_scene(void* context) {
     // Wave type setting
     VariableItem* item = variable_item_list_add(
         variableItemListView->viewData,
-        "Wave Display",
+        TONE_GEN_UI_TEXT("Wave Display", "波形"),
         COUNT_OF(wave_option_values),
         wave_type_option_change,
         app);
@@ -75,7 +75,7 @@ void scene_on_enter_settings_scene(void* context) {
     // Frequency setting
     item = variable_item_list_add(
         variableItemListView->viewData,
-        "Frequency",
+        TONE_GEN_UI_TEXT("Frequency", "频率"),
         FREQ_TO_INDEX(MAX_FREQ) + 1,
         frequency_option_change,
         app);
@@ -88,7 +88,7 @@ void scene_on_enter_settings_scene(void* context) {
 
     // Volume setting
     item = variable_item_list_add(
-        variableItemListView->viewData, "Volume", 11, volume_option_change, app);
+        variableItemListView->viewData, TONE_GEN_UI_TEXT("Volume", "音量"), 11, volume_option_change, app);
     variable_item_set_current_value_index(
         item, (uint8_t)(((struct ToneData_t*)app->additionalData)->volume * 10.0f));
 

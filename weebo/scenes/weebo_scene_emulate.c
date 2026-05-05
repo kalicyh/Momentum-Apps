@@ -18,7 +18,7 @@ void weebo_scene_emulate_draw_screen(Weebo* weebo) {
     FuriString* uid_str = furi_string_alloc();
     const MfUltralightData* data = nfc_device_get_data(weebo->nfc_device, NfcProtocolMfUltralight);
 
-    furi_string_cat_printf(info_str, "Emulating");
+    furi_string_cat_printf(info_str, WEEBO_UI_TEXT("Emulating", "模拟中"));
     furi_string_cat_printf(
         uid_str,
         "%02X%02X%02X%02X%02X%02X%02X",
@@ -37,7 +37,7 @@ void weebo_scene_emulate_draw_screen(Weebo* weebo) {
         widget, 64, 25, AlignCenter, AlignCenter, FontSecondary, furi_string_get_cstr(uid_str));
 
     widget_add_button_element(
-        widget, GuiButtonTypeCenter, "Remix", weebo_scene_emulate_widget_callback, weebo);
+        widget, GuiButtonTypeCenter, WEEBO_UI_TEXT("Remix", "重新生成"), weebo_scene_emulate_widget_callback, weebo);
 
     furi_string_free(info_str);
     furi_string_free(uid_str);

@@ -118,8 +118,8 @@ static void xremote_learn_exit_dialog_alloc(
     xremote_learn_exit_dialog_free(learn_ctx);
 
     ViewDispatcher* view_disp = learn_ctx->app_ctx->view_dispatcher;
-    const char* dialog_text = "All unsaved data\nwill be lost!";
-    const char* header_text = "Exit to XRemote Menu?";
+    const char* dialog_text = XREMOTE_UI_TEXT("All unsaved data\nwill be lost!", "未保存的数据\n将会丢失!");
+    const char* header_text = XREMOTE_UI_TEXT("Exit to XRemote Menu?", "退出到XRemote菜单?");
 
     learn_ctx->dialog_ex = dialog_ex_alloc();
     View* view = dialog_ex_get_view(learn_ctx->dialog_ex);
@@ -129,9 +129,9 @@ static void xremote_learn_exit_dialog_alloc(
     dialog_ex_set_text(learn_ctx->dialog_ex, dialog_text, 64, 25, AlignCenter, AlignTop);
     dialog_ex_set_icon(learn_ctx->dialog_ex, 0, 0, NULL);
 
-    dialog_ex_set_left_button_text(learn_ctx->dialog_ex, "Exit");
-    dialog_ex_set_center_button_text(learn_ctx->dialog_ex, "Save");
-    dialog_ex_set_right_button_text(learn_ctx->dialog_ex, "Stay");
+    dialog_ex_set_left_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Exit", "退出"));
+    dialog_ex_set_center_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Save", "保存"));
+    dialog_ex_set_right_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Stay", "留下"));
 
     dialog_ex_set_result_callback(learn_ctx->dialog_ex, callback);
     dialog_ex_set_context(learn_ctx->dialog_ex, learn_ctx);
@@ -239,7 +239,7 @@ static void xremote_learn_finish(XRemoteLearnContext* learn_ctx) {
 
     if(infrared_remote_get_button_count(learn_ctx->ir_remote) || learn_ctx->is_dirty) {
         snprintf(learn_ctx->text_store, XREMOTE_APP_TEXT_MAX, "Remote_");
-        text_input_set_header_text(learn_ctx->text_input, "Name new remote");
+        text_input_set_header_text(learn_ctx->text_input, XREMOTE_UI_TEXT("Name new remote", "命名遥控器"));
 
         text_input_set_result_callback(
             learn_ctx->text_input,

@@ -18,11 +18,11 @@ void cancommander_scene_main_menu_on_enter(void* context) {
     submenu_reset(app->submenu);
     submenu_set_header(app->submenu, "CAN Commander");
 
-    submenu_add_item(app->submenu, "Tools", MainMenuTools, cancommander_scene_main_menu_callback, app);
-    submenu_add_item(app->submenu, "Profiles", MainMenuProfiles, cancommander_scene_main_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("Tools", "工具"), MainMenuTools, cancommander_scene_main_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("Profiles", "配置"), MainMenuProfiles, cancommander_scene_main_menu_callback, app);
     submenu_add_item(
-        app->submenu, "Settings", MainMenuSettings, cancommander_scene_main_menu_callback, app);
-    submenu_add_item(app->submenu, "About", MainMenuAbout, cancommander_scene_main_menu_callback, app);
+        app->submenu, CAN_COMMANDER_UI_TEXT("Settings", "设置"), MainMenuSettings, cancommander_scene_main_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("About", "关于"), MainMenuAbout, cancommander_scene_main_menu_callback, app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, cancommander_scene_main_menu));
@@ -55,7 +55,9 @@ bool cancommander_scene_main_menu_on_event(void* context, SceneManagerEvent even
     case MainMenuAbout:
         app_set_status(
             app,
-            "CAN Commander\nVersion %s\nMade by\nMatthew KuKanich\n\nwww.cancommander.com",
+            CAN_COMMANDER_UI_TEXT(
+                "CAN Commander\nVersion %s\nMade by\nMatthew KuKanich\n\nwww.cancommander.com",
+                "CAN Commander\n版本 %s\n作者\nMatthew KuKanich\n\nwww.cancommander.com"),
             PROGRAM_VERSION);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_status);
         return true;

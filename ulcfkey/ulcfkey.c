@@ -27,6 +27,12 @@
 #include <stream/stream.h>
 #include <stream/buffered_file_stream.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ULCFKEY_UI_TEXT(en, zh) (zh)
+#else
+#define ULCFKEY_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG                            "ULCFKey"
 #define CMD_WUPA                       0x52 // 7 bits
 #define CMD_READ_PAGE                  0x30
@@ -743,9 +749,9 @@ static void render_callback(Canvas* canvas, void* ctx) {
     canvas_set_font(canvas, FontSecondary);
     switch(app->state) {
     case AppStateMain:
-        canvas_draw_str(canvas, 2, 24, "Ready");
-        elements_button_center(canvas, "Start");
-        elements_button_right(canvas, "Help");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Ready", "就绪"));
+        elements_button_center(canvas, ULCFKEY_UI_TEXT("Start", "开始"));
+        elements_button_right(canvas, ULCFKEY_UI_TEXT("Help", "帮助"));
         break;
     case AppStateHelp:
         elements_scrollbar_pos(
@@ -778,49 +784,49 @@ static void render_callback(Canvas* canvas, void* ctx) {
         }
         break;
     case AppStateCollectNTReady:
-        canvas_draw_str(canvas, 2, 24, "Place Flipper against card");
-        elements_button_center(canvas, "Collect NT");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Place Flipper against card", "将 Flipper 靠近卡片"));
+        elements_button_center(canvas, ULCFKEY_UI_TEXT("Collect NT", "收集 NT"));
         break;
     case AppStateCollectNRReady:
-        canvas_draw_str(canvas, 2, 24, "Place Flipper against reader");
-        elements_button_center(canvas, "Collect NR");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Place Flipper against reader", "将 Flipper 靠近读卡器"));
+        elements_button_center(canvas, ULCFKEY_UI_TEXT("Collect NR", "收集 NR"));
         break;
     case AppStateCollectNTInit:
     case AppStateCollectNTWaiting: {
         char buffer[32];
         char buffer_unique[32];
-        snprintf(buffer, sizeof(buffer), "Collecting NT: %lu/%u", app->total_nonces, MAX_NONCES);
-        snprintf(buffer_unique, sizeof(buffer_unique), "Unique: %u", app->unique_nonces);
+        snprintf(buffer, sizeof(buffer), ULCFKEY_UI_TEXT("Collecting NT: %lu/%u", "收集 NT: %lu/%u"), app->total_nonces, MAX_NONCES);
+        snprintf(buffer_unique, sizeof(buffer_unique), ULCFKEY_UI_TEXT("Unique: %u", "唯一: %u"), app->unique_nonces);
         canvas_draw_str(canvas, 2, 24, buffer);
         canvas_draw_str(canvas, 2, 36, buffer_unique);
         break;
     }
     case AppStateCollectNRInit:
     case AppStateCollectNRWaiting:
-        canvas_draw_str(canvas, 2, 24, "Collecting NR");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Collecting NR", "收集 NR"));
         break;
     case AppStateCrackReady:
-        canvas_draw_str(canvas, 2, 24, "Place Flipper against card");
-        elements_button_center(canvas, "Crack");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Place Flipper against card", "将 Flipper 靠近卡片"));
+        elements_button_center(canvas, ULCFKEY_UI_TEXT("Crack", "破解"));
         break;
     case AppStateCrackInit:
     case AppStateCrackInitialAuth:
-        canvas_draw_str(canvas, 2, 24, "Attempting to authenticate...");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Attempting to authenticate...", "正在尝试认证..."));
         break;
     case AppStateCrackTearLockbytes:
-        canvas_draw_str(canvas, 2, 24, "Tearing lock bytes...");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Tearing lock bytes...", "正在撕裂锁字节..."));
         break;
     case AppStateCrackOverwriteAuth0:
-        canvas_draw_str(canvas, 2, 24, "Overwriting AUTH0...");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Overwriting AUTH0...", "正在覆写 AUTH0..."));
         break;
     case AppStateCrackCollectNonces:
-        canvas_draw_str(canvas, 2, 24, "Collecting nonces...");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Collecting nonces...", "正在收集 nonce..."));
         break;
     case AppStateComplete:
-        canvas_draw_str(canvas, 2, 24, "Complete!");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Complete!", "完成!"));
         break;
     case AppStateError:
-        canvas_draw_str(canvas, 2, 24, "Error!");
+        canvas_draw_str(canvas, 2, 24, ULCFKEY_UI_TEXT("Error!", "错误!"));
         if(app->error) canvas_draw_str(canvas, 2, 36, app->error);
         break;
     }
@@ -970,16 +976,27 @@ int32_t ulcfkey_app(void* p) {
     // Calculate number of scroll positions based on total text height
     app->help_state->scroll_num = 7; // Adjust based on number of visible lines needed
     app->tear_delay = TEAR_DELAY_US;
-    app->help_state->text = furi_string_alloc_set("Place Flipper against\n"
-                                                  "card and press Collect NT.\n"
-                                                  "\n"
-                                                  "Next, bring Flipper\n"
-                                                  "to reader and press\n"
-                                                  "Collect NR.\n"
-                                                  "\n"
-                                                  "Last, place Flipper\n"
-                                                  "against card and press\n"
-                                                  "Crack.");
+    app->help_state->text = furi_string_alloc_set(ULCFKEY_UI_TEXT(
+        "Place Flipper against\n"
+        "card and press Collect NT.\n"
+        "\n"
+        "Next, bring Flipper\n"
+        "to reader and press\n"
+        "Collect NR.\n"
+        "\n"
+        "Last, place Flipper\n"
+        "against card and press\n"
+        "Crack.",
+        "将 Flipper 靠近卡片\n"
+        "并按 收集 NT。\n"
+        "\n"
+        "然后将 Flipper\n"
+        "靠近读卡器并按\n"
+        "收集 NR。\n"
+        "\n"
+        "最后将 Flipper\n"
+        "靠近卡片并按\n"
+        "破解。"));
 
     // GUI
     app->gui = furi_record_open(RECORD_GUI);
@@ -1164,7 +1181,7 @@ int32_t ulcfkey_app(void* p) {
                 }
                 if(!found_duplicate) {
                     app->state = AppStateError;
-                    app->error = "PRNG not predictable";
+                    app->error = ULCFKEY_UI_TEXT("PRNG not predictable", "PRNG 不可预测");
                     notification_message(app->notifications, &sequence_error);
                 } else {
                     FURI_LOG_I(TAG, "Highest common nonce count: %u", highest_common_nonce_count);
@@ -1224,7 +1241,7 @@ int32_t ulcfkey_app(void* p) {
                 app->state = AppStateCrackCollectNonces;
             } else {
                 app->state = AppStateError;
-                app->error = "Failed to overwrite AUTH0";
+                app->error = ULCFKEY_UI_TEXT("Failed to overwrite AUTH0", "覆写 AUTH0 失败");
                 notification_message(app->notifications, &sequence_error);
             }
         } else if(app->state == AppStateCrackCollectNonces) {
@@ -1236,7 +1253,7 @@ int32_t ulcfkey_app(void* p) {
                 notification_message(app->notifications, &sequence_success);
             } else {
                 app->state = AppStateError;
-                app->error = "Failed to collect nonces";
+                app->error = ULCFKEY_UI_TEXT("Failed to collect nonces", "收集 nonce 失败");
                 notification_message(app->notifications, &sequence_error);
             }
         }

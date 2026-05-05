@@ -14,20 +14,20 @@ void uhf_reader_view_delete_success_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, " Successfully Deleted!");
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT(" Successfully Deleted!", " 删除成功!"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 4, 22, "Name:");
+    canvas_draw_str(canvas, 4, 22, RFID_READER_UI_TEXT("Name:", "名称:"));
     
     //Displaying the name of the saved UHF Tag deleted.
     canvas_draw_str(canvas, 32, 22, furi_string_get_cstr(MyModel->SelectedTagName));
     
     //Displaying the index of the saved tag as shown in the Index file.
     furi_string_printf(XStr, "%ld", MyModel->SelectedTagIndex);
-    canvas_draw_str(canvas, 4, 33, "EPC Index:");
+    canvas_draw_str(canvas, 4, 33, RFID_READER_UI_TEXT("EPC Index:", "EPC索引:"));
     canvas_draw_str(canvas, 53, 33, furi_string_get_cstr(XStr));
 
     //Displaying the EPC scrolling across the screen
-    canvas_draw_str(canvas, 4, 44, "EPC:");
+    canvas_draw_str(canvas, 4, 44, RFID_READER_UI_TEXT("EPC:", "EPC:"));
     MyModel->ScrollingText = (char*)furi_string_get_cstr(MyModel->SelectedTagEpc);
 
     //Setting the width of the screen for the sliding window
@@ -56,7 +56,7 @@ void uhf_reader_view_delete_success_draw_callback(Canvas* canvas, void* model) {
     canvas_draw_str(canvas, 28, 44, VisiblePart);
 
     //Exit button
-    elements_button_center(canvas, "Exit");
+    elements_button_center(canvas, RFID_READER_UI_TEXT("Exit", "退出"));
     furi_string_free(XStr);
 }
 
@@ -143,9 +143,9 @@ void view_delete_success_alloc(UHFReaderApp* App) {
     //Setting default values for the view model
     ModelDeleteSuccess->SelectedTagEpc = furi_string_alloc_set("ABCDEF12");
     ModelDeleteSuccess->SelectedTagIndex = 1;
-    ModelDeleteSuccess->SelectedTagName = furi_string_alloc_set("Default Name");
+    ModelDeleteSuccess->SelectedTagName = furi_string_alloc_set(RFID_READER_UI_TEXT("Default Name", "默认名称"));
     ModelDeleteSuccess->ScrollOffset = 0;
-    ModelDeleteSuccess->ScrollingText = "Press Delete";
+    ModelDeleteSuccess->ScrollingText = RFID_READER_UI_TEXT("Press Delete", "按删除键");
     view_dispatcher_add_view(
         App->ViewDispatcher, UHFReaderViewDeleteSuccess, App->ViewDeleteSuccess);
 }

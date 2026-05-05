@@ -111,7 +111,7 @@ static int32_t game_waiting_app_callback(void *p)
     if (!fhttp)
     {
         FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-        easy_flipper_dialog("Error", "Failed to allocate FlipperHTTP");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to allocate FlipperHTTP", "FlipperHTTP 分配失败"));
         return -1;
     }
     user_hit_back = false;
@@ -152,7 +152,7 @@ static bool game_start_waiting_thread(void *context)
     if (!thread)
     {
         FURI_LOG_E(TAG, "Failed to allocate waiting thread");
-        easy_flipper_dialog("Error", "Failed to allocate waiting thread. Restart your Flipper.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to allocate waiting thread. Restart your Flipper.", "等待线程分配失败。请重启设备。"));
         return false;
     }
     furi_thread_start(thread);
@@ -166,7 +166,7 @@ static bool game_fetch_world_list(FlipperHTTP *fhttp)
     if (!fhttp)
     {
         FURI_LOG_E(TAG, "fhttp is NULL");
-        easy_flipper_dialog("Error", "fhttp is NULL. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("fhttp is NULL. Press BACK to return.", "fhttp 为空。按返回键返回。"));
         return false;
     }
 
@@ -191,14 +191,14 @@ static bool game_fetch_player_stats(FlipperHTTP *fhttp)
     if (!fhttp)
     {
         FURI_LOG_E(TAG, "fhttp is NULL");
-        easy_flipper_dialog("Error", "fhttp is NULL. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("fhttp is NULL. Press BACK to return.", "fhttp 为空。按返回键返回。"));
         return false;
     }
     char username[64];
     if (!load_char("Flip-Social-Username", username, sizeof(username)))
     {
         FURI_LOG_E(TAG, "Failed to load Flip-Social-Username");
-        easy_flipper_dialog("Error", "Failed to load saved username. Go to settings to update.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load saved username. Go to settings to update.", "加载已保存用户名失败。请前往设置更新。"));
         return false;
     }
     char url[128];
@@ -226,7 +226,7 @@ static bool game_thread_start(void *context)
     if (!app)
     {
         FURI_LOG_E(TAG, "app is NULL");
-        easy_flipper_dialog("Error", "app is NULL. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("app is NULL. Press BACK to return.", "应用为空。按返回键返回。"));
         return false;
     }
 
@@ -253,7 +253,7 @@ static bool game_thread_start(void *context)
     if (!thread)
     {
         FURI_LOG_E(TAG, "Failed to allocate game thread");
-        easy_flipper_dialog("Error", "Failed to allocate game thread. Restart your Flipper.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to allocate game thread. Restart your Flipper.", "游戏线程分配失败。请重启设备。"));
         return false;
     }
     furi_thread_start(thread);
@@ -268,7 +268,7 @@ static bool game_fetch(DataLoaderModel *model)
     if (!app)
     {
         FURI_LOG_E(TAG, "app is NULL");
-        easy_flipper_dialog("Error", "app is NULL. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("app is NULL. Press BACK to return.", "应用为空。按返回键返回。"));
         return false;
     }
     if (model->request_index == 0)
@@ -281,7 +281,7 @@ static bool game_fetch(DataLoaderModel *model)
             FURI_LOG_E(TAG, "Failed to load Flip-Social-Username");
             view_dispatcher_switch_to_view(app->view_dispatcher,
                                            FlipWorldViewSubmenu); // just go back to the main menu for now
-            easy_flipper_dialog("Error", "Failed to load saved username\nGo to user settings to update.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load saved username\nGo to user settings to update.", "加载已保存用户名失败\n请前往用户设置更新。"));
             return false;
         }
         if (!load_char("Flip-Social-Password", password, sizeof(password)))
@@ -289,7 +289,7 @@ static bool game_fetch(DataLoaderModel *model)
             FURI_LOG_E(TAG, "Failed to load Flip-Social-Password");
             view_dispatcher_switch_to_view(app->view_dispatcher,
                                            FlipWorldViewSubmenu); // just go back to the main menu for now
-            easy_flipper_dialog("Error", "Failed to load saved password\nGo to settings to update.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load saved password\nGo to settings to update.", "加载已保存密码失败\n请前往设置更新。"));
             return false;
         }
         char payload[256];
@@ -303,7 +303,7 @@ static bool game_fetch(DataLoaderModel *model)
         if (!load_char("is_logged_in", is_logged_in, sizeof(is_logged_in)))
         {
             FURI_LOG_E(TAG, "Failed to load is_logged_in");
-            easy_flipper_dialog("Error", "Failed to load is_logged_in\nGo to user settings to update.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load is_logged_in\nGo to user settings to update.", "加载登录状态失败\n请前往用户设置更新。"));
             view_dispatcher_switch_to_view(app->view_dispatcher,
                                            FlipWorldViewSubmenu); // just go back to the main menu for now
             return false;
@@ -316,7 +316,7 @@ static bool game_fetch(DataLoaderModel *model)
             if (!load_char("Flip-Social-Username", username, sizeof(username)))
             {
                 FURI_LOG_E(TAG, "Failed to load Flip-Social-Username");
-                easy_flipper_dialog("Error", "Failed to load saved username. Go to settings to update.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load saved username. Go to settings to update.", "加载已保存用户名失败。请前往设置更新。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
                 return false;
@@ -324,19 +324,19 @@ static bool game_fetch(DataLoaderModel *model)
             if (!load_char("Flip-Social-Password", password, sizeof(password)))
             {
                 FURI_LOG_E(TAG, "Failed to load Flip-Social-Password");
-                easy_flipper_dialog("Error", "Failed to load saved password. Go to settings to update.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load saved password. Go to settings to update.", "加载已保存密码失败。请前往设置更新。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
                 return false;
             }
             char payload[172];
             snprintf(payload, sizeof(payload), "{\"username\":\"%s\",\"password\":\"%s\"}", username, password);
-            model->title = "Registering...";
+            model->title = FLIP_WORLD_UI_TEXT("Registering...", "注册中...");
             return flipper_http_request(model->fhttp, POST, "https://www.jblanked.com/flipper/api/user/register/", "{\"Content-Type\":\"application/json\"}", payload);
         }
         else
         {
-            model->title = "Fetching World List..";
+            model->title = FLIP_WORLD_UI_TEXT("Fetching World List..", "获取世界列表...");
             return game_fetch_world_list(model->fhttp);
         }
     }
@@ -355,7 +355,7 @@ static bool game_fetch(DataLoaderModel *model)
             view_dispatcher_switch_to_view(app->view_dispatcher,
                                            FlipWorldViewSubmenu); // just go back to the main menu for now
             FURI_LOG_E(TAG, "Failed to load world list");
-            easy_flipper_dialog("Error", "Failed to load world list. Go to game settings to download packs.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load world list. Go to game settings to download packs.", "加载世界列表失败。请前往游戏设置下载包。"));
             return false;
         }
         FuriString *first_world = get_json_array_value_furi("worlds", 0, world_list);
@@ -364,7 +364,7 @@ static bool game_fetch(DataLoaderModel *model)
             view_dispatcher_switch_to_view(app->view_dispatcher,
                                            FlipWorldViewSubmenu); // just go back to the main menu for now
             FURI_LOG_E(TAG, "Failed to get first world");
-            easy_flipper_dialog("Error", "Failed to get first world. Go to game settings to download packs.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to get first world. Go to game settings to download packs.", "获取首个世界失败。请前往游戏设置下载包。"));
             furi_string_free(world_list);
             return false;
         }
@@ -376,10 +376,10 @@ static bool game_fetch(DataLoaderModel *model)
             if (!game_thread_start(app))
             {
                 FURI_LOG_E(TAG, "Failed to start game thread");
-                easy_flipper_dialog("Error", "Failed to start game thread. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start game thread. Press BACK to return.", "游戏线程启动失败。按返回键返回。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
-                return "Failed to start game thread";
+                return FLIP_WORLD_UI_TEXT("Failed to start game thread", "游戏线程启动失败");
             }
             return true;
         }
@@ -405,26 +405,26 @@ static char *game_parse(DataLoaderModel *model)
         {
             save_char("is_logged_in", "false");
             // Go back to the main menu
-            easy_flipper_dialog("Error", "Response is empty. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Response is empty. Press BACK to return.", "响应为空。按返回键返回。"));
             view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-            return "Response is empty...";
+            return FLIP_WORLD_UI_TEXT("Response is empty...", "响应为空...");
         }
 
         // Check for successful conditions
         if (strstr(model->fhttp->last_response, "[SUCCESS]") != NULL || strstr(model->fhttp->last_response, "User found") != NULL)
         {
             save_char("is_logged_in", "true");
-            model->title = "Login successful!";
-            model->title = "Fetching World List..";
-            return "Login successful!";
+            model->title = FLIP_WORLD_UI_TEXT("Login successful!", "登录成功!");
+            model->title = FLIP_WORLD_UI_TEXT("Fetching World List..", "获取世界列表...");
+            return FLIP_WORLD_UI_TEXT("Login successful!", "登录成功!");
         }
 
         // Check if user not found
         if (strstr(model->fhttp->last_response, "User not found") != NULL)
         {
             save_char("is_logged_in", "false");
-            model->title = "Registering...";
-            return "Account not found...\nRegistering now.."; // if they see this an issue happened switching to register
+            model->title = FLIP_WORLD_UI_TEXT("Registering...", "注册中...");
+            return FLIP_WORLD_UI_TEXT("Account not found...\nRegistering now..", "未找到账号...\n正在注册..."); // if they see this an issue happened switching to register
         }
 
         // If not success, not found, check length conditions
@@ -434,17 +434,17 @@ static char *game_parse(DataLoaderModel *model)
             // Empty or too long means failed login
             save_char("is_logged_in", "false");
             // Go back to the main menu
-            easy_flipper_dialog("Error", "Failed to login. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to login. Press BACK to return.", "登录失败。按返回键返回。"));
             view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-            return "Failed to login...";
+            return FLIP_WORLD_UI_TEXT("Failed to login...", "登录失败...");
         }
 
         // Handle any other unknown response as a failure
         save_char("is_logged_in", "false");
         // Go back to the main menu
-        easy_flipper_dialog("Error", "Failed to login. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to login. Press BACK to return.", "登录失败。按返回键返回。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-        return "Failed to login...";
+        return FLIP_WORLD_UI_TEXT("Failed to login...", "登录失败...");
     }
     else if (model->request_index == 1)
     {
@@ -460,16 +460,16 @@ static char *game_parse(DataLoaderModel *model)
                 if (!load_char("Flip-Social-Username", username, sizeof(username)))
                 {
                     FURI_LOG_E(TAG, "Failed to load Flip-Social-Username");
-                    easy_flipper_dialog("Error", "Failed to load Flip-Social-Username");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load Flip-Social-Username", "加载用户名失败"));
                     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-                    return "Failed to load Flip-Social-Username";
+                    return FLIP_WORLD_UI_TEXT("Failed to load Flip-Social-Username", "加载用户名失败");
                 }
                 if (!load_char("Flip-Social-Password", password, sizeof(password)))
                 {
                     FURI_LOG_E(TAG, "Failed to load Flip-Social-Password");
-                    easy_flipper_dialog("Error", "Failed to load Flip-Social-Password");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load Flip-Social-Password", "加载密码失败"));
                     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-                    return "Failed to load Flip-Social-Password";
+                    return FLIP_WORLD_UI_TEXT("Failed to load Flip-Social-Password", "加载密码失败");
                 }
                 // load wifi ssid,pass then save
                 char ssid[64];
@@ -477,41 +477,41 @@ static char *game_parse(DataLoaderModel *model)
                 if (!load_char("WiFi-SSID", ssid, sizeof(ssid)))
                 {
                     FURI_LOG_E(TAG, "Failed to load WiFi-SSID");
-                    easy_flipper_dialog("Error", "Failed to load WiFi-SSID");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load WiFi-SSID", "加载 WiFi SSID 失败"));
                     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-                    return "Failed to load WiFi-SSID";
+                    return FLIP_WORLD_UI_TEXT("Failed to load WiFi-SSID", "加载 WiFi SSID 失败");
                 }
                 if (!load_char("WiFi-Password", pass, sizeof(pass)))
                 {
                     FURI_LOG_E(TAG, "Failed to load WiFi-Password");
-                    easy_flipper_dialog("Error", "Failed to load WiFi-Password");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load WiFi-Password", "加载 WiFi 密码失败"));
                     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
-                    return "Failed to load WiFi-Password";
+                    return FLIP_WORLD_UI_TEXT("Failed to load WiFi-Password", "加载 WiFi 密码失败");
                 }
                 save_settings(ssid, pass, username, password);
-                model->title = "Fetching World List..";
-                return "Account created!";
+                model->title = FLIP_WORLD_UI_TEXT("Fetching World List..", "获取世界列表...");
+                return FLIP_WORLD_UI_TEXT("Account created!", "账号已创建!");
             }
             else if (strstr(model->fhttp->last_response, "Username or password not provided") != NULL)
             {
-                easy_flipper_dialog("Error", "Please enter your credentials.\nPress BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Please enter your credentials.\nPress BACK to return.", "请输入凭据。\n按返回键返回。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
-                return "Please enter your credentials.";
+                return FLIP_WORLD_UI_TEXT("Please enter your credentials.", "请输入凭据。");
             }
             else if (strstr(model->fhttp->last_response, "User already exists") != NULL || strstr(model->fhttp->last_response, "Multiple users found") != NULL)
             {
-                easy_flipper_dialog("Error", "Registration failed...\nUsername already exists.\nPress BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Registration failed...\nUsername already exists.\nPress BACK to return.", "注册失败...\n用户名已存在。\n按返回键返回。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
-                return "Username already exists.";
+                return FLIP_WORLD_UI_TEXT("Username already exists.", "用户名已存在。");
             }
             else
             {
-                easy_flipper_dialog("Error", "Registration failed...\nUpdate your credentials.\nPress BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Registration failed...\nUpdate your credentials.\nPress BACK to return.", "注册失败...\n请更新凭据。\n按返回键返回。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
-                return "Registration failed...";
+                return FLIP_WORLD_UI_TEXT("Registration failed...", "注册失败...");
             }
         }
         else
@@ -519,33 +519,33 @@ static char *game_parse(DataLoaderModel *model)
             if (!game_thread_start(app))
             {
                 FURI_LOG_E(TAG, "Failed to start game thread");
-                easy_flipper_dialog("Error", "Failed to start game thread. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start game thread. Press BACK to return.", "游戏线程启动失败。按返回键返回。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher,
                                                FlipWorldViewSubmenu); // just go back to the main menu for now
-                return "Failed to start game thread";
+                return FLIP_WORLD_UI_TEXT("Failed to start game thread", "游戏线程启动失败");
             }
-            return "Thanks for playing FlipWorld!\n\n\n\nPress BACK to return if this\ndoesn't automatically close.";
+            return FLIP_WORLD_UI_TEXT("Thanks for playing FlipWorld!\n\n\n\nPress BACK to return if this\ndoesn't automatically close.", "感谢游玩 FlipWorld!\n\n\n\n如未自动关闭，\n请按返回键返回。");
         }
     }
     else if (model->request_index == 2)
     {
-        return "Welcome to FlipWorld!\n\n\n\nPress BACK to return if this\ndoesn't automatically close.";
+        return FLIP_WORLD_UI_TEXT("Welcome to FlipWorld!\n\n\n\nPress BACK to return if this\ndoesn't automatically close.", "欢迎来到 FlipWorld!\n\n\n\n如未自动关闭，\n请按返回键返回。");
     }
     else if (model->request_index == 3)
     {
         if (!game_thread_start(app))
         {
             FURI_LOG_E(TAG, "Failed to start game thread");
-            easy_flipper_dialog("Error", "Failed to start game thread. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start game thread. Press BACK to return.", "游戏线程启动失败。按返回键返回。"));
             view_dispatcher_switch_to_view(app->view_dispatcher,
                                            FlipWorldViewSubmenu); // just go back to the main menu for now
-            return "Failed to start game thread";
+            return FLIP_WORLD_UI_TEXT("Failed to start game thread", "游戏线程启动失败");
         }
-        return "Thanks for playing FlipWorld!\n\n\n\nPress BACK to return if this\ndoesn't automatically close.";
+        return FLIP_WORLD_UI_TEXT("Thanks for playing FlipWorld!\n\n\n\nPress BACK to return if this\ndoesn't automatically close.", "感谢游玩 FlipWorld!\n\n\n\n如未自动关闭，\n请按返回键返回。");
     }
-    easy_flipper_dialog("Error", "Unknown error. Press BACK to return.");
+    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Unknown error. Press BACK to return.", "未知错误。按返回键返回。"));
     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu); // just go back to the main menu for now
-    return "Unknown error";
+    return FLIP_WORLD_UI_TEXT("Unknown error", "未知错误");
 }
 static void game_switch_to_view(FlipWorldApp *app)
 {
@@ -554,7 +554,7 @@ static void game_switch_to_view(FlipWorldApp *app)
         FURI_LOG_E(TAG, "Failed to allocate view loader");
         return;
     }
-    loader_switch_to_view(app, "Starting Game..", game_fetch, game_parse, 5, callback_to_submenu, FlipWorldViewLoader);
+    loader_switch_to_view(app, FLIP_WORLD_UI_TEXT("Starting Game..", "启动游戏..."), game_fetch, game_parse, 5, callback_to_submenu, FlipWorldViewLoader);
 }
 bool game_start_ws(FlipperHTTP *fhttp, char *lobby_name)
 {
@@ -693,8 +693,8 @@ void game_run(FlipWorldApp *app)
     {
         const size_t min_free = memmgr_get_free_heap();
         char message[64];
-        snprintf(message, sizeof(message), "Not enough heap memory.\nThere are %zu bytes free.", min_free);
-        easy_flipper_dialog("Error", message);
+        snprintf(message, sizeof(message), FLIP_WORLD_UI_TEXT("Not enough heap memory.\nThere are %zu bytes free.", "堆内存不足。\n剩余 %zu 字节。"), min_free);
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), message);
         return;
     }
     // check if logged in
@@ -704,7 +704,7 @@ void game_run(FlipWorldApp *app)
         if (!fhttp)
         {
             FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-            easy_flipper_dialog("Error", "Failed to allocate FlipperHTTP. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to allocate FlipperHTTP. Press BACK to return.", "FlipperHTTP 分配失败。按返回键返回。"));
             return;
         }
         bool game_fetch_world_list_i()
@@ -742,7 +742,7 @@ void game_run(FlipWorldApp *app)
             if (!game_thread_start(app))
             {
                 FURI_LOG_E(TAG, "Failed to start game thread");
-                easy_flipper_dialog("Error", "Failed to start game thread. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start game thread. Press BACK to return.", "游戏线程启动失败。按返回键返回。"));
                 return;
             }
         }
@@ -765,7 +765,7 @@ void game_run(FlipWorldApp *app)
                 // unlike the pve/story, receiving data is necessary
                 // so send the user back to the main menu if it fails
                 FURI_LOG_E(HTTP_TAG, "Failed to make request");
-                easy_flipper_dialog("Error", "Failed to make request. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to make request. Press BACK to return.", "请求失败。按返回键返回。"));
                 view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);
                 flipper_http_free(fhttp);
             }
@@ -1047,7 +1047,7 @@ void game_start_game(FlipperHTTP *fhttp, FuriString *lobby, void *context)
         if (!game_create_pvp_enemy(lobby))
         {
             FURI_LOG_E(TAG, "Failed to create pvp enemy context.");
-            easy_flipper_dialog("Error", "Failed to create pvp enemy context. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to create pvp enemy context. Press BACK to return.", "PvP 敌人上下文创建失败。按返回键返回。"));
             flipper_http_free(fhttp);
             furi_string_free(lobby);
             return;
@@ -1062,7 +1062,7 @@ void game_start_game(FlipperHTTP *fhttp, FuriString *lobby, void *context)
     if (!game_start_ws(fhttp, game_ws_lobby_name))
     {
         FURI_LOG_E(TAG, "Failed to start websocket session");
-        easy_flipper_dialog("Error", "Failed to start websocket session. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start websocket session. Press BACK to return.", "WebSocket 会话启动失败。按返回键返回。"));
         flipper_http_free(fhttp);
         return;
     }
@@ -1073,7 +1073,7 @@ void game_start_game(FlipperHTTP *fhttp, FuriString *lobby, void *context)
     if (!game_thread_start(app))
     {
         FURI_LOG_E(TAG, "Failed to start game thread");
-        easy_flipper_dialog("Error", "Failed to start game thread. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start game thread. Press BACK to return.", "游戏线程启动失败。按返回键返回。"));
         return;
     }
 };
@@ -1084,7 +1084,7 @@ void game_waiting_process(FlipperHTTP *fhttp, void *context)
     if (!fhttp)
     {
         FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-        easy_flipper_dialog("Error", "Failed to allocate FlipperHTTP. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to allocate FlipperHTTP. Press BACK to return.", "FlipperHTTP 分配失败。按返回键返回。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenuOther);
         return;
     }
@@ -1093,7 +1093,7 @@ void game_waiting_process(FlipperHTTP *fhttp, void *context)
     {
         FURI_LOG_E(TAG, "Failed to fetch lobby details");
         flipper_http_free(fhttp);
-        easy_flipper_dialog("Error", "Failed to fetch lobby details. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to fetch lobby details. Press BACK to return.", "获取大厅详情失败。按返回键返回。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenuOther);
         return;
     }
@@ -1103,7 +1103,7 @@ void game_waiting_process(FlipperHTTP *fhttp, void *context)
     {
         FURI_LOG_E(TAG, "Failed to load lobby details");
         flipper_http_free(fhttp);
-        easy_flipper_dialog("Error", "Failed to load lobby details. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to load lobby details. Press BACK to return.", "加载大厅详情失败。按返回键返回。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenuOther);
         return;
     }
@@ -1126,7 +1126,7 @@ void game_waiting_lobby(void *context)
     if (!game_start_waiting_thread(app))
     {
         FURI_LOG_E(TAG, "Failed to start waiting thread");
-        easy_flipper_dialog("Error", "Failed to start waiting thread. Press BACK to return.");
+        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to start waiting thread. Press BACK to return.", "等待线程启动失败。按返回键返回。"));
         return;
     }
 

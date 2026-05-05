@@ -52,9 +52,11 @@ void wifi_marauder_scene_log_viewer_setup_widget(WifiMarauderApp* app, bool call
         snprintf(
             help_msg,
             sizeof(help_msg),
-            "The log is empty! :(\nTry sending a command?\n\nSaving pcaps to flipper sdcard: %s\nSaving logs to flipper sdcard: %s",
-            app->ok_to_save_pcaps ? "ON" : "OFF",
-            app->ok_to_save_logs ? "ON" : "OFF");
+            WIFI_MARAUDER_UI_TEXT(
+                "The log is empty! :(\nTry sending a command?\n\nSaving pcaps to flipper sdcard: %s\nSaving logs to flipper sdcard: %s",
+                "日志为空! :(\n尝试发送命令?\n\n保存 pcap 到 Flipper SD 卡: %s\n保存日志到 Flipper SD 卡: %s"),
+            app->ok_to_save_pcaps ? WIFI_MARAUDER_UI_TEXT("ON", "开启") : WIFI_MARAUDER_UI_TEXT("OFF", "关闭"),
+            app->ok_to_save_logs ? WIFI_MARAUDER_UI_TEXT("ON", "开启") : WIFI_MARAUDER_UI_TEXT("OFF", "关闭"));
         furi_string_set_str(app->text_box_store, help_msg);
     }
 
@@ -70,7 +72,7 @@ void wifi_marauder_scene_log_viewer_setup_widget(WifiMarauderApp* app, bool call
         widget_add_button_element(
             widget,
             GuiButtonTypeCenter,
-            "Browse",
+            WIFI_MARAUDER_UI_TEXT("Browse", "浏览"),
             wifi_marauder_scene_log_viewer_widget_callback,
             app);
     }

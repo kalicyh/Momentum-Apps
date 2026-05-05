@@ -49,7 +49,7 @@ static void xremote_player_view_draw_callback(Canvas* canvas, void* context) {
                                         xremote_player_view_draw_vertical :
                                         xremote_player_view_draw_horizontal;
 
-    xremote_canvas_draw_header(canvas, orientation, "Playback");
+    xremote_canvas_draw_header(canvas, orientation, XREMOTE_UI_TEXT("Playback", "播放"));
     xremote_player_view_draw_body(canvas, model);
     xremote_canvas_draw_exit_footer(canvas, orientation, exit_str);
 }

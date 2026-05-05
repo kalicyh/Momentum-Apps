@@ -15,6 +15,7 @@
 #include <stdio.h>
 
 #include "iso15693_writer_worker.h"
+#include "iso15693_writer_app.h"
 
 #define MAX_TAG_BLOCKS 256
 #define MAX_TAG_BLOCK_SIZE 32
@@ -108,24 +109,24 @@ static void iso15693_draw_callback(Canvas* canvas, void* model) {
     canvas_set_font(canvas, FontPrimary);
     
     if(m->state == Iso15693StateScanning) {
-        const char* action = "Working";
-        if(m->mode == Iso15693WriterWorkerModeWrite) action = "Writing";
-        else if(m->mode == Iso15693WriterWorkerModeFormat) action = "Formatting";
-        else if(m->mode == Iso15693WriterWorkerModeWriteFull) action = "Writing All";
-        else if(m->mode == Iso15693WriterWorkerModeRead) action = "Reading";
-        else if(m->mode == Iso15693WriterWorkerModeReadAll) action = "Dumping";
-        else if(m->mode == Iso15693WriterWorkerModeLock) action = "Locking";
-        else if(m->mode == Iso15693WriterWorkerModeLockAll) action = "Locking All";
-        else if(m->mode == Iso15693WriterWorkerModeWriteAFI) action = "Writing AFI";
-        else if(m->mode == Iso15693WriterWorkerModeLockAFI) action = "Locking AFI";
-        else if(m->mode == Iso15693WriterWorkerModeWriteDSFID) action = "Writing DSFID";
-        else if(m->mode == Iso15693WriterWorkerModeLockDSFID) action = "Locking DSFID";
+        const char* action = ISO15693_WRITER_UI_TEXT("Working", "处理中");
+        if(m->mode == Iso15693WriterWorkerModeWrite) action = ISO15693_WRITER_UI_TEXT("Writing", "写入中");
+        else if(m->mode == Iso15693WriterWorkerModeFormat) action = ISO15693_WRITER_UI_TEXT("Formatting", "擦除中");
+        else if(m->mode == Iso15693WriterWorkerModeWriteFull) action = ISO15693_WRITER_UI_TEXT("Writing All", "写入全部");
+        else if(m->mode == Iso15693WriterWorkerModeRead) action = ISO15693_WRITER_UI_TEXT("Reading", "读取中");
+        else if(m->mode == Iso15693WriterWorkerModeReadAll) action = ISO15693_WRITER_UI_TEXT("Dumping", "转储中");
+        else if(m->mode == Iso15693WriterWorkerModeLock) action = ISO15693_WRITER_UI_TEXT("Locking", "锁定中");
+        else if(m->mode == Iso15693WriterWorkerModeLockAll) action = ISO15693_WRITER_UI_TEXT("Locking All", "锁定全部");
+        else if(m->mode == Iso15693WriterWorkerModeWriteAFI) action = ISO15693_WRITER_UI_TEXT("Writing AFI", "写入 AFI");
+        else if(m->mode == Iso15693WriterWorkerModeLockAFI) action = ISO15693_WRITER_UI_TEXT("Locking AFI", "锁定 AFI");
+        else if(m->mode == Iso15693WriterWorkerModeWriteDSFID) action = ISO15693_WRITER_UI_TEXT("Writing DSFID", "写入 DSFID");
+        else if(m->mode == Iso15693WriterWorkerModeLockDSFID) action = ISO15693_WRITER_UI_TEXT("Locking DSFID", "锁定 DSFID");
 
         char buf[64];
         if(m->mode == Iso15693WriterWorkerModeWrite) {
-            snprintf(buf, sizeof(buf), "Write %02X: %02X%02X%02X%02X...", m->current_address, m->current_data[0], m->current_data[1], m->current_data[2], m->current_data[3]);
+            snprintf(buf, sizeof(buf), "%s %02X: %02X%02X%02X%02X...", ISO15693_WRITER_UI_TEXT("Write", "写入"), m->current_address, m->current_data[0], m->current_data[1], m->current_data[2], m->current_data[3]);
         } else if(m->mode == Iso15693WriterWorkerModeRead) {
-            snprintf(buf, sizeof(buf), "Read Block %02X...", m->current_address);
+            snprintf(buf, sizeof(buf), "%s %02X...", ISO15693_WRITER_UI_TEXT("Read Block", "读取块"), m->current_address);
         } else if(m->mode == Iso15693WriterWorkerModeFormat || m->mode == Iso15693WriterWorkerModeReadAll || m->mode == Iso15693WriterWorkerModeWriteFull || m->mode == Iso15693WriterWorkerModeLockAll) {
             if(m->actual_block_count > 0) {
                 snprintf(buf, sizeof(buf), "%s %02X/%02X", action, m->progress, m->actual_block_count - 1);
@@ -133,21 +134,21 @@ static void iso15693_draw_callback(Canvas* canvas, void* model) {
                 snprintf(buf, sizeof(buf), "%s...", action);
             }
         } else if(m->mode == Iso15693WriterWorkerModeWriteAFI) {
-            snprintf(buf, sizeof(buf), "Writing AFI: %02X", m->current_data[0]);
+            snprintf(buf, sizeof(buf), "%s %02X", ISO15693_WRITER_UI_TEXT("Writing AFI:", "写入 AFI:"), m->current_data[0]);
         } else if(m->mode == Iso15693WriterWorkerModeWriteDSFID) {
-            snprintf(buf, sizeof(buf), "Writing DSFID: %02X", m->current_data[0]);
+            snprintf(buf, sizeof(buf), "%s %02X", ISO15693_WRITER_UI_TEXT("Writing DSFID:", "写入 DSFID:"), m->current_data[0]);
         } else {
             snprintf(buf, sizeof(buf), "%s Block %02X...", action, m->current_address);
         }
         canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, buf);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignCenter, "Hold tag near Flipper");
+        canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignCenter, ISO15693_WRITER_UI_TEXT("Hold tag near Flipper", "将标签靠近 Flipper"));
     } else if(m->state == Iso15693StateSuccess) {
         if(m->mode == Iso15693WriterWorkerModeReadAll) {
             char title_buf[32];
             uint16_t display_count = m->actual_block_count > 0 ? m->actual_block_count : 28;
             uint8_t display_size = m->actual_block_size > 0 ? m->actual_block_size : 4;
-            snprintf(title_buf, sizeof(title_buf), "%d Blocks %d Bytes", display_count, display_size);
+            snprintf(title_buf, sizeof(title_buf), ISO15693_WRITER_UI_TEXT("%d Blocks %d Bytes", "%d 块 %d 字节"), display_count, display_size);
             canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, title_buf);
             
             canvas_set_font(canvas, FontSecondary);
@@ -163,39 +164,39 @@ static void iso15693_draw_callback(Canvas* canvas, void* model) {
                         m->full_dump_ptr[offset+0], m->full_dump_ptr[offset+1],
                         m->full_dump_ptr[offset+2], m->full_dump_ptr[offset+3],
                         m->actual_block_size > 4 ? "..." : "",
-                        is_locked ? "LOCK" : "");
+                        is_locked ? ISO15693_WRITER_UI_TEXT("LOCK", "已锁定") : "");
                     canvas_draw_str(canvas, 10, 18 + (i * 9), buf);
                 }
             }
             char footer[32];
-            snprintf(footer, sizeof(footer), "OK:Back | >:Save");
+            snprintf(footer, sizeof(footer), ISO15693_WRITER_UI_TEXT("OK:Back | >:Save", "OK:返回 | >:保存"));
             canvas_draw_str_aligned(canvas, 64, 64, AlignCenter, AlignBottom, footer);
         } else {
-            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "SUCCESS!");
+            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, ISO15693_WRITER_UI_TEXT("SUCCESS!", "成功!"));
             canvas_set_font(canvas, FontSecondary);
             char buf[64];
             if(m->mode == Iso15693WriterWorkerModeRead) {
-                snprintf(buf, sizeof(buf), "Read %02X: %02X %02X %02X %02X", m->current_address, m->current_data[0], m->current_data[1], m->current_data[2], m->current_data[3]);
+                snprintf(buf, sizeof(buf), "%s %02X: %02X %02X %02X %02X", ISO15693_WRITER_UI_TEXT("Read", "读取"), m->current_address, m->current_data[0], m->current_data[1], m->current_data[2], m->current_data[3]);
                 canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, buf);
             } else if(m->mode == Iso15693WriterWorkerModeWrite) {
-                snprintf(buf, sizeof(buf), "Wrote %02X: %02X %02X %02X %02X", m->current_address, m->current_data[0], m->current_data[1], m->current_data[2], m->current_data[3]);
+                snprintf(buf, sizeof(buf), "%s %02X: %02X %02X %02X %02X", ISO15693_WRITER_UI_TEXT("Wrote", "已写入"), m->current_address, m->current_data[0], m->current_data[1], m->current_data[2], m->current_data[3]);
                 canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, buf);
             } else if(m->mode == Iso15693WriterWorkerModeWriteAFI) {
-                snprintf(buf, sizeof(buf), "Wrote AFI: %02X", m->current_data[0]);
+                snprintf(buf, sizeof(buf), "%s %02X", ISO15693_WRITER_UI_TEXT("Wrote AFI:", "已写入 AFI:"), m->current_data[0]);
                 canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, buf);
             } else if(m->mode == Iso15693WriterWorkerModeWriteDSFID) {
-                snprintf(buf, sizeof(buf), "Wrote DSFID: %02X", m->current_data[0]);
+                snprintf(buf, sizeof(buf), "%s %02X", ISO15693_WRITER_UI_TEXT("Wrote DSFID:", "已写入 DSFID:"), m->current_data[0]);
                 canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, buf);
             } else {
-                canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, "Operation finished");
+                canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, ISO15693_WRITER_UI_TEXT("Operation finished", "操作完成"));
             }
-            canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, "OK: Repeat | Back: Exit");
+            canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, ISO15693_WRITER_UI_TEXT("OK: Repeat | Back: Exit", "OK:重复 | Back:退出"));
         }
     } else if(m->state == Iso15693StateFail) {
-        canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "FAILED");
+        canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, ISO15693_WRITER_UI_TEXT("FAILED", "失败"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, "Check tag position");
-        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, "OK: Retry | Back: Exit");
+        canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, ISO15693_WRITER_UI_TEXT("Check tag position", "请检查标签位置"));
+        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, ISO15693_WRITER_UI_TEXT("OK: Retry | Back: Exit", "OK:重试 | Back:退出"));
     }
 }
 
@@ -449,7 +450,7 @@ static bool iso15693_custom_event_callback(void* context, uint32_t event) {
         app->save_preview_mode = true;
         app->current_view = Iso15693ViewTextInput;
         text_input_reset(app->text_input);
-        text_input_set_header_text(app->text_input, "Save Dump As:");
+        text_input_set_header_text(app->text_input, ISO15693_WRITER_UI_TEXT("Save Dump As:", "保存转储为:"));
         snprintf(app->file_path, sizeof(app->file_path), "%s/", ISO_APP_DATA_PATH);
         text_input_set_result_callback(app->text_input, iso15693_text_input_callback, app, &app->file_path[strlen(ISO_APP_DATA_PATH) + 1], sizeof(app->file_path) - strlen(ISO_APP_DATA_PATH) - 1, false);
         view_dispatcher_switch_to_view(app->view_dispatcher, Iso15693ViewTextInput);
@@ -505,25 +506,25 @@ static void iso15693_submenu_callback(void* context, uint32_t index) {
     if(index == Iso15693MenuSetData) {
         app->current_view = Iso15693WriterViewConfigAddress;
         byte_input_set_result_callback(app->byte_input, iso15693_byte_input_done_callback, NULL, app, app->target_data, MAX_TAG_BLOCK_SIZE);
-        byte_input_set_header_text(app->byte_input, "Set Data (32B)");
+        byte_input_set_header_text(app->byte_input, ISO15693_WRITER_UI_TEXT("Set Data (32B)", "设置数据 (32B)"));
         view_dispatcher_switch_to_view(app->view_dispatcher, Iso15693WriterViewConfigAddress);
         return;
     } else if(index == Iso15693MenuSetAddress) {
         app->current_view = Iso15693WriterViewConfigAddress;
         byte_input_set_result_callback(app->byte_input, iso15693_byte_input_done_callback, NULL, app, &app->target_block, 1);
-        byte_input_set_header_text(app->byte_input, "Set Address (1B)");
+        byte_input_set_header_text(app->byte_input, ISO15693_WRITER_UI_TEXT("Set Address (1B)", "设置地址 (1B)"));
         view_dispatcher_switch_to_view(app->view_dispatcher, Iso15693WriterViewConfigAddress);
         return;
     } else if(index == Iso15693MenuSetAFI) {
         app->current_view = Iso15693WriterViewConfigAddress;
         byte_input_set_result_callback(app->byte_input, iso15693_byte_input_done_callback, NULL, app, &app->afi_value, 1);
-        byte_input_set_header_text(app->byte_input, "Set AFI (00-FF)");
+        byte_input_set_header_text(app->byte_input, ISO15693_WRITER_UI_TEXT("Set AFI (00-FF)", "设置 AFI (00-FF)"));
         view_dispatcher_switch_to_view(app->view_dispatcher, Iso15693WriterViewConfigAddress);
         return;
     } else if(index == Iso15693MenuSetDSFID) {
         app->current_view = Iso15693WriterViewConfigAddress;
         byte_input_set_result_callback(app->byte_input, iso15693_byte_input_done_callback, NULL, app, &app->dsfid_value, 1);
-        byte_input_set_header_text(app->byte_input, "Set DSFID (00-FF)");
+        byte_input_set_header_text(app->byte_input, ISO15693_WRITER_UI_TEXT("Set DSFID (00-FF)", "设置 DSFID (00-FF)"));
         view_dispatcher_switch_to_view(app->view_dispatcher, Iso15693WriterViewConfigAddress);
         return;
     }
@@ -591,22 +592,22 @@ static Iso15693App* iso15693_app_alloc() {
     view_dispatcher_set_custom_event_callback(app->view_dispatcher, iso15693_custom_event_callback);
     view_dispatcher_set_navigation_event_callback(app->view_dispatcher, iso15693_navigation_callback);
     app->submenu = submenu_alloc();
-    submenu_set_header(app->submenu, "ISO 15693-3 NFC Tools");
-    submenu_add_item(app->submenu, "Write Single Block", Iso15693MenuWriteSingle, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "FF to All Block", Iso15693MenuFormatAll, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Write Dump", Iso15693MenuWriteAll, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Read Single Block", Iso15693MenuReadSingle, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Read Dump", Iso15693MenuReadDump, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Lock Block", Iso15693MenuLock, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Lock All Blocks", Iso15693MenuLockAll, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Set AFI", Iso15693MenuSetAFI, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Write AFI", Iso15693MenuWriteAFI, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Lock AFI", Iso15693MenuLockAFI, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Set DSFID", Iso15693MenuSetDSFID, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Write DSFID", Iso15693MenuWriteDSFID, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Lock DSFID", Iso15693MenuLockDSFID, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Set Data", Iso15693MenuSetData, iso15693_submenu_callback, app);
-    submenu_add_item(app->submenu, "Set Address", Iso15693MenuSetAddress, iso15693_submenu_callback, app);
+    submenu_set_header(app->submenu, ISO15693_WRITER_UI_TEXT("ISO 15693-3 NFC Tools", "ISO 15693-3 NFC 工具"));
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Write Single Block", "写入单个块"), Iso15693MenuWriteSingle, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("FF to All Block", "擦除所有块"), Iso15693MenuFormatAll, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Write Dump", "写入转储"), Iso15693MenuWriteAll, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Read Single Block", "读取单个块"), Iso15693MenuReadSingle, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Read Dump", "读取转储"), Iso15693MenuReadDump, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Lock Block", "锁定块"), Iso15693MenuLock, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Lock All Blocks", "锁定所有块"), Iso15693MenuLockAll, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Set AFI", "设置 AFI"), Iso15693MenuSetAFI, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Write AFI", "写入 AFI"), Iso15693MenuWriteAFI, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Lock AFI", "锁定 AFI"), Iso15693MenuLockAFI, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Set DSFID", "设置 DSFID"), Iso15693MenuSetDSFID, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Write DSFID", "写入 DSFID"), Iso15693MenuWriteDSFID, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Lock DSFID", "锁定 DSFID"), Iso15693MenuLockDSFID, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Set Data", "设置数据"), Iso15693MenuSetData, iso15693_submenu_callback, app);
+    submenu_add_item(app->submenu, ISO15693_WRITER_UI_TEXT("Set Address", "设置地址"), Iso15693MenuSetAddress, iso15693_submenu_callback, app);
     view_dispatcher_add_view(app->view_dispatcher, Iso15693WriterViewSubmenu, submenu_get_view(app->submenu));
     app->byte_input = byte_input_alloc();
     view_dispatcher_add_view(app->view_dispatcher, Iso15693WriterViewConfigAddress, byte_input_get_view(app->byte_input));

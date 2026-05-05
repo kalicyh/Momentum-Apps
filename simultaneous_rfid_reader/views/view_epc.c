@@ -81,12 +81,12 @@ void uhf_reader_view_epc_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, "            EPC Info:");
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT("            EPC Info:", "            EPC信息:"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 4, 22, "EPC: ");
-    canvas_draw_str(canvas, 4, 44, "Reserved: ");
+    canvas_draw_str(canvas, 4, 44, RFID_READER_UI_TEXT("Reserved: ", "保留区: "));
     canvas_draw_str(canvas, 4, 33, "TID: ");
-    canvas_draw_str(canvas, 4, 55, "User Mem: ");
+    canvas_draw_str(canvas, 4, 55, RFID_READER_UI_TEXT("User Mem: ", "用户区: "));
 
     //Displaying the EPC, TID, Reserved, and User memory in a scrolling fashion
     MyModel->ScrollingTextEpc = (char*)furi_string_get_cstr(MyModel->Epc);
@@ -248,13 +248,13 @@ void view_epc_alloc(UHFReaderApp* App) {
     view_allocate_model(App->ViewEpc, ViewModelTypeLockFree, sizeof(UHFRFIDTagModel));
     UHFRFIDTagModel* ModelEpc = view_get_model(App->ViewEpc);
     FuriString* UserMem = furi_string_alloc();
-    furi_string_set_str(UserMem, "Press Read!");
+    furi_string_set_str(UserMem, RFID_READER_UI_TEXT("Press Read!", "按OK读取!"));
     FuriString* TidMem = furi_string_alloc();
-    furi_string_set_str(TidMem, "Press Read!");
+    furi_string_set_str(TidMem, RFID_READER_UI_TEXT("Press Read!", "按OK读取!"));
     FuriString* Epc = furi_string_alloc();
-    furi_string_set_str(Epc, "Press Read!");
+    furi_string_set_str(Epc, RFID_READER_UI_TEXT("Press Read!", "按OK读取!"));
     FuriString* ReservedMem = furi_string_alloc();
-    furi_string_set_str(ReservedMem, "Press Read!");
+    furi_string_set_str(ReservedMem, RFID_READER_UI_TEXT("Press Read!", "按OK读取!"));
 
     
 
@@ -264,13 +264,13 @@ void view_epc_alloc(UHFReaderApp* App) {
     ModelEpc->Tid = TidMem;
     ModelEpc->Reserved = ReservedMem;
     ModelEpc->ScrollOffsetEpc = 0;
-    ModelEpc->ScrollingTextEpc = "EPC VALUE HERE";
+    ModelEpc->ScrollingTextEpc = RFID_READER_UI_TEXT("EPC VALUE HERE", "EPC值");
     ModelEpc->ScrollOffsetTid = 0;
-    ModelEpc->ScrollingTextTid = "TID VALUE HERE";
+    ModelEpc->ScrollingTextTid = RFID_READER_UI_TEXT("TID VALUE HERE", "TID值");
     ModelEpc->ScrollOffsetRes = 0;
-    ModelEpc->ScrollingTextRes = "RES VALUE HERE";
+    ModelEpc->ScrollingTextRes = RFID_READER_UI_TEXT("RES VALUE HERE", "保留区");
     ModelEpc->ScrollOffsetMem = 0;
-    ModelEpc->ScrollingTextMem = "MEM VALUE HERE";
+    ModelEpc->ScrollingTextMem = RFID_READER_UI_TEXT("MEM VALUE HERE", "用户区");
     ModelEpc->Crc = furi_string_alloc_set("XXXX");
     ModelEpc->Pc = furi_string_alloc_set("XXXX");
     view_dispatcher_add_view(App->ViewDispatcher, UHFReaderViewEpcDump, App->ViewEpc);

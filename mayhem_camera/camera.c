@@ -31,7 +31,7 @@ static void camera_view_draw_callback(Canvas* canvas, void* _model) {
 
         canvas_draw_icon(canvas, 80, 21, &I_WarningDolphinFlip_45x42);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 8, 12, "Waiting ESP32-CAM...");
+        canvas_draw_str(canvas, 8, 12, CAMERA_UI_TEXT("Waiting ESP32-CAM...", "等待ESP32-CAM..."));
         canvas_draw_str(canvas, 20, 24, "VCC - 3V3/5V");
         canvas_draw_str(canvas, 20, 34, "GND - GND");
         canvas_draw_str(canvas, 20, 44, "U0R - TX");

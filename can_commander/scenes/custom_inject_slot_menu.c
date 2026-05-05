@@ -227,19 +227,19 @@ static void cancommander_scene_custom_inject_slot_refresh_labels(App* app) {
         strncpy(interval, "0", sizeof(interval) - 1U);
     }
 
-    snprintf(cancommander_custom_slot_name_item, sizeof(cancommander_custom_slot_name_item), "Name: %s", slot_name);
-    snprintf(cancommander_custom_slot_bus_item, sizeof(cancommander_custom_slot_bus_item), "Bus: %s", bus);
+    snprintf(cancommander_custom_slot_name_item, sizeof(cancommander_custom_slot_name_item), CAN_COMMANDER_UI_TEXT("Name: %s", "名称: %s"), slot_name);
+    snprintf(cancommander_custom_slot_bus_item, sizeof(cancommander_custom_slot_bus_item), CAN_COMMANDER_UI_TEXT("Bus: %s", "总线: %s"), bus);
     snprintf(cancommander_custom_slot_id_item, sizeof(cancommander_custom_slot_id_item), "ID: %s", id);
     snprintf(
         cancommander_custom_slot_mux_item,
         sizeof(cancommander_custom_slot_mux_item),
-        "Mux: %s",
-        (strcmp(mux, "1") == 0 || strcmp(mux, "true") == 0) ? "On" : "Off");
-    snprintf(cancommander_custom_slot_count_item, sizeof(cancommander_custom_slot_count_item), "Count: %s", count);
+        CAN_COMMANDER_UI_TEXT("Mux: %s", "复用: %s"),
+        (strcmp(mux, "1") == 0 || strcmp(mux, "true") == 0) ? CAN_COMMANDER_UI_TEXT("On", "开") : CAN_COMMANDER_UI_TEXT("Off", "关"));
+    snprintf(cancommander_custom_slot_count_item, sizeof(cancommander_custom_slot_count_item), CAN_COMMANDER_UI_TEXT("Count: %s", "次数: %s"), count);
     snprintf(
         cancommander_custom_slot_interval_item,
         sizeof(cancommander_custom_slot_interval_item),
-        "Interval: %s",
+        CAN_COMMANDER_UI_TEXT("Interval: %s", "间隔: %s"),
         interval);
 }
 
@@ -250,7 +250,7 @@ static void cancommander_scene_custom_inject_slot_rebuild_menu(App* app) {
     submenu_reset(app->submenu);
 
     char header[16] = {0};
-    snprintf(header, sizeof(header), "Slot %u", (unsigned)slot_number);
+    snprintf(header, sizeof(header), CAN_COMMANDER_UI_TEXT("Slot %u", "槽位 %u"), (unsigned)slot_number);
     submenu_set_header(app->submenu, header);
 
     submenu_add_item(
@@ -273,19 +273,19 @@ static void cancommander_scene_custom_inject_slot_rebuild_menu(App* app) {
         app);
     submenu_add_item(
         app->submenu,
-        "Set Bytes",
+        CAN_COMMANDER_UI_TEXT("Set Bytes", "设置字节"),
         CustomInjectSlotSetBytes,
         cancommander_scene_custom_inject_slot_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Set Bit",
+        CAN_COMMANDER_UI_TEXT("Set Bit", "设置位"),
         CustomInjectSlotSetBit,
         cancommander_scene_custom_inject_slot_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Set Field",
+        CAN_COMMANDER_UI_TEXT("Set Field", "设置字段"),
         CustomInjectSlotSetField,
         cancommander_scene_custom_inject_slot_menu_callback,
         app);
@@ -309,13 +309,13 @@ static void cancommander_scene_custom_inject_slot_rebuild_menu(App* app) {
         app);
     submenu_add_item(
         app->submenu,
-        "Clear Slot",
+        CAN_COMMANDER_UI_TEXT("Clear Slot", "清除槽位"),
         CustomInjectSlotClear,
         cancommander_scene_custom_inject_slot_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Save",
+        CAN_COMMANDER_UI_TEXT("Save", "保存"),
         CustomInjectSlotSave,
         cancommander_scene_custom_inject_slot_menu_callback,
         app);
@@ -410,7 +410,7 @@ static void cancommander_scene_custom_inject_slot_apply_set_bit(App* app) {
     char value[8] = {0};
     if(!cancommander_scene_custom_inject_get_arg(app->custom_inject_edit_bit, "bit", bit, sizeof(bit)) ||
        !cancommander_scene_custom_inject_get_arg(app->custom_inject_edit_bit, "value", value, sizeof(value))) {
-        app_set_status(app, "Set Bit parse error");
+        app_set_status(app, CAN_COMMANDER_UI_TEXT("Set Bit parse error", "位设置解析错误"));
         return;
     }
 
@@ -436,7 +436,7 @@ static void cancommander_scene_custom_inject_slot_apply_set_field(App* app) {
            app->custom_inject_edit_field, "len", len, sizeof(len)) ||
        !cancommander_scene_custom_inject_get_arg(
            app->custom_inject_edit_field, "value", value, sizeof(value))) {
-        app_set_status(app, "Set Field parse error");
+        app_set_status(app, CAN_COMMANDER_UI_TEXT("Set Field parse error", "字段设置解析错误"));
         return;
     }
 
@@ -495,8 +495,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app,
             app->custom_inject_edit_name,
             sizeof(app->custom_inject_edit_name),
-            "Slot Name",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Slot Name", "槽位名称"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_name,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -511,8 +511,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app,
             app->custom_inject_edit_bus,
             sizeof(app->custom_inject_edit_bus),
-            "Bus",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Bus", "总线"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_bus,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -528,7 +528,7 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app->custom_inject_edit_id,
             sizeof(app->custom_inject_edit_id),
             "ID",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_id,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -559,8 +559,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app,
             app->custom_inject_edit_bit,
             sizeof(app->custom_inject_edit_bit),
-            "Set Bit",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Set Bit", "设置位"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_set_bit,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -592,8 +592,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app,
             app->custom_inject_edit_field,
             sizeof(app->custom_inject_edit_field),
-            "Set Field",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Set Field", "设置字段"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_set_field,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -634,8 +634,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
                 app,
                 app->custom_inject_edit_mux,
                 sizeof(app->custom_inject_edit_mux),
-                "Mux",
-                "Apply",
+                CAN_COMMANDER_UI_TEXT("Mux", "复用"),
+                CAN_COMMANDER_UI_TEXT("Apply", "应用"),
                 cancommander_scene_custom_inject_slot_apply_mux,
                 cancommander_scene_custom_inject_slot_menu);
             scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -651,8 +651,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app,
             app->custom_inject_edit_count,
             sizeof(app->custom_inject_edit_count),
-            "Count",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Count", "次数"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_count,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -671,8 +671,8 @@ bool cancommander_scene_custom_inject_slot_menu_on_event(void* context, SceneMan
             app,
             app->custom_inject_edit_interval,
             sizeof(app->custom_inject_edit_interval),
-            "Interval ms",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("Interval ms", "间隔(ms)"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_custom_inject_slot_apply_interval,
             cancommander_scene_custom_inject_slot_menu);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);

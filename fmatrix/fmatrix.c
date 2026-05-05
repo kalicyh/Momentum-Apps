@@ -5,6 +5,11 @@
 #include <gui/elements.h>
 #include <string.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -196,43 +201,53 @@ static void render_options_menu(Canvas* canvas, MatrixApp* app) {
         
         switch(current_item) {
             case 0:
-                snprintf(value_str, sizeof(value_str), "UPPERCASE: [%c]", 
+                snprintf(value_str, sizeof(value_str), "%s[%c]",
+                        UI_TEXT("UPPERCASE: ", "大写: "),
                         settings->use_uppercase ? 'X' : ' ');
                 break;
             case 1:
-                snprintf(value_str, sizeof(value_str), "lowercase: [%c]", 
+                snprintf(value_str, sizeof(value_str), "%s[%c]",
+                        UI_TEXT("lowercase: ", "小写: "),
                         settings->use_lowercase ? 'X' : ' ');
                 break;
             case 2:
-                snprintf(value_str, sizeof(value_str), "Numbers: [%c]", 
+                snprintf(value_str, sizeof(value_str), "%s[%c]",
+                        UI_TEXT("Numbers: ", "数字: "),
                         settings->use_numbers ? 'X' : ' ');
                 break;
             case 3:
-                snprintf(value_str, sizeof(value_str), "Symbols: [%c]", 
+                snprintf(value_str, sizeof(value_str), "%s[%c]",
+                        UI_TEXT("Symbols: ", "符号: "),
                         settings->use_symbols ? 'X' : ' ');
                 break;
             case 4:
-                snprintf(value_str, sizeof(value_str), "Inverted mode: [%c]", 
+                snprintf(value_str, sizeof(value_str), "%s[%c]",
+                        UI_TEXT("Inverted: ", "反色: "),
                         settings->inverted_mode ? 'X' : ' ');
                 break;
             case 5:
-                snprintf(value_str, sizeof(value_str), "Max Speed: < %d >", 
+                snprintf(value_str, sizeof(value_str), "%s< %d >",
+                        UI_TEXT("Max Speed: ", "最大速度: "),
                         settings->max_speed.value);
                 break;
             case 6:
-                snprintf(value_str, sizeof(value_str), "Min Speed: < %d >", 
+                snprintf(value_str, sizeof(value_str), "%s< %d >",
+                        UI_TEXT("Min Speed: ", "最小速度: "),
                         settings->min_speed.value);
                 break;
             case 7:
-                snprintf(value_str, sizeof(value_str), "Spawn Rate: < %d >", 
+                snprintf(value_str, sizeof(value_str), "%s< %d >",
+                        UI_TEXT("Spawn Rate: ", "生成率: "),
                         settings->spawn_rate.value);
                 break;
             case 8:
-                snprintf(value_str, sizeof(value_str), "Max Length: < %d >", 
+                snprintf(value_str, sizeof(value_str), "%s< %d >",
+                        UI_TEXT("Max Length: ", "最大长度: "),
                         settings->max_length.value);
                 break;
             case 9:
-                snprintf(value_str, sizeof(value_str), "Min Length: < %d >", 
+                snprintf(value_str, sizeof(value_str), "%s< %d >",
+                        UI_TEXT("Min Length: ", "最小长度: "),
                         settings->min_length.value);
                 break;
         }

@@ -29,7 +29,7 @@ void saflip_scene_emulate_setup_popup(void* context) {
     SaflipApp* app = context;
 
     // Reset popup
-    popup_set_header(app->popup, "Emulating", 67, 13, AlignLeft, AlignTop);
+    popup_set_header(app->popup, SAFLIP_UI_TEXT("Emulating", "模拟中"), 67, 13, AlignLeft, AlignTop);
     popup_set_icon(app->popup, 0, 3, &I_NFC_dolphin_emulation_51x64);
     popup_set_text(app->popup, app->text_store, 90, 28, AlignCenter, AlignTop);
     popup_set_callback(app->popup, NULL);
@@ -107,7 +107,7 @@ void saflok_scene_emulate_check_log_data(SaflipApp* app) {
             }
 
             FuriString* title_str =
-                furi_string_alloc_printf("New log entry (%d total)", app->log_entries);
+                furi_string_alloc_printf(SAFLIP_UI_TEXT("New log entry (%d total)", "新日志记录 (共%d条)"), app->log_entries);
             char* title = strdup(furi_string_get_cstr(title_str));
             furi_string_free(title_str);
 

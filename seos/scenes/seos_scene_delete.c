@@ -13,13 +13,25 @@ void seos_scene_delete_on_enter(void* context) {
 
     // Setup Custom Widget view
     char temp_str[141];
-    snprintf(temp_str, sizeof(temp_str), "\e#Delete %s?\e#", seos_credential->name);
+    snprintf(
+        temp_str,
+        sizeof(temp_str),
+        SEOS_UI_TEXT("\e#Delete %s?\e#", "\e#删除 %s?\e#"),
+        seos_credential->name);
     widget_add_text_box_element(
         seos->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, temp_str, false);
     widget_add_button_element(
-        seos->widget, GuiButtonTypeLeft, "Back", seos_scene_delete_widget_callback, seos);
+        seos->widget,
+        GuiButtonTypeLeft,
+        SEOS_UI_TEXT("Back", "返回"),
+        seos_scene_delete_widget_callback,
+        seos);
     widget_add_button_element(
-        seos->widget, GuiButtonTypeRight, "Delete", seos_scene_delete_widget_callback, seos);
+        seos->widget,
+        GuiButtonTypeRight,
+        SEOS_UI_TEXT("Delete", "删除"),
+        seos_scene_delete_widget_callback,
+        seos);
 
     view_dispatcher_switch_to_view(seos->view_dispatcher, SeosViewWidget);
 }

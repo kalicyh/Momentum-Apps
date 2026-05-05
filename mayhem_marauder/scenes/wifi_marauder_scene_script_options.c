@@ -19,9 +19,9 @@ void wifi_marauder_scene_script_options_save_script(WifiMarauderApp* app) {
     wifi_marauder_script_save_json(app->storage, script_path, app->script);
 
     DialogMessage* message = dialog_message_alloc();
-    dialog_message_set_text(message, "Saved!", 5, 7, AlignLeft, AlignTop);
+    dialog_message_set_text(message, WIFI_MARAUDER_UI_TEXT("Saved!", "已保存!"), 5, 7, AlignLeft, AlignTop);
     dialog_message_set_icon(message, &I_DolphinDone_80x58, 36, 5);
-    dialog_message_set_buttons(message, NULL, "Ok", NULL);
+    dialog_message_set_buttons(message, NULL, WIFI_MARAUDER_UI_TEXT("Ok", "确定"), NULL);
     dialog_message_show(app->dialogs, message);
     dialog_message_free(message);
 }
@@ -65,24 +65,24 @@ void wifi_marauder_scene_script_options_on_enter(void* context) {
 
     submenu_set_header(submenu, app->script->name);
     submenu_add_item(
-        submenu, "[>] RUN", SubmenuIndexRun, wifi_marauder_scene_script_options_callback, app);
+        submenu, WIFI_MARAUDER_UI_TEXT("[>] RUN", "[>] 运行"), SubmenuIndexRun, wifi_marauder_scene_script_options_callback, app);
     submenu_add_item(
         submenu,
-        "[S] SETTINGS",
+        WIFI_MARAUDER_UI_TEXT("[S] SETTINGS", "[S] 设置"),
         SubmenuIndexSettings,
         wifi_marauder_scene_script_options_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] EDIT STAGES",
+        WIFI_MARAUDER_UI_TEXT("[+] EDIT STAGES", "[+] 编辑阶段"),
         SubmenuIndexEditStages,
         wifi_marauder_scene_script_options_callback,
         app);
     submenu_add_item(
-        submenu, "[*] SAVE", SubmenuIndexSave, wifi_marauder_scene_script_options_callback, app);
+        submenu, WIFI_MARAUDER_UI_TEXT("[*] SAVE", "[*] 保存"), SubmenuIndexSave, wifi_marauder_scene_script_options_callback, app);
     submenu_add_item(
         submenu,
-        "[X] DELETE",
+        WIFI_MARAUDER_UI_TEXT("[X] DELETE", "[X] 删除"),
         SubmenuIndexDelete,
         wifi_marauder_scene_script_options_callback,
         app);

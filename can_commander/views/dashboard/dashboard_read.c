@@ -152,12 +152,12 @@ bool dashboard_read_draw(Canvas* canvas, const AppDashboardModel* dashboard) {
     canvas_set_font(canvas, FontSecondary);
 
     if(page == 0U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, filtered ? "Filtered" : "Read All");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, filtered ? CAN_COMMANDER_UI_TEXT("Filtered", "已过滤") : CAN_COMMANDER_UI_TEXT("Read All", "全部读取"));
         const AppDashFrameEntry* entry = dashboard_read_get_selected(dashboard);
         if(!entry) {
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "Waiting for CAN frames");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "OK Hold  L/R Pg  U/D Nav");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, CAN_COMMANDER_UI_TEXT("Waiting for CAN frames", "等待 CAN 帧"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, CAN_COMMANDER_UI_TEXT("OK Hold  L/R Pg  U/D Nav", "OK 暂停 左/右翻页 上/下导航"));
             return true;
         }
 
@@ -185,15 +185,15 @@ bool dashboard_read_draw(Canvas* canvas, const AppDashboardModel* dashboard) {
             "F%u/%u %s",
             (unsigned)(dashboard->read_selected + 1U),
             (unsigned)dashboard->read_count,
-            dashboard->read_hold ? "HOLD" : "LIVE");
+            dashboard->read_hold ? CAN_COMMANDER_UI_TEXT("HOLD", "暂停") : CAN_COMMANDER_UI_TEXT("LIVE", "实时"));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, footer);
     } else if(page == 1U) {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Recent Frames");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, CAN_COMMANDER_UI_TEXT("Recent Frames", "最近帧"));
         if(dashboard->read_count == 0U) {
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, "No frames yet");
-            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Pg  OK Hold");
+            canvas_draw_str_aligned(canvas, 64, 26, AlignCenter, AlignCenter, CAN_COMMANDER_UI_TEXT("No frames yet", "暂无帧"));
+            canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, CAN_COMMANDER_UI_TEXT("L/R Pg  OK Hold", "左/右翻页 OK 暂停"));
             return true;
         }
 
@@ -231,9 +231,9 @@ bool dashboard_read_draw(Canvas* canvas, const AppDashboardModel* dashboard) {
         }
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "U/D Sel  L/R Pg");
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, CAN_COMMANDER_UI_TEXT("U/D Sel  L/R Pg", "上/下选择 左/右翻页"));
     } else {
-        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Stats");
+        canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, CAN_COMMANDER_UI_TEXT("Stats", "统计"));
         char line1[24] = {0};
         char line2[24] = {0};
         char line3[24] = {0};
@@ -252,14 +252,14 @@ bool dashboard_read_draw(Canvas* canvas, const AppDashboardModel* dashboard) {
             "STD:%lu EXT:%lu",
             (unsigned long)dashboard->read_std,
             (unsigned long)dashboard->read_ext);
-        snprintf(line4, sizeof(line4), "Feed:%s", dashboard->read_hold ? "Hold" : "Live");
+        snprintf(line4, sizeof(line4), CAN_COMMANDER_UI_TEXT("Feed:%s", "数据流:%s"), dashboard->read_hold ? CAN_COMMANDER_UI_TEXT("Hold", "暂停") : CAN_COMMANDER_UI_TEXT("Live", "实时"));
 
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 2, 20, line1);
         canvas_draw_str(canvas, 2, 31, line2);
         canvas_draw_str(canvas, 2, 42, line3);
         canvas_draw_str(canvas, 2, 53, line4);
-        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, "L/R Pg  OK Hold");
+        canvas_draw_str_aligned(canvas, 64, 63, AlignCenter, AlignBottom, CAN_COMMANDER_UI_TEXT("L/R Pg  OK Hold", "左/右翻页 OK 暂停"));
     }
 
     return true;

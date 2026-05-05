@@ -25,6 +25,12 @@
 
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FUZZER_UI_TEXT(en, zh) (zh)
+#else
+#define FUZZER_UI_TEXT(en, zh) (en)
+#endif
+
 #define FUZZ_TIME_DELAY_MAX (80)
 #define KEY_NAME_SIZE       24
 

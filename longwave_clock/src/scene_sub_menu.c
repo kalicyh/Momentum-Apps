@@ -1,4 +1,5 @@
 #include "flipper.h"
+#include "longwave_clock_app.h"
 
 #include "app_state.h"
 #include "scene_sub_menu.h"
@@ -10,15 +11,15 @@
 #define DATA_MODE_ITEM 2
 #define DATA_PIN_ITEM  3
 
-static char* run_mode_names[] = {"demo", "GPIO"};
-static char* data_mode_names[] = {"normal", "inverted"};
+static char* run_mode_names[] = {LWC_UI_TEXT("demo", "演示"), "GPIO"};
+static char* data_mode_names[] = {LWC_UI_TEXT("normal", "正常"), LWC_UI_TEXT("inverted", "反转")};
 static char* data_pin_names[] = {"A7", "A4", "B2", "C1", "C0"};
 
 #ifdef FW_ORIGIN_Momentum
-static char* GPIO_ONLY = "GPIO mode\nonly!";
-static char* run_mode_start_text[] = {"Start the simulation", "Start the receiver"};
+static char* GPIO_ONLY = LWC_UI_TEXT("GPIO mode\nonly!", "仅 GPIO 模式!");
+static char* run_mode_start_text[] = {LWC_UI_TEXT("Start the simulation", "开始模拟"), LWC_UI_TEXT("Start the receiver", "开始接收")};
 #else
-static char* start_mode_text = "Start in selected mode";
+static char* start_mode_text = LWC_UI_TEXT("Start in selected mode", "以选定模式开始");
 #endif
 
 void lwc_run_mode_change_callback(VariableItem* item) {
@@ -84,19 +85,19 @@ void lwc_sub_menu_scene_on_enter(void* context) {
     variable_item_list_set_enter_callback(app->sub_menu, lwc_enter_item_callback, app);
 
     VariableItem* run_mode = variable_item_list_add(
-        app->sub_menu, "Run mode", __lwc_number_of_run_modes, lwc_run_mode_change_callback, app);
+        app->sub_menu, LWC_UI_TEXT("Run mode", "运行模式"), __lwc_number_of_run_modes, lwc_run_mode_change_callback, app);
 
     variable_item_set_current_value_index(run_mode, config->run_mode);
     variable_item_set_current_value_text(run_mode, run_mode_names[config->run_mode]);
 
     VariableItem* data_mode = variable_item_list_add(
-        app->sub_menu, "GPIO data", __lwc_number_of_data_modes, lwc_data_mode_change_callback, app);
+        app->sub_menu, LWC_UI_TEXT("GPIO data", "GPIO 数据"), __lwc_number_of_data_modes, lwc_data_mode_change_callback, app);
 
     variable_item_set_current_value_index(data_mode, config->data_mode);
     variable_item_set_current_value_text(data_mode, data_mode_names[config->data_mode]);
 
     VariableItem* data_pin = variable_item_list_add(
-        app->sub_menu, "Data pin", __lwc_number_of_data_pins, lwc_data_pin_change_callback, app);
+        app->sub_menu, LWC_UI_TEXT("Data pin", "数据引脚"), __lwc_number_of_data_pins, lwc_data_pin_change_callback, app);
 
     variable_item_set_current_value_index(data_pin, config->data_pin);
     variable_item_set_current_value_text(data_pin, data_pin_names[config->data_pin]);

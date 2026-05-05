@@ -17,11 +17,11 @@ void nfc_magic_scene_gen1_menu_on_enter(void* context) {
 
     Submenu* submenu = instance->submenu;
     submenu_add_item(
-        submenu, "Write", SubmenuIndexWrite, nfc_magic_scene_gen1_menu_submenu_callback, instance);
+        submenu, NFC_MAGIC_UI_TEXT("Write", "写入"), SubmenuIndexWrite, nfc_magic_scene_gen1_menu_submenu_callback, instance);
     submenu_add_item(
-        submenu, "Wipe", SubmenuIndexWipe, nfc_magic_scene_gen1_menu_submenu_callback, instance);
+        submenu, NFC_MAGIC_UI_TEXT("Wipe", "擦除"), SubmenuIndexWipe, nfc_magic_scene_gen1_menu_submenu_callback, instance);
     submenu_add_item(
-        submenu, "Dump", SubmenuIndexDump, nfc_magic_scene_gen1_menu_submenu_callback, instance);
+        submenu, NFC_MAGIC_UI_TEXT("Dump", "导出"), SubmenuIndexDump, nfc_magic_scene_gen1_menu_submenu_callback, instance);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(instance->scene_manager, NfcMagicSceneGen1Menu));

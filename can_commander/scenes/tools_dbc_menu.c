@@ -40,7 +40,7 @@ static void cancommander_scene_tools_dbc_open_tool_args(
         args,
         args_size,
         title,
-        "Start",
+        CAN_COMMANDER_UI_TEXT("Start", "启动"),
         cancommander_scene_tools_dbc_start_pending,
         cancommander_scene_monitor);
 
@@ -51,17 +51,17 @@ void cancommander_scene_tools_dbc_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "DBC & Databases");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("DBC & Databases", "DBC 与数据库"));
 
     submenu_add_item(
         app->submenu,
-        "DBC Decode",
+        CAN_COMMANDER_UI_TEXT("DBC Decode", "DBC 解码"),
         ToolsDbcDecode,
         cancommander_scene_tools_dbc_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "DBC Database Manager",
+        CAN_COMMANDER_UI_TEXT("DBC Database Manager", "DBC 数据库管理"),
         ToolsDbcDatabaseManager,
         cancommander_scene_tools_dbc_menu_callback,
         app);
@@ -91,7 +91,7 @@ bool cancommander_scene_tools_dbc_menu_on_event(void* context, SceneManagerEvent
             "dbc_decode",
             app->args_dbc_decode,
             sizeof(app->args_dbc_decode),
-            "DBC Decode Tool");
+            CAN_COMMANDER_UI_TEXT("DBC Decode Tool", "DBC 解码工具"));
         return true;
 
     case ToolsDbcDatabaseManager:

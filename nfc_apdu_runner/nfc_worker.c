@@ -293,7 +293,7 @@ static int32_t nfc_worker_apdu_thread(void* context) {
                 snprintf(
                     worker->error_message,
                     100,
-                    "Command too long\n%d bytes max\nCommand: %lu",
+                    NFC_APDU_RUNNER_UI_TEXT("Command too long\n%d bytes max\nCommand: %lu", "命令过长\n最大 %d 字节\n命令: %lu"),
                     MAX_APDU_LENGTH,
                     i + 1);
             }
@@ -345,7 +345,7 @@ static int32_t nfc_worker_apdu_thread(void* context) {
             // 设置错误信息
             worker->error_message = malloc(100);
             if(worker->error_message) {
-                snprintf(worker->error_message, 100, "APDU command failed\nCommand: %lu", i + 1);
+                snprintf(worker->error_message, 100, NFC_APDU_RUNNER_UI_TEXT("APDU command failed\nCommand: %lu", "APDU 命令执行失败\n命令: %lu"), i + 1);
             }
 
             worker->responses[response_count].response = NULL;
@@ -397,7 +397,7 @@ static int32_t nfc_worker_apdu_thread(void* context) {
             // 设置错误信息
             worker->error_message = malloc(100);
             if(worker->error_message) {
-                snprintf(worker->error_message, 100, "Command timeout\nCommand: %lu", i + 1);
+                snprintf(worker->error_message, 100, NFC_APDU_RUNNER_UI_TEXT("Command timeout\nCommand: %lu", "命令超时\n命令: %lu"), i + 1);
             }
 
             worker->responses[response_count].response = NULL;

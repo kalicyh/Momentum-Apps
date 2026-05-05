@@ -30,9 +30,48 @@ typedef enum {
     MenuIndex_WiringInfo,
 } MenuIndex;
 
+static const char* sensor_type_ui_name(SensorType sensor_type) {
+    switch(sensor_type) {
+    case SensorType_INA219:
+        return INA_METER_UI_TEXT("INA219", "INA219");
+    case SensorType_INA226:
+        return INA_METER_UI_TEXT("INA226", "INA226");
+    case SensorType_INA228:
+        return INA_METER_UI_TEXT("INA228", "INA228");
+    default:
+        return INA_METER_UI_TEXT("Unknown", "未知");
+    }
+}
+
+static const char* sensor_precision_ui_name(SensorPrecision sensor_mode) {
+    switch(sensor_mode) {
+    case SensorPrecision_Low:
+        return INA_METER_UI_TEXT("Low", "低");
+    case SensorPrecision_Medium:
+        return INA_METER_UI_TEXT("Medium", "中");
+    case SensorPrecision_High:
+        return INA_METER_UI_TEXT("High", "高");
+    case SensorPrecision_Max:
+        return INA_METER_UI_TEXT("Max", "最高");
+    default:
+        return INA_METER_UI_TEXT("Unknown", "未知");
+    }
+}
+
+static const char* sensor_averaging_ui_name(SensorAveraging sensor_averaging) {
+    switch(sensor_averaging) {
+    case SensorAveraging_Medium:
+        return INA_METER_UI_TEXT("Medium", "中");
+    case SensorAveraging_Max:
+        return INA_METER_UI_TEXT("Max", "最高");
+    default:
+        return INA_METER_UI_TEXT("Unknown", "未知");
+    }
+}
+
 static void on_sensor_type_changed(VariableItem* item) {
     uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, sensor_type_name(index));
+    variable_item_set_current_value_text(item, sensor_type_ui_name(index));
 
     App* app = (App*)variable_item_get_context(item);
     app->config.sensor_type = index;
@@ -52,7 +91,7 @@ static void on_i2c_address_changed(VariableItem* item) {
 
 static void on_voltage_precision_changed(VariableItem* item) {
     uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, sensor_precision_name(index));
+    variable_item_set_current_value_text(item, sensor_precision_ui_name(index));
 
     App* app = (App*)variable_item_get_context(item);
     app->config.voltage_precision = index;
@@ -60,7 +99,7 @@ static void on_voltage_precision_changed(VariableItem* item) {
 
 static void on_current_precision_changed(VariableItem* item) {
     uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, sensor_precision_name(index));
+    variable_item_set_current_value_text(item, sensor_precision_ui_name(index));
 
     App* app = (App*)variable_item_get_context(item);
     app->config.current_precision = index;
@@ -68,7 +107,7 @@ static void on_current_precision_changed(VariableItem* item) {
 
 static void on_sensor_averaging_changed(VariableItem* item) {
     uint8_t index = variable_item_get_current_value_index(item);
-    variable_item_set_current_value_text(item, sensor_averaging_name(index));
+    variable_item_set_current_value_text(item, sensor_averaging_ui_name(index));
 
     App* app = (App*)variable_item_get_context(item);
     app->config.sensor_averaging = index;

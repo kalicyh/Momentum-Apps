@@ -49,7 +49,7 @@ static void xremote_control_view_draw_callback(Canvas* canvas, void* context) {
                                          xremote_control_view_draw_vertical :
                                          xremote_control_view_draw_horizontal;
 
-    xremote_canvas_draw_header(canvas, orientation, "Control");
+    xremote_canvas_draw_header(canvas, orientation, XREMOTE_UI_TEXT("Control", "控制"));
     xremote_control_view_draw_body(canvas, model);
     xremote_canvas_draw_exit_footer(canvas, orientation, exit_str);
 }

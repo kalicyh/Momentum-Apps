@@ -23,18 +23,18 @@ void nfc_playlist_emulation_finished_scene_on_enter(void* context) {
       23,
       AlignCenter,
       AlignCenter,
-      "\e#Playlist Finished!\e#",
+      NFC_PLAYLIST_UI_TEXT("\e#Playlist Finished!\e#", "\e#播放列表已完成!\e#"),
       false);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeLeft,
-      "Again",
+      NFC_PLAYLIST_UI_TEXT("Again", "再来一次"),
       nfc_playlist_emulation_finished_scene_menu_callback,
       nfc_playlist);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeRight,
-      "Main Menu",
+      NFC_PLAYLIST_UI_TEXT("Main Menu", "主菜单"),
       nfc_playlist_emulation_finished_scene_menu_callback,
       nfc_playlist);
 

@@ -40,14 +40,14 @@ void pof_scene_main_on_update(void* context) {
 
         if(count < POF_TOKEN_LIMIT) {
             submenu_add_item(
-                submenu, "<Load figure>", SubmenuIndexLoad, pof_scene_main_submenu_callback, pof);
+                submenu, UI_TEXT("<Load figure>", "<加载玩具>"), SubmenuIndexLoad, pof_scene_main_submenu_callback, pof);
         }
 
         submenu_set_selected_item(
             submenu, scene_manager_get_scene_state(pof->scene_manager, PoFSceneMain));
     } else {
         submenu_add_item(
-            submenu, "Failed to start", SubmenuIndexLoad, pof_scene_main_submenu_callback, pof);
+            submenu, UI_TEXT("Failed to start", "启动失败"), SubmenuIndexLoad, pof_scene_main_submenu_callback, pof);
     }
     furi_string_free(token_name);
     view_dispatcher_switch_to_view(pof->view_dispatcher, PoFViewSubmenu);

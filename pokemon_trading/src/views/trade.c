@@ -363,10 +363,10 @@ static void trade_draw_connection(Canvas* const canvas, bool connected) {
     elements_frame(canvas, 9, 2, 64, 17);
 
     if(connected) {
-        canvas_draw_str(canvas, 18, 13, "Connected!");
+        canvas_draw_str(canvas, 18, 13, POKEMON_UI_TEXT("Connected!", "已连接!"));
         canvas_draw_icon(canvas, 61, 23, &I_hand_thumbsup);
     } else {
-        canvas_draw_str(canvas, 18, 13, "Connect GB");
+        canvas_draw_str(canvas, 18, 13, POKEMON_UI_TEXT("Connect GB", "连接GB"));
         canvas_draw_icon(canvas, 56, 23, &I_hand_cable);
     }
 }
@@ -437,15 +437,15 @@ static void trade_draw_callback(Canvas* canvas, void* view_model) {
         break;
     case GAMEBOY_READY:
         trade_draw_pkmn_avatar(canvas, model->pdata);
-        trade_draw_frame(canvas, "READY");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("READY", "就绪"));
         break;
     case GAMEBOY_WAITING:
         trade_draw_pkmn_avatar(canvas, model->pdata);
-        trade_draw_frame(canvas, "WAITING");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("WAITING", "等待中"));
         break;
     case GAMEBOY_TRADE_PENDING:
         trade_draw_pkmn_avatar(canvas, model->pdata);
-        trade_draw_frame(canvas, "DEAL?");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("DEAL?", "确认?"));
         break;
     case GAMEBOY_TRADING:
         furi_hal_light_set(LightGreen, 0x00);
@@ -456,16 +456,16 @@ static void trade_draw_callback(Canvas* canvas, void* view_model) {
             furi_hal_light_set(LightBlue, 0x00);
             canvas_draw_icon(canvas, 0, 5, &I_gb_step_2);
         }
-        trade_draw_frame(canvas, "TRADING");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("TRADING", "交换中"));
         break;
     case GAMEBOY_TRADE_CANCEL:
-        trade_draw_frame(canvas, "CANCEL");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("CANCEL", "取消"));
         break;
     case GAMEBOY_COLOSSEUM:
-        trade_draw_frame(canvas, "FIGHT!");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("FIGHT!", "对战!"));
         break;
     default:
-        trade_draw_frame(canvas, "INITIAL");
+        trade_draw_frame(canvas, POKEMON_UI_TEXT("INITIAL", "初始化"));
         break;
     }
 }

@@ -5,6 +5,12 @@
 #include <gui/elements.h>
 #include <furi_hal.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define RUBIKS_UI_TEXT(en, zh) (zh)
+#else
+#define RUBIKS_UI_TEXT(en, zh) (en)
+#endif
+
 #include "scrambler.h"
 #include "furi_hal_random.h"
 
@@ -50,13 +56,13 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     UNUSED(ctx);
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 13, "Rubik's Cube Scrambler");
+    canvas_draw_str(canvas, 4, 13, RUBIKS_UI_TEXT("Rubik's Cube Scrambler", "魔方打乱器"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignCenter, scramble_start);
     canvas_draw_str_aligned(canvas, 64, 38, AlignCenter, AlignCenter, scramble_end);
-    elements_button_center(canvas, "New");
+    elements_button_center(canvas, RUBIKS_UI_TEXT("New", "新打乱"));
 
-    elements_button_left(canvas, notifications_enabled ? "On" : "Off");
+    elements_button_left(canvas, notifications_enabled ? RUBIKS_UI_TEXT("On", "开") : RUBIKS_UI_TEXT("Off", "关"));
 }
 
 static void input_callback(InputEvent* input_event, void* ctx) {

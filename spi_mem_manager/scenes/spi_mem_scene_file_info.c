@@ -4,9 +4,9 @@
 void spi_mem_scene_file_info_on_enter(void* context) {
     SPIMemApp* app = context;
     FuriString* str = furi_string_alloc();
-    furi_string_printf(str, "Size: %zu KB", spi_mem_file_get_size(app) / 1024);
+    furi_string_printf(str, "%s %zu KB", SPI_MEM_UI_TEXT("Size:", "大小:"), spi_mem_file_get_size(app) / 1024);
     widget_add_string_element(
-        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, "File info");
+        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("File info", "文件信息"));
     widget_add_string_element(
         app->widget, 64, 20, AlignCenter, AlignBottom, FontSecondary, furi_string_get_cstr(str));
     furi_string_free(str);

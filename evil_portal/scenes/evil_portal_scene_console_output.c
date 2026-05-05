@@ -46,20 +46,24 @@ void evil_portal_scene_console_output_on_enter(void* context) {
         app->sent_reset = false;
 
         if(0 == strncmp("help", app->selected_tx_string, strlen("help"))) {
-            const char* help_msg = "BLUE = Waiting\nGREEN = Good\nRED = Bad\n\nThis project is a "
-                                   "WIP.\ngithub.com/bigbrodude6119/flipper-zero-evil-portal\n\n"
-                                   "Version 0.0.2\n\n";
+            const char* help_msg = EVIL_PORTAL_UI_TEXT(
+                "BLUE = Waiting\nGREEN = Good\nRED = Bad\n\nThis project is a "
+                "WIP.\ngithub.com/bigbrodude6119/flipper-zero-evil-portal\n\n"
+                "Version 0.0.2\n\n",
+                "蓝色 = 等待中\n绿色 = 正常\n红色 = 异常\n\n此项目仍在开发中。\n"
+                "github.com/bigbrodude6119/flipper-zero-evil-portal\n\n"
+                "版本 0.0.2\n\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
             if(app->show_stopscan_tip) {
-                const char* msg = "Press BACK to return\n";
+                const char* msg = EVIL_PORTAL_UI_TEXT("Press BACK to return\n", "按返回键返回\n");
                 furi_string_cat_str(app->text_box_store, msg);
                 app->text_box_store_strlen += strlen(msg);
             }
         }
 
         if(0 == strncmp("savelogs", app->selected_tx_string, strlen("savelogs"))) {
-            const char* help_msg = "Logs saved.\n\n";
+            const char* help_msg = EVIL_PORTAL_UI_TEXT("Logs saved.\n\n", "日志已保存。\n\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
             furi_mutex_acquire(app->portal_logs_mutex, FuriWaitForever);
@@ -67,7 +71,7 @@ void evil_portal_scene_console_output_on_enter(void* context) {
             furi_string_reset(app->portal_logs);
             furi_mutex_release(app->portal_logs_mutex);
             if(app->show_stopscan_tip) {
-                const char* msg = "Press BACK to return\n";
+                const char* msg = EVIL_PORTAL_UI_TEXT("Press BACK to return\n", "按返回键返回\n");
                 furi_string_cat_str(app->text_box_store, msg);
                 app->text_box_store_strlen += strlen(msg);
             }
@@ -85,8 +89,9 @@ void evil_portal_scene_console_output_on_enter(void* context) {
 
         if(0 == strncmp(SET_HTML_CMD, app->selected_tx_string, strlen(SET_HTML_CMD))) {
             if(app->show_stopscan_tip) {
-                const char* msg =
-                    "Starting portal\nMarauder takes a few secs to start\nPress BACK to return\n";
+                const char* msg = EVIL_PORTAL_UI_TEXT(
+                    "Starting portal\nMarauder takes a few secs to start\nPress BACK to return\n",
+                    "正在启动门户\nMarauder 启动需要几秒\n按返回键返回\n");
                 furi_string_cat_str(app->text_box_store, msg);
                 app->text_box_store_strlen += strlen(msg);
             }
@@ -95,7 +100,7 @@ void evil_portal_scene_console_output_on_enter(void* context) {
         if(0 == strncmp(RESET_CMD, app->selected_tx_string, strlen(RESET_CMD))) {
             app->sent_reset = true;
             if(app->show_stopscan_tip) {
-                const char* msg = "Reseting portal\nPress BACK to return\n\n\n\n";
+                const char* msg = EVIL_PORTAL_UI_TEXT("Reseting portal\nPress BACK to return\n\n\n\n", "正在重置门户\n按返回键返回\n\n\n\n");
                 furi_string_cat_str(app->text_box_store, msg);
                 app->text_box_store_strlen += strlen(msg);
             }

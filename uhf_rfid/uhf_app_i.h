@@ -27,6 +27,12 @@
 
 #include <uhf_rfid_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UHF_UI_TEXT(en, zh) (zh)
+#else
+#define UHF_UI_TEXT(en, zh) (en)
+#endif
+
 #define UHF_TEXT_STORE_SIZE 128
 // #define UHF_APPS_DATA_FOLDER EXT_PATH("apps_data")
 // #define UHF_APPS_STORAGE_FOLDER

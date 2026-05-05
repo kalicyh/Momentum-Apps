@@ -154,7 +154,7 @@ void gb_cartridge_scene_2_draw(Canvas* canvas, GameBoyCartridgeROMBackupModel* m
     if(model->total_rom > 0 && model->transfered > 0) {
         progress = model->transfered * 100 / model->total_rom;
     }
-    snprintf(progressText, sizeof(progressText), "%d%% Dump ROM...", progress);
+    snprintf(progressText, sizeof(progressText), GBCARTRIDGE_UI_TEXT("%d%% Dump ROM...", "%d%% 导出 ROM..."), progress);
     canvas_draw_str_aligned(canvas, 128 / 2, 0, AlignCenter, AlignTop, progressText);
     canvas_set_font(canvas, FontSecondary);
 
@@ -167,7 +167,7 @@ void gb_cartridge_scene_2_draw(Canvas* canvas, GameBoyCartridgeROMBackupModel* m
     snprintf(
         total_rom_str,
         sizeof(total_rom_str),
-        "of %.2lf MiB",
+        GBCARTRIDGE_UI_TEXT("of %.2lf MiB", "共 %.2lf MiB"),
         (double)(model->total_rom / 1024.0 / 1024.0));
 
     char transfered_rom_str[20];
@@ -208,7 +208,7 @@ void gb_cartridge_scene_2_draw(Canvas* canvas, GameBoyCartridgeROMBackupModel* m
         (progress * UI_PROGRESS_ROWS * UI_PROGRESS_COLS) /
             100); // Pinta las primeras 10 cajas de negro
 
-    elements_button_center(canvas, "Start");
+    elements_button_center(canvas, GBCARTRIDGE_UI_TEXT("Start", "开始"));
 }
 
 static void gb_cartridge_scene_2_model_init(GameBoyCartridgeROMBackupModel* const model) {

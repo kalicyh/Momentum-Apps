@@ -13,6 +13,14 @@
 
 #include <assets_icons.h>
 
+#ifndef ETCH_A_SKETCH_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ETCH_A_SKETCH_UI_TEXT(en, zh) (zh)
+#else
+#define ETCH_A_SKETCH_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define WIDTH  64
 #define HEIGHT 32
 
@@ -101,21 +109,21 @@ void etch_draw_callback(Canvas* canvas, void* ctx) {
 
         // Draw Etch A Sketch text banner
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 36, 15, "Etch A Sketch");
+        canvas_draw_str(canvas, 36, 15, ETCH_A_SKETCH_UI_TEXT("Etch A Sketch", "素描板"));
 
         // Draw Etch A Sketch instructions "Hold Back to clear"
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 31, 26, "* Hold ");
+        canvas_draw_str(canvas, 31, 26, ETCH_A_SKETCH_UI_TEXT("* Hold ", "长按 "));
         canvas_draw_icon(canvas, 59, 18, &I_Pin_back_arrow_10x8);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 72, 26, "to clear");
+        canvas_draw_str(canvas, 72, 26, ETCH_A_SKETCH_UI_TEXT("to clear", "清除"));
 
         // Draw Etch A Sketch instructions "Hold OK button to draw"
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 31, 37, "* Hold");
+        canvas_draw_str(canvas, 31, 37, ETCH_A_SKETCH_UI_TEXT("* Hold", "长按"));
         canvas_draw_icon(canvas, 61, 30, &I_ButtonCenter_7x7);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 72, 37, "to draw");
+        canvas_draw_str(canvas, 72, 37, ETCH_A_SKETCH_UI_TEXT("to draw", "绘画"));
     }
 
     canvas_set_color(canvas, ColorBlack);

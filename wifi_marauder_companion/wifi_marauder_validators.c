@@ -2,6 +2,14 @@
 #include "wifi_marauder_validators.h"
 #include <storage/storage.h>
 
+#ifndef WIFI_MARAUDER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WIFI_MARAUDER_UI_TEXT(en, zh) (zh)
+#else
+#define WIFI_MARAUDER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 struct ValidatorIsFile {
     char* app_path_folder;
     const char* app_extension;
@@ -24,7 +32,7 @@ bool validator_is_file_callback(const char* text, FuriString* error, void* conte
     Storage* storage = furi_record_open(RECORD_STORAGE);
     if(storage_common_stat(storage, furi_string_get_cstr(path), NULL) == FSE_OK) {
         ret = false;
-        furi_string_printf(error, "This name\nexists!\nChoose\nanother one.");
+        furi_string_printf(error, WIFI_MARAUDER_UI_TEXT("This name\nexists!\nChoose\nanother one.", "此名称\n已存在!\n请选择\n其他名称."));
     } else {
         ret = true;
     }

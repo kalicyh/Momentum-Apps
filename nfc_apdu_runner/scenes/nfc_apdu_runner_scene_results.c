@@ -26,13 +26,13 @@ void nfc_apdu_runner_scene_results_on_enter(void* context) {
     Widget* widget = app->widget;
 
     widget_reset(widget);
-    widget_add_string_element(widget, 64, 5, AlignCenter, AlignTop, FontPrimary, "执行结果");
+    widget_add_string_element(widget, 64, 5, AlignCenter, AlignTop, FontPrimary, NFC_APDU_RUNNER_UI_TEXT("Result", "执行结果"));
 
     FuriString* text = furi_string_alloc();
 
     for(uint32_t i = 0; i < app->response_count; i++) {
-        furi_string_cat_printf(text, "Command: %s\n", app->responses[i].command);
-        furi_string_cat_str(text, "Response: ");
+        furi_string_cat_printf(text, NFC_APDU_RUNNER_UI_TEXT("Command: %s\n", "命令: %s\n"), app->responses[i].command);
+        furi_string_cat_str(text, NFC_APDU_RUNNER_UI_TEXT("Response: ", "响应: "));
 
         for(uint16_t j = 0; j < app->responses[i].response_length; j++) {
             furi_string_cat_printf(text, "%02X", app->responses[i].response[j]);
@@ -46,9 +46,9 @@ void nfc_apdu_runner_scene_results_on_enter(void* context) {
 
     // 添加按钮
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Cancel", nfc_apdu_runner_scene_results_button_callback, app);
+        widget, GuiButtonTypeLeft, NFC_APDU_RUNNER_UI_TEXT("Cancel", "取消"), nfc_apdu_runner_scene_results_button_callback, app);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Save", nfc_apdu_runner_scene_results_button_callback, app);
+        widget, GuiButtonTypeRight, NFC_APDU_RUNNER_UI_TEXT("Save", "保存"), nfc_apdu_runner_scene_results_button_callback, app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, NfcApduRunnerViewWidget);
 }

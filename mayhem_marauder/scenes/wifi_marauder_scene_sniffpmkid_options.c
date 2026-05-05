@@ -58,40 +58,40 @@ void wifi_marauder_scene_sniffpmkid_options_on_enter(void* context) {
 
     Submenu* submenu = app->submenu;
 
-    submenu_set_header(submenu, "Sniff PMKID");
+    submenu_set_header(submenu, WIFI_MARAUDER_UI_TEXT("Sniff PMKID", "嗅探 PMKID"));
     submenu_add_item(
         submenu,
-        "Passive",
+        WIFI_MARAUDER_UI_TEXT("Passive", "被动"),
         SubmenuIndexPassive,
         wifi_marauder_scene_sniffpmkid_options_callback,
         app);
     submenu_add_item(
         submenu,
-        "Active (Force Deauth)",
+        WIFI_MARAUDER_UI_TEXT("Active (Force Deauth)", "主动 (强制解除认证)"),
         SubmenuIndexActive,
         wifi_marauder_scene_sniffpmkid_options_callback,
         app);
     submenu_add_item(
         submenu,
-        "Targeted Passive (List)",
+        WIFI_MARAUDER_UI_TEXT("Targeted Passive (List)", "定向被动 (列表)"),
         SubmenuIndexTargetedPassive,
         wifi_marauder_scene_sniffpmkid_options_callback,
         app);
     submenu_add_item(
         submenu,
-        "Targeted Active (List)",
+        WIFI_MARAUDER_UI_TEXT("Targeted Active (List)", "定向主动 (列表)"),
         SubmenuIndexTargetedActive,
         wifi_marauder_scene_sniffpmkid_options_callback,
         app);
     submenu_add_item(
         submenu,
-        "On Channel # - Passive",
+        WIFI_MARAUDER_UI_TEXT("On Channel # - Passive", "指定信道 - 被动"),
         SubmenuIndexChannelPassive,
         wifi_marauder_scene_sniffpmkid_options_callback,
         app);
     submenu_add_item(
         submenu,
-        "On Channel # - Active",
+        WIFI_MARAUDER_UI_TEXT("On Channel # - Active", "指定信道 - 主动"),
         SubmenuIndexChannelActive,
         wifi_marauder_scene_sniffpmkid_options_callback,
         app);

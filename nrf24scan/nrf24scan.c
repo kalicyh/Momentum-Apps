@@ -966,11 +966,11 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         canvas_set_font(canvas, FontSecondary); // 8x10 font, 6 lines
         if(save_settings)
             snprintf(
-                screen_buf, sizeof(screen_buf), "Save: %s", SETTINGS_FILENAME); // menu_selected = 0
+                screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Save: %s", "保存: %s"), SETTINGS_FILENAME); // menu_selected = 0
         else
-            snprintf(screen_buf, sizeof(screen_buf), "Load: %s", addr_file_name);
+            snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Load: %s", "加载: %s"), addr_file_name);
         canvas_draw_str(canvas, 10, 10, screen_buf);
-        snprintf(screen_buf, sizeof(screen_buf), "Ch: %d", NRF_channel); // menu_selected = 1
+        snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Ch: %d", "信道: %d"), NRF_channel); // menu_selected = 1
         canvas_draw_str(canvas, 10, 20, screen_buf);
         if(NRF_ESB) {
             strcpy(screen_buf, "ESB");
@@ -984,26 +984,26 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         snprintf(
             screen_buf,
             sizeof(screen_buf),
-            "Rate: %sbps",
+            NRF24SCAN_UI_TEXT("Rate: %sbps", "速率: %sbps"),
             NRF_rate == 2 ? "2M" :
             NRF_rate == 1 ? "1M" :
                             "250K"); // menu_selected = 2
         canvas_draw_str(canvas, 10, 30, screen_buf);
         if(what_to_do == 1)
-            snprintf(screen_buf, sizeof(screen_buf), "Min Payl: %d", NRF_Payload_sniff_min);
+            snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Min Payl: %d", "最小负载: %d"), NRF_Payload_sniff_min);
         else if(what_to_do >= 2) {
             uint8_t* p = APP->log_arr + view_log_arr_idx * LOG_REC_SIZE;
             snprintf(
                 screen_buf,
                 sizeof(screen_buf),
-                "Payload: %d",
+                NRF24SCAN_UI_TEXT("Payload: %d", "负载: %d"),
                 log_arr_idx && (*p & 0x80) ? *(p + 1) >> 3 : NRF_Payload);
         } else
-            snprintf(screen_buf, sizeof(screen_buf), "Payload: %d", NRF_Payload);
+            snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Payload: %d", "负载: %d"), NRF_Payload);
         canvas_draw_str(canvas, 78, 30, screen_buf);
-        strcpy(screen_buf, "Next Ch time: "); // menu_selected = 3
+        strcpy(screen_buf, NRF24SCAN_UI_TEXT("Next Ch time: ", "切信道时间: ")); // menu_selected = 3
         if(find_channel_period == 0)
-            strcat(screen_buf, "off");
+            strcat(screen_buf, NRF24SCAN_UI_TEXT("off", "关闭"));
         else
             snprintf(
                 screen_buf + strlen(screen_buf), sizeof(screen_buf), "%d s", find_channel_period);
@@ -1015,34 +1015,34 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         snprintf(
             screen_buf,
             sizeof(screen_buf),
-            "Log: %s",
-            log_to_file == 0 ? "No" :
-            log_to_file == 1 ? "Yes" :
-            log_to_file == 2 ? "Append" :
-                               "Clear"); // menu_selected = 4
+            NRF24SCAN_UI_TEXT("Log: %s", "日志: %s"),
+            log_to_file == 0 ? NRF24SCAN_UI_TEXT("No", "否") :
+            log_to_file == 1 ? NRF24SCAN_UI_TEXT("Yes", "是") :
+            log_to_file == 2 ? NRF24SCAN_UI_TEXT("Append", "追加") :
+                               NRF24SCAN_UI_TEXT("Clear", "清除")); // menu_selected = 4
         canvas_draw_str(canvas, 10, 50, screen_buf);
         if(what_to_do) { // menu_selected = 5
             if(NRF_ERROR)
-                snprintf(screen_buf, sizeof(screen_buf), "nRF24L01+ r/w ERROR!");
+                snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("nRF24L01+ r/w ERROR!", "nRF24L01+ 读写错误!"));
             else {
                 if(what_to_do == 1)
-                    snprintf(screen_buf, sizeof(screen_buf), "Start sniff");
+                    snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Start sniff", "开始嗅探"));
                 else {
                     uint8_t* p = APP->log_arr + view_log_arr_idx * LOG_REC_SIZE;
                     if(log_arr_idx && (*p & 0x80)) { // +RAW
-                        snprintf(screen_buf, sizeof(screen_buf), "Start read: ");
+                        snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("Start read: ", "开始读取: "));
                         add_to_str_hex_bytes(screen_buf, (char*)p + 2, (*(p + 1) & 0b11) + 2);
                         if(what_to_do == 2) strcpy(screen_buf + strlen(screen_buf) - 2, "* ");
                     } else
                         snprintf(
                             screen_buf,
                             sizeof(screen_buf),
-                            "Start scan (pipes: %d)",
+                            NRF24SCAN_UI_TEXT("Start scan (pipes: %d)", "开始扫描 (管道: %d)"),
                             addrs.addr_count);
                 }
             }
         } else
-            snprintf(screen_buf, sizeof(screen_buf), "View log (pipes: %d)", addrs.addr_count);
+            snprintf(screen_buf, sizeof(screen_buf), NRF24SCAN_UI_TEXT("View log (pipes: %d)", "查看日志 (管道: %d)"), addrs.addr_count);
         canvas_draw_str(canvas, 10, 60, screen_buf);
         canvas_draw_str(canvas, 0, menu_selected * 10 + 10, ">");
     } else if(what_doing == 1) {
@@ -1060,9 +1060,9 @@ static void render_callback(Canvas* const canvas, void* ctx) {
             screen_buf + strlen(screen_buf),
             sizeof(screen_buf),
             " %s ch: %d - %d.",
-            what_to_do == 1 ? "Sniff" :
-            what_to_do == 0 ? "View" :
-                              "Read",
+            what_to_do == 1 ? NRF24SCAN_UI_TEXT("Sniff", "嗅探") :
+            what_to_do == 0 ? NRF24SCAN_UI_TEXT("View", "查看") :
+                              NRF24SCAN_UI_TEXT("Read", "读取"),
             NRF_channel,
             log_arr_idx);
         canvas_draw_str(canvas, 0, 7, screen_buf);
@@ -1246,7 +1246,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     } else {
         canvas_set_font(canvas, FontBatteryPercent); // 5x7 font, 9 lines
         if(view_found >= 0) {
-            snprintf(screen_buf, 50, "Found > 1: %d", found_total);
+            snprintf(screen_buf, 50, NRF24SCAN_UI_TEXT("Found > 1: %d", "发现 > 1: %d"), found_total);
             canvas_draw_str(canvas, 0, 1 * 7, screen_buf);
             int16_t idx = view_found * 7;
             for(uint8_t i = 0; i < 7; i++, idx++) {
@@ -1321,7 +1321,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         strcpy(screen_buf + 1, VERSION);
         canvas_draw_str(canvas, 105, 7, screen_buf);
         if(view_log_decode_PCF || view_log_decode_CRC) {
-            strcpy(screen_buf, "Decode: ");
+            strcpy(screen_buf, NRF24SCAN_UI_TEXT("Decode: ", "解码: "));
             if(view_log_decode_PCF) strcat(screen_buf, "ESB ");
             if(view_log_decode_CRC == 1)
                 strcat(screen_buf, "CRC1");
@@ -1348,13 +1348,13 @@ int32_t nrf24scan_app(void* p) {
     APP->log_arr = malloc(LOG_REC_SIZE * MAX_LOG_RECORDS);
     if(APP->log_arr == NULL) {
         FURI_LOG_E(TAG, "Not enouch memory: %d", LOG_REC_SIZE * MAX_LOG_RECORDS);
-        strcpy(addr_file_name, "MEMORY LOW!");
+        strcpy(addr_file_name, NRF24SCAN_UI_TEXT("MEMORY LOW!", "内存不足!"));
     }
     clear_log();
     APP->found = malloc(sizeof(struct FOUND) * MAX_FOUND_RECORDS);
     if(APP->found == NULL) {
         FURI_LOG_E(TAG, "Not enouch memory: %d", sizeof(struct FOUND) * MAX_FOUND_RECORDS);
-        strcpy(addr_file_name, "MEMORY LOW!!");
+        strcpy(addr_file_name, NRF24SCAN_UI_TEXT("MEMORY LOW!!", "内存不足!!"));
     }
 
     memset((uint8_t*)&addrs, 0, sizeof(addrs));
@@ -1391,7 +1391,7 @@ int32_t nrf24scan_app(void* p) {
                 furi_string_get_cstr(path) + sizeof(SCAN_APP_PATH_FOLDER),
                 sizeof(addr_file_name));
         else
-            snprintf(addr_file_name, sizeof(addr_file_name), "LOAD ERROR#%d", err);
+            snprintf(addr_file_name, sizeof(addr_file_name), NRF24SCAN_UI_TEXT("LOAD ERROR#%d", "加载错误#%d"), err);
     } else {
         strcpy(addr_file_name, "NONE");
         if(what_to_do == 1) {
@@ -1546,7 +1546,7 @@ int32_t nrf24scan_app(void* p) {
                                             snprintf(
                                                 addr_file_name,
                                                 sizeof(addr_file_name),
-                                                "LOAD ERROR#%d",
+                                                NRF24SCAN_UI_TEXT("LOAD ERROR#%d", "加载错误#%d"),
                                                 err);
                                         file_stream_close(file_stream);
                                         menu_selected = Menu_ok;

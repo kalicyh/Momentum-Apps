@@ -7,9 +7,15 @@ void esp_flasher_scene_about_widget_callback(GuiButtonType result, InputType typ
     }
 }
 
-#define ESP_FLASHER_APP_DESCRIPTION                     \
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ESP_FLASHER_APP_DESCRIPTION                             \
+    "\e#信息\n版本: " ESP_FLASHER_APP_VERSION                        \
+    "\n作者: 0xchocolate\n(@cococode on discord)\n使用 espressif 的 esp-serial-flasher 库\nGithub: https://github.com/0xchocolate/flipperzero-esp-flasher\n\n\e#说明\n通过 Flipper (UART) 使用\nSD 卡上的 bin 文件烧录\nESP 芯片。\n烧录前需将芯片重置到\n引导加载模式。\n\n 支持的芯片:\n- ESP32\n- ESP8266\n- ESP32-S2\n- ESP32-S3\n- ESP32-C2\n- ESP32-C3\n- ESP32-C5\n- ESP32-H2"
+#else
+#define ESP_FLASHER_APP_DESCRIPTION                             \
     "\e#Information\nVersion: " ESP_FLASHER_APP_VERSION \
     "\nDeveloped by: 0xchocolate\n(@cococode on discord) using espressif's esp-serial-flasher library\nGithub: https://github.com/0xchocolate/flipperzero-esp-flasher\n\n\e#Description\nApp to flash ESP chips from\nthe flipper (over UART) using\nbin files on the sd card.\nReset the chip into bootloader\nmode before flashing.\n\n Supported targets:\n- ESP32\n- ESP8266\n- ESP32-S2\n- ESP32-S3\n- ESP32-C2\n- ESP32-C3\n- ESP32-C5\n- ESP32-H2"
+#endif
 
 void esp_flasher_scene_about_on_enter(void* context) {
     EspFlasherApp* app = context;
@@ -32,7 +38,9 @@ void esp_flasher_scene_about_on_enter(void* context) {
         14,
         AlignCenter,
         AlignBottom,
-        "\e#\e!        ESP Flasher       \e!\n",
+        ESP_FLASHER_UI_TEXT(
+            "\e#\e!        ESP Flasher       \e!\n",
+            "\e#\e!       ESP 烧录器        \e!\n"),
         false);
     widget_add_text_scroll_element(app->widget, 0, 16, 128, 50, ESP_FLASHER_APP_DESCRIPTION);
 

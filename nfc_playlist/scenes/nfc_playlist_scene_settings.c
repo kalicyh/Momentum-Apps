@@ -21,24 +21,24 @@ static void nfc_playlist_settings_scene_lock_state_check(void* context) {
    variable_item_set_locked(
       variable_item_list_get(nfc_playlist->views.variable_item_list, NfcPlaylistSettings_Timeout),
       !nfc_playlist->worker_info.settings->time_controls,
-      "Time\nControls\nDisabled");
+      NFC_PLAYLIST_UI_TEXT("Time\nControls\nDisabled", "时间\n控制\n已禁用"));
 
    variable_item_set_locked(
       variable_item_list_get(nfc_playlist->views.variable_item_list, NfcPlaylistSettings_Delay),
       !nfc_playlist->worker_info.settings->time_controls,
-      "Time\nControls\nDisabled");
+      NFC_PLAYLIST_UI_TEXT("Time\nControls\nDisabled", "时间\n控制\n已禁用"));
 
    variable_item_set_locked(
       variable_item_list_get(
          nfc_playlist->views.variable_item_list, NfcPlaylistSettings_TimeControls),
       !nfc_playlist->worker_info.settings->user_controls,
-      "User\nControls\nDisabled");
+      NFC_PLAYLIST_UI_TEXT("User\nControls\nDisabled", "用户\n控制\n已禁用"));
 
    variable_item_set_locked(
       variable_item_list_get(
          nfc_playlist->views.variable_item_list, NfcPlaylistSettings_UserControls),
       !nfc_playlist->worker_info.settings->time_controls,
-      "Time\nControls\nDisabled");
+      NFC_PLAYLIST_UI_TEXT("Time\nControls\nDisabled", "时间\n控制\n已禁用"));
 }
 
 static void nfc_playlist_settings_scene_menu_callback(void* context, uint32_t index) {
@@ -108,11 +108,11 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
    NfcPlaylist* nfc_playlist = context;
    FuriString* tmp_str = furi_string_alloc();
 
-   variable_item_list_set_header(nfc_playlist->views.variable_item_list, "Settings");
+   variable_item_list_set_header(nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Settings", "设置"));
 
    VariableItem* emulation_timeout_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Emulate time",
+      NFC_PLAYLIST_UI_TEXT("Emulate time", "模拟时间"),
       (sizeof(options_emulate_timeout) / sizeof(options_emulate_timeout[0])),
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -126,7 +126,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* emulation_delay_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Delay time",
+      NFC_PLAYLIST_UI_TEXT("Delay time", "延迟时间"),
       (sizeof(options_emulate_delay) / sizeof(options_emulate_delay[0])),
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -140,7 +140,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* emulation_led_indicator_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "LED Indicator",
+      NFC_PLAYLIST_UI_TEXT("LED Indicator", "LED 指示灯"),
       2,
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -152,7 +152,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* emulation_skip_error_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Skip Error",
+      NFC_PLAYLIST_UI_TEXT("Skip Error", "跳过错误"),
       2,
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -163,7 +163,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* loop_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Loop",
+      NFC_PLAYLIST_UI_TEXT("Loop", "循环"),
       2,
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -173,7 +173,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* time_controls_settings = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Time Controls",
+      NFC_PLAYLIST_UI_TEXT("Time Controls", "时间控制"),
       2,
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -184,7 +184,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* user_controls_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "User Controls",
+      NFC_PLAYLIST_UI_TEXT("User Controls", "用户控制"),
       2,
       nfc_playlist_settings_scene_options_change_callback,
       nfc_playlist);
@@ -194,15 +194,15 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
       user_controls_setting, nfc_playlist->worker_info.settings->user_controls ? "ON" : "OFF");
 
    variable_item_list_add(
-      nfc_playlist->views.variable_item_list, "Back to defaults", 0, NULL, NULL);
+      nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Back to defaults", "恢复默认设置"), 0, NULL, NULL);
 
-   variable_item_list_add(nfc_playlist->views.variable_item_list, "Save settings", 0, NULL, NULL);
-
-   variable_item_list_add(
-      nfc_playlist->views.variable_item_list, "Reload settings", 0, NULL, NULL);
+   variable_item_list_add(nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Save settings", "保存设置"), 0, NULL, NULL);
 
    variable_item_list_add(
-      nfc_playlist->views.variable_item_list, "Delete saved settings", 0, NULL, NULL);
+      nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Reload settings", "重新加载设置"), 0, NULL, NULL);
+
+   variable_item_list_add(
+      nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Delete saved settings", "删除已保存设置"), 0, NULL, NULL);
 
    VariableItem* credits = variable_item_list_add(
       nfc_playlist->views.variable_item_list, "acegoal07, xtruan, WillyJL", 1, NULL, NULL);

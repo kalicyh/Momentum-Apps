@@ -132,10 +132,10 @@ static void draw_access_point(Canvas* canvas, Context* context) {
 
     canvas_draw_str_aligned(canvas, 38, 12, AlignLeft, AlignBottom, ap.bssid);
 
-    furi_string_printf(string, "Signal strength: %ddBm", ap.rssi);
+    furi_string_printf(string, WARDRIVER_UI_TEXT("Signal strength: %ddBm", "信号强度: %ddBm"), ap.rssi);
     canvas_draw_str_aligned(canvas, 3, 35, AlignLeft, AlignBottom, furi_string_get_cstr(string));
 
-    furi_string_printf(string, "CH: %d", ap.channel);
+    furi_string_printf(string, WARDRIVER_UI_TEXT("CH: %d", "频道: %d"), ap.channel);
     canvas_draw_str_aligned(canvas, 3, 47, AlignLeft, AlignBottom, furi_string_get_cstr(string));
 
     furi_string_printf(string, "%d", ap.packetRxCount);
@@ -148,7 +148,7 @@ static void draw_access_point(Canvas* canvas, Context* context) {
 
     furi_string_printf(
         string,
-        "Seen: %02d:%02d:%02d (%lds ago)",
+        WARDRIVER_UI_TEXT("Seen: %02d:%02d:%02d (%lds ago)", "发现: %02d:%02d:%02d (%ld秒前)"),
         ap.datetime.hour,
         ap.datetime.minute,
         ap.datetime.second,
@@ -172,11 +172,9 @@ static void render_callback(Canvas* canvas, void* context) {
     case SHOW_NMEA:
 
         if(UART_CH_ESP == UART_CH_GPS) {
-            canvas_draw_str(canvas, 0, 10, "GPS channel invalid!");
-            canvas_draw_str(canvas, 0, 20, "Change UART");
-            canvas_draw_str(canvas, 0, 30, "channel");
-            canvas_draw_str(canvas, 0, 40, "in the Momentum");
-            canvas_draw_str(canvas, 0, 50, "app");
+            canvas_draw_str(canvas, 0, 10, WARDRIVER_UI_TEXT("GPS channel invalid!", "GPS通道无效!"));
+            canvas_draw_str(canvas, 0, 20, WARDRIVER_UI_TEXT("Change UART channel", "请在Momentum应用中"));
+            canvas_draw_str(canvas, 0, 30, WARDRIVER_UI_TEXT("in the Momentum app", "更改UART通道"));
         } else {
             furi_string_printf(
                 string, "%f", isnan(ctx->gps_data.latitude) ? 0 : (double)ctx->gps_data.latitude);
@@ -188,7 +186,7 @@ static void render_callback(Canvas* canvas, void* context) {
                 isnan(ctx->gps_data.longitude) ? 0 : (double)ctx->gps_data.longitude);
             canvas_draw_str(canvas, 0, 20, furi_string_get_cstr(string));
 
-            furi_string_printf(string, "%d sats", ctx->gps_data.satelites);
+            furi_string_printf(string, WARDRIVER_UI_TEXT("%d sats", "%d颗卫星"), ctx->gps_data.satelites);
             canvas_draw_str(canvas, 0, 30, furi_string_get_cstr(string));
 
             furi_string_printf(
@@ -198,16 +196,16 @@ static void render_callback(Canvas* canvas, void* context) {
                 ctx->gps_data.minute,
                 ctx->gps_data.second);
             canvas_draw_str(canvas, 0, 40, furi_string_get_cstr(string));
-            canvas_draw_str(canvas, 70, 10, "GPS DATA");
+            canvas_draw_str(canvas, 70, 10, WARDRIVER_UI_TEXT("GPS DATA", "GPS数据"));
         }
 
-        elements_button_left(canvas, "Back");
+        elements_button_left(canvas, WARDRIVER_UI_TEXT("Back", "返回"));
 
         canvas_draw_icon(canvas, 82, 20, &I_WarningDolphinFlip_45x42);
         break;
     case NO_APS:
-        canvas_draw_str(canvas, 80, 30, "No AP's");
-        canvas_draw_str(canvas, 80, 40, "Found!");
+        canvas_draw_str(canvas, 80, 30, WARDRIVER_UI_TEXT("No AP's", "未发现AP"));
+        canvas_draw_str(canvas, 80, 40, WARDRIVER_UI_TEXT("Found!", ""));
         canvas_draw_icon(canvas, 1, 9, &I_DolphinWait_59x54);
         break;
     case NORMAL:

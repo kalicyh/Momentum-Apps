@@ -15,9 +15,10 @@ void meal_pager_scene_set_last_pager_on_enter(void* context) {
     IntInput* int_input = app->int_input;
     size_t enter_name_length = 5;
     meal_pager_set_max_values(app);
-    char* str = "Set Last Pager (0 - 999)";
+    char* str = MEAL_PAGER_UI_TEXT("Set Last Pager (0 - 999)", "设置末呼机 (0 - 999)");
     const char* constStr = str;
-    snprintf(str, 36, "Set Last Pager (%lu - %lu)", app->first_pager, app->max_pager);
+    const char* fmt = MEAL_PAGER_UI_TEXT("Set Last Pager (%lu - %lu)", "设置末呼机 (%lu - %lu)");
+    snprintf(str, 36, fmt, app->first_pager, app->max_pager);
 
     int_input_set_header_text(int_input, constStr);
 

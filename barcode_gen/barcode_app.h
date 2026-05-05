@@ -48,6 +48,12 @@
 #include "views/message_view.h"
 #include "barcode_validator.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BARCODE_GEN_UI_TEXT(en, zh) (zh)
+#else
+#define BARCODE_GEN_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct BarcodeApp BarcodeApp;
 
 struct BarcodeApp {

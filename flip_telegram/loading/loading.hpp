@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define flip_telegram_UI_TEXT(en, zh) (zh)
+#else
+#define flip_telegram_UI_TEXT(en, zh) (en)
+#endif
+
 #include <gui/gui.h>
 
 class Loading
@@ -20,5 +27,5 @@ private:
     uint32_t timeElapsed;
     uint32_t timeStart;
     bool animating = false;
-    const char *currentText = "Loading...";
+    const char *currentText = flip_telegram_UI_TEXT("Loading...", "加载中...");
 };

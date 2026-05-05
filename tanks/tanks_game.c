@@ -15,6 +15,12 @@
 
 #include "constants.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TANKS_UI_TEXT(en, zh) (zh)
+#else
+#define TANKS_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     //    +-----x
     //    |
@@ -398,9 +404,9 @@ static void tanks_game_render_callback(Canvas* const canvas, void* ctx) {
     if(tanks_state->state == GameStateMenu) {
         canvas_draw_icon(canvas, 0, 0, &I_TanksSplashScreen_128x64);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 124, 10, AlignRight, AlignBottom, "Single");
-        canvas_draw_str_aligned(canvas, 124, 25, AlignRight, AlignBottom, "Co-op S");
-        canvas_draw_str_aligned(canvas, 124, 40, AlignRight, AlignBottom, "Co-op C");
+        canvas_draw_str_aligned(canvas, 124, 10, AlignRight, AlignBottom, TANKS_UI_TEXT("Single", "单人"));
+        canvas_draw_str_aligned(canvas, 124, 25, AlignRight, AlignBottom, TANKS_UI_TEXT("Co-op S", "联机主"));
+        canvas_draw_str_aligned(canvas, 124, 40, AlignRight, AlignBottom, TANKS_UI_TEXT("Co-op C", "联机客"));
 
         switch(tanks_state->menu_state) {
         case MenuStateSingleMode:
@@ -560,23 +566,23 @@ static void tanks_game_render_callback(Canvas* const canvas, void* ctx) {
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
     char buffer1[13];
-    snprintf(buffer1, sizeof(buffer1), "live: %u", tanks_state->enemies_live);
+    snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("live: %u", "存活:%u"), tanks_state->enemies_live);
     canvas_draw_str_aligned(canvas, 127, 8, AlignRight, AlignBottom, buffer1);
 
-    snprintf(buffer1, sizeof(buffer1), "left: %u", tanks_state->enemies_left);
+    snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("left: %u", "剩余:%u"), tanks_state->enemies_left);
     canvas_draw_str_aligned(canvas, 127, 18, AlignRight, AlignBottom, buffer1);
 
-    snprintf(buffer1, sizeof(buffer1), "p1 l: %u", tanks_state->p1->lives);
+    snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("p1 l: %u", "P1命:%u"), tanks_state->p1->lives);
     canvas_draw_str_aligned(canvas, 127, 28, AlignRight, AlignBottom, buffer1);
 
-    snprintf(buffer1, sizeof(buffer1), "p1 s: %u", tanks_state->p1->score);
+    snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("p1 s: %u", "P1分:%u"), tanks_state->p1->score);
     canvas_draw_str_aligned(canvas, 127, 38, AlignRight, AlignBottom, buffer1);
 
     if(tanks_state->state == GameStateCooperativeServer && tanks_state->p2) {
-        snprintf(buffer1, sizeof(buffer1), "rec: %u", tanks_state->received);
+        snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("rec: %u", "收:%u"), tanks_state->received);
         canvas_draw_str_aligned(canvas, 127, 48, AlignRight, AlignBottom, buffer1);
 
-        snprintf(buffer1, sizeof(buffer1), "snt: %u", tanks_state->sent);
+        snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("snt: %u", "发:%u"), tanks_state->sent);
         canvas_draw_str_aligned(canvas, 127, 58, AlignRight, AlignBottom, buffer1);
         //        snprintf(buffer1, sizeof(buffer1), "p2 l: %u", tanks_state->p2->lives);
         //        canvas_draw_str_aligned(canvas, 127, 48, AlignRight, AlignBottom, buffer1);
@@ -586,7 +592,7 @@ static void tanks_game_render_callback(Canvas* const canvas, void* ctx) {
     }
 
     if(tanks_state->state == GameStateCooperativeClient) {
-        snprintf(buffer1, sizeof(buffer1), "rec: %u", tanks_state->received);
+        snprintf(buffer1, sizeof(buffer1), TANKS_UI_TEXT("rec: %u", "收:%u"), tanks_state->received);
         canvas_draw_str_aligned(canvas, 127, 48, AlignRight, AlignBottom, buffer1);
     }
 
@@ -600,14 +606,14 @@ static void tanks_game_render_callback(Canvas* const canvas, void* ctx) {
         canvas_set_font(canvas, FontPrimary);
 
         if(tanks_state->enemies_left == 0 && tanks_state->enemies_live == 0) {
-            canvas_draw_str(canvas, 37, 31, "You win!");
+            canvas_draw_str(canvas, 37, 31, TANKS_UI_TEXT("You win!", "你赢了!"));
         } else {
-            canvas_draw_str(canvas, 37, 31, "Game Over");
+            canvas_draw_str(canvas, 37, 31, TANKS_UI_TEXT("Game Over", "游戏结束"));
         }
 
         canvas_set_font(canvas, FontSecondary);
         char buffer[13];
-        snprintf(buffer, sizeof(buffer), "Score: %u", tanks_state->p1->score);
+        snprintf(buffer, sizeof(buffer), TANKS_UI_TEXT("Score: %u", "得分:%u"), tanks_state->p1->score);
         canvas_draw_str_aligned(canvas, 64, 41, AlignCenter, AlignBottom, buffer);
     }
 

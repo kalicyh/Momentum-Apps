@@ -1,5 +1,13 @@
 #include "seader_credential.h"
 
+#ifndef SEADER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SEADER_UI_TEXT(en, zh) (zh)
+#else
+#define SEADER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include <toolbox/path.h>
 #include <flipper_format/flipper_format.h>
 #include <seader_icons.h>
@@ -124,9 +132,9 @@ static bool seader_credential_load(SeaderCredential* cred, FuriString* path, boo
 
     if((!parsed) && (show_dialog)) {
         if(deprecated_version) {
-            dialog_message_show_storage_error(cred->dialogs, "File format deprecated");
+            dialog_message_show_storage_error(cred->dialogs, SEADER_UI_TEXT("File format deprecated", "文件格式已过时"));
         } else {
-            dialog_message_show_storage_error(cred->dialogs, "Can not parse\nfile");
+            dialog_message_show_storage_error(cred->dialogs, SEADER_UI_TEXT("Can not parse\nfile", "无法解析\n文件"));
         }
     }
     if(parsed) {
@@ -283,7 +291,7 @@ bool seader_credential_save_mfc(SeaderCredential* cred, const char* name) {
     } while(false);
 
     if(!saved) {
-        dialog_message_show_storage_error(cred->dialogs, "Can not save\nfile");
+        dialog_message_show_storage_error(cred->dialogs, SEADER_UI_TEXT("Can not save\nfile", "无法保存\n文件"));
     }
     furi_string_free(temp_str);
     flipper_format_free(file);
@@ -333,7 +341,7 @@ bool seader_credential_save_agnostic(SeaderCredential* cred, const char* name) {
     } while(false);
 
     if(!saved) {
-        dialog_message_show_storage_error(cred->dialogs, "Can not save\nfile");
+        dialog_message_show_storage_error(cred->dialogs, SEADER_UI_TEXT("Can not save\nfile", "无法保存\n文件"));
     }
     furi_string_free(temp_str);
     flipper_format_free(file);
@@ -485,7 +493,7 @@ bool seader_credential_save_picopass(SeaderCredential* cred, const char* name) {
     } while(false);
 
     if(!saved) {
-        dialog_message_show_storage_error(cred->dialogs, "Can not save\nfile");
+        dialog_message_show_storage_error(cred->dialogs, SEADER_UI_TEXT("Can not save\nfile", "无法保存\n文件"));
     }
 
     furi_string_free(temp_str);
@@ -639,7 +647,7 @@ bool seader_credential_delete(SeaderCredential* cred, bool use_load_path) {
     } while(0);
 
     if(!deleted) {
-        dialog_message_show_storage_error(cred->dialogs, "Can not remove file");
+        dialog_message_show_storage_error(cred->dialogs, SEADER_UI_TEXT("Can not remove file", "无法删除文件"));
     }
 
     furi_string_free(file_path);

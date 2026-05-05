@@ -13,11 +13,11 @@ void cancommander_scene_profiles_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Profiles");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Profiles", "配置"));
 
     submenu_add_item(
         app->submenu,
-        "Smart Injection Profiles",
+        CAN_COMMANDER_UI_TEXT("Smart Injection Profiles", "智能注入配置"),
         ProfilesSmartInjection,
         cancommander_scene_profiles_menu_callback,
         app);

@@ -1,7 +1,7 @@
 App(
     appid="laser_tag",
     name="Laser Tag",
-    name_zh="激光标签",
+    name_zh="激光对战",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="laser_tag_app",
     cdefines=["APP_LASER_TAG"],

@@ -15,7 +15,7 @@ void totp_scene_standby_render(Canvas* const canvas) {
 #endif
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 5, 10, AlignLeft, AlignTop, "CLI command");
+    canvas_draw_str_aligned(canvas, 5, 10, AlignLeft, AlignTop, TOTP_UI_TEXT("CLI command", "CLI命令"));
 
-    canvas_draw_str_aligned(canvas, 5, 24, AlignLeft, AlignTop, "is running now");
+    canvas_draw_str_aligned(canvas, 5, 24, AlignLeft, AlignTop, TOTP_UI_TEXT("is running now", "正在运行"));
 }

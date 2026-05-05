@@ -24,13 +24,13 @@ void flipper_share_scene_show_file_on_enter(void* context) {
     }
 
     // Use the selected file path from app->selected_file_path
-    const char* file_path = app->selected_file_path[0] ? app->selected_file_path : "No file selected";
+    const char* file_path = app->selected_file_path[0] ? app->selected_file_path : FLIPPER_SHARE_UI_TEXT("No file selected", "未选择文件");
 
     // Configure dialog with file information
-    dialog_ex_set_header(app->dialog_show_file, "File Selected", 64, 10, AlignCenter, AlignCenter);
+    dialog_ex_set_header(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("File Selected", "已选择文件"), 64, 10, AlignCenter, AlignCenter);
     dialog_ex_set_text(app->dialog_show_file, file_path, 64, 32, AlignCenter, AlignCenter);
-    dialog_ex_set_left_button_text(app->dialog_show_file, "Back");
-    dialog_ex_set_right_button_text(app->dialog_show_file, "OK");
+    dialog_ex_set_left_button_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("Back", "返回"));
+    dialog_ex_set_right_button_text(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("OK", "确定"));
     
     // Important: set up the callback for dialog buttons
     dialog_ex_set_context(app->dialog_show_file, app);

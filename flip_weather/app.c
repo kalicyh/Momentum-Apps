@@ -38,10 +38,12 @@ int32_t flip_weather_app(void *p)
             DialogsApp *dialogs = furi_record_open(RECORD_DIALOGS);
             DialogMessage *message = dialog_message_alloc();
             dialog_message_set_header(
-                message, "[FlipperHTTP Error]", 64, 0, AlignCenter, AlignTop);
+                message, FLIP_WEATHER_UI_TEXT("[FlipperHTTP Error]", "[FlipperHTTP 错误]"), 64, 0, AlignCenter, AlignTop);
             dialog_message_set_text(
                 message,
-                "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                FLIP_WEATHER_UI_TEXT(
+                    "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.",
+                    "请确保 WiFi 开发板\n或 Pico W 已连接，\n且已安装最新\nFlipperHTTP 固件。"),
                 0,
                 63,
                 AlignLeft,

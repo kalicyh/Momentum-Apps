@@ -15,7 +15,7 @@ bool wifi_marauder_ep_read_html_file(WifiMarauderApp* app, uint8_t** the_html, s
     File* index_html = storage_file_alloc(app->storage);
     if(!storage_file_open(
            index_html, furi_string_get_cstr(selected_filepath), FSAM_READ, FSOM_OPEN_EXISTING)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot open file");
+        dialog_message_show_storage_error(app->dialogs, WIFI_MARAUDER_UI_TEXT("Cannot open file", "无法打开文件"));
         return false;
     }
 

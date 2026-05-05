@@ -7,6 +7,12 @@
 #include <math.h>
 #include <yapinvaders_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define YAPPY_UI_TEXT(en, zh) (zh)
+#else
+#define YAPPY_UI_TEXT(en, zh) (en)
+#endif
+
 #define PROJECTILES_MAX        10
 #define ENEMIES_MAX            12
 #define BARRIERS_MAX           5
@@ -295,12 +301,12 @@ void render_game_over_screen(Canvas* canvas, GameState* state) {
     char score_msg[30];
     canvas_clear(canvas);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 8, AlignCenter, AlignCenter, "Game Over!");
+    canvas_draw_str_aligned(canvas, 64, 8, AlignCenter, AlignCenter, YAPPY_UI_TEXT("Game Over!", "游戏结束!"));
 
-    snprintf(score_msg, sizeof(score_msg), "Score: %d", state->score);
+    snprintf(score_msg, sizeof(score_msg), YAPPY_UI_TEXT("Score: %d", "得分: %d"), state->score);
     canvas_draw_str_aligned(canvas, 64, 24, AlignCenter, AlignCenter, score_msg);
 
-    canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignCenter, "Press OK to restart");
+    canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignCenter, YAPPY_UI_TEXT("Press OK to restart", "按OK重新开始"));
 }
 
 void deactivate_all_enemies(GameState* state) {
@@ -363,7 +369,7 @@ void render_callback(Canvas* const canvas, void* ctx) {
     } else {
         canvas_clear(canvas);
         char score_text[30];
-        snprintf(score_text, sizeof(score_text), "Score: %d", state->score);
+        snprintf(score_text, sizeof(score_text), YAPPY_UI_TEXT("Score: %d", "得分: %d"), state->score);
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, score_text);
         canvas_draw_icon(

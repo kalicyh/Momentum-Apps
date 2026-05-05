@@ -52,7 +52,14 @@ void picopass_scene_emulate_update_ui(void* context) {
     Widget* widget = picopass->widget;
     widget_reset(widget);
     widget_add_icon_element(widget, 0, 3, &I_RFIDDolphinSend_97x61);
-    widget_add_string_element(widget, 92, 25, AlignCenter, AlignTop, FontPrimary, "Emulating");
+    widget_add_string_element(
+        widget,
+        92,
+        25,
+        AlignCenter,
+        AlignTop,
+        FontPrimary,
+        PICOPASS_UI_TEXT("Emulating", "模拟中"));
 
     // Reload credential data
     picopass_device_parse_credential(dev_data->card_data, pacs);
@@ -75,7 +82,13 @@ void picopass_scene_emulate_update_ui(void* context) {
     if(format == WiegandFormat_None) {
         widget_add_string_element(widget, 92, 40, AlignCenter, AlignTop, FontPrimary, "PicoPass");
         widget_add_string_element(
-            widget, 34, 55, AlignLeft, AlignTop, FontSecondary, "Touch flipper to reader");
+            widget,
+            34,
+            55,
+            AlignLeft,
+            AlignTop,
+            FontSecondary,
+            PICOPASS_UI_TEXT("Touch flipper to reader", "将Flipper贴近读卡器"));
     } else {
         FuriString* desc = furi_string_alloc();
 

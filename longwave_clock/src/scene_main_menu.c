@@ -1,4 +1,5 @@
 #include "flipper.h"
+#include "longwave_clock_app.h"
 #include "protocols.h"
 
 #include "app_state.h"
@@ -41,8 +42,8 @@ void lwc_main_menu_scene_on_enter(void* context) {
                 app);
         }
         submenu_add_item(
-            app->main_menu, "General infos", LWCMainMenuSelectInfo, lwc_menu_callback, app);
-        submenu_add_item(app->main_menu, "About", LWCMainMenuSelectAbout, lwc_menu_callback, app);
+            app->main_menu, LWC_UI_TEXT("General infos", "基本信息"), LWCMainMenuSelectInfo, lwc_menu_callback, app);
+        submenu_add_item(app->main_menu, LWC_UI_TEXT("About", "关于"), LWCMainMenuSelectAbout, lwc_menu_callback, app);
     }
 
     view_dispatcher_switch_to_view(app->view_dispatcher, LWCMainMenuView);

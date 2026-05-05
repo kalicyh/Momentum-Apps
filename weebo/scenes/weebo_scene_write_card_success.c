@@ -16,7 +16,7 @@ void weebo_scene_write_card_success_widget_callback(
 void weebo_scene_write_card_success_on_enter(void* context) {
     Weebo* weebo = context;
     Widget* widget = weebo->widget;
-    FuriString* str = furi_string_alloc_set("Write Success!");
+    FuriString* str = furi_string_alloc_set(WEEBO_UI_TEXT("Write Success!", "写入成功!"));
 
     dolphin_deed(DolphinDeedNfcReadSuccess);
 

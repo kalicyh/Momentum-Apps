@@ -57,9 +57,9 @@ void gb_cartridge_scene_menu_submenu_callback(void* context, uint32_t index) {
 void gb_cartridge_scene_menu_on_enter(void* context) {
     GBCartridge* app = context;
 
-    variable_item_list_add(app->submenu, "Cartridge Information", 1, NULL, NULL);
-    variable_item_list_add(app->submenu, "Dump ROM Cartridge", 1, NULL, NULL);
-    variable_item_list_add(app->submenu, "Dump RAM Cartridge", 1, NULL, NULL);
+    variable_item_list_add(app->submenu, GBCARTRIDGE_UI_TEXT("Cartridge Information", "卡带信息"), 1, NULL, NULL);
+    variable_item_list_add(app->submenu, GBCARTRIDGE_UI_TEXT("Dump ROM Cartridge", "导出 ROM"), 1, NULL, NULL);
+    variable_item_list_add(app->submenu, GBCARTRIDGE_UI_TEXT("Dump RAM Cartridge", "导出 RAM"), 1, NULL, NULL);
 
     //  TODO: Implements Write ROM
     // VariableItem* item = variable_item_list_add(
@@ -72,7 +72,7 @@ void gb_cartridge_scene_menu_on_enter(void* context) {
     // variable_item_set_current_value_index(item, app->gameboy_rom_option_selected_index);
     // variable_item_set_current_value_text(item, rom_option_uppercase(app->gameboy_rom_option_selected_index));
 
-    variable_item_list_add(app->submenu, "Write RAM", 1, NULL, NULL);
+    variable_item_list_add(app->submenu, GBCARTRIDGE_UI_TEXT("Write RAM", "写入 RAM"), 1, NULL, NULL);
     // variable_item_list_add(app->submenu, "Settings", 1, NULL, NULL);
 
     variable_item_list_set_enter_callback(

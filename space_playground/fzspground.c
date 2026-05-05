@@ -16,6 +16,12 @@
 #include "common.h"
 #include <sys/types.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SPGROUND_UI_TEXT(en, zh) (zh)
+#else
+#define SPGROUND_UI_TEXT(en, zh) (en)
+#endif
+
 static void tick_cb(void* ctx) {
     View* view = (View*)ctx;
 
@@ -45,7 +51,7 @@ void fzspground_draw_callback(Canvas* canvas, void* ctx) {
 
     int num_debri = debri_list.size;
     char debri_count_str[16];
-    snprintf(debri_count_str, sizeof(debri_count_str), "Debris: %d", num_debri);
+    snprintf(debri_count_str, sizeof(debri_count_str), SPGROUND_UI_TEXT("Debris: %d", "碎片: %d"), num_debri);
 }
 
 void fzspground_enter_callback(void* ctx) {

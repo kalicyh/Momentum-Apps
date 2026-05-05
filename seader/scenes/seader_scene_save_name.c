@@ -23,7 +23,7 @@ void seader_scene_save_name_on_enter(void* context) {
     } else {
         seader_text_store_set(seader, seader->credential->name);
     }
-    text_input_set_header_text(text_input, "Name the credential");
+    text_input_set_header_text(text_input, SEADER_UI_TEXT("Name the credential", "命名凭证"));
     text_input_set_result_callback(
         text_input,
         seader_scene_save_name_text_input_callback,

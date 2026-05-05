@@ -14,7 +14,7 @@ void nfc_magic_scene_not_magic_on_enter(void* context) {
     notification_message(instance->notifications, &sequence_error);
 
     widget_add_string_element(
-        widget, 3, 4, AlignLeft, AlignTop, FontPrimary, "Incorrect card type");
+        widget, 3, 4, AlignLeft, AlignTop, FontPrimary, NFC_MAGIC_UI_TEXT("Incorrect card type", "卡片类型错误"));
     widget_add_string_multiline_element(
         widget,
         4,
@@ -22,9 +22,9 @@ void nfc_magic_scene_not_magic_on_enter(void* context) {
         AlignLeft,
         AlignTop,
         FontSecondary,
-        "Not magic or unsupported\ncard. Only Gen1, Gen2 and \nGen4 UMC cards supported.");
+        NFC_MAGIC_UI_TEXT("Not magic or unsupported\ncard. Only Gen1, Gen2 and \nGen4 UMC cards supported.", "非魔术卡或不支持\n的卡片. 仅支持\nGen1, Gen2, Gen4 UMC."));
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", nfc_magic_scene_not_magic_widget_callback, instance);
+        widget, GuiButtonTypeLeft, NFC_MAGIC_UI_TEXT("Retry", "重试"), nfc_magic_scene_not_magic_widget_callback, instance);
 
     // Setup and start worker
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewWidget);

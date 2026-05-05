@@ -1,12 +1,26 @@
 #include "../gpio_app_i.h"
 #include "../gpio_custom_event.h"
 
+#ifndef GPIO_READER_B_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_READER_B_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_READER_B_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 void gpio_scene_usb_uart_close_rpc_on_enter(void* context) {
     GpioApp* app = context;
 
     widget_add_icon_element(app->widget, 78, 0, &I_ActiveConnection_50x64);
     widget_add_string_multiline_element(
-        app->widget, 3, 2, AlignLeft, AlignTop, FontPrimary, "Connection\nis active!");
+        app->widget,
+        3,
+        2,
+        AlignLeft,
+        AlignTop,
+        FontPrimary,
+        GPIO_READER_B_UI_TEXT("Connection\nis active!", "连接\n已激活!"));
     widget_add_string_multiline_element(
         app->widget,
         3,
@@ -14,7 +28,9 @@ void gpio_scene_usb_uart_close_rpc_on_enter(void* context) {
         AlignLeft,
         AlignTop,
         FontSecondary,
-        "Disconnect from\nPC or phone to\nuse this function.");
+        GPIO_READER_B_UI_TEXT(
+            "Disconnect from\nPC or phone to\nuse this function.",
+            "请断开电脑或\n手机连接后\n再使用此功能."));
 
     view_dispatcher_switch_to_view(app->view_dispatcher, GpioAppViewUsbUartCloseRpc);
 }

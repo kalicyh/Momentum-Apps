@@ -23,13 +23,13 @@ static bool select_number_input_validator(const char* text, FuriString* error, v
 
     switch(state) {
     case PokemonSceneLevel:
-        error_str = "Level must\nbe a number\nbetween\n2-100!";
+        error_str = POKEMON_UI_TEXT("Level must\nbe a number\nbetween\n2-100!", "等级必须\n是2-100\n之间的数字!");
         min = 2;
         max = 100;
         stat = STAT_LEVEL;
         break;
     case PokemonSceneOTID:
-        error_str = "OT ID must\nbe between\n0-65535!";
+        error_str = POKEMON_UI_TEXT("OT ID must\nbe between\n0-65535!", "训练师ID必须\n在0-65535\n之间!");
         min = 0;
         max = 65535;
         stat = STAT_OT_ID;
@@ -75,12 +75,12 @@ void pokemon_scene_select_number_on_enter(void* context) {
 
     switch(state) {
     case PokemonSceneLevel:
-        header = "Enter level (numbers only)";
+        header = POKEMON_UI_TEXT("Enter level (numbers only)", "输入等级 (仅数字)");
         len = LEN_LEVEL;
         stat = STAT_LEVEL;
         break;
     case PokemonSceneOTID:
-        header = "Enter OT ID (numbers only)";
+        header = POKEMON_UI_TEXT("Enter OT ID (numbers only)", "输入训练师ID (仅数字)");
         len = LEN_OT_ID;
         stat = STAT_OT_ID;
         break;

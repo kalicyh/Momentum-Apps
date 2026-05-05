@@ -14,12 +14,12 @@ void uhf_reader_view_epc_info_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, "            EPC Info:");
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT("            EPC Info:", "            EPC信息:"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 4, 22, "EPC: ");
-    canvas_draw_str(canvas, 4, 44, "Reserved: ");
+    canvas_draw_str(canvas, 4, 44, RFID_READER_UI_TEXT("Reserved: ", "保留区: "));
     canvas_draw_str(canvas, 4, 33, "TID: ");
-    canvas_draw_str(canvas, 4, 55, "User Mem: ");
+    canvas_draw_str(canvas, 4, 55, RFID_READER_UI_TEXT("User Mem: ", "用户区: "));
 
     //Displaying the EPC, TID, Reserved, and User memory in a scrolling fashion
     MyModel->ScrollingTextEpc = (char*)furi_string_get_cstr(MyModel->Epc);
@@ -251,13 +251,13 @@ void view_epc_info_alloc(UHFReaderApp* App) {
     ModelEpcInfo->Tid = TidMemEpcInfo;
     ModelEpcInfo->Reserved = ReservedMemEpcInfo;
     ModelEpcInfo->ScrollOffsetEpc = 0;
-    ModelEpcInfo->ScrollingTextEpc = "EPC VALUE HERE";
+    ModelEpcInfo->ScrollingTextEpc = RFID_READER_UI_TEXT("EPC VALUE HERE", "EPC值");
     ModelEpcInfo->ScrollOffsetTid = 0;
-    ModelEpcInfo->ScrollingTextTid = "TID VALUE HERE";
+    ModelEpcInfo->ScrollingTextTid = RFID_READER_UI_TEXT("TID VALUE HERE", "TID值");
     ModelEpcInfo->ScrollOffsetRes = 0;
-    ModelEpcInfo->ScrollingTextRes = "RES VALUE HERE";
+    ModelEpcInfo->ScrollingTextRes = RFID_READER_UI_TEXT("RES VALUE HERE", "保留区");
     ModelEpcInfo->ScrollOffsetMem = 0;
-    ModelEpcInfo->ScrollingTextMem = "MEM VALUE HERE";
+    ModelEpcInfo->ScrollingTextMem = RFID_READER_UI_TEXT("MEM VALUE HERE", "用户区");
     view_dispatcher_add_view(App->ViewDispatcher, UHFReaderViewEpcInfo, App->ViewEpcInfo);
 }
 

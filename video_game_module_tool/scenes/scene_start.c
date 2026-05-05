@@ -19,19 +19,19 @@ void scene_start_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Install Official Firmware",
+        VGM_UI_TEXT("Install Official Firmware", "安装官方固件"),
         SceneStartIndexInstallDefault,
         submenu_item_common_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Install RGB Firmware",
+        VGM_UI_TEXT("Install RGB Firmware", "安装RGB固件"),
         SceneStartIndexInstallRGB,
         submenu_item_common_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Install Firmware from File",
+        VGM_UI_TEXT("Install Firmware from File", "从文件安装固件"),
         SceneStartIndexInstallCustom,
         submenu_item_common_callback,
         app);

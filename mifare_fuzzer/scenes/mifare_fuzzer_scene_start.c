@@ -42,7 +42,7 @@ void mifare_fuzzer_scene_start_on_enter(void* context) {
     MifareFuzzerApp* app = context;
 
     Submenu* submenu_card = app->submenu_card;
-    submenu_set_header(submenu_card, "Mifare Fuzzer (card)");
+    submenu_set_header(submenu_card, MIFARE_FUZZER_UI_TEXT("Mifare Fuzzer (card)", "Mifare Fuzzer (卡片)"));
     submenu_add_item(
         submenu_card,
         "Classic 1k",
@@ -63,7 +63,7 @@ void mifare_fuzzer_scene_start_on_enter(void* context) {
         app);
     submenu_add_item(
         submenu_card,
-        "From file",
+        MIFARE_FUZZER_UI_TEXT("From file", "从文件"),
         SubmenuIndexFile,
         mifare_fuzzer_scene_start_submenu_callback,
         app);

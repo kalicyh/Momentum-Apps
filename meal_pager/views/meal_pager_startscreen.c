@@ -32,12 +32,12 @@ void meal_pager_startscreen_draw(Canvas* canvas, Meal_PagerStartscreenModel* mod
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, "Restaurant Pager");
+    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, MEAL_PAGER_UI_TEXT("Restaurant Pager", "餐厅呼叫器"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, "Trigger Tool");
-    snprintf(buffer, sizeof(buffer), "Version: %s", MEAL_PAGER_VERSION);
+    canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, MEAL_PAGER_UI_TEXT("Trigger Tool", "触发工具"));
+    snprintf(buffer, sizeof(buffer), MEAL_PAGER_UI_TEXT("Version: %s", "版本: %s"), MEAL_PAGER_VERSION);
     canvas_draw_str_aligned(canvas, 64, 42, AlignCenter, AlignTop, buffer);
-    elements_button_center(canvas, "Start");
+    elements_button_center(canvas, MEAL_PAGER_UI_TEXT("Start", "开始"));
 }
 
 static void meal_pager_startscreen_model_init(Meal_PagerStartscreenModel* const model) {

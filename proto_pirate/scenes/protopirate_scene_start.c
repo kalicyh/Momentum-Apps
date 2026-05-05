@@ -134,28 +134,28 @@ void protopirate_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Receive",
+        PROTOPIRATE_UI_TEXT("Receive", "接收"),
         SubmenuIndexProtoPirateReceiver,
         protopirate_scene_start_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Saved Captures",
+        PROTOPIRATE_UI_TEXT("Saved Captures", "已保存捕获"),
         SubmenuIndexProtoPirateSaved,
         protopirate_scene_start_submenu_callback,
         app);
 
     submenu_add_item(
         app->submenu,
-        "Configuration",
+        PROTOPIRATE_UI_TEXT("Configuration", "配置"),
         SubmenuIndexProtoPirateReceiverConfig,
         protopirate_scene_start_submenu_callback,
         app);
 #ifdef ENABLE_SUB_DECODE_SCENE
     submenu_add_item(
         app->submenu,
-        "Sub Decode",
+        PROTOPIRATE_UI_TEXT("Sub Decode", "子解码"),
         SubmenuIndexProtoPirateSubDecode,
         protopirate_scene_start_submenu_callback,
         app);
@@ -163,7 +163,7 @@ void protopirate_scene_start_on_enter(void* context) {
 #ifdef ENABLE_TIMING_TUNER_SCENE
     submenu_add_item(
         app->submenu,
-        "Timing Tuner",
+        PROTOPIRATE_UI_TEXT("Timing Tuner", "时序调谐"),
         SubmenuIndexProtoPirateTimingTuner,
         protopirate_scene_start_submenu_callback,
         app);
@@ -171,7 +171,7 @@ void protopirate_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "About",
+        PROTOPIRATE_UI_TEXT("About", "关于"),
         SubmenuIndexProtoPirateAbout,
         protopirate_scene_start_submenu_callback,
         app);

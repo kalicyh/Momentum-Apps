@@ -3,6 +3,12 @@
 #include <flipper_http/flipper_http.h>
 #include <font/font.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIP_WORLD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIP_WORLD_UI_TEXT(en, zh) (en)
+#endif
+
 // added by Derek Jamison to lower memory usage
 #undef FURI_LOG_E
 #define FURI_LOG_E(tag, msg, ...)

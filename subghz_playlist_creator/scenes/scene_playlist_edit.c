@@ -76,7 +76,7 @@ static void edit_dialog_callback(DialogExResult result, void* context) {
             app->playlist_entry_count = 0;
             app->playlist_entry_capacity = 0;
             playlist_edit_show_menu_after_popup = true;
-            scene_popup_show(app, "Success", "Playlist saved!");
+            scene_popup_show(app, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Success", "成功"), SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Playlist saved!", "播放列表已保存!"));
             return;
         } else if(result == DialogExResultLeft) {
             FURI_LOG_D(TAG, "Save: DialogExResultLeft -> stay in edit");
@@ -131,10 +131,10 @@ static void playlist_edit_submenu_callback(void* context, uint32_t index) {
         FURI_LOG_D(TAG, "Save playlist selected, showing dialog");
         scene_dialog_show_custom(
             app,
-            "Save playlist?",
-            "Are you sure you want to save playlist?",
-            "Cancel",
-            "Save",
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Save playlist?", "保存播放列表?"),
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Are you sure you want to save playlist?", "确定要保存播放列表吗?"),
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Cancel", "取消"),
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Save", "保存"),
             edit_dialog_callback,
             app
         );
@@ -143,10 +143,10 @@ static void playlist_edit_submenu_callback(void* context, uint32_t index) {
         FURI_LOG_D(TAG, "Entry selected for delete, showing dialog");
         scene_dialog_show_custom(
             app,
-            "Delete entry?",
-            "Remove file from playlist?",
-            "Cancel",
-            "Delete",
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Delete entry?", "删除条目?"),
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Remove file from playlist?", "从播放列表中移除文件?"),
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Cancel", "取消"),
+            SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Delete", "删除"),
             edit_dialog_callback,
             app
         );
@@ -172,9 +172,9 @@ void scene_playlist_edit_show(SubGhzPlaylistCreator* app) {
         submenu_add_item(app->playlist_edit_submenu, fname, i, playlist_edit_submenu_callback, app);
     }
     // Add '[+] Add file' as next-to-last item
-    submenu_add_item(app->playlist_edit_submenu, "[+] Add file", app->playlist_entry_count, playlist_edit_submenu_callback, app);
+    submenu_add_item(app->playlist_edit_submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("[+] Add file", "[+] 添加文件"), app->playlist_entry_count, playlist_edit_submenu_callback, app);
     // Add 'Save playlist' as last item
-    submenu_add_item(app->playlist_edit_submenu, "[s] Save playlist", app->playlist_entry_count + 1, playlist_edit_submenu_callback, app);
+    submenu_add_item(app->playlist_edit_submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("[s] Save playlist", "[s] 保存播放列表"), app->playlist_entry_count + 1, playlist_edit_submenu_callback, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, SubGhzPlaylistCreatorViewPlaylistEdit);
 }
 
@@ -191,10 +191,10 @@ bool scene_playlist_edit_back_event_callback(void* context) {
     // Show discard dialog instead of going to main menu
     scene_dialog_show_custom(
         app,
-        "Discard changes?",
-        "Are you sure you want to discard playlist?",
-        "Discard",
-        "Keep",
+        SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Discard changes?", "放弃更改?"),
+        SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Are you sure you want to discard playlist?", "确定要放弃播放列表吗?"),
+        SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Discard", "放弃"),
+        SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Keep", "保留"),
         edit_dialog_callback,
         app
     );

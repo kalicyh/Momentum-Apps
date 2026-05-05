@@ -6,31 +6,31 @@ static const char *weather_code_to_str(const char *code)
     int wmo = atoi(code);
     switch (wmo)
     {
-    case 0:  return "Clear sky";
-    case 1:  return "Mainly clear";
-    case 2:  return "Partly cloudy";
-    case 3:  return "Overcast";
-    case 45: return "Fog";
-    case 48: return "Rime fog";
-    case 51: return "Light drizzle";
-    case 53: return "Moderate drizzle";
-    case 55: return "Dense drizzle";
-    case 61: return "Slight rain";
-    case 63: return "Moderate rain";
-    case 65: return "Heavy rain";
-    case 71: return "Slight snow";
-    case 73: return "Moderate snow";
-    case 75: return "Heavy snow";
-    case 77: return "Snow grains";
-    case 80: return "Slight showers";
-    case 81: return "Moderate showers";
-    case 82: return "Violent showers";
-    case 85: return "Slight snow showers";
-    case 86: return "Heavy snow showers";
-    case 95: return "Thunderstorm";
-    case 96: return "Thunderstorm+hail";
-    case 99: return "Thunderstorm+hail";
-    default: return "Unknown";
+    case 0:  return FLIP_WEATHER_UI_TEXT("Clear sky", "晴");
+    case 1:  return FLIP_WEATHER_UI_TEXT("Mainly clear", "晴间多云");
+    case 2:  return FLIP_WEATHER_UI_TEXT("Partly cloudy", "多云");
+    case 3:  return FLIP_WEATHER_UI_TEXT("Overcast", "阴");
+    case 45: return FLIP_WEATHER_UI_TEXT("Fog", "雾");
+    case 48: return FLIP_WEATHER_UI_TEXT("Rime fog", "冻雾");
+    case 51: return FLIP_WEATHER_UI_TEXT("Light drizzle", "小毛毛雨");
+    case 53: return FLIP_WEATHER_UI_TEXT("Moderate drizzle", "中毛毛雨");
+    case 55: return FLIP_WEATHER_UI_TEXT("Dense drizzle", "大毛毛雨");
+    case 61: return FLIP_WEATHER_UI_TEXT("Slight rain", "小雨");
+    case 63: return FLIP_WEATHER_UI_TEXT("Moderate rain", "中雨");
+    case 65: return FLIP_WEATHER_UI_TEXT("Heavy rain", "大雨");
+    case 71: return FLIP_WEATHER_UI_TEXT("Slight snow", "小雪");
+    case 73: return FLIP_WEATHER_UI_TEXT("Moderate snow", "中雪");
+    case 75: return FLIP_WEATHER_UI_TEXT("Heavy snow", "大雪");
+    case 77: return FLIP_WEATHER_UI_TEXT("Snow grains", "雪粒");
+    case 80: return FLIP_WEATHER_UI_TEXT("Slight showers", "小阵雨");
+    case 81: return FLIP_WEATHER_UI_TEXT("Moderate showers", "中阵雨");
+    case 82: return FLIP_WEATHER_UI_TEXT("Violent showers", "强阵雨");
+    case 85: return FLIP_WEATHER_UI_TEXT("Slight snow showers", "小阵雪");
+    case 86: return FLIP_WEATHER_UI_TEXT("Heavy snow showers", "大阵雪");
+    case 95: return FLIP_WEATHER_UI_TEXT("Thunderstorm", "雷暴");
+    case 96: return FLIP_WEATHER_UI_TEXT("Thunderstorm+hail", "雷暴+冰雹");
+    case 99: return FLIP_WEATHER_UI_TEXT("Thunderstorm+hail", "雷暴+冰雹");
+    default: return FLIP_WEATHER_UI_TEXT("Unknown", "未知");
     }
 }
 
@@ -107,8 +107,8 @@ char *process_geo_location(DataLoaderModel *model)
             return NULL;
         }
 
-        snprintf(lat_data, sizeof(lat_data), "Latitude: %s", latitude);
-        snprintf(lon_data, sizeof(lon_data), "Longitude: %s", longitude);
+        snprintf(lat_data, sizeof(lat_data), FLIP_WEATHER_UI_TEXT("Latitude: %s", "纬度: %s"), latitude);
+        snprintf(lon_data, sizeof(lon_data), FLIP_WEATHER_UI_TEXT("Longitude: %s", "经度: %s"), longitude);
 
         if (!total_data)
         {
@@ -120,7 +120,7 @@ char *process_geo_location(DataLoaderModel *model)
                 return NULL;
             }
         }
-        snprintf(total_data, 512, "You are in %s, %s, %s. \nLatitude: %s, Longitude: %s", city, region, country, latitude, longitude);
+        snprintf(total_data, 512, FLIP_WEATHER_UI_TEXT("You are in %s, %s, %s. \nLatitude: %s, Longitude: %s", "你在 %s, %s, %s\n纬度: %s, 经度: %s"), city, region, country, latitude, longitude);
 
         fhttp.state = IDLE;
         free(city);
@@ -149,8 +149,8 @@ bool process_geo_location_2()
             return false;
         }
 
-        snprintf(lat_data, sizeof(lat_data), "Latitude: %s", latitude);
-        snprintf(lon_data, sizeof(lon_data), "Longitude: %s", longitude);
+        snprintf(lat_data, sizeof(lat_data), FLIP_WEATHER_UI_TEXT("Latitude: %s", "纬度: %s"), latitude);
+        snprintf(lon_data, sizeof(lon_data), FLIP_WEATHER_UI_TEXT("Longitude: %s", "经度: %s"), longitude);
 
         fhttp.state = IDLE;
         free(city);
@@ -206,7 +206,7 @@ char *process_weather(DataLoaderModel *model)
                 return NULL;
             }
         }
-        snprintf(weather_data, 512, "Condition: %s\nTemperature: %s %s\nWind: %s mph %s\nPrecipitation: %s\nRain: %s\nShowers: %s\nSnowfall: %s\nTime: %s", condition, temperature, use_fahrenheit ? "F" : "C", wind_speed, compass, precipitation, rain, showers, snowfall, time);
+        snprintf(weather_data, 512, FLIP_WEATHER_UI_TEXT("Condition: %s\nTemperature: %s %s\nWind: %s mph %s\nPrecipitation: %s\nRain: %s\nShowers: %s\nSnowfall: %s\nTime: %s", "天气: %s\n温度: %s %s\n风速: %s mph %s\n降水: %s\n降雨: %s\n阵雨: %s\n降雪: %s\n时间: %s"), condition, temperature, use_fahrenheit ? "F" : "C", wind_speed, compass, precipitation, rain, showers, snowfall, time);
 
         fhttp.state = IDLE;
         free(current_data);

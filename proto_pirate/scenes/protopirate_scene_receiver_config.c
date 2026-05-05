@@ -196,7 +196,7 @@ void protopirate_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Frequency:",
+        PROTOPIRATE_UI_TEXT("Frequency:", "频率:"),
         subghz_setting_get_frequency_count(app->setting),
         protopirate_scene_receiver_config_set_frequency,
         app);
@@ -216,7 +216,7 @@ void protopirate_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Hopping:",
+        PROTOPIRATE_UI_TEXT("Hopping:", "跳频:"),
         HOPPING_COUNT,
         protopirate_scene_receiver_config_set_hopping_running,
         app);
@@ -227,7 +227,7 @@ void protopirate_scene_receiver_config_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "Modulation:",
+        PROTOPIRATE_UI_TEXT("Modulation:", "调制:"),
         subghz_setting_get_preset_count(app->setting),
         protopirate_scene_receiver_config_set_preset,
         app);
@@ -241,7 +241,7 @@ void protopirate_scene_receiver_config_on_enter(void* context) {
     // TX power option
     item = variable_item_list_add(
         app->variable_item_list,
-        "TX Power:",
+        PROTOPIRATE_UI_TEXT("TX Power:", "发射功率:"),
         TX_POWER_COUNT,
         protopirate_scene_receiver_config_set_tx_power,
         app);
@@ -251,14 +251,19 @@ void protopirate_scene_receiver_config_on_enter(void* context) {
     // Auto-save option
     item = variable_item_list_add(
         app->variable_item_list,
-        "Auto-Save:",
+        PROTOPIRATE_UI_TEXT("Auto-Save:", "自动保存:"),
         AUTO_SAVE_COUNT,
         protopirate_scene_receiver_config_set_auto_save,
         app);
     variable_item_set_current_value_index(item, app->auto_save ? 1 : 0);
     variable_item_set_current_value_text(item, auto_save_text[app->auto_save ? 1 : 0]);
 
-    variable_item_list_add(app->variable_item_list, "Lock Keyboard", 1, NULL, NULL);
+    variable_item_list_add(
+        app->variable_item_list,
+        PROTOPIRATE_UI_TEXT("Lock Keyboard", "锁定键盘"),
+        1,
+        NULL,
+        NULL);
     variable_item_list_set_enter_callback(
         app->variable_item_list, protopirate_scene_receiver_config_var_list_enter_callback, app);
 

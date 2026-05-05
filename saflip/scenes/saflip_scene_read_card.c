@@ -105,7 +105,7 @@ NfcCommand saflip_scene_read_card_poller_callback(NfcGenericEvent event, void* c
 
         case MfClassicPollerEventTypeFail:
             popup_reset(app->popup);
-            popup_set_header(app->popup, "Failed to read!", 64, 2, AlignCenter, AlignTop);
+            popup_set_header(app->popup, SAFLIP_UI_TEXT("Failed to read!", "读取失败!"), 64, 2, AlignCenter, AlignTop);
             popup_set_icon(app->popup, 21, 13, &I_dolph_cry_49x54);
             popup_set_timeout(app->popup, 1000);
             popup_enable_timeout(app->popup);
@@ -116,7 +116,7 @@ NfcCommand saflip_scene_read_card_poller_callback(NfcGenericEvent event, void* c
 
         case MfClassicPollerEventTypeCardLost:
             popup_reset(app->popup);
-            popup_set_header(app->popup, "Lost card!", 64, 2, AlignCenter, AlignTop);
+            popup_set_header(app->popup, SAFLIP_UI_TEXT("Lost card!", "卡片丢失!"), 64, 2, AlignCenter, AlignTop);
             popup_set_icon(app->popup, 21, 13, &I_dolph_cry_49x54);
             popup_set_timeout(app->popup, 1000);
             popup_enable_timeout(app->popup);
@@ -144,7 +144,7 @@ void saflip_scene_read_card_on_enter(void* context) {
 
     // Setup view
     popup_reset(app->popup);
-    popup_set_header(app->popup, "Don't move", 85, 27, AlignCenter, AlignTop);
+    popup_set_header(app->popup, SAFLIP_UI_TEXT("Don't move", "请勿移动"), 85, 27, AlignCenter, AlignTop);
     popup_set_icon(app->popup, 12, 23, &A_Loading_24);
     view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewPopup);
 
@@ -167,8 +167,8 @@ bool saflip_scene_read_card_on_event(void* context, SceneManagerEvent event) {
                 scene_manager_next_scene(app->scene_manager, SaflipSceneInfo);
             } else {
                 popup_reset(app->popup);
-                popup_set_header(app->popup, "Invalid card!", 64, 2, AlignCenter, AlignTop);
-                popup_set_text(app->popup, "Failed to\nparse data.", 78, 16, AlignLeft, AlignTop);
+                popup_set_header(app->popup, SAFLIP_UI_TEXT("Invalid card!", "无效卡片!"), 64, 2, AlignCenter, AlignTop);
+                popup_set_text(app->popup, SAFLIP_UI_TEXT("Failed to\nparse data.", "数据\n解析失败."), 78, 16, AlignLeft, AlignTop);
                 popup_set_icon(app->popup, 21, 13, &I_dolph_cry_49x54);
                 popup_set_timeout(app->popup, 1500);
                 popup_enable_timeout(app->popup);

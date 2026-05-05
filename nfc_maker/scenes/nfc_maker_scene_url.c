@@ -14,7 +14,7 @@ void nfc_maker_scene_url_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Enter Plain URL:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Enter Plain URL:", "输入普通 URL:"));
 
     strlcpy(
         app->big_buf,

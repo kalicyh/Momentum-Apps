@@ -78,7 +78,7 @@ static void cancommander_scene_custom_inject_slot_label(
        slot_name[0] != '\0') {
         snprintf(out, out_size, "%s", slot_name);
     } else {
-        snprintf(out, out_size, "Slot %u", (unsigned)(slot_index + 1U));
+        snprintf(out, out_size, CAN_COMMANDER_UI_TEXT("Slot %u", "槽位 %u"), (unsigned)(slot_index + 1U));
     }
     out[out_size - 1U] = '\0';
 }
@@ -107,7 +107,7 @@ void cancommander_scene_custom_inject_menu_on_enter(void* context) {
     cancommander_scene_custom_inject_ensure_running(app);
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Smart Injection");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Smart Injection", "智能注入"));
 
     for(uint8_t i = 0U; i < 5U; i++) {
         cancommander_scene_custom_inject_slot_label(
@@ -119,7 +119,7 @@ void cancommander_scene_custom_inject_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Start",
+        CAN_COMMANDER_UI_TEXT("Start", "启动"),
         CustomInjectStartTool,
         cancommander_scene_custom_inject_menu_callback,
         app);
@@ -155,25 +155,25 @@ void cancommander_scene_custom_inject_menu_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        "List Slots",
+        CAN_COMMANDER_UI_TEXT("List Slots", "列出槽位"),
         CustomInjectListSlots,
         cancommander_scene_custom_inject_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Clear All Slots",
+        CAN_COMMANDER_UI_TEXT("Clear All Slots", "清除所有槽位"),
         CustomInjectClearAllSlots,
         cancommander_scene_custom_inject_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Save Slots",
+        CAN_COMMANDER_UI_TEXT("Save Slots", "保存槽位"),
         CustomInjectSaveSlots,
         cancommander_scene_custom_inject_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Load Slots",
+        CAN_COMMANDER_UI_TEXT("Load Slots", "加载槽位"),
         CustomInjectLoadSlots,
         cancommander_scene_custom_inject_menu_callback,
         app);

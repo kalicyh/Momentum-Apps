@@ -29,6 +29,12 @@
 
 #define TAG "FlipperWedge"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPPER_WEDGE_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPPER_WEDGE_UI_TEXT(en, zh) (en)
+#endif
+
 #define FLIPPER_WEDGE_VERSION "1.1"
 #define FLIPPER_WEDGE_TEXT_STORE_SIZE 128
 #define FLIPPER_WEDGE_TEXT_STORE_COUNT 3

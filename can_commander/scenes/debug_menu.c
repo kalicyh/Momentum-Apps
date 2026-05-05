@@ -18,29 +18,29 @@ void cancommander_scene_debug_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Settings");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Settings", "设置"));
 
     submenu_add_item(
         app->submenu,
-        "Connect/Reconnect",
+        CAN_COMMANDER_UI_TEXT("Connect/Reconnect", "连接/重连"),
         DebugConnect,
         cancommander_scene_debug_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Bus Config",
+        CAN_COMMANDER_UI_TEXT("Bus Config", "总线配置"),
         DebugBusConfig,
         cancommander_scene_debug_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Bus Filters",
+        CAN_COMMANDER_UI_TEXT("Bus Filters", "总线过滤器"),
         DebugBusFilters,
         cancommander_scene_debug_menu_callback,
         app);
-    submenu_add_item(app->submenu, "Stats", DebugStats, cancommander_scene_debug_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("Stats", "统计"), DebugStats, cancommander_scene_debug_menu_callback, app);
     submenu_add_item(app->submenu, "Ping", DebugPing, cancommander_scene_debug_menu_callback, app);
-    submenu_add_item(app->submenu, "Get Info", DebugGetInfo, cancommander_scene_debug_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("Get Info", "获取信息"), DebugGetInfo, cancommander_scene_debug_menu_callback, app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, cancommander_scene_debug_menu));
@@ -60,9 +60,9 @@ bool cancommander_scene_debug_menu_on_event(void* context, SceneManagerEvent eve
     switch(event.event) {
     case DebugConnect:
         if(app_connect(app, true)) {
-            app_set_status(app, "Connected at %lu baud", (unsigned long)CC_UART_BAUD);
+            app_set_status(app, CAN_COMMANDER_UI_TEXT("Connected at %lu baud", "已连接，波特率 %lu"), (unsigned long)CC_UART_BAUD);
         } else {
-            app_set_status(app, "Connection failed");
+            app_set_status(app, CAN_COMMANDER_UI_TEXT("Connection failed", "连接失败"));
         }
         scene_manager_next_scene(app->scene_manager, cancommander_scene_status);
         return true;

@@ -13,42 +13,66 @@ void nfc_maker_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Bluetooth MAC",
+        NFC_MAKER_UI_TEXT("Bluetooth MAC", "蓝牙 MAC"),
         NfcMakerSceneBluetooth,
         nfc_maker_scene_start_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "Contact Vcard",
+        NFC_MAKER_UI_TEXT("Contact Vcard", "联系人 Vcard"),
         NfcMakerSceneContact,
         nfc_maker_scene_start_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "Empty",
+        NFC_MAKER_UI_TEXT("Empty", "空标签"),
         NfcMakerSceneSaveGenerate,
         nfc_maker_scene_start_submenu_callback,
         app);
 
     submenu_add_item(
-        submenu, "HTTPS Link", NfcMakerSceneHttps, nfc_maker_scene_start_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("HTTPS Link", "HTTPS 链接"),
+        NfcMakerSceneHttps,
+        nfc_maker_scene_start_submenu_callback,
+        app);
 
     submenu_add_item(
-        submenu, "Mail Address", NfcMakerSceneMail, nfc_maker_scene_start_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("Mail Address", "邮箱地址"),
+        NfcMakerSceneMail,
+        nfc_maker_scene_start_submenu_callback,
+        app);
 
     submenu_add_item(
-        submenu, "Phone Number", NfcMakerScenePhone, nfc_maker_scene_start_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("Phone Number", "电话号码"),
+        NfcMakerScenePhone,
+        nfc_maker_scene_start_submenu_callback,
+        app);
 
     submenu_add_item(
-        submenu, "Text Note", NfcMakerSceneText, nfc_maker_scene_start_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("Text Note", "文本便签"),
+        NfcMakerSceneText,
+        nfc_maker_scene_start_submenu_callback,
+        app);
 
     submenu_add_item(
-        submenu, "Plain URL", NfcMakerSceneUrl, nfc_maker_scene_start_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("Plain URL", "普通 URL"),
+        NfcMakerSceneUrl,
+        nfc_maker_scene_start_submenu_callback,
+        app);
 
     submenu_add_item(
-        submenu, "WiFi Login", NfcMakerSceneWifi, nfc_maker_scene_start_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("WiFi Login", "WiFi 登录"),
+        NfcMakerSceneWifi,
+        nfc_maker_scene_start_submenu_callback,
+        app);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(app->scene_manager, NfcMakerSceneStart));

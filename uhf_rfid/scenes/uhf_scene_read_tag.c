@@ -14,7 +14,7 @@ void uhf_scene_read_tag_on_enter(void* ctx) {
 
     // Setup view
     Popup* popup = uhf_app->popup;
-    popup_set_header(popup, "Detecting\n[UHF] RFID\nTag", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, UHF_UI_TEXT("Detecting\n[UHF] RFID\nTag", "检测\n[UHF] RFID\n标签"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     // Start worker

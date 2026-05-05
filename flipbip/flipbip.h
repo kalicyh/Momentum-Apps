@@ -16,6 +16,12 @@
 #include "views/flipbip_scene_1.h"
 #include "flipbip_coins.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBIP_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBIP_UI_TEXT(en, zh) (en)
+#endif
+
 #define FLIPBIP_VERSION  "v1.18"
 #define TEXT_BUFFER_SIZE 256
 

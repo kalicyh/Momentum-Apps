@@ -33,6 +33,12 @@
 
 #include "scenes/t5577_multiwriter_scene.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define T5577_MULTIWRITER_UI_TEXT(en, zh) (zh)
+#else
+#define T5577_MULTIWRITER_UI_TEXT(en, zh) (en)
+#endif
+
 #define LFRFID_KEY_NAME_SIZE 22
 #define LFRFID_TEXT_STORE_SIZE 40
 

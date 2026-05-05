@@ -16,11 +16,23 @@ void nfc_eink_scene_start_on_enter(void* context) {
     Submenu* submenu = instance->submenu;
 
     submenu_add_item(
-        submenu, "Emulate", SubmenuIndexEmulate, nfc_eink_scene_start_submenu_callback, instance);
+        submenu,
+        NFC_EINK_UI_TEXT("Emulate", "模拟"),
+        SubmenuIndexEmulate,
+        nfc_eink_scene_start_submenu_callback,
+        instance);
     submenu_add_item(
-        submenu, "Saved", SubmenuIndexSaved, nfc_eink_scene_start_submenu_callback, instance);
+        submenu,
+        NFC_EINK_UI_TEXT("Saved", "已保存"),
+        SubmenuIndexSaved,
+        nfc_eink_scene_start_submenu_callback,
+        instance);
     submenu_add_item(
-        submenu, "Settings", SubmenuIndexSettings, nfc_eink_scene_start_submenu_callback, instance);
+        submenu,
+        NFC_EINK_UI_TEXT("Settings", "设置"),
+        SubmenuIndexSettings,
+        nfc_eink_scene_start_submenu_callback,
+        instance);
 
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcEinkViewMenu);
 }

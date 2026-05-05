@@ -187,7 +187,8 @@ void mag_make_app_folder(Mag* mag) {
     furi_assert(mag);
 
     if(!storage_simply_mkdir(mag->storage, MAG_APP_FOLDER)) {
-        dialog_message_show_storage_error(mag->dialogs, "Cannot create\napp folder");
+        dialog_message_show_storage_error(
+            mag->dialogs, MAGSPOOF_UI_TEXT("Cannot create\napp folder", "无法创建\n应用文件夹"));
     }
 }
 

@@ -279,7 +279,7 @@ static void protopirate_emulate_draw_callback(Canvas* canvas, void* context) {
     canvas_set_font(canvas, FontSecondary);
 
     // OK in Centre
-    char* unlock_text = "解锁";
+    char* unlock_text = PROTOPIRATE_UI_TEXT("Unlock", "解锁");
     uint16_t width_button = canvas_string_width(canvas, unlock_text) + 8;
     uint16_t height_button = canvas_current_font_height(canvas);
     canvas_draw_rbox(
@@ -289,12 +289,12 @@ static void protopirate_emulate_draw_callback(Canvas* canvas, void* context) {
     canvas_invert_color(canvas); // Back to Black
 
     // Row 1
-    char* panic_text = "警报";
+    char* panic_text = PROTOPIRATE_UI_TEXT("Panic", "警报");
     width_button = canvas_string_width(canvas, panic_text) + 8;
     canvas_draw_rbox(
         canvas, 64 - (width_button / 2), 33 - (height_button / 2), width_button, height_button, 3);
     canvas_invert_color(canvas); //Switch to white
-    canvas_draw_str_aligned(canvas, 64, 37, AlignCenter, AlignBottom, "锁定");
+    canvas_draw_str_aligned(canvas, 64, 37, AlignCenter, AlignBottom, PROTOPIRATE_UI_TEXT("Lock", "锁定"));
     canvas_invert_color(canvas); // Back to Black
 
     // Left Centre Row
@@ -314,7 +314,7 @@ static void protopirate_emulate_draw_callback(Canvas* canvas, void* context) {
     canvas_draw_rbox(
         canvas, 64 - (width_button / 2), 57 - (height_button / 2), width_button, height_button, 3);
     canvas_invert_color(canvas); //Switch to white
-    canvas_draw_str_aligned(canvas, 64, 61, AlignCenter, AlignBottom, "启动");
+    canvas_draw_str_aligned(canvas, 64, 61, AlignCenter, AlignBottom, PROTOPIRATE_UI_TEXT("Boot", "启动"));
     canvas_invert_color(canvas); // Back to Black
 
     // Transmitting overlay
@@ -329,7 +329,7 @@ static void protopirate_emulate_draw_callback(Canvas* canvas, void* context) {
 
         // Text
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 24, AlignCenter, AlignCenter, "发射");
+        canvas_draw_str_aligned(canvas, 64, 24, AlignCenter, AlignCenter, PROTOPIRATE_UI_TEXT("TX", "发射"));
 
         canvas_invert_color(canvas);
     }

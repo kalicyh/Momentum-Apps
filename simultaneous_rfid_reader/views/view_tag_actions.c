@@ -107,7 +107,7 @@ void uhf_reader_rename_text_updated(void* context) {
     view_dispatcher_remove_view(App->ViewDispatcher, UHFReaderViewSaved);
     submenu_free(App->SubmenuSaved);
     App->SubmenuSaved = submenu_alloc();
-    submenu_set_header(App->SubmenuSaved, "Saved EPCs");
+    submenu_set_header(App->SubmenuSaved, RFID_READER_UI_TEXT("Saved EPCs", "已保存EPC"));
 
     //Update the index file or create a new one doesn't exist
     FuriString* ExtractedNumTagsStr = furi_string_alloc();
@@ -189,7 +189,7 @@ void uhf_reader_submenu_tag_info_callback(void* context, uint32_t index) {
 
     //Handles the rename screen
     case UHFReaderSubmenuIndexTagRename:
-        text_input_set_header_text(App->RenameInput, "Rename EPC");
+        text_input_set_header_text(App->RenameInput, RFID_READER_UI_TEXT("Rename EPC", "重命名EPC"));
 
         //Grab the text from the rename text input
         bool Redraw = false;
@@ -258,40 +258,40 @@ uint32_t uhf_reader_navigation_tag_action_exit_callback(void* context) {
 void view_tag_actions_alloc(UHFReaderApp* App) {
     //Allocate the tag actions submenu
     App->SubmenuTagActions = submenu_alloc();
-    submenu_set_header(App->SubmenuTagActions, "EPC Actions");
+    submenu_set_header(App->SubmenuTagActions, RFID_READER_UI_TEXT("EPC Actions", "EPC操作"));
     submenu_add_item(
         App->SubmenuTagActions,
-        "Tag Data",
+        RFID_READER_UI_TEXT("Tag Data", "标签数据"),
         UHFReaderSubmenuIndexTagInfo,
         uhf_reader_submenu_tag_info_callback,
         App);
     submenu_add_item(
         App->SubmenuTagActions,
-        "Rename",
+        RFID_READER_UI_TEXT("Rename", "重命名"),
         UHFReaderSubmenuIndexTagRename,
         uhf_reader_submenu_tag_info_callback,
         App);
     submenu_add_item(
         App->SubmenuTagActions,
-        "Write",
+        RFID_READER_UI_TEXT("Write", "写入"),
         UHFReaderSubmenuIndexTagWrite,
         uhf_reader_submenu_tag_info_callback,
         App);
     submenu_add_item(
         App->SubmenuTagActions,
-        "Lock",
+        RFID_READER_UI_TEXT("Lock", "锁定"),
         UHFReaderSubmenuIndexTagLock,
         uhf_reader_submenu_tag_info_callback,
         App);
     submenu_add_item(
         App->SubmenuTagActions,
-        "Kill",
+        RFID_READER_UI_TEXT("Kill", "销毁"),
         UHFReaderSubmenuIndexTagKill,
         uhf_reader_submenu_tag_info_callback,
         App);
     submenu_add_item(
         App->SubmenuTagActions,
-        "Delete",
+        RFID_READER_UI_TEXT("Delete", "删除"),
         UHFReaderSubmenuIndexTagDelete,
         uhf_reader_submenu_tag_info_callback,
         App);

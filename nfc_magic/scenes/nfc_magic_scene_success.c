@@ -12,7 +12,7 @@ void nfc_magic_scene_success_on_enter(void* context) {
 
     Popup* popup = instance->popup;
     popup_set_icon(popup, 0, 9, &I_DolphinSuccess_91x55);
-    popup_set_header(popup, "Success!", 75, 12, AlignLeft, AlignCenter);
+    popup_set_header(popup, NFC_MAGIC_UI_TEXT("Success!", "成功!"), 75, 12, AlignLeft, AlignCenter);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, instance);
     popup_set_callback(popup, nfc_magic_scene_success_popup_callback);

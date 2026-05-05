@@ -14,13 +14,25 @@ void nfc_eink_scene_delete_on_enter(void* context) {
     FuriString* temp_str;
     temp_str = furi_string_alloc();
 
-    furi_string_printf(temp_str, "\e#Delete %s?\e#", furi_string_get_cstr(app->file_name));
+    furi_string_printf(
+        temp_str,
+        "\e#%s %s?\e#",
+        NFC_EINK_UI_TEXT("Delete", "删除"),
+        furi_string_get_cstr(app->file_name));
     widget_add_text_box_element(
         app->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, furi_string_get_cstr(temp_str), false);
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Cancel", nfc_eink_scene_delete_widget_callback, app);
+        app->widget,
+        GuiButtonTypeLeft,
+        NFC_EINK_UI_TEXT("Cancel", "取消"),
+        nfc_eink_scene_delete_widget_callback,
+        app);
     widget_add_button_element(
-        app->widget, GuiButtonTypeRight, "Delete", nfc_eink_scene_delete_widget_callback, app);
+        app->widget,
+        GuiButtonTypeRight,
+        NFC_EINK_UI_TEXT("Delete", "删除"),
+        nfc_eink_scene_delete_widget_callback,
+        app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, NfcEinkViewWidget);
 }

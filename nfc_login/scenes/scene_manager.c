@@ -41,10 +41,10 @@ void scene_manager_init(App* app) {
     view_dispatcher_set_navigation_event_callback(app->view_dispatcher, app_navigation_callback);
 
     app->submenu = submenu_alloc();
-    submenu_add_item(app->submenu, "Add NFC Card", SubmenuAddCard, submenu_callback, app);
-    submenu_add_item(app->submenu, "List Cards", SubmenuListCards, submenu_callback, app);
-    submenu_add_item(app->submenu, "Start Scan", SubmenuStartScan, submenu_callback, app);
-    submenu_add_item(app->submenu, "Settings", SubmenuSettings, submenu_callback, app);
+    submenu_add_item(app->submenu, NFC_LOGIN_UI_TEXT("Add NFC Card", "添加NFC卡"), SubmenuAddCard, submenu_callback, app);
+    submenu_add_item(app->submenu, NFC_LOGIN_UI_TEXT("List Cards", "卡列表"), SubmenuListCards, submenu_callback, app);
+    submenu_add_item(app->submenu, NFC_LOGIN_UI_TEXT("Start Scan", "开始扫描"), SubmenuStartScan, submenu_callback, app);
+    submenu_add_item(app->submenu, NFC_LOGIN_UI_TEXT("Settings", "设置"), SubmenuSettings, submenu_callback, app);
     view_dispatcher_add_view(app->view_dispatcher, ViewSubmenu, submenu_get_view(app->submenu));
 
     app->text_input = text_input_alloc();
@@ -219,7 +219,7 @@ static void app_file_browser_callback(void* context) {
         app->enrollment_state = EnrollmentStatePassword;
         memset(app->enrollment_card.password, 0, sizeof(app->enrollment_card.password));
         text_input_reset(app->text_input);
-        text_input_set_header_text(app->text_input, "Enter Password");
+        text_input_set_header_text(app->text_input, NFC_LOGIN_UI_TEXT("Enter Password", "输入密码"));
         text_input_set_result_callback(
             app->text_input,
             app_text_input_result_callback,
@@ -263,9 +263,9 @@ static void submenu_callback(void* context, uint32_t index) {
 
             widget_reset(app->widget);
             app->widget_state = 1;
-            widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Scanning for NFC...");
-            widget_add_string_element(app->widget, 0, 20, AlignLeft, AlignTop, FontSecondary, "Hold card to reader");
-            widget_add_string_element(app->widget, 0, 40, AlignLeft, AlignTop, FontSecondary, "Press Back to stop");
+            widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Scanning for NFC...", "正在扫描NFC..."));
+            widget_add_string_element(app->widget, 0, 20, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Hold card to reader", "将卡片靠近读卡器"));
+            widget_add_string_element(app->widget, 0, 40, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press Back to stop", "按返回键停止"));
             app_switch_to_view(app, ViewWidget);
         }
         break;
@@ -575,11 +575,11 @@ bool app_widget_view_input_handler(InputEvent* event, void* context) {
                     
                     if(button_count < MIN_PASSCODE_BUTTONS || button_count > MAX_PASSCODE_BUTTONS) {
                         widget_reset(app->widget);
-                        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Setup Passcode");
+                        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Setup Passcode", "设置密码"));
                         char error_msg[64];
-                        snprintf(error_msg, sizeof(error_msg), "Need %d-%d buttons", MIN_PASSCODE_BUTTONS, MAX_PASSCODE_BUTTONS);
+                        snprintf(error_msg, sizeof(error_msg), NFC_LOGIN_UI_TEXT("Need %d-%d buttons", "需要%d-%d个按键"), MIN_PASSCODE_BUTTONS, MAX_PASSCODE_BUTTONS);
                         widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, error_msg);
-                        widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, "Press any button");
+                        widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press any button", "按任意键"));
                         notification_message(app->notification, &sequence_error);
                         app->passcode_sequence_len = 0;
                         memset(app->passcode_sequence, 0, sizeof(app->passcode_sequence));
@@ -609,9 +609,9 @@ bool app_widget_view_input_handler(InputEvent* event, void* context) {
                     } else {
                         notification_message(app->notification, &sequence_error);
                         widget_reset(app->widget);
-                        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Setup Passcode");
-                        widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, "Failed to save");
-                        widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, "Press any button");
+                        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Setup Passcode", "设置密码"));
+                        widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Failed to save", "保存失败"));
+                        widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press any button", "按任意键"));
                         app->passcode_sequence_len = 0;
                         memset(app->passcode_sequence, 0, sizeof(app->passcode_sequence));
                     }
@@ -697,9 +697,9 @@ bool app_widget_view_input_handler(InputEvent* event, void* context) {
                                 
                                 app->widget_state = 6;
                                 widget_reset(app->widget);
-                                widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Security Reset");
-                                widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, "Cards deleted");
-                                widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, "Press OK to continue");
+                                widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Security Reset", "安全重置"));
+                                widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Cards deleted", "卡片已删除"));
+                                widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press OK to continue", "按OK继续"));
                                 app_switch_to_view(app, ViewWidget);
                                 notification_message(app->notification, &sequence_error);
                             } else {
@@ -863,7 +863,7 @@ static bool app_handle_edit_menu_input(App* app, InputEvent* event) {
         if(app->edit_menu_index == 0) {
             app->edit_state = EditStateName;
             text_input_reset(app->text_input);
-            text_input_set_header_text(app->text_input, "Edit Name");
+            text_input_set_header_text(app->text_input, NFC_LOGIN_UI_TEXT("Edit Name", "编辑名称"));
             text_input_set_result_callback(
                 app->text_input,
                 app_edit_text_result_callback,
@@ -879,7 +879,7 @@ static bool app_handle_edit_menu_input(App* app, InputEvent* event) {
         } else if(app->edit_menu_index == 1) {
             app->edit_state = EditStatePassword;
             text_input_reset(app->text_input);
-            text_input_set_header_text(app->text_input, "Edit Password");
+            text_input_set_header_text(app->text_input, NFC_LOGIN_UI_TEXT("Edit Password", "编辑密码"));
             text_input_set_result_callback(
                 app->text_input,
                 app_edit_text_result_callback,
@@ -903,7 +903,7 @@ static bool app_handle_edit_menu_input(App* app, InputEvent* event) {
             } else {
                 app->edit_uid_len = 4;
             }
-            byte_input_set_header_text(app->byte_input, "Edit UID (hex)");
+            byte_input_set_header_text(app->byte_input, NFC_LOGIN_UI_TEXT("Edit UID (hex)", "编辑UID(hex)"));
             byte_input_set_result_callback(
                 app->byte_input,
                 app_edit_uid_byte_input_done,

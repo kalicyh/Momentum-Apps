@@ -200,11 +200,11 @@ bool opal_parse(const MfDesfireData* data, FuriString* parsed_data) {
             opal_file->txn_number);
 
         if(opal_file->auto_topup) {
-            furi_string_cat_str(parsed_data, "Auto-topup enabled\n");
+            furi_string_cat_str(parsed_data, METROFLIP_UI_TEXT("Auto-topup enabled\n", "\xe8\x87\xaa\xe5\x8a\xa8\xe5\x85\x85\xe5\x80\xbc\xe5\xb7\xb2\xe5\x90\xaf\xe7\x94\xa8\n"));
         }
 
         if(opal_file->blocked) {
-            furi_string_cat_str(parsed_data, "Card blocked\n");
+            furi_string_cat_str(parsed_data, METROFLIP_UI_TEXT("Card blocked\n", "\xe5\x8d\xa1\xe7\x89\x87\xe5\xb7\xb2\xe9\x94\x81\xe5\xae\x9a\n"));
         }
 
         parsed = true;
@@ -230,14 +230,14 @@ static NfcCommand opal_poller_callback(NfcGenericEvent event, void* context) {
         if(!opal_parse(data, parsed_data)) {
             furi_string_reset(app->text_box_store);
             FURI_LOG_I(TAG, "Unknown card type");
-            furi_string_printf(parsed_data, "\e#Unknown card\n");
+            furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
         }
         widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
         widget_add_button_element(
-            widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
         widget_add_button_element(
-            widget, GuiButtonTypeCenter, "Save", metroflip_save_widget_callback, app);
+            widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Save", "\xe4\xbf\x9d\xe5\xad\x98"), metroflip_save_widget_callback, app);
 
         furi_string_free(parsed_data);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -268,9 +268,9 @@ static void opal_on_enter(Metroflip* app) {
                 widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
             widget_add_button_element(
-                widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, "Delete", metroflip_delete_widget_callback, app);
+                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
             furi_string_free(parsed_data);
             view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
         }
@@ -278,7 +278,7 @@ static void opal_on_enter(Metroflip* app) {
     } else {
         // Setup view
         Popup* popup = app->popup;
-        popup_set_header(popup, "Apply\n card to\nthe back", 68, 30, AlignLeft, AlignTop);
+        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "\xe5\xb0\x86\xe5\x8d\xa1\xe7\x89\x87\xe8\xb4\xb4\xe8\xbf\x91\n\xe8\x83\x8c\xe9\x9d\xa2"), 68, 30, AlignLeft, AlignTop);
         popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
         // Start worker
@@ -297,19 +297,19 @@ static bool opal_on_event(Metroflip* app, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "DON'T\nMOVE", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "Card \n lost", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "WRONG \n CARD", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "Failed", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

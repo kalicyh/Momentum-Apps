@@ -31,8 +31,8 @@ typedef struct {
 
 // NUM_MENU_ITEMS defined in uart_terminal_app_i.h - if you add an entry here, increment it!
 const UART_TerminalItem items[NUM_MENU_ITEMS] = {
-    {"New custom message", {""}, 1, {""}, INPUT_ARGS, FOCUS_CONSOLE_END, NO_TIP},
-    {"Quick message",
+    {MORSEFLASH_UI_TEXT("New custom message", "新建自定义消息"), {""}, 1, {""}, INPUT_ARGS, FOCUS_CONSOLE_END, NO_TIP},
+    {MORSEFLASH_UI_TEXT("Quick message", "快捷消息"),
      {"SOS", "CQD", "VVV", "Eureka", "E.T ph...", "what h...", "Mayhem", "Flipper"},
      8,
      {"sos",
@@ -46,7 +46,7 @@ const UART_TerminalItem items[NUM_MENU_ITEMS] = {
      NO_ARGS,
      FOCUS_CONSOLE_END,
      NO_TIP},
-    {"Help", {""}, 1, {""}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
+    {MORSEFLASH_UI_TEXT("Help", "帮助"), {""}, 1, {""}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
 };
 
 static void uart_terminal_scene_start_var_list_enter_callback(void* context, uint32_t index) {

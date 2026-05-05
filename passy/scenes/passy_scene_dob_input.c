@@ -16,7 +16,7 @@ void passy_scene_dob_input_on_enter(void* context) {
     // Setup view
     TextInput* text_input = passy->text_input;
 
-    text_input_set_header_text(text_input, "DoB: YYMMDD");
+    text_input_set_header_text(text_input, PASSY_UI_TEXT("DoB: YYMMDD", "出生日期: YYMMDD"));
     text_input_set_minimum_length(text_input, 6);
     if(passy->date_of_birth[0] != '\0') {
         strlcpy(passy->text_store, passy->date_of_birth, sizeof(passy->text_store));

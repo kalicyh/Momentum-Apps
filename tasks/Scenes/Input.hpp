@@ -39,12 +39,12 @@ namespace FTasks::Input
 
         if constexpr (T == Scenes::DESCRIPTION_TEXT_EDIT)
         {
-            popup->setHeaderText("New description");
+            popup->setHeaderText(TASKS_UI_TEXT("New description", "新描述"));
             ctx->inputTextBuffer = (*ctx->currentContainer)[ctx->currentNoteIndex].second;
         }
         else
         {
-            popup->setHeaderText("New name");
+            popup->setHeaderText(TASKS_UI_TEXT("New name", "新名称"));
             ctx->inputTextBuffer = (*ctx->currentContainer)[ctx->currentNoteIndex].first;
         }
         ctx->inputTextBuffer.resize(128);

@@ -22,8 +22,8 @@ const int Dialog_PromptBtns_Count[] = {
 
 const char* Dialog_BtnText[3] = {
     [DialogBtn_NONE] = "*none*",
-    [DialogBtn_OK] = "OK",
-    [DialogBtn_CANCEL] = "Cancel",
+    [DialogBtn_OK] = ICONEDIT_UI_TEXT("OK", "确定"),
+    [DialogBtn_CANCEL] = ICONEDIT_UI_TEXT("Cancel", "取消"),
 };
 
 static struct {

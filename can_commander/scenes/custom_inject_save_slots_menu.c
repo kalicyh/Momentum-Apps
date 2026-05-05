@@ -25,12 +25,12 @@ void cancommander_scene_custom_inject_save_slots_menu_on_enter(void* context) {
     }
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Save Slots");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Save Slots", "保存槽位"));
 
     snprintf(
         cancommander_custom_inject_save_name_item,
         sizeof(cancommander_custom_inject_save_name_item),
-        "Set Name: %s",
+        CAN_COMMANDER_UI_TEXT("Set Name: %s", "组名: %s"),
         app->custom_inject_set_name);
 
     submenu_add_item(
@@ -41,7 +41,7 @@ void cancommander_scene_custom_inject_save_slots_menu_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        "Save to SD",
+        CAN_COMMANDER_UI_TEXT("Save to SD", "保存到 SD 卡"),
         CustomInjectSaveSlotsSave,
         cancommander_scene_custom_inject_save_slots_menu_callback,
         app);
@@ -69,7 +69,7 @@ bool cancommander_scene_custom_inject_save_slots_menu_on_event(void* context, Sc
             app,
             app->custom_inject_set_name,
             sizeof(app->custom_inject_set_name),
-            "Set Name");
+            CAN_COMMANDER_UI_TEXT("Set Name", "组名"));
         scene_manager_next_scene(app->scene_manager, cancommander_scene_text_input);
         return true;
 

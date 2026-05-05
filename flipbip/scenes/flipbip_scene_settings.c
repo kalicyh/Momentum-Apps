@@ -3,8 +3,8 @@
 // From: lib/crypto
 #include <memzero.h>
 
-#define TEXT_LABEL_ON  "ON"
-#define TEXT_LABEL_OFF "OFF"
+#define TEXT_LABEL_ON  FLIPBIP_UI_TEXT("ON", "开")
+#define TEXT_LABEL_OFF FLIPBIP_UI_TEXT("OFF", "关")
 
 const char* const bip39_strength_text[3] = {
     "12",
@@ -41,7 +41,7 @@ static void flipbip_scene_settings_set_passphrase(VariableItem* item) {
 
     if(app->passphrase == FlipBipPassphraseOn) {
         app->input_state = FlipBipTextInputPassphrase;
-        text_input_set_header_text(app->text_input, "Enter BIP39 passphrase");
+        text_input_set_header_text(app->text_input, FLIPBIP_UI_TEXT("Enter BIP39 passphrase", "输入 BIP39 密码短语"));
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipBipViewIdTextInput);
     } else {
         memzero(app->passphrase_text, TEXT_BUFFER_SIZE);
@@ -60,7 +60,7 @@ void flipbip_scene_settings_on_enter(void* context) {
 
     // BIP39 strength
     item = variable_item_list_add(
-        app->variable_item_list, "BIP39 Words:", 3, flipbip_scene_settings_set_bip39_strength, app);
+        app->variable_item_list, FLIPBIP_UI_TEXT("BIP39 Words:", "BIP39 助记词数："), 3, flipbip_scene_settings_set_bip39_strength, app);
     value_index = value_index_uint32(app->bip39_strength, bip39_strength_value, 3);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, bip39_strength_text[value_index]);
@@ -68,7 +68,7 @@ void flipbip_scene_settings_on_enter(void* context) {
     // Passphrase
     item = variable_item_list_add(
         app->variable_item_list,
-        "BIP39 Passphrase:",
+        FLIPBIP_UI_TEXT("BIP39 Passphrase:", "BIP39 密码短语："),
         2,
         flipbip_scene_settings_set_passphrase,
         app);

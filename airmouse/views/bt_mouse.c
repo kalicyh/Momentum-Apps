@@ -1,4 +1,5 @@
 #include "bt_mouse.h"
+#include "../air_mouse.h"
 #include "../tracking/main_loop.h"
 
 #include <furi.h>
@@ -66,9 +67,10 @@ static void bt_mouse_draw_callback(Canvas* canvas, void* context) {
     UNUSED(context);
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 10, "Bluetooth Mouse mode");
+    canvas_draw_str(
+        canvas, 0, 10, AIRMOUSE_UI_TEXT("Bluetooth Mouse mode", "蓝牙鼠标模式"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 63, "Hold [back] to exit");
+    canvas_draw_str(canvas, 0, 63, AIRMOUSE_UI_TEXT("Hold [back] to exit", "长按[返回]退出"));
 }
 
 static void bt_mouse_button_state(BtMouse* bt_mouse, int8_t button, bool state) {

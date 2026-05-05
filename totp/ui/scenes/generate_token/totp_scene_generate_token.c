@@ -280,14 +280,14 @@ void totp_scene_generate_token_render(Canvas* const canvas, PluginState* plugin_
             SCREEN_HEIGHT_CENTER - 10,
             AlignCenter,
             AlignCenter,
-            "Token list is empty");
+            TOTP_UI_TEXT("Token list is empty", "令牌列表为空"));
         canvas_draw_str_aligned(
             canvas,
             SCREEN_WIDTH_CENTER,
             SCREEN_HEIGHT_CENTER + 10,
             AlignCenter,
             AlignCenter,
-            "Press OK button to open menu");
+            TOTP_UI_TEXT("Press OK button to open menu", "按OK打开菜单"));
         return;
     }
 

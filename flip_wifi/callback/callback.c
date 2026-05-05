@@ -546,7 +546,7 @@ static void update_text_box(FlipWiFiApp *app)
             text_box_reset(app->textbox);
             text_box_set_focus(app->textbox, TextBoxFocusEnd);
             text_box_set_font(app->textbox, TextBoxFontText);
-            text_box_set_text(app->textbox, "Connected... please wait");
+            text_box_set_text(app->textbox, FLIP_WIFI_UI_TEXT("Connected... please wait", "已连接...请稍候"));
         }
         else if (furi_string_size(app->fhttp->last_response_str) != last_response_len)
         {
@@ -654,7 +654,7 @@ static bool callback_handle_scan(FlipperHTTP *fhttp, void *context)
 
     // Add each SSID as a submenu item
     submenu_reset(app->submenu_wifi);
-    submenu_set_header(app->submenu_wifi, "WiFi Nearby");
+    submenu_set_header(app->submenu_wifi, FLIP_WIFI_UI_TEXT("WiFi Nearby", "附近 WiFi"));
     for (uint8_t i = 0; i < ssid_count; i++)
     {
         char *ssid_item = ssid_list[i];
@@ -682,14 +682,14 @@ void callback_submenu_choices(void *context, uint32_t index)
         free_all(app);
         if (!alloc_submenus(app, FlipWiFiViewSubmenuScan))
         {
-            easy_flipper_dialog("[ERROR]", "Failed to allocate submenus for WiFi Scan");
+            easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), FLIP_WIFI_UI_TEXT("Failed to allocate submenus for WiFi Scan", "分配 WiFi 扫描子菜单失败"));
             return;
         }
         app->fhttp = flipper_http_alloc();
         if (!app->fhttp)
         {
             FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-            easy_flipper_dialog("Error", "Failed to start UART.\nUART is likely busy or device\nis not connected.");
+            easy_flipper_dialog(FLIP_WIFI_UI_TEXT("Error", "错误"), FLIP_WIFI_UI_TEXT("Failed to start UART.\nUART is likely busy or device\nis not connected.", "UART 启动失败。\nUART 可能正忙或设备\n未连接。"));
             return;
         }
         if (callback_scan(app->fhttp))
@@ -708,7 +708,7 @@ void callback_submenu_choices(void *context, uint32_t index)
             if (!callback_handle_scan(app->fhttp, app))
             {
                 FURI_LOG_E(TAG, "Failed to handle scan");
-                easy_flipper_dialog("[ERROR]", "Failed to handle scan");
+                easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), FLIP_WIFI_UI_TEXT("Failed to handle scan", "处理扫描结果失败"));
                 return;
             }
             view_dispatcher_remove_view(app->view_dispatcher, loading_view_id);
@@ -719,7 +719,7 @@ void callback_submenu_choices(void *context, uint32_t index)
         else
         {
             flipper_http_free(app->fhttp);
-            easy_flipper_dialog("[ERROR]", "Failed to scan for WiFi networks");
+            easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), FLIP_WIFI_UI_TEXT("Failed to scan for WiFi networks", "扫描 WiFi 网络失败"));
             return;
         }
         break;
@@ -770,7 +770,7 @@ void callback_submenu_choices(void *context, uint32_t index)
         if (!app->fhttp)
         {
             FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-            easy_flipper_dialog("Error", "Failed to start UART.\nUART is likely busy or device\nis not connected.");
+            easy_flipper_dialog(FLIP_WIFI_UI_TEXT("Error", "错误"), FLIP_WIFI_UI_TEXT("Failed to start UART.\nUART is likely busy or device\nis not connected.", "UART 启动失败。\nUART 可能正忙或设备\n未连接。"));
             return;
         }
         view_dispatcher_switch_to_view(app->view_dispatcher, FlipWiFiViewSubmenu);
@@ -781,7 +781,7 @@ void callback_submenu_choices(void *context, uint32_t index)
         // send to AP View to see the responses
         if (!callback_run_ap_mode(app))
         {
-            easy_flipper_dialog("[ERROR]", "Failed to start AP mode");
+            easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), FLIP_WIFI_UI_TEXT("Failed to start AP mode", "启动 AP 模式失败"));
             return;
         }
         free_text_box(app);
@@ -823,7 +823,7 @@ void callback_submenu_choices(void *context, uint32_t index)
             if (!app->fhttp)
             {
                 FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-                easy_flipper_dialog("Error", "Failed to start UART.\nUART is likely busy or device\nis not connected.");
+                easy_flipper_dialog(FLIP_WIFI_UI_TEXT("Error", "错误"), FLIP_WIFI_UI_TEXT("Failed to start UART.\nUART is likely busy or device\nis not connected.", "UART 启动失败。\nUART 可能正忙或设备\n未连接。"));
                 return;
             }
         }
@@ -974,7 +974,7 @@ void callback_text_updated_add_ssid(void *context)
     // check if empty
     if (strlen(app->uart_text_input_temp_buffer) == 0)
     {
-        easy_flipper_dialog("[ERROR]", "SSID cannot be empty");
+        easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), FLIP_WIFI_UI_TEXT("SSID cannot be empty", "SSID 不能为空"));
         return;
     }
 
@@ -986,7 +986,7 @@ void callback_text_updated_add_ssid(void *context)
     save_char("wifi-ssid", app->uart_text_input_buffer);
     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWiFiViewSubmenuMain);
     text_input_reset(app->uart_text_input);
-    text_input_set_header_text(app->uart_text_input, "Enter Password");
+    text_input_set_header_text(app->uart_text_input, FLIP_WIFI_UI_TEXT("Enter Password", "输入密码"));
     app->uart_text_input_buffer_size = MAX_SSID_LENGTH;
     free(app->uart_text_input_buffer);
     free(app->uart_text_input_temp_buffer);
@@ -1003,7 +1003,7 @@ void callback_text_updated_add_password(void *context)
     // check if empty
     if (strlen(app->uart_text_input_temp_buffer) == 0)
     {
-        easy_flipper_dialog("[ERROR]", "Password cannot be empty");
+        easy_flipper_dialog(FLIP_WIFI_UI_TEXT("[ERROR]", "[错误]"), FLIP_WIFI_UI_TEXT("Password cannot be empty", "密码不能为空"));
         return;
     }
 

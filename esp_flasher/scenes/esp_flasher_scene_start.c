@@ -22,46 +22,46 @@ void esp_flasher_scene_start_on_enter(void* context) {
 
     EspFlasherApp* app = context;
     Submenu* submenu = app->submenu;
-    submenu_set_header(submenu, "ESP Flasher");
+    submenu_set_header(submenu, ESP_FLASHER_UI_TEXT("ESP Flasher", "ESP 烧录器"));
     submenu_add_item(
         submenu,
-        "Quick Flash",
+        ESP_FLASHER_UI_TEXT("Quick Flash", "快速烧录"),
         SubmenuIndexEspFlasherQuickFlash,
         esp_flasher_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Manual Flash",
+        ESP_FLASHER_UI_TEXT("Manual Flash", "手动烧录"),
         SubmenuIndexEspFlasherManualFlash,
         esp_flasher_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Switch to Firmware A",
+        ESP_FLASHER_UI_TEXT("Switch to Firmware A", "切换到固件 A"),
         SubmenuIndexEspFlasherSwitchA,
         esp_flasher_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Switch to Firmware B",
+        ESP_FLASHER_UI_TEXT("Switch to Firmware B", "切换到固件 B"),
         SubmenuIndexEspFlasherSwitchB,
         esp_flasher_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Reset Board",
+        ESP_FLASHER_UI_TEXT("Reset Board", "复位开发板"),
         SubmenuIndexEspFlasherReset,
         esp_flasher_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "Enter Bootloader",
+        ESP_FLASHER_UI_TEXT("Enter Bootloader", "进入引导模式"),
         SubmenuIndexEspFlasherBootloader,
         esp_flasher_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu,
-        "About",
+        ESP_FLASHER_UI_TEXT("About", "关于"),
         SubmenuIndexEspFlasherAbout,
         esp_flasher_scene_start_submenu_callback,
         app);

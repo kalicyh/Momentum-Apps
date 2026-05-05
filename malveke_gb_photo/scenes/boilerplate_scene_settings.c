@@ -462,14 +462,14 @@ void boilerplate_scene_settings_on_enter(void* context) {
 
     // Palette
     item = variable_item_list_add(
-        app->variable_item_list, "Palette:", 57, boilerplate_scene_settings_set_palette, app);
+        app->variable_item_list, GBPHOTO_UI_TEXT("Palette:", "调色板:"), 57, boilerplate_scene_settings_set_palette, app);
     value_index = value_index_uint32(app->palette, palette_value, 1);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, palette_text[value_index]);
 
     // Info
     item = variable_item_list_add(
-        app->variable_item_list, "Info:", 2, boilerplate_scene_settings_set_info, app);
+        app->variable_item_list, GBPHOTO_UI_TEXT("Info:", "信息:"), 2, boilerplate_scene_settings_set_info, app);
     value_index = value_index_uint32(app->info, info_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, info_text[value_index]);

@@ -20,31 +20,31 @@ void nfc_magic_scene_gen4_select_shd_mode_on_enter(void* context) {
     Submenu* submenu = instance->submenu;
     submenu_add_item(
         submenu,
-        "Pre-Write",
+        NFC_MAGIC_UI_TEXT("Pre-Write", "预写入"),
         SubmenuIndexPreWriteMode,
         nfc_magic_scene_gen4_select_shd_mode_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Restore",
+        NFC_MAGIC_UI_TEXT("Restore", "恢复"),
         SubmenuIndexRestoreMode,
         nfc_magic_scene_gen4_select_shd_mode_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Disable",
+        NFC_MAGIC_UI_TEXT("Disable", "禁用"),
         SubmenuIndexDisable,
         nfc_magic_scene_gen4_select_shd_mode_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Disable (High-Speed)",
+        NFC_MAGIC_UI_TEXT("Disable (High-Speed)", "禁用 (高速)"),
         SubmenuIndexDisableHighSpeed,
         nfc_magic_scene_gen4_select_shd_mode_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Split",
+        NFC_MAGIC_UI_TEXT("Split", "分离"),
         SubmenuIndexSplitMode,
         nfc_magic_scene_gen4_select_shd_mode_submenu_callback,
         instance);

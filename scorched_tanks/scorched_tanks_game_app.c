@@ -6,6 +6,12 @@
 #include <notification/notification.h>
 #include <notification/notification_messages.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SCORCHED_UI_TEXT(en, zh) (zh)
+#else
+#define SCORCHED_UI_TEXT(en, zh) (en)
+#endif
+
 #define SCREEN_WIDTH           128
 #define SCREEN_HEIGHT          64
 #define PLAYER_INIT_LOCATION_X 20
@@ -324,11 +330,11 @@ static void scorched_tanks_render_callback(Canvas* const canvas, void* ctx) {
     canvas_set_font(canvas, FontSecondary);
 
     char buffer2[18];
-    snprintf(buffer2, sizeof(buffer2), "wind: %i", game_state->windSpeed - MAX_WIND / 2);
+    snprintf(buffer2, sizeof(buffer2), SCORCHED_UI_TEXT("wind: %i", "风速: %i"), game_state->windSpeed - MAX_WIND / 2);
     canvas_draw_str(canvas, 55, 10, buffer2);
 
     if(game_state->isPlayerTurn) {
-        canvas_draw_str(canvas, 93, 10, "player1");
+        canvas_draw_str(canvas, 93, 10, SCORCHED_UI_TEXT("player1", "玩家1"));
 
         char buffer[12];
         snprintf(buffer, sizeof(buffer), "a: %u", game_state->player.aimAngle);
@@ -337,7 +343,7 @@ static void scorched_tanks_render_callback(Canvas* const canvas, void* ctx) {
         snprintf(buffer, sizeof(buffer), "p: %u", game_state->player.firePower);
         canvas_draw_str(canvas, 27, 10, buffer);
     } else {
-        canvas_draw_str(canvas, 93, 10, "player2");
+        canvas_draw_str(canvas, 93, 10, SCORCHED_UI_TEXT("player2", "玩家2"));
 
         char buffer[12];
         snprintf(buffer, sizeof(buffer), "a: %u", game_state->enemy.aimAngle);

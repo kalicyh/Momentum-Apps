@@ -2,6 +2,14 @@
 #include "eth_worker.h"
 #include "eth_save_process.h"
 
+#ifndef ETH_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ETH_UI_TEXT(en, zh) (zh)
+#else
+#define ETH_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include <furi_hal.h>
 #include "dhcp.h"
 #include "socket.h"
@@ -35,13 +43,13 @@ EthWorker* eth_worker_alloc() {
     worker->timer = furi_timer_alloc(dhcp_timer_callback, FuriTimerTypePeriodic, NULL);
     furi_timer_start(worker->timer, 1000);
 
-    eth_log(EthWorkerProcessReset, "Finik Ethernet [START]");
+    eth_log(EthWorkerProcessReset, ETH_UI_TEXT("Finik Ethernet [START]", "以太网 [启动]"));
 
     return worker;
 }
 
 void eth_worker_free(EthWorker* worker) {
-    eth_log(EthWorkerProcessReset, "Finik Ethernet [STOP]");
+    eth_log(EthWorkerProcessReset, ETH_UI_TEXT("Finik Ethernet [STOP]", "以太网 [停止]"));
 
     eth_run(worker, EthWorkerProcessExit);
 
@@ -208,11 +216,11 @@ void eth_run(EthWorker* worker, EthWorkerProcess process) {
         break;
     case EthWorkerProcessReset:
         eth_set_next_state(EthWorkerStateReset);
-        eth_log(EthWorkerProcessInit, "reset module");
-        eth_log(EthWorkerProcessDHCP, "reset module");
-        eth_log(EthWorkerProcessStatic, "reset module");
-        eth_log(EthWorkerProcessPing, "reset module");
-        eth_log(EthWorkerProcessReset, "reset module");
+        eth_log(EthWorkerProcessInit, ETH_UI_TEXT("reset module", "重置模块"));
+        eth_log(EthWorkerProcessDHCP, ETH_UI_TEXT("reset module", "重置模块"));
+        eth_log(EthWorkerProcessStatic, ETH_UI_TEXT("reset module", "重置模块"));
+        eth_log(EthWorkerProcessPing, ETH_UI_TEXT("reset module", "重置模块"));
+        eth_log(EthWorkerProcessReset, ETH_UI_TEXT("reset module", "重置模块"));
         break;
     case EthWorkerProcessExit:
         if(worker->state != EthWorkerStateNotAllocated) {
@@ -241,12 +249,12 @@ static void W5500_Unselect(void) {
 
 static void Callback_IPAssigned(void) {
     eth_log(
-        EthWorkerProcessDHCP, "Callback: IP assigned! Leased time: %d sec", getDHCPLeasetime());
+        EthWorkerProcessDHCP, ETH_UI_TEXT("Callback: IP assigned! Leased time: %d sec", "回调: IP已分配! 租期: %d秒"), getDHCPLeasetime());
     ip_assigned = 1;
 }
 
 static void Callback_IPConflict(void) {
-    eth_log(EthWorkerProcessDHCP, "Callback: IP conflict!");
+    eth_log(EthWorkerProcessDHCP, ETH_UI_TEXT("Callback: IP conflict!", "回调: IP冲突!"));
 }
 
 static void W5500_ReadBuff(uint8_t* buff, uint16_t len) {
@@ -289,28 +297,28 @@ void update_WIZNETINFO(uint8_t is_dhcp) {
 int check_phylink(EthWorker* worker, EthWorkerState state, EthWorkerProcess proc, int timeout) {
     uint32_t start_time = furi_get_tick();
     uint32_t last_log_time = start_time;
-    eth_log(proc, "phy link check 0");
+    eth_log(proc, ETH_UI_TEXT("phy link check 0", "物理链路检查 0"));
     for(;;) {
         if(furi_get_tick() > start_time + timeout) {
-            eth_log(proc, "phy link timeout");
+            eth_log(proc, ETH_UI_TEXT("phy link timeout", "物理链路超时"));
             break;
         }
         if(worker->state != state) {
-            eth_log(proc, "state changed");
+            eth_log(proc, ETH_UI_TEXT("state changed", "状态已变更"));
             break;
         }
         uint8_t link = PHY_LINK_OFF;
         if(ctlwizchip(CW_GET_PHYLINK, (void*)&link) == -1) {
-            eth_log(proc, "Unknown PHY link status");
+            eth_log(proc, ETH_UI_TEXT("Unknown PHY link status", "未知物理链路状态"));
             break;
         }
         if(link != PHY_LINK_OFF) {
-            eth_log(proc, "phy link on");
+            eth_log(proc, ETH_UI_TEXT("phy link on", "物理链路已连接"));
             return 1;
         }
         furi_delay_ms(20);
         if(furi_get_tick() > last_log_time + 1000) {
-            eth_log(proc, "phy link check %d", (last_log_time - start_time) / 1000);
+            eth_log(proc, ETH_UI_TEXT("phy link check %d", "物理链路检查 %d"), (last_log_time - start_time) / 1000);
             last_log_time = furi_get_tick();
         }
     }
@@ -397,18 +405,18 @@ int32_t eth_worker_task(void* context) {
             furi_delay_ms(50);
             furi_hal_gpio_write(ETH_RESET_PIN, true);
             if(ctlwizchip(CW_INIT_WIZCHIP, (void*)W5500FifoSize) == -1) {
-                eth_log(EthWorkerProcessInit, "[error] W5500 init fail");
+                eth_log(EthWorkerProcessInit, ETH_UI_TEXT("[error] W5500 init fail", "[错误] W5500初始化失败"));
                 eth_set_force_state(EthWorkerStateNotInited);
                 continue;
             }
-            eth_log(EthWorkerProcessInit, "W5500 inited");
+            eth_log(EthWorkerProcessInit, ETH_UI_TEXT("W5500 inited", "W5500已初始化"));
             furi_delay_ms(90);
             update_WIZNETINFO(false);
             wizchip_setnetinfo(&gWIZNETINFO);
             wiz_NetInfo readed_net_info;
             wizchip_getnetinfo(&readed_net_info);
             if(memcmp(&readed_net_info, &gWIZNETINFO, sizeof(wiz_NetInfo))) {
-                eth_log(EthWorkerProcessInit, "[error] module not detected");
+                eth_log(EthWorkerProcessInit, ETH_UI_TEXT("[error] module not detected", "[错误] 未检测到模块"));
                 eth_set_force_state(EthWorkerStateNotInited);
                 continue;
             }
@@ -422,7 +430,7 @@ int32_t eth_worker_task(void* context) {
                 conf.mode,
                 conf.speed,
                 conf.duplex);
-            eth_log(EthWorkerProcessInit, "net info setted");
+            eth_log(EthWorkerProcessInit, ETH_UI_TEXT("net info setted", "网络信息已设置"));
             eth_log(
                 EthWorkerProcessInit,
                 "mac: %02X-%02X-%02X-%02X-%02X-%02X",
@@ -461,18 +469,18 @@ int32_t eth_worker_task(void* context) {
                     gWIZNETINFO.dhcp = NETINFO_DHCP;
                     ctlnetwork(CN_SET_NETINFO, (void*)&gWIZNETINFO);
                     eth_log(
-                        EthWorkerProcessDHCP, "DHCP IP Leased Time : %ld Sec", getDHCPLeasetime());
+                        EthWorkerProcessDHCP, ETH_UI_TEXT("DHCP IP Leased Time : %ld Sec", "DHCP IP租期: %ld秒"), getDHCPLeasetime());
                     break;
                 case DHCP_FAILED:
-                    eth_log(EthWorkerProcessDHCP, "DHCP Failed");
+                    eth_log(EthWorkerProcessDHCP, ETH_UI_TEXT("DHCP Failed", "DHCP失败"));
                     break;
                 }
                 furi_delay_ms(10);
                 if(divider++ % 100 == 0) {
-                    eth_log(EthWorkerProcessDHCP, "DHCP process %d", divider / 100);
+                    eth_log(EthWorkerProcessDHCP, ETH_UI_TEXT("DHCP process %d", "DHCP进程 %d"), divider / 100);
                     if(divider > 2000) {
                         DHCP_stop();
-                        eth_log(EthWorkerProcessDHCP, "DHCP Stop by timer");
+                        eth_log(EthWorkerProcessDHCP, ETH_UI_TEXT("DHCP Stop by timer", "DHCP定时停止"));
                         eth_set_force_state(EthWorkerStateInited);
                         break;
                     }
@@ -484,28 +492,28 @@ int32_t eth_worker_task(void* context) {
             }
             eth_log(
                 EthWorkerProcessDHCP,
-                "IP address:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("IP address:\n %d.%d.%d.%d", "IP地址:\n %d.%d.%d.%d"),
                 gWIZNETINFO.ip[0],
                 gWIZNETINFO.ip[1],
                 gWIZNETINFO.ip[2],
                 gWIZNETINFO.ip[3]);
             eth_log(
                 EthWorkerProcessDHCP,
-                "SM Mask:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("SM Mask:\n %d.%d.%d.%d", "子网掩码:\n %d.%d.%d.%d"),
                 gWIZNETINFO.sn[0],
                 gWIZNETINFO.sn[1],
                 gWIZNETINFO.sn[2],
                 gWIZNETINFO.sn[3]);
             eth_log(
                 EthWorkerProcessDHCP,
-                "Gate way:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("Gate way:\n %d.%d.%d.%d", "网关:\n %d.%d.%d.%d"),
                 gWIZNETINFO.gw[0],
                 gWIZNETINFO.gw[1],
                 gWIZNETINFO.gw[2],
                 gWIZNETINFO.gw[3]);
             eth_log(
                 EthWorkerProcessDHCP,
-                "DNS Server:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("DNS Server:\n %d.%d.%d.%d", "DNS服务器:\n %d.%d.%d.%d"),
                 gWIZNETINFO.dns[0],
                 gWIZNETINFO.dns[1],
                 gWIZNETINFO.dns[2],
@@ -516,32 +524,32 @@ int32_t eth_worker_task(void* context) {
                 worker->state = EthWorkerStateInited;
                 continue;
             }
-            eth_log(EthWorkerProcessStatic, "set static ip");
+            eth_log(EthWorkerProcessStatic, ETH_UI_TEXT("set static ip", "设置静态IP"));
             load_net_parameters(worker->config);
             eth_log(
                 EthWorkerProcessStatic,
-                "IP address:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("IP address:\n %d.%d.%d.%d", "IP地址:\n %d.%d.%d.%d"),
                 gWIZNETINFO.ip[0],
                 gWIZNETINFO.ip[1],
                 gWIZNETINFO.ip[2],
                 gWIZNETINFO.ip[3]);
             eth_log(
                 EthWorkerProcessStatic,
-                "SM Mask:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("SM Mask:\n %d.%d.%d.%d", "子网掩码:\n %d.%d.%d.%d"),
                 gWIZNETINFO.sn[0],
                 gWIZNETINFO.sn[1],
                 gWIZNETINFO.sn[2],
                 gWIZNETINFO.sn[3]);
             eth_log(
                 EthWorkerProcessStatic,
-                "Gate way:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("Gate way:\n %d.%d.%d.%d", "网关:\n %d.%d.%d.%d"),
                 gWIZNETINFO.gw[0],
                 gWIZNETINFO.gw[1],
                 gWIZNETINFO.gw[2],
                 gWIZNETINFO.gw[3]);
             eth_log(
                 EthWorkerProcessStatic,
-                "DNS Server:\n %d.%d.%d.%d",
+                ETH_UI_TEXT("DNS Server:\n %d.%d.%d.%d", "DNS服务器:\n %d.%d.%d.%d"),
                 gWIZNETINFO.dns[0],
                 gWIZNETINFO.dns[1],
                 gWIZNETINFO.dns[2],
@@ -552,7 +560,7 @@ int32_t eth_worker_task(void* context) {
             uint8_t* address = worker->config->ping_ip;
             eth_log(
                 EthWorkerProcessPing,
-                "ping %d.%d.%d.%d",
+                ETH_UI_TEXT("ping %d.%d.%d.%d", "Ping %d.%d.%d.%d"),
                 address[0],
                 address[1],
                 address[2],
@@ -565,10 +573,10 @@ int32_t eth_worker_task(void* context) {
                 uint8_t res = ping_auto_interface(address);
                 uint32_t res_time = furi_get_tick();
                 if(res == 3) {
-                    eth_log(EthWorkerProcessPing, "%d success %d ms", try, res_time - start_time);
+                    eth_log(EthWorkerProcessPing, ETH_UI_TEXT("%d success %d ms", "%d 成功 %d ms"), try, res_time - start_time);
                 } else {
                     eth_log(
-                        EthWorkerProcessPing, "%d error %d, %d", try, res, res_time - start_time);
+                        EthWorkerProcessPing, ETH_UI_TEXT("%d error %d, %d", "%d 错误 %d, %d"), try, res, res_time - start_time);
                     break;
                 }
             }

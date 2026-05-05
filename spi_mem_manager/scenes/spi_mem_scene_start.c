@@ -17,31 +17,31 @@ void spi_mem_scene_start_on_enter(void* context) {
     SPIMemApp* app = context;
     submenu_add_item(
         app->submenu,
-        "Read",
+        SPI_MEM_UI_TEXT("Read", "读取"),
         SPIMemSceneStartSubmenuIndexRead,
         spi_mem_scene_start_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Saved",
+        SPI_MEM_UI_TEXT("Saved", "已存文件"),
         SPIMemSceneStartSubmenuIndexSaved,
         spi_mem_scene_start_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Erase",
+        SPI_MEM_UI_TEXT("Erase", "擦除"),
         SPIMemSceneStartSubmenuIndexErase,
         spi_mem_scene_start_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Wiring",
+        SPI_MEM_UI_TEXT("Wiring", "接线图"),
         SPIMemSceneStartSubmenuIndexWiring,
         spi_mem_scene_start_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "About",
+        SPI_MEM_UI_TEXT("About", "关于"),
         SPIMemSceneStartSubmenuIndexAbout,
         spi_mem_scene_start_submenu_callback,
         app);

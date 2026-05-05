@@ -1,4 +1,5 @@
 #include "usb_ccb_start.h"
+#include "../usb_ccb.h"
 #include <furi.h>
 #include <furi_hal_usb_hid.h>
 #include <gui/elements.h>
@@ -498,35 +499,35 @@ const int hidConsumerSubsetsSize = sizeof(hidConsumerSubsets) / sizeof(hidConsum
 
 const char* getConsumerSubsetName(int i) {
     if(i >= 0 && i < 7) {
-        return "Generic Consumer Control";
+        return USB_CCB_UI_TEXT("Generic Consumer Control", "通用消费者控制");
     } else if(i >= 7 && i < 10) {
-        return "Numeric Key Pad";
+        return USB_CCB_UI_TEXT("Numeric Key Pad", "数字键盘");
     } else if(i >= 10 && i < 17) {
-        return "General Controls";
+        return USB_CCB_UI_TEXT("General Controls", "通用控制");
     } else if(i >= 17 && i < 26) {
-        return "Menu Controls";
+        return USB_CCB_UI_TEXT("Menu Controls", "菜单控制");
     } else if(i >= 26 && i < 33) {
-        return "Display Controls";
+        return USB_CCB_UI_TEXT("Display Controls", "显示控制");
     } else if(i >= 33 && i < 69) {
-        return "Selection Controls";
+        return USB_CCB_UI_TEXT("Selection Controls", "选择控制");
     } else if(i >= 69 && i < 87) {
-        return "Transport Controls";
+        return USB_CCB_UI_TEXT("Transport Controls", "传输控制");
     } else if(i >= 87 && i < 100) {
-        return "Search Controls";
+        return USB_CCB_UI_TEXT("Search Controls", "搜索控制");
     } else if(i >= 100 && i < 111) {
-        return "Audio Controls";
+        return USB_CCB_UI_TEXT("Audio Controls", "音频控制");
     } else if(i >= 111 && i < 117) {
-        return "Speed Controls";
+        return USB_CCB_UI_TEXT("Speed Controls", "速度控制");
     } else if(i >= 117 && i < 131) {
-        return "Home and Security Controls";
+        return USB_CCB_UI_TEXT("Home and Security Controls", "家居和安全控制");
     } else if(i >= 131 && i < 148) {
-        return "Speaker Channels";
+        return USB_CCB_UI_TEXT("Speaker Channels", "扬声器通道");
     } else if(i >= 148 && i < 153) {
-        return "PC Theatre";
+        return USB_CCB_UI_TEXT("PC Theatre", "PC 影院");
     } else if(i >= 153 && i < 224) {
-        return "Application Launch Buttons";
+        return USB_CCB_UI_TEXT("Application Launch Buttons", "应用启动按钮");
     } else if(i >= 224) {
-        return "GUI Application Controls";
+        return USB_CCB_UI_TEXT("GUI Application Controls", "GUI 应用控制");
     }
     // Won't ever happen though
     return "Invalid Index";
@@ -541,20 +542,20 @@ static void usb_ccb_start_draw_callback(Canvas* canvas, void* context) {
     canvas_clear(canvas);
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 10, is_running ? "Running" : "Not running");
+    canvas_draw_str(canvas, 0, 10, is_running ? USB_CCB_UI_TEXT("Running", "运行中") : USB_CCB_UI_TEXT("Not running", "未运行"));
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 24, "Delay [ms]: ");
+    canvas_draw_str(canvas, 0, 24, USB_CCB_UI_TEXT("Delay [ms]: ", "延迟[ms]: "));
     canvas_draw_str(canvas, 50, 24, autofire_delay_str);
 
-    canvas_draw_str(canvas, 0, 38, "Current key subset:");
+    canvas_draw_str(canvas, 0, 38, USB_CCB_UI_TEXT("Current key subset:", "当前按键子集:"));
     canvas_draw_str(canvas, 0, 46, getConsumerSubsetName(i));
 
     canvas_draw_str(
         canvas,
         0,
         56,
-        is_running ? "Sent:                HID_CONSUMER_" : "Next:                HID_CONSUMER_");
+        is_running ? USB_CCB_UI_TEXT("Sent:                HID_CONSUMER_", "已发送:              HID_CONSUMER_") : USB_CCB_UI_TEXT("Next:                HID_CONSUMER_", "下一个:              HID_CONSUMER_"));
     canvas_draw_str(canvas, 24, 56, hexString);
     canvas_draw_str(canvas, 0, 64, hidConsumerArray[i].name);
 

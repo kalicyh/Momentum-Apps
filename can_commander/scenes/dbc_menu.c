@@ -25,10 +25,10 @@ void cancommander_scene_dbc_menu_on_enter(void* context) {
 
     submenu_reset(app->submenu);
 
-    submenu_add_item(app->submenu, "DBC Clear", DbcClear, cancommander_scene_dbc_menu_callback, app);
-    submenu_add_item(app->submenu, "DBC Add", DbcAdd, cancommander_scene_dbc_menu_callback, app);
-    submenu_add_item(app->submenu, "DBC Remove", DbcRemove, cancommander_scene_dbc_menu_callback, app);
-    submenu_add_item(app->submenu, "DBC List", DbcList, cancommander_scene_dbc_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("DBC Clear", "DBC 清除"), DbcClear, cancommander_scene_dbc_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("DBC Add", "DBC 添加"), DbcAdd, cancommander_scene_dbc_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("DBC Remove", "DBC 移除"), DbcRemove, cancommander_scene_dbc_menu_callback, app);
+    submenu_add_item(app->submenu, CAN_COMMANDER_UI_TEXT("DBC List", "DBC 列表"), DbcList, cancommander_scene_dbc_menu_callback, app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, cancommander_scene_dbc_menu));
@@ -55,8 +55,8 @@ bool cancommander_scene_dbc_menu_on_event(void* context, SceneManagerEvent event
             app,
             app->args_dbc_add,
             sizeof(app->args_dbc_add),
-            "DBC Add",
-            "Add",
+            CAN_COMMANDER_UI_TEXT("DBC Add", "DBC 添加"),
+            CAN_COMMANDER_UI_TEXT("Add", "添加"),
             cancommander_scene_dbc_add_apply,
             cancommander_scene_status);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -67,8 +67,8 @@ bool cancommander_scene_dbc_menu_on_event(void* context, SceneManagerEvent event
             app,
             app->args_dbc_remove,
             sizeof(app->args_dbc_remove),
-            "DBC Remove",
-            "Remove",
+            CAN_COMMANDER_UI_TEXT("DBC Remove", "DBC 移除"),
+            CAN_COMMANDER_UI_TEXT("Remove", "移除"),
             cancommander_scene_dbc_remove_apply,
             cancommander_scene_status);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);

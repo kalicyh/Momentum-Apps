@@ -14,7 +14,7 @@ void nfc_maker_scene_save_name_on_enter(void* context) {
     NfcMaker* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Save the NFC tag:");
+    text_input_set_header_text(text_input, NFC_MAKER_UI_TEXT("Save the NFC tag:", "保存 NFC 标签:"));
 
     FuriString* prefix = furi_string_alloc();
     furi_string_set(prefix, nfc_device_get_name(app->nfc_device, NfcDeviceNameTypeFull));

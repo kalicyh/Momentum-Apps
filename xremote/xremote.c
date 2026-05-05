@@ -87,11 +87,11 @@ int32_t xremote_main(void* p) {
 
     /* Allocate and build the menu */
     xremote_app_submenu_alloc(app, XRemoteViewSubmenu, xremote_exit_callback);
-    xremote_app_submenu_add(app, "Learn", XRemoteViewLearn, xremote_submenu_callback);
-    xremote_app_submenu_add(app, "Saved", XRemoteViewIRSubmenu, xremote_submenu_callback);
-    xremote_app_submenu_add(app, "Analyzer", XRemoteViewAnalyzer, xremote_submenu_callback);
-    xremote_app_submenu_add(app, "Settings", XRemoteViewSettings, xremote_submenu_callback);
-    xremote_app_submenu_add(app, "About", XRemoteViewAbout, xremote_submenu_callback);
+    xremote_app_submenu_add(app, XREMOTE_UI_TEXT("Learn", "学习"), XRemoteViewLearn, xremote_submenu_callback);
+    xremote_app_submenu_add(app, XREMOTE_UI_TEXT("Saved", "已保存"), XRemoteViewIRSubmenu, xremote_submenu_callback);
+    xremote_app_submenu_add(app, XREMOTE_UI_TEXT("Analyzer", "分析器"), XRemoteViewAnalyzer, xremote_submenu_callback);
+    xremote_app_submenu_add(app, XREMOTE_UI_TEXT("Settings", "设置"), XRemoteViewSettings, xremote_submenu_callback);
+    xremote_app_submenu_add(app, XREMOTE_UI_TEXT("About", "关于"), XRemoteViewAbout, xremote_submenu_callback);
 
     bool otg_was_enabled = furi_hal_power_is_otg_enabled();
     InfraredSettings settings = {0};

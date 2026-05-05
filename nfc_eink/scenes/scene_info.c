@@ -19,16 +19,22 @@ void nfc_eink_scene_info_on_enter(void* context) {
     const NfcEinkScreenInfo* info = nfc_eink_screen_get_image_info(instance->screen);
 
     FuriString* temp_str = furi_string_alloc();
-    furi_string_cat_printf(temp_str, "\e#Information\n");
-    furi_string_cat_printf(temp_str, "Name: %s\n", info->name);
+    furi_string_cat_printf(temp_str, "\e#%s\n", NFC_EINK_UI_TEXT("Information", "详细信息"));
+    furi_string_cat_printf(
+        temp_str, "%s %s\n", NFC_EINK_UI_TEXT("Name:", "名称:"), info->name);
     furi_string_cat_printf(
         temp_str,
-        "Vendor: %s\n",
+        "%s %s\n",
+        NFC_EINK_UI_TEXT("Vendor:", "厂商:"),
         nfc_eink_screen_get_manufacturer_name(info->screen_manufacturer));
-    furi_string_cat_printf(temp_str, "Resolution: %d x %d\n", info->width, info->height);
+    furi_string_cat_printf(
+        temp_str, "%s %d x %d\n", NFC_EINK_UI_TEXT("Resolution:", "分辨率:"), info->width, info->height);
 
     furi_string_cat_printf(
-        temp_str, "Size: %d bytes\n", nfc_eink_screen_get_image_size(instance->screen));
+        temp_str,
+        "%s %d bytes\n",
+        NFC_EINK_UI_TEXT("Size:", "大小:"),
+        nfc_eink_screen_get_image_size(instance->screen));
 
     widget_add_text_scroll_element(
         instance->widget, 0, 0, 128, 52, furi_string_get_cstr(temp_str));

@@ -38,6 +38,12 @@
 #include "des_cmac.h"
 #include "aes_cmac.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SEOS_UI_TEXT(en, zh) (zh)
+#else
+#define SEOS_UI_TEXT(en, zh) (en)
+#endif
+
 #define SEOS_TEXT_STORE_SIZE 128
 
 enum SeosCustomEvent {

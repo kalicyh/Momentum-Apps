@@ -450,9 +450,9 @@ void uhf_reader_view_write_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, "           Write Menu:");
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT("           Write Menu:", "           写入菜单:"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 33, "Write Mode:");
+    canvas_draw_str(canvas, 0, 33, RFID_READER_UI_TEXT("Write Mode:", "写入模式:"));
 
     //Displaying the current write mode selected
     canvas_draw_str(canvas, 51, 33, furi_string_get_cstr(MyModel->WriteFunction));
@@ -467,15 +467,15 @@ void uhf_reader_view_write_draw_callback(Canvas* canvas, void* model) {
     canvas_draw_str(canvas, 90, 22, furi_string_get_cstr(MyModel->Pc));
 
     //Display the current write status
-    canvas_draw_str(canvas, 0, 44, "Write Status: ");
+    canvas_draw_str(canvas, 0, 44, RFID_READER_UI_TEXT("Write Status: ", "写入状态: "));
     canvas_draw_str(canvas, 65, 44, furi_string_get_cstr(MyModel->WriteStatus));
 
     //Display the write button
     if(!MyModel->IsWriting) {
-        elements_button_center(canvas, "Write");
+        elements_button_center(canvas, RFID_READER_UI_TEXT("Write", "写入"));
 
     } else {
-        elements_button_center(canvas, "Cancel");
+        elements_button_center(canvas, RFID_READER_UI_TEXT("Cancel", "取消"));
     }
     furi_string_free(xstr);
 }
@@ -494,7 +494,7 @@ bool uhf_reader_view_write_input_callback(InputEvent* event, void* context) {
     if(event->type == InputTypeShort) {
         //If the left button is pressed, then pull up the EPC value and keyboard
         if(event->key == InputKeyLeft && !App->IsWriting) {
-            text_input_set_header_text(App->EpcWrite, "EPC Value");
+            text_input_set_header_text(App->EpcWrite, RFID_READER_UI_TEXT("EPC Value", "EPC值"));
 
             bool redraw = false;
             with_view_model(
@@ -530,7 +530,7 @@ bool uhf_reader_view_write_input_callback(InputEvent* event, void* context) {
 
         //If the right button is pressed, then display the reserved memory bank and display the keyboard
         else if(event->key == InputKeyRight && !App->IsWriting) {
-            text_input_set_header_text(App->EpcWrite, "Reserved Memory Bank");
+            text_input_set_header_text(App->EpcWrite, RFID_READER_UI_TEXT("Reserved Memory Bank", "保留存储区"));
             bool redraw = false;
             with_view_model(
                 App->ViewWrite,
@@ -563,7 +563,7 @@ bool uhf_reader_view_write_input_callback(InputEvent* event, void* context) {
 
         //If the up button is pressed, then display the user memory bank and keyboard
         else if(event->key == InputKeyUp && !App->IsWriting) {
-            text_input_set_header_text(App->EpcWrite, "User Memory Bank");
+            text_input_set_header_text(App->EpcWrite, RFID_READER_UI_TEXT("User Memory Bank", "用户存储区"));
             bool redraw = false;
             with_view_model(
                 App->ViewWrite,
@@ -596,7 +596,7 @@ bool uhf_reader_view_write_input_callback(InputEvent* event, void* context) {
 
         //If the down button is pressed, then display the TID memory bank and the keyboard
         else if(event->key == InputKeyDown && !App->IsWriting) {
-            text_input_set_header_text(App->EpcWrite, "TID Memory Bank");
+            text_input_set_header_text(App->EpcWrite, RFID_READER_UI_TEXT("TID Memory Bank", "TID存储区"));
             bool redraw = false;
             with_view_model(
                 App->ViewWrite,
@@ -693,38 +693,38 @@ void view_write_alloc(UHFReaderApp* App) {
     ModelWrite->Pc = furi_string_alloc_set("XXXX");
     ModelWrite->Crc = furi_string_alloc_set("XXXX");
     FuriString* EpcWriteDefault = furi_string_alloc();
-    furi_string_set_str(EpcWriteDefault, "Press Write");
+    furi_string_set_str(EpcWriteDefault, RFID_READER_UI_TEXT("Press Write", "按OK写入"));
     FuriString* EpcValueWriteDefault = furi_string_alloc();
-    furi_string_set_str(EpcValueWriteDefault, "Press Write");
+    furi_string_set_str(EpcValueWriteDefault, RFID_READER_UI_TEXT("Press Write", "按OK写入"));
     ModelWrite->EpcValue = EpcValueWriteDefault;
     FuriString* EpcValueWriteStatus = furi_string_alloc();
-    furi_string_set_str(EpcValueWriteStatus, "Press Write");
+    furi_string_set_str(EpcValueWriteStatus, RFID_READER_UI_TEXT("Press Write", "按OK写入"));
     ModelWrite->WriteStatus = EpcValueWriteStatus;
     FuriString* WriteDefaultEpc = furi_string_alloc();
     ModelWrite->NewEpcValue = WriteDefaultEpc;
     FuriString* DefaultWriteFunction = furi_string_alloc();
-    furi_string_set_str(DefaultWriteFunction, "Press Arrow Keys");
+    furi_string_set_str(DefaultWriteFunction, RFID_READER_UI_TEXT("Press Arrow Keys", "按方向键选择"));
     ModelWrite->WriteFunction = DefaultWriteFunction;
     FuriString* DefaultWriteTid = furi_string_alloc();
-    furi_string_set_str(DefaultWriteTid, "TID HERE");
+    furi_string_set_str(DefaultWriteTid, RFID_READER_UI_TEXT("TID HERE", "TID"));
     ModelWrite->TidValue = DefaultWriteTid;
     FuriString* DefaultWriteTidNew = furi_string_alloc();
-    furi_string_set_str(DefaultWriteTidNew, "NEW TID HERE");
+    furi_string_set_str(DefaultWriteTidNew, RFID_READER_UI_TEXT("NEW TID HERE", "新TID"));
     ModelWrite->NewTidValue = DefaultWriteTidNew;
     FuriString* DefaultWriteRes = furi_string_alloc();
-    furi_string_set_str(DefaultWriteRes, "RES HERE");
+    furi_string_set_str(DefaultWriteRes, RFID_READER_UI_TEXT("RES HERE", "保留区"));
     ModelWrite->ResValue = DefaultWriteRes;
     FuriString* DefaultWriteResNew = furi_string_alloc();
-    furi_string_set_str(DefaultWriteResNew, "NEW RES HERE");
+    furi_string_set_str(DefaultWriteResNew, RFID_READER_UI_TEXT("NEW RES HERE", "新保留区"));
     ModelWrite->NewResValue = DefaultWriteResNew;
     FuriString* DefaultWriteMem = furi_string_alloc();
-    furi_string_set_str(DefaultWriteMem, "MEM HERE");
+    furi_string_set_str(DefaultWriteMem, RFID_READER_UI_TEXT("MEM HERE", "用户区"));
     ModelWrite->MemValue = DefaultWriteMem;
     FuriString* DefaultWriteMemNew = furi_string_alloc();
-    furi_string_set_str(DefaultWriteMemNew, "NEW MEM HERE");
+    furi_string_set_str(DefaultWriteMemNew, RFID_READER_UI_TEXT("NEW MEM HERE", "新用户区"));
     ModelWrite->NewMemValue = DefaultWriteMemNew;
-    App->EpcName = furi_string_alloc_set("Enter Name");
-    App->EpcToWrite = furi_string_alloc_set("Enter Name");
+    App->EpcName = furi_string_alloc_set(RFID_READER_UI_TEXT("Enter Name", "输入名称"));
+    App->EpcToWrite = furi_string_alloc_set(RFID_READER_UI_TEXT("Enter Name", "输入名称"));
     App->EpcWrite = text_input_alloc();
     view_dispatcher_add_view(
         App->ViewDispatcher, UHFReaderViewEpcWriteInput, text_input_get_view(App->EpcWrite));

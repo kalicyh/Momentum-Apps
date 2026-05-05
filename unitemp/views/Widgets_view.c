@@ -74,11 +74,11 @@ void unitemp_widget_delete_switch(Sensor* sensor) {
     widget_reset(app->widget);
     //Adding buttons
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Cancel", _delete_click_callback, app);
+        app->widget, GuiButtonTypeLeft, UNITEMP_UI_TEXT("Cancel", "取消"), _delete_click_callback, app);
     widget_add_button_element(
-        app->widget, GuiButtonTypeRight, "Delete", _delete_click_callback, app);
+        app->widget, GuiButtonTypeRight, UNITEMP_UI_TEXT("Delete", "删除"), _delete_click_callback, app);
 
-    snprintf(app->buff, BUFF_SIZE, "\e#Delete %s?\e#", current_sensor->name);
+    snprintf(app->buff, BUFF_SIZE, UNITEMP_UI_TEXT("\e#Delete %s?\e#", "\e#删除 %s?\e#"), current_sensor->name);
     widget_add_text_box_element(
         app->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, app->buff, false);
 
@@ -88,7 +88,7 @@ void unitemp_widget_delete_switch(Sensor* sensor) {
         snprintf(
             app->buff,
             BUFF_SIZE,
-            "\e#Type:\e# %s",
+            UNITEMP_UI_TEXT("\e#Type:\e# %s", "\e#型号:\e# %s"),
             unitemp_onewire_sensor_getModel(current_sensor));
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, app->buff, false);
@@ -113,7 +113,7 @@ void unitemp_widget_delete_switch(Sensor* sensor) {
     }
 
     if(current_sensor->type->interface == &SINGLE_WIRE) {
-        snprintf(app->buff, BUFF_SIZE, "\e#Type:\e# %s", current_sensor->type->typename);
+        snprintf(app->buff, BUFF_SIZE, UNITEMP_UI_TEXT("\e#Type:\e# %s", "\e#型号:\e# %s"), current_sensor->type->typename);
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, app->buff, false);
         snprintf(
@@ -126,13 +126,13 @@ void unitemp_widget_delete_switch(Sensor* sensor) {
     }
 
     if(current_sensor->type->interface == &I2C) {
-        snprintf(app->buff, BUFF_SIZE, "\e#Type:\e# %s", current_sensor->type->typename);
+        snprintf(app->buff, BUFF_SIZE, UNITEMP_UI_TEXT("\e#Type:\e# %s", "\e#型号:\e# %s"), current_sensor->type->typename);
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, app->buff, false);
         snprintf(
             app->buff,
             BUFF_SIZE,
-            "\e#I2C addr:\e# 0x%02X",
+            UNITEMP_UI_TEXT("\e#I2C addr:\e# 0x%02X", "\e#I2C 地址:\e# 0x%02X"),
             ((I2CSensor*)current_sensor->instance)->currentI2CAdr >> 1);
         widget_add_text_box_element(
             app->widget, 0, 28, 128, 23, AlignLeft, AlignTop, app->buff, false);
@@ -167,7 +167,7 @@ void unitemp_widget_help_switch(void) {
     widget_add_icon_element(app->widget, 77, 18, &I_WarningDolphinFlip_45x42);
 
     widget_add_string_multiline_element(
-        app->widget, 55, 5, AlignLeft, AlignTop, FontSecondary, "You can find help\nthere");
+        app->widget, 55, 5, AlignLeft, AlignTop, FontSecondary, UNITEMP_UI_TEXT("You can find help\nthere", "扫码获取帮助"));
 
     widget_add_frame_element(app->widget, 0, 0, 128, 63, 7);
     widget_add_frame_element(app->widget, 0, 0, 128, 64, 7);
@@ -198,7 +198,9 @@ void unitemp_widget_about_switch(void) {
         16,
         121,
         44,
-        "Universal plugin for viewing the values of temperature\nsensors\n\e#Author: Quenon\ngithub.com/quen0n\n\e#Designer: Svaarich\ngithub.com/Svaarich\n\e#Issues & suggestions\ntiny.one/unitemp\n\e#Special thanks\nxMasterX");
+        UNITEMP_UI_TEXT(
+            "Universal plugin for viewing the values of temperature\nsensors\n\e#Author: Quenon\ngithub.com/quen0n\n\e#Designer: Svaarich\ngithub.com/Svaarich\n\e#Issues & suggestions\ntiny.one/unitemp\n\e#Special thanks\nxMasterX",
+            "查看温度传感器数值的通用插件\n\e#作者: Quenon\ngithub.com/quen0n\n\e#设计: Svaarich\ngithub.com/Svaarich\n\e#问题与建议\ntiny.one/unitemp\n\e#特别感谢\nxMasterX"));
 
     view_set_previous_callback(widget_get_view(app->widget), _help_exit_callback);
     view_dispatcher_switch_to_view(app->view_dispatcher, UnitempViewWidget);

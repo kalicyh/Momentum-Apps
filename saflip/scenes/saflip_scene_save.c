@@ -34,7 +34,7 @@ void saflip_scene_save_on_enter(void* context) {
 
     name_generator_make_auto(app->text_store, sizeof(app->text_store), SAFLIP_APP_FILE_PREFIX);
 
-    text_input_set_header_text(text_input, "Name the card");
+    text_input_set_header_text(text_input, SAFLIP_UI_TEXT("Name the card", "为卡片命名"));
     text_input_set_result_callback(
         text_input,
         saflip_scene_save_text_input_callback,
@@ -69,14 +69,14 @@ bool saflip_scene_save_on_event(void* context, SceneManagerEvent event) {
                 if(saflip_save_file(app, furi_string_get_cstr(saflip_full_path))) {
                     Popup* popup = app->popup;
                     popup_set_icon(popup, 36, 5, &I_DolphinDone_80x58);
-                    popup_set_header(popup, "Saved!", 13, 22, AlignLeft, AlignBottom);
+                    popup_set_header(popup, SAFLIP_UI_TEXT("Saved!", "已保存!"), 13, 22, AlignLeft, AlignBottom);
                     popup_set_timeout(popup, 1500);
                     popup_set_context(popup, app);
                     popup_set_callback(popup, saflip_scene_save_popup_callback);
                     popup_enable_timeout(popup);
                     view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewPopup);
                 } else {
-                    dialog_message_show_storage_error(app->dialogs_app, "Cannot save file");
+                    dialog_message_show_storage_error(app->dialogs_app, SAFLIP_UI_TEXT("Cannot save file", "无法保存文件"));
                 }
                 furi_string_free(saflip_full_path);
                 consumed = true;
@@ -96,17 +96,17 @@ bool saflip_scene_save_on_event(void* context, SceneManagerEvent event) {
                     if(nfc_device_save(app->nfc_device, furi_string_get_cstr(nfc_full_path))) {
                         Popup* popup = app->popup;
                         popup_set_icon(popup, 36, 5, &I_DolphinDone_80x58);
-                        popup_set_header(popup, "Saved!", 13, 22, AlignLeft, AlignBottom);
+                        popup_set_header(popup, SAFLIP_UI_TEXT("Saved!", "已保存!"), 13, 22, AlignLeft, AlignBottom);
                         popup_set_timeout(popup, 1500);
                         popup_set_context(popup, app);
                         popup_set_callback(popup, saflip_scene_save_popup_callback);
                         popup_enable_timeout(popup);
                         view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewPopup);
                     } else {
-                        dialog_message_show_storage_error(app->dialogs_app, "Cannot save file");
+                        dialog_message_show_storage_error(app->dialogs_app, SAFLIP_UI_TEXT("Cannot save file", "无法保存文件"));
                     }
                 } else {
-                    dialog_message_show_storage_error(app->dialogs_app, "Cannot save file");
+                    dialog_message_show_storage_error(app->dialogs_app, SAFLIP_UI_TEXT("Cannot save file", "无法保存文件"));
                 }
 
                 furi_string_free(nfc_full_path);

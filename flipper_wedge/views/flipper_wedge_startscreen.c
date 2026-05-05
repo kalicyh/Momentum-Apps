@@ -45,19 +45,19 @@ void flipper_wedge_startscreen_draw(Canvas* canvas, FlipperWedgeStartscreenModel
 
     // Title
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Flipper Wedge");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, FLIPPER_WEDGE_UI_TEXT("Flipper Wedge", "Flipper \xe6\xa5\x94\xe5\x85\xa5"));
 
     // HID connection status
     canvas_set_font(canvas, FontSecondary);
     char status_line[32];
     if(model->usb_connected && model->bt_connected) {
-        snprintf(status_line, sizeof(status_line), "USB: OK  BT: OK");
+        snprintf(status_line, sizeof(status_line), FLIPPER_WEDGE_UI_TEXT("USB: OK  BT: OK", "USB: OK  \xe8\x93\x9d\xe7\x89\x99: OK"));
     } else if(model->usb_connected) {
-        snprintf(status_line, sizeof(status_line), "USB: OK  BT: --");
+        snprintf(status_line, sizeof(status_line), FLIPPER_WEDGE_UI_TEXT("USB: OK  BT: --", "USB: OK  \xe8\x93\x9d\xe7\x89\x99: --"));
     } else if(model->bt_connected) {
-        snprintf(status_line, sizeof(status_line), "USB: --  BT: OK");
+        snprintf(status_line, sizeof(status_line), FLIPPER_WEDGE_UI_TEXT("USB: --  BT: OK", "USB: --  \xe8\x93\x9d\xe7\x89\x99: OK"));
     } else {
-        snprintf(status_line, sizeof(status_line), "No HID connection");
+        snprintf(status_line, sizeof(status_line), FLIPPER_WEDGE_UI_TEXT("No HID connection", "\xe6\x97\xa0 HID \xe8\xbf\x9e\xe6\x8e\xa5"));
     }
     canvas_draw_str_aligned(canvas, 64, 14, AlignCenter, AlignTop, status_line);
 
@@ -78,21 +78,21 @@ void flipper_wedge_startscreen_draw(Canvas* canvas, FlipperWedgeStartscreenModel
         // Status and bottom buttons
         canvas_set_font(canvas, FontSecondary);
         if(connected) {
-            canvas_draw_str_aligned(canvas, 64, 46, AlignCenter, AlignTop, "Scanning...");
+            canvas_draw_str_aligned(canvas, 64, 46, AlignCenter, AlignTop, FLIPPER_WEDGE_UI_TEXT("Scanning...", "\xe6\x89\xab\xe6\x8f\x8f\xe4\xb8\xad..."));
         } else {
-            canvas_draw_str_aligned(canvas, 64, 46, AlignCenter, AlignTop, "Connect USB or BT");
+            canvas_draw_str_aligned(canvas, 64, 46, AlignCenter, AlignTop, FLIPPER_WEDGE_UI_TEXT("Connect USB or BT", "\xe8\xbf\x9e\xe6\x8e\xa5 USB \xe6\x88\x96\xe8\x93\x9d\xe7\x89\x99"));
         }
 
         // Show Settings hint
-        canvas_draw_str_aligned(canvas, 64, 56, AlignCenter, AlignTop, "[OK] Settings");
+        canvas_draw_str_aligned(canvas, 64, 56, AlignCenter, AlignTop, FLIPPER_WEDGE_UI_TEXT("[OK] Settings", "[OK] \xe8\xae\xbe\xe7\xbd\xae"));
     } else if(model->display_state == FlipperWedgeDisplayStateScanning) {
         // Scanning state
-        canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignTop, "Scanning...");
+        canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignTop, FLIPPER_WEDGE_UI_TEXT("Scanning...", "\xe6\x89\xab\xe6\x8f\x8f\xe4\xb8\xad..."));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 44, AlignCenter, AlignTop, model->status_text);
     } else if(model->display_state == FlipperWedgeDisplayStateWaiting) {
         // Waiting for second tag
-        canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignTop, "Waiting...");
+        canvas_draw_str_aligned(canvas, 64, 28, AlignCenter, AlignTop, FLIPPER_WEDGE_UI_TEXT("Waiting...", "\xe7\xad\x89\xe5\xbe\x85\xe4\xb8\xad..."));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 44, AlignCenter, AlignTop, model->status_text);
     } else if(model->display_state == FlipperWedgeDisplayStateResult) {
@@ -102,7 +102,7 @@ void flipper_wedge_startscreen_draw(Canvas* canvas, FlipperWedgeStartscreenModel
         canvas_draw_str_aligned(canvas, 64, 44, AlignCenter, AlignTop, model->status_text);
     } else if(model->display_state == FlipperWedgeDisplayStateSent) {
         // Show "Sent"
-        canvas_draw_str_aligned(canvas, 64, 36, AlignCenter, AlignCenter, "Sent");
+        canvas_draw_str_aligned(canvas, 64, 36, AlignCenter, AlignCenter, FLIPPER_WEDGE_UI_TEXT("Sent", "\xe5\xb7\xb2\xe5\x8f\x91\xe9\x80\x81"));
     }
 }
 

@@ -24,29 +24,29 @@ static esp_loader_error_t _flash_file(EspFlasherApp* app, char* filepath, uint32
     if(!storage_file_open(bin_file, filepath, FSAM_READ, FSOM_OPEN_EXISTING)) {
         storage_file_close(bin_file);
         storage_file_free(bin_file);
-        dialog_message_show_storage_error(app->dialogs, "Cannot open file");
+        dialog_message_show_storage_error(app->dialogs, ESP_FLASHER_UI_TEXT("Cannot open file", "无法打开文件"));
         return ESP_LOADER_ERROR_FAIL;
     }
 
     uint64_t size = storage_file_size(bin_file);
 
-    loader_port_debug_print("Erasing flash...this may take a while\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Erasing flash...this may take a while\n", "正在擦除闪存...请耐心等待\n"));
     err = esp_loader_flash_start(addr, size, sizeof(payload));
     if(err != ESP_LOADER_SUCCESS) {
         storage_file_close(bin_file);
         storage_file_free(bin_file);
-        snprintf(user_msg, sizeof(user_msg), "Erasing flash failed with error %d\n", err);
+        snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("Erasing flash failed with error %d\n", "擦除闪存失败，错误码 %d\n"), err);
         loader_port_debug_print(user_msg);
         return err;
     }
 
-    loader_port_debug_print("Start programming\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Start programming\n", "开始烧录\n"));
     uint64_t last_updated = size;
     while(size > 0) {
         if((last_updated - size) > 50000) {
             // inform user every 50k bytes
             // TODO: draw a progress bar next update
-            snprintf(user_msg, sizeof(user_msg), "%llu bytes left.\n", size);
+            snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("%llu bytes left.\n", "剩余 %llu 字节\n"), size);
             loader_port_debug_print(user_msg);
             last_updated = size;
         }
@@ -54,7 +54,7 @@ static esp_loader_error_t _flash_file(EspFlasherApp* app, char* filepath, uint32
         uint16_t num_bytes = storage_file_read(bin_file, payload, to_read);
         err = esp_loader_flash_write(payload, num_bytes);
         if(err != ESP_LOADER_SUCCESS) {
-            snprintf(user_msg, sizeof(user_msg), "Packet could not be written! Error: %u\n", err);
+            snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("Packet could not be written! Error: %u\n", "数据包写入失败！错误: %u\n"), err);
             storage_file_close(bin_file);
             storage_file_free(bin_file);
             loader_port_debug_print(user_msg);
@@ -64,7 +64,7 @@ static esp_loader_error_t _flash_file(EspFlasherApp* app, char* filepath, uint32
         size -= num_bytes;
     }
 
-    loader_port_debug_print("Finished programming\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Finished programming\n", "烧录完成\n"));
 
     // TODO verify
 
@@ -107,49 +107,49 @@ static bool _switch_fw(EspFlasherApp* app) {
     esp_loader_error_t err;
     char user_msg[256];
 
-    loader_port_debug_print("Preparing to set flags for firmware A\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Preparing to set flags for firmware A\n", "正在设置固件 A 标志\n"));
     err = esp_loader_flash_start(
         ESP_ADDR_BOOT_APP0 + ESP_ADDR_OTADATA_OFFSET_APP_A,
         MAGIC_PAYLOAD_SIZE,
         MAGIC_PAYLOAD_SIZE);
     if(err != ESP_LOADER_SUCCESS) {
-        snprintf(user_msg, sizeof(user_msg), "Erasing flash failed with error %d\n", err);
+        snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("Erasing flash failed with error %d\n", "擦除闪存失败，错误码 %d\n"), err);
         loader_port_debug_print(user_msg);
         return true;
     }
 
-    loader_port_debug_print("Setting flags for firmware A\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Setting flags for firmware A\n", "正在写入固件 A 标志\n"));
     const uint8_t* which_payload_app_a = magic_payload_app_a;
     err = esp_loader_flash_write((void*)which_payload_app_a, MAGIC_PAYLOAD_SIZE);
     if(err != ESP_LOADER_SUCCESS) {
-        snprintf(user_msg, sizeof(user_msg), "Packet could not be written! Error: %u\n", err);
+        snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("Packet could not be written! Error: %u\n", "数据包写入失败！错误: %u\n"), err);
         loader_port_debug_print(user_msg);
         return true;
     }
 
-    loader_port_debug_print("Preparing to set flags for firmware B\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Preparing to set flags for firmware B\n", "正在设置固件 B 标志\n"));
     err = esp_loader_flash_start(
         ESP_ADDR_BOOT_APP0 + ESP_ADDR_OTADATA_OFFSET_APP_B,
         MAGIC_PAYLOAD_SIZE,
         MAGIC_PAYLOAD_SIZE);
     if(err != ESP_LOADER_SUCCESS) {
-        snprintf(user_msg, sizeof(user_msg), "Erasing flash failed with error %d\n", err);
+        snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("Erasing flash failed with error %d\n", "擦除闪存失败，错误码 %d\n"), err);
         loader_port_debug_print(user_msg);
         return true;
     }
 
-    loader_port_debug_print("Setting flags for firmware B\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Setting flags for firmware B\n", "正在写入固件 B 标志\n"));
     const uint8_t* which_payload_app_b =
         (app->switch_fw == SwitchToFirmwareB ? magic_payload_app_b_set :
                                                magic_payload_app_b_unset);
     err = esp_loader_flash_write((void*)which_payload_app_b, MAGIC_PAYLOAD_SIZE);
     if(err != ESP_LOADER_SUCCESS) {
-        snprintf(user_msg, sizeof(user_msg), "Packet could not be written! Error: %u\n", err);
+        snprintf(user_msg, sizeof(user_msg), ESP_FLASHER_UI_TEXT("Packet could not be written! Error: %u\n", "数据包写入失败！错误: %u\n"), err);
         loader_port_debug_print(user_msg);
         return true;
     }
 
-    loader_port_debug_print("Finished programming\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Finished programming\n", "烧录完成\n"));
     return true;
 }
 
@@ -167,18 +167,18 @@ static void _flash_all_files(EspFlasherApp* app) {
 #define NUM_FLASH_ITEMS 7
     FlashItem items[NUM_FLASH_ITEMS] = {
         {SelectedFlashBoot,
-         "bootloader",
+         ESP_FLASHER_UI_TEXT("bootloader", "引导加载"),
          app->bin_file_path_boot,
          app->selected_flash_options[SelectedFlashC5Mode] ?
              ESP_ADDR_BOOT_C5 :
              (app->selected_flash_options[SelectedFlashS3Mode] ? ESP_ADDR_BOOT_S3 :
                                                                  ESP_ADDR_BOOT)},
-        {SelectedFlashPart, "partition table", app->bin_file_path_part, ESP_ADDR_PART},
+        {SelectedFlashPart, ESP_FLASHER_UI_TEXT("partition table", "分区表"), app->bin_file_path_part, ESP_ADDR_PART},
         {SelectedFlashNvs, "NVS", app->bin_file_path_nvs, ESP_ADDR_NVS},
         {SelectedFlashBootApp0, "boot_app0", app->bin_file_path_boot_app0, ESP_ADDR_BOOT_APP0},
-        {SelectedFlashAppA, "firmware A", app->bin_file_path_app_a, ESP_ADDR_APP_A},
-        {SelectedFlashAppB, "firmware B", app->bin_file_path_app_b, ESP_ADDR_APP_B},
-        {SelectedFlashCustom, "custom data", app->bin_file_path_custom, 0x0},
+        {SelectedFlashAppA, ESP_FLASHER_UI_TEXT("firmware A", "固件 A"), app->bin_file_path_app_a, ESP_ADDR_APP_A},
+        {SelectedFlashAppB, ESP_FLASHER_UI_TEXT("firmware B", "固件 B"), app->bin_file_path_app_b, ESP_ADDR_APP_B},
+        {SelectedFlashCustom, ESP_FLASHER_UI_TEXT("custom data", "自定义数据"), app->bin_file_path_custom, 0x0},
         /* if you add more entries, update NUM_FLASH_ITEMS above! */
     };
 
@@ -190,7 +190,9 @@ static void _flash_all_files(EspFlasherApp* app) {
             snprintf(
                 user_msg,
                 sizeof(user_msg),
-                "Flashing %s (%d/%d) to address 0x%lx\n",
+                ESP_FLASHER_UI_TEXT(
+                    "Flashing %s (%d/%d) to address 0x%lx\n",
+                    "正在烧录 %s (%d/%d) 到地址 0x%lx\n"),
                 item->description,
                 current_step++,
                 num_steps,
@@ -217,7 +219,7 @@ static int32_t esp_flasher_flash_bin(void* context) {
     // turn on flipper blue LED for duration of flash
     notification_message(app->notification, &sequence_set_only_blue_255);
 
-    loader_port_debug_print("Connecting\n");
+    loader_port_debug_print(ESP_FLASHER_UI_TEXT("Connecting\n", "正在连接\n"));
     esp_loader_connect_args_t connect_config = ESP_LOADER_CONNECT_DEFAULT();
     err = esp_loader_connect(&connect_config);
     if(err != ESP_LOADER_SUCCESS) {
@@ -225,26 +227,28 @@ static int32_t esp_flasher_flash_bin(void* context) {
         snprintf(
             err_msg,
             sizeof(err_msg),
-            "Cannot connect to target. Error: %u\nMake sure the device is in bootloader/reflash mode, then try again.\n",
+            ESP_FLASHER_UI_TEXT(
+                "Cannot connect to target. Error: %u\nMake sure the device is in bootloader/reflash mode, then try again.\n",
+                "无法连接目标。错误: %u\n请确保设备处于引导模式，然后重试。\n"),
             err);
         loader_port_debug_print(err_msg);
     }
 
     // higher BR
     if(!err && app->turbospeed) {
-        loader_port_debug_print("Increasing speed for faster flash\n");
+        loader_port_debug_print(ESP_FLASHER_UI_TEXT("Increasing speed for faster flash\n", "正在提升速度以加速烧录\n"));
         err = esp_loader_change_transmission_rate(FAST_BAUDRATE);
         if(err != ESP_LOADER_SUCCESS) {
             char err_msg[256];
             snprintf(
-                err_msg, sizeof(err_msg), "Cannot change transmission rate. Error: %u\n", err);
+                err_msg, sizeof(err_msg), ESP_FLASHER_UI_TEXT("Cannot change transmission rate. Error: %u\n", "无法更改传输速率。错误: %u\n"), err);
             loader_port_debug_print(err_msg);
         }
         esp_flasher_uart_set_br(app->uart, FAST_BAUDRATE);
     }
 
     if(!err) {
-        loader_port_debug_print("Connected\n");
+        loader_port_debug_print(ESP_FLASHER_UI_TEXT("Connected\n", "已连接\n"));
         uint32_t start_time = furi_get_tick();
 
         if(!_switch_fw(app)) {
@@ -252,18 +256,20 @@ static int32_t esp_flasher_flash_bin(void* context) {
         }
         app->switch_fw = SwitchNotSet;
 
-        FuriString* flash_time =
-            furi_string_alloc_printf("Flash took: %lds\n", (furi_get_tick() - start_time) / 1000);
+        FuriString* flash_time = furi_string_alloc_printf(
+            ESP_FLASHER_UI_TEXT("Flash took: %lds\n", "烧录耗时: %ld 秒\n"),
+            (furi_get_tick() - start_time) / 1000);
         loader_port_debug_print(furi_string_get_cstr(flash_time));
         furi_string_free(flash_time);
 
         if(app->turbospeed) {
-            loader_port_debug_print("Restoring transmission rate\n");
+            loader_port_debug_print(ESP_FLASHER_UI_TEXT("Restoring transmission rate\n", "正在恢复传输速率\n"));
             esp_flasher_uart_set_br(app->uart, BAUDRATE);
         }
 
-        loader_port_debug_print(
-            "Done flashing. Please reset the board manually if it doesn't auto-reset.\n");
+        loader_port_debug_print(ESP_FLASHER_UI_TEXT(
+            "Done flashing. Please reset the board manually if it doesn't auto-reset.\n",
+            "烧录完成。若未自动复位，请手动复位开发板。\n"));
 
         // auto-reset for supported boards
         loader_port_reset_target();
@@ -338,10 +344,10 @@ static int32_t esp_flasher_reset(void* context) {
     furi_hal_gpio_write(&gpio_swclk, true);
 
     if(app->reset) {
-        loader_port_debug_print("Resetting board\n");
+        loader_port_debug_print(ESP_FLASHER_UI_TEXT("Resetting board\n", "正在复位开发板\n"));
         loader_port_reset_target();
     } else if(app->boot) {
-        loader_port_debug_print("Entering bootloader\n");
+        loader_port_debug_print(ESP_FLASHER_UI_TEXT("Entering bootloader\n", "正在进入引导模式\n"));
         loader_port_enter_bootloader();
     }
 

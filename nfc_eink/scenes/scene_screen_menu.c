@@ -24,28 +24,36 @@ void nfc_eink_scene_screen_menu_on_enter(void* context) {
     if(!after_emulation) {
         submenu_add_item(
             submenu,
-            "Write",
+            NFC_EINK_UI_TEXT("Write", "写入"),
             SubmenuIndexWrite,
             nfc_eink_scene_screen_menu_submenu_callback,
             instance);
         submenu_add_item(
             submenu,
-            "Delete",
+            NFC_EINK_UI_TEXT("Delete", "删除"),
             SubmenuIndexDelete,
             nfc_eink_scene_screen_menu_submenu_callback,
             instance);
     } else {
         submenu_add_item(
             submenu,
-            "Save",
+            NFC_EINK_UI_TEXT("Save", "保存"),
             SubmenuIndexSave,
             nfc_eink_scene_screen_menu_submenu_callback,
             instance);
     }
     submenu_add_item(
-        submenu, "Show", SubmenuIndexShow, nfc_eink_scene_screen_menu_submenu_callback, instance);
+        submenu,
+        NFC_EINK_UI_TEXT("Show", "显示"),
+        SubmenuIndexShow,
+        nfc_eink_scene_screen_menu_submenu_callback,
+        instance);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, nfc_eink_scene_screen_menu_submenu_callback, instance);
+        submenu,
+        NFC_EINK_UI_TEXT("Info", "信息"),
+        SubmenuIndexInfo,
+        nfc_eink_scene_screen_menu_submenu_callback,
+        instance);
 
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcEinkViewMenu);
 }

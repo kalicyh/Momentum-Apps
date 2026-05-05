@@ -22,7 +22,7 @@ void spi_mem_scene_select_model_on_enter(void* context) {
         models_on_vendor++;
     }
     if(models_on_vendor == 1) spi_mem_scene_select_model_submenu_callback(context, 0);
-    submenu_set_header(app->submenu, "Choose chip model");
+    submenu_set_header(app->submenu, SPI_MEM_UI_TEXT("Choose chip model", "选择芯片型号"));
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, SPIMemSceneSelectVendor));
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewSubmenu);

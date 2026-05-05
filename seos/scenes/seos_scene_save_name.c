@@ -23,7 +23,7 @@ void seos_scene_save_name_on_enter(void* context) {
     } else {
         seos_text_store_set(seos, seos->credential->name);
     }
-    text_input_set_header_text(text_input, "Name the card");
+    text_input_set_header_text(text_input, SEOS_UI_TEXT("Name the card", "命名卡片"));
     text_input_set_result_callback(
         text_input,
         seos_scene_save_name_text_input_callback,

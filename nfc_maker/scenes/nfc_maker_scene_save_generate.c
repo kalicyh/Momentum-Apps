@@ -499,7 +499,7 @@ void nfc_maker_scene_save_generate_on_enter(void* context) {
     Submenu* submenu = app->submenu;
     nfc_maker_scene_save_generate_populate_ndef_buffer(app);
 
-    submenu_set_header(submenu, "Tag Type:");
+    submenu_set_header(submenu, NFC_MAKER_UI_TEXT("Tag Type:", "标签类型:"));
 
     for(Card card = 0; card < CardMAX; card++) {
         submenu_add_lockable_item(
@@ -509,7 +509,7 @@ void nfc_maker_scene_save_generate_on_enter(void* context) {
             nfc_maker_scene_save_generate_submenu_callback,
             app,
             app->ndef_size > cards[card].size,
-            "Data is\ntoo large!");
+            NFC_MAKER_UI_TEXT("Data is\ntoo large!", "数据\n过大!"));
     }
 
     submenu_set_selected_item(

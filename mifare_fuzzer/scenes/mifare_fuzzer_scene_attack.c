@@ -38,22 +38,22 @@ void mifare_fuzzer_scene_attack_on_enter(void* context) {
     MifareFuzzerApp* app = context;
 
     Submenu* submenu_attack = app->submenu_attack;
-    submenu_set_header(submenu_attack, "Mifare Fuzzer (attack)");
+    submenu_set_header(submenu_attack, MIFARE_FUZZER_UI_TEXT("Mifare Fuzzer (attack)", "Mifare Fuzzer (攻击)"));
     submenu_add_item(
         submenu_attack,
-        "Test Values",
+        MIFARE_FUZZER_UI_TEXT("Test Values", "测试值"),
         SubmenuIndexTestValue,
         mifare_fuzzer_scene_attack_submenu_callback,
         app);
     submenu_add_item(
         submenu_attack,
-        "Random Values",
+        MIFARE_FUZZER_UI_TEXT("Random Values", "随机值"),
         SubmenuIndexRandomValuesAttack,
         mifare_fuzzer_scene_attack_submenu_callback,
         app);
     submenu_add_item(
         submenu_attack,
-        "Load UIDs from file",
+        MIFARE_FUZZER_UI_TEXT("Load UIDs from file", "从文件加载UID"),
         SubmenuIndexLoadUIDsFromFile,
         mifare_fuzzer_scene_attack_submenu_callback,
         app);

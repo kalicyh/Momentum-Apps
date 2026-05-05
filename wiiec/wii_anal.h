@@ -1,6 +1,12 @@
 #ifndef WII_ANAL_H_
 #define WII_ANAL_H_
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WIIEC_UI_TEXT(en, zh) (zh)
+#else
+#define WIIEC_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h> // Core API
 #include <input/input.h> // GUI Input extensions
 #include <notification/notification_messages.h>

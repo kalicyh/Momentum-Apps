@@ -38,7 +38,7 @@ static const MultiConverterUnit multi_converter_unit_dec = {
     0,
     10,
     "DEC\0",
-    "Decimal\0",
+    MULTI_CONVERTER_UI_TEXT("Decimal\0", "十进制\0"),
     multi_converter_unit_dec_hex_bin_convert,
     multi_converter_unit_dec_hex_bin_allowed};
 static const MultiConverterUnit multi_converter_unit_hex = {
@@ -46,7 +46,7 @@ static const MultiConverterUnit multi_converter_unit_hex = {
     0,
     16,
     "HEX\0",
-    "Hexadecimal\0",
+    MULTI_CONVERTER_UI_TEXT("Hexadecimal\0", "十六进制\0"),
     multi_converter_unit_dec_hex_bin_convert,
     multi_converter_unit_dec_hex_bin_allowed};
 static const MultiConverterUnit multi_converter_unit_bin = {
@@ -54,7 +54,7 @@ static const MultiConverterUnit multi_converter_unit_bin = {
     0,
     2,
     "BIN\0",
-    "Binary\0",
+    MULTI_CONVERTER_UI_TEXT("Binary\0", "二进制\0"),
     multi_converter_unit_dec_hex_bin_convert,
     multi_converter_unit_dec_hex_bin_allowed};
 
@@ -63,7 +63,7 @@ static const MultiConverterUnit multi_converter_unit_cel = {
     1,
     10,
     "CEL\0",
-    "Celsius\0",
+    MULTI_CONVERTER_UI_TEXT("Celsius\0", "摄氏度\0"),
     multi_converter_unit_temperature_convert,
     multi_converter_unit_temperature_allowed};
 static const MultiConverterUnit multi_converter_unit_far = {
@@ -71,7 +71,7 @@ static const MultiConverterUnit multi_converter_unit_far = {
     1,
     10,
     "FAR\0",
-    "Fahernheit\0",
+    MULTI_CONVERTER_UI_TEXT("Fahernheit\0", "华氏度\0"),
     multi_converter_unit_temperature_convert,
     multi_converter_unit_temperature_allowed};
 static const MultiConverterUnit multi_converter_unit_kel = {
@@ -79,7 +79,7 @@ static const MultiConverterUnit multi_converter_unit_kel = {
     1,
     10,
     "KEL\0",
-    "Kelvin\0",
+    MULTI_CONVERTER_UI_TEXT("Kelvin\0", "开尔文\0"),
     multi_converter_unit_temperature_convert,
     multi_converter_unit_temperature_allowed};
 
@@ -88,7 +88,7 @@ static const MultiConverterUnit multi_converter_unit_km = {
     0,
     10,
     "KM\0",
-    "Kilometers\0",
+    MULTI_CONVERTER_UI_TEXT("Kilometers\0", "千米\0"),
     multi_converter_unit_distance_convert,
     multi_converter_unit_distance_allowed};
 static const MultiConverterUnit multi_converter_unit_m = {
@@ -96,7 +96,7 @@ static const MultiConverterUnit multi_converter_unit_m = {
     0,
     10,
     "M\0",
-    "Meters\0",
+    MULTI_CONVERTER_UI_TEXT("Meters\0", "米\0"),
     multi_converter_unit_distance_convert,
     multi_converter_unit_distance_allowed};
 static const MultiConverterUnit multi_converter_unit_cm = {
@@ -104,7 +104,7 @@ static const MultiConverterUnit multi_converter_unit_cm = {
     0,
     10,
     "CM\0",
-    "Centimeters\0",
+    MULTI_CONVERTER_UI_TEXT("Centimeters\0", "厘米\0"),
     multi_converter_unit_distance_convert,
     multi_converter_unit_distance_allowed};
 static const MultiConverterUnit multi_converter_unit_mi = {
@@ -112,7 +112,7 @@ static const MultiConverterUnit multi_converter_unit_mi = {
     0,
     10,
     "MI\0",
-    "Miles\0",
+    MULTI_CONVERTER_UI_TEXT("Miles\0", "英里\0"),
     multi_converter_unit_distance_convert,
     multi_converter_unit_distance_allowed};
 static const MultiConverterUnit multi_converter_unit_ft = {
@@ -120,7 +120,7 @@ static const MultiConverterUnit multi_converter_unit_ft = {
     0,
     10,
     "FT\0",
-    "Feet\0",
+    MULTI_CONVERTER_UI_TEXT("Feet\0", "英尺\0"),
     multi_converter_unit_distance_convert,
     multi_converter_unit_distance_allowed};
 static const MultiConverterUnit multi_converter_unit_in = {
@@ -128,7 +128,7 @@ static const MultiConverterUnit multi_converter_unit_in = {
     0,
     10,
     " \"\0",
-    "Inches\0",
+    MULTI_CONVERTER_UI_TEXT("Inches\0", "英寸\0"),
     multi_converter_unit_distance_convert,
     multi_converter_unit_distance_allowed};
 
@@ -137,7 +137,7 @@ static const MultiConverterUnit multi_converter_unit_deg = {
     0,
     10,
     "DEG\0",
-    "Degree\0",
+    MULTI_CONVERTER_UI_TEXT("Degree\0", "度\0"),
     multi_converter_unit_angle_convert,
     multi_converter_unit_angle_allowed};
 static const MultiConverterUnit multi_converter_unit_rad = {
@@ -145,7 +145,7 @@ static const MultiConverterUnit multi_converter_unit_rad = {
     0,
     10,
     "RAD\0",
-    "Radian\0",
+    MULTI_CONVERTER_UI_TEXT("Radian\0", "弧度\0"),
     multi_converter_unit_angle_convert,
     multi_converter_unit_angle_allowed};
 

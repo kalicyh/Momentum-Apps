@@ -126,16 +126,34 @@ int32_t ghost_esp_app(void* p) {
     state->settings_actions_menu = submenu_alloc();
 
     // Set headers - only for successfully allocated components
-    if(state->main_menu) main_menu_set_header(state->main_menu, "Select a Utility");
-    if(state->wifi_menu) submenu_set_header(state->wifi_menu, "Select a Wifi Utility");
-    if(state->ble_menu) submenu_set_header(state->ble_menu, "Select a Bluetooth Utility");
-    if(state->gps_menu) submenu_set_header(state->gps_menu, "Select a GPS Utility");
-    if(state->ir_menu) submenu_set_header(state->ir_menu, "Select an IR Utility");
-    if(state->ir_remotes_menu) submenu_set_header(state->ir_remotes_menu, "IR Remotes");
-    if(state->ir_buttons_menu) submenu_set_header(state->ir_buttons_menu, "IR Buttons");
-    if(state->ir_universals_menu) submenu_set_header(state->ir_universals_menu, "IR Universals");
-    if(state->text_input) text_input_set_header_text(state->text_input, "Enter Your Text");
-    if(state->settings_actions_menu) submenu_set_header(state->settings_actions_menu, "Settings");
+    if(state->main_menu)
+        main_menu_set_header(
+            state->main_menu, GHOST_ESP_UI_TEXT("Select a Utility", "选择工具"));
+    if(state->wifi_menu)
+        submenu_set_header(
+            state->wifi_menu, GHOST_ESP_UI_TEXT("Select a Wifi Utility", "选择 WiFi 工具"));
+    if(state->ble_menu)
+        submenu_set_header(
+            state->ble_menu, GHOST_ESP_UI_TEXT("Select a Bluetooth Utility", "选择蓝牙工具"));
+    if(state->gps_menu)
+        submenu_set_header(
+            state->gps_menu, GHOST_ESP_UI_TEXT("Select a GPS Utility", "选择 GPS 工具"));
+    if(state->ir_menu)
+        submenu_set_header(
+            state->ir_menu, GHOST_ESP_UI_TEXT("Select an IR Utility", "选择红外工具"));
+    if(state->ir_remotes_menu)
+        submenu_set_header(state->ir_remotes_menu, GHOST_ESP_UI_TEXT("IR Remotes", "红外遥控器"));
+    if(state->ir_buttons_menu)
+        submenu_set_header(state->ir_buttons_menu, GHOST_ESP_UI_TEXT("IR Buttons", "红外按键"));
+    if(state->ir_universals_menu)
+        submenu_set_header(
+            state->ir_universals_menu, GHOST_ESP_UI_TEXT("IR Universals", "红外万能遥控"));
+    if(state->text_input)
+        text_input_set_header_text(
+            state->text_input, GHOST_ESP_UI_TEXT("Enter Your Text", "输入文本"));
+    if(state->settings_actions_menu)
+        submenu_set_header(
+            state->settings_actions_menu, GHOST_ESP_UI_TEXT("Settings", "设置"));
 
     // Initialize settings and configuration early
     settings_storage_init();

@@ -11,7 +11,7 @@ void seos_scene_ble_central_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seos->popup;
-    popup_set_header(popup, "Starting...", 68, 20, AlignLeft, AlignTop);
+    popup_set_header(popup, SEOS_UI_TEXT("Starting...", "启动中..."), 68, 20, AlignLeft, AlignTop);
     // popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     seos->seos_central = seos_central_alloc(seos);
@@ -37,22 +37,27 @@ bool seos_scene_ble_central_on_event(void* context, SceneManagerEvent event) {
             scene_manager_next_scene(seos->scene_manager, SeosSceneReadError);
             consumed = true;
         } else if(event.event == SeosCustomEventHCIInit) {
-            popup_set_header(popup, "Init", 68, 20, AlignLeft, AlignTop);
+            popup_set_header(popup, SEOS_UI_TEXT("Init", "初始化"), 68, 20, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventScan) {
-            popup_set_header(popup, "Scanning...", 68, 20, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Scanning...", "扫描中..."), 68, 20, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventFound) {
-            popup_set_header(popup, "Device\nfound", 68, 20, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Device\nfound", "发现\n设备"), 68, 20, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventConnected) {
-            popup_set_header(popup, "Connected", 68, 20, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Connected", "已连接"), 68, 20, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventAuthenticated) {
-            popup_set_header(popup, "Auth'd", 68, 20, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Auth'd", "已认证"), 68, 20, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventSIORequested) {
-            popup_set_header(popup, "SIO\nRequested", 68, 20, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("SIO\nRequested", "SIO\n已请求"), 68, 20, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

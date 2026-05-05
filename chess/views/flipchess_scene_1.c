@@ -10,6 +10,12 @@
 #include "../helpers/flipchess_voice.h"
 #include "../helpers/flipchess_haptic.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHESS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHESS_UI_TEXT(en, zh) (en)
+#endif
+
 #define SCL_960_CASTLING        0 // setting to 1 compiles a 960 version of smolchess
 #define XBOARD_DEBUG            0 // will create files with xboard communication
 #define SCL_EVALUATION_FUNCTION SCL_boardEvaluateStatic
@@ -52,9 +58,9 @@ typedef struct {
     uint8_t squareSelected;
     uint8_t squareSelectedLast;
 
-    char* msg;
-    char* msg2;
-    char* msg3;
+    const char* msg;
+    const char* msg2;
+    const char* msg3;
     char moveString[MAX_TEXT_BUF];
     char moveString2[MAX_TEXT_BUF];
     char moveString3[MAX_TEXT_BUF];
@@ -298,37 +304,37 @@ uint8_t flipchess_turn(FlipChessScene1Model* model) {
 
         switch(model->game.state) {
         case SCL_GAME_STATE_WHITE_WIN:
-            model->msg = "white wins";
+            model->msg = FLIPCHESS_UI_TEXT("white wins", "白方胜");
             model->paramExit = FlipChessStatusReturn;
             break;
 
         case SCL_GAME_STATE_BLACK_WIN:
-            model->msg = "black wins";
+            model->msg = FLIPCHESS_UI_TEXT("black wins", "黑方胜");
             model->paramExit = FlipChessStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_STALEMATE:
-            model->msg = "stalemate";
+            model->msg = FLIPCHESS_UI_TEXT("stalemate", "逼和");
             model->paramExit = FlipChessStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_REPETITION:
-            model->msg = "draw-repetition";
+            model->msg = FLIPCHESS_UI_TEXT("draw-repetition", "重复和棋");
             model->paramExit = FlipChessStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_DEAD:
-            model->msg = "draw-dead pos.";
+            model->msg = FLIPCHESS_UI_TEXT("draw-dead pos.", "死局和棋");
             model->paramExit = FlipChessStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW:
-            model->msg = "draw";
+            model->msg = FLIPCHESS_UI_TEXT("draw", "和棋");
             model->paramExit = FlipChessStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_50:
-            model->msg = "draw-50 moves";
+            model->msg = FLIPCHESS_UI_TEXT("draw-50 moves", "50步和棋");
             model->paramExit = FlipChessStatusReturn;
             break;
 
@@ -337,9 +343,11 @@ uint8_t flipchess_turn(FlipChessScene1Model* model) {
                 const uint8_t whitesTurn = SCL_boardWhitesTurn(model->game.board);
 
                 if(SCL_boardCheck(model->game.board, whitesTurn)) {
-                    model->msg = (whitesTurn ? "black: check!" : "white: check!");
+                    model->msg = (whitesTurn ? FLIPCHESS_UI_TEXT("black: check!", "黑方: 将军!")
+                                             : FLIPCHESS_UI_TEXT("white: check!", "白方: 将军!"));
                 } else {
-                    model->msg = (whitesTurn ? "black played" : "white played");
+                    model->msg = (whitesTurn ? FLIPCHESS_UI_TEXT("black played", "黑方走棋")
+                                             : FLIPCHESS_UI_TEXT("white played", "白方走棋"));
                 }
 
                 uint8_t s0, s1;
@@ -380,7 +388,7 @@ void flipchess_scene_1_draw(Canvas* canvas, FlipChessScene1Model* model) {
     // Message
     canvas_set_font(canvas, FontSecondary);
     if(model->thinking) {
-        canvas_draw_str(canvas, 68, 10, "thinking...");
+        canvas_draw_str(canvas, 68, 10, FLIPCHESS_UI_TEXT("thinking...", "思考中..."));
     } else {
         canvas_draw_str(canvas, 68, 10, model->msg);
     }
@@ -428,7 +436,7 @@ static int flipchess_scene_1_model_init(
     model->squareSelected = 255;
     model->squareSelectedLast = 28; // start selector near middle
 
-    model->msg = "init";
+    model->msg = FLIPCHESS_UI_TEXT("init", "初始化");
     model->moveString[0] = '\0';
     model->msg2 = "";
     model->moveString2[0] = '\0';
@@ -512,7 +520,8 @@ static int flipchess_scene_1_model_init(
         return FlipChessStatusReturn;
     }
 
-    model->msg = (SCL_boardWhitesTurn(model->game.board) ? "white to move" : "black to move");
+    model->msg = (SCL_boardWhitesTurn(model->game.board) ? FLIPCHESS_UI_TEXT("white to move", "白方走棋")
+                                                          : FLIPCHESS_UI_TEXT("black to move", "黑方走棋"));
 
     // 0 = success
     return FlipChessStatusNone;

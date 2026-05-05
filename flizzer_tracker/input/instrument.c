@@ -26,7 +26,7 @@ void edit_instrument_param(FlizzerTrackerApp* tracker, uint8_t selected_param, i
     }
 
     case INST_INSTRUMENTNAME: {
-        text_input_set_header_text(tracker->text_input, "Instrument name:");
+        text_input_set_header_text(tracker->text_input, FLIZZER_TRACKER_UI_TEXT("Instrument name:", "乐器名称:"));
         text_input_set_result_callback(
             tracker->text_input,
             return_from_keyboard_callback,

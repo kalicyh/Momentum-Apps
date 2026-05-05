@@ -33,3 +33,9 @@ void game_switch_show_fps(GameContext* context);
 void game_sound_play(GameContext* context, const NotificationSequence* sequence);
 
 extern const NotificationSequence sequence_sound_menu;
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif

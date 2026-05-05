@@ -28,15 +28,15 @@
 #include "src/gui_bridge/view_module_entity.h"
 
 const char* const difficulty_text[DifficultyCount] = {
-    "Easy",
-    "Normal",
-    "Hard",
-    "Insane",
+    UI_TEXT("Easy", "简单"),
+    UI_TEXT("Normal", "普通"),
+    UI_TEXT("Hard", "困难"),
+    UI_TEXT("Insane", "疯狂"),
 };
 
 const char* const state_text[StateCount] = {
-    "OFF",
-    "ON",
+    UI_TEXT("OFF", "关"),
+    UI_TEXT("ON", "开"),
 };
 
 static bool
@@ -85,7 +85,7 @@ level_settings_alloc(Level* level, GameManager* manager, void* context)
 
     // Add difficulty
     item = variable_item_list_add(variable_item_list,
-                                  "Difficulty",
+                                  UI_TEXT("Difficulty", "难度"),
                                   DifficultyCount,
                                   difficulty_change_callback,
                                   manager);
@@ -95,7 +95,7 @@ level_settings_alloc(Level* level, GameManager* manager, void* context)
 
     // Add sound
     item = variable_item_list_add(variable_item_list,
-                                  "Sound",
+                                  UI_TEXT("Sound", "音效"),
                                   StateCount,
                                   state_change_callback,
                                   &game_context->sound);
@@ -104,7 +104,7 @@ level_settings_alloc(Level* level, GameManager* manager, void* context)
 
     // Add vibro
     item = variable_item_list_add(variable_item_list,
-                                  "Vibro",
+                                  UI_TEXT("Vibro", "振动"),
                                   StateCount,
                                   state_change_callback,
                                   &game_context->vibro);

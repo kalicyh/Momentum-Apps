@@ -74,21 +74,21 @@ void wifi_marauder_script_stage_menu_select_load(WifiMarauderScriptStageMenu* st
     stage_menu->items = malloc(3 * sizeof(WifiMarauderScriptMenuItem));
 
     stage_menu->items[0] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Type"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Type", "类型")),
         .type = WifiMarauderScriptMenuItemTypeOptionsString,
         .num_options = 2,
         .options = {"ap", "station"},
         .setup_callback = wifi_marauder_select_stage_type_setup_callback,
         .change_callback = wifi_marauder_select_stage_type_change_callback};
     stage_menu->items[1] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Filter"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Filter", "过滤器")),
         .type = WifiMarauderScriptMenuItemTypeString,
         .num_options = 2,
         .setup_callback = wifi_marauder_select_stage_filter_setup_callback,
         .change_callback = wifi_marauder_select_stage_filter_change_callback,
         .select_callback = wifi_marauder_select_stage_filter_select_callback};
     stage_menu->items[2] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Indexes"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Indexes", "索引")),
         .type = WifiMarauderScriptMenuItemTypeListNumber,
         .num_options = 1,
         .select_callback = wifi_marauder_select_stage_indexes_select_callback};

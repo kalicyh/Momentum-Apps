@@ -98,7 +98,7 @@ void metroflip_scene_auto_on_enter(void* context) {
 
     // Setup view
     Popup* popup = app->popup;
-    popup_set_header(popup, "Apply\n card to\nthe back", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "\xe5\xb0\x86\xe5\x8d\xa1\xe7\x89\x87\xe8\xb4\xb4\xe8\xbf\x91\n\xe8\x83\x8c\xe9\x9d\xa2"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     // Start worker
@@ -116,7 +116,7 @@ bool metroflip_scene_auto_on_event(void* context, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "DON'T\nMOVE", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerSuccess) {
             nfc_poller_stop(app->poller);
@@ -125,15 +125,15 @@ bool metroflip_scene_auto_on_event(void* context, SceneManagerEvent event) {
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "Card \n lost", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "WRONG \n CARD", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, "Failed", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerDetect) {
             nfc_scanner_stop(app->scanner);
@@ -177,12 +177,12 @@ bool metroflip_scene_auto_on_event(void* context, SceneManagerEvent event) {
                     break;
                 case CARD_TYPE_UNKNOWN:
                     app->card_type = "Unknown Card";
-                    popup_set_header(popup, "Unsupported\n card", 58, 31, AlignLeft, AlignTop);
+                    popup_set_header(popup, METROFLIP_UI_TEXT("Unsupported\n card", "\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81\n\xe7\x9a\x84\xe5\x8d\xa1\xe7\x89\x87"), 58, 31, AlignLeft, AlignTop);
                     break;
                 default:
                     app->card_type = "Unknown Card";
                     FURI_LOG_I(TAG, "Detected: Unknown card type\n");
-                    popup_set_header(popup, "Unsupported\n card", 58, 31, AlignLeft, AlignTop);
+                    popup_set_header(popup, METROFLIP_UI_TEXT("Unsupported\n card", "\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81\n\xe7\x9a\x84\xe5\x8d\xa1\xe7\x89\x87"), 58, 31, AlignLeft, AlignTop);
                     break;
                 }
                 app->is_desfire = false;
@@ -237,13 +237,13 @@ bool metroflip_scene_auto_on_event(void* context, SceneManagerEvent event) {
                 NfcProtocolInvalid) {
                 app->card_type = "Unknown Card";
                 Popup* popup = app->popup;
-                popup_set_header(popup, "Card\n Unsupported", 58, 31, AlignLeft, AlignTop);
+                popup_set_header(popup, METROFLIP_UI_TEXT("Card\n Unsupported", "\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81\n\xe7\x9a\x84\xe5\x8d\xa1\xe7\x89\x87"), 58, 31, AlignLeft, AlignTop);
                 scene_manager_next_scene(app->scene_manager, MetroflipSceneParse);
                 consumed = true;
             } else {
                 Popup* popup = app->popup;
                 app->card_type = "Unknown Card";
-                popup_set_header(popup, "Card\n Unsupported", 68, 30, AlignLeft, AlignTop);
+                popup_set_header(popup, METROFLIP_UI_TEXT("Card\n Unsupported", "\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81\n\xe7\x9a\x84\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
                 scene_manager_next_scene(app->scene_manager, MetroflipSceneParse);
                 consumed = true;
             }

@@ -38,7 +38,7 @@ void save_current_state(ToyPadEmu* emulator) {
         return; // Invalid emulator
     }
     if(ToyPadEmu_get_token_count() == 0) {
-        set_debug_text("No tokens to save");
+        set_debug_text(LDTOYPAD_UI_TEXT("No tokens to save", "无令牌可保存"));
         return;
     }
 
@@ -49,7 +49,7 @@ void save_current_state(ToyPadEmu* emulator) {
         }
     }
     if(save_toypad(tokens_copy, boxInfo, "preset1")) {
-        set_debug_text("Saved preset");
+        set_debug_text(LDTOYPAD_UI_TEXT("Saved preset", "预设已保存"));
     }
 }
 
@@ -106,15 +106,15 @@ bool ldtoypad_scene_emulate_input_callback(InputEvent* event, void* context) {
                                     // check if the minifigure is already a favorite then unfavorite it
                                     if(is_favorite(id)) {
                                         if(unfavorite(id, app)) {
-                                            set_debug_text("Minifigure removed from favs");
+                                            set_debug_text(LDTOYPAD_UI_TEXT("Minifigure removed from favs", "人仔已从收藏移除"));
                                         } else {
-                                            set_debug_text("Error removing from favs");
+                                            set_debug_text(LDTOYPAD_UI_TEXT("Error removing from favs", "从收藏移除失败"));
                                         }
                                     } else {
                                         if(favorite(id, app)) {
-                                            set_debug_text("Minifigure added to favs");
+                                            set_debug_text(LDTOYPAD_UI_TEXT("Minifigure added to favs", "人仔已添加到收藏"));
                                         } else {
-                                            set_debug_text("Error adding to favs");
+                                            set_debug_text(LDTOYPAD_UI_TEXT("Error adding to favs", "添加到收藏失败"));
                                         }
                                     }
                                 }
@@ -148,7 +148,7 @@ bool ldtoypad_scene_emulate_input_callback(InputEvent* event, void* context) {
                             if(i >= 0 && ToyPadEmu_remove(i)) {
                                 boxInfo[selectedBox].isFilled = false;
                                 boxInfo[selectedBox].index = -1; // Reset index
-                                set_debug_text("Going to remove minifig from toypad");
+                                set_debug_text(LDTOYPAD_UI_TEXT("Going to remove minifig from toypad", "即将从玩具垫移除人仔"));
                                 consumed = true;
                             }
                             return consumed;
@@ -276,7 +276,7 @@ bool ldtoypad_scene_emulate_input_callback(InputEvent* event, void* context) {
     return consumed;
 }
 
-static const char* all_mini_menu_labels[] = {"Add favorite", "Save vehicle"};
+static const char* all_mini_menu_labels[] = {LDTOYPAD_UI_TEXT("Add favorite", "添加收藏"), LDTOYPAD_UI_TEXT("Save vehicle", "保存载具")};
 
 static void ldtoypad_scene_emulate_draw_render_callback(Canvas* canvas, void* context) {
     LDToyPadSceneEmulateModel* model = context;
@@ -300,7 +300,7 @@ static void ldtoypad_scene_emulate_draw_render_callback(Canvas* canvas, void* co
         model->connected = true;
         set_connected_status(
             ConnectedStatusConnected); // Set the connected status to 1 (connected) and not 2 (re-connecting)
-        model->connection_status = "USB Awoken";
+        model->connection_status = LDTOYPAD_UI_TEXT("USB Awoken", "USB 已唤醒");
         model->sub_screen_box_selected =
             SelectionMinifigure; // Set the minifigure box selected as this is the most commonnly used at start of the app.
 
@@ -315,9 +315,9 @@ static void ldtoypad_scene_emulate_draw_render_callback(Canvas* canvas, void* co
             furi_timer_start(toypadscene_instance->timer, furi_ms_to_ticks(5000));
         }
     } else if(model->connected) {
-        model->connection_status = "USB Connected";
+        model->connection_status = LDTOYPAD_UI_TEXT("USB Connected", "USB 已连接");
     } else if(!model->connected) {
-        model->connection_status = "Trying to connect USB";
+        model->connection_status = LDTOYPAD_UI_TEXT("Trying to connect USB", "正在尝试连接 USB");
     }
 
     if((model->selected_minifigure_index > 0 || model->selected_vehicle_index > 0) &&
@@ -449,7 +449,7 @@ static void ldtoypad_scene_emulate_draw_render_callback(Canvas* canvas, void* co
 
             // change add favorite to remove favorite if the minifigure is already a favorite
             if(is_favorite(ToyPadEmu_get_token(boxInfo[selectedBox].index)->id)) {
-                visible_labels[0] = "Remove favorite";
+                visible_labels[0] = LDTOYPAD_UI_TEXT("Remove favorite", "移除收藏");
             }
         } else if(token_selected == 2) {
             // Only vehicle, show only save vehicle
@@ -485,7 +485,7 @@ static void ldtoypad_scene_emulate_draw_render_callback(Canvas* canvas, void* co
             y += 10;
         }
 
-        elements_multiline_text_framed(canvas, x, y, "Connect Game");
+        elements_multiline_text_framed(canvas, x, y, LDTOYPAD_UI_TEXT("Connect Game", "连接游戏"));
     }
 }
 
@@ -614,7 +614,7 @@ void saved_token_submenu_callback(void* context, uint32_t index) {
     FuriString* filepath = (FuriString*)context;
 
     if(furi_string_utf8_length(filepath) == 0) {
-        set_debug_text("Invalid filepath");
+        set_debug_text(LDTOYPAD_UI_TEXT("Invalid filepath", "无效文件路径"));
         return;
     }
 

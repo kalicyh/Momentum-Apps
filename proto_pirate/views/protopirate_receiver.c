@@ -204,7 +204,7 @@ void protopirate_view_receiver_draw(Canvas* canvas, ProtoPirateReceiverModel* mo
 
     if(!model->sub_decode_mode) {
         //Config button. (Do it at the top so we dont get Inversion problems from the list view part.)
-        elements_button_left(canvas, "Config");
+        elements_button_left(canvas, PROTOPIRATE_UI_TEXT("Config", "配置"));
 
         // Draw RSSI
         protopirate_view_rssi_draw(canvas, model);
@@ -217,7 +217,7 @@ void protopirate_view_receiver_draw(Canvas* canvas, ProtoPirateReceiverModel* mo
         canvas_draw_str(canvas, 96, 63, furi_string_get_cstr(model->history_stat_str));
         canvas_set_font(canvas, FontSecondary);
         elements_bold_rounded_frame(canvas, 14, 8, 99, 48);
-        elements_multiline_text(canvas, 65, 26, "To unlock\npress:");
+        elements_multiline_text(canvas, 65, 26, PROTOPIRATE_UI_TEXT("To unlock\npress:", "解锁\n按下:"));
         canvas_draw_icon(canvas, 65, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 80, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 95, 42, &I_Pin_back_arrow_10x8);
@@ -226,7 +226,7 @@ void protopirate_view_receiver_draw(Canvas* canvas, ProtoPirateReceiverModel* mo
     } else {
         if(model->lock == ProtoPirateLockOn) {
             canvas_draw_icon(canvas, 64, 55, &I_Lock_7x8);
-            canvas_draw_str(canvas, 74, 62, "锁定");
+            canvas_draw_str(canvas, 74, 62, PROTOPIRATE_UI_TEXT("Locked", "锁定"));
         } else {
             canvas_draw_str(canvas, 44, 63, furi_string_get_cstr(model->frequency_str));
             canvas_draw_str(canvas, 79, 63, furi_string_get_cstr(model->preset_str));
@@ -383,14 +383,14 @@ void protopirate_view_receiver_draw(Canvas* canvas, ProtoPirateReceiverModel* mo
         // Draw EXT/INT indicator in upper right corner
         canvas_set_font(canvas, FontSecondary);
         if(model->external_radio) {
-            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, "外置");
+            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, PROTOPIRATE_UI_TEXT("EXT", "外置"));
         } else {
-            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, "内置");
+            canvas_draw_str_aligned(canvas, 127, 0, AlignRight, AlignTop, PROTOPIRATE_UI_TEXT("INT", "内置"));
         }
 
         //Draw the Auto-save Indicator
         if(model->auto_save) {
-            const char* auto_save_text = "Save";
+            const char* auto_save_text = PROTOPIRATE_UI_TEXT("Save", "保存");
             canvas_draw_str(
                 canvas, 110 - canvas_string_width(canvas, auto_save_text), 7, auto_save_text);
         }

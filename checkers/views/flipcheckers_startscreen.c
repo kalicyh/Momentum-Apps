@@ -63,7 +63,7 @@ void flipcheckers_startscreen_draw(Canvas* canvas, FlipCheckersStartscreenModel*
 
     // === Title: "CHECKERS" bold large, version right-aligned on same baseline ===
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 14, 16, "CHECKERS");
+    canvas_draw_str(canvas, 14, 16, FLIPCHECKERS_UI_TEXT("CHECKERS", "跳棋"));
     canvas_draw_str_aligned(canvas, 113, 16, AlignRight, AlignBottom, FLIPCHECKERS_VERSION);
 
     // Double underline beneath title

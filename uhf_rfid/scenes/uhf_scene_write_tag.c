@@ -17,7 +17,7 @@ void uhf_scene_write_tag_on_enter(void* ctx) {
 
     // Setup view
     Popup* popup = uhf_app->popup;
-    popup_set_header(popup, "Writing\n[UHF] RFID\nTag", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, UHF_UI_TEXT("Writing\n[UHF] RFID\nTag", "写入\n[UHF] RFID\n标签"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinSend_97x61);
 
     // Start worker

@@ -1,6 +1,12 @@
 #ifndef MFKEY_H
 #define MFKEY_H
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MFKEY_UI_TEXT(en, zh) (zh)
+#else
+#define MFKEY_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi_hal.h>
 #include <gui/gui.h>
 #include <gui/elements.h>

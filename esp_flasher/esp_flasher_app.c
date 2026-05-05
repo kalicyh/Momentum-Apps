@@ -82,7 +82,7 @@ void esp_flasher_make_app_folder(EspFlasherApp* app) {
     furi_assert(app);
 
     if(!storage_simply_mkdir(app->storage, ESP_APP_FOLDER)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\napp folder");
+        dialog_message_show_storage_error(app->dialogs, ESP_FLASHER_UI_TEXT("Cannot create\napp folder", "无法创建\n应用文件夹"));
     }
 }
 

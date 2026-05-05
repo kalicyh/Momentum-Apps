@@ -29,11 +29,11 @@ bool scene_action_settings_delete(App* app) {
     Item* item = ItemArray_get(app->items_view->items, app->selected_item);
 
     DialogMessage* dialog = dialog_message_alloc();
-    dialog_message_set_header(dialog, "Delete?", 64, 0, AlignCenter, AlignTop);
+    dialog_message_set_header(dialog, QUAC_UI_TEXT("Delete?", "删除?"), 64, 0, AlignCenter, AlignTop);
     FuriString* text = furi_string_alloc();
-    furi_string_printf(text, "%s\n\n%s", furi_string_get_cstr(item->name), "Are you sure?");
+    furi_string_printf(text, "%s\n\n%s", furi_string_get_cstr(item->name), QUAC_UI_TEXT("Are you sure?", "确定删除吗?"));
     dialog_message_set_text(dialog, furi_string_get_cstr(text), 64, 18, AlignCenter, AlignTop);
-    dialog_message_set_buttons(dialog, "Cancel", NULL, "OK");
+    dialog_message_set_buttons(dialog, QUAC_UI_TEXT("Cancel", "取消"), NULL, QUAC_UI_TEXT("OK", "确定"));
     DialogMessageButton button = dialog_message_show(app->dialog, dialog);
 
     if(button == DialogMessageButtonRight) {
@@ -52,7 +52,7 @@ bool scene_action_settings_delete(App* app) {
                 TAG, "Error deleting file! Error=%s", filesystem_api_error_get_desc(fs_result));
             FuriString* error_msg = furi_string_alloc();
             furi_string_printf(
-                error_msg, "Delete failed!\nError: %s", filesystem_api_error_get_desc(fs_result));
+                error_msg, QUAC_UI_TEXT("Delete failed!\nError: %s", "删除失败!\n错误: %s"), filesystem_api_error_get_desc(fs_result));
             dialog_message_show_storage_error(app->dialog, furi_string_get_cstr(error_msg));
             furi_string_free(error_msg);
         }
@@ -154,7 +154,7 @@ bool scene_action_settings_import(App* app) {
         } else {
             FURI_LOG_E(TAG, "File copy failed! %s", filesystem_api_error_get_desc(fs_result));
             FuriString* error_msg = furi_string_alloc_printf(
-                "File copy failed!\nError: %s", filesystem_api_error_get_desc(fs_result));
+                QUAC_UI_TEXT("File copy failed!\nError: %s", "文件复制失败!\n错误: %s"), filesystem_api_error_get_desc(fs_result));
             dialog_message_show_storage_error(app->dialog, furi_string_get_cstr(error_msg));
             furi_string_free(error_msg);
         }
@@ -191,19 +191,19 @@ void scene_action_settings_on_enter(void* context) {
         submenu_set_header(menu, furi_string_get_cstr(item->name));
 
         submenu_add_item(
-            menu, "Rename", ActionSettingsRename, scene_action_settings_callback, app);
+            menu, QUAC_UI_TEXT("Rename", "重命名"), ActionSettingsRename, scene_action_settings_callback, app);
         submenu_add_item(
-            menu, "Delete", ActionSettingsDelete, scene_action_settings_callback, app);
+            menu, QUAC_UI_TEXT("Delete", "删除"), ActionSettingsDelete, scene_action_settings_callback, app);
     } else {
         submenu_set_header(menu, furi_string_get_cstr(app->items_view->name));
     }
 
     submenu_add_item(
-        menu, "Import Here", ActionSettingsImport, scene_action_settings_callback, app);
+        menu, QUAC_UI_TEXT("Import Here", "导入到此处"), ActionSettingsImport, scene_action_settings_callback, app);
     submenu_add_item(
-        menu, "Import Link Here", ActionSettingsImportLink, scene_action_settings_callback, app);
+        menu, QUAC_UI_TEXT("Import Link Here", "导入链接到此处"), ActionSettingsImportLink, scene_action_settings_callback, app);
     submenu_add_item(
-        menu, "Create Group", ActionSettingsCreateGroup, scene_action_settings_callback, app);
+        menu, QUAC_UI_TEXT("Create Group", "创建分组"), ActionSettingsCreateGroup, scene_action_settings_callback, app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, QView_SubMenu);
 }
@@ -273,7 +273,7 @@ bool scene_action_settings_on_event(void* context, SceneManagerEvent event) {
                         FURI_LOG_E(
                             TAG, "Copy file failed! %s", filesystem_api_error_get_desc(fs_result));
                         FuriString* error_msg = furi_string_alloc_printf(
-                            "Copy failed!\nError: %s", filesystem_api_error_get_desc(fs_result));
+                            QUAC_UI_TEXT("Copy failed!\nError: %s", "复制失败!\n错误: %s"), filesystem_api_error_get_desc(fs_result));
                         dialog_message_show_storage_error(
                             app->dialog, furi_string_get_cstr(error_msg));
                         furi_string_free(error_msg);
@@ -301,11 +301,11 @@ bool scene_action_settings_on_event(void* context, SceneManagerEvent event) {
                 path_extract_extension(import_file, ext, MAX_EXT_LEN);
                 if(!strcmp(ext, ".ir")) {
                     dialog_message_show_storage_error(
-                        app->dialog, "Can't import IR file as link at this time");
+                        app->dialog, QUAC_UI_TEXT("Can't import IR file as link at this time", "暂时无法导入红外文件为链接"));
                 } else if(!strcmp(ext, ".ql")) {
                     FURI_LOG_E(TAG, "Can't import link file as a link!");
                     dialog_message_show_storage_error(
-                        app->dialog, "Can't import link file as a link!");
+                        app->dialog, QUAC_UI_TEXT("Can't import link file as a link!", "无法导入链接文件为链接!"));
                 } else {
                     FuriString* current_path = furi_string_alloc();
                     if(app->selected_item != EMPTY_ACTION_INDEX) {
@@ -345,7 +345,7 @@ bool scene_action_settings_on_event(void* context, SceneManagerEvent event) {
                                 bytes_written);
                         }
                     } else {
-                        dialog_message_show_storage_error(app->dialog, "Error writing link file!");
+                        dialog_message_show_storage_error(app->dialog, QUAC_UI_TEXT("Error writing link file!", "写入链接文件出错!"));
                         FURI_LOG_E(
                             TAG,
                             "Copy file as link failed! File %s already exists",

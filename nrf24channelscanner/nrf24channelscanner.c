@@ -8,6 +8,12 @@
 #include <nrf24.h>
 #include "nrf24channelscanner_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NRF24_CH_SCANNER_UI_TEXT(en, zh) (zh)
+#else
+#define NRF24_CH_SCANNER_UI_TEXT(en, zh) (en)
+#endif
+
 const uint8_t num_channels = 128;
 static uint8_t nrf24values[128] = {0}; //to store channel data
 
@@ -44,19 +50,19 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     canvas_set_bitmap_mode(canvas, true);
     canvas_draw_icon(canvas, 100, 0, &I_Pin_back_arrow_10x8);
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 112, 8, "Exit");
+    canvas_draw_str(canvas, 112, 8, NRF24_CH_SCANNER_UI_TEXT("Exit", "退出"));
     canvas_draw_icon(canvas, 1, 0, &I_Ok_btn_9x9);
     canvas_set_font(canvas, FontSecondary);
     if(isScanning) {
-        canvas_draw_str(canvas, 12, 8, "Stop");
+        canvas_draw_str(canvas, 12, 8, NRF24_CH_SCANNER_UI_TEXT("Stop", "停止"));
     } else {
-        canvas_draw_str(canvas, 12, 8, "Scan");
+        canvas_draw_str(canvas, 12, 8, NRF24_CH_SCANNER_UI_TEXT("Scan", "扫描"));
     }
     canvas_draw_line(canvas, 0, 11, 127, 11);
 
     if(ifNotFoundNrf) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 23, 35, "NRF24 not found!");
+        canvas_draw_str(canvas, 23, 35, NRF24_CH_SCANNER_UI_TEXT("NRF24 not found!", "未找到NRF24!"));
         return;
     }
 
@@ -65,19 +71,19 @@ static void draw_callback(Canvas* canvas, void* ctx) {
     //draw hello mesage
     if(szuz) {
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 1, 22, "OK: scan / stop. Long: infinite.");
-        canvas_draw_str(canvas, 1, 33, "Up / Down to change channel time.");
-        canvas_draw_str(canvas, 1, 44, "Left / Right to select channel");
-        canvas_draw_str(canvas, 1, 56, "  to get it's frequency");
+        canvas_draw_str(canvas, 1, 22, NRF24_CH_SCANNER_UI_TEXT("OK: scan / stop. Long: infinite.", "OK:扫描/停止 长按:无限"));
+        canvas_draw_str(canvas, 1, 33, NRF24_CH_SCANNER_UI_TEXT("Up / Down to change channel time.", "上下键:更改信道停留时间"));
+        canvas_draw_str(canvas, 1, 44, NRF24_CH_SCANNER_UI_TEXT("Left / Right to select channel", "左右键:选择信道"));
+        canvas_draw_str(canvas, 1, 56, NRF24_CH_SCANNER_UI_TEXT("  to get it's frequency", "  查看其频率"));
     }
 
     //draw freq ir the progress
     canvas_set_font(canvas, FontSecondary);
     if(isScanning) {
         if(isInfiniteScan)
-            canvas_draw_str(canvas, 37, 8, "scanning...");
+            canvas_draw_str(canvas, 37, 8, NRF24_CH_SCANNER_UI_TEXT("scanning...", "扫描中..."));
         else
-            canvas_draw_str(canvas, 37, 8, "scanning");
+            canvas_draw_str(canvas, 37, 8, NRF24_CH_SCANNER_UI_TEXT("scanning", "扫描中"));
 
     } else {
         if(showFreq) {

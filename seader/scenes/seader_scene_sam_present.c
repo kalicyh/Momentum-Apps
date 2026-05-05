@@ -26,29 +26,29 @@ void seader_scene_sam_present_on_update(void* context) {
 
     submenu_add_item(
         submenu,
-        "Read Picopass",
+        SEADER_UI_TEXT("Read Picopass", "读取Picopass"),
         SubmenuIndexReadPicopass,
         seader_scene_sam_present_submenu_callback,
         seader);
     submenu_add_item(
         submenu,
-        "Read 14443A",
+        SEADER_UI_TEXT("Read 14443A", "读取14443A"),
         SubmenuIndexRead14a,
         seader_scene_sam_present_submenu_callback,
         seader);
     submenu_add_item(
         submenu,
-        "Read MFC",
+        SEADER_UI_TEXT("Read MFC", "读取MFC"),
         SubmenuIndexReadMfc,
         seader_scene_sam_present_submenu_callback,
         seader);
     submenu_add_item(
-        submenu, "Saved", SubmenuIndexSaved, seader_scene_sam_present_submenu_callback, seader);
+        submenu, SEADER_UI_TEXT("Saved", "已保存"), SubmenuIndexSaved, seader_scene_sam_present_submenu_callback, seader);
 
     if(seader->is_debug_enabled) {
         submenu_add_item(
             submenu,
-            "Read Config Card",
+            SEADER_UI_TEXT("Read Config Card", "读取配置卡"),
             SubmenuIndexReadConfigCard,
             seader_scene_sam_present_submenu_callback,
             seader);
@@ -57,7 +57,7 @@ void seader_scene_sam_present_on_update(void* context) {
     if(apdu_log_check_presence(SEADER_APDU_RUNNER_FILE_NAME)) {
         submenu_add_item(
             submenu,
-            "Run APDUs",
+            SEADER_UI_TEXT("Run APDUs", "运行APDU"),
             SubmenuIndexAPDURunner,
             seader_scene_sam_present_submenu_callback,
             seader);

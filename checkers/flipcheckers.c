@@ -3,6 +3,12 @@
 #include "helpers/flipcheckers_file.h"
 #include "helpers/flipcheckers_sound.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHECKERS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHECKERS_UI_TEXT(en, zh) (en)
+#endif
+
 bool flipcheckers_custom_event_callback(void* context, uint32_t event) {
     furi_assert(context);
     FlipCheckers* app = context;
@@ -119,7 +125,7 @@ FlipCheckers* flipcheckers_app_alloc() {
         TEXT_BUFFER_SIZE,
         //clear default text
         true);
-    text_input_set_header_text(app->text_input, "Input");
+    text_input_set_header_text(app->text_input, FLIPCHECKERS_UI_TEXT("Input", "输入"));
     view_dispatcher_add_view(
         app->view_dispatcher, FlipCheckersViewIdTextInput, text_input_get_view(app->text_input));
 

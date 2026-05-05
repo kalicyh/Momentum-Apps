@@ -42,7 +42,7 @@ void wifi_marauder_scene_script_select_on_enter(void* context) {
             app->script_list_count++;
         }
         if(app->script_list_count > 0) {
-            submenu_set_header(submenu, "Select a script:");
+            submenu_set_header(submenu, WIFI_MARAUDER_UI_TEXT("Select a script:", "选择脚本:"));
             app->script_list = malloc(app->script_list_count * sizeof(FuriString*));
             storage_dir_close(dir_scripts);
             storage_dir_open(dir_scripts, MARAUDER_APP_FOLDER_SCRIPTS);
@@ -60,10 +60,10 @@ void wifi_marauder_scene_script_select_on_enter(void* context) {
                 script_index++;
             }
         } else {
-            submenu_set_header(submenu, "No script found");
+            submenu_set_header(submenu, WIFI_MARAUDER_UI_TEXT("No script found", "未找到脚本"));
         }
         submenu_add_item(
-            submenu, "[+] ADD SCRIPT", 99, wifi_marauder_scene_script_select_add_callback, app);
+            submenu, WIFI_MARAUDER_UI_TEXT("[+] ADD SCRIPT", "[+] 添加脚本"), 99, wifi_marauder_scene_script_select_add_callback, app);
         storage_dir_close(dir_scripts);
     }
     storage_file_free(dir_scripts);

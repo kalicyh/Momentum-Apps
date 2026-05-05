@@ -14,36 +14,36 @@ static void cancommander_scene_tools_vehicle_diag_menu_callback(void* context, u
 
 static void cancommander_scene_tools_vehicle_diag_set_pid(App* app, const char* pid_token, const char* label) {
     app_args_set_key_value(app->args_obd_pid, sizeof(app->args_obd_pid), "pid", pid_token);
-    app_set_status(app, "OBD PID selected: %s", label);
+    app_set_status(app, CAN_COMMANDER_UI_TEXT("OBD PID selected: %s", "已选择 OBD PID: %s"), label);
 }
 
 void cancommander_scene_tools_vehicle_diag_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Vehicle Diagnostics");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Vehicle Diagnostics", "车辆诊断"));
 
     submenu_add_item(
         app->submenu,
-        "OBD2 Live Data",
+        CAN_COMMANDER_UI_TEXT("OBD2 Live Data", "OBD2 实时数据"),
         ToolsVehicleDiagLiveData,
         cancommander_scene_tools_vehicle_diag_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Fetch VIN",
+        CAN_COMMANDER_UI_TEXT("Fetch VIN", "获取 VIN"),
         ToolsVehicleDiagFetchVin,
         cancommander_scene_tools_vehicle_diag_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Fetch DTCs",
+        CAN_COMMANDER_UI_TEXT("Fetch DTCs", "读取故障码"),
         ToolsVehicleDiagFetchDtcs,
         cancommander_scene_tools_vehicle_diag_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Clear DTCs",
+        CAN_COMMANDER_UI_TEXT("Clear DTCs", "清除故障码"),
         ToolsVehicleDiagClearDtcs,
         cancommander_scene_tools_vehicle_diag_menu_callback,
         app);
@@ -79,7 +79,7 @@ bool cancommander_scene_tools_vehicle_diag_menu_on_event(void* context, SceneMan
         return true;
 
     case ToolsVehicleDiagFetchDtcs:
-        cancommander_scene_tools_vehicle_diag_set_pid(app, "dtc_all", "DTCs (All)");
+        cancommander_scene_tools_vehicle_diag_set_pid(app, "dtc_all", CAN_COMMANDER_UI_TEXT("DTCs (All)", "故障码(全部)"));
         app_action_tool_start(app, CcToolObdPid, app->args_obd_pid, "obd_pid");
         scene_manager_next_scene(
             app->scene_manager,
@@ -87,7 +87,7 @@ bool cancommander_scene_tools_vehicle_diag_menu_on_event(void* context, SceneMan
         return true;
 
     case ToolsVehicleDiagClearDtcs:
-        cancommander_scene_tools_vehicle_diag_set_pid(app, "clear_dtcs", "Clear DTCs");
+        cancommander_scene_tools_vehicle_diag_set_pid(app, "clear_dtcs", CAN_COMMANDER_UI_TEXT("Clear DTCs", "清除故障码"));
         app_action_tool_start(app, CcToolObdPid, app->args_obd_pid, "obd_pid");
         scene_manager_next_scene(
             app->scene_manager,

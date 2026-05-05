@@ -29,22 +29,31 @@ enum LedColors {
 };
 
 #ifdef DEFINE_COLOR_NAMES_AND_VALUES
+
+#ifndef FLIPBOARD_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 /**
  * @brief    The names of the colors.
  * @details  The index of the color in this array is the same as
  *   the index of the color in the color_values array.
 */
 static char* color_names[] = {
-    "Off",
-    "Red",
-    "Orange",
-    "Yellow",
-    "Green",
-    "Cyan",
-    "Blue",
-    "Violet",
-    "Magenta",
-    "White",
+    FLIPBOARD_UI_TEXT("Off", "关闭"),
+    FLIPBOARD_UI_TEXT("Red", "红色"),
+    FLIPBOARD_UI_TEXT("Orange", "橙色"),
+    FLIPBOARD_UI_TEXT("Yellow", "黄色"),
+    FLIPBOARD_UI_TEXT("Green", "绿色"),
+    FLIPBOARD_UI_TEXT("Cyan", "青色"),
+    FLIPBOARD_UI_TEXT("Blue", "蓝色"),
+    FLIPBOARD_UI_TEXT("Violet", "紫色"),
+    FLIPBOARD_UI_TEXT("Magenta", "品红"),
+    FLIPBOARD_UI_TEXT("White", "白色"),
 };
 
 /**

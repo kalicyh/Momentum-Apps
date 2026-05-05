@@ -77,39 +77,39 @@ static void menu_render(Entity* entity, GameManager* manager, Canvas* canvas, vo
     UNUSED(entity);
     MenuContext* menu_context = context;
     GameContext* game_context = game_manager_game_context_get(manager);
-    FuriString* line = furi_string_alloc_set("Sound: ");
+    FuriString* line = furi_string_alloc_set(UI_TEXT("Sound: ", "音效: "));
 
     if(menu_context->selected == Sound) {
-        furi_string_set(line, ">Sound: ");
+        furi_string_set(line, UI_TEXT(">Sound: ", ">音效: "));
     }
 
     if(game_context->settings.sound) {
-        furi_string_cat(line, "On");
+        furi_string_cat(line, UI_TEXT("On", "开"));
     } else {
-        furi_string_cat(line, "Off");
+        furi_string_cat(line, UI_TEXT("Off", "关"));
     }
 
     canvas_draw_str_aligned(
         canvas, 64 + 3, 18, AlignLeft, AlignCenter, furi_string_get_cstr(line));
 
-    furi_string_set(line, "FPS: ");
+    furi_string_set(line, UI_TEXT("FPS: ", "帧率: "));
     if(menu_context->selected == ShowFPS) {
-        furi_string_set(line, ">FPS: ");
+        furi_string_set(line, UI_TEXT(">FPS: ", ">帧率: "));
     }
 
     if(game_context->settings.show_fps) {
-        furi_string_cat(line, "On");
+        furi_string_cat(line, UI_TEXT("On", "开"));
     } else {
-        furi_string_cat(line, "Off");
+        furi_string_cat(line, UI_TEXT("Off", "关"));
     }
 
     canvas_draw_str_aligned(
         canvas, 64 + 3, 33, AlignLeft, AlignCenter, furi_string_get_cstr(line));
 
-    furi_string_set(line, "Back");
+    furi_string_set(line, UI_TEXT("Back", "返回"));
 
     if(menu_context->selected == Back) {
-        furi_string_set(line, ">Back");
+        furi_string_set(line, UI_TEXT(">Back", ">返回"));
     }
 
     canvas_draw_str_aligned(
@@ -191,7 +191,7 @@ static void imu_debug_render(Entity* self, GameManager* manager, Canvas* canvas,
 
         canvas_draw_disc(canvas, ball.x, ball.y, bubble_radius);
     } else {
-        canvas_draw_str_aligned(canvas, pos.x, pos.y + 1, AlignCenter, AlignCenter, "No IMU");
+        canvas_draw_str_aligned(canvas, pos.x, pos.y + 1, AlignCenter, AlignCenter, UI_TEXT("No IMU", "无IMU"));
     }
 }
 

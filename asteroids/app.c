@@ -19,6 +19,12 @@
 #define DEBUG_MSG 0
 #define SCREEN_XRES 128
 #define SCREEN_YRES 64
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ASTEROIDS_UI_TEXT(en, zh) (zh)
+#else
+#define ASTEROIDS_UI_TEXT(en, zh) (en)
+#endif
 #define GAME_START_LIVES 3
 #define MAXLIVES 5 /* Max bonus lives allowed. */
 #define TTLBUL 30 /* Bullet time to live, in ticks. */
@@ -573,7 +579,7 @@ void render_splash_screen(Canvas* const canvas, AsteroidsApp* app) {
 
     /* Draw credits section */
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, SCREEN_XRES / 2, 26, AlignCenter, AlignCenter, "Designed and Developed by");
+    canvas_draw_str_aligned(canvas, SCREEN_XRES / 2, 26, AlignCenter, AlignCenter, ASTEROIDS_UI_TEXT("Designed and Developed by", "设计与开发"));
 
     /* Draw developer credits */
     canvas_set_font(canvas, FontSecondary);
@@ -582,7 +588,7 @@ void render_splash_screen(Canvas* const canvas, AsteroidsApp* app) {
 
     /* Draw skip instruction */
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, SCREEN_XRES / 2, 60, AlignCenter, AlignCenter, "Press any key to skip");
+    canvas_draw_str_aligned(canvas, SCREEN_XRES / 2, 60, AlignCenter, AlignCenter, ASTEROIDS_UI_TEXT("Press any key to skip", "按任意键跳过"));
 }
 
 /* Render the current game screen. */
@@ -651,7 +657,7 @@ void render_callback(Canvas* const canvas, void* ctx) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_rbox(canvas, 0, 0, SCREEN_XRES, SCREEN_YRES, 4);
         canvas_draw_str_aligned(
-            canvas, SCREEN_XRES / 2, SCREEN_YRES / 2, AlignCenter, AlignCenter, "Paused");
+            canvas, SCREEN_XRES / 2, SCREEN_YRES / 2, AlignCenter, AlignCenter, ASTEROIDS_UI_TEXT("Paused", "已暂停"));
         return;
     }
 
@@ -663,9 +669,9 @@ void render_callback(Canvas* const canvas, void* ctx) {
         // TODO: if new highscore, display blinking "New High Score"
         // Display High Score
         if(app->is_new_highscore) {
-            canvas_draw_str(canvas, 22, 9, "New High Score!");
+            canvas_draw_str(canvas, 22, 9, ASTEROIDS_UI_TEXT("New High Score!", "新最高分!"));
         } else {
-            canvas_draw_str(canvas, 36, 9, "High Score");
+            canvas_draw_str(canvas, 36, 9, ASTEROIDS_UI_TEXT("High Score", "最高分"));
         }
 
         // Convert highscore to string
@@ -683,9 +689,9 @@ void render_callback(Canvas* const canvas, void* ctx) {
         canvas_draw_str(canvas, (SCREEN_XRES / 2) - (nDigits * 2), 20, str_high_score);
         free(str_high_score);
 
-        canvas_draw_str(canvas, 28, 35, "GAME   OVER");
+        canvas_draw_str(canvas, 28, 35, ASTEROIDS_UI_TEXT("GAME   OVER", "游戏结束"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 25, 50, "Press OK to restart");
+        canvas_draw_str(canvas, 25, 50, ASTEROIDS_UI_TEXT("Press OK to restart", "按 OK 重新开始"));
     }
 }
 

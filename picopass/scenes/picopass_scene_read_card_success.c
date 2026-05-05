@@ -50,7 +50,7 @@ void picopass_scene_read_card_success_on_enter(void* context) {
     bool hid_csn = picopass_device_hid_csn(picopass->dev);
 
     if(!secured) {
-        furi_string_cat_printf(info_str, "Non-Secured Chip");
+        furi_string_cat_printf(info_str, PICOPASS_UI_TEXT("Non-Secured Chip", "未加密芯片"));
 
         if(!hid_csn) {
             furi_string_cat_printf(credential_str, "Non-HID CSN");
@@ -59,14 +59,14 @@ void picopass_scene_read_card_success_on_enter(void* context) {
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "More",
+            PICOPASS_UI_TEXT("More", "更多"),
             picopass_scene_read_card_success_widget_callback,
             picopass);
     } else if(auth == PicopassDeviceAuthMethodFailed) {
-        furi_string_cat_printf(info_str, "Read Failed");
+        furi_string_cat_printf(info_str, PICOPASS_UI_TEXT("Read Failed", "读取失败"));
 
         if(pacs->se_enabled) {
-            furi_string_cat_printf(credential_str, "SE enabled");
+            furi_string_cat_printf(credential_str, PICOPASS_UI_TEXT("SE enabled", "SE已启用"));
         } else if(!hid_csn) {
             furi_string_cat_printf(credential_str, "Non-HID CSN");
         }
@@ -74,43 +74,43 @@ void picopass_scene_read_card_success_on_enter(void* context) {
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "More",
+            PICOPASS_UI_TEXT("More", "更多"),
             picopass_scene_read_card_success_widget_callback,
             picopass);
     } else if(pacs->se_enabled) {
-        furi_string_cat_printf(credential_str, "SE enabled");
+        furi_string_cat_printf(credential_str, PICOPASS_UI_TEXT("SE enabled", "SE已启用"));
         furi_string_cat_printf(info_str, "SIO");
 
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "More",
+            PICOPASS_UI_TEXT("More", "更多"),
             picopass_scene_read_card_success_widget_callback,
             picopass);
     } else if(configCard) {
-        furi_string_cat_printf(credential_str, "Config Card");
+        furi_string_cat_printf(credential_str, PICOPASS_UI_TEXT("Config Card", "配置卡"));
     } else if(empty) {
-        furi_string_cat_printf(credential_str, "Empty");
+        furi_string_cat_printf(credential_str, PICOPASS_UI_TEXT("Empty", "空白"));
     } else if(pacs->bitLength == 0 || pacs->bitLength == 255) {
         // Neither of these are valid.  Indicates the block was all 0x00 or all 0xff
         if(SE) {
             furi_string_cat_printf(info_str, "SIO");
         } else if(auth == PicopassDeviceAuthMethodFailed) {
-            furi_string_cat_printf(info_str, "Auth Failed");
+            furi_string_cat_printf(info_str, PICOPASS_UI_TEXT("Auth Failed", "认证失败"));
         } else {
-            furi_string_cat_printf(info_str, "Invalid PACS");
+            furi_string_cat_printf(info_str, PICOPASS_UI_TEXT("Invalid PACS", "无效PACS"));
         }
 
         widget_add_button_element(
             widget,
             GuiButtonTypeCenter,
-            "Menu",
+            PICOPASS_UI_TEXT("Menu", "菜单"),
             picopass_scene_read_card_success_widget_callback,
             picopass);
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "More",
+            PICOPASS_UI_TEXT("More", "更多"),
             picopass_scene_read_card_success_widget_callback,
             picopass);
     } else {
@@ -128,21 +128,21 @@ void picopass_scene_read_card_success_on_enter(void* context) {
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "More",
+            PICOPASS_UI_TEXT("More", "更多"),
             picopass_scene_read_card_success_widget_callback,
             picopass);
     }
 
     if(auth == PicopassDeviceAuthMethodUnset) {
-        furi_string_cat_printf(key_str, "Error: Auth Unset");
+        furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("Error: Auth Unset", "错误: 未设置认证"));
     } else if(auth == PicopassDeviceAuthMethodNone) {
-        furi_string_cat_printf(key_str, "Unsecure card");
+        furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("Unsecure card", "未加密卡"));
     } else if(auth == PicopassDeviceAuthMethodNrMac) {
-        furi_string_cat_printf(key_str, "No Key: used NR-MAC");
+        furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("No Key: used NR-MAC", "无密钥: 使用NR-MAC"));
     } else if(auth == PicopassDeviceAuthMethodFailed) {
-        furi_string_cat_printf(key_str, "Auth Failed");
+        furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("Auth Failed", "认证失败"));
     } else if(auth == PicopassDeviceAuthMethodKey) {
-        furi_string_cat_printf(key_str, "Key: ");
+        furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("Key: ", "密钥: "));
         uint8_t key[PICOPASS_BLOCK_LEN];
         memcpy(key, &pacs->key, PICOPASS_BLOCK_LEN);
 
@@ -156,7 +156,7 @@ void picopass_scene_read_card_success_on_enter(void* context) {
         }
 
         if(standard_key) {
-            furi_string_cat_printf(key_str, "Standard");
+            furi_string_cat_printf(key_str, PICOPASS_UI_TEXT("Standard", "标准"));
         } else {
             for(uint8_t i = 0; i < PICOPASS_BLOCK_LEN; i++) {
                 furi_string_cat_printf(key_str, "%02X", key[i]);
@@ -167,7 +167,7 @@ void picopass_scene_read_card_success_on_enter(void* context) {
     widget_add_button_element(
         widget,
         GuiButtonTypeLeft,
-        "Retry",
+        PICOPASS_UI_TEXT("Retry", "重试"),
         picopass_scene_read_card_success_widget_callback,
         picopass);
 

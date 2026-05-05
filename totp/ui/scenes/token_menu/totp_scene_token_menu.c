@@ -36,7 +36,7 @@ void totp_scene_token_menu_render(Canvas* const canvas, PluginState* plugin_stat
             5,
             72,
             21,
-            "Add new token",
+            TOTP_UI_TEXT("Add new token", "添加令牌"),
             scene_state->selected_control == AddNewToken);
         ui_control_button_render(
             canvas,
@@ -44,7 +44,7 @@ void totp_scene_token_menu_render(Canvas* const canvas, PluginState* plugin_stat
             39,
             72,
             21,
-            "Settings",
+            TOTP_UI_TEXT("Settings", "设置"),
             scene_state->selected_control == AppSettings);
     } else {
         ui_control_button_render(
@@ -53,7 +53,7 @@ void totp_scene_token_menu_render(Canvas* const canvas, PluginState* plugin_stat
             SCREEN_HEIGHT_THIRD_CENTER - 8,
             72,
             16,
-            "Add new token",
+            TOTP_UI_TEXT("Add new token", "添加令牌"),
             scene_state->selected_control == AddNewToken);
         ui_control_button_render(
             canvas,
@@ -61,7 +61,7 @@ void totp_scene_token_menu_render(Canvas* const canvas, PluginState* plugin_stat
             SCREEN_HEIGHT_THIRD + SCREEN_HEIGHT_THIRD_CENTER - 8,
             72,
             16,
-            "Delete token",
+            TOTP_UI_TEXT("Delete token", "删除令牌"),
             scene_state->selected_control == DeleteToken);
         ui_control_button_render(
             canvas,
@@ -69,7 +69,7 @@ void totp_scene_token_menu_render(Canvas* const canvas, PluginState* plugin_stat
             SCREEN_HEIGHT_THIRD + SCREEN_HEIGHT_THIRD + SCREEN_HEIGHT_THIRD_CENTER - 8,
             72,
             16,
-            "Settings",
+            TOTP_UI_TEXT("Settings", "设置"),
             scene_state->selected_control == AppSettings);
     }
 }
@@ -123,11 +123,11 @@ bool totp_scene_token_menu_handle_event(const PluginEvent* const event, PluginSt
                 totp_scene_director_activate_scene(plugin_state, TotpSceneAddNewToken);
 #else
                 DialogMessage* message = dialog_message_alloc();
-                dialog_message_set_buttons(message, "Back", NULL, NULL);
-                dialog_message_set_header(message, "Information", 0, 0, AlignLeft, AlignTop);
+                dialog_message_set_buttons(message, TOTP_UI_TEXT("Back", "返回"), NULL, NULL);
+                dialog_message_set_header(message, TOTP_UI_TEXT("Information", "提示"), 0, 0, AlignLeft, AlignTop);
                 dialog_message_set_text(
                     message,
-                    "Read here\nhttps://t.ly/8ZOtj\nhow to add new token",
+                    TOTP_UI_TEXT("Read here\nhttps://t.ly/8ZOtj\nhow to add new token", "访问以下链接了解\n如何添加新令牌\nhttps://t.ly/8ZOtj"),
                     SCREEN_WIDTH_CENTER,
                     SCREEN_HEIGHT_CENTER,
                     AlignCenter,
@@ -139,11 +139,11 @@ bool totp_scene_token_menu_handle_event(const PluginEvent* const event, PluginSt
             }
             case DeleteToken: {
                 DialogMessage* message = dialog_message_alloc();
-                dialog_message_set_buttons(message, "No", NULL, "Yes");
-                dialog_message_set_header(message, "Confirmation", 0, 0, AlignLeft, AlignTop);
+                dialog_message_set_buttons(message, TOTP_UI_TEXT("No", "否"), NULL, TOTP_UI_TEXT("Yes", "是"));
+                dialog_message_set_header(message, TOTP_UI_TEXT("Confirmation", "确认"), 0, 0, AlignLeft, AlignTop);
                 dialog_message_set_text(
                     message,
-                    "Are you sure want to delete?",
+                    TOTP_UI_TEXT("Are you sure want to delete?", "确定要删除吗?"),
                     SCREEN_WIDTH_CENTER,
                     SCREEN_HEIGHT_CENTER,
                     AlignCenter,

@@ -20,9 +20,9 @@ void scene_success_on_enter(void* context) {
     widget_add_icon_element(app->widget, 11, 24, &I_Module_60x26);
     widget_add_icon_element(app->widget, 77, 10, &I_Checkmark_44x40);
     widget_add_button_element(
-        app->widget, GuiButtonTypeCenter, "OK", scene_success_button_callback, app);
+        app->widget, GuiButtonTypeCenter, VGM_UI_TEXT("OK", "确定"), scene_success_button_callback, app);
     widget_add_string_multiline_element(
-        app->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, "Video Game Module\nUpdated");
+        app->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, VGM_UI_TEXT("Video Game Module\nUpdated", "视频游戏模块\n已更新"));
 
     view_dispatcher_switch_to_view(app->view_dispatcher, ViewIdWidget);
 

@@ -162,7 +162,7 @@ void gb_cartridge_scene_3_draw(Canvas* canvas, GameBoyCartridgeRAMBackupModel* m
     if(model->total_ram > 0 && model->transfered > 0) {
         progress = model->transfered * 100 / model->total_ram;
     }
-    snprintf(progressText, sizeof(progressText), "%d%% Dump RAM...", progress);
+    snprintf(progressText, sizeof(progressText), GBCARTRIDGE_UI_TEXT("%d%% Dump RAM...", "%d%% 导出 RAM..."), progress);
     canvas_draw_str_aligned(canvas, 128 / 2, 0, AlignCenter, AlignTop, progressText);
     canvas_set_font(canvas, FontSecondary);
 
@@ -174,7 +174,7 @@ void gb_cartridge_scene_3_draw(Canvas* canvas, GameBoyCartridgeRAMBackupModel* m
     snprintf(
         total_ram_str,
         sizeof(total_ram_str),
-        "of %.2lf MiB",
+        GBCARTRIDGE_UI_TEXT("of %.2lf MiB", "共 %.2lf MiB"),
         (double)(model->total_ram / 1024.0 / 1024.0));
 
     char transfered_ram_str[20];
@@ -217,7 +217,7 @@ void gb_cartridge_scene_3_draw(Canvas* canvas, GameBoyCartridgeRAMBackupModel* m
             100); // Pinta las primeras 10 cajas de negro
     // free(totalText);
 
-    elements_button_center(canvas, "Start");
+    elements_button_center(canvas, GBCARTRIDGE_UI_TEXT("Start", "开始"));
 }
 
 static void gb_cartridge_scene_3_model_init(GameBoyCartridgeRAMBackupModel* const model) {

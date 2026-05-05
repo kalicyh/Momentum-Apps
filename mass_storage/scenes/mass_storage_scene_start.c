@@ -15,15 +15,15 @@ void mass_storage_scene_start_on_enter(void* context) {
     MassStorageApp* app = context;
     VariableItemList* variable_item_list = app->variable_item_list;
 
-    variable_item_list_add(variable_item_list, "Select Disk Image", 0, NULL, app);
+    variable_item_list_add(variable_item_list, MASS_STORAGE_UI_TEXT("Select Disk Image", "选择磁盘镜像"), 0, NULL, app);
 
-    variable_item_list_add(variable_item_list, "Create Disk Image", 0, NULL, app);
-    variable_item_list_add(variable_item_list, "Spoof USB Identity", 0, NULL, app);
+    variable_item_list_add(variable_item_list, MASS_STORAGE_UI_TEXT("Create Disk Image", "创建磁盘镜像"), 0, NULL, app);
+    variable_item_list_add(variable_item_list, MASS_STORAGE_UI_TEXT("Spoof USB Identity", "伪装 USB 标识"), 0, NULL, app);
 
     variable_item_list_set_enter_callback(
         variable_item_list, mass_storage_scene_start_variable_item_list_callback, app);
 
-    variable_item_list_set_header(variable_item_list, "USB Mass Storage");
+    variable_item_list_set_header(variable_item_list, MASS_STORAGE_UI_TEXT("USB Mass Storage", "USB 大容量存储"));
 
     variable_item_list_set_selected_item(
         variable_item_list,

@@ -159,18 +159,18 @@ uint8_t ask_question_answer = 0; // 0 - no, 1 - yes
 
 static bool ask_fill_screen_buf(void) {
     if(ask_question == ask_write_batch)
-        strcpy(screen_buf, "RUN WRITE BATCH?");
+        strcpy(screen_buf, NRF24BATCH_UI_TEXT("RUN WRITE BATCH?", "运行写入批处理?"));
     else if(ask_question == ask_save_batch)
-        strcpy(screen_buf, "SAVE AS WRITE BATCH?");
+        strcpy(screen_buf, NRF24BATCH_UI_TEXT("SAVE AS WRITE BATCH?", "另存为写入批处理?"));
     else if(ask_question == ask_skip_cmd)
-        strcpy(screen_buf, "SKIP CMD?");
+        strcpy(screen_buf, NRF24BATCH_UI_TEXT("SKIP CMD?", "跳过命令?"));
     else if(ask_question == ask_return)
-        strcpy(screen_buf, "RETURN?");
+        strcpy(screen_buf, NRF24BATCH_UI_TEXT("RETURN?", "返回?"));
     else if(ask_question == ask_exit)
-        strcpy(screen_buf, "EXIT?");
+        strcpy(screen_buf, NRF24BATCH_UI_TEXT("EXIT?", "退出?"));
     else
         return false;
-    strcat(screen_buf, ask_question_answer ? " YES" : " NO");
+    strcat(screen_buf, ask_question_answer ? NRF24BATCH_UI_TEXT(" YES", " 是") : NRF24BATCH_UI_TEXT(" NO", " 否"));
     return true;
 }
 
@@ -623,7 +623,7 @@ bool fill_payload(char* p, uint8_t* idx_i, int32_t var_n) {
             if(b == VAR_EMPTY) {
                 ERR = 1;
                 memset(ERR_STR, 0, sizeof(ERR_STR));
-                strcpy(ERR_STR, "No ");
+                strcpy(ERR_STR, NRF24BATCH_UI_TEXT("No ", "未找到 "));
                 strncpy(ERR_STR + strlen(ERR_STR), p, sizeof(ERR_STR) - 4);
                 FURI_LOG_D(TAG, "Constant not found: %s", p);
                 return false;
@@ -634,7 +634,7 @@ bool fill_payload(char* p, uint8_t* idx_i, int32_t var_n) {
             break;
         } else {
             ERR = 2;
-            strcpy(ERR_STR, "char: ");
+            strcpy(ERR_STR, NRF24BATCH_UI_TEXT("char: ", "字符: "));
             uint8_t l = strlen(ERR_STR);
             ERR_STR[l] = *p;
             ERR_STR[l + 1] = '\0';
@@ -709,7 +709,7 @@ bool Run_ReadBatch_cmd(FuriString* cmd) {
         p = strchr((char*)furi_string_get_cstr(cmd), ':');
         if(p == NULL) {
             ERR = 5;
-            strcpy(ERR_STR, "WRONG FORMAT");
+            strcpy(ERR_STR, NRF24BATCH_UI_TEXT("WRONG FORMAT", "格式错误"));
             return false;
         }
         p += 2;
@@ -745,7 +745,7 @@ bool Run_ReadBatch_cmd(FuriString* cmd) {
     if(NRF_ERROR) return false;
     if(ERR == 0) {
         ERR = 4;
-        strcpy(ERR_STR, "NOT FOUND");
+        strcpy(ERR_STR, NRF24BATCH_UI_TEXT("NOT FOUND", "未找到"));
         FuriString* fs = furi_string_alloc();
         furi_string_set_strn(fs, p, len);
         Log[Log_Total++] = fs;
@@ -761,7 +761,7 @@ void Prepare_Write_cmd(FuriString* cmd) {
     char *end, *p = strchr((char*)furi_string_get_cstr(cmd), ':');
     if(p == NULL) {
         ERR = 8;
-        strcpy(ERR_STR, "Wrong batch");
+        strcpy(ERR_STR, NRF24BATCH_UI_TEXT("Wrong batch", "批处理错误"));
         FURI_LOG_D(TAG, ERR_STR);
         return;
     }
@@ -781,7 +781,7 @@ void Prepare_Write_cmd(FuriString* cmd) {
         if(Log_Total) Log = realloc(Log, sizeof(Log) * (Log_Total + 1));
         if(Log == NULL) {
             ERR = 3;
-            strcpy(ERR_STR, "Memory low");
+            strcpy(ERR_STR, NRF24BATCH_UI_TEXT("Memory low", "内存不足"));
             FURI_LOG_D(TAG, ERR_STR);
             return;
         }
@@ -900,7 +900,7 @@ bool Run_WriteBatch_cmd() {
         return true;
     }
     ERR = 7;
-    strcpy(ERR_STR, "NOT FOUND!");
+    strcpy(ERR_STR, NRF24BATCH_UI_TEXT("NOT FOUND!", "未找到!"));
     send_status = sst_error;
     view_Batch = cmd_curr;
     return false;
@@ -1179,28 +1179,28 @@ void display_edit_ttf_font(Canvas* const canvas, uint8_t start_x, uint8_t start_
 
 void display_add_status(void) {
     if(NRF_ERROR)
-        strcat(screen_buf, "nRF24 ERROR!");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("nRF24 ERROR!", "nRF24 错误!"));
     else if(ERR)
-        snprintf(screen_buf, sizeof(screen_buf), "ERROR %s", ERR_STR);
+        snprintf(screen_buf, sizeof(screen_buf), NRF24BATCH_UI_TEXT("ERROR %s", "错误 %s"), ERR_STR);
     else if(send_status == sst_error)
-        strcat(screen_buf, "NO ACK!");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("NO ACK!", "无应答!"));
     else if(send_status == sst_timeout)
-        strcat(screen_buf, "TIMEOUT!");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("TIMEOUT!", "超时!"));
     else if(send_status == sst_none)
         ;
     else if(send_status == sst_sending)
-        strcat(screen_buf, "sending");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("sending", "发送中"));
     else if(send_status == sst_receiving)
-        strcat(screen_buf, "receiving");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("receiving", "接收中"));
     else if(
         send_status == sst_ok &&
         (rw_type == rwt_read_cmd ||
          (rw_type == rwt_read_batch && (uint32_t)ReadBatch_cmd_curr == 0xFFFFFFFF) ||
          (rw_type == rwt_set_batch && SetBatch_cmd_curr == Log_Total) ||
          (rw_type == rwt_write_batch && WriteBatch_cmd_curr == Log_Total)))
-        strcat(screen_buf, "OK");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("OK", "完成"));
     else
-        strcat(screen_buf, "working");
+        strcat(screen_buf, NRF24BATCH_UI_TEXT("working", "处理中"));
 }
 
 static void render_callback(Canvas* const canvas, void* ctx) {
@@ -1211,7 +1211,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     //canvas_draw_frame(canvas, 0, 0, 128, 64); // border around the edge of the screen
     if(what_doing == 0) {
         canvas_set_font(canvas, FontSecondary); // 8x10 font, 6 lines
-        snprintf(screen_buf, sizeof(screen_buf), "%s: %s", addr_len ? "File" : "Open", file_name);
+        snprintf(screen_buf, sizeof(screen_buf), "%s: %s", addr_len ? NRF24BATCH_UI_TEXT("File", "文件") : NRF24BATCH_UI_TEXT("Open", "打开"), file_name);
         canvas_draw_str(canvas, 8, 10, screen_buf);
         if(addr_len) {
             if(Edit) {
@@ -1229,8 +1229,8 @@ static void render_callback(Canvas* const canvas, void* ctx) {
                 snprintf(screen_buf, sizeof(screen_buf), "%d", NRF_channel);
                 canvas_draw_str(canvas, 55, 30, screen_buf);
             }
-            canvas_draw_str(canvas, 8, 20, "Address:");
-            snprintf(screen_buf, sizeof(screen_buf), "Rate: %d, Ch:", NRF_rate);
+            canvas_draw_str(canvas, 8, 20, NRF24BATCH_UI_TEXT("Address:", "地址:"));
+            snprintf(screen_buf, sizeof(screen_buf), NRF24BATCH_UI_TEXT("Rate: %d, Ch:", "速率: %d, 信道:"), NRF_rate);
             canvas_draw_str(canvas, 8, 30, screen_buf);
             snprintf(
                 screen_buf,
@@ -1250,8 +1250,8 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     } else if(what_doing == 1) {
         if(rw_type == rwt_listen) {
             canvas_set_font(canvas, FontSecondary); // 8x10 font, 6 lines
-            canvas_draw_str(canvas, 0, 10, "Listen mode");
-            canvas_draw_str(canvas, 0, 25, "Address:");
+            canvas_draw_str(canvas, 0, 10, NRF24BATCH_UI_TEXT("Listen mode", "监听模式"));
+            canvas_draw_str(canvas, 0, 25, NRF24BATCH_UI_TEXT("Address:", "地址:"));
             if(Edit)
                 display_edit_ttf_font(canvas, 40, 25);
             else if(listen_addr_len) {
@@ -1269,19 +1269,19 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         } else {
             canvas_set_font(canvas, FontBatteryPercent); // 5x7 font, 9 lines, 25 cols
             if(rw_type == rwt_read_batch) {
-                canvas_draw_str(canvas, 0, 7, "Read Batch:");
+                canvas_draw_str(canvas, 0, 7, NRF24BATCH_UI_TEXT("Read Batch:", "读取批处理:"));
                 render_display_list(
                     canvas, &ReadBatch_cmd, ':', view_cmd[rw_type], ReadBatch_cmd_Total);
             } else if(rw_type == rwt_read_cmd) {
-                canvas_draw_str(canvas, 0, 7, "Read Command:");
+                canvas_draw_str(canvas, 0, 7, NRF24BATCH_UI_TEXT("Read Command:", "读取命令:"));
                 render_display_list(canvas, &Read_cmd, '=', view_cmd[rw_type], Read_cmd_Total);
             } else if(rw_type == rwt_write_batch) {
-                if(!ask_fill_screen_buf()) strcpy(screen_buf, "Write Batch:");
+                if(!ask_fill_screen_buf()) strcpy(screen_buf, NRF24BATCH_UI_TEXT("Write Batch:", "写入批处理:"));
                 canvas_draw_str(canvas, 0, 7, screen_buf);
                 render_display_list(
                     canvas, &WriteBatch_cmd, ':', view_cmd[rw_type], WriteBatch_cmd_Total);
             } else if(rw_type == rwt_set_batch) {
-                strcpy(screen_buf, "Set: ");
+                strcpy(screen_buf, NRF24BATCH_UI_TEXT("Set: ", "设置: "));
                 display_add_status();
                 canvas_draw_str(canvas, 0, 7, screen_buf);
                 render_display_list(
@@ -1291,9 +1291,9 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     } else { // what_doing == 2
         if(rw_type == rwt_listen) {
             canvas_set_font(canvas, FontSecondary); // 8x10 font, 6 lines
-            strcpy(screen_buf, "Listen: ");
+            strcpy(screen_buf, NRF24BATCH_UI_TEXT("Listen: ", "监听: "));
             if(NRF_ERROR)
-                strcat(screen_buf, "nRF24 ERROR!");
+                strcat(screen_buf, NRF24BATCH_UI_TEXT("nRF24 ERROR!", "nRF24 错误!"));
             else if(ListenNew) {
                 snprintf(
                     screen_buf + strlen(screen_buf),
@@ -1306,7 +1306,7 @@ static void render_callback(Canvas* const canvas, void* ctx) {
                     snprintf(
                         screen_buf + strlen(screen_buf), 16, " (%lu)", ListenLast - ListenPrev);
             } else
-                strcat(screen_buf, "receiving");
+                strcat(screen_buf, NRF24BATCH_UI_TEXT("receiving", "接收中"));
             snprintf(screen_buf + strlen(screen_buf), 16, " %dmA", Current - CurrentStart);
             canvas_draw_str(canvas, 0, 10, screen_buf);
             if(ListenFields) {
@@ -1343,8 +1343,8 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         } else if(rw_type == rwt_read_cmd) { // Read command
             canvas_set_font(canvas, FontSecondary); // 8x10 font, 6 lines
             if(!ask_fill_screen_buf()) {
-                strcpy(screen_buf, "Read ");
-                strcat(screen_buf, ReadRepeat ? "rep: " : "cmd: ");
+                strcpy(screen_buf, NRF24BATCH_UI_TEXT("Read ", "读取 "));
+                strcat(screen_buf, ReadRepeat ? NRF24BATCH_UI_TEXT("rep: ", "重复: ") : NRF24BATCH_UI_TEXT("cmd: ", "命令: "));
             }
             display_add_status();
             canvas_draw_str(canvas, 0, 10, screen_buf);
@@ -1357,14 +1357,14 @@ static void render_callback(Canvas* const canvas, void* ctx) {
             }
         } else if(rw_type == rwt_set_batch) {
             canvas_set_font(canvas, FontBatteryPercent); // 5x7 font, 9 lines, 25 cols
-            strcpy(screen_buf, "Set: ");
+            strcpy(screen_buf, NRF24BATCH_UI_TEXT("Set: ", "设置: "));
             display_add_status();
             canvas_draw_str(canvas, 0, 7, screen_buf);
             render_display_list(canvas, &SetBatch_cmd, ':', view_cmd[rw_type], SetBatch_cmd_Total);
         } else { // rwt_read_batch, rwt_write_batch
             canvas_set_font(canvas, FontBatteryPercent); // 5x7 font, 9 lines, 25 cols
             if(!ask_fill_screen_buf()) {
-                strcpy(screen_buf, rw_type == rwt_read_batch ? "Read Batch: " : "Write: ");
+                strcpy(screen_buf, rw_type == rwt_read_batch ? NRF24BATCH_UI_TEXT("Read Batch: ", "读取批处理: ") : NRF24BATCH_UI_TEXT("Write: ", "写入: "));
                 if(rw_type == rwt_read_batch || send_status != sst_none) {
                     display_add_status();
                 } else if(rw_type == rwt_write_batch) {
@@ -1761,7 +1761,7 @@ int32_t nrf24batch_app(void* p) {
                                     uint8_t err = load_settings_file();
                                     if(err)
                                         snprintf(
-                                            file_name, sizeof(file_name), "LOAD ERROR #%d", err);
+                                            file_name, sizeof(file_name), NRF24BATCH_UI_TEXT("LOAD ERROR #%d", "加载错误 #%d"), err);
                                 }
                             } else if(setup_cursor == 1) { // change address
                                 char* ebuf = (char*)payload;

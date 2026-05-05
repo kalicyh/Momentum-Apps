@@ -10,6 +10,12 @@
 #include <m-array.h>
 #include <math.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GEOMETRY_FLIP_UI_TEXT(en, zh) (zh)
+#else
+#define GEOMETRY_FLIP_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "GeometryDash"
 #define GD_APP_DATA_PATH EXT_PATH("apps_data/geometry_flip")
 #define SCREEN_WIDTH 128

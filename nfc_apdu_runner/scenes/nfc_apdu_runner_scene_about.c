@@ -19,19 +19,33 @@ void nfc_apdu_runner_scene_about_on_enter(void* context) {
 
     text_box_set_text(
         text_box,
-        "NFC APDU Runner\n"
-        "Version: 0.3\n"
-        "Auther: SpenserCai\n\n"
-        "This app allows you to run APDU commands from script files.\n\n"
-        "Supported card types:\n"
-        "- ISO14443-4A\n"
-        "- ISO14443-4B\n\n"
-        "Place your script files in:\n" APP_DIRECTORY_PATH "\n\n"
-        "File format:\n"
-        "Filetype: APDU Script\n"
-        "Version: 1\n"
-        "CardType: iso14443_4a\n"
-        "Data: [\"APDU1\",\"APDU2\",...]\n");
+        NFC_APDU_RUNNER_UI_TEXT(
+            "NFC APDU Runner\n"
+            "Version: 0.3\n"
+            "Auther: SpenserCai\n\n"
+            "This app allows you to run APDU commands from script files.\n\n"
+            "Supported card types:\n"
+            "- ISO14443-4A\n"
+            "- ISO14443-4B\n\n"
+            "Place your script files in:\n" APP_DIRECTORY_PATH "\n\n"
+            "File format:\n"
+            "Filetype: APDU Script\n"
+            "Version: 1\n"
+            "CardType: iso14443_4a\n"
+            "Data: [\"APDU1\",\"APDU2\",...]\n",
+            "NFC APDU 运行器\n"
+            "版本: 0.3\n"
+            "作者: SpenserCai\n\n"
+            "此应用允许您从脚本文件运行 APDU 命令。\n\n"
+            "支持的卡类型:\n"
+            "- ISO14443-4A\n"
+            "- ISO14443-4B\n\n"
+            "请将脚本文件放在:\n" APP_DIRECTORY_PATH "\n\n"
+            "文件格式:\n"
+            "Filetype: APDU Script\n"
+            "Version: 1\n"
+            "CardType: iso14443_4a\n"
+            "Data: [\"APDU1\",\"APDU2\",...]\n"));
 
     view_dispatcher_switch_to_view(app->view_dispatcher, NfcApduRunnerViewTextBox);
 }

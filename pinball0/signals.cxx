@@ -1,6 +1,7 @@
 #include <furi.h>
 #include "objects.h"
 #include "signals.h"
+#include "pinball0.h"
 
 void SignalManager::register_signal(int id, void* ctx) {
     // FURI_LOG_I("SIGNAL", "Registered signal, id = %d", id);
@@ -78,7 +79,7 @@ bool SignalManager::validate(char* err, std::size_t err_size) {
         }
         if(!found) {
             FURI_LOG_E("PB0 SIGNAL", "Signal %d has no slots!", signal.id);
-            snprintf(err, err_size, "Signal %d\nhas no\nslots!", signal.id);
+            snprintf(err, err_size, PINBALL_UI_TEXT("Signal %d\nhas no\nslots!", "信号 %d\n没有\n接收槽!"), signal.id);
             return false;
         }
     }
@@ -93,7 +94,7 @@ bool SignalManager::validate(char* err, std::size_t err_size) {
         }
         if(!found) {
             FURI_LOG_E("PB0 SIGNAL", "Slot %d has no signals!", slot.id);
-            snprintf(err, err_size, "Slot %d\nhas no\nsignals!", slot.id);
+            snprintf(err, err_size, PINBALL_UI_TEXT("Slot %d\nhas no\nsignals!", "接收槽 %d\n没有\n信号!"), slot.id);
             return false;
         }
     }
@@ -106,7 +107,7 @@ bool SignalManager::validate(char* err, std::size_t err_size) {
             if(signal.id == s.id && signal_type != s_obj->tx_type) {
                 valid_types = false;
                 FURI_LOG_E("PB0 SIGNAL", "Signal %d has differing type!", s.id);
-                snprintf(err, err_size, "Signal %d\nhas diff\ntype!", s.id);
+                snprintf(err, err_size, PINBALL_UI_TEXT("Signal %d\nhas diff\ntype!", "信号 %d\n类型\n不一致!"), s.id);
                 break;
             }
         }

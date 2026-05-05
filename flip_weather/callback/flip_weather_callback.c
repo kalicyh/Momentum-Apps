@@ -420,12 +420,12 @@ void flip_weather_loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == INACTIVE)
     {
-        canvas_draw_str(canvas, 0, 7, "Wifi Dev Board disconnected.");
-        canvas_draw_str(canvas, 0, 17, "Please connect to the board.");
-        canvas_draw_str(canvas, 0, 32, "If your board is connected,");
-        canvas_draw_str(canvas, 0, 42, "make sure you have flashed");
-        canvas_draw_str(canvas, 0, 52, "your WiFi Devboard with the");
-        canvas_draw_str(canvas, 0, 62, "latest FlipperHTTP flash.");
+        canvas_draw_str(canvas, 0, 7, FLIP_WEATHER_UI_TEXT("Wifi Dev Board disconnected.", "WiFi 开发板已断开。"));
+        canvas_draw_str(canvas, 0, 17, FLIP_WEATHER_UI_TEXT("Please connect to the board.", "请连接开发板。"));
+        canvas_draw_str(canvas, 0, 32, FLIP_WEATHER_UI_TEXT("If your board is connected,", "如已连接，请确认已"));
+        canvas_draw_str(canvas, 0, 42, FLIP_WEATHER_UI_TEXT("make sure you have flashed", "刷入最新 FlipperHTTP"));
+        canvas_draw_str(canvas, 0, 52, FLIP_WEATHER_UI_TEXT("your WiFi Devboard with the", "固件到 WiFi 开发板。"));
+        canvas_draw_str(canvas, 0, 62, FLIP_WEATHER_UI_TEXT("latest FlipperHTTP flash.", ""));
         return;
     }
 
@@ -436,7 +436,7 @@ void flip_weather_loader_draw_callback(Canvas *canvas, void *model)
     }
 
     canvas_draw_str(canvas, 0, 7, title);
-    canvas_draw_str(canvas, 0, 17, "Loading...");
+    canvas_draw_str(canvas, 0, 17, FLIP_WEATHER_UI_TEXT("Loading...", "加载中..."));
 
     if (data_state == DataStateInitial)
     {
@@ -445,25 +445,25 @@ void flip_weather_loader_draw_callback(Canvas *canvas, void *model)
 
     if (http_state == SENDING)
     {
-        canvas_draw_str(canvas, 0, 27, "Sending...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WEATHER_UI_TEXT("Sending...", "发送中..."));
         return;
     }
 
     if (http_state == RECEIVING || data_state == DataStateRequested)
     {
-        canvas_draw_str(canvas, 0, 27, "Receiving...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WEATHER_UI_TEXT("Receiving...", "接收中..."));
         return;
     }
 
     if (http_state == IDLE && data_state == DataStateReceived)
     {
-        canvas_draw_str(canvas, 0, 27, "Processing...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WEATHER_UI_TEXT("Processing...", "处理中..."));
         return;
     }
 
     if (http_state == IDLE && data_state == DataStateParsed)
     {
-        canvas_draw_str(canvas, 0, 27, "Processed...");
+        canvas_draw_str(canvas, 0, 27, FLIP_WEATHER_UI_TEXT("Processed...", "处理完成..."));
         return;
     }
 }
@@ -593,7 +593,7 @@ static void flip_weather_loader_process_callback(void *context)
                 }
                 else
                 {
-                    flip_weather_widget_set_text(model->data_text != NULL ? model->data_text : "Empty result", &app_instance->widget_result);
+                    flip_weather_widget_set_text(model->data_text != NULL ? model->data_text : FLIP_WEATHER_UI_TEXT("Empty result", "无结果"), &app_instance->widget_result);
                     if (model->data_text != NULL)
                     {
                         free(model->data_text);

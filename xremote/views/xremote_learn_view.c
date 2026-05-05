@@ -19,27 +19,27 @@ static void xremote_learn_view_draw_callback(Canvas* canvas, void* context) {
     const char* button_name = xremote_learn_get_curr_button_name(learn_ctx);
 
     ViewOrientation orientation = app_ctx->app_settings->orientation;
-    xremote_canvas_draw_header(canvas, orientation, "Learn");
+    xremote_canvas_draw_header(canvas, orientation, XREMOTE_UI_TEXT("Learn", "学习"));
 
     char info_text[128];
     snprintf(
         info_text,
         sizeof(info_text),
-        "Press\n\"%s\"\nbutton on\nthe remote.",
+        XREMOTE_UI_TEXT("Press\n\"%s\"\nbutton on\nthe remote.", "按下遥控器\n上的\n\"%s\"\n按键"),
         button_name != NULL ? button_name : "");
 
     if(orientation == ViewOrientationHorizontal) {
         elements_multiline_text_aligned(canvas, 0, 12, AlignLeft, AlignTop, info_text);
         xremote_canvas_draw_button_wide(
-            canvas, model->ok_pressed, 68, 22, "Finish", XRemoteIconEnter);
+            canvas, model->ok_pressed, 68, 22, XREMOTE_UI_TEXT("Finish", "完成"), XRemoteIconEnter);
         xremote_canvas_draw_button_wide(
-            canvas, model->right_pressed, 68, 40, "Skip", XRemoteIconArrowRight);
+            canvas, model->right_pressed, 68, 40, XREMOTE_UI_TEXT("Skip", "跳过"), XRemoteIconArrowRight);
     } else {
         elements_multiline_text_aligned(canvas, 0, 30, AlignLeft, AlignTop, info_text);
         xremote_canvas_draw_button_wide(
-            canvas, model->ok_pressed, 0, 82, "Finish", XRemoteIconEnter);
+            canvas, model->ok_pressed, 0, 82, XREMOTE_UI_TEXT("Finish", "完成"), XRemoteIconEnter);
         xremote_canvas_draw_button_wide(
-            canvas, model->right_pressed, 0, 100, "Skip", XRemoteIconArrowRight);
+            canvas, model->right_pressed, 0, 100, XREMOTE_UI_TEXT("Skip", "跳过"), XRemoteIconArrowRight);
     }
 
     const char* exit_str = xremote_app_context_get_exit_str(app_ctx);
@@ -89,23 +89,23 @@ static void xremote_learn_success_view_draw_callback(Canvas* canvas, void* conte
     }
 
     if(app_ctx->app_settings->orientation == ViewOrientationHorizontal) {
-        canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, "Received signal");
+        canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Received signal", "已接收信号"));
         elements_multiline_text_aligned(canvas, 0, 16, AlignLeft, AlignTop, signal_info);
         xremote_canvas_draw_button_wide(
-            canvas, model->ok_pressed, 68, 12, "Finish", XRemoteIconEnter);
+            canvas, model->ok_pressed, 68, 12, XREMOTE_UI_TEXT("Finish", "完成"), XRemoteIconEnter);
         xremote_canvas_draw_button_wide(
-            canvas, model->right_pressed, 68, 30, "Next", XRemoteIconArrowRight);
+            canvas, model->right_pressed, 68, 30, XREMOTE_UI_TEXT("Next", "下一个"), XRemoteIconArrowRight);
         xremote_canvas_draw_button_wide(
-            canvas, model->back_pressed, 68, 48, "Retry", XRemoteIconBack);
+            canvas, model->back_pressed, 68, 48, XREMOTE_UI_TEXT("Retry", "重试"), XRemoteIconBack);
     } else {
-        canvas_draw_str_aligned(canvas, 0, 12, AlignLeft, AlignTop, "Received signal");
+        canvas_draw_str_aligned(canvas, 0, 12, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Received signal", "已接收信号"));
         elements_multiline_text_aligned(canvas, 0, 27, AlignLeft, AlignTop, signal_info);
         xremote_canvas_draw_button_wide(
-            canvas, model->ok_pressed, 0, 76, "Finish", XRemoteIconEnter);
+            canvas, model->ok_pressed, 0, 76, XREMOTE_UI_TEXT("Finish", "完成"), XRemoteIconEnter);
         xremote_canvas_draw_button_wide(
-            canvas, model->right_pressed, 0, 94, "Next", XRemoteIconArrowRight);
+            canvas, model->right_pressed, 0, 94, XREMOTE_UI_TEXT("Next", "下一个"), XRemoteIconArrowRight);
         xremote_canvas_draw_button_wide(
-            canvas, model->back_pressed, 0, 112, "Retry", XRemoteIconBack);
+            canvas, model->back_pressed, 0, 112, XREMOTE_UI_TEXT("Retry", "重试"), XRemoteIconBack);
     }
 }
 

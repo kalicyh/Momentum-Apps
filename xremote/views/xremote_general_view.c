@@ -10,32 +10,32 @@
 #include "../xremote_app.h"
 
 static void xremote_general_view_draw_vertical(Canvas* canvas, XRemoteViewModel* model) {
-    xremote_canvas_draw_button_wide(canvas, model->ok_pressed, 0, 27, "Power", XRemoteIconEnter);
-    xremote_canvas_draw_button_wide(canvas, model->up_pressed, 0, 45, "Input", XRemoteIconArrowUp);
+    xremote_canvas_draw_button_wide(canvas, model->ok_pressed, 0, 27, XREMOTE_UI_TEXT("Power", "电源"), XRemoteIconEnter);
+    xremote_canvas_draw_button_wide(canvas, model->up_pressed, 0, 45, XREMOTE_UI_TEXT("Input", "输入"), XRemoteIconArrowUp);
     xremote_canvas_draw_button_wide(
-        canvas, model->down_pressed, 0, 63, "Setup", XRemoteIconArrowDown);
+        canvas, model->down_pressed, 0, 63, XREMOTE_UI_TEXT("Setup", "设置"), XRemoteIconArrowDown);
     xremote_canvas_draw_button_wide(
-        canvas, model->left_pressed, 0, 81, "Menu", XRemoteIconArrowLeft);
+        canvas, model->left_pressed, 0, 81, XREMOTE_UI_TEXT("Menu", "菜单"), XRemoteIconArrowLeft);
     xremote_canvas_draw_button_wide(
-        canvas, model->right_pressed, 0, 99, "List", XRemoteIconArrowRight);
+        canvas, model->right_pressed, 0, 99, XREMOTE_UI_TEXT("List", "列表"), XRemoteIconArrowRight);
 }
 
 static void xremote_general_view_draw_horizontal(Canvas* canvas, XRemoteViewModel* model) {
-    xremote_canvas_draw_button_wide(canvas, model->ok_pressed, 0, 7, "Power", XRemoteIconEnter);
-    xremote_canvas_draw_button_wide(canvas, model->up_pressed, 0, 25, "Input", XRemoteIconArrowUp);
+    xremote_canvas_draw_button_wide(canvas, model->ok_pressed, 0, 7, XREMOTE_UI_TEXT("Power", "电源"), XRemoteIconEnter);
+    xremote_canvas_draw_button_wide(canvas, model->up_pressed, 0, 25, XREMOTE_UI_TEXT("Input", "输入"), XRemoteIconArrowUp);
     xremote_canvas_draw_button_wide(
-        canvas, model->down_pressed, 0, 43, "Setup", XRemoteIconArrowDown);
+        canvas, model->down_pressed, 0, 43, XREMOTE_UI_TEXT("Setup", "设置"), XRemoteIconArrowDown);
     xremote_canvas_draw_button_wide(
-        canvas, model->left_pressed, 64, 20, "Menu", XRemoteIconArrowLeft);
+        canvas, model->left_pressed, 64, 20, XREMOTE_UI_TEXT("Menu", "菜单"), XRemoteIconArrowLeft);
     xremote_canvas_draw_button_wide(
-        canvas, model->right_pressed, 64, 38, "List", XRemoteIconArrowRight);
+        canvas, model->right_pressed, 64, 38, XREMOTE_UI_TEXT("List", "列表"), XRemoteIconArrowRight);
 }
 
 static void xremote_general_view_draw_page_name(Canvas* canvas, ViewOrientation orientation) {
     Align align = orientation == ViewOrientationHorizontal ? AlignRight : AlignLeft;
     uint8_t x = orientation == ViewOrientationHorizontal ? 128 : 0;
     uint8_t y = orientation == ViewOrientationHorizontal ? 10 : 12;
-    elements_multiline_text_aligned(canvas, x, y, align, AlignTop, "General");
+    elements_multiline_text_aligned(canvas, x, y, align, AlignTop, XREMOTE_UI_TEXT("General", "通用"));
 }
 
 static void xremote_general_view_draw_callback(Canvas* canvas, void* context) {

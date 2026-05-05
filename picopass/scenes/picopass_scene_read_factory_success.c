@@ -16,7 +16,8 @@ void picopass_scene_read_factory_success_widget_callback(
 
 void picopass_scene_read_factory_success_on_enter(void* context) {
     Picopass* picopass = context;
-    FuriString* title = furi_string_alloc_set("Factory Default");
+    FuriString* title =
+        furi_string_alloc_set(PICOPASS_UI_TEXT("Factory Default", "出厂默认"));
     FuriString* subtitle = furi_string_alloc_set("");
 
     dolphin_deed(DolphinDeedNfcReadSuccess);
@@ -33,15 +34,17 @@ void picopass_scene_read_factory_success_on_enter(void* context) {
     uint8_t fuses = configBlock[7];
 
     if((fuses & 0x80) == 0x80) {
-        furi_string_cat_printf(subtitle, "Personalization mode");
+        furi_string_cat_printf(
+            subtitle, PICOPASS_UI_TEXT("Personalization mode", "个性化模式"));
     } else {
-        furi_string_cat_printf(subtitle, "Application mode");
+        furi_string_cat_printf(
+            subtitle, PICOPASS_UI_TEXT("Application mode", "应用模式"));
     }
 
     widget_add_button_element(
         widget,
         GuiButtonTypeCenter,
-        "Write Standard iClass Key",
+        PICOPASS_UI_TEXT("Write Standard iClass Key", "写入标准iClass密钥"),
         picopass_scene_read_factory_success_widget_callback,
         picopass);
 

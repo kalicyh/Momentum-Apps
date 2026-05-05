@@ -37,7 +37,7 @@ void spi_mem_scene_select_vendor_on_enter(void* context) {
             app);
     }
     vendors_clear(vendors_arr);
-    submenu_set_header(app->submenu, "Choose chip vendor");
+    submenu_set_header(app->submenu, SPI_MEM_UI_TEXT("Choose chip vendor", "选择芯片厂商"));
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, SPIMemSceneSelectVendor));
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewSubmenu);

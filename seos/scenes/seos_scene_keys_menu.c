@@ -37,7 +37,8 @@ void seos_scene_keys_menu_on_enter(void* context) {
     bool zero_active = (seos->keys_version == 0);
     submenu_add_item(
         submenu,
-        zero_active ? "Zero Keys *" : "Zero Keys",
+        zero_active ? SEOS_UI_TEXT("Zero Keys *", "零密钥 *") :
+                      SEOS_UI_TEXT("Zero Keys", "零密钥"),
         SubmenuIndexZeroKeys,
         seos_scene_keys_menu_submenu_callback,
         seos);
@@ -103,9 +104,20 @@ bool seos_scene_keys_menu_on_event(void* context, SceneManagerEvent event) {
                         seos->scene_manager, SeosSceneMainMenu);
                 }
             } else {
-                popup_set_header(seos->popup, "Load Failed", 64, 20, AlignCenter, AlignTop);
+                popup_set_header(
+                    seos->popup,
+                    SEOS_UI_TEXT("Load Failed", "加载失败"),
+                    64,
+                    20,
+                    AlignCenter,
+                    AlignTop);
                 popup_set_text(
-                    seos->popup, "Could not load key file", 64, 40, AlignCenter, AlignTop);
+                    seos->popup,
+                    SEOS_UI_TEXT("Could not load key file", "无法加载密钥文件"),
+                    64,
+                    40,
+                    AlignCenter,
+                    AlignTop);
                 popup_set_timeout(seos->popup, 2000);
                 popup_enable_timeout(seos->popup);
                 view_dispatcher_switch_to_view(seos->view_dispatcher, SeosViewPopup);

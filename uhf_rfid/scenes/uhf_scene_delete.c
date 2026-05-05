@@ -16,9 +16,9 @@ void uhf_scene_delete_on_enter(void* context) {
     widget_add_text_box_element(
         uhf_app->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, temp_str, false);
     widget_add_button_element(
-        uhf_app->widget, GuiButtonTypeLeft, "Back", uhf_scene_delete_widget_callback, uhf_app);
+        uhf_app->widget, GuiButtonTypeLeft, UHF_UI_TEXT("Back", "返回"), uhf_scene_delete_widget_callback, uhf_app);
     widget_add_button_element(
-        uhf_app->widget, GuiButtonTypeRight, "Delete", uhf_scene_delete_widget_callback, uhf_app);
+        uhf_app->widget, GuiButtonTypeRight, UHF_UI_TEXT("Delete", "删除"), uhf_scene_delete_widget_callback, uhf_app);
 
     view_dispatcher_switch_to_view(uhf_app->view_dispatcher, UHFViewWidget);
 }

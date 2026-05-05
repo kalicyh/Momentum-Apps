@@ -25,7 +25,7 @@ void passy_scene_main_menu_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Enter MRZ Info",
+        PASSY_UI_TEXT("Enter MRZ Info", "输入MRZ信息"),
         SubmenuIndexEnterMRZInfo,
         passy_scene_main_menu_submenu_callback,
         passy);
@@ -33,34 +33,34 @@ void passy_scene_main_menu_on_enter(void* context) {
        strlen(passy->date_of_expiry) > 0) {
         submenu_add_item(
             submenu,
-            "Read DG1 (MRZ)",
+            PASSY_UI_TEXT("Read DG1 (MRZ)", "读取 DG1 (MRZ)"),
             SubmenuIndexReadDG1,
             passy_scene_main_menu_submenu_callback,
             passy);
         submenu_add_item(
             submenu,
-            "Read DG2 (Face)",
+            PASSY_UI_TEXT("Read DG2 (Face)", "读取 DG2 (人脸)"),
             SubmenuIndexReadDG2,
             passy_scene_main_menu_submenu_callback,
             passy);
         if(furi_hal_rtc_is_flag_set(FuriHalRtcFlagDebug)) {
             submenu_add_item(
                 submenu,
-                "Read Advanced",
+                PASSY_UI_TEXT("Read Advanced", "高级读取"),
                 SubmenuIndexReadAdvanced,
                 passy_scene_main_menu_submenu_callback,
                 passy);
         }
         submenu_add_item(
             submenu,
-            "Known Issues",
+            PASSY_UI_TEXT("Known Issues", "已知问题"),
             SubmenuIndexKnownIssues,
             passy_scene_main_menu_submenu_callback,
             passy);
 
         submenu_add_item(
             submenu,
-            "Delete MRZ Info",
+            PASSY_UI_TEXT("Delete MRZ Info", "删除MRZ信息"),
             SubmenuIndexDeleteMRZInfo,
             passy_scene_main_menu_submenu_callback,
             passy);

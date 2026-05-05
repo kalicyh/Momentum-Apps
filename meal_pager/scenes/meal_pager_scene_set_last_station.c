@@ -15,9 +15,10 @@ void meal_pager_scene_set_last_station_on_enter(void* context) {
     IntInput* int_input = app->int_input;
     size_t enter_name_length = 5;
     meal_pager_set_max_values(app);
-    char* str = "Set Last Station (0 - 9999)";
+    char* str = MEAL_PAGER_UI_TEXT("Set Last Station (0 - 9999)", "设置末基站 (0 - 9999)");
     const char* constStr = str;
-    snprintf(str, 36, "Set Last Station (%lu - %lu)", app->first_station, app->max_station);
+    const char* fmt = MEAL_PAGER_UI_TEXT("Set Last Station (%lu - %lu)", "设置末基站 (%lu - %lu)");
+    snprintf(str, 36, fmt, app->first_station, app->max_station);
 
     int_input_set_header_text(int_input, constStr);
 

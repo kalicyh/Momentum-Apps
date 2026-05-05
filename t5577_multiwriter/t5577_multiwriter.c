@@ -199,7 +199,7 @@ bool t5577_multiwriter_load_key_data(LfRfid* app, FuriString* path, bool show_di
     } while(0);
 
     if((!result) && (show_dialog)) {
-        dialog_message_show_storage_error(app->dialogs, "Unsupported\nlfrfid protocol!");
+        dialog_message_show_storage_error(app->dialogs, T5577_MULTIWRITER_UI_TEXT("Unsupported\nlfrfid protocol!", "不支持的\n低频RFID协议!"));
     }
 
     return result;
@@ -209,7 +209,7 @@ void t5577_multiwriter_make_app_folder(LfRfid* app) {
     furi_assert(app);
 
     if(!storage_simply_mkdir(app->storage, LFRFID_APP_FOLDER)) {
-        dialog_message_show_storage_error(app->dialogs, "Cannot create\napp folder");
+        dialog_message_show_storage_error(app->dialogs, T5577_MULTIWRITER_UI_TEXT("Cannot create\napp folder", "无法创建\n应用文件夹"));
     }
 }
 

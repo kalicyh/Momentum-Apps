@@ -32,6 +32,8 @@
 #include <lib/subghz/devices/cc1101_int/cc1101_int_interconnect.h>
 #include <lib/subghz/devices/devices.h>
 
+#include "sub_analyzer.h"
+
 #define TAG "SubAnalyzer"
 #define SUB_ANALYZER_VERSION "5.0"
 #define TEXT_BUFFER_SIZE 8192
@@ -121,27 +123,27 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
     
     do {
         if(!flipper_format_file_open_existing(format, path)) {
-            furi_string_cat_printf(app->text_buffer, "Error: Cannot open file\n");
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Error: Cannot open file\n", "错误: 无法打开文件\n"));
             break;
         }
         
         // Get filename
         FuriString* filename = furi_string_alloc();
         path_extract_filename_no_ext(path, filename);
-        furi_string_cat_printf(app->text_buffer, "=== SubGhz File Analysis ===\n");
-        furi_string_cat_printf(app->text_buffer, "File: %s.sub\n", furi_string_get_cstr(filename));
+        furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("=== SubGhz File Analysis ===\n", "=== SubGhz 文件分析 ===\n"));
+        furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("File: %s.sub\n", "文件: %s.sub\n"), furi_string_get_cstr(filename));
         furi_string_free(filename);
         
         // Read header
         FuriString* temp_str = furi_string_alloc();
         uint32_t version;
         if(!flipper_format_read_header(format, temp_str, &version)) {
-            furi_string_cat_printf(app->text_buffer, "Error: Invalid header\n");
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Error: Invalid header\n", "错误: 无效的文件头\n"));
             furi_string_free(temp_str);
             break;
         }
         
-        furi_string_cat_printf(app->text_buffer, "Format: %s v%lu\n\n", 
+        furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Format: %s v%lu\n\n", "格式: %s v%lu\n\n"),
                               furi_string_get_cstr(temp_str), version);
         
         // Read all basic fields
@@ -154,15 +156,15 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
         
         if(is_raw) {
             // RAW file analysis
-            furi_string_cat_printf(app->text_buffer, "=== RAW Signal ===\n");
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("=== RAW Signal ===\n", "=== 原始信号 ===\n"));
             
             if(frequency > 0) {
-                furi_string_cat_printf(app->text_buffer, "Frequency: %lu.%03lu MHz\n", 
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Frequency: %lu.%03lu MHz\n", "频率: %lu.%03lu MHz\n"),
                                       frequency / 1000000, (frequency / 1000) % 1000);
             }
-            
+
             if(!furi_string_empty(preset_name)) {
-                furi_string_cat_printf(app->text_buffer, "Preset: %s\n", 
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Preset: %s\n", "预设: %s\n"),
                                       furi_string_get_cstr(preset_name));
             }
             
@@ -205,12 +207,12 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                 }
             }
             
-            furi_string_cat_printf(app->text_buffer, "\nSignal Analysis:\n");
-            furi_string_cat_printf(app->text_buffer, "Total pulses: %d\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nSignal Analysis:\n", "\n信号分析:\n"));
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Total pulses: %d\n", "总脉冲数: %d\n"),
                                   positive_count + negative_count);
-            furi_string_cat_printf(app->text_buffer, "High pulses: %d\n", positive_count);
-            furi_string_cat_printf(app->text_buffer, "Low pulses: %d\n", negative_count);
-            furi_string_cat_printf(app->text_buffer, "Duration: %lld.%03lld ms\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("High pulses: %d\n", "高电平脉冲: %d\n"), positive_count);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Low pulses: %d\n", "低电平脉冲: %d\n"), negative_count);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Duration: %lld.%03lld ms\n", "持续时间: %lld.%03lld ms\n"),
                                   total_duration / 1000, total_duration % 1000);
             
             // Estimate symbol rate based on shortest pulse
@@ -221,10 +223,10 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
             
             if(min_pulse < INT32_MAX && min_pulse > 0) {
                 uint32_t symbol_rate = 1000000 / min_pulse;
-                furi_string_cat_printf(app->text_buffer, "Est. symbol rate: %lu Hz\n", symbol_rate);
-                
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Est. symbol rate: %lu Hz\n", "估计符号率: %lu Hz\n"), symbol_rate);
+
                 // Estimate data rate for common encodings
-                furi_string_cat_printf(app->text_buffer, "\nPossible data rates:\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nPossible data rates:\n", "\n可能的数据速率:\n"));
                 furi_string_cat_printf(app->text_buffer, "  Manchester: %lu bps\n", symbol_rate / 2);
                 furi_string_cat_printf(app->text_buffer, "  PWM: %lu bps\n", symbol_rate / 3);
                 furi_string_cat_printf(app->text_buffer, "  PPM: %lu bps\n", symbol_rate / 4);
@@ -233,17 +235,17 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
         } else {
             // Protocol file - read protocol name
             if(flipper_format_read_string(format, "Protocol", protocol_name)) {
-                furi_string_cat_printf(app->text_buffer, "=== Protocol: %s ===\n", 
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("=== Protocol: %s ===\n", "=== 协议: %s ===\n"),
                                       furi_string_get_cstr(protocol_name));
                 
                 // Basic info
                 if(frequency > 0) {
-                    furi_string_cat_printf(app->text_buffer, "Frequency: %lu.%03lu MHz\n", 
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Frequency: %lu.%03lu MHz\n", "频率: %lu.%03lu MHz\n"),
                                           frequency / 1000000, (frequency / 1000) % 1000);
                 }
-                
+
                 if(!furi_string_empty(preset_name)) {
-                    furi_string_cat_printf(app->text_buffer, "Preset: %s\n", 
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Preset: %s\n", "预设: %s\n"),
                                           furi_string_get_cstr(preset_name));
                 }
                 
@@ -257,15 +259,15 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                 flipper_format_read_uint32(format, "Delay", &delay, 1);
                 
                 // Display extracted data
-                furi_string_cat_printf(app->text_buffer, "\nExtracted Data:\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nExtracted Data:\n", "\n提取数据:\n"));
                 
                 if(bits > 0) {
-                    furi_string_cat_printf(app->text_buffer, "Bits: %lu (%lu bytes)\n", 
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Bits: %lu (%lu bytes)\n", "位数: %lu (%lu 字节)\n"),
                                           bits, (bits + 7) / 8);
                 }
                 
                 if(!furi_string_empty(key_data)) {
-                    furi_string_cat_printf(app->text_buffer, "Key: %s\n", 
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Key: %s\n", "密钥: %s\n"),
                                           furi_string_get_cstr(key_data));
                 }
                 
@@ -274,19 +276,19 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                 }
                 
                 if(baud > 0) {
-                    furi_string_cat_printf(app->text_buffer, "Baud: %lu bps\n", baud);
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Baud: %lu bps\n", "波特率: %lu bps\n"), baud);
                 }
                 
                 if(guard_time > 0) {
-                    furi_string_cat_printf(app->text_buffer, "Guard: %lu μs\n", guard_time);
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Guard: %lu μs\n", "保护时间: %lu μs\n"), guard_time);
                 }
                 
                 if(repeat > 0) {
-                    furi_string_cat_printf(app->text_buffer, "Repeat: %lu times\n", repeat);
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Repeat: %lu times\n", "重复: %lu 次\n"), repeat);
                 }
                 
                 if(delay > 0) {
-                    furi_string_cat_printf(app->text_buffer, "Delay: %lu ms\n", delay);
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Delay: %lu ms\n", "延迟: %lu ms\n"), delay);
                 }
                 
                 // Try to decode with protocol decoder
@@ -302,9 +304,9 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                 }
                 
                 if(protocol && protocol->decoder) {
-                    furi_string_cat_printf(app->text_buffer, "\nProtocol Type: %s\n", 
-                                          protocol->type == SubGhzProtocolTypeStatic ? "Static (Fixed)" :
-                                          protocol->type == SubGhzProtocolTypeDynamic ? "Dynamic (Rolling)" :
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nProtocol Type: %s\n", "\n协议类型: %s\n"),
+                                          protocol->type == SubGhzProtocolTypeStatic ? SUB_ANALYZER_UI_TEXT("Static (Fixed)", "静态 (固定)") :
+                                          protocol->type == SubGhzProtocolTypeDynamic ? SUB_ANALYZER_UI_TEXT("Dynamic (Rolling)", "动态 (滚动)") :
                                           "RAW");
                     
                     if(protocol->decoder->alloc && protocol->decoder->deserialize) {
@@ -318,7 +320,7 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                                 FuriString* decoded_info = furi_string_alloc();
                                 protocol->decoder->get_string(decoder, decoded_info);
                                 
-                                furi_string_cat_printf(app->text_buffer, "\nDecoded Info:\n%s", 
+                                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nDecoded Info:\n%s", "\n解码信息:\n%s"),
                                                       furi_string_get_cstr(decoded_info));
                                 
                                 furi_string_free(decoded_info);
@@ -345,7 +347,7 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                     uint32_t value;
                     if(flipper_format_read_uint32(format, extra_fields[i], &value, 1)) {
                         if(!found_extra) {
-                            furi_string_cat_printf(app->text_buffer, "\nProtocol Fields:\n");
+                            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nProtocol Fields:\n", "\n协议字段:\n"));
                             found_extra = true;
                         }
                         furi_string_cat_printf(app->text_buffer, "%s: 0x%08lX (%lu)\n", 
@@ -356,7 +358,7 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
         }
         
         // CALCULATIONS SECTION
-        furi_string_cat_printf(app->text_buffer, "\n=== Calculations ===\n");
+        furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\n=== Calculations ===\n", "\n=== 计算 ===\n"));
         
         // Frequency calculations
         if(frequency > 0) {
@@ -367,13 +369,13 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
             uint32_t wavelength_cm = (wavelength_mm / 10) % 100;
             uint32_t wavelength_mm_frac = wavelength_mm % 10;
             
-            furi_string_cat_printf(app->text_buffer, "Wavelength: %lu.%02lu%lu m (%lu.%lu cm)\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Wavelength: %lu.%02lu%lu m (%lu.%lu cm)\n", "波长: %lu.%02lu%lu m (%lu.%lu cm)\n"),
                                   wavelength_m, wavelength_cm, wavelength_mm_frac,
                                   wavelength_mm / 10, wavelength_mm % 10);
             
             uint32_t quarter_wave_cm = wavelength_mm / 40; // λ/4 in cm
             uint32_t quarter_wave_mm = (wavelength_mm / 4) % 10;
-            furi_string_cat_printf(app->text_buffer, "λ/4 antenna: %lu.%lu cm\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("λ/4 antenna: %lu.%lu cm\n", "λ/4 天线: %lu.%lu cm\n"),
                                   quarter_wave_cm, quarter_wave_mm);
             
             // FSPL calculation using integer math
@@ -384,27 +386,27 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
             float fspl_1m = 20.0f * log_freq + 20.0f * log10f(1000000.0f) - 147.55f;
             int fspl_1m_int = (int)(fspl_1m * 10.0f);
             
-            furi_string_cat_printf(app->text_buffer, "FSPL @ 1m: %d.%d dB\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("FSPL @ 1m: %d.%d dB\n", "自由空间路径损耗 @ 1m: %d.%d dB\n"),
                                   fspl_1m_int / 10, abs(fspl_1m_int % 10));
             
             int fspl_10m_int = fspl_1m_int + 200; // +20 dB
             int fspl_100m_int = fspl_1m_int + 400; // +40 dB
-            furi_string_cat_printf(app->text_buffer, "FSPL @ 10m: %d.%d dB\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("FSPL @ 10m: %d.%d dB\n", "自由空间路径损耗 @ 10m: %d.%d dB\n"),
                                   fspl_10m_int / 10, abs(fspl_10m_int % 10));
-            furi_string_cat_printf(app->text_buffer, "FSPL @ 100m: %d.%d dB\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("FSPL @ 100m: %d.%d dB\n", "自由空间路径损耗 @ 100m: %d.%d dB\n"),
                                   fspl_100m_int / 10, abs(fspl_100m_int % 10));
         }
         
         // Timing calculations
         if(te > 0) {
             uint32_t symbol_rate = 1000000 / te;
-            furi_string_cat_printf(app->text_buffer, "\nTiming Analysis:\n");
-            furi_string_cat_printf(app->text_buffer, "Symbol rate: %lu Hz\n", symbol_rate);
-            furi_string_cat_printf(app->text_buffer, "Symbol period: %lu μs\n", te);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nTiming Analysis:\n", "\n时序分析:\n"));
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Symbol rate: %lu Hz\n", "符号率: %lu Hz\n"), symbol_rate);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Symbol period: %lu μs\n", "符号周期: %lu μs\n"), te);
             
             // Calculate data rates for different encodings
             if(baud == 0) {
-                furi_string_cat_printf(app->text_buffer, "\nPossible baud rates:\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nPossible baud rates:\n", "\n可能的波特率:\n"));
                 furi_string_cat_printf(app->text_buffer, "  Manchester: %lu bps\n", symbol_rate / 2);
                 furi_string_cat_printf(app->text_buffer, "  3-PWM: %lu bps\n", symbol_rate / 3);
                 furi_string_cat_printf(app->text_buffer, "  4-PWM: %lu bps\n", symbol_rate / 4);
@@ -424,33 +426,33 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                     encoding = "4-PWM";
                 }
                 
-                furi_string_cat_printf(app->text_buffer, "Symbols per bit: %lu.%lu\n", 
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Symbols per bit: %lu.%lu\n", "每比特符号数: %lu.%lu\n"),
                                       symbols_per_bit, symbols_per_bit_frac);
-                furi_string_cat_printf(app->text_buffer, "Encoding: %s\n", encoding);
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Encoding: %s\n", "编码: %s\n"), encoding);
             }
         }
         
         // Data rate calculations
         if(baud > 0) {
-            furi_string_cat_printf(app->text_buffer, "\nData Rate Analysis:\n");
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nData Rate Analysis:\n", "\n数据速率分析:\n"));
             uint32_t bit_period_us = 1000000 / baud;
-            furi_string_cat_printf(app->text_buffer, "Bit period: %lu μs\n", bit_period_us);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Bit period: %lu μs\n", "比特周期: %lu μs\n"), bit_period_us);
             
             uint32_t kbps_int = baud / 1000;
             uint32_t kbps_frac = (baud % 1000) / 10;
-            furi_string_cat_printf(app->text_buffer, "Data rate: %lu.%02lu kbps\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Data rate: %lu.%02lu kbps\n", "数据速率: %lu.%02lu kbps\n"),
                                   kbps_int, kbps_frac);
             
             // Bandwidth estimates
-            furi_string_cat_printf(app->text_buffer, "Min bandwidth: %lu.%lu kHz\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Min bandwidth: %lu.%lu kHz\n", "最小带宽: %lu.%lu kHz\n"),
                                   baud / 1000, (baud % 1000) / 100);
-            furi_string_cat_printf(app->text_buffer, "Typical BW: %lu.%lu kHz\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Typical BW: %lu.%lu kHz\n", "典型带宽: %lu.%lu kHz\n"),
                                   (baud * 2) / 1000, ((baud * 2) % 1000) / 100);
         }
         
         // Transmission time calculations
         if(bits > 0 && (baud > 0 || te > 0)) {
-            furi_string_cat_printf(app->text_buffer, "\nTransmission Time:\n");
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nTransmission Time:\n", "\n传输时间:\n"));
             
             uint32_t tx_time_us;
             if(baud > 0) {
@@ -462,7 +464,7 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
             
             uint32_t tx_time_ms = tx_time_us / 1000;
             uint32_t tx_time_us_frac = tx_time_us % 1000;
-            furi_string_cat_printf(app->text_buffer, "Single TX: %lu.%02lu ms\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Single TX: %lu.%02lu ms\n", "单次传输: %lu.%02lu ms\n"),
                                   tx_time_ms, tx_time_us_frac / 10);
             
             if(repeat > 1) {
@@ -470,11 +472,11 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                 if(delay > 0) {
                     total_time_ms += delay * (repeat - 1);
                 }
-                furi_string_cat_printf(app->text_buffer, "Total TX: %lu ms\n", total_time_ms);
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Total TX: %lu ms\n", "总传输时间: %lu ms\n"), total_time_ms);
                 
                 if(delay > 0 && total_time_ms > 0) {
                     uint32_t duty = (tx_time_ms * repeat * 100) / total_time_ms;
-                    furi_string_cat_printf(app->text_buffer, "Duty cycle: %lu%%\n", duty);
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Duty cycle: %lu%%\n", "占空比: %lu%%\n"), duty);
                 }
             }
             
@@ -484,27 +486,27 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
                 uint32_t total_time = active_time + delay * (repeat - 1);
                 // Average current = 30mA * duty + 1mA * (1-duty)
                 uint32_t avg_current_ua = (30000 * active_time + 1000 * (total_time - active_time)) / total_time;
-                furi_string_cat_printf(app->text_buffer, "Avg current: %lu.%lu mA\n", 
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Avg current: %lu.%lu mA\n", "平均电流: %lu.%lu mA\n"),
                                       avg_current_ua / 1000, (avg_current_ua % 1000) / 100);
             }
         }
         
         // Key analysis
         if(!furi_string_empty(key_data)) {
-            furi_string_cat_printf(app->text_buffer, "\nKey Analysis:\n");
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("\nKey Analysis:\n", "\n密钥分析:\n"));
             
             size_t hex_len = furi_string_size(key_data);
             size_t byte_len = hex_len / 2;
             
-            furi_string_cat_printf(app->text_buffer, "Hex chars: %zu\n", hex_len);
-            furi_string_cat_printf(app->text_buffer, "Bytes: %zu\n", byte_len);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Hex chars: %zu\n", "十六进制字符: %zu\n"), hex_len);
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Bytes: %zu\n", "字节数: %zu\n"), byte_len);
             
             if(bits > 0) {
                 size_t expected_bytes = (bits + 7) / 8;
                 if(byte_len == expected_bytes) {
-                    furi_string_cat_printf(app->text_buffer, "Matches bit count: Yes\n");
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Matches bit count: Yes\n", "匹配位数: 是\n"));
                 } else {
-                    furi_string_cat_printf(app->text_buffer, "Expected bytes: %zu\n", 
+                    furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Expected bytes: %zu\n", "期望字节数: %zu\n"),
                                           expected_bytes);
                 }
             }
@@ -523,11 +525,11 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
             }
             
             if(all_same) {
-                furi_string_cat_printf(app->text_buffer, "Pattern: All bytes same\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Pattern: All bytes same\n", "模式: 所有字节相同\n"));
             } else if(all_zero) {
-                furi_string_cat_printf(app->text_buffer, "Pattern: All zeros\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Pattern: All zeros\n", "模式: 全零\n"));
             } else if(all_ff) {
-                furi_string_cat_printf(app->text_buffer, "Pattern: All FF\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Pattern: All FF\n", "模式: 全FF\n"));
             }
             
             // Calculate entropy (randomness)
@@ -563,17 +565,17 @@ static void sub_analyzer_analyze_file(SubAnalyzerApp* app, const char* path) {
             }
             
             uint32_t entropy_int = (uint32_t)(entropy * 100.0f);
-            furi_string_cat_printf(app->text_buffer, "Entropy: %lu.%02lu bits/byte\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Entropy: %lu.%02lu bits/byte\n", "熵: %lu.%02lu bits/byte\n"),
                                   entropy_int / 100, entropy_int % 100);
-            furi_string_cat_printf(app->text_buffer, "Unique bytes: %lu/%zu\n", 
+            furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Unique bytes: %lu/%zu\n", "唯一字节数: %lu/%zu\n"),
                                   unique_bytes, byte_len);
             
             if(entropy < 2.0f) {
-                furi_string_cat_printf(app->text_buffer, "Randomness: Low\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Randomness: Low\n", "随机性: 低\n"));
             } else if(entropy < 6.0f) {
-                furi_string_cat_printf(app->text_buffer, "Randomness: Medium\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Randomness: Medium\n", "随机性: 中\n"));
             } else {
-                furi_string_cat_printf(app->text_buffer, "Randomness: High\n");
+                furi_string_cat_printf(app->text_buffer, SUB_ANALYZER_UI_TEXT("Randomness: High\n", "随机性: 高\n"));
             }
         }
         
@@ -611,18 +613,31 @@ static void sub_analyzer_select_file(SubAnalyzerApp* app) {
 static void sub_analyzer_show_about(SubAnalyzerApp* app) {
     furi_string_reset(app->text_buffer);
     furi_string_cat_str(app->text_buffer,
-                        "Sub Analyzer v5.0\n\n"
-                        "RocketGod was here\n"
-                        "betaskynet.com\n\n"
-                        "Features:\n"
-                        "- Complete .sub analysis\n"
-                        "- Protocol decoding\n"
-                        "- RAW timing analysis\n"
-                        "- Accurate calculations\n"
-                        "- Pattern detection\n"
-                        "- Link budget\n"
-                        "- Entropy analysis\n\n"
-                        "Extracts everything!");
+                        SUB_ANALYZER_UI_TEXT(
+                            "Sub Analyzer v5.0\n\n"
+                            "RocketGod was here\n"
+                            "betaskynet.com\n\n"
+                            "Features:\n"
+                            "- Complete .sub analysis\n"
+                            "- Protocol decoding\n"
+                            "- RAW timing analysis\n"
+                            "- Accurate calculations\n"
+                            "- Pattern detection\n"
+                            "- Link budget\n"
+                            "- Entropy analysis\n\n"
+                            "Extracts everything!",
+                            "Sub 分析器 v5.0\n\n"
+                            "RocketGod was here\n"
+                            "betaskynet.com\n\n"
+                            "功能:\n"
+                            "- 完整 .sub 文件分析\n"
+                            "- 协议解码\n"
+                            "- 原始信号时序分析\n"
+                            "- 精确计算\n"
+                            "- 模式检测\n"
+                            "- 链路预算\n"
+                            "- 熵分析\n\n"
+                            "提取一切信息!"));
 
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_buffer));
     text_box_set_focus(app->text_box, TextBoxFocusStart);
@@ -630,7 +645,7 @@ static void sub_analyzer_show_about(SubAnalyzerApp* app) {
 }
 
 static void sub_analyzer_show_intro_popup(SubAnalyzerApp* app) {
-    popup_set_header(app->popup, "Sub Analyzer", 64, 10, AlignCenter, AlignTop);
+    popup_set_header(app->popup, SUB_ANALYZER_UI_TEXT("Sub Analyzer", "Sub 分析器"), 64, 10, AlignCenter, AlignTop);
     popup_set_text(app->popup, "RocketGod\nbetaskynet.com", 64, 20, AlignCenter, AlignTop);
     popup_set_callback(app->popup, sub_analyzer_popup_callback);
     popup_set_context(app->popup, app);
@@ -680,8 +695,8 @@ static SubAnalyzerApp* sub_analyzer_app_alloc() {
     view_dispatcher_add_view(app->view_dispatcher, SubAnalyzerViewTextBox, text_box_get_view(app->text_box));
     view_dispatcher_add_view(app->view_dispatcher, SubAnalyzerViewLoading, loading_get_view(app->loading));
 
-    submenu_add_item(app->submenu, "Select .sub file", SubAnalyzerSubmenuIndexSelectFile, sub_analyzer_submenu_callback, app);
-    submenu_add_item(app->submenu, "About", SubAnalyzerSubmenuIndexAbout, sub_analyzer_submenu_callback, app);
+    submenu_add_item(app->submenu, SUB_ANALYZER_UI_TEXT("Select .sub file", "选择 .sub 文件"), SubAnalyzerSubmenuIndexSelectFile, sub_analyzer_submenu_callback, app);
+    submenu_add_item(app->submenu, SUB_ANALYZER_UI_TEXT("About", "关于"), SubAnalyzerSubmenuIndexAbout, sub_analyzer_submenu_callback, app);
 
     return app;
 }

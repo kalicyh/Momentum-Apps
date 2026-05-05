@@ -71,18 +71,26 @@ AirMouse* air_mouse_app_alloc() {
     // Submenu view
     app->submenu = submenu_alloc();
     submenu_add_item(
-        app->submenu, "Bluetooth", AirMouseSubmenuIndexBtMouse, air_mouse_submenu_callback, app);
-    submenu_add_item(
-        app->submenu, "USB", AirMouseSubmenuIndexUsbMouse, air_mouse_submenu_callback, app);
+        app->submenu,
+        AIRMOUSE_UI_TEXT("Bluetooth", "蓝牙"),
+        AirMouseSubmenuIndexBtMouse,
+        air_mouse_submenu_callback,
+        app);
     submenu_add_item(
         app->submenu,
-        "Calibration",
+        AIRMOUSE_UI_TEXT("USB", "USB"),
+        AirMouseSubmenuIndexUsbMouse,
+        air_mouse_submenu_callback,
+        app);
+    submenu_add_item(
+        app->submenu,
+        AIRMOUSE_UI_TEXT("Calibration", "校准"),
         AirMouseSubmenuIndexCalibration,
         air_mouse_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Clear Bluetooth Pairings",
+        AIRMOUSE_UI_TEXT("Clear Bluetooth Pairings", "清除蓝牙配对"),
         AirMouseSubmenuIndexRemovePairing,
         air_mouse_submenu_callback,
         app);
@@ -94,17 +102,29 @@ AirMouse* air_mouse_app_alloc() {
     app->dialog = dialog_ex_alloc();
     dialog_ex_set_result_callback(app->dialog, air_mouse_dialog_callback);
     dialog_ex_set_context(app->dialog, app);
-    dialog_ex_set_left_button_text(app->dialog, "Exit");
-    dialog_ex_set_right_button_text(app->dialog, "Stay");
-    dialog_ex_set_center_button_text(app->dialog, "Menu");
-    dialog_ex_set_header(app->dialog, "Close Current App?", 16, 12, AlignLeft, AlignTop);
+    dialog_ex_set_left_button_text(app->dialog, AIRMOUSE_UI_TEXT("Exit", "退出"));
+    dialog_ex_set_right_button_text(app->dialog, AIRMOUSE_UI_TEXT("Stay", "留下"));
+    dialog_ex_set_center_button_text(app->dialog, AIRMOUSE_UI_TEXT("Menu", "菜单"));
+    dialog_ex_set_header(
+        app->dialog, AIRMOUSE_UI_TEXT("Close Current App?", "关闭当前应用?"), 16, 12, AlignLeft, AlignTop);
     view_dispatcher_add_view(
         app->view_dispatcher, AirMouseViewExitConfirm, dialog_ex_get_view(app->dialog));
 
     app->error_dialog = dialog_ex_alloc();
-    dialog_ex_set_header(app->error_dialog, "Failed to init IMU", 63, 0, AlignCenter, AlignTop);
+    dialog_ex_set_header(
+        app->error_dialog,
+        AIRMOUSE_UI_TEXT("Failed to init IMU", "IMU 初始化失败"),
+        63,
+        0,
+        AlignCenter,
+        AlignTop);
     dialog_ex_set_text(
-        app->error_dialog, "Please connect sensor module", 63, 30, AlignCenter, AlignTop);
+        app->error_dialog,
+        AIRMOUSE_UI_TEXT("Please connect sensor module", "请连接传感器模块"),
+        63,
+        30,
+        AlignCenter,
+        AlignTop);
     view_set_previous_callback(dialog_ex_get_view(app->error_dialog), air_mouse_exit);
     view_dispatcher_add_view(
         app->view_dispatcher, AirMouseViewError, dialog_ex_get_view(app->error_dialog));

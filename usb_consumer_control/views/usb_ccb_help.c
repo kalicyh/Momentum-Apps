@@ -1,4 +1,5 @@
 #include "usb_ccb_help.h"
+#include "../usb_ccb.h"
 #include <furi.h>
 #include <furi_hal_usb_hid.h>
 #include <gui/elements.h>
@@ -21,13 +22,13 @@ static void usb_ccb_help_draw_callback(Canvas* canvas, void* context) {
     furi_assert(context);
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 8, "Exit to menu: hold [back].");
-    canvas_draw_str(canvas, 0, 18, "Adjust delay between keys:");
-    canvas_draw_str(canvas, 0, 26, "push [up] or [down].");
-    canvas_draw_str(canvas, 0, 36, "Cycle between keys:");
-    canvas_draw_str(canvas, 0, 44, "push/hold [left] or [right].");
-    canvas_draw_str(canvas, 0, 54, "Toggle sending keys: push [ok].");
-    canvas_draw_str(canvas, 0, 62, "Send one key: double click [ok].");
+    canvas_draw_str(canvas, 0, 8, USB_CCB_UI_TEXT("Exit to menu: hold [back].", "返回菜单: 长按[返回]。"));
+    canvas_draw_str(canvas, 0, 18, USB_CCB_UI_TEXT("Adjust delay between keys:", "调整按键间隔:"));
+    canvas_draw_str(canvas, 0, 26, USB_CCB_UI_TEXT("push [up] or [down].", "按[上]或[下]。"));
+    canvas_draw_str(canvas, 0, 36, USB_CCB_UI_TEXT("Cycle between keys:", "切换按键:"));
+    canvas_draw_str(canvas, 0, 44, USB_CCB_UI_TEXT("push/hold [left] or [right].", "按/长按[左]或[右]。"));
+    canvas_draw_str(canvas, 0, 54, USB_CCB_UI_TEXT("Toggle sending keys: push [ok].", "切换发送: 按[OK]。"));
+    canvas_draw_str(canvas, 0, 62, USB_CCB_UI_TEXT("Send one key: double click [ok].", "发送单键: 双击[OK]。"));
 }
 
 static bool usb_ccb_help_input_callback(InputEvent* event, void* context) {

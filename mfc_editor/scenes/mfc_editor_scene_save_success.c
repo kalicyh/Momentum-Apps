@@ -10,7 +10,7 @@ void mfc_editor_scene_save_success_on_enter(void* context) {
 
     Popup* popup = instance->popup;
     popup_set_icon(popup, 36, 5, &I_DolphinSaved_92x58);
-    popup_set_header(popup, "Saved", 15, 19, AlignLeft, AlignBottom);
+    popup_set_header(popup, MFC_EDITOR_UI_TEXT("Saved", "已保存"), 15, 19, AlignLeft, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, instance);
     popup_set_callback(popup, mfc_editor_scene_save_success_popup_callback);

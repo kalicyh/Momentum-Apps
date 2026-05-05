@@ -40,6 +40,12 @@
 #include "weebo_common.h"
 #include "scenes/weebo_scene.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WEEBO_UI_TEXT(en, zh) (zh)
+#else
+#define WEEBO_UI_TEXT(en, zh) (en)
+#endif
+
 #define WEEBO_TEXT_STORE_SIZE      128
 #define WEEBO_FILE_NAME_MAX_LENGTH 64
 

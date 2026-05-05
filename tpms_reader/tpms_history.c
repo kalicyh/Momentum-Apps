@@ -6,6 +6,12 @@
 
 #include <furi.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TPMS_UI_TEXT(en, zh) (zh)
+#else
+#define TPMS_UI_TEXT(en, zh) (en)
+#endif
+
 #define TPMS_HISTORY_MAX 50
 #define TAG "TPMSHistory"
 
@@ -125,7 +131,7 @@ FlipperFormat* tpms_history_get_raw_data(TPMSHistory* instance, uint16_t idx) {
 bool tpms_history_get_text_space_left(TPMSHistory* instance, FuriString* output) {
     furi_assert(instance);
     if(instance->last_index_write == TPMS_HISTORY_MAX) {
-        if(output != NULL) furi_string_printf(output, "Memory is FULL");
+        if(output != NULL) furi_string_printf(output, TPMS_UI_TEXT("Memory is FULL", "存储已满"));
         return true;
     }
     if(output != NULL)

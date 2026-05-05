@@ -31,7 +31,7 @@ void nfc_apdu_runner_scene_save_file_on_enter(void* context) {
 
     // 设置文本输入
     text_input_reset(text_input);
-    text_input_set_header_text(text_input, "Input save file name");
+    text_input_set_header_text(text_input, NFC_APDU_RUNNER_UI_TEXT("Input save file name", "输入保存文件名"));
     text_input_set_result_callback(
         text_input,
         nfc_apdu_runner_scene_save_file_text_input_callback,
@@ -74,14 +74,14 @@ bool nfc_apdu_runner_scene_save_file_on_event(void* context, SceneManagerEvent e
 
             if(!success) {
                 // 显示错误消息
-                dialog_message_show_storage_error(app->dialogs, "Save failed");
+                dialog_message_show_storage_error(app->dialogs, NFC_APDU_RUNNER_UI_TEXT("Save failed", "保存失败"));
             } else {
                 // 显示成功消息
                 DialogMessage* message = dialog_message_alloc();
-                dialog_message_set_header(message, "Save success", 64, 0, AlignCenter, AlignTop);
+                dialog_message_set_header(message, NFC_APDU_RUNNER_UI_TEXT("Save success", "保存成功"), 64, 0, AlignCenter, AlignTop);
                 dialog_message_set_text(
-                    message, "Responses saved", 64, 32, AlignCenter, AlignCenter);
-                dialog_message_set_buttons(message, "OK", NULL, NULL);
+                    message, NFC_APDU_RUNNER_UI_TEXT("Responses saved", "响应已保存"), 64, 32, AlignCenter, AlignCenter);
+                dialog_message_set_buttons(message, NFC_APDU_RUNNER_UI_TEXT("OK", "确定"), NULL, NULL);
                 dialog_message_show(app->dialogs, message);
                 dialog_message_free(message);
             }

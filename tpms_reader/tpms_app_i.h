@@ -2,6 +2,12 @@
 
 #include "helpers/tpms_types.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TPMS_UI_TEXT(en, zh) (zh)
+#else
+#define TPMS_UI_TEXT(en, zh) (en)
+#endif
+
 #include "scenes/tpms_scene.h"
 #include <gui/gui.h>
 #include <gui/view_dispatcher.h>

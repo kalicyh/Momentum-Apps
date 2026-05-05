@@ -1,5 +1,13 @@
 #pragma once
 
+#ifndef CHIEF_COOKER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CHIEF_COOKER_UI_TEXT(en, zh) (zh)
+#else
+#define CHIEF_COOKER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include "SelectCategoryScreen.hpp"
 #include "app/AppConfig.hpp"
 #include "app/pager/PagerReceiver.hpp"
@@ -41,12 +49,12 @@ public:
         varItemList->SetEnterPressHandler(HANDLER_1ARG(&SettingsScreen::enterPressHandler));
 
         categoryItemIndex = varItemList->AddItem(
-            currentCategoryItem = new UiVariableItem("Category", HANDLER_1ARG(&SettingsScreen::categoryChangedHandler))
+            currentCategoryItem = new UiVariableItem(CHIEF_COOKER_UI_TEXT("Category", "分类"), HANDLER_1ARG(&SettingsScreen::categoryChangedHandler))
         );
 
         varItemList->AddItem(
             frequencyItem = new UiVariableItem(
-                "Scan frequency",
+                CHIEF_COOKER_UI_TEXT("Scan frequency", "扫描频率"),
                 FrequencyManager::GetInstance()->GetFrequencyIndex(config->Frequency),
                 FrequencyManager::GetInstance()->GetFrequencyCount(),
                 [this](uint8_t val) {
@@ -59,7 +67,7 @@ public:
 
         varItemList->AddItem(
             maxPagerItem = new UiVariableItem(
-                "Max pager value",
+                CHIEF_COOKER_UI_TEXT("Max pager value", "呼机最大值"),
                 config->MaxPagerForBatchOrDetection - 1,
                 UINT8_MAX,
                 [this](uint8_t val) {
@@ -71,7 +79,7 @@ public:
 
         varItemList->AddItem(
             signalRepeatItem = new UiVariableItem(
-                "Times to repeat signal",
+                CHIEF_COOKER_UI_TEXT("Times to repeat signal", "信号重复次数"),
                 config->SignalRepeats - 1,
                 UINT8_MAX,
                 [this](uint8_t val) {
@@ -83,7 +91,7 @@ public:
 
         varItemList->AddItem(
             ignoreSavedItem = new UiVariableItem(
-                "Saved stations",
+                CHIEF_COOKER_UI_TEXT("Saved stations", "已保存电台"),
                 config->SavedStrategy,
                 SavedStationStrategyValuesCount,
                 [this](uint8_t val) {
@@ -95,7 +103,7 @@ public:
 
         varItemList->AddItem(
             autosaveFoundItem = new UiVariableItem(
-                "Autosave found signals",
+                CHIEF_COOKER_UI_TEXT("Autosave found signals", "自动保存发现的信号"),
                 config->AutosaveFoundSignals,
                 2,
                 [this](uint8_t val) {
@@ -132,25 +140,25 @@ private:
     const char* categoryChangedHandler(uint8_t) {
         const char* category = config->GetCurrentUserCategoryCstr();
         if(category == NULL) {
-            category = "Default";
+            category = CHIEF_COOKER_UI_TEXT("Default", "默认");
         }
         return category;
     }
 
     const char* boolOption(uint8_t value) {
-        return value ? "ON" : "OFF";
+        return value ? CHIEF_COOKER_UI_TEXT("ON", "开启") : CHIEF_COOKER_UI_TEXT("OFF", "关闭");
     }
 
     const char* savedStationsStrategy(SavedStationStrategy value) {
         switch(value) {
         case IGNORE:
-            return "Ignore";
+            return CHIEF_COOKER_UI_TEXT("Ignore", "忽略");
 
         case SHOW_NAME:
-            return "Show name";
+            return CHIEF_COOKER_UI_TEXT("Show name", "显示名称");
 
         case HIDE:
-            return "Hide";
+            return CHIEF_COOKER_UI_TEXT("Hide", "隐藏");
 
         default:
             return NULL;

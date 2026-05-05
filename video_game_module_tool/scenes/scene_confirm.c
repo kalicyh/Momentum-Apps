@@ -25,7 +25,7 @@ void scene_confirm_on_enter(void* context) {
     FuriString* file_name = furi_string_alloc();
     path_extract_filename(app->file_path, file_name, false);
 
-    FuriString* label = furi_string_alloc_printf("Install\n%s?", furi_string_get_cstr(file_name));
+    FuriString* label = furi_string_alloc_printf(VGM_UI_TEXT("Install\n%s?", "安装\n%s?"), furi_string_get_cstr(file_name));
     widget_add_string_multiline_element(
         app->widget, 64, 0, AlignCenter, AlignTop, FontPrimary, furi_string_get_cstr(label));
 
@@ -33,9 +33,9 @@ void scene_confirm_on_enter(void* context) {
     furi_string_free(file_name);
 
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Cancel", scene_confirm_button_callback, app);
+        app->widget, GuiButtonTypeLeft, VGM_UI_TEXT("Cancel", "取消"), scene_confirm_button_callback, app);
     widget_add_button_element(
-        app->widget, GuiButtonTypeRight, "Install", scene_confirm_button_callback, app);
+        app->widget, GuiButtonTypeRight, VGM_UI_TEXT("Install", "安装"), scene_confirm_button_callback, app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, ViewIdWidget);
 }

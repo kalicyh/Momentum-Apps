@@ -28,22 +28,22 @@ typedef struct {
 } SaflipCardLevel;
 
 static SaflipCardLevel card_levels[] = {
-    {"Guest", "Guest Key"},
-    {"Cnectors", "Connectors"},
-    {"Suite", "Suite"},
-    {"LmtdUse", "Limited Use"},
-    {"Failsafe", "Failsafe"},
-    {"Inhibit", "Inhibit"},
-    {"MtgMstr", "Pool/Meeting Master"},
-    {"Hsekpng", "Housekeeping"},
-    {"FloorKey", "Floor Key"},
-    {"SctnKey", "Section Key"},
-    {"RmsMstr", "Rooms Master"},
-    {"GrndMstr", "Grand Master"},
-    {"Emrgncy", "Emergency"},
-    {"Lockout", "Electronic Lockout"},
-    {"SecProg", "Secondary Programming Key"},
-    {"PriProg", "Primary Programming Key"},
+    {"Guest", SAFLIP_UI_TEXT("Guest Key", "宾客钥匙")},
+    {"Cnectors", SAFLIP_UI_TEXT("Connectors", "连接器")},
+    {"Suite", SAFLIP_UI_TEXT("Suite", "套房")},
+    {"LmtdUse", SAFLIP_UI_TEXT("Limited Use", "受限使用")},
+    {"Failsafe", SAFLIP_UI_TEXT("Failsafe", "故障安全")},
+    {"Inhibit", SAFLIP_UI_TEXT("Inhibit", "禁止")},
+    {"MtgMstr", SAFLIP_UI_TEXT("Pool/Meeting Master", "泳池/会议主卡")},
+    {"Hsekpng", SAFLIP_UI_TEXT("Housekeeping", "客房服务")},
+    {"FloorKey", SAFLIP_UI_TEXT("Floor Key", "楼层钥匙")},
+    {"SctnKey", SAFLIP_UI_TEXT("Section Key", "区域钥匙")},
+    {"RmsMstr", SAFLIP_UI_TEXT("Rooms Master", "房间主卡")},
+    {"GrndMstr", SAFLIP_UI_TEXT("Grand Master", "总主卡")},
+    {"Emrgncy", SAFLIP_UI_TEXT("Emergency", "紧急")},
+    {"Lockout", SAFLIP_UI_TEXT("Electronic Lockout", "电子锁定")},
+    {"SecProg", SAFLIP_UI_TEXT("Secondary Programming Key", "副编程钥匙")},
+    {"PriProg", SAFLIP_UI_TEXT("Primary Programming Key", "主编程钥匙")},
 };
 
 typedef struct {
@@ -54,16 +54,16 @@ typedef struct {
 } SaflipCardType;
 
 static SaflipCardType card_types[] = {
-    {"Stndard", "Make Standard Key", "Stndard", "Make Standard Key"},
-    {"Reseque", "Make Resequencing Key", "LED Diag", "LED Diagnostic"},
-    {"Block", "Make Block Key", "E2 Chng", "Dis/Enable E2 Changes"},
-    {"Unblock", "Make Unblock Key", "Erase E2", "Erase Lock (E2) Memory"},
-    {"ChgDate", "Change Checkout Date", "Batt Disc", "Battery Disconect"},
-    {"Chkout", "Check Out a Key", "Display", "Make Display Key"},
-    {"CnclPrer", "Cancel Prereg Key", "", ""},
-    {"ChknPrer", "Check In Prereg Key", "", ""},
-    {"Cancel ID", "Make Cancel-A-Key-ID", "", ""},
-    {"Chng Rm", "Make Change Room Key", "", ""},
+    {"Stndard", SAFLIP_UI_TEXT("Make Standard Key", "制作标准钥匙"), "Stndard", SAFLIP_UI_TEXT("Make Standard Key", "制作标准钥匙")},
+    {"Reseque", SAFLIP_UI_TEXT("Make Resequencing Key", "制作重排序钥匙"), "LED Diag", SAFLIP_UI_TEXT("LED Diagnostic", "LED诊断")},
+    {"Block", SAFLIP_UI_TEXT("Make Block Key", "制作锁定钥匙"), "E2 Chng", SAFLIP_UI_TEXT("Dis/Enable E2 Changes", "启用/禁用E2修改")},
+    {"Unblock", SAFLIP_UI_TEXT("Make Unblock Key", "制作解锁钥匙"), "Erase E2", SAFLIP_UI_TEXT("Erase Lock (E2) Memory", "擦除锁(E2)存储")},
+    {"ChgDate", SAFLIP_UI_TEXT("Change Checkout Date", "修改退房日期"), "Batt Disc", SAFLIP_UI_TEXT("Battery Disconect", "电池断开")},
+    {"Chkout", SAFLIP_UI_TEXT("Check Out a Key", "退房钥匙"), "Display", SAFLIP_UI_TEXT("Make Display Key", "制作显示钥匙")},
+    {"CnclPrer", SAFLIP_UI_TEXT("Cancel Prereg Key", "取消预登记钥匙"), "", ""},
+    {"ChknPrer", SAFLIP_UI_TEXT("Check In Prereg Key", "入住预登记钥匙"), "", ""},
+    {"Cancel ID", SAFLIP_UI_TEXT("Make Cancel-A-Key-ID", "制作取消钥匙ID"), "", ""},
+    {"Chng Rm", SAFLIP_UI_TEXT("Make Change Room Key", "制作换房钥匙"), "", ""},
 };
 
 static bool available_card_types[][COUNT_OF(card_types)] = {
@@ -94,34 +94,34 @@ typedef struct {
 } SaflipDisplayKey;
 
 static SaflipDisplayKey display_key_types[] = {
-    {"EPR Ver", "EPROM Version"},
-    {"Clk Time", "Clock Time"},
-    {"Clk Date", "Clock Date"},
-    {"AutoLtc", "AutoLatch Status"},
-    {"LstRcrds", "Last 2 LPI Records"},
-    {"KnbSwt", "Knob Switch Status"},
-    {"DBltSwt", "Dead Bolt Switch Status"},
-    {"MtrSwt", "Motor Switch + Latch State"},
-    {"LowBtry", "Low Battery Status"},
-    {"Clck Run", "Clock Run Test"},
-    {"LEDTest", "LED Lights Test"},
+    {"EPR Ver", SAFLIP_UI_TEXT("EPROM Version", "EPROM版本")},
+    {"Clk Time", SAFLIP_UI_TEXT("Clock Time", "时钟时间")},
+    {"Clk Date", SAFLIP_UI_TEXT("Clock Date", "时钟日期")},
+    {"AutoLtc", SAFLIP_UI_TEXT("AutoLatch Status", "自动锁舌状态")},
+    {"LstRcrds", SAFLIP_UI_TEXT("Last 2 LPI Records", "最近2条LPI记录")},
+    {"KnbSwt", SAFLIP_UI_TEXT("Knob Switch Status", "旋钮开关状态")},
+    {"DBltSwt", SAFLIP_UI_TEXT("Dead Bolt Switch Status", "反锁开关状态")},
+    {"MtrSwt", SAFLIP_UI_TEXT("Motor Switch + Latch State", "电机开关+锁舌状态")},
+    {"LowBtry", SAFLIP_UI_TEXT("Low Battery Status", "低电量状态")},
+    {"Clck Run", SAFLIP_UI_TEXT("Clock Run Test", "时钟运行测试")},
+    {"LEDTest", SAFLIP_UI_TEXT("LED Lights Test", "LED灯测试")},
 };
 
 static const char* options[] = {
-    "Format",
-    "Card Level",
-    "Card Type",
-    "Card ID",
-    "Opening Key",
-    "Key/Lock ID",
-    "Pass #/Areas",
-    "Seq & Comb",
-    "Deadbolt Overide",
-    "Restricted Days",
-    "Property ID",
-    "Creation",
-    "Expiration",
-    "Done",
+    SAFLIP_UI_TEXT("Format", "格式"),
+    SAFLIP_UI_TEXT("Card Level", "卡级别"),
+    SAFLIP_UI_TEXT("Card Type", "卡类型"),
+    SAFLIP_UI_TEXT("Card ID", "卡号"),
+    SAFLIP_UI_TEXT("Opening Key", "开门钥匙"),
+    SAFLIP_UI_TEXT("Key/Lock ID", "钥匙/锁号"),
+    SAFLIP_UI_TEXT("Pass #/Areas", "通行证/区域"),
+    SAFLIP_UI_TEXT("Seq & Comb", "序号与组合"),
+    SAFLIP_UI_TEXT("Deadbolt Overide", "覆盖反锁"),
+    SAFLIP_UI_TEXT("Restricted Days", "受限日期"),
+    SAFLIP_UI_TEXT("Property ID", "物业号"),
+    SAFLIP_UI_TEXT("Creation", "创建日期"),
+    SAFLIP_UI_TEXT("Expiration", "过期日期"),
+    SAFLIP_UI_TEXT("Done", "完成"),
 };
 
 enum {
@@ -142,13 +142,13 @@ enum {
 };
 
 static const char* days_of_the_week[] = {
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    SAFLIP_UI_TEXT("Sunday", "周日"),
+    SAFLIP_UI_TEXT("Monday", "周一"),
+    SAFLIP_UI_TEXT("Tuesday", "周二"),
+    SAFLIP_UI_TEXT("Wednesday", "周三"),
+    SAFLIP_UI_TEXT("Thursday", "周四"),
+    SAFLIP_UI_TEXT("Friday", "周五"),
+    SAFLIP_UI_TEXT("Saturday", "周六"),
 };
 
 void set_state_flag(SaflipApp* app, SaflipSceneState flag, bool new_state);
@@ -230,7 +230,7 @@ void submenu_item_callback(void* context, uint32_t index) {
             state = state ? 'X' : ' ';
 
             FuriString* label = furi_string_alloc();
-            furi_string_printf(label, "[%c] Area %ld", state, index + 1);
+            furi_string_printf(label, SAFLIP_UI_TEXT("[%c] Area %ld", "[%c] 区域 %ld"), state, index + 1);
             submenu_change_item_label(app->submenu, index, furi_string_get_cstr(label));
             furi_string_free(label);
         }
@@ -246,7 +246,7 @@ void submenu_item_callback(void* context, uint32_t index) {
             state = state ? 'X' : ' ';
 
             FuriString* label = furi_string_alloc();
-            furi_string_printf(label, "[%c] %s", state, days_of_the_week[index]);
+            furi_string_printf(label, "[%c] %s", state, days_of_the_week[index]); // days_of_the_week already translated
             submenu_change_item_label(app->submenu, index, furi_string_get_cstr(label));
             furi_string_free(label);
         }
@@ -375,9 +375,9 @@ void variable_item_list_update_value(
         variable_item_set_values_count(item, 2);
 
         if(value) {
-            furi_string_printf(value_text, "On");
+            furi_string_printf(value_text, SAFLIP_UI_TEXT("On", "开"));
         } else {
-            furi_string_printf(value_text, "Off");
+            furi_string_printf(value_text, SAFLIP_UI_TEXT("Off", "关"));
         }
         break;
     case OptionsIndexKeyLockID:
@@ -422,9 +422,9 @@ void variable_item_list_update_value(
         variable_item_set_values_count(item, 2);
 
         if(value) {
-            furi_string_printf(value_text, "On");
+            furi_string_printf(value_text, SAFLIP_UI_TEXT("On", "开"));
         } else {
-            furi_string_printf(value_text, "Off");
+            furi_string_printf(value_text, SAFLIP_UI_TEXT("Off", "关"));
         }
         break;
 
@@ -555,12 +555,12 @@ void variable_item_list_enter_callback(void* context, uint32_t index) {
             state = state ? 'X' : ' ';
 
             furi_string_reset(label);
-            furi_string_printf(label, "[%c] Area %d", state, i + 1);
+            furi_string_printf(label, SAFLIP_UI_TEXT("[%c] Area %d", "[%c] 区域 %d"), state, i + 1);
             submenu_add_item(
                 app->submenu, furi_string_get_cstr(label), i, submenu_item_callback, context);
         }
 
-        submenu_add_item(app->submenu, "Done", 12, submenu_item_callback, context);
+        submenu_add_item(app->submenu, SAFLIP_UI_TEXT("Done", "完成"), 12, submenu_item_callback, context);
         break;
     case OptionsIndexSequenceCombination:
         use_number_input = true;
@@ -578,13 +578,13 @@ void variable_item_list_enter_callback(void* context, uint32_t index) {
             state = state ? 'X' : ' ';
 
             furi_string_reset(label);
-            furi_string_printf(label, "[%c] %s", state, days_of_the_week[i]);
+            furi_string_printf(label, "[%c] %s", state, days_of_the_week[i]); // days_of_the_week already translated
             submenu_add_item(
                 app->submenu, furi_string_get_cstr(label), i, submenu_item_callback, context);
         }
 
         submenu_add_item(
-            app->submenu, "Done", COUNT_OF(days_of_the_week), submenu_item_callback, context);
+            app->submenu, SAFLIP_UI_TEXT("Done", "完成"), COUNT_OF(days_of_the_week), submenu_item_callback, context);
         break;
 
     case OptionsIndexPropertyID:

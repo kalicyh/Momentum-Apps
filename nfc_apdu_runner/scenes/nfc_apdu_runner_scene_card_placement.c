@@ -21,21 +21,21 @@ void nfc_apdu_runner_scene_card_placement_on_enter(void* context) {
     widget_reset(widget);
 
     // 添加图标 - 使用内置元素
-    widget_add_string_element(widget, 64, 5, AlignCenter, AlignTop, FontPrimary, "Place card on");
+    widget_add_string_element(widget, 64, 5, AlignCenter, AlignTop, FontPrimary, NFC_APDU_RUNNER_UI_TEXT("Place card on", "请将卡片放到"));
     widget_add_string_element(
-        widget, 64, 20, AlignCenter, AlignTop, FontPrimary, "the Flipper's back");
+        widget, 64, 20, AlignCenter, AlignTop, FontPrimary, NFC_APDU_RUNNER_UI_TEXT("the Flipper's back", "Flipper 背面"));
 
     // 添加按钮
     widget_add_button_element(
         widget,
         GuiButtonTypeLeft,
-        "Back",
+        NFC_APDU_RUNNER_UI_TEXT("Back", "返回"),
         nfc_apdu_runner_scene_card_placement_widget_callback,
         app);
     widget_add_button_element(
         widget,
         GuiButtonTypeRight,
-        "Run",
+        NFC_APDU_RUNNER_UI_TEXT("Run", "运行"),
         nfc_apdu_runner_scene_card_placement_widget_callback,
         app);
 

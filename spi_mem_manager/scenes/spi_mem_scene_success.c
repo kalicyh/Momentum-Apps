@@ -8,7 +8,7 @@ static void spi_mem_scene_success_popup_callback(void* context) {
 void spi_mem_scene_success_on_enter(void* context) {
     SPIMemApp* app = context;
     popup_set_icon(app->popup, 36, 5, &I_DolphinDone_80x58);
-    popup_set_header(app->popup, "Success!", 5, 7, AlignLeft, AlignTop);
+    popup_set_header(app->popup, SPI_MEM_UI_TEXT("Success!", "成功!"), 5, 7, AlignLeft, AlignTop);
     popup_set_callback(app->popup, spi_mem_scene_success_popup_callback);
     popup_set_context(app->popup, app);
     popup_set_timeout(app->popup, 1500);

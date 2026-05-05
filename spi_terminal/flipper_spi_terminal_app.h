@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SPI_TERMINAL_UI_TEXT(en, zh) (zh)
+#else
+#define SPI_TERMINAL_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h>
 #include <gui/gui.h>
 #include <gui/scene_manager.h>

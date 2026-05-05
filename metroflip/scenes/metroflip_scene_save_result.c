@@ -44,11 +44,11 @@ void metroflip_scene_save_result_on_enter(void* context) {
 
     if(success) {
         popup_set_icon(popup, 36, 5, &I_DolphinDone_80x58);
-        popup_set_header(popup, "Saved!", 13, 22, AlignLeft, AlignBottom);
+        popup_set_header(popup, METROFLIP_UI_TEXT("Saved!", "\xe5\xb7\xb2\xe4\xbf\x9d\xe5\xad\x98!"), 13, 22, AlignLeft, AlignBottom);
         popup_enable_timeout(popup);
     } else {
         popup_set_icon(popup, 69, 15, &I_WarningDolphinFlip_45x42);
-        popup_set_header(popup, "Error!", 13, 22, AlignLeft, AlignBottom);
+        popup_set_header(popup, METROFLIP_UI_TEXT("Error!", "\xe9\x94\x99\xe8\xaf\xaf!"), 13, 22, AlignLeft, AlignBottom);
         popup_disable_timeout(popup);
     }
     popup_set_timeout(popup, 1500);

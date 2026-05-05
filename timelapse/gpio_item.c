@@ -2,6 +2,12 @@
 
 #include <furi_hal_resources.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GPIO_ITEM_UI_TEXT(en, zh) (zh)
+#else
+#define GPIO_ITEM_UI_TEXT(en, zh) (en)
+#endif
+
 typedef struct {
     const char* name;
     const GpioPin* pin;
@@ -44,7 +50,7 @@ void gpio_item_set_all_pins(bool level) {
 const char* gpio_item_get_pin_name(uint8_t index) {
     furi_assert(index < GPIO_ITEM_COUNT + 1);
     if(index == GPIO_ITEM_COUNT) {
-        return "ALL";
+        return GPIO_ITEM_UI_TEXT("ALL", "全部");
     } else {
         return gpio_item[index].name;
     }

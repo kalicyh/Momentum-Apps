@@ -69,7 +69,7 @@ void wifi_marauder_script_stage_menu_scan_load(WifiMarauderScriptStageMenu* stag
     stage_menu->items = malloc(3 * sizeof(WifiMarauderScriptMenuItem));
 
     stage_menu->items[0] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Type"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Type", "类型")),
         .type = WifiMarauderScriptMenuItemTypeOptionsString,
         .num_options = 2,
         .options = {"ap", "station"},
@@ -77,7 +77,7 @@ void wifi_marauder_script_stage_menu_scan_load(WifiMarauderScriptStageMenu* stag
         .change_callback = wifi_marauder_scan_stage_type_change_callback,
     };
     stage_menu->items[1] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Channel"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Channel", "信道")),
         .type = WifiMarauderScriptMenuItemTypeOptionsNumber,
         .num_options = 12,
         .options = {"none", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"},
@@ -85,7 +85,7 @@ void wifi_marauder_script_stage_menu_scan_load(WifiMarauderScriptStageMenu* stag
         .change_callback = wifi_marauder_scan_stage_channel_change_callback,
     };
     stage_menu->items[2] = (WifiMarauderScriptMenuItem){
-        .name = strdup("Timeout"),
+        .name = strdup(WIFI_MARAUDER_UI_TEXT("Timeout", "超时")),
         .type = WifiMarauderScriptMenuItemTypeNumber,
         .num_options = 1,
         .setup_callback = wifi_marauder_scan_stage_timeout_setup_callback,

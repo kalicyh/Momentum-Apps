@@ -112,44 +112,44 @@ void xremote_scene_settings_init(void* context) {
 
     // LED Effects on/off
     item = variable_item_list_add(
-        app->variable_item_list, "LED FX", 2, xremote_scene_settings_set_led, app);
+        app->variable_item_list, XREMOTE_UI_TEXT("LED FX", "LED \xe7\x81\xaf\xe6\x95\x88"), 2, xremote_scene_settings_set_led, app);
     value_index = value_index_uint32(app->led, led_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, led_text[value_index]);
 
     /* NEW: Loop saved command functionality */
     item = variable_item_list_add(
-        app->variable_item_list, "Loop Transmit", 2, xremote_scene_settings_set_loop, app);
+        app->variable_item_list, XREMOTE_UI_TEXT("Loop Transmit", "\xe5\xbe\xaa\xe7\x8e\xaf\xe5\x8f\x91\xe9\x80\x81"), 2, xremote_scene_settings_set_loop, app);
     value_index = value_index_uint32(app->loop_transmit, loop_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, loop_text[value_index]);
 
     // Save Settings to File
     item = variable_item_list_add(
-        app->variable_item_list, "Save Settings", 2, xremote_scene_settings_set_save_settings, app);
+        app->variable_item_list, XREMOTE_UI_TEXT("Save Settings", "\xe4\xbf\x9d\xe5\xad\x98\xe8\xae\xbe\xe7\xbd\xae"), 2, xremote_scene_settings_set_save_settings, app);
     value_index = value_index_uint32(app->save_settings, settings_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, settings_text[value_index]);
 
     // Infrared GPIO Board
     item = variable_item_list_add(
-        app->variable_item_list, 
-        "External IR", 
-        COUNT_OF(infrared_pin_text), 
-        xremote_scene_settings_set_ir_pin, 
+        app->variable_item_list,
+        XREMOTE_UI_TEXT("External IR", "\xe5\xa4\x96\xe9\x83\xa8\xe7\xba\xa2\xe5\xa4\x96"),
+        COUNT_OF(infrared_pin_text),
+        xremote_scene_settings_set_ir_pin,
         app);
     value_index = app->ir_tx_pin;
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, infrared_pin_text[value_index]);
-    
+
     // Infrared GPIO 5V
     item = variable_item_list_add(
         app->variable_item_list,
-        "5V on IR GPIO",
+        XREMOTE_UI_TEXT("5V on IR GPIO", "IR GPIO 5V \xe8\xbe\x93\xe5\x87\xba"),
         COUNT_OF(infrared_otg_text),
         xremote_scene_settings_set_ir_is_otg_enabled,
         app);
-    
+
     if(app->ir_tx_pin < FuriHalInfraredTxPinMax) {
         value_index = app->ir_is_otg_enabled;
         variable_item_set_current_value_index(item, value_index);
@@ -162,7 +162,7 @@ void xremote_scene_settings_init(void* context) {
 
     // Set Infrared Timer
     item = variable_item_list_add(
-        app->variable_item_list, "IR Time ms", 30, xremote_scene_settings_set_ir_timing, app);
+        app->variable_item_list, XREMOTE_UI_TEXT("IR Time ms", "IR\xe6\x97\xb6\xe9\x97\xb4(ms)"), 30, xremote_scene_settings_set_ir_timing, app);
 
     variable_item_set_current_value_index(item, (uint8_t)(app->ir_timing / 100));
     snprintf(app->ir_timing_char, 20, "%lu", app->ir_timing);
@@ -170,7 +170,7 @@ void xremote_scene_settings_init(void* context) {
 
     // Set SubGhz Timer
     item = variable_item_list_add(
-        app->variable_item_list, "SubG. Time ms", 30, xremote_scene_settings_set_sg_timing, app);
+        app->variable_item_list, XREMOTE_UI_TEXT("SubG. Time ms", "SubGhz\xe6\x97\xb6\xe9\x97\xb4(ms)"), 30, xremote_scene_settings_set_sg_timing, app);
 
     variable_item_set_current_value_index(item, (uint8_t)(app->sg_timing / 100));
     snprintf(app->sg_timing_char, 20, "%lu", app->sg_timing);

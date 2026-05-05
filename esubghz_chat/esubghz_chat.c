@@ -27,7 +27,7 @@ static void have_read_cb(void* context) {
  * message preview exists. */
 void set_chat_input_header(ESubGhzChatState* state) {
     if(strlen(state->msg_preview) == 0) {
-        text_input_set_header_text(state->text_input, "Message");
+        text_input_set_header_text(state->text_input, ESUBGHZ_CHAT_UI_TEXT("Message", "消息"));
     } else {
         text_input_set_header_text(state->text_input, state->msg_preview);
     }
@@ -86,7 +86,7 @@ static void post_rx(ESubGhzChatState* state, size_t rx_size) {
     } else {
         /* if decryption fails output an error message */
         if(!post_rx_decrypt(state, rx_size)) {
-            strcpy(state->rx_str_buffer, "ERR: Decryption failed!");
+            strcpy(state->rx_str_buffer, ESUBGHZ_CHAT_UI_TEXT("ERR: Decryption failed!", "错误: 解密失败!"));
         }
     }
 
@@ -130,22 +130,22 @@ void tx_msg_input(ESubGhzChatState* state) {
  * box. Also clears the text input buffer to remove the password and starts the
  * Sub-GHz worker. After starting the worker a join message is transmitted. */
 void enter_chat(ESubGhzChatState* state) {
-    furi_string_cat_printf(state->chat_box_store, "Frequency: %lu", state->frequency);
+    furi_string_cat_printf(state->chat_box_store, ESUBGHZ_CHAT_UI_TEXT("Frequency: %lu", "频率: %lu"), state->frequency);
 
     furi_string_cat_printf(
-        state->chat_box_store, "\nEncrypted: %s", (state->encrypted ? "yes" : "no"));
+        state->chat_box_store, ESUBGHZ_CHAT_UI_TEXT("\nEncrypted: %s", "\n加密: %s"), (state->encrypted ? ESUBGHZ_CHAT_UI_TEXT("yes", "是") : ESUBGHZ_CHAT_UI_TEXT("no", "否")));
 
     subghz_tx_rx_worker_start(state->subghz_worker, state->subghz_device, state->frequency);
 
     if(strcmp(state->subghz_device->name, "cc1101_ext") == 0) {
-        furi_string_cat_printf(state->chat_box_store, "\nRadio: External");
+        furi_string_cat_printf(state->chat_box_store, ESUBGHZ_CHAT_UI_TEXT("\nRadio: External", "\n无线电: 外部"));
     } else {
-        furi_string_cat_printf(state->chat_box_store, "\nRadio: Internal");
+        furi_string_cat_printf(state->chat_box_store, ESUBGHZ_CHAT_UI_TEXT("\nRadio: Internal", "\n无线电: 内部"));
     }
 
     /* concatenate the name prefix and join message */
     furi_string_set(state->msg_input, state->name_prefix);
-    furi_string_cat_str(state->msg_input, " joined chat.");
+    furi_string_cat_str(state->msg_input, ESUBGHZ_CHAT_UI_TEXT(" joined chat.", " 加入了聊天."));
 
     /* encrypt and transmit message */
     tx_msg_input(state);
@@ -158,7 +158,7 @@ void enter_chat(ESubGhzChatState* state) {
 void exit_chat(ESubGhzChatState* state) {
     /* concatenate the name prefix and leave message */
     furi_string_set(state->msg_input, state->name_prefix);
-    furi_string_cat_str(state->msg_input, " left chat.");
+    furi_string_cat_str(state->msg_input, ESUBGHZ_CHAT_UI_TEXT(" left chat.", " 离开了聊天."));
 
     /* encrypt and transmit message */
     tx_msg_input(state);
@@ -280,14 +280,14 @@ static void esubghz_hooked_draw_callback(Canvas* canvas, void* context) {
     /* display if the keyboard is locked */
     if(state->kbd_locked) {
         canvas_set_font(canvas, FontPrimary);
-        elements_multiline_text_framed(canvas, 42, 30, "Locked");
+        elements_multiline_text_framed(canvas, 42, 30, ESUBGHZ_CHAT_UI_TEXT("Locked", "已锁定"));
     }
 
     /* display the unlock message if necessary */
     if(kbd_lock_msg_display(state)) {
         canvas_set_font(canvas, FontSecondary);
         elements_bold_rounded_frame(canvas, 14, 8, 99, 48);
-        elements_multiline_text(canvas, 65, 26, "To unlock\npress:");
+        elements_multiline_text(canvas, 65, 26, ESUBGHZ_CHAT_UI_TEXT("To unlock\npress:", "解锁请\n按下:"));
         canvas_draw_icon(canvas, 65, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 80, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 95, 42, &I_Pin_back_arrow_10x8);

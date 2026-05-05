@@ -62,22 +62,22 @@ void mass_storage_scene_create_image_on_enter(void* context) {
     }
     item = variable_item_list_add(
         variable_item_list,
-        "Image Size",
+        MASS_STORAGE_UI_TEXT("Image Size", "镜像大小"),
         size_count,
         mass_storage_scene_create_image_image_size_changed,
         app);
     variable_item_set_current_value_index(item, app->create_image_size);
     variable_item_set_current_value_text(item, image_sizes[app->create_image_size].name);
 
-    item = variable_item_list_add(variable_item_list, "Image Name", 0, NULL, app);
+    item = variable_item_list_add(variable_item_list, MASS_STORAGE_UI_TEXT("Image Name", "镜像名称"), 0, NULL, app);
     variable_item_set_current_value_text(item, app->create_image_name);
 
-    variable_item_list_add(variable_item_list, "Create Image", 0, NULL, app);
+    variable_item_list_add(variable_item_list, MASS_STORAGE_UI_TEXT("Create Image", "创建镜像"), 0, NULL, app);
 
     variable_item_list_set_enter_callback(
         variable_item_list, mass_storage_scene_create_image_variable_item_list_callback, app);
 
-    variable_item_list_set_header(variable_item_list, "Create Disk Image");
+    variable_item_list_set_header(variable_item_list, MASS_STORAGE_UI_TEXT("Create Disk Image", "创建磁盘镜像"));
 
     variable_item_list_set_selected_item(
         variable_item_list,
@@ -140,7 +140,7 @@ bool mass_storage_scene_create_image_on_event(void* context, SceneManagerEvent e
                 if(!storage_file_expand(app->file, size)) break;
 
                 // Format as exFAT
-                error = "Image formatting failed";
+                error = MASS_STORAGE_UI_TEXT("Image formatting failed", "镜像格式化失败");
                 if(storage_virtual_init(app->fs_api, app->file) != FSE_OK) {
                     if(storage_virtual_quit(app->fs_api) != FSE_OK) break;
                     if(storage_virtual_init(app->fs_api, app->file) != FSE_OK) break;
@@ -165,11 +165,11 @@ bool mass_storage_scene_create_image_on_event(void* context, SceneManagerEvent e
 
             if(error) {
                 popup_set_header(
-                    app->popup, "Error Creating Image!", 64, 26, AlignCenter, AlignCenter);
+                    app->popup, MASS_STORAGE_UI_TEXT("Error Creating Image!", "创建镜像失败!"), 64, 26, AlignCenter, AlignCenter);
                 popup_set_text(app->popup, error, 64, 40, AlignCenter, AlignCenter);
                 popup_set_callback(app->popup, popup_callback_error);
             } else {
-                popup_set_header(app->popup, "Image Created!", 64, 32, AlignCenter, AlignCenter);
+                popup_set_header(app->popup, MASS_STORAGE_UI_TEXT("Image Created!", "镜像已创建!"), 64, 32, AlignCenter, AlignCenter);
                 popup_set_text(app->popup, "", 0, 0, AlignLeft, AlignBottom);
                 popup_set_callback(app->popup, popup_callback_ok);
             }

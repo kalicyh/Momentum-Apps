@@ -41,10 +41,10 @@ static void nfc_magic_scene_gen4_get_info_setup_view(NfcMagicApp* instance) {
     if(state == NfcMagicSceneGen4GetInfoStateCardSearch) {
         popup_set_icon(instance->popup, 0, 8, &I_NFC_manual_60x50);
         popup_set_text(
-            instance->popup, "Apply the\ncard\nto the back", 128, 32, AlignRight, AlignCenter);
+            instance->popup, NFC_MAGIC_UI_TEXT("Apply the\ncard\nto the back", "将卡片\n贴到背面"), 128, 32, AlignRight, AlignCenter);
     } else {
         popup_set_icon(popup, 12, 23, &I_Loading_24);
-        popup_set_header(popup, "Reading\nDon't move...", 52, 32, AlignLeft, AlignCenter);
+        popup_set_header(popup, NFC_MAGIC_UI_TEXT("Reading\nDon't move...", "读取中\n请勿移动..."), 52, 32, AlignLeft, AlignCenter);
     }
 
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewPopup);

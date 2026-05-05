@@ -1,4 +1,5 @@
 #include "usb_ccb_about.h"
+#include "../usb_ccb.h"
 #include <furi.h>
 #include <furi_hal_usb_hid.h>
 #include <gui/elements.h>
@@ -21,11 +22,11 @@ static void usb_ccb_about_draw_callback(Canvas* canvas, void* context) {
     furi_assert(context);
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 7, "A tool to send USB CCBs,");
-    canvas_draw_str(canvas, 0, 16, "to launch & control apps.");
-    canvas_draw_str(canvas, 0, 28, "For security research.");
-    canvas_draw_str(canvas, 0, 37, "Only use with permission.");
-    canvas_draw_str(canvas, 0, 49, "More info at: github.com");
+    canvas_draw_str(canvas, 0, 7, USB_CCB_UI_TEXT("A tool to send USB CCBs,", "发送 USB CCB 的工具，"));
+    canvas_draw_str(canvas, 0, 16, USB_CCB_UI_TEXT("to launch & control apps.", "用于启动和控制应用。"));
+    canvas_draw_str(canvas, 0, 28, USB_CCB_UI_TEXT("For security research.", "仅供安全研究使用。"));
+    canvas_draw_str(canvas, 0, 37, USB_CCB_UI_TEXT("Only use with permission.", "仅在获得授权后使用。"));
+    canvas_draw_str(canvas, 0, 49, USB_CCB_UI_TEXT("More info at: github.com", "更多信息: github.com"));
     canvas_draw_str(canvas, 0, 58, "/piraija/usb-hid-and-run");
 }
 

@@ -63,12 +63,12 @@ static void ldtoypad_submenu_callback(void* context, uint32_t index) {
 }
 
 static const bool setting_bool_values[] = {false, true};
-static const char* setting_no_yes[] = {"No", "Yes"};
+static const char* setting_no_yes[] = {LDTOYPAD_UI_TEXT("No", "否"), LDTOYPAD_UI_TEXT("Yes", "是")};
 
 /**
  * First setting is the show debug text setting. This setting has 2 options: yes or no. Default is no.
 */
-static const char* setting_show_debug_text_config_label = "Show Debug texts";
+static const char* setting_show_debug_text_config_label = LDTOYPAD_UI_TEXT("Show Debug texts", "显示调试文本");
 static void ldtoypad_setting_setting_show_debug_text_index_change(VariableItem* item) {
     LDToyPadApp* app = variable_item_get_context(item);
     uint8_t index = variable_item_get_current_value_index(item);
@@ -78,8 +78,8 @@ static void ldtoypad_setting_setting_show_debug_text_index_change(VariableItem* 
     model->show_debug_text_index = index;
 }
 
-static const char* setting_show_icons_names_config_label = "Show letter or icon";
-static char* setting_show_icons_names_names[] = {"Letter", "Icon"};
+static const char* setting_show_icons_names_config_label = LDTOYPAD_UI_TEXT("Show letter or icon", "显示字母或图标");
+static char* setting_show_icons_names_names[] = {LDTOYPAD_UI_TEXT("Letter", "字母"), LDTOYPAD_UI_TEXT("Icon", "图标")};
 
 static void ldtoypad_setting_setting_show_icons_names_index_change(VariableItem* item) {
     LDToyPadApp* app = variable_item_get_context(item);
@@ -126,9 +126,9 @@ static void ldtoypad_setup_dispatcher(LDToyPadApp* app, Gui* gui) {
 static void ldtoypad_setup_main_menu(LDToyPadApp* app) {
     app->submenu = submenu_alloc();
     submenu_add_item(
-        app->submenu, "Emulate", EmulateToyPadSubmenuIndex, ldtoypad_submenu_callback, app);
-    submenu_add_item(app->submenu, "Config", SettingsSubmenuIndex, ldtoypad_submenu_callback, app);
-    submenu_add_item(app->submenu, "About", AboutSubmenuIndex, ldtoypad_submenu_callback, app);
+        app->submenu, LDTOYPAD_UI_TEXT("Emulate", "模拟"), EmulateToyPadSubmenuIndex, ldtoypad_submenu_callback, app);
+    submenu_add_item(app->submenu, LDTOYPAD_UI_TEXT("Config", "配置"), SettingsSubmenuIndex, ldtoypad_submenu_callback, app);
+    submenu_add_item(app->submenu, LDTOYPAD_UI_TEXT("About", "关于"), AboutSubmenuIndex, ldtoypad_submenu_callback, app);
 
     view_set_previous_callback(submenu_get_view(app->submenu), ldtoypad_navigation_exit_callback);
     view_dispatcher_add_view(app->view_dispatcher, ViewSubmenu, submenu_get_view(app->submenu));
@@ -164,7 +164,7 @@ static void ldtoypad_setup_settings(LDToyPadApp* app) {
     bool setting_minifig_only_mode = false;
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Skip vehicle selection / Minifig only mode",
+        LDTOYPAD_UI_TEXT("Skip vehicle selection / Minifig only mode", "跳过载具选择/仅人仔模式"),
         COUNT_OF(setting_bool_values),
         ldtoypad_setting_minifig_only_mode_change,
         app);
@@ -174,7 +174,7 @@ static void ldtoypad_setup_settings(LDToyPadApp* app) {
     bool setting_minfig_switching_mode = false;
     item = variable_item_list_add(
         app->variable_item_list_config,
-        "Quick minifig switching",
+        LDTOYPAD_UI_TEXT("Quick minifig switching", "快速人仔切换"),
         COUNT_OF(setting_bool_values),
         ldtoypad_setting_quick_switching_mode_change,
         app);
@@ -215,7 +215,9 @@ static void ldtoypad_setup_about_view(LDToyPadApp* app) {
         0,
         128,
         64,
-        "This is a educational project to learn how to interact and reverse engineer a Toy Pad with a Flipper Zero.\n\nhttps://github.com/SegerEnd/Flipper-Zero-LD-Toypad-Emulator \n\nCredits: \n- Berny23 for the JavaScript Toy Pad Emulator for the Raspberry Pi\n- AlinaNova21 for the Node-LD project (Node.js Lego Dimensions Library)\n- woodenphone for the analysis of the Lego Dimensions Protocol\n\nAuthor: SegerEnd");
+        LDTOYPAD_UI_TEXT(
+            "This is a educational project to learn how to interact and reverse engineer a Toy Pad with a Flipper Zero.\n\nhttps://github.com/SegerEnd/Flipper-Zero-LD-Toypad-Emulator \n\nCredits: \n- Berny23 for the JavaScript Toy Pad Emulator for the Raspberry Pi\n- AlinaNova21 for the Node-LD project (Node.js Lego Dimensions Library)\n- woodenphone for the analysis of the Lego Dimensions Protocol\n\nAuthor: SegerEnd",
+            "这是一个学习如何与 Toy Pad 交互和逆向工程的教育项目。\n\nhttps://github.com/SegerEnd/Flipper-Zero-LD-Toypad-Emulator \n\n致谢: \n- Berny23 提供 Raspberry Pi 的 JS Toy Pad 模拟器\n- AlinaNova21 提供 Node-LD 项目\n- woodenphone 分析 Lego Dimensions 协议\n\n作者: SegerEnd"));
 
     view_set_previous_callback(
         widget_get_view(app->widget_about), ldtoypad_navigation_submenu_callback);
@@ -244,7 +246,7 @@ static void ldtoypad_setup_minifigure_menu(LDToyPadApp* app) {
         ViewMinifigureSelection,
         submenu_get_view(app->submenu_minifigure_selection));
 
-    submenu_set_header(app->submenu_minifigure_selection, "Select minifigure");
+    submenu_set_header(app->submenu_minifigure_selection, LDTOYPAD_UI_TEXT("Select minifigure", "选择人仔"));
 }
 
 static void ldtoypad_setup_vehicle_menu(LDToyPadApp* app) {
@@ -267,7 +269,7 @@ static void ldtoypad_setup_vehicle_menu(LDToyPadApp* app) {
         ViewVehicleSelection,
         submenu_get_view(app->submenu_vehicle_selection));
 
-    submenu_set_header(app->submenu_vehicle_selection, "Select vehicle");
+    submenu_set_header(app->submenu_vehicle_selection, LDTOYPAD_UI_TEXT("Select vehicle", "选择载具"));
 }
 
 static void ldtoypad_setup_favorites_menu(LDToyPadApp* app) {
@@ -293,7 +295,7 @@ static void ldtoypad_setup_saved_menu(LDToyPadApp* app) {
     view_dispatcher_add_view(
         app->view_dispatcher, ViewSavedSelection, submenu_get_view(app->submenu_saved_selection));
 
-    submenu_set_header(app->submenu_saved_selection, "No saves loaded");
+    submenu_set_header(app->submenu_saved_selection, LDTOYPAD_UI_TEXT("No saves loaded", "无已加载存档"));
 
     fill_saved_submenu(app);
 }

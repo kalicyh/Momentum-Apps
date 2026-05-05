@@ -32,43 +32,43 @@ void saflip_scene_options_on_enter(void* context) {
     submenu_reset(app->submenu);
     submenu_add_item(
         app->submenu,
-        "Save",
+        SAFLIP_UI_TEXT("Save", "保存"),
         SaflipSceneOptionsMenuItemSave,
         saflip_scene_options_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Save as NFC",
+        SAFLIP_UI_TEXT("Save as NFC", "保存为NFC"),
         SaflipSceneOptionsMenuItemSaveNFC,
         saflip_scene_options_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Emulate",
+        SAFLIP_UI_TEXT("Emulate", "模拟"),
         SaflipSceneOptionsMenuItemEmulate,
         saflip_scene_options_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Write",
+        SAFLIP_UI_TEXT("Write", "写入"),
         SaflipSceneOptionsMenuItemWrite,
         saflip_scene_options_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Edit",
+        SAFLIP_UI_TEXT("Edit", "编辑"),
         SaflipSceneOptionsMenuItemEdit,
         saflip_scene_options_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Change UID",
+        SAFLIP_UI_TEXT("Change UID", "修改UID"),
         SaflipSceneOptionsMenuItemChangeUID,
         saflip_scene_options_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Info",
+        SAFLIP_UI_TEXT("Info", "信息"),
         SaflipSceneOptionsMenuItemInfo,
         saflip_scene_options_menu_callback,
         app);
@@ -128,7 +128,7 @@ bool saflip_scene_options_on_event(void* context, SceneManagerEvent event) {
             break;
 
         case SaflipSceneOptionsMenuItemChangeUID:
-            byte_input_set_header_text(app->byte_input, "Change UID");
+            byte_input_set_header_text(app->byte_input, SAFLIP_UI_TEXT("Change UID", "修改UID"));
             byte_input_set_result_callback(
                 app->byte_input,
                 saflip_scene_options_byte_input_callback,

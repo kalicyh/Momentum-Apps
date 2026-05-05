@@ -21,6 +21,12 @@
 #include "helpers/subghz/subghz.h"
 #include "helpers/gui/int_input.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MEAL_PAGER_UI_TEXT(en, zh) (zh)
+#else
+#define MEAL_PAGER_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "Meal_Pager"
 
 #define MEAL_PAGER_VERSION "1.8"

@@ -16,13 +16,13 @@ void nfc_magic_scene_start_on_enter(void* context) {
     Submenu* submenu = instance->submenu;
     submenu_add_item(
         submenu,
-        "Check Magic Tag",
+        NFC_MAGIC_UI_TEXT("Check Magic Tag", "检测魔术标签"),
         SubmenuIndexCheck,
         nfc_magic_scene_start_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Gen4 Actions",
+        NFC_MAGIC_UI_TEXT("Gen4 Actions", "Gen4 操作"),
         SubmenuIndexGen4ActionsMenu,
         nfc_magic_scene_start_submenu_callback,
         instance);

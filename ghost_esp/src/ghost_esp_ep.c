@@ -1,4 +1,5 @@
 #include "ghost_esp_ep.h"
+#include "menu.h"
 #include <dialogs/dialogs.h>
 #include <gui/gui.h>
 #include <gui/view_dispatcher.h>
@@ -43,19 +44,19 @@ bool ghost_esp_ep_read_html_file(AppState* app, uint8_t** the_html, size_t* html
                furi_string_get_cstr(selected_filepath),
                FSAM_READ,
                FSOM_OPEN_EXISTING)) {
-            dialog_message_show_storage_error(app->dialogs, "Cannot open file");
+            dialog_message_show_storage_error(app->dialogs, GHOST_ESP_UI_TEXT("Cannot open file", "无法打开文件"));
             break;
         }
 
         uint64_t size = storage_file_size(index_html);
         if(size == 0) {
-            dialog_message_show_storage_error(app->dialogs, "File is empty");
+            dialog_message_show_storage_error(app->dialogs, GHOST_ESP_UI_TEXT("File is empty", "文件为空"));
             break;
         }
 
         *the_html = malloc(size);
         if(!*the_html) {
-            dialog_message_show_storage_error(app->dialogs, "Memory allocation failed");
+            dialog_message_show_storage_error(app->dialogs, GHOST_ESP_UI_TEXT("Memory allocation failed", "内存分配失败"));
             break;
         }
 
@@ -77,7 +78,7 @@ bool ghost_esp_ep_read_html_file(AppState* app, uint8_t** the_html, size_t* html
         if(!read_success) {
             free(*the_html);
             *the_html = NULL;
-            dialog_message_show_storage_error(app->dialogs, "Error reading file");
+            dialog_message_show_storage_error(app->dialogs, GHOST_ESP_UI_TEXT("Error reading file", "读取文件错误"));
             break;
         }
 
@@ -124,13 +125,13 @@ bool ghost_esp_ep_read_ir_file(AppState* app, uint8_t** ir_data, size_t* ir_size
         ir_file = storage_file_alloc(storage);
         const char* chosen_path = furi_string_get_cstr(selected_filepath);
         if(!storage_file_open(ir_file, chosen_path, FSAM_READ, FSOM_OPEN_EXISTING)) {
-            dialog_message_show_storage_error(app->dialogs, "Cannot open file");
+            dialog_message_show_storage_error(app->dialogs, GHOST_ESP_UI_TEXT("Cannot open file", "无法打开文件"));
             break;
         }
 
         uint64_t size = storage_file_size(ir_file);
         if(size == 0) {
-            dialog_message_show_storage_error(app->dialogs, "File is empty");
+            dialog_message_show_storage_error(app->dialogs, GHOST_ESP_UI_TEXT("File is empty", "文件为空"));
             break;
         }
 

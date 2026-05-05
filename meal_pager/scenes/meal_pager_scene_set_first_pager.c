@@ -15,9 +15,10 @@ void meal_pager_scene_set_first_pager_on_enter(void* context) {
     IntInput* int_input = app->int_input;
     size_t enter_name_length = 5;
     meal_pager_set_max_values(app);
-    char* str = "Set First Pager (0 - 999)";
+    char* str = MEAL_PAGER_UI_TEXT("Set First Pager (0 - 999)", "设置首呼机 (0 - 999)");
     const char* constStr = str;
-    snprintf(str, 36, "Set First Pager (0 - %lu)", app->max_pager);
+    const char* fmt = MEAL_PAGER_UI_TEXT("Set First Pager (0 - %lu)", "设置首呼机 (0 - %lu)");
+    snprintf(str, 36, fmt, app->max_pager);
 
     int_input_set_header_text(int_input, constStr);
 

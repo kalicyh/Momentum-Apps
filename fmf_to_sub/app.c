@@ -14,6 +14,12 @@
 
 #define TAG "FMF to SUB"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FMF_TO_SUB_UI_TEXT(en, zh) (zh)
+#else
+#define FMF_TO_SUB_UI_TEXT(en, zh) (en)
+#endif
+
 #define FMF_FILE_EXTENSION ".fmf"
 
 #define FMF_LOAD_PATH     \
@@ -132,7 +138,7 @@ static void fmf2sub_submenu_callback(void* context, uint32_t index) {
 /**
  * Frequency settings and values.
 */
-static const char* setting_frequency_label = "Frequency";
+static const char* setting_frequency_label = FMF_TO_SUB_UI_TEXT("Frequency", "频率");
 static char* setting_frequency_values[] = {
     "300000000", "302757000", "303875000", "303900000", "304250000", "307000000", "307500000",
     "307800000", "309000000", "310000000", "312000000", "312100000", "313000000", "313850000",
@@ -161,7 +167,7 @@ static void fmf2sub_setting_frequency_change(VariableItem* item) {
 /**
  * Modulation
 */
-static const char* setting_modulation_label = "Modulation";
+static const char* setting_modulation_label = FMF_TO_SUB_UI_TEXT("Modulation", "调制方式");
 static char* setting_modulation_values[] = {
     "FuriHalSubGhzPresetOok270Async",
     "FuriHalSubGhzPresetOok650Async",
@@ -179,7 +185,7 @@ static void fmf2sub_setting_modulation_change(VariableItem* item) {
 /**
  * Flipboard button
 */
-static const char* setting_button_label = "FlipButtons";
+static const char* setting_button_label = FMF_TO_SUB_UI_TEXT("FlipButtons", "Flip 按钮");
 static char* setting_button_values[] = {
     "Flip1.sub",
     "Flip2.sub",
@@ -229,10 +235,10 @@ static void fmf2sub_setting_button_change(VariableItem* item) {
 static void fmf2sub_view_convert_draw_callback(Canvas* canvas, void* model) {
     Fmf2SubConvertModel* my_model = (Fmf2SubConvertModel*)model;
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 1, 10, "Press OK to select Flipper");
-    canvas_draw_str(canvas, 1, 20, "Music File (.FMF) to convert");
-    canvas_draw_str(canvas, 1, 30, "to Sub-GHz format (.SUB).");
-    canvas_draw_str(canvas, 10, 40, "FlipBoard buttons:");
+    canvas_draw_str(canvas, 1, 10, FMF_TO_SUB_UI_TEXT("Press OK to select Flipper", "按 OK 选择 Flipper"));
+    canvas_draw_str(canvas, 1, 20, FMF_TO_SUB_UI_TEXT("Music File (.FMF) to convert", "音乐文件 (.FMF) 转换为"));
+    canvas_draw_str(canvas, 1, 30, FMF_TO_SUB_UI_TEXT("to Sub-GHz format (.SUB).", "Sub-GHz 格式 (.SUB)"));
+    canvas_draw_str(canvas, 10, 40, FMF_TO_SUB_UI_TEXT("FlipBoard buttons:", "FlipBoard 按钮:"));
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str(canvas, 90, 40, setting_button_names[my_model->setting_button_index]);
 
@@ -244,15 +250,15 @@ static void fmf2sub_view_convert_draw_callback(Canvas* canvas, void* model) {
 
     canvas_set_font(canvas, FontPrimary);
     if(my_model->state == Fmf2SubStateLoading) {
-        canvas_draw_str(canvas, 1, 60, "Loading...");
+        canvas_draw_str(canvas, 1, 60, FMF_TO_SUB_UI_TEXT("Loading...", "加载中..."));
     } else if(my_model->state == Fmf2SubStateError) {
-        canvas_draw_str(canvas, 1, 60, "Error!");
+        canvas_draw_str(canvas, 1, 60, FMF_TO_SUB_UI_TEXT("Error!", "错误!"));
     } else if(my_model->state == Fmf2SubStateConverting) {
-        canvas_draw_str(canvas, 1, 60, "Converting...");
+        canvas_draw_str(canvas, 1, 60, FMF_TO_SUB_UI_TEXT("Converting...", "转换中..."));
     } else if(my_model->state == Fmf2SubStateConverted) {
-        canvas_draw_str(canvas, 1, 60, "Saved in Sub-GHz folder");
+        canvas_draw_str(canvas, 1, 60, FMF_TO_SUB_UI_TEXT("Saved in Sub-GHz folder", "已保存至 Sub-GHz 文件夹"));
     } else {
-        canvas_draw_str(canvas, 1, 60, "Press OK to choose file");
+        canvas_draw_str(canvas, 1, 60, FMF_TO_SUB_UI_TEXT("Press OK to choose file", "按 OK 选择文件"));
     }
 }
 
@@ -762,11 +768,11 @@ static Fmf2SubApp* fmf2sub_app_alloc() {
 
     app->submenu = submenu_alloc();
     submenu_add_item(
-        app->submenu, "Configure", Fmf2SubSubmenuIndexConfigure, fmf2sub_submenu_callback, app);
+        app->submenu, FMF_TO_SUB_UI_TEXT("Configure", "配置"), Fmf2SubSubmenuIndexConfigure, fmf2sub_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "Convert", Fmf2SubSubmenuIndexConvert, fmf2sub_submenu_callback, app);
+        app->submenu, FMF_TO_SUB_UI_TEXT("Convert", "转换"), Fmf2SubSubmenuIndexConvert, fmf2sub_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "About", Fmf2SubSubmenuIndexAbout, fmf2sub_submenu_callback, app);
+        app->submenu, FMF_TO_SUB_UI_TEXT("About", "关于"), Fmf2SubSubmenuIndexAbout, fmf2sub_submenu_callback, app);
     view_set_previous_callback(submenu_get_view(app->submenu), fmf2sub_navigation_exit_callback);
     view_dispatcher_add_view(
         app->view_dispatcher, Fmf2SubViewSubmenu, submenu_get_view(app->submenu));
@@ -843,20 +849,33 @@ static Fmf2SubApp* fmf2sub_app_alloc() {
         0,
         128,
         64,
-        "Music to Sub-GHz  v1.2!\n\n"
-        "Converts music files (.FMF)\n"
-        "or (.TXT) to Sub-GHz format\n"
-        "(.SUB) Files.   Flip#.sub is\n"
-        "written to the SD Card's\n"
-        "subghz folder. Another\n"
-        "Flipper Zero with sound\n"
-        "turned on doing a Read RAW\n"
-        "in the Sub-GHz app can\n"
-        "listen to the music!\n"
-        "Use Flipboard Signal app to\n"
-        "send signals or use the\n"
-        "Sub-GHz app. Enjoy!\n\n"
-        "author: @codeallnight\nhttps://discord.com/invite/NsjCvqwPAd\nhttps://youtube.com/@MrDerekJamison");
+        FMF_TO_SUB_UI_TEXT(
+            "Music to Sub-GHz  v1.2!\n\n"
+            "Converts music files (.FMF)\n"
+            "or (.TXT) to Sub-GHz format\n"
+            "(.SUB) Files.   Flip#.sub is\n"
+            "written to the SD Card's\n"
+            "subghz folder. Another\n"
+            "Flipper Zero with sound\n"
+            "turned on doing a Read RAW\n"
+            "in the Sub-GHz app can\n"
+            "listen to the music!\n"
+            "Use Flipboard Signal app to\n"
+            "send signals or use the\n"
+            "Sub-GHz app. Enjoy!\n\n"
+            "author: @codeallnight\nhttps://discord.com/invite/NsjCvqwPAd\nhttps://youtube.com/@MrDerekJamison",
+            "音乐转 Sub-GHz  v1.2!\n\n"
+            "将音乐文件 (.FMF) 或\n"
+            "(.TXT) 转换为 Sub-GHz 格式\n"
+            "(.SUB) 文件。Flip#.sub 将\n"
+            "写入 SD 卡的 subghz 文件夹。\n"
+            "另一台开启声音的 Flipper Zero\n"
+            "在 Sub-GHz 应用中执行\n"
+            "读取 RAW 即可收听音乐!\n"
+            "使用 Flipboard Signal 应用\n"
+            "发送信号或使用 Sub-GHz 应用。\n"
+            "尽情享受!\n\n"
+            "作者: @codeallnight\nhttps://discord.com/invite/NsjCvqwPAd\nhttps://youtube.com/@MrDerekJamison"));
     view_set_previous_callback(
         widget_get_view(app->widget_about), fmf2sub_navigation_submenu_callback);
     view_dispatcher_add_view(

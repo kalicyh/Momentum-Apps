@@ -180,6 +180,23 @@ static void esp_flasher_scene_browse_callback(void* context, uint32_t index) {
 
 #define STR_SELECT         "[x]"
 #define STR_UNSELECT       "[ ]"
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define STR_BOOT           "引导加载 (" TOSTRING(ESP_ADDR_BOOT) ")"
+#define STR_BOOT_S3        "引导加载 (" TOSTRING(ESP_ADDR_BOOT_S3) ")"
+#define STR_BOOT_C5        "引导加载 (" TOSTRING(ESP_ADDR_BOOT_C5) ")"
+#define STR_PART           "分区表 (" TOSTRING(ESP_ADDR_PART) ")"
+#define STR_NVS            "NVS (" TOSTRING(ESP_ADDR_NVS) ")"
+#define STR_BOOT_APP0      "boot_app0 (" TOSTRING(ESP_ADDR_BOOT_APP0) ")"
+#define STR_APP_A          "固件 A (" TOSTRING(ESP_ADDR_APP_A) ")"
+#define STR_APP_B          "固件 B (" TOSTRING(ESP_ADDR_APP_B) ")"
+#define STR_CUSTOM         "自定义"
+#define STR_FLASH_S3       "[>] 烧录 - 慢速 (0x0)"
+#define STR_FLASH_C5       "[>] 烧录 - 慢速 (0x2000)"
+#define STR_FLASH          "[>] 烧录 - 慢速"
+#define STR_FLASH_TURBO_S3 "[>] 烧录 - 快速 (0x0)"
+#define STR_FLASH_TURBO_C5 "[>] 烧录 - 快速 (0x2000)"
+#define STR_FLASH_TURBO    "[>] 烧录 - 快速"
+#else
 #define STR_BOOT           "Bootloader (" TOSTRING(ESP_ADDR_BOOT) ")"
 #define STR_BOOT_S3        "Bootloader (" TOSTRING(ESP_ADDR_BOOT_S3) ")"
 #define STR_BOOT_C5        "Bootloader (" TOSTRING(ESP_ADDR_BOOT_C5) ")"
@@ -195,25 +212,28 @@ static void esp_flasher_scene_browse_callback(void* context, uint32_t index) {
 #define STR_FLASH_TURBO_S3 "[>] FLASH - fast (0x0)"
 #define STR_FLASH_TURBO_C5 "[>] FLASH - fast (0x2000)"
 #define STR_FLASH_TURBO    "[>] FLASH - fast"
+#endif
 static void _refresh_submenu(EspFlasherApp* app) {
     Submenu* submenu = app->submenu;
 
     submenu_reset(app->submenu);
 
-    submenu_set_header(submenu, "Browse for files to flash");
+    submenu_set_header(submenu, ESP_FLASHER_UI_TEXT("Browse for files to flash", "选择要烧录的文件"));
 
     submenu_add_item(
         submenu,
-        app->selected_flash_options[SelectedFlashS3Mode] ? "[x] Using S3, C3 or C6" :
-                                                           "[ ] Select for S3, C3 or C6",
+        app->selected_flash_options[SelectedFlashS3Mode] ?
+            ESP_FLASHER_UI_TEXT("[x] Using S3, C3 or C6", "[x] 使用 S3/C3/C6") :
+            ESP_FLASHER_UI_TEXT("[ ] Select for S3, C3 or C6", "[ ] 选择 S3/C3/C6"),
         SubmenuIndexS3Mode,
         esp_flasher_scene_browse_callback,
         app);
 
     submenu_add_item(
         submenu,
-        app->selected_flash_options[SelectedFlashC5Mode] ? "[x] Using ESP32-C5" :
-                                                           "[ ] Select for ESP32-C5",
+        app->selected_flash_options[SelectedFlashC5Mode] ?
+            ESP_FLASHER_UI_TEXT("[x] Using ESP32-C5", "[x] 使用 ESP32-C5") :
+            ESP_FLASHER_UI_TEXT("[ ] Select for ESP32-C5", "[ ] 选择 ESP32-C5"),
         SubmenuIndexC5Mode,
         esp_flasher_scene_browse_callback,
         app);

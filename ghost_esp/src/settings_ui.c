@@ -429,7 +429,7 @@ void settings_setup_gui(VariableItemList* list, SettingsUIContext* context) {
     // Add "Configuration" submenu item
     submenu_add_item(
         app_state->settings_actions_menu,
-        "Configuration  >",
+        GHOST_ESP_UI_TEXT("Configuration  >", "配置  >"),
         SETTINGS_COUNT,
         settings_menu_callback,
         app_state);
@@ -437,7 +437,7 @@ void settings_setup_gui(VariableItemList* list, SettingsUIContext* context) {
     // add hardware submenu item in settings actions menu
     submenu_add_item(
         app_state->settings_actions_menu,
-        "Hardware  >",
+        GHOST_ESP_UI_TEXT("Hardware  >", "硬件  >"),
         WIFI_SETTINGS_MENU_ID,
         wifi_settings_menu_callback,
         app_state);
@@ -445,7 +445,7 @@ void settings_setup_gui(VariableItemList* list, SettingsUIContext* context) {
     // add status idle animation submenu item
     submenu_add_item(
         app_state->settings_actions_menu,
-        "Status display animation  >",
+        GHOST_ESP_UI_TEXT("Status display animation  >", "待机动画  >"),
         STATUS_IDLE_MENU_ID,
         status_idle_menu_callback,
         app_state);
@@ -509,11 +509,16 @@ bool settings_custom_event_callback(void* context, uint32_t event_id) {
     case SETTING_CLEAR_LOGS:
         show_confirmation_dialog_ex(
             app_state,
-            "Clear Logs",
-            "Clear all log files?\n"
-            "This cannot be undone.\n"
-            "Files located at:\n"
-            "apps_data/ghost_esp/logs\n",
+            GHOST_ESP_UI_TEXT("Clear Logs", "清除日志"),
+            GHOST_ESP_UI_TEXT(
+                "Clear all log files?\n"
+                "This cannot be undone.\n"
+                "Files located at:\n"
+                "apps_data/ghost_esp/logs\n",
+                "清除所有日志？\n"
+                "此操作不可撤销。\n"
+                "文件位于:\n"
+                "apps_data/ghost_esp/logs\n"),
             logs_clear_confirmed_callback,
             logs_clear_cancelled_callback);
         return true;
@@ -521,11 +526,16 @@ bool settings_custom_event_callback(void* context, uint32_t event_id) {
     case SETTING_CLEAR_PCAPS:
         show_confirmation_dialog_ex(
             app_state,
-            "Clear PCAPs",
-            "Clear all PCAP files?\n"
-            "This cannot be undone.\n"
-            "Files located at:\n"
-            "apps_data/ghost_esp/pcaps\n",
+            GHOST_ESP_UI_TEXT("Clear PCAPs", "清除 PCAP"),
+            GHOST_ESP_UI_TEXT(
+                "Clear all PCAP files?\n"
+                "This cannot be undone.\n"
+                "Files located at:\n"
+                "apps_data/ghost_esp/pcaps\n",
+                "清除所有 PCAP 文件？\n"
+                "此操作不可撤销。\n"
+                "文件位于:\n"
+                "apps_data/ghost_esp/pcaps\n"),
             pcap_clear_confirmed_callback,
             pcap_clear_cancelled_callback);
         return true;
@@ -533,11 +543,16 @@ bool settings_custom_event_callback(void* context, uint32_t event_id) {
     case SETTING_CLEAR_WARDRIVE:
         show_confirmation_dialog_ex(
             app_state,
-            "Clear Wardrives",
-            "Clear all wardrive files?\n"
-            "This cannot be undone.\n"
-            "Files located at:\n"
-            "apps_data/ghost_esp/wardrive\n",
+            GHOST_ESP_UI_TEXT("Clear Wardrives", "清除 Wardrive"),
+            GHOST_ESP_UI_TEXT(
+                "Clear all wardrive files?\n"
+                "This cannot be undone.\n"
+                "Files located at:\n"
+                "apps_data/ghost_esp/wardrive\n",
+                "清除所有 Wardrive 文件？\n"
+                "此操作不可撤销。\n"
+                "文件位于:\n"
+                "apps_data/ghost_esp/wardrive\n"),
             wardrive_clear_confirmed_callback,
             wardrive_clear_cancelled_callback);
         return true;
@@ -545,11 +560,16 @@ bool settings_custom_event_callback(void* context, uint32_t event_id) {
     case SETTING_CLEAR_NVS:
         show_confirmation_dialog_ex(
             app_state,
-            "Clear NVS",
-            "Clear NVS settings?\n"
-            "This will reset all ESP\n"
-            "settings to default.\n"
-            "This cannot be undone.",
+            GHOST_ESP_UI_TEXT("Clear NVS", "清除 NVS"),
+            GHOST_ESP_UI_TEXT(
+                "Clear NVS settings?\n"
+                "This will reset all ESP\n"
+                "settings to default.\n"
+                "This cannot be undone.",
+                "清除 NVS 设置？\n"
+                "将重置所有 ESP\n"
+                "设置为默认值。\n"
+                "此操作不可撤销。"),
             nvs_clear_confirmed_callback,
             nvs_clear_cancelled_callback);
         return true;
@@ -568,7 +588,7 @@ bool settings_custom_event_callback(void* context, uint32_t event_id) {
                                 "Built with <3\n"
                                 "github.com/jaylikesbunda/ghost_esp\n\n";
 
-        confirmation_view_set_header(app_state->confirmation_view, "Ghost ESP v1.6.3");
+        confirmation_view_set_header(app_state->confirmation_view, GHOST_ESP_UI_TEXT("Ghost ESP v1.6.3", "Ghost ESP v1.6.3"));
         confirmation_view_set_text(app_state->confirmation_view, info_text);
 
         // Save current view before switching

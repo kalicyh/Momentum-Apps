@@ -81,7 +81,7 @@ bool dashboard_bittrack_draw(Canvas* canvas, const AppDashboardModel* dashboard)
     }
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Bit Tracker");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, CAN_COMMANDER_UI_TEXT("Bit Tracker", "位追踪器"));
 
     canvas_set_font(canvas, FontKeyboard);
     canvas_draw_str(canvas, 2, 18, dashboard->bit_row[0]);

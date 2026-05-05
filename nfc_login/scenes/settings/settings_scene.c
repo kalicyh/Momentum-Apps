@@ -47,22 +47,22 @@ static void widget_custom_draw_callback(Canvas* canvas, void* context) {
 
 void app_render_credits(App* app) {
     widget_reset(app->widget);
-    widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Credits");
+    widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Credits", "关于"));
 
     if(app->credits_page == 0) {
         widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, "NFC Login");
-        widget_add_string_element(app->widget, 0, 22, AlignLeft, AlignTop, FontSecondary, "Version: 1.0");
+        widget_add_string_element(app->widget, 0, 22, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Version: 1.0", "版本: 1.0"));
         widget_add_string_element(app->widget, 0, 32, AlignLeft, AlignTop, FontSecondary, "Creator: Play2BReal");
         widget_add_string_element(app->widget, 0, 42, AlignLeft, AlignTop, FontSecondary, "github.com/Play2BReal");
     } else if(app->credits_page == 1) {
-        widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, "Special Thanks To:");
+        widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Special Thanks To:", "特别感谢:"));
         widget_add_string_element(app->widget, 0, 22, AlignLeft, AlignTop, FontSecondary, "Equip, Tac0s, WillyJL, pr3");
-        widget_add_string_element(app->widget, 0, 32, AlignLeft, AlignTop, FontSecondary, "& The Biohacking Community!");
+        widget_add_string_element(app->widget, 0, 32, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("& The Biohacking Community!", "及生物黑客社区!"));
         widget_add_string_element(app->widget, 0, 42, AlignLeft, AlignTop, FontSecondary, "");
     }
 
     char page_info[32];
-    snprintf(page_info, sizeof(page_info), "Page %d/%d  <- ->=Navigate", app->credits_page + 1, CREDITS_PAGES);
+    snprintf(page_info, sizeof(page_info), NFC_LOGIN_UI_TEXT("Page %d/%d  <- ->=Navigate", "第%d/%d页  <- ->=翻页"), app->credits_page + 1, CREDITS_PAGES);
     widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, page_info);
 }
 
@@ -82,7 +82,7 @@ void app_render_lockscreen(App* app) {
     bool has_stored = get_passcode_sequence(stored_sequence, sizeof(stored_sequence));
     
     if(!has_stored) {
-        widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, "Error: No stored sequence");
+        widget_add_string_element(app->widget, 0, 24, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Error: No stored sequence", "错误: 无已存密码"));
         return;
     }
     
@@ -106,35 +106,35 @@ void app_render_lockscreen(App* app) {
     widget_add_string_element(app->widget, 0, 36, AlignLeft, AlignTop, FontSecondary, progress);
     
     if(input_button_count >= stored_button_count) {
-        widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, "Press OK to verify");
+        widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press OK to verify", "按OK验证"));
     } else {
-        widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, "Enter passcode...");
+        widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Enter passcode...", "输入密码..."));
     }
 }
 
 void app_render_settings(App* app) {
     widget_reset(app->widget);
-    widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Settings");
+    widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Settings", "设置"));
 
     char setting_lines[SETTINGS_MENU_ITEMS][64];
     char layout_display[32];
     strncpy(layout_display, app->keyboard_layout, sizeof(layout_display) - 1);
     layout_display[sizeof(layout_display) - 1] = '\0';
 
-    snprintf(setting_lines[0], sizeof(setting_lines[0]), "%s HID Mode: %s",
-             (app->settings_menu_index == 0) ? ">" : " ", app->hid_mode == HidModeBle ? "BLE" : "USB");
-    snprintf(setting_lines[1], sizeof(setting_lines[1]), "%s Keyboard Layout: %s",
-             (app->settings_menu_index == 1) ? ">" : " ", layout_display);
-    snprintf(setting_lines[2], sizeof(setting_lines[2]), "%s Input Delay: %dms",
-             (app->settings_menu_index == 2) ? ">" : " ", app->input_delay_ms);
-    snprintf(setting_lines[3], sizeof(setting_lines[3]), "%s Append Enter: %s",
-             (app->settings_menu_index == 3) ? ">" : " ", app->append_enter ? "ON" : "OFF");
-    snprintf(setting_lines[4], sizeof(setting_lines[4]), "%s Reset Passcode",
-             (app->settings_menu_index == 4) ? ">" : " ");
-    snprintf(setting_lines[5], sizeof(setting_lines[5]), "%s Disable Passcode: %s",
-             (app->settings_menu_index == 5) ? ">" : " ", get_passcode_disabled() ? "ON" : "OFF");
-    snprintf(setting_lines[6], sizeof(setting_lines[6]), "%s Credits",
-             (app->settings_menu_index == 6) ? ">" : " ");
+    snprintf(setting_lines[0], sizeof(setting_lines[0]), "%s %s: %s",
+             (app->settings_menu_index == 0) ? ">" : " ", NFC_LOGIN_UI_TEXT("HID Mode", "HID模式"), app->hid_mode == HidModeBle ? "BLE" : "USB");
+    snprintf(setting_lines[1], sizeof(setting_lines[1]), "%s %s: %s",
+             (app->settings_menu_index == 1) ? ">" : " ", NFC_LOGIN_UI_TEXT("Keyboard Layout", "键盘布局"), layout_display);
+    snprintf(setting_lines[2], sizeof(setting_lines[2]), "%s %s: %dms",
+             (app->settings_menu_index == 2) ? ">" : " ", NFC_LOGIN_UI_TEXT("Input Delay", "输入延迟"), app->input_delay_ms);
+    snprintf(setting_lines[3], sizeof(setting_lines[3]), "%s %s: %s",
+             (app->settings_menu_index == 3) ? ">" : " ", NFC_LOGIN_UI_TEXT("Append Enter", "追加回车"), app->append_enter ? NFC_LOGIN_UI_TEXT("ON", "开") : NFC_LOGIN_UI_TEXT("OFF", "关"));
+    snprintf(setting_lines[4], sizeof(setting_lines[4]), "%s %s",
+             (app->settings_menu_index == 4) ? ">" : " ", NFC_LOGIN_UI_TEXT("Reset Passcode", "重置密码"));
+    snprintf(setting_lines[5], sizeof(setting_lines[5]), "%s %s: %s",
+             (app->settings_menu_index == 5) ? ">" : " ", NFC_LOGIN_UI_TEXT("Disable Passcode", "禁用密码"), get_passcode_disabled() ? NFC_LOGIN_UI_TEXT("ON", "开") : NFC_LOGIN_UI_TEXT("OFF", "关"));
+    snprintf(setting_lines[6], sizeof(setting_lines[6]), "%s %s",
+             (app->settings_menu_index == 6) ? ">" : " ", NFC_LOGIN_UI_TEXT("Credits", "关于"));
 
     for(uint8_t i = 0; i < SETTINGS_VISIBLE_ITEMS; i++) {
         uint8_t item_index = app->settings_scroll_offset + i;
@@ -144,18 +144,18 @@ void app_render_settings(App* app) {
     }
 
     if(app->settings_menu_index == 0) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "<-> Cycle  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("<-> Cycle  Back=Menu", "<->切换  返回=菜单"));
     } else if(app->settings_menu_index == 1) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "<-> Cycle  OK=Sel  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("<-> Cycle  OK=Sel  Back=Menu", "<->切换  OK=选  返回=菜单"));
     } else if(app->settings_menu_index == 2) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "<-> Cycle  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("<-> Cycle  Back=Menu", "<->切换  返回=菜单"));
     } else if(app->settings_menu_index == 3) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "OK=Toggle  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("OK=Toggle  Back=Menu", "OK=切换  返回=菜单"));
     } else if(app->settings_menu_index == 4) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "OK=Reset  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("OK=Reset  Back=Menu", "OK=重置  返回=菜单"));
     } else if(app->settings_menu_index == 5) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "<-> Toggle  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("<-> Toggle  Back=Menu", "<->切换  返回=菜单"));
     } else if(app->settings_menu_index == 6) {
-        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, "OK=View  Back=Menu");
+        widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("OK=View  Back=Menu", "OK=查看  返回=菜单"));
     }
 }

@@ -38,14 +38,15 @@ void uart_terminal_scene_console_output_on_enter(void* context) {
         // app->show_stopscan_tip in the if is just a hack to get the help displayed since there is no commands in this app
         if(app->show_stopscan_tip ||
            0 == strncmp("help", app->selected_tx_string, strlen("help"))) {
-            const char* help_msg =
-                "Morse Flasher for\nMayhem Fin\n\nBased on UART terminal by\ncool4uma, which is a\nmodified WiFi Marauder\ncompanion by 0xchocolate\n\n";
+            const char* help_msg = MORSEFLASH_UI_TEXT(
+                "Morse Flasher for\nMayhem Fin\n\nBased on UART terminal by\ncool4uma, which is a\nmodified WiFi Marauder\ncompanion by 0xchocolate\n\n",
+                "Mayhem Fin 摩尔斯闪光器\n\n基于 cool4uma 的 UART 终端\n修改自 0xchocolate 的\nWiFi Marauder 伴侣\n\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
         }
 
         if(app->show_stopscan_tip) {
-            const char* help_msg = "Press BACK to return\n";
+            const char* help_msg = MORSEFLASH_UI_TEXT("Press BACK to return\n", "按返回键返回\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
         }

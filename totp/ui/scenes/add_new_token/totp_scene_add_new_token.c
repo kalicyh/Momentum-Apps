@@ -11,8 +11,13 @@
 #include <roll_value.h>
 
 char* TOKEN_ALGO_LIST[] = {"SHA1", "SHA256", "SHA512", "Steam"};
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+char* TOKEN_DIGITS_TEXT_LIST[] = {"5位", "6位", "8位"};
+char* TOKEN_TYPE_LIST[] = {"基于时间(TOTP)", "基于计数器(HOTP)"};
+#else
 char* TOKEN_DIGITS_TEXT_LIST[] = {"5 digits", "6 digits", "8 digits"};
 char* TOKEN_TYPE_LIST[] = {"Time-based (TOTP)", "Counter-based (HOTP)"};
+#endif
 
 TokenDigitsCount TOKEN_DIGITS_VALUE_LIST[] = {
     TokenDigitsCountFive,
@@ -132,7 +137,7 @@ static void
     show_invalid_field_message(const PluginState* plugin_state, Control control, const char* text) {
     DialogMessage* message = dialog_message_alloc();
     SceneState* scene_state = plugin_state->current_scene_state;
-    dialog_message_set_buttons(message, "Back", NULL, NULL);
+    dialog_message_set_buttons(message, TOTP_UI_TEXT("Back", "返回"), NULL, NULL);
     dialog_message_set_text(
         message, text, SCREEN_WIDTH_CENTER, SCREEN_HEIGHT_CENTER, AlignCenter, AlignCenter);
     dialog_message_show(plugin_state->dialogs_app, message);
@@ -145,13 +150,13 @@ void totp_scene_add_new_token_activate(PluginState* plugin_state) {
     SceneState* scene_state = malloc(sizeof(SceneState));
     furi_check(scene_state != NULL);
     plugin_state->current_scene_state = scene_state;
-    scene_state->token_name = strdup("Name");
+    scene_state->token_name = strdup(TOTP_UI_TEXT("Name", "名称"));
     furi_check(scene_state->token_name != NULL);
     scene_state->token_name_length = strlen(scene_state->token_name);
-    scene_state->token_secret = strdup("Secret");
+    scene_state->token_secret = strdup(TOTP_UI_TEXT("Secret", "密钥"));
     furi_check(scene_state->token_secret != NULL);
     scene_state->token_secret_length = strlen(scene_state->token_secret);
-    scene_state->initial_counter = strdup("Counter");
+    scene_state->initial_counter = strdup(TOTP_UI_TEXT("Counter", "计数器"));
     furi_check(scene_state->initial_counter != NULL);
     scene_state->initial_counter_length = strlen(scene_state->initial_counter);
 
@@ -224,14 +229,14 @@ void totp_scene_add_new_token_render(Canvas* const canvas, const PluginState* pl
         119 - scene_state->screen_y_offset,
         48,
         13,
-        "Confirm",
+        TOTP_UI_TEXT("Confirm", "确认"),
         scene_state->selected_control == ConfirmButton);
 
     canvas_set_color(canvas, ColorWhite);
     canvas_draw_box(canvas, 0, 0, SCREEN_WIDTH, 10);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, "Add new token");
+    canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, TOTP_UI_TEXT("Add new token", "添加新令牌"));
     canvas_set_font(canvas, FontSecondary);
 }
 
@@ -329,14 +334,14 @@ bool totp_scene_add_new_token_handle_event(
             case TokenNameTextBox:
                 ask_user_input(
                     plugin_state,
-                    "Token name",
+                    TOTP_UI_TEXT("Token name", "令牌名称"),
                     &scene_state->token_name,
                     &scene_state->token_name_length);
                 break;
             case TokenSecretTextBox:
                 ask_user_input(
                     plugin_state,
-                    "Token secret",
+                    TOTP_UI_TEXT("Token secret", "令牌密钥"),
                     &scene_state->token_secret,
                     &scene_state->token_secret_length);
                 break;
@@ -348,7 +353,7 @@ bool totp_scene_add_new_token_handle_event(
                 if(scene_state->type == TokenTypeHOTP) {
                     ask_user_input(
                         plugin_state,
-                        "Initial counter",
+                        TOTP_UI_TEXT("Initial counter", "初始计数器"),
                         &scene_state->initial_counter,
                         &scene_state->initial_counter_length);
                 }
@@ -365,10 +370,10 @@ bool totp_scene_add_new_token_handle_event(
                     totp_scene_director_activate_scene(plugin_state, TotpSceneGenerateToken);
                 } else if(add_result == TotpIteratorUpdateTokenResultInvalidSecret) {
                     show_invalid_field_message(
-                        plugin_state, TokenSecretTextBox, "Token secret is invalid");
+                        plugin_state, TokenSecretTextBox, TOTP_UI_TEXT("Token secret is invalid", "令牌密钥无效"));
                 } else if(add_result == TotpIteratorUpdateTokenResultInvalidCounter) {
                     show_invalid_field_message(
-                        plugin_state, TokenDurationOrCounterSelect, "Initial counter is invalid");
+                        plugin_state, TokenDurationOrCounterSelect, TOTP_UI_TEXT("Initial counter is invalid", "初始计数器无效"));
                 } else if(add_result == TotpIteratorUpdateTokenResultFileUpdateFailed) {
                     totp_dialogs_config_updating_error(plugin_state);
                 }

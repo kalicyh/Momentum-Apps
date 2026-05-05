@@ -34,6 +34,12 @@
 
 #define TAG "Saflip"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SAFLIP_UI_TEXT(en, zh) (zh)
+#else
+#define SAFLIP_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     SaflipViewMenu,
     SaflipViewPopup,

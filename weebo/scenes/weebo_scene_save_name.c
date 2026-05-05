@@ -31,7 +31,7 @@ void weebo_scene_save_name_on_enter(void* context) {
         weebo->file_name[strlen(weebo->file_name)] = '\0';
         weebo_text_store_set(weebo, weebo->file_name);
     }
-    text_input_set_header_text(text_input, "Name the card");
+    text_input_set_header_text(text_input, WEEBO_UI_TEXT("Name the card", "命名卡片"));
     text_input_set_result_callback(
         text_input,
         weebo_scene_save_name_text_input_callback,

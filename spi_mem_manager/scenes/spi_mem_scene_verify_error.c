@@ -13,11 +13,11 @@ static void spi_mem_scene_verify_error_widget_callback(
 void spi_mem_scene_verify_error_on_enter(void* context) {
     SPIMemApp* app = context;
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Back", spi_mem_scene_verify_error_widget_callback, app);
+        app->widget, GuiButtonTypeLeft, SPI_MEM_UI_TEXT("Back", "返回"), spi_mem_scene_verify_error_widget_callback, app);
     widget_add_string_element(
-        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, "Verification error");
+        app->widget, 64, 9, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("Verification error", "校验错误"));
     widget_add_string_element(
-        app->widget, 64, 21, AlignCenter, AlignBottom, FontSecondary, "Data mismatch");
+        app->widget, 64, 21, AlignCenter, AlignBottom, FontSecondary, SPI_MEM_UI_TEXT("Data mismatch", "数据不匹配"));
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewWidget);
 }
 

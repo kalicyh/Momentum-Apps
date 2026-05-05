@@ -71,7 +71,7 @@ void dashboard_apply_template(
             strncpy(model->title, title ? title : "", sizeof(model->title) - 1U);
             model->title[sizeof(model->title) - 1U] = '\0';
             model->mode = AppDashboardNone;
-            strncpy(model->label, "Waiting for response", sizeof(model->label) - 1U);
+            strncpy(model->label, CAN_COMMANDER_UI_TEXT("Waiting for response", "等待响应"), sizeof(model->label) - 1U);
             model->label[sizeof(model->label) - 1U] = '\0';
             strncpy(model->value, "--", sizeof(model->value) - 1U);
             model->value[sizeof(model->value) - 1U] = '\0';
@@ -240,35 +240,35 @@ AppDashboardMode dashboard_mode_for_tool(CcToolId tool_id) {
 static void dashboard_init_mode(App* app, AppDashboardMode mode) {
     switch(mode) {
     case AppDashboardReadAll:
-        dashboard_apply_template(app, "READ ALL", "Frames", "0", "", "Waiting for CAN frames");
+        dashboard_apply_template(app, "READ ALL", CAN_COMMANDER_UI_TEXT("Frames", "帧"), "0", "", CAN_COMMANDER_UI_TEXT("Waiting for CAN frames", "等待 CAN 帧"));
         break;
     case AppDashboardFiltered:
-        dashboard_apply_template(app, "FILTERED", "Frames", "0", "", "Waiting for matched frames");
+        dashboard_apply_template(app, "FILTERED", CAN_COMMANDER_UI_TEXT("Frames", "帧"), "0", "", CAN_COMMANDER_UI_TEXT("Waiting for matched frames", "等待匹配帧"));
         break;
     case AppDashboardWrite:
-        dashboard_apply_template(app, "WRITE", "Sent", "0", "", "No TX sent yet");
+        dashboard_apply_template(app, "WRITE", CAN_COMMANDER_UI_TEXT("Sent", "已发送"), "0", "", CAN_COMMANDER_UI_TEXT("No TX sent yet", "尚未发送"));
         break;
     case AppDashboardSpeed:
-        dashboard_apply_template(app, "SPEED TEST", "Rate", "--", "msg/s", "Waiting for 1s sample");
+        dashboard_apply_template(app, "SPEED TEST", CAN_COMMANDER_UI_TEXT("Rate", "速率"), "--", CAN_COMMANDER_UI_TEXT("msg/s", "帧/秒"), CAN_COMMANDER_UI_TEXT("Waiting for 1s sample", "等待1秒采样"));
         break;
     case AppDashboardValtrack:
-        dashboard_apply_template(app, "VAL TRACK", "Last Change", "--", "", "Waiting for byte changes");
+        dashboard_apply_template(app, "VAL TRACK", CAN_COMMANDER_UI_TEXT("Last Change", "上次变化"), "--", "", CAN_COMMANDER_UI_TEXT("Waiting for byte changes", "等待字节变化"));
         break;
     case AppDashboardUniqueIds:
-        dashboard_apply_template(app, "UNIQUE IDS", "Found", "0", "ids", "Waiting for new IDs");
+        dashboard_apply_template(app, "UNIQUE IDS", CAN_COMMANDER_UI_TEXT("Found", "已发现"), "0", CAN_COMMANDER_UI_TEXT("ids", "个"), CAN_COMMANDER_UI_TEXT("Waiting for new IDs", "等待新的 ID"));
         break;
     case AppDashboardBittrack:
-        dashboard_apply_template(app, "BIT TRACK", "Tracking", "--", "", "Waiting for matching ID");
+        dashboard_apply_template(app, "BIT TRACK", CAN_COMMANDER_UI_TEXT("Tracking", "追踪"), "--", "", CAN_COMMANDER_UI_TEXT("Waiting for matching ID", "等待匹配 ID"));
         dashboard_bittrack_prepare_template(app);
         break;
     case AppDashboardReverse:
-        dashboard_apply_template(app, "BYTE WATCHER", "Phase", "Init", "", "Waiting for tool events");
+        dashboard_apply_template(app, "BYTE WATCHER", CAN_COMMANDER_UI_TEXT("Phase", "阶段"), CAN_COMMANDER_UI_TEXT("Init", "初始化"), "", CAN_COMMANDER_UI_TEXT("Waiting for tool events", "等待工具事件"));
         break;
     case AppDashboardObdPid:
-        dashboard_apply_template(app, "OBD PID", "Waiting for response", "--", "", "");
+        dashboard_apply_template(app, "OBD PID", CAN_COMMANDER_UI_TEXT("Waiting for response", "等待响应"), "--", "", "");
         break;
     case AppDashboardDbcDecode:
-        dashboard_apply_template(app, "DBC DECODE", "Signal", "--", "", "Waiting for decoded values");
+        dashboard_apply_template(app, "DBC DECODE", CAN_COMMANDER_UI_TEXT("Signal", "信号"), "--", "", CAN_COMMANDER_UI_TEXT("Waiting for decoded values", "等待解码值"));
         break;
     case AppDashboardCustomInject:
         {
@@ -279,12 +279,12 @@ static void dashboard_init_mode(App* app, AppDashboardMode mode) {
                 "%u",
                 (unsigned)(app_custom_inject_get_active_slot(app) + 1U));
             dashboard_apply_template(
-                app, "CUSTOM INJECT", "Slot", slot_value, "", "Waiting for slot data");
+                app, "CUSTOM INJECT", CAN_COMMANDER_UI_TEXT("Slot", "槽位"), slot_value, "", CAN_COMMANDER_UI_TEXT("Waiting for slot data", "等待槽位数据"));
         }
         break;
     case AppDashboardNone:
     default:
-        dashboard_apply_template(app, "CAN Commander", "Live Monitor", "--", "", "");
+        dashboard_apply_template(app, "CAN Commander", CAN_COMMANDER_UI_TEXT("Live Monitor", "实时监测"), "--", "", "");
         break;
     }
 }

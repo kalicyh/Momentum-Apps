@@ -14,7 +14,7 @@ void metroflip_scene_save_on_enter(void* context) {
     Metroflip* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, "Save the NFC tag:");
+    text_input_set_header_text(text_input, METROFLIP_UI_TEXT("Save the NFC tag:", "\xe4\xbf\x9d\xe5\xad\x98NFC\xe5\x8d\xa1\xe6\x95\xb0\xe6\x8d\xae:"));
 
     text_input_set_result_callback(
         text_input,

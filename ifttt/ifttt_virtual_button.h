@@ -1,6 +1,12 @@
 #pragma once
 
 #include <furi.h>
+
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define IFTTT_UI_TEXT(en, zh) (zh)
+#else
+#define IFTTT_UI_TEXT(en, zh) (en)
+#endif
 #include <power/power_service/power.h>
 #include <gui/gui.h>
 #include <gui/view.h>

@@ -50,7 +50,7 @@ void cancommander_scene_text_input_on_enter(void* context) {
 
     if(app->input_use_byte_input && app->input_hex_count > 0U) {
         byte_input_set_header_text(
-            app->byte_input, app->input_header ? app->input_header : "Edit Hex Value");
+            app->byte_input, app->input_header ? app->input_header : CAN_COMMANDER_UI_TEXT("Edit Hex Value", "编辑十六进制值"));
         byte_input_set_result_callback(
             app->byte_input,
             cancommander_scene_byte_input_done,
@@ -71,7 +71,7 @@ void cancommander_scene_text_input_on_enter(void* context) {
         sizeof(app->input_work),
         true);
 
-    text_input_set_header_text(app->text_input, app->input_header ? app->input_header : "Edit Args");
+    text_input_set_header_text(app->text_input, app->input_header ? app->input_header : CAN_COMMANDER_UI_TEXT("Edit Args", "编辑参数"));
 
     view_dispatcher_switch_to_view(app->view_dispatcher, AppViewTextInput);
 }

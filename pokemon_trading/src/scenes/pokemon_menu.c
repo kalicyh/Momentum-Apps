@@ -24,23 +24,23 @@ void pokemon_scene_main_menu_on_enter(void* context) {
     PokemonFap* pokemon_fap = (PokemonFap*)context;
 
     submenu_reset(pokemon_fap->submenu);
-    submenu_set_header(pokemon_fap->submenu, "Pokemon Trade Tool");
+    submenu_set_header(pokemon_fap->submenu, POKEMON_UI_TEXT("Pokemon Trade Tool", "宝可梦交换工具"));
 
     submenu_add_item(
         pokemon_fap->submenu,
-        "Gen I    (R/B/Y non-JPN)",
+        POKEMON_UI_TEXT("Gen I    (R/B/Y non-JPN)", "第一世代 (红/蓝/黄 非日版)"),
         PokemonSceneGenITrade,
         scene_change_from_main_cb,
         pokemon_fap);
     submenu_add_item(
         pokemon_fap->submenu,
-        "Gen II   (G/S/C non-JPN)",
+        POKEMON_UI_TEXT("Gen II   (G/S/C non-JPN)", "第二世代 (金/银/水晶 非日版)"),
         PokemonSceneGenIITrade,
         scene_change_from_main_cb,
         pokemon_fap);
     submenu_add_item(
         pokemon_fap->submenu,
-        "Select EXT Pinout",
+        POKEMON_UI_TEXT("Select EXT Pinout", "选择外部引脚"),
         PokemonScenePins,
         scene_change_from_main_cb,
         pokemon_fap);

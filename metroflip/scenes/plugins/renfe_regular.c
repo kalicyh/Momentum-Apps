@@ -1004,7 +1004,7 @@ static bool renfe_regular_parse(FuriString* parsed_data, const MfClassicData* da
         
         // 1. Show card type
         const char* card_type = renfe_regular_detect_card_type(data);
-        furi_string_cat_printf(parsed_data, "Type: %s\n", card_type);
+        furi_string_cat_printf(parsed_data, METROFLIP_UI_TEXT("Type: %", "\xe7\xb1\xbb\xe5\x9e\x8b: %s\n", card_type);
         
         // 1.1. Show trip counter or usage status
         if(strcmp(card_type, "Bono Regular 10 trips") == 0) {
@@ -1169,7 +1169,7 @@ static void renfe_regular_on_enter(Metroflip* app) {
             furi_string_reset(app->text_box_store);
             if(!renfe_regular_parse(parsed_data, mfc_data)) {
                 furi_string_reset(app->text_box_store);
-                furi_string_printf(parsed_data, "\e#Unknown card\n");
+                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
             }
             widget_add_text_scroll_element(widget, 0, 0, 128, 52, furi_string_get_cstr(parsed_data));
 
@@ -1178,11 +1178,11 @@ static void renfe_regular_on_enter(Metroflip* app) {
             
             if(!is_ida_vuelta) {
                 // Only show History button for non-ida/vuelta cards
-                widget_add_button_element(widget, GuiButtonTypeLeft, "History", renfe_regular_widget_callback, app);
+                widget_add_button_element(widget, GuiButtonTypeLeft, METROFLIP_UI_TEXT("History", "\xe5\x8e\x86\xe5\x8f\xb2"), renfe_regular_widget_callback, app);
             }
             
-            widget_add_button_element(widget, GuiButtonTypeCenter, "Delete", metroflip_delete_widget_callback, app);
-            widget_add_button_element(widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+            widget_add_button_element(widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
+            widget_add_button_element(widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
             
             if(!app->view_dispatcher) {
                 if(should_free_mfc_data) mf_classic_free(mfc_data);
@@ -1224,7 +1224,7 @@ static void renfe_regular_on_enter(Metroflip* app) {
         furi_string_cat_printf(message, "   to dump the card first.");
         
         widget_add_text_scroll_element(widget, 0, 0, 128, 52, furi_string_get_cstr(message));
-        widget_add_button_element(widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+        widget_add_button_element(widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
         
         furi_string_free(message);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -1262,7 +1262,7 @@ static bool renfe_regular_on_event(Metroflip* app, SceneManagerEvent event) {
                             furi_string_printf(parsed_data, "\e#Travel History\nNo history found\n");
                         }
                         widget_add_text_scroll_element(widget, 0, 0, 128, 52, furi_string_get_cstr(parsed_data));
-                        widget_add_button_element(widget, GuiButtonTypeRight, "Back", renfe_regular_widget_callback, app);
+                        widget_add_button_element(widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Back", "\xe8\xbf\x94\xe5\x9b\x9e"), renfe_regular_widget_callback, app);
                         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
                     }
 
@@ -1295,7 +1295,7 @@ static bool renfe_regular_on_event(Metroflip* app, SceneManagerEvent event) {
                     if(widget) {
                         widget_reset(widget);
                         if(!renfe_regular_parse(parsed_data, mfc_data)) {
-                            furi_string_printf(parsed_data, "\e#Unknown card\n");
+                            furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
                         }
                         widget_add_text_scroll_element(widget, 0, 0, 128, 52, furi_string_get_cstr(parsed_data));
 
@@ -1304,11 +1304,11 @@ static bool renfe_regular_on_event(Metroflip* app, SceneManagerEvent event) {
                         
                         if(!is_ida_vuelta) {
                             // Only show History button for non-ida/vuelta cards
-                            widget_add_button_element(widget, GuiButtonTypeLeft, "History", renfe_regular_widget_callback, app);
+                            widget_add_button_element(widget, GuiButtonTypeLeft, METROFLIP_UI_TEXT("History", "\xe5\x8e\x86\xe5\x8f\xb2"), renfe_regular_widget_callback, app);
                         }
                         
-                        widget_add_button_element(widget, GuiButtonTypeCenter, "Delete", metroflip_delete_widget_callback, app);
-                        widget_add_button_element(widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+                        widget_add_button_element(widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
+                        widget_add_button_element(widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
                         
                         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
                     }

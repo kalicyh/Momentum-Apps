@@ -2,6 +2,14 @@
 #include "../mag_state.h"
 #include "../helpers/mag_helpers.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define TAG "MagSceneEmulateConfig"
 
 enum VarItemListIndex {
@@ -55,8 +63,8 @@ const uint32_t n_repeats_value[N_REPEATS_COUNT] = {
 
 #define OFF_ON_COUNT 2
 const char* const off_on_text[OFF_ON_COUNT] = {
-    "OFF",
-    "ON",
+    MAGSPOOF_UI_TEXT("OFF", "关"),
+    MAGSPOOF_UI_TEXT("ON", "开"),
 };
 
 void mag_scene_settings_var_item_list_callback(void* context, uint32_t index) {
@@ -155,23 +163,42 @@ void mag_scene_settings_on_enter(void* context) {
     mag_state_load(&mag->state);
 
     mag_pin_variable_item_list_add(
-        mag, "Input pin:", mag->state.pin_input, mag_scene_settings_set_gpio_input);
+        mag,
+        MAGSPOOF_UI_TEXT("Input pin:", "输入引脚:"),
+        mag->state.pin_input,
+        mag_scene_settings_set_gpio_input);
     mag_pin_variable_item_list_add(
-        mag, "Output pin:", mag->state.pin_output, mag_scene_settings_set_gpio_output);
+        mag,
+        MAGSPOOF_UI_TEXT("Output pin:", "输出引脚:"),
+        mag->state.pin_output,
+        mag_scene_settings_set_gpio_output);
     mag_pin_variable_item_list_add(
-        mag, "Enable pin:", mag->state.pin_enable, mag_scene_settings_set_gpio_enable);
+        mag,
+        MAGSPOOF_UI_TEXT("Enable pin:", "使能引脚:"),
+        mag->state.pin_enable,
+        mag_scene_settings_set_gpio_enable);
 
     mag_bool_variable_item_list_add(
-        mag, "Repeat default:", mag->state.repeat_mode, mag_scene_settings_set_repeat_mode);
+        mag,
+        MAGSPOOF_UI_TEXT("Repeat default:", "默认重复:"),
+        mag->state.repeat_mode,
+        mag_scene_settings_set_repeat_mode);
 
     item = variable_item_list_add(
-        var_item_list, "# repeats: ", N_REPEATS_COUNT, mag_scene_settings_set_n_repeats, mag);
+        var_item_list,
+        MAGSPOOF_UI_TEXT("# repeats: ", "重复次数: "),
+        N_REPEATS_COUNT,
+        mag_scene_settings_set_n_repeats,
+        mag);
     value_index = value_index_uint32(mag->state.n_repeats, n_repeats_value, N_REPEATS_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, n_repeats_text[value_index]);
 
     mag_bool_variable_item_list_add(
-        mag, "UART MSR:", mag->state.allow_uart, mag_scene_settings_set_allow_uart);
+        mag,
+        MAGSPOOF_UI_TEXT("UART MSR:", "UART 磁卡:"),
+        mag->state.allow_uart,
+        mag_scene_settings_set_allow_uart);
 
     variable_item_list_set_enter_callback(
         var_item_list, mag_scene_settings_var_item_list_callback, mag);
@@ -187,11 +214,20 @@ void mag_scene_settings_dialog_invalid_pins(Mag* mag) {
 
     DialogMessage* message = dialog_message_alloc();
 
-    dialog_message_set_header(message, "Invalid Pin Config!", 64, 0, AlignCenter, AlignTop);
-    dialog_message_set_buttons(message, "Modify", NULL, "Reset");
+    dialog_message_set_header(
+        message,
+        MAGSPOOF_UI_TEXT("Invalid Pin Config!", "引脚配置无效!"),
+        64,
+        0,
+        AlignCenter,
+        AlignTop);
+    dialog_message_set_buttons(
+        message, MAGSPOOF_UI_TEXT("Modify", "修改"), NULL, MAGSPOOF_UI_TEXT("Reset", "重置"));
     dialog_message_set_text(
         message,
-        "Pins cannot overlap.\nChange, or reset to defaults.",
+        MAGSPOOF_UI_TEXT(
+            "Pins cannot overlap.\nChange, or reset to defaults.",
+            "引脚不能重叠.\n请修改或重置为默认值."),
         64,
         32,
         AlignCenter,
@@ -228,11 +264,15 @@ bool mag_scene_settings_on_event(void* context, SceneManagerEvent event) {
         consumed = true;
         if(event.event == MagEventConfirmDialog) {
             DialogMessage* msg = dialog_message_alloc();
-            dialog_message_set_header(msg, "UART MSR", 64, 0, AlignCenter, AlignTop);
-            dialog_message_set_buttons(msg, "No", NULL, "Yes");
+            dialog_message_set_header(
+                msg, MAGSPOOF_UI_TEXT("UART MSR", "UART 磁卡读取"), 64, 0, AlignCenter, AlignTop);
+            dialog_message_set_buttons(
+                msg, MAGSPOOF_UI_TEXT("No", "否"), NULL, MAGSPOOF_UI_TEXT("Yes", "是"));
             dialog_message_set_text(
                 msg,
-                "This option requires a\nUART-compatible mag reader.\nIs it installed?\n",
+                MAGSPOOF_UI_TEXT(
+                    "This option requires a\nUART-compatible mag reader.\nIs it installed?\n",
+                    "此选项需要 UART\n兼容的磁卡读取器.\n是否已安装?\n"),
                 64,
                 32,
                 AlignCenter,

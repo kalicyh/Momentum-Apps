@@ -934,7 +934,7 @@ bool app_require_connected(App* app) {
         return true;
     }
 
-    app_set_status(app, "Not connected to \nCAN Commander");
+    app_set_status(app, CAN_COMMANDER_UI_TEXT("Not connected to \nCAN Commander", "未连接到\nCAN Commander"));
     return false;
 }
 

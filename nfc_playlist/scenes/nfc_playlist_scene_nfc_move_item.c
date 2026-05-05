@@ -17,7 +17,7 @@ static void nfc_playlist_nfc_move_item_scene_lock_state_check(void* context) {
       variable_item_list_get(
          nfc_playlist->views.variable_item_list, NfcPlaylistNfcMoveItem_MoveItem),
       (selected_target == selected_destination),
-      "Target\nand\nDestination\nare the same");
+      NFC_PLAYLIST_UI_TEXT("Target\nand\nDestination\nare the same", "目标\n和\n目的地\n相同"));
 }
 
 static void nfc_playlist_nfc_move_item_scene_menu_callback(void* context, uint32_t index) {
@@ -63,11 +63,11 @@ void nfc_playlist_nfc_move_item_scene_on_enter(void* context) {
    selected_target = 1;
    selected_destination = 1;
 
-   variable_item_list_set_header(nfc_playlist->views.variable_item_list, "Move NFC Item");
+   variable_item_list_set_header(nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Move NFC Item", "移动 NFC 项目"));
 
    VariableItem* target_selector = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Select Target",
+      NFC_PLAYLIST_UI_TEXT("Select Target", "选择目标"),
       nfc_playlist->worker_info.settings->playlist_length,
       nfc_playlist_nfc_move_item_scene_options_change_callback,
       nfc_playlist);
@@ -76,14 +76,14 @@ void nfc_playlist_nfc_move_item_scene_on_enter(void* context) {
 
    VariableItem* destination_selector = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
-      "Select Destination",
+      NFC_PLAYLIST_UI_TEXT("Select Destination", "选择目的地"),
       nfc_playlist->worker_info.settings->playlist_length,
       nfc_playlist_nfc_move_item_scene_options_change_callback,
       nfc_playlist);
    variable_item_set_current_value_index(destination_selector, 0);
    variable_item_set_current_value_text(destination_selector, "1");
 
-   variable_item_list_add(nfc_playlist->views.variable_item_list, "Move Item", 0, NULL, NULL);
+   variable_item_list_add(nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Move Item", "移动项目"), 0, NULL, NULL);
 
    nfc_playlist_nfc_move_item_scene_lock_state_check(nfc_playlist);
 

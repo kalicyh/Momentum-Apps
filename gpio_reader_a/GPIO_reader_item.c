@@ -14,9 +14,9 @@ const char* gpio_item_get_pin_level(uint8_t index) {
     furi_assert(index < GPIO_ITEM_COUNT);
     //furi_hal_gpio_write(gpio_item[index].pin, level);
     if(furi_hal_gpio_read(gpio_item[index].pin)) {
-        return "High";
+        return GPIO_READER_UI_TEXT("High", "高电平");
     } else {
-        return "Low";
+        return GPIO_READER_UI_TEXT("Low", "低电平");
     }
 }
 

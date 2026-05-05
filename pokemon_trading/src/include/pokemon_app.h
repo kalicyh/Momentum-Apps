@@ -15,6 +15,12 @@
 
 #include <src/include/pokemon_data.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define POKEMON_UI_TEXT(en, zh) (zh)
+#else
+#define POKEMON_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "Pokemon"
 
 struct pokemon_fap {

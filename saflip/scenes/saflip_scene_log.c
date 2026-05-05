@@ -27,9 +27,9 @@ void saflip_scene_log_submenu_callback(void* context, InputType type, uint32_t i
         scene_manager_set_scene_state(app->scene_manager, SaflipSceneLogInfo, index);
         scene_manager_next_scene(app->scene_manager, SaflipSceneLogInfo);
     } else if(type == InputTypeLong) {
-        dialog_ex_set_header(app->dialog, "Remove log entry?", 64, 12, AlignCenter, AlignTop);
-        dialog_ex_set_left_button_text(app->dialog, "Cancel");
-        dialog_ex_set_right_button_text(app->dialog, "Remove");
+        dialog_ex_set_header(app->dialog, SAFLIP_UI_TEXT("Remove log entry?", "删除日志记录?"), 64, 12, AlignCenter, AlignTop);
+        dialog_ex_set_left_button_text(app->dialog, SAFLIP_UI_TEXT("Cancel", "取消"));
+        dialog_ex_set_right_button_text(app->dialog, SAFLIP_UI_TEXT("Remove", "删除"));
         dialog_ex_set_result_callback(app->dialog, saflip_scene_log_dialog_callback);
         dialog_ex_set_context(app->dialog, app);
         view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewDialog);

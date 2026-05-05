@@ -28,12 +28,12 @@ void nfc_maker_scene_save_result_on_enter(void* context) {
 
     if(success) {
         popup_set_icon(popup, 36, 5, &I_DolphinDone_80x58);
-        popup_set_header(popup, "Saved!", 13, 22, AlignLeft, AlignBottom);
+        popup_set_header(popup, NFC_MAKER_UI_TEXT("Saved!", "已保存!"), 13, 22, AlignLeft, AlignBottom);
         popup_enable_timeout(popup);
         popup_set_callback(popup, nfc_maker_scene_save_result_popup_callback_exit);
     } else {
         popup_set_icon(popup, 69, 15, &I_WarningDolphinFlip_45x42);
-        popup_set_header(popup, "Error!", 13, 22, AlignLeft, AlignBottom);
+        popup_set_header(popup, NFC_MAKER_UI_TEXT("Error!", "错误!"), 13, 22, AlignLeft, AlignBottom);
         popup_disable_timeout(popup);
         popup_set_callback(popup, nfc_maker_scene_save_result_popup_callback_failed);
     }

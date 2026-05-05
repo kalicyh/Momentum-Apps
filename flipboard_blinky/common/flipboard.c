@@ -1,5 +1,13 @@
 #include "flipboard_i.h"
 
+#ifndef FLIPBOARD_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 /**
  * @brief Callback to load the model of a Flipboard application.
  * @details This callback is used to load the model of a Flipboard application. 
@@ -61,25 +69,41 @@ Flipboard* flipboard_alloc(
 
     app->app_menu = app_menu_alloc(app->view_dispatcher);
     app_menu_add_item(
-        app->app_menu, "Start application", app->view_primary, FlipboardViewPrimaryId);
+        app->app_menu,
+        FLIPBOARD_UI_TEXT("Start application", "启动应用"),
+        app->view_primary,
+        FlipboardViewPrimaryId);
 
     app_menu_add_item(
         app->app_menu,
-        "Configure application",
+        FLIPBOARD_UI_TEXT("Configure application", "配置应用"),
         action_config_get_view(app->action_config),
         action_config_get_view_id(app->action_config));
 
     app->widget_about = widget_alloc();
     widget_add_text_scroll_element(app->widget_about, 0, 0, 128, 64, about_text);
     app_menu_add_item(
-        app->app_menu, "About", widget_get_view(app->widget_about), FlipboardViewAboutId);
+        app->app_menu,
+        FLIPBOARD_UI_TEXT("About", "关于"),
+        widget_get_view(app->widget_about),
+        FlipboardViewAboutId);
 
     app->widget_qr = widget_alloc();
     widget_add_icon_element(app->widget_qr, 0, 0, qr_icon);
     widget_add_text_scroll_element(
-        app->widget_qr, 70, 5, 128, 64, "Scan this\nQR code\nto access\nGitHub\ninstructions.");
+        app->widget_qr,
+        70,
+        5,
+        128,
+        64,
+        FLIPBOARD_UI_TEXT(
+            "Scan this\nQR code\nto access\nGitHub\ninstructions.",
+            "扫码访问\nGitHub\n查看说明"));
     app_menu_add_item(
-        app->app_menu, "Instructions QR Code", widget_get_view(app->widget_qr), FlipboardViewQRId);
+        app->app_menu,
+        FLIPBOARD_UI_TEXT("Instructions QR Code", "说明二维码"),
+        widget_get_view(app->widget_qr),
+        FlipboardViewQRId);
 
     app_menu_set_callback(app->app_menu, flipboard_cb_model_load, app->model);
 

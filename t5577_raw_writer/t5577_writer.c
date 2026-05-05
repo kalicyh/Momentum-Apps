@@ -193,7 +193,7 @@ static void t5577_writer_submenu_callback(void* context, uint32_t index) {
     }
 }
 
-static const char* modulation_config_label = "Modulation";
+static const char* modulation_config_label = T5577_UI_TEXT("Modulation", "调制方式");
 static void t5577_writer_modulation_change(VariableItem* item) {
     T5577WriterApp* app = variable_item_get_context(item);
     T5577WriterModel* model = view_get_model(app->view_write);
@@ -208,7 +208,7 @@ static void t5577_writer_modulation_change(VariableItem* item) {
     variable_item_set_current_value_text(item, modulation_names[model->modulation_index]);
 }
 
-static const char* rf_clock_config_label = "RF Clock";
+static const char* rf_clock_config_label = T5577_UI_TEXT("RF Clock", "射频时钟");
 static void t5577_writer_rf_clock_change(VariableItem* item) {
     T5577WriterApp* app = variable_item_get_context(item);
     T5577WriterModel* model = view_get_model(app->view_write);
@@ -226,7 +226,7 @@ static void t5577_writer_rf_clock_change(VariableItem* item) {
     furi_string_free(buffer);
 }
 
-static const char* user_block_num_config_label = "Max User Block";
+static const char* user_block_num_config_label = T5577_UI_TEXT("Max User Block", "最大用户块");
 static void t5577_writer_user_block_num_change(VariableItem* item) {
     T5577WriterApp* app = variable_item_get_context(item);
     T5577WriterModel* model = view_get_model(app->view_write);
@@ -246,7 +246,7 @@ static void t5577_writer_user_block_num_change(VariableItem* item) {
     furi_string_free(buffer);
 }
 
-static const char* edit_block_slc_config_label = "Edit Block";
+static const char* edit_block_slc_config_label = T5577_UI_TEXT("Edit Block", "编辑块");
 static void t5577_writer_edit_block_slc_change(VariableItem* item) {
     T5577WriterApp* app = variable_item_get_context(item);
     T5577WriterModel* model = view_get_model(app->view_write);
@@ -263,7 +263,7 @@ static void t5577_writer_edit_block_slc_change(VariableItem* item) {
     furi_string_free(buffer);
 }
 
-static const char* tag_name_entry_text = "Enter name";
+static const char* tag_name_entry_text = T5577_UI_TEXT("Enter name", "输入名称");
 static const char* tag_name_default_value = "Tag_1";
 static void t5577_writer_file_saver(void* context) {
     T5577WriterApp* app = (T5577WriterApp*)context;
@@ -341,7 +341,7 @@ void t5577_writer_update_config_from_load(void* context) {
     memset(my_model->data_loaded, true, sizeof(my_model->data_loaded)); // Everything is loaded
 }
 
-static const char* edit_block_data_config_label = "Block Data";
+static const char* edit_block_data_config_label = T5577_UI_TEXT("Block Data", "块数据");
 
 static void t5577_writer_content_byte_input_confirmed(void* context) {
     T5577WriterApp* app = (T5577WriterApp*)context;
@@ -358,7 +358,9 @@ static void t5577_writer_config_item_clicked(void* context, uint32_t index) {
     T5577WriterApp* app = (T5577WriterApp*)context;
     T5577WriterModel* my_model = view_get_model(app->view_write);
     FuriString* buffer = furi_string_alloc();
-    furi_string_printf(buffer, "Enter Block %u Data", my_model->edit_block_slc);
+    char fmt_buf[64];
+    snprintf(fmt_buf, sizeof(fmt_buf), T5577_UI_TEXT("Enter Block %u Data", "输入块 %u 数据"), my_model->edit_block_slc);
+    furi_string_set(buffer, fmt_buf);
     // Our hex input UI is the 5th in the config menue.
     if(index == 4) {
         // Header to display on the text input screen.
@@ -647,19 +649,19 @@ static T5577WriterApp* t5577_writer_app_alloc() {
     view_dispatcher_set_event_callback_context(app->view_dispatcher, app);
     app->submenu = submenu_alloc();
     submenu_add_item(
-        app->submenu, "Write", T5577WriterSubmenuIndexWrite, t5577_writer_submenu_callback, app);
+        app->submenu, T5577_UI_TEXT("Write", "写入"), T5577WriterSubmenuIndexWrite, t5577_writer_submenu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Config",
+        T5577_UI_TEXT("Config", "配置"),
         T5577WriterSubmenuIndexConfigure,
         t5577_writer_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, "Save", T5577WriterSubmenuIndexSave, t5577_writer_submenu_callback, app);
+        app->submenu, T5577_UI_TEXT("Save", "保存"), T5577WriterSubmenuIndexSave, t5577_writer_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "Load", T5577WriterSubmenuIndexLoad, t5577_writer_submenu_callback, app);
+        app->submenu, T5577_UI_TEXT("Load", "加载"), T5577WriterSubmenuIndexLoad, t5577_writer_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "About", T5577WriterSubmenuIndexAbout, t5577_writer_submenu_callback, app);
+        app->submenu, T5577_UI_TEXT("About", "关于"), T5577WriterSubmenuIndexAbout, t5577_writer_submenu_callback, app);
     view_set_previous_callback(
         submenu_get_view(app->submenu), t5577_writer_navigation_exit_callback);
     view_dispatcher_add_view(

@@ -72,7 +72,7 @@ NfcCommand saflip_scene_write_card_poller_callback(NfcGenericEvent event, void* 
         case MfClassicPollerEventTypeFail:
         case MfClassicPollerEventTypeCardLost:
             popup_reset(app->popup);
-            popup_set_header(app->popup, "Lost card!", 64, 2, AlignCenter, AlignTop);
+            popup_set_header(app->popup, SAFLIP_UI_TEXT("Lost card!", "卡片丢失!"), 64, 2, AlignCenter, AlignTop);
             popup_set_icon(app->popup, 21, 13, &I_dolph_cry_49x54);
             popup_set_timeout(app->popup, 1000);
             popup_enable_timeout(app->popup);
@@ -101,7 +101,7 @@ void saflip_scene_write_card_on_enter(void* context) {
 
     // Setup view
     popup_reset(app->popup);
-    popup_set_header(app->popup, "Don't move", 85, 27, AlignCenter, AlignTop);
+    popup_set_header(app->popup, SAFLIP_UI_TEXT("Don't move", "请勿移动"), 85, 27, AlignCenter, AlignTop);
     popup_set_icon(app->popup, 12, 23, &A_Loading_24);
     view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewPopup);
 

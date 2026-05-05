@@ -53,12 +53,12 @@ void mfc_editor_scene_data_edit_access_bits_on_enter(void* context) {
         uint8_t relative_block_num = (instance->current_block - sector_start_num) / 5 * 5;
         furi_string_printf(
             instance->data_view_header,
-            "Edit B. %u-%u Access",
+            MFC_EDITOR_UI_TEXT("Edit B. %u-%u Access", "编辑块 %u-%u 访问权限"),
             sector_start_num + relative_block_num,
             sector_start_num + relative_block_num + 4);
     } else {
         furi_string_printf(
-            instance->data_view_header, "Edit Block %u Access", instance->current_block);
+            instance->data_view_header, MFC_EDITOR_UI_TEXT("Edit Block %u Access", "编辑块 %u 访问权限"), instance->current_block);
     }
 
     dialog_ex_set_header(
@@ -74,9 +74,9 @@ void mfc_editor_scene_data_edit_access_bits_on_enter(void* context) {
 
     mfc_editor_scene_data_edit_access_bits_update_display(instance);
 
-    dialog_ex_set_center_button_text(dialog_ex, "Save");
-    dialog_ex_set_left_button_text(dialog_ex, "Prev");
-    dialog_ex_set_right_button_text(dialog_ex, "Next");
+    dialog_ex_set_center_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Save", "保存"));
+    dialog_ex_set_left_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Prev", "上一个"));
+    dialog_ex_set_right_button_text(dialog_ex, MFC_EDITOR_UI_TEXT("Next", "下一个"));
 
     dialog_ex_set_result_callback(
         dialog_ex, mfc_editor_scene_data_edit_access_bits_dialog_ex_callback);

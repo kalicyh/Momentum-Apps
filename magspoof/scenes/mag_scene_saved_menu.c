@@ -1,5 +1,13 @@
 #include "../mag_i.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 enum SubmenuIndex {
     SubmenuIndexEmulate,
     //SubmenuIndexEdit,
@@ -18,13 +26,25 @@ void mag_scene_saved_menu_on_enter(void* context) {
     Submenu* submenu = mag->submenu;
 
     submenu_add_item(
-        submenu, "Emulate", SubmenuIndexEmulate, mag_scene_saved_menu_submenu_callback, mag);
+        submenu,
+        MAGSPOOF_UI_TEXT("Emulate", "模拟"),
+        SubmenuIndexEmulate,
+        mag_scene_saved_menu_submenu_callback,
+        mag);
     //submenu_add_item(
     //    submenu, "Edit (WIP)", SubmenuIndexEdit, mag_scene_saved_menu_submenu_callback, mag);
     submenu_add_item(
-        submenu, "Delete", SubmenuIndexDelete, mag_scene_saved_menu_submenu_callback, mag);
+        submenu,
+        MAGSPOOF_UI_TEXT("Delete", "删除"),
+        SubmenuIndexDelete,
+        mag_scene_saved_menu_submenu_callback,
+        mag);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, mag_scene_saved_menu_submenu_callback, mag);
+        submenu,
+        MAGSPOOF_UI_TEXT("Info", "信息"),
+        SubmenuIndexInfo,
+        mag_scene_saved_menu_submenu_callback,
+        mag);
 
     submenu_set_selected_item(
         mag->submenu, scene_manager_get_scene_state(mag->scene_manager, MagSceneSavedMenu));

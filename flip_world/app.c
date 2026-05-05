@@ -1,11 +1,6 @@
 #include <alloc/alloc.h>
 #include <flip_storage/storage.h>
 #include <update/update.h>
-#ifdef MOMENTUM_UI_LANG_ZH_CN
-#define FLIP_WORLD_UI_TEXT(en, zh) (zh)
-#else
-#define FLIP_WORLD_UI_TEXT(en, zh) (en)
-#endif
 
 // Entry point for the FlipWorld application
 int32_t flip_world_main(void *p)
@@ -14,8 +9,8 @@ int32_t flip_world_main(void *p)
     if (!is_enough_heap(sizeof(FlipWorldApp) + sizeof(FlipperHTTP), true))
     {
         easy_flipper_dialog(
-            "Memory Error",
-            "Not enough heap memory.\nPlease restart your Flipper Zero.");
+            FLIP_WORLD_UI_TEXT("Memory Error", "内存错误"),
+            FLIP_WORLD_UI_TEXT("Not enough heap memory.\nPlease restart your Flipper Zero.", "堆内存不足。\n请重启 Flipper Zero。"));
         return 0; // return success so the user can see the error
     }
 

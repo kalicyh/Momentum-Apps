@@ -269,8 +269,8 @@ void upython_repl_execute() {
     uint8_t* heap = malloc(heap_size * sizeof(uint8_t));
 
     printf("MicroPython (%s, %s) on Flipper Zero\r\n", MICROPY_GIT_TAG, MICROPY_BUILD_DATE);
-    printf("Quit: Ctrl+D | Heap: %zu bytes | Stack: %zu bytes\r\n", heap_size, stack_size);
-    printf("      To do a reboot, press Left+Back for 5 seconds.\r\n");
+    printf("%s: Ctrl+D | Heap: %zu bytes | Stack: %zu bytes\r\n", UPYTHON_UI_TEXT("Quit", "退出"), heap_size, stack_size);
+    printf("      %s\r\n", UPYTHON_UI_TEXT("To do a reboot, press Left+Back for 5 seconds.", "长按左+返回键5秒可重启设备."));
     printf("Docs: https://ofabel.github.io/mp-flipper\r\n");
 
     mp_flipper_repl_context_t* context = mp_flipper_repl_context_alloc();

@@ -26,17 +26,24 @@ void wifi_deauther_scene_text_input_on_enter(void* context) {
     TextInput* text_input = app->text_input;
     // Add help message to header
     if(0 == strncmp("ssid -a -g", app->selected_tx_string, strlen("ssid -a -g"))) {
-        text_input_set_header_text(text_input, "Enter # SSIDs to generate");
+        text_input_set_header_text(
+            text_input, WIFI_DEAUTHER_UI_TEXT("Enter # SSIDs to generate", "输入要生成的SSID数量"));
     } else if(0 == strncmp("ssid -a -n", app->selected_tx_string, strlen("ssid -a -n"))) {
-        text_input_set_header_text(text_input, "Enter SSID name to add");
+        text_input_set_header_text(
+            text_input, WIFI_DEAUTHER_UI_TEXT("Enter SSID name to add", "输入要添加的SSID名称"));
     } else if(0 == strncmp("ssid -r", app->selected_tx_string, strlen("ssid -r"))) {
-        text_input_set_header_text(text_input, "Remove target from SSID list");
+        text_input_set_header_text(
+            text_input,
+            WIFI_DEAUTHER_UI_TEXT("Remove target from SSID list", "从SSID列表中移除目标"));
     } else if(0 == strncmp("select -a", app->selected_tx_string, strlen("select -a"))) {
-        text_input_set_header_text(text_input, "Add target from AP list");
+        text_input_set_header_text(
+            text_input, WIFI_DEAUTHER_UI_TEXT("Add target from AP list", "从AP列表中添加目标"));
     } else if(0 == strncmp("select -s", app->selected_tx_string, strlen("select -s"))) {
-        text_input_set_header_text(text_input, "Add target from SSID list");
+        text_input_set_header_text(
+            text_input, WIFI_DEAUTHER_UI_TEXT("Add target from SSID list", "从SSID列表中添加目标"));
     } else {
-        text_input_set_header_text(text_input, "Add command arguments");
+        text_input_set_header_text(
+            text_input, WIFI_DEAUTHER_UI_TEXT("Add command arguments", "添加命令参数"));
     }
     text_input_set_result_callback(
         text_input,

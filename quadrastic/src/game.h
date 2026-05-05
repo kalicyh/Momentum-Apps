@@ -26,6 +26,12 @@
 
 #define GAME_NAME "Quadrastic"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UI_TEXT(en, zh) (zh)
+#else
+#define UI_TEXT(en, zh) (en)
+#endif
+
 #define WIN_SCORE 15
 
 typedef enum

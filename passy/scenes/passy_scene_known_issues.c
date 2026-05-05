@@ -1,10 +1,16 @@
 #include "../passy_i.h"
 
-static const char* known_issues_text = "Passy only uses BAC, not PACE for auth\n"
-                                       "PACE-only:\n"
-                                       "  - German Personalausweis\n"
-                                       "  - German Aufenthaltstitel post 2015\n"
-                                       "  - Dutch passport post 2022\n";
+static const char* known_issues_text = PASSY_UI_TEXT(
+    "Passy only uses BAC, not PACE for auth\n"
+    "PACE-only:\n"
+    "  - German Personalausweis\n"
+    "  - German Aufenthaltstitel post 2015\n"
+    "  - Dutch passport post 2022\n",
+    "Passy仅使用BAC认证，不支持PACE\n"
+    "仅支持PACE的设备:\n"
+    "  - 德国身份证\n"
+    "  - 2015年后德国居留许可\n"
+    "  - 2022年后荷兰护照\n");
 
 void passy_scene_known_issues_on_enter(void* context) {
     Passy* passy = context;

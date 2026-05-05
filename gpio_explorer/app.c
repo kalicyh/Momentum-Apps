@@ -65,26 +65,34 @@ static struct gpio_explorer_app_struct * gpio_explorer_app_alloc() {
     app->submenu = submenu_alloc();
     submenu_add_item(
         app->submenu,
-        "Config",
+        GPIO_EXPLORER_UI_TEXT("Config", "配置"),
         GPIOExplorerSubmenuIndexConfigure,
         gpio_explorer_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, "LED", GPIOExplorerSubmenuIndexLED, gpio_explorer_submenu_callback, app);
+        app->submenu,
+        "LED",
+        GPIOExplorerSubmenuIndexLED,
+        gpio_explorer_submenu_callback,
+        app);
     submenu_add_item(
         app->submenu,
-        "RGB Light",
+        GPIO_EXPLORER_UI_TEXT("RGB Light", "RGB灯"),
         GPIOExplorerSubmenuIndexRGBLignt,
         gpio_explorer_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "GPIO Reader",
+        GPIO_EXPLORER_UI_TEXT("GPIO Reader", "GPIO读取"),
         GPIOExplorerSubmenuIndexGPIORearder,
         gpio_explorer_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, "About", GPIOExplorerSubmenuIndexAbout, gpio_explorer_submenu_callback, app);
+        app->submenu,
+        GPIO_EXPLORER_UI_TEXT("About", "关于"),
+        GPIOExplorerSubmenuIndexAbout,
+        gpio_explorer_submenu_callback,
+        app);
     view_set_previous_callback(
         submenu_get_view(app->submenu), gpio_explorer_navigation_exit_callback);
     view_dispatcher_add_view(
@@ -210,7 +218,9 @@ static struct gpio_explorer_app_struct * gpio_explorer_app_alloc() {
         0,
         128,
         64,
-        "GPIO Explorer\n---\nThis is the most complete\napp to start exploring the\nGPIO functionalities.\n---\nYou can configure the pins\nthat you want to use from\nthe configure menu.\n---\nNOTE: ALWAYS PUT\nAT LEAST 100 Ohm\nRESISTORS BEFORE\nYOU CONNECT THE LEDS.\n---\nauthor: dun-crop\nGitHub: https://github.com/EvgeniGenchev07/\ngpio_explorer\nDiscord: @dun-crop");
+        GPIO_EXPLORER_UI_TEXT(
+            "GPIO Explorer\n---\nThis is the most complete\napp to start exploring the\nGPIO functionalities.\n---\nYou can configure the pins\nthat you want to use from\nthe configure menu.\n---\nNOTE: ALWAYS PUT\nAT LEAST 100 Ohm\nRESISTORS BEFORE\nYOU CONNECT THE LEDS.\n---\nauthor: dun-crop\nGitHub: https://github.com/EvgeniGenchev07/\ngpio_explorer\nDiscord: @dun-crop",
+            "GPIO 探索器\n---\n最完整的GPIO功能\n探索应用。\n---\n可在配置菜单中\n设置要使用的引脚。\n---\n注意: 连接LED前\n务必串联至少\n100欧姆电阻。\n---\n作者: dun-crop\nGitHub: https://github.com/EvgeniGenchev07/\ngpio_explorer\nDiscord: @dun-crop"));
     view_set_previous_callback(
         widget_get_view(app->widget_about), gpio_explorer_navigation_submenu_callback);
     view_dispatcher_add_view(
@@ -389,11 +399,20 @@ static void view_rgb_init(struct gpio_explorer_app_struct * app) {
 
 static void gpio_explorer_view_rgb_draw_callback(Canvas* canvas, void* model) {
     struct gpio_explorer_rgb_struct* my_model = model;
-    canvas_draw_str(canvas, 1, 25, "Press < or > to change the color");
+    canvas_draw_str(
+        canvas,
+        1,
+        25,
+        GPIO_EXPLORER_UI_TEXT("Press < or > to change the color", "按 < 或 > 切换颜色"));
     FuriString* xstr = furi_string_alloc();
     furi_string_printf(xstr, "%s", rgb_colors[my_model->color_index]);
     canvas_draw_str(canvas, 50, 40, furi_string_get_cstr(xstr));
-    furi_string_printf(xstr, "Press Ok to %s", my_model->rgb_pins_state == 0 ? "Start" : "Stop");
+    furi_string_printf(
+        xstr,
+        "%s",
+        my_model->rgb_pins_state == 0 ?
+            GPIO_EXPLORER_UI_TEXT("Press Ok to Start", "按确认键开启") :
+            GPIO_EXPLORER_UI_TEXT("Press Ok to Stop", "按确认键关闭"));
     canvas_draw_str(canvas, 25, 60, furi_string_get_cstr(xstr));
     furi_string_free(xstr);
 }
@@ -479,11 +498,20 @@ static void view_led_init(struct gpio_explorer_app_struct * app) {
 static void gpio_explorer_view_led_draw_callback(Canvas* canvas, void* model) {
     struct gpio_explorer_led_struct* my_model = model;
     FuriString* xstr = furi_string_alloc();
-    furi_string_printf(xstr, "Pin state: %s", my_model->led_pin_state == 0 ? "LOW" : "HIGH");
+    furi_string_printf(
+        xstr,
+        GPIO_EXPLORER_UI_TEXT("Pin state: %s", "引脚状态: %s"),
+        my_model->led_pin_state == 0 ? GPIO_EXPLORER_UI_TEXT("LOW", "低电平") :
+                                       GPIO_EXPLORER_UI_TEXT("HIGH", "高电平"));
     canvas_draw_str(canvas, 30, 15, furi_string_get_cstr(xstr));
     furi_string_printf(xstr, "Pin: %s", rgb_setting_pins[my_model->led_pin_index]);
     canvas_draw_str(canvas, 43, 35, furi_string_get_cstr(xstr));
-    furi_string_printf(xstr, "Press Ok to %s", my_model->led_pin_state == 0 ? "Start" : "Stop");
+    furi_string_printf(
+        xstr,
+        "%s",
+        my_model->led_pin_state == 0 ?
+            GPIO_EXPLORER_UI_TEXT("Press Ok to Start", "按确认键开启") :
+            GPIO_EXPLORER_UI_TEXT("Press Ok to Stop", "按确认键关闭"));
     canvas_draw_str(canvas, 25, 60, furi_string_get_cstr(xstr));
     furi_string_free(xstr);
 }
@@ -534,11 +562,19 @@ static void view_gpio_reader_init(struct gpio_explorer_gpio_reader_struct* gpio_
 static void gpio_explorer_view_gpio_reader_draw_callback(Canvas* canvas, void* model) {
     struct gpio_explorer_gpio_reader_struct* my_model = model;
     FuriString* xstr = furi_string_alloc();
-    furi_string_printf(xstr, "Pin state: %s", my_model->curr_pin_state == 0 ? "LOW" : "HIGH");
+    furi_string_printf(
+        xstr,
+        GPIO_EXPLORER_UI_TEXT("Pin state: %s", "引脚状态: %s"),
+        my_model->curr_pin_state == 0 ? GPIO_EXPLORER_UI_TEXT("LOW", "低电平") :
+                                        GPIO_EXPLORER_UI_TEXT("HIGH", "高电平"));
     canvas_draw_str(canvas, 30, 15, furi_string_get_cstr(xstr));
     furi_string_printf(xstr, "Pin: %s", rgb_setting_pins[my_model->curr_pin_index]);
     canvas_draw_str(canvas, 43, 35, furi_string_get_cstr(xstr));
-    canvas_draw_str(canvas, 1, 60, "Press < or > to change the pin");
+    canvas_draw_str(
+        canvas,
+        1,
+        60,
+        GPIO_EXPLORER_UI_TEXT("Press < or > to change the pin", "按 < 或 > 切换引脚"));
     furi_string_free(xstr);
 }
 

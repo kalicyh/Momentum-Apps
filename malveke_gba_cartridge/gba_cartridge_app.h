@@ -24,6 +24,12 @@
 
 #define TAG "GBACartridge"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GBACARTRIDGE_UI_TEXT(en, zh) (zh)
+#else
+#define GBACARTRIDGE_UI_TEXT(en, zh) (en)
+#endif
+
 #define MALVEKE_APP_FOLDER_USER "apps_data/malveke"
 #define MALVEKE_APP_FOLDER EXT_PATH(MALVEKE_APP_FOLDER_USER)
 #define MALVEKE_APP_FOLDER_ROMS MALVEKE_APP_FOLDER "/roms"

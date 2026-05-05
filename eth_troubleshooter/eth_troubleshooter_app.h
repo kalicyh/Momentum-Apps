@@ -8,6 +8,12 @@
 #include "eth_worker.h"
 #include "eth_troubleshooter_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define ETH_UI_TEXT(en, zh) (zh)
+#else
+#define ETH_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     DRAW_ALL,
     DRAW_ONLY_TEXT,

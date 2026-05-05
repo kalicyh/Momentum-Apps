@@ -1,4 +1,5 @@
 #include "../dap_gui_i.h"
+#include "../../dap_link.h"
 
 void dap_scene_help_on_enter(void* context) {
     DapGuiApp* app = context;
@@ -6,11 +7,14 @@ void dap_scene_help_on_enter(void* context) {
     FuriString* string = furi_string_alloc();
 
     furi_string_cat(string, "CMSIS DAP/DAP Link v2\r\n");
-    furi_string_cat_printf(string, "Serial: %s\r\n", dap_app_get_serial(app->dap_app));
+    furi_string_cat_printf(
+        string,
+        "%s %s\r\n",
+        DAP_LINK_UI_TEXT("Serial:", "序列号:"),
+        dap_app_get_serial(app->dap_app));
     furi_string_cat(
         string,
-        "Pinout:\r\n"
-        "\e#SWD:\r\n");
+        DAP_LINK_UI_TEXT("Pinout:\r\n\e#SWD:\r\n", "引脚:\r\n\e#SWD:\r\n"));
 
     switch(config->swd_pins) {
     case DapSwdPinsPA7PA6:

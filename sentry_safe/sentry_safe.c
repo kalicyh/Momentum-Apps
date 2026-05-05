@@ -7,6 +7,12 @@
 #include <expansion/expansion.h>
 #include <gui/canvas.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SENTRY_UI_TEXT(en, zh) (zh)
+#else
+#define SENTRY_UI_TEXT(en, zh) (en)
+#endif
+
 // Application state structure
 typedef struct {
     uint8_t status;                  // 0: idle, 1: sending, 2: done
@@ -29,35 +35,35 @@ typedef struct {
 } Event;
 
 // Status messages shown in UI
-const char* status_texts[] = {"", "Sending...", "Done !"};
+const char* status_texts[] = {"", SENTRY_UI_TEXT("Sending...", "发送中..."), SENTRY_UI_TEXT("Done !", "完成!")};
 
 // Help screen content (used when holding OK)
 const char* help_lines[] = {
-    "- [SENTRY SAFE OPENER] -",
+    SENTRY_UI_TEXT("- [SENTRY SAFE OPENER] -", "- [保险箱开锁器] -"),
     "",
-    "Open safes by overwritting",
-    "code with a new one, using",
-    "a vulnerability.",
+    SENTRY_UI_TEXT("Open safes by overwritting", "通过覆写密码来打开"),
+    SENTRY_UI_TEXT("code with a new one, using", "保险箱,利用漏洞"),
+    SENTRY_UI_TEXT("a vulnerability.", "实现开锁。"),
     "",
-    "Place wires, chose code,", 
-    "press OK, it's open !",
+    SENTRY_UI_TEXT("Place wires, chose code,", "连接线路,选择密码,"),
+    SENTRY_UI_TEXT("press OK, it's open !", "按OK即可开锁!"),
     "",
-    "Supported safes :",
-    "- Sentry Safe",
-    "- Master Lock",
+    SENTRY_UI_TEXT("Supported safes :", "支持的保险箱:"),
+    SENTRY_UI_TEXT("- Sentry Safe", "- Sentry Safe"),
+    SENTRY_UI_TEXT("- Master Lock", "- Master Lock"),
     "",
-    "+-----[WIRING]-----+",
-    " BLACK  <-->  GND  ",
-    " GREEN  <-->  C1   ",
-    "+----------------+",
+    SENTRY_UI_TEXT("+-----[WIRING]-----+", "+-----[接线]------+"),
+    SENTRY_UI_TEXT(" BLACK  <-->  GND  ", " 黑线   <-->  GND  "),
+    SENTRY_UI_TEXT(" GREEN  <-->  C1   ", " 绿线   <-->  C1   "),
+    SENTRY_UI_TEXT("+----------------+", "+----------------+"),
     "",
-    "Use arrows to select & edit",
-    "'P' = Primary code",
-    "'S' = Secondary code",
+    SENTRY_UI_TEXT("Use arrows to select & edit", "方向键选择和编辑"),
+    SENTRY_UI_TEXT("'P' = Primary code", "'P' = 主密码"),
+    SENTRY_UI_TEXT("'S' = Secondary code", "'S' = 副密码"),
     "",
-    "Set code to 00000 to delete",
+    SENTRY_UI_TEXT("Set code to 00000 to delete", "设为00000可删除密码"),
     "",
-    "Thanks to ArsLock",
+    SENTRY_UI_TEXT("Thanks to ArsLock", "感谢ArsLock"),
     "",
     "v2.0 - @h4ckd4ddy",
     "__QR__",
@@ -204,8 +210,8 @@ static void sentry_safe_render_callback(Canvas* const canvas, void* ctx) {
     }
 
     // Bottom instructions
-    canvas_draw_str_aligned(canvas, 64, 50, AlignCenter, AlignBottom, "Hold OK = Help");
-    canvas_draw_str_aligned(canvas, 64, 58, AlignCenter, AlignBottom, "Press OK = Send");
+    canvas_draw_str_aligned(canvas, 64, 50, AlignCenter, AlignBottom, SENTRY_UI_TEXT("Hold OK = Help", "长按OK=帮助"));
+    canvas_draw_str_aligned(canvas, 64, 58, AlignCenter, AlignBottom, SENTRY_UI_TEXT("Press OK = Send", "按OK=发送"));
 
     furi_mutex_release(state->mutex);
 }

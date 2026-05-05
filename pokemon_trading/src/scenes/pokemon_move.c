@@ -65,7 +65,8 @@ void pokemon_scene_select_move_on_enter(void* context) {
         snprintf(
             buf,
             sizeof(buf),
-            "Move %d:         %s",
+            "%s%d:         %s",
+            POKEMON_UI_TEXT("Move ", "招式 "),
             i + 1,
             namedlist_name_get_index(
                 pokemon_fap->pdata->move_list,
@@ -133,7 +134,8 @@ void pokemon_scene_select_move_index_on_enter(void* context) {
     snprintf(
         buf,
         sizeof(buf),
-        "Default [%s]",
+        "%s[%s]",
+        POKEMON_UI_TEXT("Default ", "默认 "),
         namedlist_name_get_index(
             pokemon_fap->pdata->move_list,
             table_stat_base_get(

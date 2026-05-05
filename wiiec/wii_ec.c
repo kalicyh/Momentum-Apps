@@ -227,7 +227,7 @@ void ec_show(Canvas* const canvas, state_t* const state) {
     canvas_draw_str_aligned(canvas, c2, 0, AlignLeft, AlignTop, pec->sid);
 
     canvas_draw_str_aligned(canvas, 0, 11, AlignLeft, AlignTop, "PID:");
-    canvas_draw_str_aligned(canvas, 0, 22, AlignLeft, AlignTop, "Cal:");
+    canvas_draw_str_aligned(canvas, 0, 22, AlignLeft, AlignTop, WIIEC_UI_TEXT("Cal:", "校准:"));
 
     // PID
     x = c2;

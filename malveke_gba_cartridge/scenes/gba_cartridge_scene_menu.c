@@ -14,7 +14,7 @@ void gba_cartridge_scene_menu_submenu_callback(void* context, uint32_t index) {
 void gba_cartridge_scene_menu_on_enter(void* context) {
     GBACartridge* app = context;
 
-    variable_item_list_add(app->submenu, "Cartridge Information", 1, NULL, NULL);
+    variable_item_list_add(app->submenu, GBACARTRIDGE_UI_TEXT("Cartridge Information", "卡带信息"), 1, NULL, NULL);
     // variable_item_list_add(app->submenu, "Dump ROM Cartridge", 1, NULL, NULL);
     // variable_item_list_add(app->submenu, "Dump RAM Cartridge", 1, NULL, NULL);
     // variable_item_list_add(app->submenu, "Write ROM", 1, NULL, NULL);

@@ -6,11 +6,11 @@
 #include "../utils/draw.h"
 
 static const char* TAB_NAMES[] = {
-    "File",
-    "Tools",
-    "Settings",
-    "Help",
-    "About",
+    ICONEDIT_UI_TEXT("File", "文件"),
+    ICONEDIT_UI_TEXT("Tools", "工具"),
+    ICONEDIT_UI_TEXT("Settings", "设置"),
+    ICONEDIT_UI_TEXT("Help", "帮助"),
+    ICONEDIT_UI_TEXT("About", "关于"),
 };
 
 const Tab Tab_LEFT[Tab_COUNT] = {Tab_NONE, TabFile, TabTools, TabSettings, TabHelp};

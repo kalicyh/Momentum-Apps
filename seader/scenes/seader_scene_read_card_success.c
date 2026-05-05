@@ -40,9 +40,9 @@ void seader_scene_read_card_success_on_enter(void* context) {
         furi_string_cat_printf(credential_str, "0x%llX", credential->credential);
 
         if(credential->type == SeaderCredentialTypeNone) {
-            furi_string_set(type_str, "Unknown");
+            furi_string_set(type_str, SEADER_UI_TEXT("Unknown", "未知"));
         } else if(credential->type == SeaderCredentialTypeVirtual) {
-            furi_string_set(type_str, "Virtual");
+            furi_string_set(type_str, SEADER_UI_TEXT("Virtual", "虚拟"));
         } else if(credential->type == SeaderCredentialType14A) {
             furi_string_set(type_str, "14443A");
         } else if(credential->type == SeaderCredentialTypePicopass) {
@@ -53,8 +53,8 @@ void seader_scene_read_card_success_on_enter(void* context) {
             furi_string_set(type_str, "");
         }
     } else {
-        furi_string_set(type_str, "Read error");
-        furi_string_set(bitlength_str, seader->read_error[0] ? seader->read_error : "Read failed");
+        furi_string_set(type_str, SEADER_UI_TEXT("Read error", "读取错误"));
+        furi_string_set(bitlength_str, seader->read_error[0] ? seader->read_error : SEADER_UI_TEXT("Read failed", "读取失败"));
 
         SeaderWorker* seader_worker = seader->worker;
         SeaderUartBridge* seader_uart = seader_worker->uart;
@@ -63,20 +63,20 @@ void seader_scene_read_card_success_on_enter(void* context) {
     }
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", seader_scene_read_card_success_widget_callback, seader);
+        widget, GuiButtonTypeLeft, SEADER_UI_TEXT("Retry", "重试"), seader_scene_read_card_success_widget_callback, seader);
 
     if(credential->bit_length > 0) {
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "More",
+            SEADER_UI_TEXT("More", "更多"),
             seader_scene_read_card_success_widget_callback,
             seader);
     } else {
         widget_add_button_element(
             widget,
             GuiButtonTypeRight,
-            "Back",
+            SEADER_UI_TEXT("Back", "返回"),
             seader_scene_read_card_success_widget_callback,
             seader);
     }
@@ -87,7 +87,7 @@ void seader_scene_read_card_success_on_enter(void* context) {
             widget_add_button_element(
                 seader->widget,
                 GuiButtonTypeCenter,
-                "Parse",
+                SEADER_UI_TEXT("Parse", "解析"),
                 seader_scene_read_card_success_widget_callback,
                 seader);
         }

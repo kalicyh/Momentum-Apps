@@ -65,7 +65,7 @@ static void xremote_custom_view_draw_page_name(Canvas* canvas, ViewOrientation o
     Align align = orientation == ViewOrientationHorizontal ? AlignRight : AlignLeft;
     uint8_t x = orientation == ViewOrientationHorizontal ? 128 : 0;
     uint8_t y = orientation == ViewOrientationHorizontal ? 10 : 12;
-    elements_multiline_text_aligned(canvas, x, y, align, AlignTop, "Custom");
+    elements_multiline_text_aligned(canvas, x, y, align, AlignTop, XREMOTE_UI_TEXT("Custom", "自定义"));
 }
 
 static void xremote_custom_view_draw_callback(Canvas* canvas, void* context) {

@@ -41,7 +41,7 @@ static void cancommander_scene_tools_control_open_tool_args(
         args,
         args_size,
         title,
-        "Start",
+        CAN_COMMANDER_UI_TEXT("Start", "启动"),
         cancommander_scene_tools_control_start_pending,
         cancommander_scene_monitor);
 
@@ -52,23 +52,23 @@ void cancommander_scene_tools_control_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Control & Injection");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Control & Injection", "控制与注入"));
 
     submenu_add_item(
         app->submenu,
-        "Write Frames",
+        CAN_COMMANDER_UI_TEXT("Write Frames", "写入帧"),
         ToolsControlWriteFrames,
         cancommander_scene_tools_control_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Smart Injection",
+        CAN_COMMANDER_UI_TEXT("Smart Injection", "智能注入"),
         ToolsControlSmartInjection,
         cancommander_scene_tools_control_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Stop Active Tool",
+        CAN_COMMANDER_UI_TEXT("Stop Active Tool", "停止当前工具"),
         ToolsControlStopActive,
         cancommander_scene_tools_control_menu_callback,
         app);
@@ -98,7 +98,7 @@ bool cancommander_scene_tools_control_menu_on_event(void* context, SceneManagerE
             "write",
             app->args_write_tool,
             sizeof(app->args_write_tool),
-            "Write Frames");
+            CAN_COMMANDER_UI_TEXT("Write Frames", "写入帧"));
         return true;
 
     case ToolsControlSmartInjection:

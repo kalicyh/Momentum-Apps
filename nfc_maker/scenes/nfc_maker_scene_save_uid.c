@@ -14,21 +14,21 @@ static void nfc_maker_scene_save_uid_byte_input_callback(void* context) {
     if(uid_valid) {
         view_dispatcher_send_custom_event(app->view_dispatcher, ByteInputResultOk);
     } else {
-        byte_input_set_header_text(app->byte_input, "Invalid UID!");
+        byte_input_set_header_text(app->byte_input, NFC_MAKER_UI_TEXT("Invalid UID!", "无效 UID!"));
     }
 }
 
 static void nfc_maker_scene_save_uid_byte_input_changed(void* context) {
     NfcMaker* app = context;
 
-    byte_input_set_header_text(app->byte_input, "Change UID:");
+    byte_input_set_header_text(app->byte_input, NFC_MAKER_UI_TEXT("Change UID:", "修改 UID:"));
 }
 
 void nfc_maker_scene_save_uid_on_enter(void* context) {
     NfcMaker* app = context;
     ByteInput* byte_input = app->byte_input;
 
-    byte_input_set_header_text(byte_input, "(Optional) Change UID:");
+    byte_input_set_header_text(byte_input, NFC_MAKER_UI_TEXT("(Optional) Change UID:", "(可选) 修改 UID:"));
 
     size_t uid_len;
     const uint8_t* uid = nfc_device_get_uid(app->nfc_device, &uid_len);

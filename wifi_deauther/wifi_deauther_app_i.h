@@ -14,6 +14,12 @@
 
 #include <momentum/momentum.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define WIFI_DEAUTHER_UI_TEXT(en, zh) (zh)
+#else
+#define WIFI_DEAUTHER_UI_TEXT(en, zh) (en)
+#endif
+
 #define UART_CH (momentum_settings.uart_esp_channel)
 
 #define NUM_MENU_ITEMS (11)

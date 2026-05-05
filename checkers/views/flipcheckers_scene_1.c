@@ -9,6 +9,12 @@
 #include "../helpers/flipcheckers_haptic.h"
 #include "../helpers/flipcheckers_sound.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPCHECKERS_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPCHECKERS_UI_TEXT(en, zh) (en)
+#endif
+
 #define XBOARD_DEBUG 0
 
 #include "../checkers/smallcheckerslib.h"
@@ -305,37 +311,37 @@ uint8_t flipcheckers_turn(FlipCheckersScene1Model* model) {
 
         switch(model->game.state) {
         case SCL_GAME_STATE_WHITE_WIN:
-            model->msg = "white wins";
+            model->msg = FLIPCHECKERS_UI_TEXT("white wins", "白方胜");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
         case SCL_GAME_STATE_BLACK_WIN:
-            model->msg = "black wins";
+            model->msg = FLIPCHECKERS_UI_TEXT("black wins", "黑方胜");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_STALEMATE:
-            model->msg = "stalemate";
+            model->msg = FLIPCHECKERS_UI_TEXT("stalemate", "僵局");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_REPETITION:
-            model->msg = "draw-repetition";
+            model->msg = FLIPCHECKERS_UI_TEXT("draw-repetition", "重复和棋");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_DEAD:
-            model->msg = "draw-dead pos.";
+            model->msg = FLIPCHECKERS_UI_TEXT("draw-dead pos.", "死局和棋");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW:
-            model->msg = "draw";
+            model->msg = FLIPCHECKERS_UI_TEXT("draw", "和棋");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
         case SCL_GAME_STATE_DRAW_50:
-            model->msg = "draw-50 moves";
+            model->msg = FLIPCHECKERS_UI_TEXT("draw-50 moves", "50步和棋");
             model->paramExit = FlipCheckersStatusReturn;
             break;
 
@@ -344,9 +350,9 @@ uint8_t flipcheckers_turn(FlipCheckersScene1Model* model) {
                 const uint8_t whitesTurn = SCL_boardWhitesTurn(model->game.board);
 
                 if(SCL_boardCheck(model->game.board, whitesTurn)) {
-                    model->msg = (whitesTurn ? "black: forced!" : "white: forced!");
+                    model->msg = (whitesTurn ? FLIPCHECKERS_UI_TEXT("black: forced!", "黑方: 强制!") : FLIPCHECKERS_UI_TEXT("white: forced!", "白方: 强制!"));
                 } else {
-                    model->msg = (whitesTurn ? "black played" : "white played");
+                    model->msg = (whitesTurn ? FLIPCHECKERS_UI_TEXT("black played", "黑方走棋") : FLIPCHECKERS_UI_TEXT("white played", "白方走棋"));
                 }
 
                 uint8_t s0, s1;
@@ -386,7 +392,7 @@ void flipcheckers_scene_1_draw(Canvas* canvas, FlipCheckersScene1Model* model) {
     // Message
     canvas_set_font(canvas, FontSecondary);
     if(model->thinking) {
-        canvas_draw_str(canvas, 68, 10, "thinking...");
+        canvas_draw_str(canvas, 68, 10, FLIPCHECKERS_UI_TEXT("thinking...", "思考中..."));
     } else {
         canvas_draw_str(canvas, 68, 10, model->msg);
     }
@@ -412,15 +418,15 @@ void flipcheckers_scene_1_draw(Canvas* canvas, FlipCheckersScene1Model* model) {
         bool black_human = (model->paramPlayerB == 0);
 
         if(model->game.state == SCL_GAME_STATE_WHITE_WIN) {
-            if(white_human && !black_human) banner_text = "You Win!";
-            else if(!white_human && black_human) banner_text = "You Lose!";
-            else banner_text = "White Wins!";
+            if(white_human && !black_human) banner_text = FLIPCHECKERS_UI_TEXT("You Win!", "你赢了!");
+            else if(!white_human && black_human) banner_text = FLIPCHECKERS_UI_TEXT("You Lose!", "你输了!");
+            else banner_text = FLIPCHECKERS_UI_TEXT("White Wins!", "白方胜!");
         } else if(model->game.state == SCL_GAME_STATE_BLACK_WIN) {
-            if(black_human && !white_human) banner_text = "You Win!";
-            else if(!black_human && white_human) banner_text = "You Lose!";
-            else banner_text = "Black Wins!";
+            if(black_human && !white_human) banner_text = FLIPCHECKERS_UI_TEXT("You Win!", "你赢了!");
+            else if(!black_human && white_human) banner_text = FLIPCHECKERS_UI_TEXT("You Lose!", "你输了!");
+            else banner_text = FLIPCHECKERS_UI_TEXT("Black Wins!", "黑方胜!");
         } else {
-            banner_text = "Draw!";
+            banner_text = FLIPCHECKERS_UI_TEXT("Draw!", "和棋!");
         }
 
         if(banner_text) {
@@ -465,7 +471,7 @@ static int flipcheckers_scene_1_model_init(
     model->squareSelected = 255;
     model->squareSelectedLast = 28; // start selector near middle
 
-    model->msg = "checkers";
+    model->msg = FLIPCHECKERS_UI_TEXT("checkers", "跳棋");
     model->moveString[0] = '\0';
     model->msg2 = "";
     model->moveString2[0] = '\0';
@@ -549,7 +555,7 @@ static int flipcheckers_scene_1_model_init(
         return FlipCheckersStatusReturn;
     }
 
-    model->msg = (SCL_boardWhitesTurn(model->game.board) ? "white to move" : "black to move");
+    model->msg = (SCL_boardWhitesTurn(model->game.board) ? FLIPCHECKERS_UI_TEXT("white to move", "白方走棋") : FLIPCHECKERS_UI_TEXT("black to move", "黑方走棋"));
 
     // 0 = success
     return FlipCheckersStatusNone;

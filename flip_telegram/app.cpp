@@ -19,9 +19,9 @@ FlipTelegramApp::FlipTelegramApp()
         return;
     }
 
-    submenu_add_item(submenu, "Run", FlipTelegramSubmenuRun, submenuChoicesCallback, this);
-    submenu_add_item(submenu, "About", FlipTelegramSubmenuAbout, submenuChoicesCallback, this);
-    submenu_add_item(submenu, "Settings", FlipTelegramSubmenuSettings, submenuChoicesCallback, this);
+    submenu_add_item(submenu, flip_telegram_UI_TEXT("Run", "运行"), FlipTelegramSubmenuRun, submenuChoicesCallback, this);
+    submenu_add_item(submenu, flip_telegram_UI_TEXT("About", "关于"), FlipTelegramSubmenuAbout, submenuChoicesCallback, this);
+    submenu_add_item(submenu, flip_telegram_UI_TEXT("Settings", "设置"), FlipTelegramSubmenuSettings, submenuChoicesCallback, this);
 
     flipperHttp = flipper_http_alloc();
     if (!flipperHttp)
@@ -113,20 +113,20 @@ void FlipTelegramApp::callbackSubmenuChoices(uint32_t index)
         // if the board is not connected, we can't use WiFi
         if (!isBoardConnected())
         {
-            easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+            easy_flipper_dialog(flip_telegram_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), flip_telegram_UI_TEXT("Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.", "请确保 WiFi 开发板\n或 Pico W 已连接\n并安装最新 FlipperHTTP\n固件。"));
             return;
         }
         // if we don't have WiFi credentials, we can't connect to WiFi in case
         // we are not connected to WiFi yet
         if (!hasWiFiCredentials())
         {
-            easy_flipper_dialog("No WiFi Credentials", "Please set your WiFi SSID\nand Password in Settings.");
+            easy_flipper_dialog(flip_telegram_UI_TEXT("No WiFi Credentials", "无 WiFi 凭据"), flip_telegram_UI_TEXT("Please set your WiFi SSID\nand Password in Settings.", "请在设置中配置 WiFi\n名称和密码。"));
             return;
         }
         // if we don't have telegram credentials, we can't get their user data
         if (!hasTelegramCredentials())
         {
-            easy_flipper_dialog("No Telegram Credentials", "Please set your Token\nand Chat ID in Settings.");
+            easy_flipper_dialog(flip_telegram_UI_TEXT("No Telegram Credentials", "无 Telegram 凭据"), flip_telegram_UI_TEXT("Please set your Token\nand Chat ID in Settings.", "请在设置中配置令牌\n和聊天 ID。"));
             return;
         }
 

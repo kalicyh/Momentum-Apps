@@ -25,17 +25,19 @@ void tpms_scene_about_on_enter(void* context) {
 
     FuriString* temp_str;
     temp_str = furi_string_alloc();
-    furi_string_printf(temp_str, "\e#%s\n", "Information");
+    furi_string_printf(temp_str, "\e#%s\n", TPMS_UI_TEXT("Information", "信息"));
 
-    furi_string_cat_printf(temp_str, "Version: %s\n", TPMS_VERSION_APP);
-    furi_string_cat_printf(temp_str, "Developed by: %s\n", TPMS_DEVELOPED);
+    furi_string_cat_printf(temp_str, TPMS_UI_TEXT("Version: %s\n", "版本: %s\n"), TPMS_VERSION_APP);
+    furi_string_cat_printf(temp_str, TPMS_UI_TEXT("Developed by: %s\n", "开发者: %s\n"), TPMS_DEVELOPED);
     furi_string_cat_printf(temp_str, "Github: %s\n\n", TPMS_GITHUB);
 
-    furi_string_cat_printf(temp_str, "\e#%s\n", "Description");
+    furi_string_cat_printf(temp_str, "\e#%s\n", TPMS_UI_TEXT("Description", "描述"));
     furi_string_cat_printf(
-        temp_str, "Reading messages from\nTPMS sensors that work\nwith SubGhz sensors\n\n");
+        temp_str, TPMS_UI_TEXT(
+            "Reading messages from\nTPMS sensors that work\nwith SubGhz sensors\n\n",
+            "读取通过SubGhz传感器\n工作的TPMS传感器\n消息\n\n"));
 
-    furi_string_cat_printf(temp_str, "Supported protocols:\n");
+    furi_string_cat_printf(temp_str, TPMS_UI_TEXT("Supported protocols:\n", "支持的协议:\n"));
 
     for(size_t i = 0; i < subghz_protocol_registry_count(&tpms_protocol_registry); ++i) {
         char* frequency = NULL;

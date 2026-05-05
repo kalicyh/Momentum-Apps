@@ -98,7 +98,7 @@ void table_table_list_init(void* ctx) {
     // Add 'Settings' as last element
     TableList::TableMenuItem settings;
     settings.filename = furi_string_alloc_set_str("99_Settings");
-    settings.name = furi_string_alloc_set_str("SETTINGS");
+    settings.name = furi_string_alloc_set_str(PINBALL_UI_TEXT("SETTINGS", "设置"));
     pb->table_list.menu_items.push_back(settings);
 
     FURI_LOG_I(TAG, "Found %d tables", pb->table_list.menu_items.size());
@@ -180,7 +180,7 @@ Table* table_load_table_from_file(PinballApp* pb, size_t index) {
     FURI_LOG_I(TAG, "Found file ok!");
     if(fileinfo.size >= 8192) {
         FURI_LOG_E(TAG, "Table file size too big");
-        snprintf(pb->text, 256, "Table file\nis too big!\n> 8192 bytes");
+        snprintf(pb->text, 256, PINBALL_UI_TEXT("Table file\nis too big!\n> 8192 bytes", "桌台文件\n过大!\n> 8192 字节"));
         storage_file_free(file);
         return NULL;
     }
@@ -188,7 +188,7 @@ Table* table_load_table_from_file(PinballApp* pb, size_t index) {
         storage_file_open(file, furi_string_get_cstr(tmi.filename), FSAM_READ, FSOM_OPEN_EXISTING);
     if(!ok) {
         FURI_LOG_E(TAG, "Failed to open table file: %s", furi_string_get_cstr(tmi.filename));
-        snprintf(pb->text, 256, "Failed\nto open\nfile!");
+        snprintf(pb->text, 256, PINBALL_UI_TEXT("Failed\nto open\nfile!", "无法\n打开\n文件!"));
         storage_file_free(file);
         return NULL;
     }
@@ -198,7 +198,7 @@ Table* table_load_table_from_file(PinballApp* pb, size_t index) {
     uint64_t file_size = storage_file_size(file);
     if(file_size > 8192) { // TODO - what's the right size?
         FURI_LOG_E(TAG, "Table file is too large! (> 8192 bytes)");
-        snprintf(pb->text, 256, "Table file\nis too big!\n> 8192 bytes");
+        snprintf(pb->text, 256, PINBALL_UI_TEXT("Table file\nis too big!\n> 8192 bytes", "桌台文件\n过大!\n> 8192 字节"));
         storage_file_free(file);
         return NULL;
     }
@@ -230,7 +230,7 @@ Table* table_load_table_from_file(PinballApp* pb, size_t index) {
 
     if(!json) {
         FURI_LOG_E(TAG, "Failed to parse table json!");
-        snprintf(pb->text, 256, "Failed to\nparse table\njson!!");
+        snprintf(pb->text, 256, PINBALL_UI_TEXT("Failed to\nparse table\njson!!", "无法\n解析桌台\nJSON文件!"));
         free(json_buffer);
         return NULL;
     }
@@ -290,7 +290,7 @@ Table* table_load_table_from_file(PinballApp* pb, size_t index) {
         }
         if(table->balls.size() == 0) {
             FURI_LOG_E(TAG, "Table has NO BALLS");
-            snprintf(pb->text, 256, "No balls\nfound in\ntable file!");
+            snprintf(pb->text, 256, PINBALL_UI_TEXT("No balls\nfound in\ntable file!", "桌台文件\n中未找到\n球!"));
             delete table;
             table = NULL;
             break;

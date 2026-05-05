@@ -20,6 +20,12 @@
 
 // #define DRAW_NORMALS
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PINBALL_UI_TEXT(en, zh) (zh)
+#else
+#define PINBALL_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG     "Pinball0"
 #define VERSION "v0.5.2"
 

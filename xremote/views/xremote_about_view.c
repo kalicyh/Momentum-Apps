@@ -16,14 +16,14 @@ static void xremote_about_view_draw_vertical(Canvas* canvas, XRemoteViewModel* m
     canvas_set_font(canvas, FontSecondary);
     xremote_get_version(version, sizeof(version));
 
-    canvas_draw_str_aligned(canvas, 0, 30, AlignLeft, AlignTop, "Version:");
+    canvas_draw_str_aligned(canvas, 0, 30, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Version:", "版本:"));
     canvas_draw_str_aligned(canvas, 35, 30, AlignLeft, AlignTop, version);
 
     canvas_draw_str_aligned(canvas, 0, 40, AlignLeft, AlignTop, "License: GPLv3");
     canvas_draw_str_aligned(canvas, 0, 50, AlignLeft, AlignTop, "Author: kala13x");
 
     elements_slightly_rounded_frame(canvas, 9, 78, 45, 33);
-    canvas_draw_str_aligned(canvas, 0, 69, AlignLeft, AlignTop, "Contact:");
+    canvas_draw_str_aligned(canvas, 0, 69, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Contact:", "联系:"));
     canvas_draw_str_aligned(canvas, 13, 80, AlignLeft, AlignTop, "s.kalatoz");
     canvas_draw_str_aligned(canvas, 28, 91, AlignLeft, AlignTop, "@");
     canvas_draw_str_aligned(canvas, 11, 100, AlignLeft, AlignTop, "gmail.com");
@@ -36,14 +36,14 @@ static void xremote_about_view_draw_horizontal(Canvas* canvas, XRemoteViewModel*
     canvas_set_font(canvas, FontSecondary);
     xremote_get_version(version, sizeof(version));
 
-    canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, "Version:");
+    canvas_draw_str_aligned(canvas, 0, 0, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Version:", "版本:"));
     canvas_draw_str_aligned(canvas, 35, 0, AlignLeft, AlignTop, version);
 
     canvas_draw_str_aligned(canvas, 0, 10, AlignLeft, AlignTop, "License: GPLv3");
     canvas_draw_str_aligned(canvas, 0, 20, AlignLeft, AlignTop, "Author: kala13x");
 
     elements_slightly_rounded_frame(canvas, 8, 30, 45, 33);
-    canvas_draw_str_aligned(canvas, 0, 69, AlignLeft, AlignTop, "Contact:");
+    canvas_draw_str_aligned(canvas, 0, 69, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Contact:", "联系:"));
     canvas_draw_str_aligned(canvas, 12, 32, AlignLeft, AlignTop, "s.kalatoz");
     canvas_draw_str_aligned(canvas, 27, 43, AlignLeft, AlignTop, "@");
     canvas_draw_str_aligned(canvas, 10, 52, AlignLeft, AlignTop, "gmail.com");
@@ -60,9 +60,9 @@ static void xremote_about_view_draw_callback(Canvas* canvas, void* context) {
                                        xremote_about_view_draw_vertical :
                                        xremote_about_view_draw_horizontal;
 
-    xremote_canvas_draw_header(canvas, orientation, "About");
+    xremote_canvas_draw_header(canvas, orientation, XREMOTE_UI_TEXT("About", "关于"));
     xremote_about_view_draw_body(canvas, model);
-    xremote_canvas_draw_exit_footer(canvas, orientation, "Press to exit");
+    xremote_canvas_draw_exit_footer(canvas, orientation, XREMOTE_UI_TEXT("Press to exit", "按下退出"));
 }
 
 XRemoteView* xremote_about_view_alloc(void* app_ctx) {

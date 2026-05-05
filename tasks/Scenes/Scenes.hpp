@@ -4,6 +4,14 @@
 #include <string>
 #include "../UFZ/UI.hpp"
 
+#ifndef TASKS_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TASKS_UI_TEXT(en, zh) (zh)
+#else
+#define TASKS_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define CTX(x) ((FTasks::ApplicationData*)(x))
 #define TASKS_TODO_DATA_FILE STORAGE_APP_DATA_PATH_PREFIX"/todo.save"
 #define TASKS_DONE_DATA_FILE STORAGE_APP_DATA_PATH_PREFIX"/done.save"
@@ -43,7 +51,7 @@ namespace FTasks
 
     struct Containers
     {
-        NoteContainer todo{ { "+ New task", "Describes a new task" } };
+        NoteContainer todo{ { TASKS_UI_TEXT("+ New task", "+ 新任务"), TASKS_UI_TEXT("Describes a new task", "新任务描述") } };
         NoteContainer done{};
     };
 

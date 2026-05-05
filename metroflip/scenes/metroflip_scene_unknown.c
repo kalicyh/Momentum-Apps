@@ -16,12 +16,12 @@ void metroflip_scene_unknown_on_enter(void* context) {
     FURI_LOG_I(TAG, "ct 2 %s", app->card_type);
     furi_string_printf(str, "\e#%s \n\n", app->card_type);
     furi_string_cat_printf(
-        str, "This card is currently \nunsupported / fully locked");
+        str, METROFLIP_UI_TEXT("This card is currently \nunsupported / fully locked", "\xe6\xad\xa4\xe5\x8d\xa1\xe7\x89\x87\xe5\xbd\x93\xe5\x89\x8d\n\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81 / \xe5\xb7\xb2\xe5\xae\x8c\xe5\x85\xa8\xe9\x94\x81\xe5\xae\x9a"));
 
     widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(str));
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+        widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
 
     furi_string_free(str);
     view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);

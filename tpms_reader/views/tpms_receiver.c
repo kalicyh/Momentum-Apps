@@ -207,7 +207,7 @@ void tpms_view_receiver_draw(Canvas* canvas, TPMSReceiverModel* model) {
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
 
-    elements_button_left(canvas, "Config");
+    elements_button_left(canvas, TPMS_UI_TEXT("Config", "配置"));
 
     bool scrollbar = model->history_item > 4;
     FuriString* str_buff;
@@ -240,10 +240,10 @@ void tpms_view_receiver_draw(Canvas* canvas, TPMSReceiverModel* model) {
         canvas_draw_icon(
             canvas, 0, 0, model->external_radio ? &I_Fishing_123x52 : &I_Scanning_123x52);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 63, 46, "Scanning...");
+        canvas_draw_str(canvas, 63, 46, TPMS_UI_TEXT("Scanning...", "扫描中..."));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 44, 10, model->external_radio ? "Ext" : "Int");
-        canvas_draw_str(canvas, 70, 9, "-> to relearn");
+        canvas_draw_str(canvas, 44, 10, model->external_radio ? TPMS_UI_TEXT("Ext", "外置") : TPMS_UI_TEXT("Int", "内置"));
+        canvas_draw_str(canvas, 70, 9, TPMS_UI_TEXT("-> to relearn", "-> 重学"));
     }
 
     // Draw RSSI
@@ -252,7 +252,7 @@ void tpms_view_receiver_draw(Canvas* canvas, TPMSReceiverModel* model) {
     switch(model->bar_show) {
     case TPMSReceiverBarShowLock:
         canvas_draw_icon(canvas, 64, 55, &I_Lock_7x8);
-        canvas_draw_str(canvas, 74, 62, "Locked");
+        canvas_draw_str(canvas, 74, 62, TPMS_UI_TEXT("Locked", "已锁定"));
         break;
     case TPMSReceiverBarShowToUnlockPress:
         canvas_draw_str(canvas, 44, 62, furi_string_get_cstr(model->frequency_str));
@@ -260,7 +260,7 @@ void tpms_view_receiver_draw(Canvas* canvas, TPMSReceiverModel* model) {
         canvas_draw_str(canvas, 96, 62, furi_string_get_cstr(model->history_stat_str));
         canvas_set_font(canvas, FontSecondary);
         elements_bold_rounded_frame(canvas, 14, 8, 99, 48);
-        elements_multiline_text(canvas, 65, 26, "To unlock\npress:");
+        elements_multiline_text(canvas, 65, 26, TPMS_UI_TEXT("To unlock\npress:", "解锁\n请按:"));
         canvas_draw_icon(canvas, 65, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 80, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 95, 42, &I_Pin_back_arrow_10x8);
@@ -269,7 +269,7 @@ void tpms_view_receiver_draw(Canvas* canvas, TPMSReceiverModel* model) {
         break;
     case TPMSReceiverBarShowUnlock:
         canvas_draw_icon(canvas, 64, 55, &I_Unlock_7x8);
-        canvas_draw_str(canvas, 74, 62, "Unlocked");
+        canvas_draw_str(canvas, 74, 62, TPMS_UI_TEXT("Unlocked", "已解锁"));
         break;
     default:
         canvas_draw_str(canvas, 44, 62, furi_string_get_cstr(model->frequency_str));

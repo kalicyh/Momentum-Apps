@@ -10,7 +10,7 @@ void weebo_scene_keys_missing_on_enter(void* context) {
 
     Popup* popup = weebo->popup;
 
-    popup_set_header(popup, "key_retail.bin missing", 58, 28, AlignCenter, AlignCenter);
+    popup_set_header(popup, WEEBO_UI_TEXT("key_retail.bin missing", "缺少 key_retail.bin"), 58, 28, AlignCenter, AlignCenter);
     // popup_set_text(popup, "words", 64, 36, AlignCenter, AlignTop);
     popup_set_context(weebo->popup, weebo);
     popup_set_callback(popup, weebo_scene_keys_missing_popup_callback);

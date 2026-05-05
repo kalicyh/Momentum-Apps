@@ -5,6 +5,7 @@
 #include <m-array.h>
 
 #include <ghost_esp_icons.h>
+#include "../src/menu.h"
 
 #define CARD_WIDTH         28
 #define CARD_HEIGHT        44
@@ -112,7 +113,7 @@ void main_menu_set_help_callback(MainMenu* main_menu, MainMenuItemCallback callb
 }
 
 static void draw_help_button(Canvas* canvas) {
-    const char* str = "Help";
+    const char* str = GHOST_ESP_UI_TEXT("Help", "帮助");
     const size_t vertical_offset = 3;
     const size_t horizontal_offset = 3;
     const size_t string_width = canvas_string_width(canvas, str);

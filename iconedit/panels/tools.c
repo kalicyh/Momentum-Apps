@@ -19,16 +19,16 @@ static struct {
 } toolModel = {.tool_callback = NULL, .tool = Tool_Draw};
 
 const char* EditorTool_Desc[Tool_COUNT] = {
-    "Draw pixel",
-    "Draw Line",
-    "Draw Circle",
-    "Draw Rect",
-    "Dupe Frame",
-    "Delete Frame",
-    "Play", // View
-    "Change FPS",
-    "Prev Frame",
-    "Next Frame"};
+    ICONEDIT_UI_TEXT("Draw pixel", "画像素"),
+    ICONEDIT_UI_TEXT("Draw Line", "画线"),
+    ICONEDIT_UI_TEXT("Draw Circle", "画圆"),
+    ICONEDIT_UI_TEXT("Draw Rect", "画矩形"),
+    ICONEDIT_UI_TEXT("Dupe Frame", "复制帧"),
+    ICONEDIT_UI_TEXT("Delete Frame", "删除帧"),
+    ICONEDIT_UI_TEXT("Play", "播放"), // View
+    ICONEDIT_UI_TEXT("Change FPS", "修改帧率"),
+    ICONEDIT_UI_TEXT("Prev Frame", "上一帧"),
+    ICONEDIT_UI_TEXT("Next Frame", "下一帧")};
 
 // Tool selection allowed movements
 const EditorTool EditorTool_UP[Tool_COUNT] = {
@@ -118,7 +118,7 @@ void tools_draw(Canvas* canvas, void* context) {
         if((EditorTool)t == toolModel.tool) {
             if(app->panel == Panel_Tools) {
                 if(t == Tool_Play && app->icon->frame_count == 1) {
-                    ie_draw_str(canvas, 1, 64 - 7, AlignLeft, AlignTop, Font5x7, "View");
+                    ie_draw_str(canvas, 1, 64 - 7, AlignLeft, AlignTop, Font5x7, ICONEDIT_UI_TEXT("View", "查看"));
                 } else {
                     ie_draw_str(
                         canvas, 1, 64 - 7, AlignLeft, AlignTop, Font5x7, EditorTool_Desc[t]);

@@ -14,17 +14,17 @@ void cancommander_scene_profiles_smart_inject_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Smart Injection Profiles");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Smart Injection Profiles", "智能注入配置"));
 
     submenu_add_item(
         app->submenu,
-        "Save Current Slot Set",
+        CAN_COMMANDER_UI_TEXT("Save Current Slot Set", "保存当前槽位组"),
         ProfilesSmartInjectSave,
         cancommander_scene_profiles_smart_inject_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Load Slot Set",
+        CAN_COMMANDER_UI_TEXT("Load Slot Set", "加载槽位组"),
         ProfilesSmartInjectLoad,
         cancommander_scene_profiles_smart_inject_menu_callback,
         app);

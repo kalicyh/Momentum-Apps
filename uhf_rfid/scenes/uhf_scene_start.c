@@ -16,11 +16,11 @@ void uhf_scene_start_on_enter(void* ctx) {
 
     Submenu* submenu = uhf_app->submenu;
     submenu_add_item(
-        submenu, "Read Tag", SubmenuIndexRead, uhf_scene_start_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Read Tag", "读取标签"), SubmenuIndexRead, uhf_scene_start_submenu_callback, uhf_app);
     submenu_add_item(
-        submenu, "Saved", SubmenuIndexSaved, uhf_scene_start_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Saved", "已保存"), SubmenuIndexSaved, uhf_scene_start_submenu_callback, uhf_app);
     submenu_add_item(
-        submenu, "Settings", SubmenuIndexSettings, uhf_scene_start_submenu_callback, uhf_app);
+        submenu, UHF_UI_TEXT("Settings", "设置"), SubmenuIndexSettings, uhf_scene_start_submenu_callback, uhf_app);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(uhf_app->scene_manager, UHFSceneStart));

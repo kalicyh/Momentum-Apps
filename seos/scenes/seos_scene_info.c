@@ -20,7 +20,7 @@ void seos_scene_info_on_enter(void* context) {
     Widget* widget = seos->widget;
     SeosCredential* credential = seos->credential;
 
-    FuriString* primary_str = furi_string_alloc_set("Info");
+    FuriString* primary_str = furi_string_alloc_set(SEOS_UI_TEXT("Info", "信息"));
     FuriString* secondary_str_label = furi_string_alloc();
     FuriString* secondary_str_value = furi_string_alloc();
     FuriString* details_str = furi_string_alloc();
@@ -49,7 +49,7 @@ void seos_scene_info_on_enter(void* context) {
 
     // keys
     if(memcmp(credential->priv_key, empty, sizeof(empty)) != 0) {
-        furi_string_cat_printf(keys_str, "+keys");
+        furi_string_cat_printf(keys_str, SEOS_UI_TEXT("+keys", "+密钥"));
     }
 
     widget_add_string_element(

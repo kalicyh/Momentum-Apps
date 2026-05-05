@@ -69,10 +69,15 @@ static void render_subview_main(Canvas* const canvas, ProtoViewApp* app) {
         if(--max_lines == 0) break;
     }
 
-    /* Draw a vertical "save" label. Temporary solution, to switch to
-     * something better ASAP. */
+    /* Draw a vertical "save" label. */
     y = 37;
     lineheight = 7;
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+    canvas_draw_str(canvas, 119, y, "保");
+    y += lineheight;
+    canvas_draw_str(canvas, 119, y, "存");
+    y += lineheight;
+#else
     canvas_draw_str(canvas, 119, y, "s");
     y += lineheight;
     canvas_draw_str(canvas, 119, y, "a");
@@ -81,6 +86,7 @@ static void render_subview_main(Canvas* const canvas, ProtoViewApp* app) {
     y += lineheight;
     canvas_draw_str(canvas, 119, y, "e");
     y += lineheight;
+#endif
 }
 
 /* Render view with save option. */
@@ -115,14 +121,14 @@ static void render_subview_save(Canvas* const canvas, ProtoViewApp* app) {
     }
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 6, "ok: send, long ok: save");
+    canvas_draw_str(canvas, 0, 6, PROTOVIEW_UI_TEXT("ok: send, long ok: save", "确认:发送 长按:保存"));
 }
 
 /* Render the selected subview of this view. */
 void render_view_info(Canvas* const canvas, ProtoViewApp* app) {
     if(app->signal_decoded == false) {
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 30, 36, "No signal decoded");
+        canvas_draw_str(canvas, 30, 36, PROTOVIEW_UI_TEXT("No signal decoded", "未解码到信号"));
         return;
     }
 
@@ -151,7 +157,7 @@ static void text_input_done_callback(void* context) {
     free(privdata->filename);
     privdata->filename = NULL; // Don't free it again on view exit
     ui_dismiss_keyboard(app);
-    ui_show_alert(app, "Signal saved", 1500);
+    ui_show_alert(app, PROTOVIEW_UI_TEXT("Signal saved", "信号已保存"), 1500);
 }
 
 /* Replace all the occurrences of character c1 with c2 in the specified

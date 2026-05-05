@@ -45,11 +45,11 @@ static void
     switch(state) {
     case SceneFwWarningStateAttention:
         widget_add_button_element(
-            widget, GuiButtonTypeLeft, "Exit", subrem_scene_fw_warning_widget_callback, app);
+            widget, GuiButtonTypeLeft, SUBREM_UI_TEXT("Exit", "退出"), subrem_scene_fw_warning_widget_callback, app);
         widget_add_button_element(
-            widget, GuiButtonTypeRight, "Continue", subrem_scene_fw_warning_widget_callback, app);
+            widget, GuiButtonTypeRight, SUBREM_UI_TEXT("Continue", "继续"), subrem_scene_fw_warning_widget_callback, app);
         widget_add_string_element(
-            widget, 64, 12, AlignCenter, AlignBottom, FontPrimary, "Not official FW");
+            widget, 64, 12, AlignCenter, AlignBottom, FontPrimary, SUBREM_UI_TEXT("Not official FW", "非官方固件"));
         widget_add_string_multiline_element(
             widget,
             64,
@@ -57,16 +57,18 @@ static void
             AlignCenter,
             AlignCenter,
             FontSecondary,
-            "You are using custom firmware\nPlease download a compatible\nversion of the application");
+            SUBREM_UI_TEXT(
+                "You are using custom firmware\nPlease download a compatible\nversion of the application",
+                "你正在使用第三方固件\n请下载兼容版本的\n应用程序"));
         break;
 
     case SceneFwWarningStateAccept:
         widget_add_button_element(
-            widget, GuiButtonTypeLeft, "Exit", subrem_scene_fw_warning_widget_callback, app);
+            widget, GuiButtonTypeLeft, SUBREM_UI_TEXT("Exit", "退出"), subrem_scene_fw_warning_widget_callback, app);
         widget_add_button_element(
-            widget, GuiButtonTypeRight, "Accept", subrem_scene_fw_warning_widget_callback, app);
+            widget, GuiButtonTypeRight, SUBREM_UI_TEXT("Accept", "接受"), subrem_scene_fw_warning_widget_callback, app);
         widget_add_string_element(
-            widget, 64, 12, AlignCenter, AlignBottom, FontPrimary, "Not official FW");
+            widget, 64, 12, AlignCenter, AlignBottom, FontPrimary, SUBREM_UI_TEXT("Not official FW", "非官方固件"));
         widget_add_string_multiline_element(
             widget,
             64,
@@ -74,7 +76,9 @@ static void
             AlignCenter,
             AlignCenter,
             FontSecondary,
-            "Yes, I understand that\nthe application can\nbreak my subghz key file");
+            SUBREM_UI_TEXT(
+                "Yes, I understand that\nthe application can\nbreak my subghz key file",
+                "我已知晓该应用\n可能会损坏我的\nSubGhz密钥文件"));
         break;
     }
 }

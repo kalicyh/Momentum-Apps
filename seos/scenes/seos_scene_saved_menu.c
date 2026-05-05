@@ -20,29 +20,45 @@ void seos_scene_saved_menu_on_enter(void* context) {
     Submenu* submenu = seos->submenu;
 
     submenu_add_item(
-        submenu, "NFC Emulate", SubmenuIndexEmulate, seos_scene_saved_menu_submenu_callback, seos);
+        submenu,
+        SEOS_UI_TEXT("NFC Emulate", "NFC 模拟"),
+        SubmenuIndexEmulate,
+        seos_scene_saved_menu_submenu_callback,
+        seos);
 
     if(seos->has_external_ble) {
         submenu_add_item(
             submenu,
-            "BLE Emulate Central",
+            SEOS_UI_TEXT("BLE Emulate Central", "BLE 模拟 (中心)"),
             SubmenuIndexBLEEmulateCentral,
             seos_scene_saved_menu_submenu_callback,
             seos);
     }
     submenu_add_item(
         submenu,
-        "BLE Emulate Peripheral",
+        SEOS_UI_TEXT("BLE Emulate Peripheral", "BLE 模拟 (外围)"),
         SubmenuIndexBLEEmulatePeripheral,
         seos_scene_saved_menu_submenu_callback,
         seos);
 
     submenu_add_item(
-        submenu, "Write", SubmenuIndexWrite, seos_scene_saved_menu_submenu_callback, seos);
+        submenu,
+        SEOS_UI_TEXT("Write", "写入"),
+        SubmenuIndexWrite,
+        seos_scene_saved_menu_submenu_callback,
+        seos);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, seos_scene_saved_menu_submenu_callback, seos);
+        submenu,
+        SEOS_UI_TEXT("Info", "信息"),
+        SubmenuIndexInfo,
+        seos_scene_saved_menu_submenu_callback,
+        seos);
     submenu_add_item(
-        submenu, "Delete", SubmenuIndexDelete, seos_scene_saved_menu_submenu_callback, seos);
+        submenu,
+        SEOS_UI_TEXT("Delete", "删除"),
+        SubmenuIndexDelete,
+        seos_scene_saved_menu_submenu_callback,
+        seos);
 
     submenu_set_selected_item(
         seos->submenu, scene_manager_get_scene_state(seos->scene_manager, SeosSceneSavedMenu));

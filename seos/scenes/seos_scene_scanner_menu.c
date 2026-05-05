@@ -15,13 +15,13 @@ void seos_scene_scanner_menu_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Start BLE Reader Scanner",
+        SEOS_UI_TEXT("Start BLE Reader Scanner", "启动 BLE 读取扫描"),
         SubmenuIndexBLEReaderScanner,
         seos_scene_scanner_menu_submenu_callback,
         seos);
     submenu_add_item(
         submenu,
-        "Start BLE Cred Scanner",
+        SEOS_UI_TEXT("Start BLE Cred Scanner", "启动 BLE 凭证扫描"),
         SubmenuIndexBLECredScanner,
         seos_scene_scanner_menu_submenu_callback,
         seos);

@@ -1,5 +1,13 @@
 #include "app_menu_i.h"
 
+#ifndef FLIPBOARD_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 /**
  * @brief      Global ViewDispatcher pointer.  
  * @details    This global is due to submenu context being fixed to submenu.
@@ -162,9 +170,17 @@ static void app_menu_popup_done(void* context) {
 */
 void app_menu_show(AppMenu* menu) {
     menu->popup = popup_alloc();
-    popup_set_header(menu->popup, "FlipBoard", 70, 2, AlignLeft, AlignTop);
+    popup_set_header(
+        menu->popup, FLIPBOARD_UI_TEXT("FlipBoard", "FlipBoard"), 70, 2, AlignLeft, AlignTop);
     popup_set_text(
-        menu->popup, "Be sure\ndevice is\nconnected\nto Flipper.", 70, 20, AlignLeft, AlignTop);
+        menu->popup,
+        FLIPBOARD_UI_TEXT(
+            "Be sure\ndevice is\nconnected\nto Flipper.",
+            "请确保设备\n已连接\n到 Flipper"),
+        70,
+        20,
+        AlignLeft,
+        AlignTop);
     popup_set_icon(menu->popup, 0, 0, &I_flippy);
     popup_set_timeout(menu->popup, 3000);
     popup_enable_timeout(menu->popup);

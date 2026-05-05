@@ -56,9 +56,9 @@ FlipWorldApp *flip_world_app_alloc()
         return NULL;
     }
 
-    submenu_add_item(app->submenu, "Play", FlipWorldSubmenuIndexGameSubmenu, callback_submenu_choices, app);
-    submenu_add_item(app->submenu, "About", FlipWorldSubmenuIndexMessage, callback_submenu_choices, app);
-    submenu_add_item(app->submenu, "Settings", FlipWorldSubmenuIndexSettings, callback_submenu_choices, app);
+    submenu_add_item(app->submenu, FLIP_WORLD_UI_TEXT("Play", "开始游戏"), FlipWorldSubmenuIndexGameSubmenu, callback_submenu_choices, app);
+    submenu_add_item(app->submenu, FLIP_WORLD_UI_TEXT("About", "关于"), FlipWorldSubmenuIndexMessage, callback_submenu_choices, app);
+    submenu_add_item(app->submenu, FLIP_WORLD_UI_TEXT("Settings", "设置"), FlipWorldSubmenuIndexSettings, callback_submenu_choices, app);
 
     // Switch to the main view
     view_dispatcher_switch_to_view(app->view_dispatcher, FlipWorldViewSubmenu);

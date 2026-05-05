@@ -19,7 +19,7 @@ void nfc_playlist_confirm_delete_scene_on_enter(void* context) {
    path_extract_filename_no_ext(
       furi_string_get_cstr(nfc_playlist->worker_info.settings->playlist_path), file_name);
    FuriString* temp_str =
-      furi_string_alloc_printf("\e#Delete %s?\e#", furi_string_get_cstr(file_name));
+      furi_string_alloc_printf(NFC_PLAYLIST_UI_TEXT("\e#Delete %s?\e#", "\e#删除 %s?\e#"), furi_string_get_cstr(file_name));
    furi_string_free(file_name);
 
    widget_add_text_box_element(
@@ -35,13 +35,13 @@ void nfc_playlist_confirm_delete_scene_on_enter(void* context) {
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeLeft,
-      "Cancel",
+      NFC_PLAYLIST_UI_TEXT("Cancel", "取消"),
       nfc_playlist_confirm_delete_scene_menu_callback,
       nfc_playlist);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeRight,
-      "Delete",
+      NFC_PLAYLIST_UI_TEXT("Delete", "删除"),
       nfc_playlist_confirm_delete_scene_menu_callback,
       nfc_playlist);
 

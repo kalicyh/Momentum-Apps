@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UMPIRE_INDICATOR_UI_TEXT(en, zh) (zh)
+#else
+#define UMPIRE_INDICATOR_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     StateInstructions,
     StateCounter
@@ -28,13 +34,13 @@ char* int_to_char(int num) {
 void draw_instructions(Canvas* canvas) {
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 2, 12, "Umpire Indicator");
+    canvas_draw_str(canvas, 2, 12, UMPIRE_INDICATOR_UI_TEXT("Umpire Indicator", "裁判指示器"));
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 2, 24, "Left: Ball   Up: Strike");
-    canvas_draw_str(canvas, 2, 34, "Right: Out   Down: Undo");
-    canvas_draw_str(canvas, 2, 44, "Back: Clear  Hold: Exit");
-    canvas_draw_str(canvas, 2, 54, "Press OK to start");
+    canvas_draw_str(canvas, 2, 24, UMPIRE_INDICATOR_UI_TEXT("Left: Ball   Up: Strike", "左: 坏球   上: 好球"));
+    canvas_draw_str(canvas, 2, 34, UMPIRE_INDICATOR_UI_TEXT("Right: Out   Down: Undo", "右: 出局   下: 撤销"));
+    canvas_draw_str(canvas, 2, 44, UMPIRE_INDICATOR_UI_TEXT("Back: Clear  Hold: Exit", "返回: 清除  长按: 退出"));
+    canvas_draw_str(canvas, 2, 54, UMPIRE_INDICATOR_UI_TEXT("Press OK to start", "按 OK 开始"));
 }
 
 void draw_counter(Canvas* canvas, UmpireIndicatorState* state) {

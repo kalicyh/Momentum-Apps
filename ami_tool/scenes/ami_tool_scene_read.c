@@ -29,17 +29,17 @@ static void ami_tool_scene_read_stop_thread(AmiToolApp* app) {
 static const char* ami_tool_scene_read_error_to_string(MfUltralightError error) {
     switch(error) {
     case MfUltralightErrorNone:
-        return "No error";
+        return AMI_TOOL_UI_TEXT("No error", "无错误");
     case MfUltralightErrorNotPresent:
-        return "Tag lost during read.";
+        return AMI_TOOL_UI_TEXT("Tag lost during read.", "读取时标签丢失。");
     case MfUltralightErrorProtocol:
-        return "Protocol error while reading.";
+        return AMI_TOOL_UI_TEXT("Protocol error while reading.", "读取时协议错误。");
     case MfUltralightErrorAuth:
-        return "Authentication failed.";
+        return AMI_TOOL_UI_TEXT("Authentication failed.", "认证失败。");
     case MfUltralightErrorTimeout:
-        return "Timed out waiting for tag.";
+        return AMI_TOOL_UI_TEXT("Timed out waiting for tag.", "等待标签超时。");
     default:
-        return "Unknown read error.";
+        return AMI_TOOL_UI_TEXT("Unknown read error.", "未知读取错误。");
     }
 }
 
@@ -77,7 +77,8 @@ static const char* ami_tool_scene_read_type_to_string(MfUltralightType type) {
 static void ami_tool_scene_read_show_waiting(AmiToolApp* app) {
     furi_string_printf(
         app->text_box_store,
-        "NFC Read\n\nPlace an NTAG215 tag on the back of the Flipper.\nPress Back to cancel.");
+        AMI_TOOL_UI_TEXT("NFC Read\n\nPlace an NTAG215 tag on the back of the Flipper.\nPress Back to cancel.",
+                          "NFC 读取\n\n将 NTAG215 标签放在 Flipper 背面。\n按返回键取消。"));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
 }
@@ -85,7 +86,8 @@ static void ami_tool_scene_read_show_waiting(AmiToolApp* app) {
 static void ami_tool_scene_read_show_wrong_type(AmiToolApp* app) {
     furi_string_printf(
         app->text_box_store,
-        "Unsupported tag.\nExpected NTAG215 but detected %s.\n\nPress Back to exit.",
+        AMI_TOOL_UI_TEXT("Unsupported tag.\nExpected NTAG215 but detected %s.\n\nPress Back to exit.",
+                          "不支持的标签。\n预期 NTAG215 但检测到 %s。\n\n按返回键退出。"),
         ami_tool_scene_read_type_to_string(app->read_result.tag_type));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
@@ -94,7 +96,8 @@ static void ami_tool_scene_read_show_wrong_type(AmiToolApp* app) {
 static void ami_tool_scene_read_show_error(AmiToolApp* app) {
     furi_string_printf(
         app->text_box_store,
-        "Read failed.\n%s\n\nPress Back to exit.",
+        AMI_TOOL_UI_TEXT("Read failed.\n%s\n\nPress Back to exit.",
+                          "读取失败。\n%s\n\n按返回键退出。"),
         ami_tool_scene_read_error_to_string(app->read_result.error));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
@@ -234,7 +237,8 @@ bool ami_tool_scene_read_on_event(void* context, SceneManagerEvent event) {
         case AmiToolEventInfoActionEmulate:
             if(!ami_tool_info_start_emulation(app)) {
                 ami_tool_info_show_action_message(
-                    app, "Unable to start emulation.\nRead or generate an Amiibo first.");
+                    app, AMI_TOOL_UI_TEXT("Unable to start emulation.\nRead or generate an Amiibo first.",
+                                          "无法启动模拟。\n请先读取或生成 Amiibo。"));
             }
             return true;
         case AmiToolEventInfoActionUsage:
@@ -243,21 +247,24 @@ bool ami_tool_scene_read_on_event(void* context, SceneManagerEvent event) {
         case AmiToolEventInfoActionChangeUid:
             if(!ami_tool_info_change_uid(app)) {
                 ami_tool_info_show_action_message(
-                    app, "Unable to change UID.\nInstall key_retail.bin and try again.");
+                    app, AMI_TOOL_UI_TEXT("Unable to change UID.\nInstall key_retail.bin and try again.",
+                                          "无法更改 UID。\n请安装 key_retail.bin 后重试。"));
             }
             return true;
         case AmiToolEventInfoActionWriteTag:
             if(!ami_tool_info_write_to_tag(app)) {
                 ami_tool_info_show_action_message(
                     app,
-                    "Unable to write tag.\nUse a blank NTAG215 and make\nsure key_retail.bin is installed.");
+                    AMI_TOOL_UI_TEXT("Unable to write tag.\nUse a blank NTAG215 and make\nsure key_retail.bin is installed.",
+                                     "无法写入标签。\n请使用空白 NTAG215 并确保\n已安装 key_retail.bin。"));
             }
             return true;
         case AmiToolEventInfoActionSaveToStorage:
             if(!ami_tool_info_save_to_storage(app)) {
                 ami_tool_info_show_action_message(
                     app,
-                    "Unable to save Amiibo.\nRead or generate one first\nand check storage access.");
+                    AMI_TOOL_UI_TEXT("Unable to save Amiibo.\nRead or generate one first\nand check storage access.",
+                                     "无法保存 Amiibo。\n请先读取或生成一个\n并检查存储访问权限。"));
             }
             return true;
         case AmiToolEventUsagePrevPage:

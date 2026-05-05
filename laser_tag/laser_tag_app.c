@@ -71,7 +71,7 @@ static void laser_tag_app_draw_callback(Canvas* canvas, void* context) {
     if(app->state == LaserTagStateSplashScreen) {
         canvas_clear(canvas);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 5, 20, "Laser Tag!");
+        canvas_draw_str(canvas, 5, 20, LASER_TAG_UI_TEXT("Laser Tag!", "激光对战!"));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 5, 40, "https://github.com/");
         canvas_draw_str(canvas, 5, 50, "RocketGod-git/");
@@ -86,17 +86,17 @@ static void laser_tag_app_draw_callback(Canvas* canvas, void* context) {
         canvas_draw_frame(canvas, 0, 0, 128, 64);
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 14, 13, "SELECT TEAM");
+        canvas_draw_str(canvas, 14, 13, LASER_TAG_UI_TEXT("SELECT TEAM", "选择队伍"));
 
         canvas_draw_line(canvas, 0, 16, 127, 16);
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 5, 30, "LEFT");
-        canvas_draw_str(canvas, 95, 30, "RIGHT");
+        canvas_draw_str(canvas, 5, 30, LASER_TAG_UI_TEXT("LEFT", "左"));
+        canvas_draw_str(canvas, 95, 30, LASER_TAG_UI_TEXT("RIGHT", "右"));
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 10, 45, "RED");
-        canvas_draw_str(canvas, 95, 45, "BLUE");
+        canvas_draw_str(canvas, 10, 45, LASER_TAG_UI_TEXT("RED", "红队"));
+        canvas_draw_str(canvas, 95, 45, LASER_TAG_UI_TEXT("BLUE", "蓝队"));
 
         // Gun icon for Red team
         canvas_draw_line(canvas, 10, 50, 25, 50);
@@ -124,7 +124,7 @@ static void laser_tag_app_draw_callback(Canvas* canvas, void* context) {
         canvas_set_font(canvas, FontPrimary);
 
         // Display "GAME OVER!" centered on the screen
-        canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignCenter, "GAME OVER!");
+        canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignCenter, LASER_TAG_UI_TEXT("GAME OVER!", "游戏结束!"));
 
         // Add a solid block border around the screen
         for(int x = 0; x < 128; x += 8) {
@@ -137,7 +137,7 @@ static void laser_tag_app_draw_callback(Canvas* canvas, void* context) {
         }
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 50, AlignCenter, AlignCenter, "Press OK to Restart");
+        canvas_draw_str_aligned(canvas, 64, 50, AlignCenter, AlignCenter, LASER_TAG_UI_TEXT("Press OK to Restart", "按 OK 重新开始"));
 
     } else if(app->view) {
         FURI_LOG_D(TAG, "Drawing game view");

@@ -43,21 +43,22 @@ void MTP_on_draw(Canvas* canvas, void* context) {
         canvas_set_bitmap_mode(canvas, true);
         canvas_draw_icon(canvas, 0, 14, &I_DFU_128x50);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 43, 10, "MTP Connection");
+        canvas_draw_str(canvas, 43, 10, MTP_UI_TEXT("MTP Connection", "MTP 连接"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 3, 22, "Disconnect or");
+        canvas_draw_str(canvas, 3, 22, MTP_UI_TEXT("Disconnect or", "请断开或"));
         canvas_draw_icon(canvas, 28, 23, &I_Pin_back_arrow_10x8);
-        canvas_draw_str(canvas, 3, 31, "Press");
+        canvas_draw_str(canvas, 3, 31, MTP_UI_TEXT("Press", "按"));
     } else {
         canvas_draw_icon(canvas, 1, 31, &I_Connect_me_62x31);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 43, 10, "MTP Connection");
-        canvas_draw_str(canvas, 10, 25, "Plug me into computer!");
+        canvas_draw_str(canvas, 43, 10, MTP_UI_TEXT("MTP Connection", "MTP 连接"));
+        canvas_draw_str(
+            canvas, 10, 25, MTP_UI_TEXT("Plug me into computer!", "请连接到电脑!"));
         canvas_draw_icon(canvas, 2, 2, &I_Pin_back_arrow_10x8);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 15, 10, "Exit");
-        canvas_draw_str(canvas, 61, 41, "Waiting for USB");
-        canvas_draw_str(canvas, 72, 50, "Connection...");
+        canvas_draw_str(canvas, 15, 10, MTP_UI_TEXT("Exit", "退出"));
+        canvas_draw_str(canvas, 61, 41, MTP_UI_TEXT("Waiting for USB", "等待 USB"));
+        canvas_draw_str(canvas, 72, 50, MTP_UI_TEXT("Connection...", "连接..."));
     }
 }
 

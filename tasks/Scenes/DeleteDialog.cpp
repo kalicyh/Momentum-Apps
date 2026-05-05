@@ -16,18 +16,18 @@ void FTasks::DeleteDialog::enter(void* context) noexcept
     auto* popup = GET_WIDGET_P(context, UFZ::DialogEx, Scenes::DELETE);
     auto* ctx = CTX(popup->application->getUserPointer());
 
-    ctx->tmpBuffer = R"(Do you want to delete the following note: ")";
+    ctx->tmpBuffer = std::string(TASKS_UI_TEXT("Do you want to delete the following note: \"", "是否删除以下笔记: \""));
     ctx->tmpBuffer += (*ctx->currentContainer)[ctx->currentNoteIndex].first.c_str(); // Call c_str() because appending doesn't work I guess??
-    ctx->tmpBuffer += R"("?)";
+    ctx->tmpBuffer += std::string(TASKS_UI_TEXT("\"?", "\"?"));
 
     popup->reset();
     popup->setContext(popup->application)
-            .setHeader("Delete note?", 64, 4, AlignCenter, AlignTop)
+            .setHeader(TASKS_UI_TEXT("Delete note?", "删除笔记?"), 64, 4, AlignCenter, AlignTop)
             .setIcon(-1, -1, nullptr)
             .setText(ctx->tmpBuffer.c_str(), 4, 16, AlignLeft, AlignTop)
-            .setLeftButtonText("No")
+            .setLeftButtonText(TASKS_UI_TEXT("No", "否"))
             .setCenterButtonText(nullptr)
-            .setRightButtonText("Yes")
+            .setRightButtonText(TASKS_UI_TEXT("Yes", "是"))
             .setResultCallback(callback);
     RENDER_VIEW(popup->application, Scenes::DELETE);
 }

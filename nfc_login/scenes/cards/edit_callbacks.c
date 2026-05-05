@@ -54,8 +54,12 @@ void app_edit_text_result_callback(void* context) {
         // Return to edit menu
         app->widget_state = 3;
         widget_reset(app->widget);
-        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Edit Card");
-        const char* items[] = {"Name", "Password", "UID", "Delete"};
+        widget_add_string_element(app->widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_LOGIN_UI_TEXT("Edit Card", "编辑卡片"));
+        const char* items[] = {
+            NFC_LOGIN_UI_TEXT("Name", "名称"),
+            NFC_LOGIN_UI_TEXT("Password", "密码"),
+            NFC_LOGIN_UI_TEXT("UID", "UID"),
+            NFC_LOGIN_UI_TEXT("Delete", "删除")};
         for(size_t i = 0; i < 4; i++) {
             char line[32];
             snprintf(line, sizeof(line), "%s %s", (i == app->edit_menu_index) ? ">" : " ", items[i]);

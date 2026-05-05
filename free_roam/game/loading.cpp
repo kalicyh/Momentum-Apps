@@ -72,18 +72,18 @@ void Loading::drawSpinner()
     draw->setFont(FONT_SIZE_SMALL);
     _pos.x = 0;
     _pos.y = 60;
-    draw->text(_pos, "Time Elapsed:", 0x0000);
+    draw->text(_pos, free_roam_UI_TEXT("Time Elapsed:", "已用时间:"), 0x0000);
     char timeStr[16];
     int seconds = timeElapsed / 10000;
     if (seconds < 60)
     {
         if (seconds <= 1)
         {
-            snprintf(timeStr, sizeof(timeStr), "%u second", seconds);
+            snprintf(timeStr, sizeof(timeStr), free_roam_UI_TEXT("%u second", "%u 秒"), seconds);
         }
         else
         {
-            snprintf(timeStr, sizeof(timeStr), "%u seconds", seconds);
+            snprintf(timeStr, sizeof(timeStr), free_roam_UI_TEXT("%u seconds", "%u 秒"), seconds);
         }
         _pos.x = 90;
         _pos.y = 60;

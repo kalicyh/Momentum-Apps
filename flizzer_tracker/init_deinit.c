@@ -103,59 +103,59 @@ FlizzerTrackerApp* init_tracker(
 
     submenu_add_item(
         tracker->pattern_submenu,
-        "Load song",
+        FLIZZER_TRACKER_UI_TEXT("Load song", "加载歌曲"),
         SUBMENU_PATTERN_LOAD_SONG,
         submenu_callback,
         tracker);
     submenu_add_item(
         tracker->pattern_submenu,
-        "Save song",
+        FLIZZER_TRACKER_UI_TEXT("Save song", "保存歌曲"),
         SUBMENU_PATTERN_SAVE_SONG,
         submenu_callback,
         tracker);
     submenu_add_item(
-        tracker->pattern_submenu, "Settings", SUBMENU_PATTERN_SETTINGS, submenu_callback, tracker);
+        tracker->pattern_submenu, FLIZZER_TRACKER_UI_TEXT("Settings", "设置"), SUBMENU_PATTERN_SETTINGS, submenu_callback, tracker);
     submenu_add_item(
-        tracker->pattern_submenu, "Help", SUBMENU_PATTERN_HELP, submenu_callback, tracker);
+        tracker->pattern_submenu, FLIZZER_TRACKER_UI_TEXT("Help", "帮助"), SUBMENU_PATTERN_HELP, submenu_callback, tracker);
     submenu_add_item(
-        tracker->pattern_submenu, "Exit", SUBMENU_PATTERN_EXIT, submenu_callback, tracker);
+        tracker->pattern_submenu, FLIZZER_TRACKER_UI_TEXT("Exit", "退出"), SUBMENU_PATTERN_EXIT, submenu_callback, tracker);
 
     submenu_add_item(
         tracker->instrument_submenu,
-        "Load instrument",
+        FLIZZER_TRACKER_UI_TEXT("Load instrument", "加载乐器"),
         SUBMENU_INSTRUMENT_LOAD,
         submenu_callback,
         tracker);
     submenu_add_item(
         tracker->instrument_submenu,
-        "Save instrument",
+        FLIZZER_TRACKER_UI_TEXT("Save instrument", "保存乐器"),
         SUBMENU_INSTRUMENT_SAVE,
         submenu_callback,
         tracker);
     submenu_add_item(
-        tracker->instrument_submenu, "Exit", SUBMENU_INSTRUMENT_EXIT, submenu_callback, tracker);
+        tracker->instrument_submenu, FLIZZER_TRACKER_UI_TEXT("Exit", "退出"), SUBMENU_INSTRUMENT_EXIT, submenu_callback, tracker);
 
     submenu_add_item(
         tracker->pattern_copypaste_submenu,
-        "Copy",
+        FLIZZER_TRACKER_UI_TEXT("Copy", "复制"),
         SUBMENU_PATTERN_COPYPASTE_COPY,
         submenu_copypaste_callback,
         tracker);
     submenu_add_item(
         tracker->pattern_copypaste_submenu,
-        "Paste",
+        FLIZZER_TRACKER_UI_TEXT("Paste", "粘贴"),
         SUBMENU_PATTERN_COPYPASTE_PASTE,
         submenu_copypaste_callback,
         tracker);
     submenu_add_item(
         tracker->pattern_copypaste_submenu,
-        "Cut",
+        FLIZZER_TRACKER_UI_TEXT("Cut", "剪切"),
         SUBMENU_PATTERN_COPYPASTE_CUT,
         submenu_copypaste_callback,
         tracker);
     submenu_add_item(
         tracker->pattern_copypaste_submenu,
-        "Clear",
+        FLIZZER_TRACKER_UI_TEXT("Clear", "清除"),
         SUBMENU_PATTERN_COPYPASTE_CLEAR,
         submenu_copypaste_callback,
         tracker);
@@ -184,7 +184,7 @@ FlizzerTrackerApp* init_tracker(
 
     item = variable_item_list_add(
         tracker->settings_list,
-        "Audio output",
+        FLIZZER_TRACKER_UI_TEXT("Audio output", "音频输出"),
         AUDIO_MODES_COUNT,
         audio_output_changed_callback,
         tracker);
@@ -200,13 +200,13 @@ FlizzerTrackerApp* init_tracker(
     widget_add_button_element(
         tracker->overwrite_file_widget,
         GuiButtonTypeLeft,
-        "No",
+        FLIZZER_TRACKER_UI_TEXT("No", "否"),
         (ButtonCallback)overwrite_file_widget_no_input_callback,
         tracker);
     widget_add_button_element(
         tracker->overwrite_file_widget,
         GuiButtonTypeRight,
-        "Yes",
+        FLIZZER_TRACKER_UI_TEXT("Yes", "是"),
         (ButtonCallback)overwrite_file_widget_yes_input_callback,
         tracker);
 
@@ -216,7 +216,9 @@ FlizzerTrackerApp* init_tracker(
         0,
         128,
         64,
-        "This song file already exists,\n do you want to overwrite it?");
+        FLIZZER_TRACKER_UI_TEXT(
+            "This song file already exists,\n do you want to overwrite it?",
+            "此歌曲文件已存在，\n是否覆盖？"));
 
     view_dispatcher_add_view(
         tracker->view_dispatcher,
@@ -228,13 +230,13 @@ FlizzerTrackerApp* init_tracker(
     widget_add_button_element(
         tracker->overwrite_instrument_file_widget,
         GuiButtonTypeLeft,
-        "No",
+        FLIZZER_TRACKER_UI_TEXT("No", "否"),
         (ButtonCallback)overwrite_instrument_file_widget_no_input_callback,
         tracker);
     widget_add_button_element(
         tracker->overwrite_instrument_file_widget,
         GuiButtonTypeRight,
-        "Yes",
+        FLIZZER_TRACKER_UI_TEXT("Yes", "是"),
         (ButtonCallback)overwrite_instrument_file_widget_yes_input_callback,
         tracker);
 
@@ -244,7 +246,9 @@ FlizzerTrackerApp* init_tracker(
         0,
         128,
         64,
-        "This instrument file already\nexists, do you want to\noverwrite it?");
+        FLIZZER_TRACKER_UI_TEXT(
+            "This instrument file already\nexists, do you want to\noverwrite it?",
+            "此乐器文件已存在，\n是否覆盖？"));
 
     view_dispatcher_add_view(
         tracker->view_dispatcher,

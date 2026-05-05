@@ -197,10 +197,10 @@ void draw_ui(Canvas* canvas, GeometryDashApp* app) {
     }
     if (progress > 100) progress = 100;
     if (progress < 0) progress = 0; // Добавлена проверка на отрицательное значение
-    snprintf(buffer, sizeof(buffer), "Progress: %d%%", progress);
+    snprintf(buffer, sizeof(buffer), GEOMETRY_FLIP_UI_TEXT("Progress: %d%%", "进度: %d%%"), progress);
     canvas_draw_str(canvas, 2, 10, buffer);
     if(app->state == GameStatePlaying || app->state == GameStateGameOver || app->state == GameStateWin) {
-        snprintf(buffer, sizeof(buffer), "Level: %s", app->current_level.name);
+        snprintf(buffer, sizeof(buffer), GEOMETRY_FLIP_UI_TEXT("Level: %s", "关卡: %s"), app->current_level.name);
         canvas_draw_str(canvas, 2, 20, buffer);
     }
 }
@@ -214,12 +214,12 @@ void draw_game_scene(Canvas* canvas, GeometryDashApp* app) {
 
     if (app->state == GameStateMenu) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignTop, "Geometry Dash");
+        canvas_draw_str_aligned(canvas, 64, 5, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Geometry Dash", "几何冲刺"));
         canvas_set_font(canvas, FontSecondary);
         size_t file_count = LevelFileArray_size(app->level_files);
         if (file_count == 0) {
-             canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignTop, "No levels found!");
-             canvas_draw_str_aligned(canvas, 64, 45, AlignCenter, AlignTop, "Put .gflvl files in");
+             canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("No levels found!", "未找到关卡!"));
+             canvas_draw_str_aligned(canvas, 64, 45, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Put .gflvl files in", "请将 .gflvl 文件放入"));
              canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, GD_APP_DATA_PATH);
              return;
         }
@@ -248,19 +248,19 @@ void draw_game_scene(Canvas* canvas, GeometryDashApp* app) {
 
     if (app->state == GameStateGameOver) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignTop, "Game Over!");
+        canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Game Over!", "游戏结束!"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignTop, "Press OK to Restart");
-        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, "Press BACK to Menu");
+        canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Press OK to Restart", "按 OK 重新开始"));
+        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Press BACK to Menu", "按返回回菜单"));
         return;
     }
 
     if (app->state == GameStateWin) {
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignTop, "Level Complete!");
+        canvas_draw_str_aligned(canvas, 64, 20, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Level Complete!", "关卡完成!"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignTop, "Press OK to Restart");
-        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, "Press BACK to Menu");
+        canvas_draw_str_aligned(canvas, 64, 40, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Press OK to Restart", "按 OK 重新开始"));
+        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, GEOMETRY_FLIP_UI_TEXT("Press BACK to Menu", "按返回回菜单"));
         return;
     }
 

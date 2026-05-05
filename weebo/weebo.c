@@ -51,7 +51,7 @@ bool weebo_load_key_retail(Weebo* weebo) {
 
 bool weebo_load_figure(Weebo* weebo, FuriString* path, bool show_dialog) {
     bool parsed = false;
-    FuriString* reason = furi_string_alloc_set("Couldn't load file");
+    FuriString* reason = furi_string_alloc_set(WEEBO_UI_TEXT("Couldn't load file", "无法加载文件"));
     uint8_t buffer[NTAG215_SIZE];
     memset(buffer, 0, sizeof(buffer));
 
@@ -65,19 +65,19 @@ bool weebo_load_figure(Weebo* weebo, FuriString* path, bool show_dialog) {
 
         NfcProtocol protocol = nfc_device_get_protocol(nfc_device);
         if(protocol != NfcProtocolMfUltralight) {
-            furi_string_printf(reason, "Not Ultralight protocol");
+            furi_string_printf(reason, WEEBO_UI_TEXT("Not Ultralight protocol", "非 Ultralight 协议"));
             break;
         }
 
         const MfUltralightData* data = nfc_device_get_data(nfc_device, NfcProtocolMfUltralight);
         if(data->type != MfUltralightTypeNTAG215) {
-            furi_string_printf(reason, "Not NTAG215");
+            furi_string_printf(reason, WEEBO_UI_TEXT("Not NTAG215", "非 NTAG215"));
             break;
         }
 
         if(!mf_ultralight_is_all_data_read(data)) {
             //TODO: check is the missing data is the PWD and/or PACK and fill that in
-            furi_string_printf(reason, "Incomplete data");
+            furi_string_printf(reason, WEEBO_UI_TEXT("Incomplete data", "数据不完整"));
             break;
         }
 
@@ -86,7 +86,7 @@ bool weebo_load_figure(Weebo* weebo, FuriString* path, bool show_dialog) {
         weebo_calculate_pwd(uid, pwd);
 
         if(memcmp(data->page[133].data, pwd, sizeof(pwd)) != 0) {
-            furi_string_printf(reason, "Wrong password");
+            furi_string_printf(reason, WEEBO_UI_TEXT("Wrong password", "密码错误"));
             break;
         }
 
@@ -154,15 +154,15 @@ bool weebo_get_figure_form(Weebo* weebo, FuriString* name) {
     FURI_LOG_D(TAG, "form = %02x", form);
     switch(form) {
     case 0x00:
-        furi_string_set_str(name, "Figure");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Figure", "手办"));
         parsed = true;
         break;
     case 0x01:
-        furi_string_set_str(name, "Card");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Card", "卡片"));
         parsed = true;
         break;
     case 0x02:
-        furi_string_set_str(name, "Yarn");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Yarn", "毛线"));
         parsed = true;
         break;
     default:
@@ -178,63 +178,63 @@ bool weebo_get_figure_series(Weebo* weebo, FuriString* name) {
     uint8_t series_id = weebo->figure[UNPACKED_FIGURE_ID + 6];
     switch(series_id) {
     case 0x00:
-        furi_string_set_str(name, "Smash Bros");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Smash Bros", "任天堂明星大乱斗"));
         parsed = true;
         break;
     case 0x01:
-        furi_string_set_str(name, "Mario Bros");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Mario Bros", "马力欧兄弟"));
         parsed = true;
         break;
     case 0x02:
-        furi_string_set_str(name, "Chibi Robo");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Chibi Robo", "机器人大冒险"));
         parsed = true;
         break;
     case 0x03:
-        furi_string_set_str(name, "Yarn Yoshi");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Yarn Yoshi", "毛线耀西"));
         parsed = true;
         break;
     case 0x04:
-        furi_string_set_str(name, "Splatoon");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Splatoon", "斯普拉遁"));
         parsed = true;
         break;
     case 0x05:
-        furi_string_set_str(name, "Animal Crossing");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Animal Crossing", "动物森友会"));
         parsed = true;
         break;
     case 0x06:
-        furi_string_set_str(name, "8-bit Mario");
+        furi_string_set_str(name, WEEBO_UI_TEXT("8-bit Mario", "8位马力欧"));
         parsed = true;
         break;
     case 0x07:
-        furi_string_set_str(name, "Skylanders");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Skylanders", "小龙斯派罗"));
         parsed = true;
         break;
     case 0x09:
-        furi_string_set_str(name, "Legend of Zelda");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Legend of Zelda", "塞尔达传说"));
         parsed = true;
         break;
     case 0x0A:
-        furi_string_set_str(name, "Shovel Knight");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Shovel Knight", "铲子骑士"));
         parsed = true;
         break;
     case 0x0C:
-        furi_string_set_str(name, "Kirby");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Kirby", "星之卡比"));
         parsed = true;
         break;
     case 0x0D:
-        furi_string_set_str(name, "Pokken");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Pokken", "口袋铁拳"));
         parsed = true;
         break;
     case 0x0F:
-        furi_string_set_str(name, "Monster Hunter");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Monster Hunter", "怪物猎人"));
         parsed = true;
         break;
     case 0x14:
-        furi_string_set_str(name, "Super Mario Cereal");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Super Mario Cereal", "马力欧麦片"));
         parsed = true;
         break;
     case 0x1B:
-        furi_string_set_str(name, "Xenoblade Chronicles");
+        furi_string_set_str(name, WEEBO_UI_TEXT("Xenoblade Chronicles", "异度神剑"));
         parsed = true;
         break;
     default:

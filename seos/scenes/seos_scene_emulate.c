@@ -9,7 +9,7 @@ void seos_scene_emulate_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seos->popup;
-    popup_set_header(popup, "Emulating", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEOS_UI_TEXT("Emulating", "模拟中"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinSend_97x61);
 
     nfc_device_load(seos->nfc_device, APP_ASSETS_PATH("seos.nfc"));
@@ -30,18 +30,22 @@ bool seos_scene_emulate_on_event(void* context, SceneManagerEvent event) {
 
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == SeosCustomEventEmulate) {
-            popup_set_header(popup, "Emulating", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, SEOS_UI_TEXT("Emulating", "模拟中"), 68, 30, AlignLeft, AlignTop);
         } else if(event.event == SeosCustomEventAIDSelected) {
-            popup_set_header(popup, "AID\nSelected", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("AID\nSelected", "AID\n已选择"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventADFMatched) {
-            popup_set_header(popup, "ADF\nMatched", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("ADF\nMatched", "ADF\n已匹配"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventAuthenticated) {
-            popup_set_header(popup, "Auth'd", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Auth'd", "已认证"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventSIORequested) {
-            popup_set_header(popup, "SIO\nRequested", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("SIO\nRequested", "SIO\n已请求"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     }

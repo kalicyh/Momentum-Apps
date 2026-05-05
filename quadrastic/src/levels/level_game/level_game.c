@@ -70,11 +70,11 @@ level_game_alloc(Level* level, GameManager* manager, void* _level_context)
       level_add_entity(level, &context_menu_description);
 
     context_menu_add_item(
-      level_context->pause_menu, "Resume", 0, on_resume_clicked, level);
+      level_context->pause_menu, UI_TEXT("Resume", "继续"), 0, on_resume_clicked, level);
     context_menu_add_item(
-      level_context->pause_menu, "Menu", 1, on_menu_clicked, manager);
+      level_context->pause_menu, UI_TEXT("Menu", "菜单"), 1, on_menu_clicked, manager);
     context_menu_add_item(
-      level_context->pause_menu, "Quit", 2, on_quit_clicked, manager);
+      level_context->pause_menu, UI_TEXT("Quit", "退出"), 2, on_quit_clicked, manager);
 
     context_menu_back_callback_set(
       level_context->pause_menu, (ContextMenuBackCallback)resume_game, level);

@@ -213,7 +213,7 @@ static void clock_render_callback(Canvas* const canvas, void* ctx) {
             date_pct_string, sizeof(date_pct_string), "%s   %u%%", date_string, state->battery_pct);
         canvas_draw_str_aligned(
             canvas, 64, 20, AlignCenter, AlignTop, date_pct_string); // DRAW DATE + BATTERY
-        elements_button_left(canvas, "Reset");
+        elements_button_left(canvas, CLOCK_UI_TEXT("Reset", "重置"));
     } else {
         canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignCenter, time_string);
         canvas_set_font(canvas, FontSecondary);
@@ -234,9 +234,9 @@ static void clock_render_callback(Canvas* const canvas, void* ctx) {
         }
     }
     if(timer_running) {
-        elements_button_center(canvas, "Stop");
+        elements_button_center(canvas, CLOCK_UI_TEXT("Stop", "停止"));
     } else if(timer_start_timestamp != 0 && !timer_running) {
-        elements_button_center(canvas, "Start");
+        elements_button_center(canvas, CLOCK_UI_TEXT("Start", "开始"));
     }
 }
 

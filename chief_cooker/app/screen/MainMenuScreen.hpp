@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CHIEF_COOKER_UI_TEXT(en, zh) (zh)
+#else
+#define CHIEF_COOKER_UI_TEXT(en, zh) (en)
+#endif
+
 #include "app/AppConfig.hpp"
 
 #include "lib/ui/view/UiView.hpp"
@@ -21,9 +27,9 @@ public:
         this->config = config;
 
         menuView = new SubMenuUiView("Chief Cooker");
-        menuView->AddItem("Scan for station signals", HANDLER_1ARG(&MainMenuScreen::scanStationsMenuPressed));
-        menuView->AddItem("Saved stations database", HANDLER_1ARG(&MainMenuScreen::stationDatabasePressed));
-        menuView->AddItem("About / Manual", HANDLER_1ARG(&MainMenuScreen::aboutPressed));
+        menuView->AddItem(CHIEF_COOKER_UI_TEXT("Scan for station signals", "扫描电台信号"), HANDLER_1ARG(&MainMenuScreen::scanStationsMenuPressed));
+        menuView->AddItem(CHIEF_COOKER_UI_TEXT("Saved stations database", "已保存电台数据库"), HANDLER_1ARG(&MainMenuScreen::stationDatabasePressed));
+        menuView->AddItem(CHIEF_COOKER_UI_TEXT("About / Manual", "关于 / 说明"), HANDLER_1ARG(&MainMenuScreen::aboutPressed));
         menuView->SetOnDestroyHandler(HANDLER(&MainMenuScreen::destroy));
     }
 
@@ -38,9 +44,9 @@ private:
     }
 
     void stationDatabasePressed(uint32_t) {
-        SubMenuUiView* savedMenuView = new SubMenuUiView("Select database");
-        savedMenuView->AddItem("Saved by you", HANDLER_1ARG(&MainMenuScreen::savedStationsPressed));
-        savedMenuView->AddItem("Autosaved", HANDLER_1ARG(&MainMenuScreen::autosavedStationsPressed));
+        SubMenuUiView* savedMenuView = new SubMenuUiView(CHIEF_COOKER_UI_TEXT("Select database", "选择数据库"));
+        savedMenuView->AddItem(CHIEF_COOKER_UI_TEXT("Saved by you", "手动保存"), HANDLER_1ARG(&MainMenuScreen::savedStationsPressed));
+        savedMenuView->AddItem(CHIEF_COOKER_UI_TEXT("Autosaved", "自动保存"), HANDLER_1ARG(&MainMenuScreen::autosavedStationsPressed));
         UiManager::GetInstance()->PushView(savedMenuView);
     }
 
@@ -67,7 +73,7 @@ private:
         UNUSED(index);
 
         Notification::Play(&NOTIFICATION_PAGER_RECEIVE);
-        menuView->SetItemLabel(index, "Developed by Denr01!");
+        menuView->SetItemLabel(index, CHIEF_COOKER_UI_TEXT("Developed by Denr01!", "由 Denr01 开发！"));
     }
 
     void destroy() {

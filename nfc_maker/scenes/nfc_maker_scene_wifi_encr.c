@@ -9,7 +9,7 @@ void nfc_maker_scene_wifi_encr_on_enter(void* context) {
     NfcMaker* app = context;
     Submenu* submenu = app->submenu;
 
-    submenu_set_header(submenu, "Encryption Type:");
+    submenu_set_header(submenu, NFC_MAKER_UI_TEXT("Encryption Type:", "加密类型:"));
 
     submenu_add_item(
         submenu, "AES", WifiEncryptionAes, nfc_maker_scene_wifi_encr_submenu_callback, app);
@@ -21,7 +21,11 @@ void nfc_maker_scene_wifi_encr_on_enter(void* context) {
         submenu, "TKIP", WifiEncryptionTkip, nfc_maker_scene_wifi_encr_submenu_callback, app);
 
     submenu_add_item(
-        submenu, "None", WifiEncryptionNone, nfc_maker_scene_wifi_encr_submenu_callback, app);
+        submenu,
+        NFC_MAKER_UI_TEXT("None", "无"),
+        WifiEncryptionNone,
+        nfc_maker_scene_wifi_encr_submenu_callback,
+        app);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(app->scene_manager, NfcMakerSceneWifiEncr));

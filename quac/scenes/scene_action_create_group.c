@@ -24,7 +24,7 @@ void scene_action_create_group_on_enter(void* context) {
     App* app = context;
     TextInput* text = app->text_input;
 
-    text_input_set_header_text(text, "Enter new group name:");
+    text_input_set_header_text(text, QUAC_UI_TEXT("Enter new group name:", "输入新组名:"));
 
     app->temp_cstr[0] = 0;
     text_input_set_result_callback(
@@ -69,7 +69,7 @@ bool scene_action_create_group_on_event(void* context, SceneManagerEvent event) 
                 FURI_LOG_E(
                     TAG, "Create Group failed! %s", filesystem_api_error_get_desc(fs_result));
                 FuriString* error_msg = furi_string_alloc_printf(
-                    "Create Group failed!\nError: %s", filesystem_api_error_get_desc(fs_result));
+                    QUAC_UI_TEXT("Create Group failed!\nError: %s", "创建分组失败!\n错误: %s"), filesystem_api_error_get_desc(fs_result));
                 dialog_message_show_storage_error(app->dialog, furi_string_get_cstr(error_msg));
                 furi_string_free(error_msg);
             }

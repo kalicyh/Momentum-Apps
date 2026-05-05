@@ -225,32 +225,32 @@ static void flipvalo_config_edit_draw(Canvas* canvas, struct flipvalo_config_edi
         case FvConfigEditInitDelay:
             line_value = &view->config->init_delay_msec;
             line_type = FvConfigEditTypeTimer;
-            line_label = "Init Time";
+            line_label = (char*)INTERVALOMETER_UI_TEXT("Init Time", "初始时间");
             break;
         case FvConfigEditShotDelay:
             line_value = &view->config->interval_delay_msec;
             line_type = FvConfigEditTypeTimer;
-            line_label = "Seq Time";
+            line_label = (char*)INTERVALOMETER_UI_TEXT("Seq Time", "序列时间");
             break;
         case FvConfigEditShotCount:
             line_value = &view->config->shot_count;
             line_type = FvConfigEditTypeCount;
-            line_label = "Seq Count";
+            line_label = (char*)INTERVALOMETER_UI_TEXT("Seq Count", "序列计数");
             break;
         case FvConfigEditBurstDelay:
             line_value = &view->config->burst_delay_msec;
             line_type = FvConfigEditTypeTimer;
-            line_label = "Brst Time";
+            line_label = (char*)INTERVALOMETER_UI_TEXT("Brst Time", "连拍时间");
             break;
         case FvConfigEditBurstCount:
             line_value = &view->config->burst_count;
             line_type = FvConfigEditTypeCount;
-            line_label = "Brst Count";
+            line_label = (char*)INTERVALOMETER_UI_TEXT("Brst Count", "连拍计数");
             break;
         case FvConfigEditTrigger:
             line_value = NULL;
             line_type = FvConfigEditTypeEnum;
-            line_label = "Trig Type";
+            line_label = (char*)INTERVALOMETER_UI_TEXT("Trig Type", "触发类型");
             line_disp_str = flipvalo_get_trigger(view->config->trigger)->display_name;
             break;
         default:
@@ -603,15 +603,15 @@ static void render_callback(Canvas* const canvas, void* ctx) {
             (elapsed_msec / 1000) % 60);
         canvas_draw_str_aligned(
             canvas, 4, 8, AlignLeft, AlignCenter, furi_string_get_cstr(temp_str));
-        furi_string_printf(temp_str, "Shot: %d", fv_priv->run_state.shot_cur);
+        furi_string_printf(temp_str, INTERVALOMETER_UI_TEXT("Shot: %d", "拍摄: %d"), fv_priv->run_state.shot_cur);
         canvas_draw_str_aligned(
             canvas, 124, 8, AlignRight, AlignCenter, furi_string_get_cstr(temp_str));
-        elements_button_left(canvas, "Cfg");
-        elements_button_right(canvas, "Snap");
+        elements_button_left(canvas, INTERVALOMETER_UI_TEXT("Cfg", "配置"));
+        elements_button_right(canvas, INTERVALOMETER_UI_TEXT("Snap", "拍照"));
         if(fv_priv->run_state.state == FVDone) {
-            elements_button_center(canvas, "Start");
+            elements_button_center(canvas, INTERVALOMETER_UI_TEXT("Start", "开始"));
         } else {
-            elements_button_center(canvas, "Stop ");
+            elements_button_center(canvas, INTERVALOMETER_UI_TEXT("Stop ", "停止 "));
         }
     } else if(fv_priv->ui_scene == FVSceneConfig) {
         flipvalo_config_edit_draw(canvas, &fv_priv->config_edit_view);

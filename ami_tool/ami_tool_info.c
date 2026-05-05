@@ -125,17 +125,17 @@ static bool ami_tool_info_format_uid_string(
 static const char* ami_tool_info_error_to_string(MfUltralightError error) {
     switch(error) {
     case MfUltralightErrorNone:
-        return "No error";
+        return AMI_TOOL_UI_TEXT("No error", "无错误");
     case MfUltralightErrorNotPresent:
-        return "Tag not present";
+        return AMI_TOOL_UI_TEXT("Tag not present", "标签不存在");
     case MfUltralightErrorProtocol:
-        return "Protocol error";
+        return AMI_TOOL_UI_TEXT("Protocol error", "协议错误");
     case MfUltralightErrorAuth:
-        return "Authentication failed";
+        return AMI_TOOL_UI_TEXT("Authentication failed", "认证失败");
     case MfUltralightErrorTimeout:
-        return "Timed out";
+        return AMI_TOOL_UI_TEXT("Timed out", "超时");
     default:
-        return "Unknown error";
+        return AMI_TOOL_UI_TEXT("Unknown error", "未知错误");
     }
 }
 
@@ -490,7 +490,8 @@ static void ami_tool_info_show_usage_page(AmiToolApp* app) {
 
     if(!app->usage_entries || app->usage_page_count == 0) {
         widget_add_text_scroll_element(
-            app->info_widget, 2, 0, 124, 60, "No usage data available for this Amiibo.");
+            app->info_widget, 2, 0, 124, 60, AMI_TOOL_UI_TEXT("No usage data available for this Amiibo.",
+                                                                "此 Amiibo 没有可用的使用数据。"));
         view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewInfo);
         app->usage_info_visible = true;
         app->info_actions_visible = false;
@@ -505,26 +506,31 @@ static void ami_tool_info_show_usage_page(AmiToolApp* app) {
 
     AmiToolUsageEntry* entry = &app->usage_entries[app->usage_page_index];
     furi_string_reset(app->text_box_store);
-    furi_string_cat_printf(app->text_box_store, "\e#Usage Info %u/%u\n\n", (unsigned)(app->usage_page_index + 1), (unsigned)app->usage_page_count);
-    furi_string_cat_printf(app->text_box_store, "Game: %s\n", entry->game);
+    furi_string_cat_printf(app->text_box_store, "\e#%s %u/%u\n\n",
+        AMI_TOOL_UI_TEXT("Usage Info", "使用信息"),
+        (unsigned)(app->usage_page_index + 1), (unsigned)app->usage_page_count);
+    furi_string_cat_printf(app->text_box_store, "%s %s\n",
+        AMI_TOOL_UI_TEXT("Game:", "游戏:"), entry->game);
     if(entry->has_usage && entry->usage && entry->usage[0] != '\0') {
-        furi_string_cat(app->text_box_store, "Usage: ");
+        furi_string_cat(app->text_box_store, AMI_TOOL_UI_TEXT("Usage: ", "用法: "));
         furi_string_cat(app->text_box_store, entry->usage);
         furi_string_push_back(app->text_box_store, '\n');
     }
     furi_string_cat_printf(
-        app->text_box_store, "Writable: %s\n", entry->writable ? "Yes" : "No");
+        app->text_box_store, "%s %s\n",
+        AMI_TOOL_UI_TEXT("Writable:", "可写:"),
+        entry->writable ? AMI_TOOL_UI_TEXT("Yes", "是") : AMI_TOOL_UI_TEXT("No", "否"));
 
     widget_add_text_scroll_element(
         app->info_widget, 2, 0, 124, 60, furi_string_get_cstr(app->text_box_store));
 
     if(app->usage_page_index > 0) {
         widget_add_button_element(
-            app->info_widget, GuiButtonTypeLeft, "Prev", ami_tool_usage_button_callback, app);
+            app->info_widget, GuiButtonTypeLeft, AMI_TOOL_UI_TEXT("Prev", "上一页"), ami_tool_usage_button_callback, app);
     }
     if((app->usage_page_index + 1) < app->usage_page_count) {
         widget_add_button_element(
-            app->info_widget, GuiButtonTypeRight, "Next", ami_tool_usage_button_callback, app);
+            app->info_widget, GuiButtonTypeRight, AMI_TOOL_UI_TEXT("Next", "下一页"), ami_tool_usage_button_callback, app);
     }
 
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewInfo);
@@ -584,7 +590,7 @@ static void ami_tool_info_append_releases(FuriString* buffer, const char* releas
         return;
     }
 
-    furi_string_cat(buffer, "Released on:\n");
+    furi_string_cat(buffer, AMI_TOOL_UI_TEXT("Released on:\n", "发行日期:\n"));
     size_t len = strlen(releases);
     char* temp = malloc(len + 1);
     if(!temp) {
@@ -667,22 +673,24 @@ static void ami_tool_info_format_entry(
         }
     }
 
-    const char* name = (field_count > 0 && fields[0]) ? fields[0] : "Unknown";
-    const char* character = (field_count > 1 && fields[1]) ? fields[1] : "Unknown";
-    const char* series = (field_count > 2 && fields[2]) ? fields[2] : "Unknown";
-    const char* game_series = (field_count > 3 && fields[3]) ? fields[3] : "Unknown";
-    const char* type = (field_count > 4 && fields[4]) ? fields[4] : "Unknown";
-    const char* releases = (field_count > 5 && fields[5]) ? fields[5] : "N/A";
+    const char* unknown = AMI_TOOL_UI_TEXT("Unknown", "未知");
+    const char* na = AMI_TOOL_UI_TEXT("N/A", "无");
+    const char* name = (field_count > 0 && fields[0]) ? fields[0] : unknown;
+    const char* character = (field_count > 1 && fields[1]) ? fields[1] : unknown;
+    const char* series = (field_count > 2 && fields[2]) ? fields[2] : unknown;
+    const char* game_series = (field_count > 3 && fields[3]) ? fields[3] : unknown;
+    const char* type = (field_count > 4 && fields[4]) ? fields[4] : unknown;
+    const char* releases = (field_count > 5 && fields[5]) ? fields[5] : na;
 
     furi_string_cat_printf(app->text_box_store, "\e#%s\n\n", name);
     ami_tool_info_append_uid(app, app->text_box_store);
     if(id_hex && id_hex[0] != '\0') {
         ami_tool_info_append_field(app->text_box_store, "ID", id_hex);
     }
-    ami_tool_info_append_field(app->text_box_store, "Character", character);
-    ami_tool_info_append_field(app->text_box_store, "Amiibo Series", series);
-    ami_tool_info_append_field(app->text_box_store, "Game Series", game_series);
-    ami_tool_info_append_field(app->text_box_store, "Type", type);
+    ami_tool_info_append_field(app->text_box_store, AMI_TOOL_UI_TEXT("Character", "角色"), character);
+    ami_tool_info_append_field(app->text_box_store, AMI_TOOL_UI_TEXT("Amiibo Series", "Amiibo 系列"), series);
+    ami_tool_info_append_field(app->text_box_store, AMI_TOOL_UI_TEXT("Game Series", "游戏系列"), game_series);
+    ami_tool_info_append_field(app->text_box_store, AMI_TOOL_UI_TEXT("Type", "类型"), type);
     ami_tool_info_append_releases(app->text_box_store, releases);
 
     free(temp);
@@ -749,7 +757,7 @@ static void ami_tool_info_show_widget_text(AmiToolApp* app, const char* text) {
     widget_reset(app->info_widget);
     widget_add_text_scroll_element(app->info_widget, 2, 0, 124, 60, text);
     widget_add_button_element(
-        app->info_widget, GuiButtonTypeCenter, "OK", ami_tool_info_widget_callback, app);
+        app->info_widget, GuiButtonTypeCenter, AMI_TOOL_UI_TEXT("OK", "确认"), ami_tool_info_widget_callback, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewInfo);
     app->usage_info_visible = false;
 }
@@ -778,7 +786,8 @@ void ami_tool_info_show_page(AmiToolApp* app, const char* id_hex, bool from_read
     if(!app->tag_data || !app->tag_data_valid) {
         ami_tool_info_show_text_info(
             app,
-            "No Amiibo dump available.\nRead a tag or generate one, then try again.");
+            AMI_TOOL_UI_TEXT("No Amiibo dump available.\nRead a tag or generate one, then try again.",
+                             "没有可用的 Amiibo 数据。\n请读取标签或生成一个后重试。"));
         return;
     }
 
@@ -797,33 +806,38 @@ void ami_tool_info_show_page(AmiToolApp* app, const char* id_hex, bool from_read
     } else {
         furi_string_reset(app->text_box_store);
         if(from_read) {
-            furi_string_cat(app->text_box_store, "Valid NTAG215 detected.\n");
+            furi_string_cat(app->text_box_store, AMI_TOOL_UI_TEXT("Valid NTAG215 detected.\n", "检测到有效 NTAG215。\n"));
             if(id_hex && id_hex[0] != '\0') {
                 furi_string_cat_printf(app->text_box_store, "ID: %s\n", id_hex);
             }
             if(asset_error) {
                 furi_string_cat(
                     app->text_box_store,
-                    "\nUnable to open amiibo.dat.\nInstall or update the assets.");
+                    AMI_TOOL_UI_TEXT("\nUnable to open amiibo.dat.\nInstall or update the assets.",
+                                     "\n无法打开 amiibo.dat。\n请安装或更新资源。"));
             } else {
                 furi_string_cat(
                     app->text_box_store,
-                    "\nNo matching entry found.\nTag is unlikely to be an official Amiibo.");
+                    AMI_TOOL_UI_TEXT("\nNo matching entry found.\nTag is unlikely to be an official Amiibo.",
+                                     "\n未找到匹配项。\n该标签可能不是官方 Amiibo。"));
             }
         } else {
             if(asset_error) {
                 furi_string_cat(
                     app->text_box_store,
-                    "Unable to open amiibo.dat.\nInstall or update the assets.");
+                    AMI_TOOL_UI_TEXT("Unable to open amiibo.dat.\nInstall or update the assets.",
+                                     "无法打开 amiibo.dat。\n请安装或更新资源。"));
             } else if(id_hex && id_hex[0] != '\0') {
                 furi_string_cat_printf(
                     app->text_box_store,
-                    "Selected Amiibo ID:\n%s\nNo matching entry found.",
+                    AMI_TOOL_UI_TEXT("Selected Amiibo ID:\n%s\nNo matching entry found.",
+                                     "所选 Amiibo ID:\n%s\n未找到匹配项。"),
                     id_hex);
             } else {
                 furi_string_cat(
                     app->text_box_store,
-                    "No Amiibo ID provided.\nUnable to display details.");
+                    AMI_TOOL_UI_TEXT("No Amiibo ID provided.\nUnable to display details.",
+                                     "未提供 Amiibo ID。\n无法显示详细信息。"));
             }
         }
         ami_tool_info_append_uid(app, app->text_box_store);
@@ -838,7 +852,8 @@ bool ami_tool_info_show_usage(AmiToolApp* app) {
 
     if(!app->info_last_has_id || app->info_last_id[0] == '\0') {
         ami_tool_info_show_action_message(
-            app, "Usage data requires a valid Amiibo ID.\nRead or generate one first.");
+            app, AMI_TOOL_UI_TEXT("Usage data requires a valid Amiibo ID.\nRead or generate one first.",
+                                  "使用数据需要有效的 Amiibo ID。\n请先读取或生成一个。"));
         return false;
     }
 
@@ -864,13 +879,16 @@ bool ami_tool_info_show_usage(AmiToolApp* app) {
     if(!success) {
         if(asset_error) {
             ami_tool_info_show_action_message(
-                app, "Unable to open amiibo_usage.dat.\nInstall or update the assets.");
+                app, AMI_TOOL_UI_TEXT("Unable to open amiibo_usage.dat.\nInstall or update the assets.",
+                                      "无法打开 amiibo_usage.dat。\n请安装或更新资源。"));
         } else if(!found) {
             ami_tool_info_show_action_message(
-                app, "No usage info is available for this Amiibo.");
+                app, AMI_TOOL_UI_TEXT("No usage info is available for this Amiibo.",
+                                      "此 Amiibo 没有可用的使用信息。"));
         } else {
             ami_tool_info_show_action_message(
-                app, "Usage data is invalid.\nInstall or update the assets.");
+                app, AMI_TOOL_UI_TEXT("Usage data is invalid.\nInstall or update the assets.",
+                                      "使用数据无效。\n请安装或更新资源。"));
         }
     }
 
@@ -1069,14 +1087,14 @@ static int32_t ami_tool_info_write_worker(void* context) {
     MfUltralightData* target = mf_ultralight_alloc();
     if(!target) {
         ami_tool_info_write_send_event(
-            app, AmiToolEventInfoWriteFailed, "Unable to allocate tag buffer.");
+            app, AmiToolEventInfoWriteFailed, AMI_TOOL_UI_TEXT("Unable to allocate tag buffer.", "无法分配标签缓冲区。"));
         return 0;
     }
 
     while(true) {
         if(app->write_cancel_requested) {
             ami_tool_info_write_send_event(
-                app, AmiToolEventInfoWriteCancelled, "Write cancelled.");
+                app, AmiToolEventInfoWriteCancelled, AMI_TOOL_UI_TEXT("Write cancelled.", "写入已取消。"));
             goto cleanup;
         }
 
@@ -1093,7 +1111,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
         snprintf(
             message,
             sizeof(message),
-            "Unable to read tag: %s",
+            AMI_TOOL_UI_TEXT("Unable to read tag: %s", "无法读取标签: %s"),
             ami_tool_info_error_to_string(error));
         ami_tool_info_write_send_event(app, AmiToolEventInfoWriteFailed, message);
         goto cleanup;
@@ -1106,7 +1124,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
 
     if(target->type != MfUltralightTypeNTAG215) {
         ami_tool_info_write_send_event(
-            app, AmiToolEventInfoWriteFailed, "Detected tag is not an NTAG215.");
+            app, AmiToolEventInfoWriteFailed, AMI_TOOL_UI_TEXT("Detected tag is not an NTAG215.", "检测到的标签不是 NTAG215。"));
         goto cleanup;
     }
 
@@ -1114,7 +1132,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
     const uint8_t* target_uid = mf_ultralight_get_uid(target, &target_uid_len);
     if(!target_uid || target_uid_len < 7) {
         ami_tool_info_write_send_event(
-            app, AmiToolEventInfoWriteFailed, "Unable to read tag UID.");
+            app, AmiToolEventInfoWriteFailed, AMI_TOOL_UI_TEXT("Unable to read tag UID.", "无法读取标签 UID。"));
         goto cleanup;
     }
 
@@ -1122,7 +1140,8 @@ static int32_t ami_tool_info_write_worker(void* context) {
         ami_tool_info_write_send_event(
             app,
             AmiToolEventInfoWriteFailed,
-            "Failed to prepare Amiibo data. Install key_retail.bin and try again.");
+            AMI_TOOL_UI_TEXT("Failed to prepare Amiibo data. Install key_retail.bin and try again.",
+                             "准备 Amiibo 数据失败。请安装 key_retail.bin 后重试。"));
         goto cleanup;
     }
 
@@ -1135,7 +1154,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
     }
     if(total_pages <= 4) {
         ami_tool_info_write_send_event(
-            app, AmiToolEventInfoWriteFailed, "Detected tag does not have enough pages.");
+            app, AmiToolEventInfoWriteFailed, AMI_TOOL_UI_TEXT("Detected tag does not have enough pages.", "检测到的标签页数不足。"));
         goto cleanup;
     }
 
@@ -1151,7 +1170,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
             snprintf(
                 message,
                 sizeof(message),
-                "Write failed at page %u: %s",
+                AMI_TOOL_UI_TEXT("Write failed at page %u: %s", "写入第 %u 页失败: %s"),
                 page,
                 ami_tool_info_error_to_string(write_error));
             ami_tool_info_write_send_event(app, AmiToolEventInfoWriteFailed, message);
@@ -1167,7 +1186,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
             snprintf(
                 message,
                 sizeof(message),
-                "Config write failed (%u): %s",
+                AMI_TOOL_UI_TEXT("Config write failed (%u): %s", "配置写入失败 (%u): %s"),
                 page,
                 ami_tool_info_error_to_string(write_error));
             ami_tool_info_write_send_event(app, AmiToolEventInfoWriteFailed, message);
@@ -1181,7 +1200,7 @@ static int32_t ami_tool_info_write_worker(void* context) {
         snprintf(
             message,
             sizeof(message),
-            "Lock bits write failed: %s",
+            AMI_TOOL_UI_TEXT("Lock bits write failed: %s", "锁定位写入失败: %s"),
             ami_tool_info_error_to_string(write_error));
         ami_tool_info_write_send_event(app, AmiToolEventInfoWriteFailed, message);
         goto cleanup;
@@ -1208,7 +1227,8 @@ bool ami_tool_info_write_to_tag(AmiToolApp* app) {
 
     furi_string_set(
         app->text_box_store,
-        "Write Amiibo\n\nPlace an NTAG215 tag on the back of the Flipper.\nPress Back to cancel.");
+        AMI_TOOL_UI_TEXT("Write Amiibo\n\nPlace an NTAG215 tag on the back of the Flipper.\nPress Back to cancel.",
+                         "写入 Amiibo\n\n将 NTAG215 标签放在 Flipper 背面。\n按返回键取消。"));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewTextBox);
@@ -1290,7 +1310,7 @@ bool ami_tool_info_save_to_storage(AmiToolApp* app) {
             file_name = saved_path;
         }
         char message[128];
-        snprintf(message, sizeof(message), "Saved Amiibo as\n%s", file_name);
+        snprintf(message, sizeof(message), AMI_TOOL_UI_TEXT("Saved Amiibo as\n%s", "已将 Amiibo 保存为\n%s"), file_name);
         ami_tool_info_show_action_message(app, message);
     }
 
@@ -1326,34 +1346,34 @@ static void ami_tool_info_actions_submenu_callback(void* context, uint32_t index
 void ami_tool_info_show_actions_menu(AmiToolApp* app) {
     furi_assert(app);
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Amiibo Actions");
+    submenu_set_header(app->submenu, AMI_TOOL_UI_TEXT("Amiibo Actions", "Amiibo 操作"));
     submenu_add_item(
         app->submenu,
-        "Emulate",
+        AMI_TOOL_UI_TEXT("Emulate", "模拟"),
         AmiToolInfoActionMenuIndexEmulate,
         ami_tool_info_actions_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Usage Info",
+        AMI_TOOL_UI_TEXT("Usage Info", "使用信息"),
         AmiToolInfoActionMenuIndexUsageInfo,
         ami_tool_info_actions_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Change UID",
+        AMI_TOOL_UI_TEXT("Change UID", "更改 UID"),
         AmiToolInfoActionMenuIndexChangeUid,
         ami_tool_info_actions_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Write to Tag",
+        AMI_TOOL_UI_TEXT("Write to Tag", "写入标签"),
         AmiToolInfoActionMenuIndexWriteTag,
         ami_tool_info_actions_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Save to Storage",
+        AMI_TOOL_UI_TEXT("Save to Storage", "保存到存储"),
         AmiToolInfoActionMenuIndexSaveToStorage,
         ami_tool_info_actions_submenu_callback,
         app);
@@ -1370,9 +1390,9 @@ void ami_tool_info_show_action_message(AmiToolApp* app, const char* message) {
     if(message && message[0] != '\0') {
         furi_string_cat(app->text_box_store, message);
     } else {
-        furi_string_cat(app->text_box_store, "This action is not available yet.");
+        furi_string_cat(app->text_box_store, AMI_TOOL_UI_TEXT("This action is not available yet.", "此操作暂不可用。"));
     }
-    furi_string_cat(app->text_box_store, "\n\nPress Back to return.");
+    furi_string_cat(app->text_box_store, AMI_TOOL_UI_TEXT("\n\nPress Back to return.", "\n\n按返回键返回。"));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewTextBox);
@@ -1461,7 +1481,8 @@ bool ami_tool_info_start_emulation(AmiToolApp* app) {
 
     furi_string_set(
         app->text_box_store,
-        "Emulating Amiibo...\n\nPlace the back of the Flipper near the reader.\nPress Back to stop.");
+        AMI_TOOL_UI_TEXT("Emulating Amiibo...\n\nPlace the back of the Flipper near the reader.\nPress Back to stop.",
+                         "模拟 Amiibo 中...\n\n将 Flipper 背面靠近读卡器。\n按返回键停止。"));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewTextBox);
@@ -1502,7 +1523,7 @@ void ami_tool_info_handle_write_event(AmiToolApp* app, AmiToolCustomEvent event)
     switch(event) {
     case AmiToolEventInfoWriteStarted:
         app->write_waiting_for_tag = false;
-        furi_string_set(app->text_box_store, "Writing Amiibo...\nDo not remove the tag.");
+        furi_string_set(app->text_box_store, AMI_TOOL_UI_TEXT("Writing Amiibo...\nDo not remove the tag.", "写入 Amiibo 中...\n请勿移除标签。"));
         text_box_reset(app->text_box);
         text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
         view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewTextBox);
@@ -1522,8 +1543,8 @@ void ami_tool_info_handle_write_event(AmiToolApp* app, AmiToolCustomEvent event)
         app->write_cancel_requested = false;
         const char* message = app->write_result_message[0] != '\0'
                                   ? app->write_result_message
-                                  : ((event == AmiToolEventInfoWriteCancelled) ? "Write cancelled."
-                                                                               : "Unable to write tag.");
+                                  : ((event == AmiToolEventInfoWriteCancelled) ? AMI_TOOL_UI_TEXT("Write cancelled.", "写入已取消。")
+                                                                               : AMI_TOOL_UI_TEXT("Unable to write tag.", "无法写入标签。"));
         ami_tool_info_show_action_message(app, message);
         break;
     }
@@ -1539,7 +1560,7 @@ bool ami_tool_info_request_write_cancel(AmiToolApp* app) {
     }
 
     app->write_cancel_requested = true;
-    furi_string_set(app->text_box_store, "Cancelling write...\nPlease wait.");
+    furi_string_set(app->text_box_store, AMI_TOOL_UI_TEXT("Cancelling write...\nPlease wait.", "正在取消写入...\n请稍候。"));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewTextBox);

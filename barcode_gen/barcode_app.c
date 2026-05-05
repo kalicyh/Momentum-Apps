@@ -331,11 +331,11 @@ int32_t barcode_main(void* p) {
     view_dispatcher_attach_to_gui(app->view_dispatcher, app->gui, ViewDispatcherTypeFullscreen);
 
     app->main_menu = submenu_alloc();
-    submenu_add_item(app->main_menu, "Load Barcode", SelectBarcodeItem, submenu_callback, app);
+    submenu_add_item(app->main_menu, BARCODE_GEN_UI_TEXT("Load Barcode", "加载条码"), SelectBarcodeItem, submenu_callback, app);
     view_set_previous_callback(submenu_get_view(app->main_menu), exit_callback);
     view_dispatcher_add_view(app->view_dispatcher, MainMenuView, submenu_get_view(app->main_menu));
 
-    submenu_add_item(app->main_menu, "Edit Barcode", EditBarcodeItem, submenu_callback, app);
+    submenu_add_item(app->main_menu, BARCODE_GEN_UI_TEXT("Edit Barcode", "编辑条码"), EditBarcodeItem, submenu_callback, app);
 
     barcode_notifications = furi_record_open(RECORD_NOTIFICATION);
     // Save original brightness
@@ -363,7 +363,7 @@ int32_t barcode_main(void* p) {
      * Creating Create View
      ******************************/
     app->create_view = create_view_allocate(app);
-    submenu_add_item(app->main_menu, "Create Barcode", CreateBarcodeItem, submenu_callback, app);
+    submenu_add_item(app->main_menu, BARCODE_GEN_UI_TEXT("Create Barcode", "创建条码"), CreateBarcodeItem, submenu_callback, app);
     view_set_previous_callback(create_get_view(app->create_view), main_menu_callback);
     view_dispatcher_add_view(
         app->view_dispatcher, CreateBarcodeView, create_get_view(app->create_view));
@@ -378,38 +378,64 @@ int32_t barcode_main(void* p) {
         0,
         128,
         64,
-        "\e#Error Codes\n"
-        "\e#Wrong # Of Characters\n"
-        "The barcode data has too \nmany or too few characters\n"
-        "UPC-A: 11-12 characters\n"
-        "EAN-8: 7-8 characters\n"
-        "EAN-13: 12-13 characters\n"
-        "Code128C - even # of \ncharacters\n"
-        "\n"
-        "\e#Invalid Characters\n"
-        "The barcode data has invalid \ncharacters.\n"
-        "Ex: UPC-A, EAN-8, EAN-13 barcodes can only have \nnumbers while Code128 can \nhave almost any character\n"
-        "\n"
-        "\e#Unsupported Type\n"
-        "The barcode type is not \nsupported by this application\n"
-        "\n"
-        "\e#File Opening Error\n"
-        "The barcode file could not be opened. One reason could be \nthat the file no longer exists\n"
-        "\n"
-        "\e#Invalid File Data\n"
-        "The barcode file could not find the keys \"Type\" or \"Data\". \nThis usually occurs when you edit the file manually and \naccidently change the keys\n"
-        "\n"
-        "\e#Missing Encoding Table\n"
-        "The encoding table files are \nmissing. This only occurs \nwhen you need to handle the \nencoding files manually. If you \ndownload the files from the \napp store this should not \noccur\n"
-        "\n"
-        "\e#Encoding Table Error\n"
-        "This occurs when the \nprogram cannot find a \ncharacter in the encoding \ntable, meaning that either the\ncharacter isn't supported \nor the character is missing \nfrom the encoding table\n"
-        "");
+        BARCODE_GEN_UI_TEXT(
+            "\e#Error Codes\n"
+            "\e#Wrong # Of Characters\n"
+            "The barcode data has too \nmany or too few characters\n"
+            "UPC-A: 11-12 characters\n"
+            "EAN-8: 7-8 characters\n"
+            "EAN-13: 12-13 characters\n"
+            "Code128C - even # of \ncharacters\n"
+            "\n"
+            "\e#Invalid Characters\n"
+            "The barcode data has invalid \ncharacters.\n"
+            "Ex: UPC-A, EAN-8, EAN-13 barcodes can only have \nnumbers while Code128 can \nhave almost any character\n"
+            "\n"
+            "\e#Unsupported Type\n"
+            "The barcode type is not \nsupported by this application\n"
+            "\n"
+            "\e#File Opening Error\n"
+            "The barcode file could not be opened. One reason could be \nthat the file no longer exists\n"
+            "\n"
+            "\e#Invalid File Data\n"
+            "The barcode file could not find the keys \"Type\" or \"Data\". \nThis usually occurs when you edit the file manually and \naccidently change the keys\n"
+            "\n"
+            "\e#Missing Encoding Table\n"
+            "The encoding table files are \nmissing. This only occurs \nwhen you need to handle the \nencoding files manually. If you \ndownload the files from the \napp store this should not \noccur\n"
+            "\n"
+            "\e#Encoding Table Error\n"
+            "This occurs when the \nprogram cannot find a \ncharacter in the encoding \ntable, meaning that either the\ncharacter isn't supported \nor the character is missing \nfrom the encoding table\n",
+            "\e#错误代码\n"
+            "\e#字符数量错误\n"
+            "条码数据的字符数量\n过多或过少\n"
+            "UPC-A: 11-12个字符\n"
+            "EAN-8: 7-8个字符\n"
+            "EAN-13: 12-13个字符\n"
+            "Code128C - 偶数个字符\n"
+            "\n"
+            "\e#无效字符\n"
+            "条码数据包含无效字符\n"
+            "例如: UPC-A, EAN-8, EAN-13\n条码只能包含数字，而\nCode128可以包含几乎所有\n字符\n"
+            "\n"
+            "\e#不支持的类型\n"
+            "此应用程序不支持\n该条码类型\n"
+            "\n"
+            "\e#文件打开错误\n"
+            "无法打开条码文件。\n可能的原因是文件\n已不存在\n"
+            "\n"
+            "\e#无效的文件数据\n"
+            "条码文件中找不到\n\"Type\"或\"Data\"键。\n这通常发生在手动编辑\n文件时意外更改了键名\n"
+            "\n"
+            "\e#缺少编码表\n"
+            "编码表文件缺失。\n仅在需要手动处理\n编码文件时才会出现。\n从应用商店下载的\n文件通常不会出现\n此问题\n"
+            "\n"
+            "\e#编码表错误\n"
+            "当程序在编码表中\n找不到某个字符时\n会出现此错误，\n意味着该字符不受支持\n或编码表中缺少\n该字符\n"));
     view_set_previous_callback(widget_get_view(app->error_codes_widget), main_menu_callback);
     view_dispatcher_add_view(
         app->view_dispatcher, ErrorCodesWidgetView, widget_get_view(app->error_codes_widget));
     submenu_add_item(
-        app->main_menu, "Error Codes Info", ErrorCodesWidgetItem, submenu_callback, app);
+        app->main_menu, BARCODE_GEN_UI_TEXT("Error Codes Info", "错误代码信息"), ErrorCodesWidgetItem, submenu_callback, app);
 
     /*****************************
      * Creating About View
@@ -421,20 +447,31 @@ int32_t barcode_main(void* p) {
         0,
         128,
         64,
-        "This is a barcode generator\n"
-        "capable of generating UPC-A,\n"
-        "EAN-8, EAN-13, Code-39,\n"
-        "Codabar, and Code-128\n"
-        "\n"
-        "author: @Kingal1337\n"
-        "\n"
-        "For more information or\n"
-        "issues, go to\n"
-        "https://github.com/Kingal1337/flipper-barcode-generator");
+        BARCODE_GEN_UI_TEXT(
+            "This is a barcode generator\n"
+            "capable of generating UPC-A,\n"
+            "EAN-8, EAN-13, Code-39,\n"
+            "Codabar, and Code-128\n"
+            "\n"
+            "author: @Kingal1337\n"
+            "\n"
+            "For more information or\n"
+            "issues, go to\n"
+            "https://github.com/Kingal1337/flipper-barcode-generator",
+            "这是一个条码生成器\n"
+            "支持生成 UPC-A、\n"
+            "EAN-8、EAN-13、Code-39、\n"
+            "Codabar 和 Code-128\n"
+            "\n"
+            "作者: @Kingal1337\n"
+            "\n"
+            "如需更多信息或\n"
+            "报告问题，请访问\n"
+            "https://github.com/Kingal1337/flipper-barcode-generator"));
     view_set_previous_callback(widget_get_view(app->about_widget), main_menu_callback);
     view_dispatcher_add_view(
         app->view_dispatcher, AboutWidgetView, widget_get_view(app->about_widget));
-    submenu_add_item(app->main_menu, "About", AboutWidgetItem, submenu_callback, app);
+    submenu_add_item(app->main_menu, BARCODE_GEN_UI_TEXT("About", "关于"), AboutWidgetItem, submenu_callback, app);
 
     /*****************************
      * Creating Barcode View

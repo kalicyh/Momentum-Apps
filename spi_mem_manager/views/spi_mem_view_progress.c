@@ -1,4 +1,5 @@
 #include "spi_mem_view_progress.h"
+#include "../spi_mem_app_i.h"
 #include <gui/elements.h>
 
 struct SPIMemProgressView {
@@ -39,35 +40,35 @@ static void spi_mem_view_progress_draw_progress(Canvas* canvas, float progress) 
 
 static void
     spi_mem_view_progress_read_draw_callback(Canvas* canvas, SPIMemProgressViewModel* model) {
-    canvas_draw_str_aligned(canvas, 64, 4, AlignCenter, AlignTop, "Reading dump");
+    canvas_draw_str_aligned(canvas, 64, 4, AlignCenter, AlignTop, SPI_MEM_UI_TEXT("Reading dump", "正在读取"));
     spi_mem_view_progress_draw_progress(canvas, model->progress);
-    elements_button_left(canvas, "Cancel");
+    elements_button_left(canvas, SPI_MEM_UI_TEXT("Cancel", "取消"));
 }
 
 static void
     spi_mem_view_progress_draw_size_warning(Canvas* canvas, SPIMemProgressViewModel* model) {
     if(model->file_size > model->chip_size) {
-        canvas_draw_str_aligned(canvas, 64, 13, AlignCenter, AlignTop, "Size clamped to chip!");
+        canvas_draw_str_aligned(canvas, 64, 13, AlignCenter, AlignTop, SPI_MEM_UI_TEXT("Size clamped to chip!", "大小已限制为芯片容量!"));
     }
     if(model->chip_size > model->file_size) {
-        canvas_draw_str_aligned(canvas, 64, 13, AlignCenter, AlignTop, "Size clamped to file!");
+        canvas_draw_str_aligned(canvas, 64, 13, AlignCenter, AlignTop, SPI_MEM_UI_TEXT("Size clamped to file!", "大小已限制为文件大小!"));
     }
 }
 
 static void
     spi_mem_view_progress_verify_draw_callback(Canvas* canvas, SPIMemProgressViewModel* model) {
-    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, "Verifying dump");
+    canvas_draw_str_aligned(canvas, 64, 2, AlignCenter, AlignTop, SPI_MEM_UI_TEXT("Verifying dump", "正在校验"));
     spi_mem_view_progress_draw_size_warning(canvas, model);
     spi_mem_view_progress_draw_progress(canvas, model->progress);
-    elements_button_center(canvas, "Skip");
+    elements_button_center(canvas, SPI_MEM_UI_TEXT("Skip", "跳过"));
 }
 
 static void
     spi_mem_view_progress_write_draw_callback(Canvas* canvas, SPIMemProgressViewModel* model) {
-    canvas_draw_str_aligned(canvas, 64, 4, AlignCenter, AlignTop, "Writing dump");
+    canvas_draw_str_aligned(canvas, 64, 4, AlignCenter, AlignTop, SPI_MEM_UI_TEXT("Writing dump", "正在写入"));
     spi_mem_view_progress_draw_size_warning(canvas, model);
     spi_mem_view_progress_draw_progress(canvas, model->progress);
-    elements_button_left(canvas, "Cancel");
+    elements_button_left(canvas, SPI_MEM_UI_TEXT("Cancel", "取消"));
 }
 
 static void spi_mem_view_progress_draw_callback(Canvas* canvas, void* context) {

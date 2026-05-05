@@ -390,7 +390,7 @@ static bool update_parse_last_app_update(FlipperHTTP *fhttp, DateTime *time_curr
         // Check if the app version is different from the server version.
         if (!update_is_str(app_version, version_str))
         {
-            easy_flipper_dialog("Update available", "New update available!\nPress BACK to download.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Update available", "发现更新"), FLIP_WORLD_UI_TEXT("New update available!\nPress BACK to download.", "发现新更新!\n按返回键下载。"));
             return true; // Update available.
         }
         FURI_LOG_I(TAG, "No update available");
@@ -486,7 +486,7 @@ static bool update_update_app(FlipperHTTP *fhttp, DateTime *time_current, bool u
         if (fhttp->state == ISSUE)
         {
             FURI_LOG_E(TAG, "Failed to fetch fap file 2");
-            easy_flipper_dialog("Update Error", "Failed to download the\nupdate file.\nPlease try again.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Update Error", "更新错误"), FLIP_WORLD_UI_TEXT("Failed to download the\nupdate file.\nPlease try again.", "更新文件下载失败。\n请重试。"));
             return false;
         }
         return true;

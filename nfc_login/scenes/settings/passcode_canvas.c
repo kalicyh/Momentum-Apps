@@ -33,7 +33,7 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         if(canvas) {
             canvas_clear(canvas);
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str(canvas, 0, 11, "Error: No context");
+            canvas_draw_str(canvas, 0, 11, NFC_LOGIN_UI_TEXT("Error: No context", "错误: 无上下文"));
         }
         return;
     }
@@ -52,9 +52,9 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
             app->widget_state = 6; // Set state to match
         } else {
             // Show default message - always draw something
-            canvas_draw_str(canvas, 0, 11, "Passcode");
+            canvas_draw_str(canvas, 0, 11, NFC_LOGIN_UI_TEXT("Passcode", "密码"));
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 0, 24, "Initializing...");
+            canvas_draw_str(canvas, 0, 24, NFC_LOGIN_UI_TEXT("Initializing...", "初始化中..."));
             return;
         }
     }
@@ -63,11 +63,11 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         // Show failed attempts first if any (overwrites title area)
         if(app->passcode_failed_attempts > 0) {
             char error_msg[64];
-            snprintf(error_msg, sizeof(error_msg), "Wrong! (%u/5 attempts)", app->passcode_failed_attempts);
+            snprintf(error_msg, sizeof(error_msg), NFC_LOGIN_UI_TEXT("Wrong! (%u/5 attempts)", "错误! (%u/5次尝试)"), app->passcode_failed_attempts);
             canvas_set_font(canvas, FontSecondary);
             canvas_draw_str(canvas, 0, 10, error_msg);
         } else {
-            canvas_draw_str(canvas, 0, 10, "Enter Passcode");
+            canvas_draw_str(canvas, 0, 10, NFC_LOGIN_UI_TEXT("Enter Passcode", "输入密码"));
         }
         
         // Get stored sequence to know how many buttons to expect
@@ -76,7 +76,7 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         
         if(!has_stored) {
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 0, 24, "Error: No stored sequence");
+            canvas_draw_str(canvas, 0, 24, NFC_LOGIN_UI_TEXT("Error: No stored sequence", "错误: 无已存密码"));
             return;
         }
         
@@ -108,19 +108,19 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         canvas_draw_str(canvas, 0, 40, progress);
         
         if(input_button_count >= stored_button_count) {
-            canvas_draw_str(canvas, 0, 52, "Press OK to verify");
+            canvas_draw_str(canvas, 0, 52, NFC_LOGIN_UI_TEXT("Press OK to verify", "按OK验证"));
         } else {
-            canvas_draw_str(canvas, 0, 52, "Enter passcode...");
+            canvas_draw_str(canvas, 0, 52, NFC_LOGIN_UI_TEXT("Enter passcode...", "输入密码..."));
         }
     } else if(is_setup) {
-        canvas_draw_str(canvas, 0, 10, "Setup Passcode");
+        canvas_draw_str(canvas, 0, 10, NFC_LOGIN_UI_TEXT("Setup Passcode", "设置密码"));
         
         // Count buttons in current input
         size_t input_button_count = count_buttons_in_sequence(app->passcode_sequence);
         
         // Show button count
         char count_msg[32];
-        snprintf(count_msg, sizeof(count_msg), "%zu/%d-%d buttons", input_button_count, MIN_PASSCODE_BUTTONS, MAX_PASSCODE_BUTTONS);
+        snprintf(count_msg, sizeof(count_msg), NFC_LOGIN_UI_TEXT("%zu/%d-%d buttons", "%zu/%d-%d个按键"), input_button_count, MIN_PASSCODE_BUTTONS, MAX_PASSCODE_BUTTONS);
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 0, 20, count_msg);
         
@@ -141,15 +141,15 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         
         // Show instruction
         if(input_button_count >= MIN_PASSCODE_BUTTONS && input_button_count <= MAX_PASSCODE_BUTTONS) {
-            canvas_draw_str(canvas, 0, 40, "Press OK when done");
+            canvas_draw_str(canvas, 0, 40, NFC_LOGIN_UI_TEXT("Press OK when done", "完成后按OK"));
         } else {
-            canvas_draw_str(canvas, 0, 40, "Need 4-8 buttons");
+            canvas_draw_str(canvas, 0, 40, NFC_LOGIN_UI_TEXT("Need 4-8 buttons", "需要4-8个按键"));
         }
     } else {
         // Fallback: show something if state is unclear
-        canvas_draw_str(canvas, 0, 11, "Passcode");
+        canvas_draw_str(canvas, 0, 11, NFC_LOGIN_UI_TEXT("Passcode", "密码"));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 0, 24, "Press buttons");
+        canvas_draw_str(canvas, 0, 24, NFC_LOGIN_UI_TEXT("Press buttons", "按下按键"));
     }
 }
 

@@ -25,6 +25,12 @@
 
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MFC_EDITOR_UI_TEXT(en, zh) (zh)
+#else
+#define MFC_EDITOR_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "MFCEditor"
 
 #define NFC_APP_FOLDER           ANY_PATH("nfc")

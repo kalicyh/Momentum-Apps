@@ -69,7 +69,8 @@ void picopass_scene_parse_sio_on_enter(void* context) {
         }
     } else {
         FURI_LOG_W(TAG, "Failed to decode SIO: %d.  %d bytes consumed", rval.code, rval.consumed);
-        furi_string_cat_printf(str, "Failed to decode SIO");
+        furi_string_cat_printf(
+            str, PICOPASS_UI_TEXT("Failed to decode SIO", "SIO解码失败"));
     }
 
     ASN_STRUCT_FREE(asn_DEF_SIO, sio);

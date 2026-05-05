@@ -1,4 +1,5 @@
 #include "pocsag_pager_history.h"
+#include "pocsag_pager_app_i.h"
 #include <flipper_format/flipper_format_i.h>
 #include <lib/toolbox/stream/stream.h>
 #include <lib/subghz/receiver.h>
@@ -124,7 +125,7 @@ FlipperFormat* pcsg_history_get_raw_data(PCSGHistory* instance, uint16_t idx) {
 bool pcsg_history_get_text_space_left(PCSGHistory* instance, FuriString* output) {
     furi_assert(instance);
     if(instance->last_index_write == PCSG_HISTORY_MAX) {
-        if(output != NULL) furi_string_printf(output, "Memory is FULL");
+        if(output != NULL) furi_string_printf(output, POCSAG_PAGER_UI_TEXT("Memory is FULL", "内存已满"));
         return true;
     }
     if(output != NULL)

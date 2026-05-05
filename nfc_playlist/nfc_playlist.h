@@ -23,6 +23,12 @@
 #include "lib/led_worker/nfc_playlist_led_worker.h"
 #include "lib/playlist_worker/nfc_playlist_worker.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_PLAYLIST_UI_TEXT(en, zh) (zh)
+#else
+#define NFC_PLAYLIST_UI_TEXT(en, zh) (en)
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

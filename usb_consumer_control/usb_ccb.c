@@ -64,12 +64,12 @@ UsbCcb* usb_ccb_app_alloc() {
 
     // Submenu view
     app->submenu = submenu_alloc();
-    submenu_set_header(app->submenu, "USB Consumer Control");
+    submenu_set_header(app->submenu, USB_CCB_UI_TEXT("USB Consumer Control", "USB 消费者控制"));
     submenu_add_item(
-        app->submenu, "About", UsbCcbSubmenuIndexAbout, usb_ccb_submenu_callback, app);
-    submenu_add_item(app->submenu, "Help", UsbCcbSubmenuIndexHelp, usb_ccb_submenu_callback, app);
+        app->submenu, USB_CCB_UI_TEXT("About", "关于"), UsbCcbSubmenuIndexAbout, usb_ccb_submenu_callback, app);
+    submenu_add_item(app->submenu, USB_CCB_UI_TEXT("Help", "帮助"), UsbCcbSubmenuIndexHelp, usb_ccb_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "Start", UsbCcbSubmenuIndexStart, usb_ccb_submenu_callback, app);
+        app->submenu, USB_CCB_UI_TEXT("Start", "开始"), UsbCcbSubmenuIndexStart, usb_ccb_submenu_callback, app);
     view_set_previous_callback(submenu_get_view(app->submenu), usb_ccb_exit);
     view_dispatcher_add_view(
         app->view_dispatcher, UsbCcbViewSubmenu, submenu_get_view(app->submenu));
@@ -78,10 +78,10 @@ UsbCcb* usb_ccb_app_alloc() {
     app->dialog = dialog_ex_alloc();
     dialog_ex_set_result_callback(app->dialog, usb_ccb_dialog_callback);
     dialog_ex_set_context(app->dialog, app);
-    dialog_ex_set_left_button_text(app->dialog, "Exit");
-    dialog_ex_set_right_button_text(app->dialog, "Stay");
-    dialog_ex_set_center_button_text(app->dialog, "Menu");
-    dialog_ex_set_header(app->dialog, "Exit or return to menu?", 64, 11, AlignCenter, AlignTop);
+    dialog_ex_set_left_button_text(app->dialog, USB_CCB_UI_TEXT("Exit", "退出"));
+    dialog_ex_set_right_button_text(app->dialog, USB_CCB_UI_TEXT("Stay", "留下"));
+    dialog_ex_set_center_button_text(app->dialog, USB_CCB_UI_TEXT("Menu", "菜单"));
+    dialog_ex_set_header(app->dialog, USB_CCB_UI_TEXT("Exit or return to menu?", "退出或返回菜单?"), 64, 11, AlignCenter, AlignTop);
     view_dispatcher_add_view(
         app->view_dispatcher, UsbCcbViewExitConfirm, dialog_ex_get_view(app->dialog));
 

@@ -5,6 +5,12 @@
 
 #include "video_game_module_tool_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define VGM_UI_TEXT(en, zh) (zh)
+#else
+#define VGM_UI_TEXT(en, zh) (en)
+#endif
+
 struct Progress {
     View* view;
 };
@@ -18,7 +24,7 @@ static void progress_draw_callback(Canvas* canvas, void* _model) {
     ProgressModel* model = _model;
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, "INSTALLING");
+    canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, VGM_UI_TEXT("INSTALLING", "安装中"));
     canvas_draw_icon(canvas, 34, 11, &I_Flashing_module_70x30);
 
     elements_progress_bar_with_text(

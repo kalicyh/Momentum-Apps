@@ -69,7 +69,7 @@ void subrem_scene_open_sub_file_on_enter(void* context) {
 
     Popup* popup = app->popup;
     // popup_set_icon();
-    popup_set_header(popup, "ERROR", 63, 16, AlignCenter, AlignBottom);
+    popup_set_header(popup, SUBREM_UI_TEXT("ERROR", "错误"), 63, 16, AlignCenter, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, app);
     popup_set_callback(popup, subrem_scene_open_sub_file_error_popup_callback);
@@ -83,15 +83,15 @@ void subrem_scene_open_sub_file_on_enter(void* context) {
         switch(load_state) {
         case SubRemLoadSubStateErrorFreq:
 
-            popup_set_text(popup, "Bad frequency", 63, 30, AlignCenter, AlignBottom);
+            popup_set_text(popup, SUBREM_UI_TEXT("Bad frequency", "频率错误"), 63, 30, AlignCenter, AlignBottom);
             break;
         case SubRemLoadSubStateErrorMod:
 
-            popup_set_text(popup, "Bad modulation", 63, 30, AlignCenter, AlignBottom);
+            popup_set_text(popup, SUBREM_UI_TEXT("Bad modulation", "调制方式错误"), 63, 30, AlignCenter, AlignBottom);
             break;
         case SubRemLoadSubStateErrorProtocol:
 
-            popup_set_text(popup, "Unsupported protocol", 63, 30, AlignCenter, AlignBottom);
+            popup_set_text(popup, SUBREM_UI_TEXT("Unsupported protocol", "不支持的协议"), 63, 30, AlignCenter, AlignBottom);
             break;
 
         default:

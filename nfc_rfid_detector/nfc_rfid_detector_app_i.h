@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_RFID_DETECTOR_UI_TEXT(en, zh) (zh)
+#else
+#define NFC_RFID_DETECTOR_UI_TEXT(en, zh) (en)
+#endif
+
 #include "helpers/nfc_rfid_detector_types.h"
 #include "helpers/nfc_rfid_detector_event.h"
 

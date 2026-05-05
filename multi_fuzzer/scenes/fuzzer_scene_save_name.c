@@ -14,7 +14,7 @@ void fuzzer_scene_save_name_on_enter(void* context) {
 
     name_generator_make_auto(app->key_name, KEY_NAME_SIZE, app->fuzzer_const->file_prefix);
 
-    text_input_set_header_text(text_input, "Name the key");
+    text_input_set_header_text(text_input, FUZZER_UI_TEXT("Name the key", "命名密钥"));
     text_input_set_result_callback(
         text_input,
         fuzzer_scene_save_name_text_input_callback,

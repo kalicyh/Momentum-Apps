@@ -7,6 +7,12 @@
 // 6. Emulate grayscale
 // 7. Photo browser app
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CAMERA_UI_TEXT(en, zh) (zh)
+#else
+#define CAMERA_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h>
 #include <furi_hal.h>
 #include <gui/gui.h>

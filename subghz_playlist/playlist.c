@@ -1,5 +1,11 @@
 #include <furi.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SUBGHZ_PLAYLIST_UI_TEXT(en, zh) (zh)
+#else
+#define SUBGHZ_PLAYLIST_UI_TEXT(en, zh) (en)
+#endif
+
 #include <gui/gui.h>
 #include <input/input.h>
 #include <dialogs/dialogs.h>
@@ -693,7 +699,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
     case STATE_NONE:
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(
-            canvas, WIDTH / 2, HEIGHT / 2, AlignCenter, AlignCenter, "No playlist loaded");
+            canvas, WIDTH / 2, HEIGHT / 2, AlignCenter, AlignCenter, SUBGHZ_PLAYLIST_UI_TEXT("No playlist loaded", "未加载播放列表"));
         break;
 
     case STATE_OVERVIEW:
@@ -709,16 +715,16 @@ static void render_callback(Canvas* canvas, void* ctx) {
 
         // draw loaded count
         {
-            furi_string_printf(temp_str, "%d Items in playlist", app->meta->total_count);
+            furi_string_printf(temp_str, SUBGHZ_PLAYLIST_UI_TEXT("%d Items in playlist", "播放列表共 %d 项"), app->meta->total_count);
             canvas_draw_str_aligned(
                 canvas, 1, 19, AlignLeft, AlignTop, furi_string_get_cstr(temp_str));
 
             if(app->meta->playlist_repetitions <= 0) {
-                furi_string_set(temp_str, "Repeat: inf");
+                furi_string_set(temp_str, SUBGHZ_PLAYLIST_UI_TEXT("Repeat: inf", "重复: 无限"));
             } else if(app->meta->playlist_repetitions == 1) {
-                furi_string_set(temp_str, "Repeat: no");
+                furi_string_set(temp_str, SUBGHZ_PLAYLIST_UI_TEXT("Repeat: no", "重复: 否"));
             } else {
-                furi_string_printf(temp_str, "Repeat: %dx", app->meta->playlist_repetitions);
+                furi_string_printf(temp_str, SUBGHZ_PLAYLIST_UI_TEXT("Repeat: %dx", "重复: %dx"), app->meta->playlist_repetitions);
             }
             canvas_draw_str_aligned(
                 canvas, 1, 29, AlignLeft, AlignTop, furi_string_get_cstr(temp_str));
@@ -728,7 +734,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
         draw_corner_aligned(canvas, 40, 15, AlignCenter, AlignBottom);
 
         canvas_set_color(canvas, ColorWhite);
-        canvas_draw_str_aligned(canvas, WIDTH / 2 - 7, HEIGHT - 11, AlignLeft, AlignTop, "Start");
+        canvas_draw_str_aligned(canvas, WIDTH / 2 - 7, HEIGHT - 11, AlignLeft, AlignTop, SUBGHZ_PLAYLIST_UI_TEXT("Start", "开始"));
         canvas_draw_disc(canvas, WIDTH / 2 - 14, HEIGHT - 8, 3);
 
         //

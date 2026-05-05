@@ -1,5 +1,13 @@
 #include "../mag_i.h"
 
+#ifndef MAGSPOOF_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MAGSPOOF_UI_TEXT(en, zh) (zh)
+#else
+#define MAGSPOOF_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define TAG "MagSceneEmulateConfig"
 
 enum MagEmulateConfigIndex {
@@ -47,8 +55,8 @@ const uint32_t track_value[TRACK_COUNT] = {
 
 #define REVERSE_COUNT 2
 const char* const reverse_text[REVERSE_COUNT] = {
-    "OFF",
-    "ON",
+    MAGSPOOF_UI_TEXT("OFF", "关"),
+    MAGSPOOF_UI_TEXT("ON", "开"),
 };
 const uint32_t reverse_value[REVERSE_COUNT] = {
     MagReverseStateOff,
@@ -197,14 +205,22 @@ void mag_scene_emulate_config_on_enter(void* context) {
 
     // Clock
     item = variable_item_list_add(
-        mag->variable_item_list, "Clock:", CLOCK_COUNT, mag_scene_emulate_config_set_clock, mag);
+        mag->variable_item_list,
+        MAGSPOOF_UI_TEXT("Clock:", "时钟:"),
+        CLOCK_COUNT,
+        mag_scene_emulate_config_set_clock,
+        mag);
     value_index = value_index_uint32(mag->state.us_clock, clock_value, CLOCK_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, clock_text[value_index]);
 
     // Track
     item = variable_item_list_add(
-        mag->variable_item_list, "Track:", TRACK_COUNT, mag_scene_emulate_config_set_track, mag);
+        mag->variable_item_list,
+        MAGSPOOF_UI_TEXT("Track:", "磁道:"),
+        TRACK_COUNT,
+        mag_scene_emulate_config_set_track,
+        mag);
     value_index = value_index_uint32(mag->state.track, track_value, TRACK_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, track_text[value_index]);
@@ -213,7 +229,7 @@ void mag_scene_emulate_config_on_enter(void* context) {
     //FURI_LOG_D(TAG, "%d", mag->setting->reverse);
     item = variable_item_list_add(
         mag->variable_item_list,
-        "Reverse:",
+        MAGSPOOF_UI_TEXT("Reverse:", "反转:"),
         REVERSE_COUNT,
         mag_scene_emulate_config_set_reverse,
         mag);
@@ -224,7 +240,7 @@ void mag_scene_emulate_config_on_enter(void* context) {
     // Repeated TX
     item = variable_item_list_add(
         mag->variable_item_list,
-        "Repeat:",
+        MAGSPOOF_UI_TEXT("Repeat:", "重复:"),
         REVERSE_COUNT,
         mag_scene_emulate_config_set_repeat_mode,
         mag);
@@ -237,14 +253,19 @@ void mag_scene_emulate_config_on_enter(void* context) {
     if(mag->state.is_debug) {
 #endif
         item = variable_item_list_add(
-            mag->variable_item_list, "TX via:", TX_COUNT, mag_scene_emulate_config_set_tx, mag);
+            mag->variable_item_list,
+            MAGSPOOF_UI_TEXT("TX via:", "发射方式:"),
+            TX_COUNT,
+            mag_scene_emulate_config_set_tx,
+            mag);
         value_index = value_index_uint32(mag->state.tx, tx_value, TX_COUNT);
         variable_item_set_current_value_index(item, value_index);
         variable_item_set_current_value_text(item, tx_text[value_index]);
 #ifdef FW_ORIGIN_Official
     }
 #else
-    variable_item_set_locked(item, !mag->state.is_debug, "Enable Debug!");
+    variable_item_set_locked(
+        item, !mag->state.is_debug, MAGSPOOF_UI_TEXT("Enable Debug!", "请启用调试!"));
 #endif
     // Interpacket
     /*

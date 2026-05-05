@@ -30,7 +30,7 @@ typedef enum {
 
 // const char* FileTool_Names[File_COUNT] = {"New", "Open", "Save", "Rename"};
 const char* FileTool_Desc[File_COUNT] =
-    {"New Icon", "Open Icon", "Save To...", "Rename...", "Send to PC"};
+    {ICONEDIT_UI_TEXT("New Icon", "新建图标"), ICONEDIT_UI_TEXT("Open Icon", "打开图标"), ICONEDIT_UI_TEXT("Save To...", "另存为..."), ICONEDIT_UI_TEXT("Rename...", "重命名..."), ICONEDIT_UI_TEXT("Send to PC", "发送到 PC")};
 
 const Icon* FileTool_Icon[File_COUNT] = {
     [File_New] = &I_iet_New,
@@ -153,7 +153,7 @@ void file_input_handle_ok(void* context) {
     case File_New:
         if(app->dirty) {
             app->panel = Panel_Dialog;
-            dialog_setup("Discard changes?", Dialog_OK_CANCEL, file_new_icon_dialog_cb, app);
+            dialog_setup(ICONEDIT_UI_TEXT("Discard changes?", "放弃更改?"), Dialog_OK_CANCEL, file_new_icon_dialog_cb, app);
         } else {
             app->panel = Panel_New;
         }
@@ -161,7 +161,7 @@ void file_input_handle_ok(void* context) {
     case File_Open: {
         if(app->dirty) {
             app->panel = Panel_Dialog;
-            dialog_setup("Discard changes?", Dialog_OK_CANCEL, file_clear_dirty_dialog_cb, app);
+            dialog_setup(ICONEDIT_UI_TEXT("Discard changes?", "放弃更改?"), Dialog_OK_CANCEL, file_clear_dirty_dialog_cb, app);
             break;
         }
         DialogsFileBrowserOptions ieOptions;
@@ -187,7 +187,7 @@ void file_input_handle_ok(void* context) {
                 canvas_initialize(app->icon, app->settings.canvas_scale);
             } else {
                 // unsupported file type
-                dialog_info_dialog(app, "Unsupported type", app->panel);
+                dialog_info_dialog(app, ICONEDIT_UI_TEXT("Unsupported type", "不支持的类型"), app->panel);
             }
         }
         furi_record_close(RECORD_DIALOGS);
@@ -216,7 +216,7 @@ void file_input_handle_ok(void* context) {
         strncpy(tmp_cstr, furi_string_get_cstr(app->icon->name), 64);
         text_input_set_result_callback(
             text_input, text_input_callback, ti_context, tmp_cstr, 64, false);
-        text_input_set_header_text(text_input, "Rename icon:");
+        text_input_set_header_text(text_input, ICONEDIT_UI_TEXT("Rename icon:", "重命名图标:"));
 
         view_holder_set_view(view_holder, text_input_get_view(text_input));
         api_lock_wait_unlock(ti_context->lock);

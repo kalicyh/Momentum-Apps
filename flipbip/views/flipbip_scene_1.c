@@ -36,17 +36,24 @@
 #define PAGE_ADDR_BEGIN 9
 #define PAGE_ADDR_END   (PAGE_ADDR_BEGIN + NUM_ADDRS - 1)
 
-#define TEXT_LOADING         "Loading..."
-#define TEXT_NEW_WALLET      "New wallet"
-#define TEXT_DEFAULT_COIN    "Coin"
-#define TEXT_RECEIVE_ADDRESS "receive address:"
+#define TEXT_LOADING         FLIPBIP_UI_TEXT("Loading...", "加载中...")
+#define TEXT_NEW_WALLET      FLIPBIP_UI_TEXT("New wallet", "新钱包")
+#define TEXT_DEFAULT_COIN    FLIPBIP_UI_TEXT("Coin", "币种")
+#define TEXT_RECEIVE_ADDRESS FLIPBIP_UI_TEXT("receive address:", "接收地址：")
 // #define TEXT_DEFAULT_DERIV "m/44'/X'/0'/0"
-const char* TEXT_INFO = "-Scroll pages with up/down-"
-                        "p1,2)   BIP39 Mnemonic/Seed"
-                        "p3)       BIP32 Root Key   "
-                        "p4,5)  Prv/Pub Account Keys"
-                        "p6,7)  Prv/Pub BIP32 Keys  "
-                        "p8+)    Receive Addresses  ";
+const char* TEXT_INFO = FLIPBIP_UI_TEXT(
+    "-Scroll pages with up/down-"
+    "p1,2)   BIP39 Mnemonic/Seed"
+    "p3)       BIP32 Root Key   "
+    "p4,5)  Prv/Pub Account Keys"
+    "p6,7)  Prv/Pub BIP32 Keys  "
+    "p8+)    Receive Addresses  ",
+    "-使用上下键翻页-           "
+    "p1,2) BIP39助记词/种子     "
+    "p3)    BIP32根密钥         "
+    "p4,5) 私钥/公钥-账户密钥   "
+    "p6,7) 私钥/公钥-BIP32密钥  "
+    "p8+)   接收地址            ");
 
 // #define TEXT_SAVE_QR "Save QR"
 #define TEXT_QRFILE_EXT ".qrcode" // 7 chars + 1 null
@@ -86,8 +93,8 @@ static CONFIDENTIAL char* s_disp_text6 = NULL;
 static const char* s_derivation_text = TEXT_DEFAULT_COIN; // TEXT_DEFAULT_DERIV;
 // Warning text
 static bool s_warn_insecure = false;
-#define WARN_INSECURE_TEXT_1 "Recommendation:"
-#define WARN_INSECURE_TEXT_2 "Set BIP39 Passphrase"
+#define WARN_INSECURE_TEXT_1 FLIPBIP_UI_TEXT("Recommendation:", "建议：")
+#define WARN_INSECURE_TEXT_2 FLIPBIP_UI_TEXT("Set BIP39 Passphrase", "设置BIP39密码短语")
 //static bool s_busy = false;
 
 void flipbip_scene_1_set_callback(
@@ -665,15 +672,15 @@ void flipbip_scene_1_enter(void* context) {
 
             // if error, set the error message
             if(status == FlipBipStatusSaveError) {
-                model->mnemonic = "ERROR:,Save error";
+                model->mnemonic = FLIPBIP_UI_TEXT("ERROR:,Save error", "错误：,保存错误");
                 model->page = PAGE_MNEMONIC;
                 //flipbip_play_long_bump(app);
             } else if(status == FlipBipStatusLoadError) {
-                model->mnemonic = "ERROR:,Load error";
+                model->mnemonic = FLIPBIP_UI_TEXT("ERROR:,Load error", "错误：,加载错误");
                 model->page = PAGE_MNEMONIC;
                 //flipbip_play_long_bump(app);
             } else if(status == FlipBipStatusMnemonicCheckError) {
-                model->mnemonic = "ERROR:,Mnemonic check error";
+                model->mnemonic = FLIPBIP_UI_TEXT("ERROR:,Mnemonic check error", "错误：,助记词校验错误");
                 model->page = PAGE_MNEMONIC;
                 //flipbip_play_long_bump(app);
             }

@@ -42,6 +42,12 @@
 #include "xremote_icons.h"
 #include "models/subghz/xremote_sg_remote.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define XREMOTE_UI_TEXT(en, zh) (zh)
+#else
+#define XREMOTE_UI_TEXT(en, zh) (en)
+#endif
+
 #define XREMOTE_APP_FOLDER EXT_PATH("apps_data/xremote")
 #define XREMOTE_DEFAULT_REMOTE_NAME "remote"
 #define XREMOTE_APP_EXTENSION ".xr"

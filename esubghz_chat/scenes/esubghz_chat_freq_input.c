@@ -23,12 +23,12 @@ static bool freq_input_validator(const char* text, FuriString* error, void* cont
 
     int ret = sscanf(text, "%lu", &(state->frequency));
     if(ret != 1) {
-        furi_string_printf(error, "Please enter\nfrequency\nin Hz!");
+        furi_string_printf(error, ESUBGHZ_CHAT_UI_TEXT("Please enter\nfrequency\nin Hz!", "请以 Hz\n为单位\n输入频率!"));
         return false;
     }
 
     if(!subghz_devices_is_frequency_valid(state->subghz_device, state->frequency)) {
-        furi_string_printf(error, "Frequency\n%lu\n is invalid!", state->frequency);
+        furi_string_printf(error, ESUBGHZ_CHAT_UI_TEXT("Frequency\n%lu\n is invalid!", "频率\n%lu\n 无效!"), state->frequency);
         return false;
     }
 
@@ -37,7 +37,7 @@ static bool freq_input_validator(const char* text, FuriString* error, void* cont
 #else /* FW_ORIGIN_Official */
     if(!furi_hal_subghz_is_tx_allowed(state->frequency)) {
 #endif /* FW_ORIGIN_Official */
-        furi_string_printf(error, "TX forbidden\non frequency\n%lu!", state->frequency);
+        furi_string_printf(error, ESUBGHZ_CHAT_UI_TEXT("TX forbidden\non frequency\n%lu!", "频率\n%lu\n禁止发射!"), state->frequency);
         return false;
     }
 
@@ -61,7 +61,7 @@ void scene_on_enter_freq_input(void* context) {
         sizeof(state->text_input_store),
         true);
     text_input_set_validator(state->text_input, freq_input_validator, state);
-    text_input_set_header_text(state->text_input, "Frequency");
+    text_input_set_header_text(state->text_input, ESUBGHZ_CHAT_UI_TEXT("Frequency", "频率"));
 
     view_dispatcher_switch_to_view(state->view_dispatcher, ESubGhzChatView_Input);
 }

@@ -12,11 +12,11 @@ static UHFTagInfo current_info;
 char* get_current_bank_info_str() {
     switch(current_info) {
     case EPC_INFO:
-        return "EPC Bank";
+        return UHF_UI_TEXT("EPC Bank", "EPC 存储区");
     case TID_INFO:
-        return "TID Bank";
+        return UHF_UI_TEXT("TID Bank", "TID 存储区");
     case USER_INFO:
-        return "User Bank";
+        return UHF_UI_TEXT("User Bank", "用户存储区");
     }
     return "";
 }
@@ -25,13 +25,13 @@ char* get_next_bank_info_str() {
     switch(current_info) {
     case EPC_INFO:
         current_info = TID_INFO;
-        return "TID";
+        return UHF_UI_TEXT("TID", "TID");
     case TID_INFO:
         current_info = USER_INFO;
-        return "USER";
+        return UHF_UI_TEXT("USER", "USER");
     case USER_INFO:
         current_info = EPC_INFO;
-        return "EPC";
+        return UHF_UI_TEXT("EPC", "EPC");
     }
     return "";
 }
@@ -73,7 +73,7 @@ void change_view_on_event(UHFApp* uhf_app) {
         break;
     }
 
-    furi_string_cat_printf(furi_temp_str, "Length: %d bytes", length);
+    furi_string_cat_printf(furi_temp_str, UHF_UI_TEXT("Length: %d bytes", "长度: %d 字节"), length);
 
     widget_add_string_element(
         uhf_app->widget,
@@ -95,7 +95,7 @@ void change_view_on_event(UHFApp* uhf_app) {
         uhf_app);
 
     widget_add_button_element(
-        uhf_app->widget, GuiButtonTypeLeft, "Back", uhf_scene_device_info_widget_callback, uhf_app);
+        uhf_app->widget, GuiButtonTypeLeft, UHF_UI_TEXT("Back", "返回"), uhf_scene_device_info_widget_callback, uhf_app);
 
     furi_string_free(furi_temp_str);
     free(temp_str);

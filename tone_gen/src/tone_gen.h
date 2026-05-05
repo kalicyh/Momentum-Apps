@@ -6,6 +6,12 @@
 
 #include <furi.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TONE_GEN_UI_TEXT(en, zh) (zh)
+#else
+#define TONE_GEN_UI_TEXT(en, zh) (en)
+#endif
+
 // ids for all scenes used by the app
 typedef enum {
     ToneGenAppScene_Starting,

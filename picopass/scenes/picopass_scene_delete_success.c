@@ -11,7 +11,7 @@ void picopass_scene_delete_success_on_enter(void* context) {
     // Setup view
     Popup* popup = picopass->popup;
     popup_set_icon(popup, 0, 2, &I_DolphinMafia_119x62);
-    popup_set_header(popup, "Deleted", 83, 19, AlignLeft, AlignBottom);
+    popup_set_header(popup, PICOPASS_UI_TEXT("Deleted", "已删除"), 83, 19, AlignLeft, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, picopass);
     popup_set_callback(popup, picopass_scene_delete_success_popup_callback);

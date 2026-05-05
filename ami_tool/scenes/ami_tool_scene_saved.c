@@ -30,7 +30,8 @@ static void ami_tool_scene_saved_show_message(AmiToolApp* app, const char* messa
     furi_assert(app);
     furi_string_set(
         app->text_box_store,
-        message ? message : "No saved Amiibo files.\nUse Save to Storage first.");
+        message ? message : AMI_TOOL_UI_TEXT("No saved Amiibo files.\nUse Save to Storage first.",
+                                              "没有已保存的 Amiibo 文件。\n请先使用保存到存储功能。"));
     text_box_reset(app->text_box);
     text_box_set_text(app->text_box, furi_string_get_cstr(app->text_box_store));
     view_dispatcher_switch_to_view(app->view_dispatcher, AmiToolViewTextBox);
@@ -199,12 +200,12 @@ static AmiToolSavedLoadStatus ami_tool_scene_saved_load_page(AmiToolApp* app) {
 
 static void ami_tool_scene_saved_show_menu(AmiToolApp* app) {
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Saved Amiibo");
+    submenu_set_header(app->submenu, AMI_TOOL_UI_TEXT("Saved Amiibo", "已保存的 Amiibo"));
 
     if(app->saved_page_offset > 0) {
         submenu_add_item(
             app->submenu,
-            "Prev Page",
+            AMI_TOOL_UI_TEXT("Prev Page", "上一页"),
             AMI_TOOL_SAVED_MENU_INDEX_PREV_PAGE,
             ami_tool_scene_saved_submenu_callback,
             app);
@@ -222,7 +223,7 @@ static void ami_tool_scene_saved_show_menu(AmiToolApp* app) {
     if(app->saved_has_next_page) {
         submenu_add_item(
             app->submenu,
-            "Next Page",
+            AMI_TOOL_UI_TEXT("Next Page", "下一页"),
             AMI_TOOL_SAVED_MENU_INDEX_NEXT_PAGE,
             ami_tool_scene_saved_submenu_callback,
             app);
@@ -255,13 +256,16 @@ static void ami_tool_scene_saved_refresh(AmiToolApp* app) {
     if(status == AmiToolSavedLoadNoFolder) {
         ami_tool_scene_saved_show_message(
             app,
-            "No saved Amiibo folder found.\nUse Save to Storage to create files.");
+            AMI_TOOL_UI_TEXT("No saved Amiibo folder found.\nUse Save to Storage to create files.",
+                             "未找到已保存的 Amiibo 文件夹。\n请使用保存到存储功能创建文件。"));
     } else if(status == AmiToolSavedLoadError) {
         ami_tool_scene_saved_show_message(
-            app, "Unable to open saved Amiibo folder.\nCheck storage and try again.");
+            app, AMI_TOOL_UI_TEXT("Unable to open saved Amiibo folder.\nCheck storage and try again.",
+                                  "无法打开已保存的 Amiibo 文件夹。\n请检查存储后重试。"));
     } else if(app->saved_page_entry_count == 0) {
         ami_tool_scene_saved_show_message(
-            app, "No saved Amiibo files found.\nUse Save to Storage first.");
+            app, AMI_TOOL_UI_TEXT("No saved Amiibo files found.\nUse Save to Storage first.",
+                                  "未找到已保存的 Amiibo 文件。\n请先使用保存到存储功能。"));
     } else {
         ami_tool_scene_saved_show_menu(app);
     }
@@ -345,7 +349,8 @@ static void ami_tool_scene_saved_submenu_callback(void* context, uint32_t index)
     } else {
         if(!ami_tool_scene_saved_load_entry(app, index)) {
             ami_tool_scene_saved_show_message(
-                app, "Unable to load Amiibo file.\nCheck the NFC file and try again.");
+                app, AMI_TOOL_UI_TEXT("Unable to load Amiibo file.\nCheck the NFC file and try again.",
+                                      "无法加载 Amiibo 文件。\n请检查 NFC 文件后重试。"));
         }
     }
 }
@@ -374,7 +379,8 @@ bool ami_tool_scene_saved_on_event(void* context, SceneManagerEvent event) {
         case AmiToolEventInfoActionEmulate:
             if(!ami_tool_info_start_emulation(app)) {
                 ami_tool_info_show_action_message(
-                    app, "Unable to start emulation.\nLoad a saved Amiibo first.");
+                    app, AMI_TOOL_UI_TEXT("Unable to start emulation.\nLoad a saved Amiibo first.",
+                                          "无法启动模拟。\n请先加载已保存的 Amiibo。"));
             }
             return true;
         case AmiToolEventInfoActionUsage:
@@ -383,21 +389,24 @@ bool ami_tool_scene_saved_on_event(void* context, SceneManagerEvent event) {
         case AmiToolEventInfoActionChangeUid:
             if(!ami_tool_info_change_uid(app)) {
                 ami_tool_info_show_action_message(
-                    app, "Unable to change UID.\nInstall key_retail.bin and try again.");
+                    app, AMI_TOOL_UI_TEXT("Unable to change UID.\nInstall key_retail.bin and try again.",
+                                          "无法更改 UID。\n请安装 key_retail.bin 后重试。"));
             }
             return true;
         case AmiToolEventInfoActionWriteTag:
             if(!ami_tool_info_write_to_tag(app)) {
                 ami_tool_info_show_action_message(
                     app,
-                    "Unable to write tag.\nUse a blank NTAG215 and make\nsure key_retail.bin is installed.");
+                    AMI_TOOL_UI_TEXT("Unable to write tag.\nUse a blank NTAG215 and make\nsure key_retail.bin is installed.",
+                                     "无法写入标签。\n请使用空白 NTAG215 并确保\n已安装 key_retail.bin。"));
             }
             return true;
         case AmiToolEventInfoActionSaveToStorage:
             if(!ami_tool_info_save_to_storage(app)) {
                 ami_tool_info_show_action_message(
                     app,
-                    "Unable to save Amiibo.\nLoad one first and check storage access.");
+                    AMI_TOOL_UI_TEXT("Unable to save Amiibo.\nLoad one first and check storage access.",
+                                     "无法保存 Amiibo。\n请先加载一个并检查存储访问权限。"));
             }
             return true;
         case AmiToolEventUsagePrevPage:

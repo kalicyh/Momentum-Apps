@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define blackhat_UI_TEXT(en, zh) (zh)
+#else
+#define blackhat_UI_TEXT(en, zh) (en)
+#endif
+
 #include <dialogs/dialogs.h>
 #include <dolphin/dolphin.h>
 #include <furi.h>

@@ -15,6 +15,12 @@
 
 #define TAG "SAM"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define TEXT2SAM_UI_TEXT(en, zh) (zh)
+#else
+#define TEXT2SAM_UI_TEXT(en, zh) (en)
+#endif
+
 #define SAM_SAVE_PATH    APP_DATA_PATH("message.txt")
 #define TEXT_BUFFER_SIZE 256
 STM32SAM voice;
@@ -119,7 +125,7 @@ extern "C" int32_t sam_app(void* p) {
         app_state->input,
         TEXT_BUFFER_SIZE,
         false); //clear default text
-    text_input_set_header_text(app_state->text_input, "Input");
+    text_input_set_header_text(app_state->text_input, TEXT2SAM_UI_TEXT("Input", "输入"));
 
     Gui* gui = (Gui*)furi_record_open(RECORD_GUI);
 

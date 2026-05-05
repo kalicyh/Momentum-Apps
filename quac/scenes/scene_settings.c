@@ -19,22 +19,28 @@
 // TODO: Figure out a better way to do this
 #define SCENE_SETTINGS_ABOUT 9 // 10 items in our Settings list, so last index is 9
 
-static const char* const layout_text[2] = {"Vert", "Horiz"};
+static const char* const layout_text[2] = {
+    QUAC_UI_TEXT("Vert", "竖屏"),
+    QUAC_UI_TEXT("Horiz", "横屏"),
+};
 static const uint32_t layout_value[2] = {QUAC_APP_PORTRAIT, QUAC_APP_LANDSCAPE};
 
-static const char* const show_offon_text[2] = {"OFF", "ON"};
+static const char* const show_offon_text[2] = {
+    QUAC_UI_TEXT("OFF", "关"),
+    QUAC_UI_TEXT("ON", "开"),
+};
 static const uint32_t show_offon_value[2] = {false, true};
 
 #define V_DURATION_COUNT 8
 static const char* const duration_text[V_DURATION_COUNT] = {
     "500 ms",
-    "1 sec",
-    "1.5 sec",
-    "2 sec",
-    "2.5 sec",
-    "3 sec",
-    "5 sec",
-    "10 sec",
+    QUAC_UI_TEXT("1 sec", "1 秒"),
+    QUAC_UI_TEXT("1.5 sec", "1.5 秒"),
+    QUAC_UI_TEXT("2 sec", "2 秒"),
+    QUAC_UI_TEXT("2.5 sec", "2.5 秒"),
+    QUAC_UI_TEXT("3 sec", "3 秒"),
+    QUAC_UI_TEXT("5 sec", "5 秒"),
+    QUAC_UI_TEXT("10 sec", "10 秒"),
 };
 static const uint32_t duration_value[V_DURATION_COUNT] = {
     500,
@@ -47,7 +53,10 @@ static const uint32_t duration_value[V_DURATION_COUNT] = {
     10000,
 };
 
-static const char* const disabled_enabled_text[2] = {"Disabled", "Enabled"};
+static const char* const disabled_enabled_text[2] = {
+    QUAC_UI_TEXT("Disabled", "禁用"),
+    QUAC_UI_TEXT("Enabled", "启用"),
+};
 static const uint32_t disabled_enabled_value[2] = {false, true};
 
 static void scene_settings_layout_changed(VariableItem* item) {
@@ -128,61 +137,61 @@ void scene_settings_on_enter(void* context) {
     VariableItem* item;
     uint8_t value_index;
 
-    item = variable_item_list_add(vil, "Layout", 2, scene_settings_layout_changed, app);
+    item = variable_item_list_add(vil, QUAC_UI_TEXT("Layout", "布局"), 2, scene_settings_layout_changed, app);
     value_index = value_index_uint32(app->settings.layout, layout_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, layout_text[value_index]);
 
-    item = variable_item_list_add(vil, "Show Icons", 2, scene_settings_show_icons_changed, app);
+    item = variable_item_list_add(vil, QUAC_UI_TEXT("Show Icons", "显示图标"), 2, scene_settings_show_icons_changed, app);
     value_index = value_index_uint32(app->settings.show_icons, show_offon_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, show_offon_text[value_index]);
 
     item =
-        variable_item_list_add(vil, "Show Headers", 2, scene_settings_show_headers_changed, app);
+        variable_item_list_add(vil, QUAC_UI_TEXT("Show Headers", "显示标题"), 2, scene_settings_show_headers_changed, app);
     value_index = value_index_uint32(app->settings.show_headers, show_offon_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, show_offon_text[value_index]);
 
     item = variable_item_list_add(
-        vil, "SubGhz Duration", V_DURATION_COUNT, scene_settings_subghz_duration_changed, app);
+        vil, QUAC_UI_TEXT("SubGhz Duration", "SubGhz 时长"), V_DURATION_COUNT, scene_settings_subghz_duration_changed, app);
     value_index =
         value_index_uint32(app->settings.subghz_duration, duration_value, V_DURATION_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, duration_text[value_index]);
 
     item = variable_item_list_add(
-        vil, "RFID Duration", V_DURATION_COUNT, scene_settings_rfid_duration_changed, app);
+        vil, QUAC_UI_TEXT("RFID Duration", "RFID 时长"), V_DURATION_COUNT, scene_settings_rfid_duration_changed, app);
     value_index =
         value_index_uint32(app->settings.rfid_duration, duration_value, V_DURATION_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, duration_text[value_index]);
 
     item = variable_item_list_add(
-        vil, "NFC Duration", V_DURATION_COUNT, scene_settings_nfc_duration_changed, app);
+        vil, QUAC_UI_TEXT("NFC Duration", "NFC 时长"), V_DURATION_COUNT, scene_settings_nfc_duration_changed, app);
     value_index = value_index_uint32(app->settings.nfc_duration, duration_value, V_DURATION_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, duration_text[value_index]);
 
     item = variable_item_list_add(
-        vil, "iButton Duration", V_DURATION_COUNT, scene_settings_ibutton_duration_changed, app);
+        vil, QUAC_UI_TEXT("iButton Duration", "iButton 时长"), V_DURATION_COUNT, scene_settings_ibutton_duration_changed, app);
     value_index =
         value_index_uint32(app->settings.ibutton_duration, duration_value, V_DURATION_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, duration_text[value_index]);
 
-    item = variable_item_list_add(vil, "IR Ext Module", 2, scene_settings_ir_ext_changed, app);
+    item = variable_item_list_add(vil, QUAC_UI_TEXT("IR Ext Module", "外部红外模块"), 2, scene_settings_ir_ext_changed, app);
     value_index = value_index_uint32(app->settings.ir_use_ext_module, disabled_enabled_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, disabled_enabled_text[value_index]);
 
-    item = variable_item_list_add(vil, "Show Hidden", 2, scene_settings_show_hidden_changed, app);
+    item = variable_item_list_add(vil, QUAC_UI_TEXT("Show Hidden", "显示隐藏项"), 2, scene_settings_show_hidden_changed, app);
     value_index = value_index_uint32(app->settings.show_hidden, show_offon_value, 2);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, show_offon_text[value_index]);
 
     // Last item is always "About"
-    item = variable_item_list_add(vil, "About", 1, NULL, NULL);
+    item = variable_item_list_add(vil, QUAC_UI_TEXT("About", "关于"), 1, NULL, NULL);
     variable_item_list_set_enter_callback(vil, scene_settings_enter_callback, app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, QView_Settings);

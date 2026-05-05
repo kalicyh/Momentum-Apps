@@ -21,7 +21,7 @@ static bool pass_input_validator(const char* text, FuriString* error, void* cont
     ESubGhzChatState* state = context;
 
     if(strlen(text) == 0) {
-        furi_string_printf(error, "Enter a\npassword!");
+        furi_string_printf(error, ESUBGHZ_CHAT_UI_TEXT("Enter a\npassword!", "请输入\n密码!"));
         return false;
     }
 
@@ -38,7 +38,7 @@ static bool pass_input_validator(const char* text, FuriString* error, void* cont
 
     if(!ret) {
         crypto_ctx_clear(state->crypto_ctx);
-        furi_string_printf(error, "Failed to\nset key!");
+        furi_string_printf(error, ESUBGHZ_CHAT_UI_TEXT("Failed to\nset key!", "设置密钥\n失败!"));
         return false;
     }
 
@@ -64,7 +64,7 @@ void scene_on_enter_pass_input(void* context) {
         sizeof(state->text_input_store),
         true);
     text_input_set_validator(state->text_input, pass_input_validator, state);
-    text_input_set_header_text(state->text_input, "Password");
+    text_input_set_header_text(state->text_input, ESUBGHZ_CHAT_UI_TEXT("Password", "密码"));
 
     view_dispatcher_switch_to_view(state->view_dispatcher, ESubGhzChatView_Input);
 }

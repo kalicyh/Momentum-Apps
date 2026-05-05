@@ -16,12 +16,12 @@ void draw_callback(Canvas* canvas, void* ctx) {
     canvas_set_color(canvas, ColorXOR);
 
     if(tracker->is_loading || tracker->is_loading_instrument) {
-        canvas_draw_str(canvas, 10, 10, "Loading...");
+        canvas_draw_str(canvas, 10, 10, FLIZZER_TRACKER_UI_TEXT("Loading...", "加载中..."));
         return;
     }
 
     if(tracker->is_saving || tracker->is_saving_instrument) {
-        canvas_draw_str(canvas, 10, 10, "Saving...");
+        canvas_draw_str(canvas, 10, 10, FLIZZER_TRACKER_UI_TEXT("Saving...", "保存中..."));
         return;
     }
 

@@ -9,11 +9,11 @@ FlipTelegramSettings::FlipTelegramSettings(ViewDispatcher **view_dispatcher, voi
         return;
     }
 
-    variable_item_wifi_ssid = variable_item_list_add(variable_item_list, "WiFi SSID", 1, nullptr, nullptr);
-    variable_item_wifi_pass = variable_item_list_add(variable_item_list, "WiFi Password", 1, nullptr, nullptr);
-    variable_item_connect = variable_item_list_add(variable_item_list, "Connect To WiFi", 1, nullptr, nullptr);
-    variable_item_token = variable_item_list_add(variable_item_list, "Bot Token", 1, nullptr, nullptr);
-    variable_item_chat_id = variable_item_list_add(variable_item_list, "Chat ID", 1, nullptr, nullptr);
+    variable_item_wifi_ssid = variable_item_list_add(variable_item_list, flip_telegram_UI_TEXT("WiFi SSID", "WiFi 名称"), 1, nullptr, nullptr);
+    variable_item_wifi_pass = variable_item_list_add(variable_item_list, flip_telegram_UI_TEXT("WiFi Password", "WiFi 密码"), 1, nullptr, nullptr);
+    variable_item_connect = variable_item_list_add(variable_item_list, flip_telegram_UI_TEXT("Connect To WiFi", "连接 WiFi"), 1, nullptr, nullptr);
+    variable_item_token = variable_item_list_add(variable_item_list, flip_telegram_UI_TEXT("Bot Token", "机器人令牌"), 1, nullptr, nullptr);
+    variable_item_chat_id = variable_item_list_add(variable_item_list, flip_telegram_UI_TEXT("Chat ID", "聊天 ID"), 1, nullptr, nullptr);
 
     char loaded_ssid[64];
     char loaded_pass[64];
@@ -139,11 +139,11 @@ bool FlipTelegramSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipTelegramViewTextInput,
-                                                "Enter SSID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                flip_telegram_UI_TEXT("Enter SSID", "输入 WiFi 名称"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedSsidCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipTelegramViewTextInput,
-                                           "Enter SSID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           flip_telegram_UI_TEXT("Enter SSID", "输入 WiFi 名称"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedSsidCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -160,11 +160,11 @@ bool FlipTelegramSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipTelegramViewTextInput,
-                                                "Enter Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                flip_telegram_UI_TEXT("Enter Password", "输入密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipTelegramViewTextInput,
-                                           "Enter Password", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           flip_telegram_UI_TEXT("Enter Password", "输入密码"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedPassCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -181,11 +181,11 @@ bool FlipTelegramSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipTelegramViewTextInput,
-                                                "Enter Bot Token", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                flip_telegram_UI_TEXT("Enter Bot Token", "输入机器人令牌"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedTokenCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipTelegramViewTextInput,
-                                           "Enter Bot Token", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           flip_telegram_UI_TEXT("Enter Bot Token", "输入机器人令牌"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedTokenCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -202,11 +202,11 @@ bool FlipTelegramSettings::initTextInput(uint32_t view)
         text_input_temp_buffer[text_input_buffer_size - 1] = '\0'; // Ensure null-termination
 #ifndef FW_ORIGIN_Momentum
         return easy_flipper_set_uart_text_input(&text_input, FlipTelegramViewTextInput,
-                                                "Enter Chat ID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                                flip_telegram_UI_TEXT("Enter Chat ID", "输入聊天 ID"), text_input_temp_buffer.get(), text_input_buffer_size,
                                                 textUpdatedChatIDCallback, callbackToSettings, view_dispatcher_ref, this);
 #else
         return easy_flipper_set_text_input(&text_input, FlipTelegramViewTextInput,
-                                           "Enter Chat ID", text_input_temp_buffer.get(), text_input_buffer_size,
+                                           flip_telegram_UI_TEXT("Enter Chat ID", "输入聊天 ID"), text_input_temp_buffer.get(), text_input_buffer_size,
                                            textUpdatedChatIDCallback, callbackToSettings, view_dispatcher_ref, this);
 #endif
     }
@@ -232,7 +232,7 @@ void FlipTelegramSettings::settingsItemSelected(uint32_t index)
             !app->loadChar("wifi_pass", loaded_pass, sizeof(loaded_pass), "flipper_http"))
         {
             FURI_LOG_E(TAG, "WiFi credentials not set");
-            easy_flipper_dialog("No WiFi Credentials", "Please set your WiFi SSID\nand Password in Settings.");
+            easy_flipper_dialog(flip_telegram_UI_TEXT("No WiFi Credentials", "无 WiFi 凭据"), flip_telegram_UI_TEXT("Please set your WiFi SSID\nand Password in Settings.", "请在设置中配置 WiFi\n名称和密码。"));
         }
         else
         {

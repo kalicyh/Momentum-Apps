@@ -17,6 +17,12 @@
 #include <furi/core/thread.h>
 #include <furi_hal_random.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define AMI_TOOL_UI_TEXT(en, zh) (zh)
+#else
+#define AMI_TOOL_UI_TEXT(en, zh) (en)
+#endif
+
 #define AMI_TOOL_RETAIL_KEY_SIZE (160U)
 #define AMI_TOOL_RETAIL_KEY_FILENAME "key_retail.bin"
 #define AMI_TOOL_GENERATE_MAX_AMIIBO_PAGE_ITEMS (32U)

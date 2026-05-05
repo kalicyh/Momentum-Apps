@@ -126,16 +126,16 @@ static void menu_render(Entity* entity, GameManager* manager, Canvas* canvas, vo
     UNUSED(entity);
     UNUSED(manager);
     MenuContext* menu_context = context;
-    const char* line_1 = "Play";
-    const char* line_2 = "Settings";
-    const char* line_3 = "Exit";
+    const char* line_1 = UI_TEXT("Play", "开始");
+    const char* line_2 = UI_TEXT("Settings", "设置");
+    const char* line_3 = UI_TEXT("Exit", "退出");
 
     if(menu_context->selected == 0) {
-        line_1 = ">Play";
+        line_1 = UI_TEXT(">Play", ">开始");
     } else if(menu_context->selected == 1) {
-        line_2 = ">Settings";
+        line_2 = UI_TEXT(">Settings", ">设置");
     } else if(menu_context->selected == 2) {
-        line_3 = ">Exit";
+        line_3 = UI_TEXT(">Exit", ">退出");
     }
 
     canvas_draw_str_aligned(canvas, 64, 39, AlignCenter, AlignCenter, line_1);

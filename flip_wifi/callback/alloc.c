@@ -23,8 +23,8 @@ bool alloc_playlist(void *context)
 
         // playlist is empty?
         submenu_reset(app->submenu_wifi);
-        submenu_set_header(app->submenu_wifi, "Saved APs");
-        submenu_add_item(app->submenu_wifi, "[Add Network]", FlipWiFiSubmenuIndexWiFiSavedAddSSID, callback_submenu_choices, app);
+        submenu_set_header(app->submenu_wifi, FLIP_WIFI_UI_TEXT("Saved APs", "已保存 AP"));
+        submenu_add_item(app->submenu_wifi, FLIP_WIFI_UI_TEXT("[Add Network]", "[添加网络]"), FlipWiFiSubmenuIndexWiFiSavedAddSSID, callback_submenu_choices, app);
     }
     else
     {
@@ -43,7 +43,7 @@ bool alloc_submenus(void *context, uint32_t view)
     case FlipWiFiViewSubmenuScan:
         if (!app->submenu_wifi)
         {
-            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, "WiFi Nearby", callback_to_submenu_main, &app->view_dispatcher))
+            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, FLIP_WIFI_UI_TEXT("WiFi Nearby", "附近 WiFi"), callback_to_submenu_main, &app->view_dispatcher))
             {
                 return false;
             }
@@ -57,7 +57,7 @@ bool alloc_submenus(void *context, uint32_t view)
     case FlipWiFiViewSubmenuSaved:
         if (!app->submenu_wifi)
         {
-            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, "Saved APs", callback_to_submenu_main, &app->view_dispatcher))
+            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, FLIP_WIFI_UI_TEXT("Saved APs", "已保存 AP"), callback_to_submenu_main, &app->view_dispatcher))
             {
                 return false;
             }
@@ -76,7 +76,7 @@ bool alloc_submenus(void *context, uint32_t view)
     case FlipWiFiViewSubmenuCommands:
         if (!app->submenu_wifi)
         {
-            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, "Fast Commands", callback_to_submenu_main, &app->view_dispatcher))
+            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, FLIP_WIFI_UI_TEXT("Fast Commands", "快捷命令"), callback_to_submenu_main, &app->view_dispatcher))
             {
                 return false;
             }
@@ -86,7 +86,7 @@ bool alloc_submenus(void *context, uint32_t view)
                 return false;
             }
             //  PING, LIST, WIFI/LIST, IP/ADDRESS, and WIFI/IP.
-            submenu_add_item(app->submenu_wifi, "[CUSTOM]", FlipWiFiSubmenuIndexFastCommandStart + 0, callback_submenu_choices, app);
+            submenu_add_item(app->submenu_wifi, FLIP_WIFI_UI_TEXT("[CUSTOM]", "[自定义]"), FlipWiFiSubmenuIndexFastCommandStart + 0, callback_submenu_choices, app);
             submenu_add_item(app->submenu_wifi, "PING", FlipWiFiSubmenuIndexFastCommandStart + 1, callback_submenu_choices, app);
             submenu_add_item(app->submenu_wifi, "LIST", FlipWiFiSubmenuIndexFastCommandStart + 2, callback_submenu_choices, app);
             submenu_add_item(app->submenu_wifi, "IP/ADDRESS", FlipWiFiSubmenuIndexFastCommandStart + 3, callback_submenu_choices, app);
@@ -97,7 +97,7 @@ bool alloc_submenus(void *context, uint32_t view)
     case FlipWiFiViewSubmenuAP:
         if (!app->submenu_wifi)
         {
-            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, "AP Mode", callback_to_submenu_main, &app->view_dispatcher))
+            if (!easy_flipper_set_submenu(&app->submenu_wifi, FlipWiFiViewSubmenu, FLIP_WIFI_UI_TEXT("AP Mode", "AP 模式"), callback_to_submenu_main, &app->view_dispatcher))
             {
                 return false;
             }
@@ -107,9 +107,9 @@ bool alloc_submenus(void *context, uint32_t view)
                 return false;
             }
             // start, set SSID, set HTML
-            submenu_add_item(app->submenu_wifi, "Start AP", FlipWiFiSubmenuIndexWiFiAPStart, callback_submenu_choices, app);
-            submenu_add_item(app->submenu_wifi, "Set SSID", FlipWiFiSubmenuIndexWiFiAPSetSSID, callback_submenu_choices, app);
-            submenu_add_item(app->submenu_wifi, "Change HTML", FlipWiFiSubmenuIndexWiFiAPSetHTML, callback_submenu_choices, app);
+            submenu_add_item(app->submenu_wifi, FLIP_WIFI_UI_TEXT("Start AP", "启动 AP"), FlipWiFiSubmenuIndexWiFiAPStart, callback_submenu_choices, app);
+            submenu_add_item(app->submenu_wifi, FLIP_WIFI_UI_TEXT("Set SSID", "设置 SSID"), FlipWiFiSubmenuIndexWiFiAPSetSSID, callback_submenu_choices, app);
+            submenu_add_item(app->submenu_wifi, FLIP_WIFI_UI_TEXT("Change HTML", "更换 HTML"), FlipWiFiSubmenuIndexWiFiAPSetHTML, callback_submenu_choices, app);
         }
         return true;
     }
@@ -127,7 +127,7 @@ bool alloc_text_box(FlipWiFiApp *app)
     if (!easy_flipper_set_text_box(
             &app->textbox,
             FlipWiFiViewWiFiAP,
-            app->fhttp->last_response_str && furi_string_size(app->fhttp->last_response_str) > 0 ? (char *)furi_string_get_cstr(app->fhttp->last_response_str) : "AP Connected... please wait",
+            app->fhttp->last_response_str && furi_string_size(app->fhttp->last_response_str) > 0 ? (char *)furi_string_get_cstr(app->fhttp->last_response_str) : FLIP_WIFI_UI_TEXT("AP Connected... please wait", "AP 已连接...请稍候"),
             false,
             callback_submenu_ap,
             &app->view_dispatcher))
@@ -179,7 +179,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiViewTextInputScan:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter WiFi Password", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_password_scan, callback_to_submenu_scan, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter WiFi Password", "输入 WiFi 密码"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_password_scan, callback_to_submenu_scan, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for WiFi Scan");
                 return false;
@@ -194,7 +194,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiViewTextInputSaved:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter WiFi Password", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_password_saved, callback_to_submenu_saved, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter WiFi Password", "输入 WiFi 密码"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_password_saved, callback_to_submenu_saved, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for WiFi Saved");
                 return false;
@@ -209,7 +209,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiViewTextInputSavedAddSSID:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter SSID", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_add_ssid, callback_to_submenu_saved, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter SSID", "输入 SSID"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_add_ssid, callback_to_submenu_saved, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for WiFi Saved Add SSID");
                 return false;
@@ -224,7 +224,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiViewTextInputSavedAddPassword:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter Password", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_add_password, callback_to_submenu_saved, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter Password", "输入密码"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_add_password, callback_to_submenu_saved, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for WiFi Saved Add Password");
                 return false;
@@ -239,7 +239,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiSubmenuIndexFastCommandStart:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter Command", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_custom_command_updated, callback_to_submenu_saved, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter Command", "输入命令"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_custom_command_updated, callback_to_submenu_saved, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for Fast Command");
                 return false;
@@ -254,7 +254,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiSubmenuIndexWiFiAPSetSSID:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter AP SSID", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_ap_ssid_updated, callback_to_submenu_main, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter AP SSID", "输入 AP SSID"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_ap_ssid_updated, callback_to_submenu_main, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for Fast Command");
                 return false;
@@ -269,7 +269,7 @@ bool alloc_text_inputs(void *context, uint32_t view)
     case FlipWiFiViewTextInputDeauth:
         if (!app->uart_text_input)
         {
-            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, "Enter SSID", app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_deauth, callback_to_submenu_main, &app->view_dispatcher, app))
+            if (!easy_flipper_set_uart_text_input(&app->uart_text_input, FlipWiFiViewTextInput, FLIP_WIFI_UI_TEXT("Enter SSID", "输入 SSID"), app->uart_text_input_temp_buffer, app->uart_text_input_buffer_size, callback_text_updated_deauth, callback_to_submenu_main, &app->view_dispatcher, app))
             {
                 FURI_LOG_E(TAG, "Failed to allocate text input for WiFi Deauth");
                 return false;
@@ -354,7 +354,7 @@ bool alloc_widgets(void *context, uint32_t widget)
         if (!app->widget_info)
         {
             char about_text[128];
-            snprintf(about_text, sizeof(about_text), "FlipWiFi v%s\n-----\nFlipperHTTP companion app.\nScan and save WiFi networks.\n-----\nwww.github.com/jblanked", VERSION);
+            snprintf(about_text, sizeof(about_text), FLIP_WIFI_UI_TEXT("FlipWiFi v%s\n-----\nFlipperHTTP companion app.\nScan and save WiFi networks.\n-----\nwww.github.com/jblanked", "FlipWiFi v%s\n-----\nFlipperHTTP 配套应用\n扫描并保存 WiFi 网络\n-----\nwww.github.com/jblanked"), VERSION);
             if (!easy_flipper_set_widget(&app->widget_info, FlipWiFiViewAbout, about_text, callback_to_submenu_main, &app->view_dispatcher))
             {
                 return false;

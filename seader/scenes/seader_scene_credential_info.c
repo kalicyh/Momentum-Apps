@@ -33,7 +33,7 @@ void seader_scene_credential_info_on_enter(void* context) {
         furi_string_cat_printf(credential_str, "0x%llX", credential->credential);
 
         if(credential->type == SeaderCredentialTypeNone) {
-            furi_string_set(type_str, "Unknown");
+            furi_string_set(type_str, SEADER_UI_TEXT("Unknown", "未知"));
         } else if(credential->type == SeaderCredentialType14A) {
             furi_string_set(type_str, "14443A");
         } else if(credential->type == SeaderCredentialTypePicopass) {
@@ -46,7 +46,7 @@ void seader_scene_credential_info_on_enter(void* context) {
     widget_add_button_element(
         seader->widget,
         GuiButtonTypeLeft,
-        "Back",
+        SEADER_UI_TEXT("Back", "返回"),
         seader_scene_credential_info_widget_callback,
         seader);
 
@@ -56,7 +56,7 @@ void seader_scene_credential_info_on_enter(void* context) {
             widget_add_button_element(
                 seader->widget,
                 GuiButtonTypeCenter,
-                "Parse",
+                SEADER_UI_TEXT("Parse", "解析"),
                 seader_scene_credential_info_widget_callback,
                 seader);
         }

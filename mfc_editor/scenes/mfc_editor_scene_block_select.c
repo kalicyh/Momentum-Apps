@@ -32,7 +32,7 @@ void mfc_editor_scene_block_select_on_enter(void* context) {
     FuriString* label = furi_string_alloc();
     for(uint8_t i = 0; i < block_num; i++) {
         uint8_t block_index = first_block + i;
-        furi_string_printf(label, "Block %u", block_index);
+        furi_string_printf(label, MFC_EDITOR_UI_TEXT("Block %u", "块 %u"), block_index);
         submenu_add_item(
             submenu,
             furi_string_get_cstr(label),
@@ -60,7 +60,7 @@ void mfc_editor_scene_block_select_on_enter(void* context) {
         }
         submenu_add_item(
             submenu,
-            "Manufacturer Bytes",
+            MFC_EDITOR_UI_TEXT("Manufacturer Bytes", "制造商字节"),
             SubmenuIndexManufacturerBytes,
             mfc_editor_scene_block_select_submenu_callback,
             instance);
@@ -68,25 +68,25 @@ void mfc_editor_scene_block_select_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Key A",
+        MFC_EDITOR_UI_TEXT("Key A", "密钥 A"),
         SubmenuIndexKeyA,
         mfc_editor_scene_block_select_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Key B",
+        MFC_EDITOR_UI_TEXT("Key B", "密钥 B"),
         SubmenuIndexKeyB,
         mfc_editor_scene_block_select_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Access Bits",
+        MFC_EDITOR_UI_TEXT("Access Bits", "访问位"),
         SubmenuIndexAccessBits,
         mfc_editor_scene_block_select_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "User Byte",
+        MFC_EDITOR_UI_TEXT("User Byte", "用户字节"),
         SubmenuIndexUserByte,
         mfc_editor_scene_block_select_submenu_callback,
         instance);

@@ -103,17 +103,17 @@ void fuzzer_view_field_editor_draw(Canvas* canvas, FuzzerViewFieldEditorModel* m
         canvas_draw_icon_ex(canvas, 62, 3, &I_Pin_arrow_up_7x9, IconRotation180);
         canvas_draw_icon(canvas, 69, 3, &I_Pin_arrow_up_7x9);
 
-        canvas_draw_str(canvas, 14, 10, "select byte");
-        canvas_draw_str(canvas, 79, 10, "adjust byte");
+        canvas_draw_str(canvas, 14, 10, FUZZER_UI_TEXT("select byte", "选择字节"));
+        canvas_draw_str(canvas, 79, 10, FUZZER_UI_TEXT("adjust byte", "调节字节"));
     } else {
         canvas_draw_icon(canvas, 35, 4, &I_ButtonLeft_4x7);
         canvas_draw_icon(canvas, 41, 4, &I_ButtonRight_4x7);
-        canvas_draw_str(canvas, 49, 10, "select byte");
+        canvas_draw_str(canvas, 49, 10, FUZZER_UI_TEXT("select byte", "选择字节"));
     }
 
     char msg_index[18];
     canvas_set_font(canvas, FontPrimary);
-    snprintf(msg_index, sizeof(msg_index), "Field index : %d", model->index);
+    snprintf(msg_index, sizeof(msg_index), FUZZER_UI_TEXT("Field index : %d", "字段索引: %d"), model->index);
 
     canvas_draw_str_aligned(
         canvas, GUI_DISPLAY_HORIZONTAL_CENTER, 24, AlignCenter, AlignBottom, msg_index);
@@ -122,8 +122,8 @@ void fuzzer_view_field_editor_draw(Canvas* canvas, FuzzerViewFieldEditorModel* m
     canvas_draw_icon(canvas, 4, 52, &I_Pin_back_arrow_10x8);
     canvas_draw_icon(canvas, 85, 52, &I_Ok_btn_9x9);
 
-    canvas_draw_str(canvas, 16, 60, "Back");
-    canvas_draw_str(canvas, 96, 60, "Attack");
+    canvas_draw_str(canvas, 16, 60, FUZZER_UI_TEXT("Back", "返回"));
+    canvas_draw_str(canvas, 96, 60, FUZZER_UI_TEXT("Attack", "攻击"));
 #else
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(
@@ -132,18 +132,18 @@ void fuzzer_view_field_editor_draw(Canvas* canvas, FuzzerViewFieldEditorModel* m
         5,
         AlignCenter,
         AlignTop,
-        "Left and right: select byte");
+        FUZZER_UI_TEXT("Left and right: select byte", "左右: 选择字节"));
     canvas_draw_str_aligned(
         canvas,
         GUI_DISPLAY_HORIZONTAL_CENTER,
         15,
         AlignCenter,
         AlignTop,
-        "Up and down: adjust byte");
+        FUZZER_UI_TEXT("Up and down: adjust byte", "上下: 调节字节"));
 
     char msg_index[18];
     canvas_set_font(canvas, FontPrimary);
-    snprintf(msg_index, sizeof(msg_index), "Field index : %d", model->index);
+    snprintf(msg_index, sizeof(msg_index), FUZZER_UI_TEXT("Field index : %d", "字段索引: %d"), model->index);
     canvas_draw_str_aligned(
         canvas, GUI_DISPLAY_HORIZONTAL_CENTER, 28, AlignCenter, AlignTop, msg_index);
 #endif

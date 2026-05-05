@@ -23,18 +23,18 @@ void nfc_playlist_failed_to_load_playlist_scene_on_enter(void* context) {
       23,
       AlignCenter,
       AlignCenter,
-      "\e#Failed to load playlist!\e#",
+      NFC_PLAYLIST_UI_TEXT("\e#Failed to load playlist!\e#", "\e#加载播放列表失败!\e#"),
       false);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeLeft,
-      "Try Again",
+      NFC_PLAYLIST_UI_TEXT("Try Again", "重试"),
       nfc_playlist_failed_to_load_playlist_scene_menu_callback,
       nfc_playlist);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeRight,
-      "Main Menu",
+      NFC_PLAYLIST_UI_TEXT("Main Menu", "主菜单"),
       nfc_playlist_failed_to_load_playlist_scene_menu_callback,
       nfc_playlist);
 

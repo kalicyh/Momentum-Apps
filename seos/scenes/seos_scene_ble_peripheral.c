@@ -9,7 +9,7 @@ void seos_scene_ble_peripheral_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seos->popup;
-    popup_set_header(popup, "Starting", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEOS_UI_TEXT("Starting", "启动中"), 68, 30, AlignLeft, AlignTop);
     if(seos->flow_mode == FLOW_READER) {
         popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
     } else if(seos->flow_mode == FLOW_CRED) {
@@ -43,19 +43,23 @@ bool seos_scene_ble_peripheral_on_event(void* context, SceneManagerEvent event) 
             scene_manager_next_scene(seos->scene_manager, SeosSceneReadError);
             consumed = true;
         } else if(event.event == SeosCustomEventHCIInit) {
-            popup_set_header(popup, "Init", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, SEOS_UI_TEXT("Init", "初始化"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventAdvertising) {
-            popup_set_header(popup, "Advertising", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Advertising", "广播中"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventConnected) {
-            popup_set_header(popup, "Connected", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Connected", "已连接"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventAuthenticated) {
-            popup_set_header(popup, "Auth'd", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("Auth'd", "已认证"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeosCustomEventSIORequested) {
-            popup_set_header(popup, "SIO\nRequested", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, SEOS_UI_TEXT("SIO\nRequested", "SIO\n已请求"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

@@ -7,7 +7,7 @@ bool wifi_marauder_scene_user_input_validator_number_callback(
     UNUSED(context);
     for(int i = 0; text[i] != '\0'; i++) {
         if(text[i] < '0' || text[i] > '9') {
-            furi_string_printf(error, "This is not\na valid\nnumber!");
+            furi_string_printf(error, WIFI_MARAUDER_UI_TEXT("This is not\na valid\nnumber!", "这不是\n有效数字!"));
             return false;
         }
     }
@@ -20,7 +20,7 @@ bool wifi_marauder_scene_user_input_validator_file_callback(
     void* context) {
     UNUSED(context);
     if(strlen(text) == 0) {
-        furi_string_printf(error, "File name\ncannot be\nblank!");
+        furi_string_printf(error, WIFI_MARAUDER_UI_TEXT("File name\ncannot be\nblank!", "文件名\n不能为空!"));
         return false;
     }
     return true;
@@ -100,7 +100,7 @@ void wifi_marauder_scene_user_input_on_enter(void* context) {
     switch(app->user_input_type) {
     // Loads the string value of the reference
     case WifiMarauderUserInputTypeString:
-        text_input_set_header_text(app->text_input, "Enter value:");
+        text_input_set_header_text(app->text_input, WIFI_MARAUDER_UI_TEXT("Enter value:", "输入数值:"));
         text_input_set_validator(app->text_input, NULL, app);
         if(app->user_input_string_reference != NULL) {
             strncpy(
@@ -112,7 +112,7 @@ void wifi_marauder_scene_user_input_on_enter(void* context) {
         break;
     // Loads the numerical value of the reference
     case WifiMarauderUserInputTypeNumber:
-        text_input_set_header_text(app->text_input, "Enter a valid number:");
+        text_input_set_header_text(app->text_input, WIFI_MARAUDER_UI_TEXT("Enter a valid number:", "输入有效数字:"));
         text_input_set_validator(
             app->text_input, wifi_marauder_scene_user_input_validator_number_callback, app);
         if(app->user_input_number_reference != NULL) {
@@ -123,7 +123,7 @@ void wifi_marauder_scene_user_input_on_enter(void* context) {
         break;
     // File name
     case WifiMarauderUserInputTypeFileName:
-        text_input_set_header_text(app->text_input, "Enter file name:");
+        text_input_set_header_text(app->text_input, WIFI_MARAUDER_UI_TEXT("Enter file name:", "输入文件名:"));
         text_input_set_validator(
             app->text_input, wifi_marauder_scene_user_input_validator_file_callback, app);
         break;

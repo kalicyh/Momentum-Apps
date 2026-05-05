@@ -47,13 +47,14 @@ void flipboard_view_flip_keyboard_draw(Canvas* canvas, void* model) {
         canvas_draw_str(canvas, 6, 12, "FlipKeyboard (USB/BLE)");
     }
 
+    canvas_set_font(canvas, FontPrimary);
+    canvas_draw_str(canvas, 33, 60, FLIPBOARD_UI_TEXT("ACTION:", "动作:"));
+
     canvas_draw_icon(canvas, 5, 19, icon1);
     canvas_draw_icon(canvas, 36, 19, icon2);
     canvas_draw_icon(canvas, 67, 19, icon3);
     canvas_draw_icon(canvas, 98, 19, icon4);
 
-    canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 33, 60, "ACTION:");
     canvas_draw_str(canvas, 84, 60, furi_string_get_cstr(action_text));
 
     furi_string_free(action_text);
@@ -196,7 +197,8 @@ static void flipboard_defaults(FlipboardModel* model) {
     action_model_set_color_down(action_model, LedColorCyan);
     action_model_set_frequency(action_model, 164.814);
     action_model_append_keystroke(action_model, 0xF1, 1); // Msg 1
-    action_model_set_message(action_model, "Welcome to FlipKeyboard!", 0);
+    action_model_set_message(
+        action_model, FLIPBOARD_UI_TEXT("Welcome to FlipKeyboard!", "欢迎使用 FlipKeyboard!"), 0);
     flipboard_model_set_action_model(
         model, action_model_get_action_id(action_model), action_model);
     action_model = action_model_alloc(2);

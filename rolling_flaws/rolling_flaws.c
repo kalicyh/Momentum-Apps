@@ -228,10 +228,10 @@ void rolling_flaws_submenu_callback(void* context, uint32_t index) {
 void rolling_flaws_receive_sync_draw_callback(Canvas* canvas, void* model) {
     UNUSED(model);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 13, 30, "Syncing rolling code:");
+    canvas_draw_str(canvas, 13, 30, ROLLING_FLAWS_UI_TEXT("Syncing rolling code:", "\xe5\x90\x8c\xe6\xad\xa5\xe6\xbb\x9a\xe5\x8a\xa8\xe7\xa0\x81:"));
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 13, 45, "Press remote button now.");
+    canvas_draw_str(canvas, 13, 45, ROLLING_FLAWS_UI_TEXT("Press remote button now.", "\xe8\xaf\xb7\xe6\x8c\x89\xe4\xb8\x8b\xe9\x81\xa5\xe6\x8e\xa7\xe5\x99\xa8\xe6\x8c\x89\xe9\x92\xae."));
 }
 
 void rolling_flaws_receive_signal_draw_callback(Canvas* canvas, void* model) {
@@ -241,13 +241,13 @@ void rolling_flaws_receive_signal_draw_callback(Canvas* canvas, void* model) {
 
     canvas_set_bitmap_mode(canvas, true);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 13, 8, "Rolling code receiver");
+    canvas_draw_str(canvas, 13, 8, ROLLING_FLAWS_UI_TEXT("Rolling code receiver", "\xe6\xbb\x9a\xe5\x8a\xa8\xe7\xa0\x81\xe6\x8e\xa5\xe6\x94\xb6\xe5\x99\xa8"));
     canvas_set_font(canvas, FontSecondary);
     furi_string_printf(str, "Count:   %04X", (uint16_t)my_model->count);
     canvas_draw_str(canvas, 2, 34, furi_string_get_cstr(str));
     canvas_set_font(canvas, FontSecondary);
     if(my_model->future_count > 0xFFFF) {
-        canvas_draw_str(canvas, 2, 44, "Future:   none");
+        canvas_draw_str(canvas, 2, 44, ROLLING_FLAWS_UI_TEXT("Future:   none", "\xe6\x9c\xaa\xe6\x9d\xa5:   \xe6\x97\xa0"));
     } else {
         furi_string_printf(str, "Future:   %04X", (uint16_t)my_model->future_count);
         canvas_draw_str(canvas, 2, 44, furi_string_get_cstr(str));
@@ -263,11 +263,11 @@ void rolling_flaws_receive_signal_draw_callback(Canvas* canvas, void* model) {
     if(my_model->opened) {
         canvas_draw_icon(canvas, 100, 15, &I_Unlock_10x8);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 82, 33, "OPENED!");
+        canvas_draw_str(canvas, 82, 33, ROLLING_FLAWS_UI_TEXT("OPENED!", "\xe5\xb7\xb2\xe5\xbc\x80\xe5\x90\xaf!"));
     } else {
         canvas_draw_icon(canvas, 100, 15, &I_Lock_10x8);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 85, 33, "CLOSED");
+        canvas_draw_str(canvas, 85, 33, ROLLING_FLAWS_UI_TEXT("CLOSED", "\xe5\xb7\xb2\xe5\x85\xb3\xe9\x97\xad"));
     }
 
     canvas_set_font(canvas, FontSecondary);
@@ -349,36 +349,36 @@ RollingFlaws* rolling_flaws_alloc() {
     app->submenu = submenu_alloc();
     submenu_add_item(
         app->submenu,
-        "Config",
+        ROLLING_FLAWS_UI_TEXT("Config", "\xe9\x85\x8d\xe7\xbd\xae"),
         RollingFlawsSubmenuIndexConfigure,
         rolling_flaws_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Reset count to 0",
+        ROLLING_FLAWS_UI_TEXT("Reset count to 0", "\xe9\x87\x8d\xe7\xbd\xae\xe8\xae\xa1\xe6\x95\xb0\xe4\xb8\xba 0"),
         RollingFlawsSubmenuIndexResetCountToZero,
         rolling_flaws_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Transmit Signal",
+        ROLLING_FLAWS_UI_TEXT("Transmit Signal", "\xe5\x8f\x91\xe5\xb0\x84\xe4\xbf\xa1\xe5\x8f\xb7"),
         RollingFlawsSubmenuIndexTransmit,
         rolling_flaws_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Receive Signals",
+        ROLLING_FLAWS_UI_TEXT("Receive Signals", "\xe6\x8e\xa5\xe6\x94\xb6\xe4\xbf\xa1\xe5\x8f\xb7"),
         RollingFlawsSubmenuIndexReceive,
         rolling_flaws_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Sync Remote",
+        ROLLING_FLAWS_UI_TEXT("Sync Remote", "\xe5\x90\x8c\xe6\xad\xa5\xe9\x81\xa5\xe6\x8e\xa7\xe5\x99\xa8"),
         RollingFlawsSubmenuIndexSyncRemote,
         rolling_flaws_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, "About", RollingFlawsSubmenuIndexAbout, rolling_flaws_submenu_callback, app);
+        app->submenu, ROLLING_FLAWS_UI_TEXT("About", "\xe5\x85\xb3\xe4\xba\x8e"), RollingFlawsSubmenuIndexAbout, rolling_flaws_submenu_callback, app);
     view_set_previous_callback(
         submenu_get_view(app->submenu), rolling_flaws_navigation_exit_callback);
     view_dispatcher_add_view(

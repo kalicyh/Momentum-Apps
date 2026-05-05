@@ -25,12 +25,12 @@ void scene_action_ir_list_on_enter(void* context) {
     submenu_reset(menu);
 
     // Our selected IR File is app->temp_str
-    submenu_set_header(menu, "Select IR Command");
+    submenu_set_header(menu, QUAC_UI_TEXT("Select IR Command", "选择红外命令"));
 
     uint32_t index = 0;
 
     // Add an entry for IMPORT ALL
-    submenu_add_item(menu, "* IMPORT ALL *", index++, scene_action_ir_list_callback, app);
+    submenu_add_item(menu, QUAC_UI_TEXT("* IMPORT ALL *", "* 导入全部 *"), index++, scene_action_ir_list_callback, app);
 
     // read the IR file and load the names of all of the commands
     FuriString* name = furi_string_alloc();
@@ -48,7 +48,7 @@ void scene_action_ir_list_on_enter(void* context) {
     app->temp_u32 = index - 1;
     if(app->temp_u32 == 0) {
         FURI_LOG_E(TAG, "Failed to get ANY commands from %s", furi_string_get_cstr(app->temp_str));
-        submenu_change_item_label(menu, 0, "No IR cmds!");
+        submenu_change_item_label(menu, 0, QUAC_UI_TEXT("No IR cmds!", "无红外命令!"));
     }
 
     flipper_format_file_close(fff_data_file);

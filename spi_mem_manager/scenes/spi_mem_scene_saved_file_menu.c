@@ -16,25 +16,25 @@ void spi_mem_scene_saved_file_menu_on_enter(void* context) {
     SPIMemApp* app = context;
     submenu_add_item(
         app->submenu,
-        "Write",
+        SPI_MEM_UI_TEXT("Write", "写入"),
         SPIMemSceneSavedFileMenuSubmenuIndexWrite,
         spi_mem_scene_saved_file_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Compare",
+        SPI_MEM_UI_TEXT("Compare", "校验"),
         SPIMemSceneSavedFileMenuSubmenuIndexCompare,
         spi_mem_scene_saved_file_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Info",
+        SPI_MEM_UI_TEXT("Info", "信息"),
         SPIMemSceneSavedFileMenuSubmenuIndexInfo,
         spi_mem_scene_saved_file_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Delete",
+        SPI_MEM_UI_TEXT("Delete", "删除"),
         SPIMemSceneSavedFileMenuSubmenuIndexDelete,
         spi_mem_scene_saved_file_menu_submenu_callback,
         app);

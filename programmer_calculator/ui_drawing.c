@@ -61,7 +61,7 @@ void generate_calculator_layout(Canvas* canvas) {
     drawElement(canvas, "<", 6, 124, 0, 0, FontSecondary);
     drawElement(canvas, "0", 17, 124, 0, 0, FontSecondary);
     drawElement(canvas, "=", 29, 124, 0, 0, FontSecondary);
-    drawElement(canvas, "CLR", 42, 124, 0, 0, FontSecondary);
+    drawElement(canvas, PROGRAMMER_CALC_UI_TEXT("CLR", "清除"), 42, 124, 0, 0, FontSecondary);
 }
 
 // highlighting when cursor moves
@@ -186,7 +186,7 @@ void calculator_draw_callback(Canvas* canvas, void* ctx) {
         snprintf(resultLabel, sizeof(resultLabel), "%s", calculator_state->binToHexResult);
         break;
     default:
-        strncpy(resultLabel, "         -> [M]ODE -------- v0.9.2", sizeof(resultLabel));
+        strncpy(resultLabel, PROGRAMMER_CALC_UI_TEXT("         -> [M]ODE -------- v0.9.2", "         -> [M]模式 -------- v0.9.2"), sizeof(resultLabel));
         break;
     }
 
@@ -211,28 +211,28 @@ void calculator_draw_callback(Canvas* canvas, void* ctx) {
     const char* modeStr = "";
     switch(calculator_state->mode) {
     case ModeDecToBin:
-        modeStr = "dec >> bin";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("dec >> bin", "十 >> 二");
         break;
     case ModeDecToHex:
-        modeStr = "dec >> hex";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("dec >> hex", "十 >> 十六");
         break;
     case ModeDecToChar:
-        modeStr = "dec >> char";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("dec >> char", "十 >> 字符");
         break;
     case ModeHexToBin:
-        modeStr = "hex >> bin";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("hex >> bin", "十六 >> 二");
         break;
     case ModeHexToDec:
-        modeStr = "hex >> dec";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("hex >> dec", "十六 >> 十");
         break;
     case ModeBinToDec:
-        modeStr = "bin >> dec";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("bin >> dec", "二 >> 十");
         break;
     case ModeBinToHex:
-        modeStr = "bin >> hex";
+        modeStr = PROGRAMMER_CALC_UI_TEXT("bin >> hex", "二 >> 十六");
         break;
     default:
-        modeStr = " waiting ...";
+        modeStr = PROGRAMMER_CALC_UI_TEXT(" waiting ...", " 等待中 ...");
         break;
     }
 

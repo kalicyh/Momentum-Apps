@@ -141,8 +141,10 @@ void on_clear_logs_changed(VariableItem* item) {
     if(index == 0) {
         show_confirmation_dialog_ex(
             app,
-            "Clear Logs",
-            "Are you sure you want to clear the logs?\nThis action cannot be undone.",
+            GHOST_ESP_UI_TEXT("Clear Logs", "清除日志"),
+            GHOST_ESP_UI_TEXT(
+                "Are you sure you want to clear the logs?\nThis action cannot be undone.",
+                "确定清除日志？\n此操作不可撤销。"),
             logs_clear_confirmed_callback,
             logs_clear_cancelled_callback);
     }
@@ -156,8 +158,10 @@ void on_clear_nvs_changed(VariableItem* item) {
     if(index == 0) {
         show_confirmation_dialog_ex( // Changed to _ex version
             app,
-            "Clear NVS",
-            "Are you sure you want to clear NVS?\nThis will reset all ESP settings.",
+            GHOST_ESP_UI_TEXT("Clear NVS", "清除 NVS"),
+            GHOST_ESP_UI_TEXT(
+                "Are you sure you want to clear NVS?\nThis will reset all ESP settings.",
+                "确定清除 NVS？\n将重置所有 ESP 设置。"),
             nvs_clear_confirmed_callback,
             nvs_clear_cancelled_callback);
     }
@@ -219,7 +223,7 @@ void show_app_info(void* context) {
         app->previous_view = app->current_view;
         FURI_LOG_D("AppInfo", "Saved previous view: %d", app->previous_view);
 
-        confirmation_view_set_header(app->confirmation_view, "App Info");
+        confirmation_view_set_header(app->confirmation_view, GHOST_ESP_UI_TEXT("App Info", "应用信息"));
         confirmation_view_set_text(app->confirmation_view, info_text);
 
         // Set up callbacks with proper context
@@ -385,8 +389,10 @@ void on_clear_wardrive_changed(VariableItem* item) {
     if(index == 0) {
         show_confirmation_dialog_ex(
             app,
-            "Clear Wardrives",
-            "Are you sure you want to clear\nall wardrive files?\nThis action cannot be undone.",
+            GHOST_ESP_UI_TEXT("Clear Wardrives", "清除 Wardrive"),
+            GHOST_ESP_UI_TEXT(
+                "Are you sure you want to clear\nall wardrive files?\nThis action cannot be undone.",
+                "确定清除所有\nWardrive 文件？\n此操作不可撤销。"),
             wardrive_clear_confirmed_callback,
             wardrive_clear_cancelled_callback);
     }
@@ -400,8 +406,10 @@ void on_clear_pcaps_changed(VariableItem* item) {
     if(index == 0) {
         show_confirmation_dialog_ex(
             app,
-            "Clear PCAPs",
-            "Are you sure you want to clear\nall PCAP files?\nThis action cannot be undone.",
+            GHOST_ESP_UI_TEXT("Clear PCAPs", "清除 PCAP"),
+            GHOST_ESP_UI_TEXT(
+                "Are you sure you want to clear\nall PCAP files?\nThis action cannot be undone.",
+                "确定清除所有\nPCAP 文件？\n此操作不可撤销。"),
             pcap_clear_confirmed_callback,
             pcap_clear_cancelled_callback);
     }

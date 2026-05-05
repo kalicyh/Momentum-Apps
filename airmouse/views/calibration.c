@@ -1,6 +1,6 @@
 #include "calibration.h"
-#include "../tracking/main_loop.h"
 #include "../air_mouse.h"
+#include "../tracking/main_loop.h"
 
 #include <furi.h>
 #include <gui/elements.h>
@@ -14,9 +14,9 @@ static void calibration_draw_callback(Canvas* canvas, void* context) {
     UNUSED(context);
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 10, "Calibrating...");
+    canvas_draw_str(canvas, 0, 10, AIRMOUSE_UI_TEXT("Calibrating...", "校准中..."));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 0, 63, "Please wait");
+    canvas_draw_str(canvas, 0, 63, AIRMOUSE_UI_TEXT("Please wait", "请等待"));
 }
 
 void calibration_enter_callback(void* context) {

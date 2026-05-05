@@ -15,10 +15,10 @@ void passy_scene_adv_warning_on_enter(void* context) {
     Passy* passy = context;
     Widget* widget = passy->widget;
 
-    FuriString* first_str = furi_string_alloc_set("These DG may require");
-    FuriString* second_str = furi_string_alloc_set("advanced authentication.\n");
-    FuriString* third_str = furi_string_alloc_set("Do not expect them to work.\n");
-    FuriString* fourth_str = furi_string_alloc_set("Do not open issues for them.\n");
+    FuriString* first_str = furi_string_alloc_set(PASSY_UI_TEXT("These DG may require", "这些数据组可能需要"));
+    FuriString* second_str = furi_string_alloc_set(PASSY_UI_TEXT("advanced authentication.\n", "高级认证。\n"));
+    FuriString* third_str = furi_string_alloc_set(PASSY_UI_TEXT("Do not expect them to work.\n", "请不要期望它们能正常工作。\n"));
+    FuriString* fourth_str = furi_string_alloc_set(PASSY_UI_TEXT("Do not open issues for them.\n", "请不要为此提交问题。\n"));
 
     widget_add_string_element(
         widget, 64, 8, AlignCenter, AlignCenter, FontPrimary, furi_string_get_cstr(first_str));
@@ -30,7 +30,7 @@ void passy_scene_adv_warning_on_enter(void* context) {
         widget, 0, 44, AlignLeft, AlignCenter, FontSecondary, furi_string_get_cstr(fourth_str));
 
     widget_add_button_element(
-        widget, GuiButtonTypeCenter, "OK", passy_scene_adv_warning_widget_callback, passy);
+        widget, GuiButtonTypeCenter, PASSY_UI_TEXT("OK", "确定"), passy_scene_adv_warning_widget_callback, passy);
 
     furi_string_free(first_str);
     furi_string_free(second_str);

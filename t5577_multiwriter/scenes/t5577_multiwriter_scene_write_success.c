@@ -4,7 +4,7 @@ void t5577_multiwriter_scene_write_success_on_enter(void* context) {
     LfRfid* app = context;
     Popup* popup = app->popup;
 
-    popup_set_header(popup, "Successfully\nwritten!", 94, 3, AlignCenter, AlignTop);
+    popup_set_header(popup, T5577_MULTIWRITER_UI_TEXT("Successfully\nwritten!", "写入\n成功!"), 94, 3, AlignCenter, AlignTop);
     popup_set_icon(popup, 0, 6, &I_DolphinSuccess_91x55);
     popup_set_context(popup, app);
     popup_set_callback(popup, t5577_multiwriter_popup_timeout_callback);

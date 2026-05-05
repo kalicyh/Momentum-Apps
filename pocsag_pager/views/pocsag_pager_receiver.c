@@ -207,7 +207,7 @@ void pcsg_view_receiver_draw(Canvas* canvas, PCSGReceiverModel* model) {
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontSecondary);
 
-    elements_button_left(canvas, "Config");
+    elements_button_left(canvas, POCSAG_PAGER_UI_TEXT("Config", "配置"));
     //canvas_draw_line(canvas, 46, 51, 125, 51);
 
     bool scrollbar = model->history_item > 4;
@@ -241,9 +241,9 @@ void pcsg_view_receiver_draw(Canvas* canvas, PCSGReceiverModel* model) {
     if(model->history_item == 0) {
         canvas_draw_icon(canvas, 0, 0, model->ext_module ? &I_Fishing_123x52 : &I_Scanning_123x52);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 63, 46, "Scanning...");
+        canvas_draw_str(canvas, 63, 46, POCSAG_PAGER_UI_TEXT("Scanning...", "扫描中..."));
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str(canvas, 44, 10, model->ext_module ? "Ext" : "Int");
+        canvas_draw_str(canvas, 44, 10, model->ext_module ? POCSAG_PAGER_UI_TEXT("Ext", "外") : POCSAG_PAGER_UI_TEXT("Int", "内"));
     }
 
     // Draw RSSI
@@ -252,7 +252,7 @@ void pcsg_view_receiver_draw(Canvas* canvas, PCSGReceiverModel* model) {
     switch(model->bar_show) {
     case PCSGReceiverBarShowLock:
         canvas_draw_icon(canvas, 64, 55, &I_Lock_7x8);
-        canvas_draw_str(canvas, 74, 62, "Locked");
+        canvas_draw_str(canvas, 74, 62, POCSAG_PAGER_UI_TEXT("Locked", "已锁定"));
         break;
     case PCSGReceiverBarShowToUnlockPress:
         canvas_draw_str(canvas, 44, 62, furi_string_get_cstr(model->frequency_str));
@@ -260,7 +260,7 @@ void pcsg_view_receiver_draw(Canvas* canvas, PCSGReceiverModel* model) {
         canvas_draw_str(canvas, 96, 62, furi_string_get_cstr(model->history_stat_str));
         canvas_set_font(canvas, FontSecondary);
         elements_bold_rounded_frame(canvas, 14, 8, 99, 48);
-        elements_multiline_text(canvas, 65, 26, "To unlock\npress:");
+        elements_multiline_text(canvas, 65, 26, POCSAG_PAGER_UI_TEXT("To unlock\npress:", "按以下键\n解锁:"));
         canvas_draw_icon(canvas, 65, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 80, 42, &I_Pin_back_arrow_10x8);
         canvas_draw_icon(canvas, 95, 42, &I_Pin_back_arrow_10x8);
@@ -269,7 +269,7 @@ void pcsg_view_receiver_draw(Canvas* canvas, PCSGReceiverModel* model) {
         break;
     case PCSGReceiverBarShowUnlock:
         canvas_draw_icon(canvas, 64, 55, &I_Unlock_7x8);
-        canvas_draw_str(canvas, 74, 62, "Unlocked");
+        canvas_draw_str(canvas, 74, 62, POCSAG_PAGER_UI_TEXT("Unlocked", "已解锁"));
         break;
     default:
         canvas_draw_str(canvas, 44, 62, furi_string_get_cstr(model->frequency_str));

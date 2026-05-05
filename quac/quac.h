@@ -16,10 +16,19 @@
 #include "views/action_menu.h"
 #include "item.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define QUAC_UI_TEXT(en, zh) (zh)
+#else
+#define QUAC_UI_TEXT(en, zh) (en)
+#endif
+
 #define QUAC_NAME    "Quac!"
 #define QUAC_ABOUT                                    \
-    "Quick Action remote control\nv" FAP_VERSION "\n" \
-    "github.com/rdefeo/quac"
+    QUAC_UI_TEXT(                                      \
+        "Quick Action remote control\nv" FAP_VERSION "\n" \
+        "github.com/rdefeo/quac",                     \
+        "快捷动作遥控器\nv" FAP_VERSION "\n"               \
+        "github.com/rdefeo/quac")
 #define TAG "Quac" // log statement id
 
 // Location of our actions and folders

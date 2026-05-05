@@ -39,7 +39,7 @@ static bool select_name_input_validator(const char* text, FuriString* error, voi
     /* Check to ensure no digits in OT name/nickname */
     for(i = 0; i < strlen(text); i++) {
         if(isdigit((unsigned int)text[i])) {
-            furi_string_printf(error, "Name cannot\ncontain\nnumbers!");
+            furi_string_printf(error, POKEMON_UI_TEXT("Name cannot\ncontain\nnumbers!", "名字不能\n包含数字!"));
             return false;
         }
     }
@@ -47,7 +47,7 @@ static bool select_name_input_validator(const char* text, FuriString* error, voi
     /* Check for Unown setting is a character */
     if(state == PokemonSceneUnownForm) {
         if(!isalpha((int)text[0])) {
-            furi_string_printf(error, "Form must\nbe a single\nletter!");
+            furi_string_printf(error, POKEMON_UI_TEXT("Form must\nbe a single\nletter!", "形态必须\n是单个字母!"));
             return false;
         }
     }
@@ -86,17 +86,17 @@ void pokemon_scene_select_name_on_enter(void* context) {
 
     switch(state) {
     case PokemonSceneNickname:
-        header = "Nickname (none for default)";
+        header = POKEMON_UI_TEXT("Nickname (none for default)", "昵称 (留空使用默认)");
         len = LEN_NICKNAME;
         stat = STAT_NICKNAME;
         break;
     case PokemonSceneOTName:
-        header = "Enter OT Name";
+        header = POKEMON_UI_TEXT("Enter OT Name", "输入训练师名");
         len = LEN_OT_NAME;
         stat = STAT_OT_NAME;
         break;
     case PokemonSceneUnownForm:
-        header = "Enter Unown Letter Form";
+        header = POKEMON_UI_TEXT("Enter Unown Letter Form", "输入未知图腾字母");
         len = 2;
         stat = STAT_OT_NAME;
         break;

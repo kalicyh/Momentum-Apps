@@ -33,22 +33,22 @@ typedef struct {
 // increment it!
 const Evil_PortalItem items[NUM_MENU_ITEMS] = {
     // send command
-    {"Start portal", {""}, 1, {SET_HTML_CMD}, NO_ARGS, FOCUS_CONSOLE_END, SHOW_STOPSCAN_TIP},
+    {EVIL_PORTAL_UI_TEXT("Start portal", "启动门户"), {""}, 1, {SET_HTML_CMD}, NO_ARGS, FOCUS_CONSOLE_END, SHOW_STOPSCAN_TIP},
 
     // stop portal
-    {"Stop portal", {""}, 1, {RESET_CMD}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
+    {EVIL_PORTAL_UI_TEXT("Stop portal", "停止门户"), {""}, 1, {RESET_CMD}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
 
     // console
-    {"Save logs", {""}, 1, {"savelogs"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
+    {EVIL_PORTAL_UI_TEXT("Save logs", "保存日志"), {""}, 1, {"savelogs"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
 
     // set AP name
-    {"Set AP name", {""}, 1, {"setapname"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
+    {EVIL_PORTAL_UI_TEXT("Set AP name", "设置 AP 名称"), {""}, 1, {"setapname"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
 
     // select HTML Portal File
-    {"Select HTML", {""}, 1, {"selecthtml"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
+    {EVIL_PORTAL_UI_TEXT("Select HTML", "选择 HTML"), {""}, 1, {"selecthtml"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
 
     // help
-    {"Help", {""}, 1, {"help"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
+    {EVIL_PORTAL_UI_TEXT("Help", "帮助"), {""}, 1, {"help"}, NO_ARGS, FOCUS_CONSOLE_START, SHOW_STOPSCAN_TIP},
 };
 
 static void evil_portal_scene_start_var_list_enter_callback(void* context, uint32_t index) {

@@ -22,12 +22,13 @@ void pokemon_scene_reset_confirm_on_enter(void* context) {
     // Clean view
     dialog_ex_reset(pokemon_fap->dialog_ex);
 
-    dialog_ex_set_left_button_text(dialog_ex, "Reset");
-    dialog_ex_set_right_button_text(dialog_ex, "Back");
-    dialog_ex_set_header(dialog_ex, "Reset Trade State?", 64, 0, AlignCenter, AlignTop);
+    dialog_ex_set_left_button_text(dialog_ex, POKEMON_UI_TEXT("Reset", "重置"));
+    dialog_ex_set_right_button_text(dialog_ex, POKEMON_UI_TEXT("Back", "返回"));
+    dialog_ex_set_header(dialog_ex, POKEMON_UI_TEXT("Reset Trade State?", "重置交换状态?"), 64, 0, AlignCenter, AlignTop);
     dialog_ex_set_text(
         dialog_ex,
-        "Trade partner will need to\nleave and re-enter the\nTrade Center!",
+        POKEMON_UI_TEXT("Trade partner will need to\nleave and re-enter the\nTrade Center!",
+                        "交换对象需要\n退出并重新进入\n交换中心!"),
         64,
         12,
         AlignCenter,

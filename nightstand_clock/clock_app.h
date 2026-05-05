@@ -3,6 +3,12 @@
 #include <input/input.h>
 #include <locale/locale.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CLOCK_UI_TEXT(en, zh) (zh)
+#else
+#define CLOCK_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "Clock"
 
 #define CLOCK_ISO_DATE_FORMAT "%.4d-%.2d-%.2d"

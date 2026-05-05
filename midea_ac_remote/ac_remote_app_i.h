@@ -16,6 +16,12 @@
 #include "views/ac_remote_panel.h"
 #include "midea_ac_remote_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MIDEA_AC_REMOTE_UI_TEXT(en, zh) (zh)
+#else
+#define MIDEA_AC_REMOTE_UI_TEXT(en, zh) (en)
+#endif
+
 #define AC_REMOTE_APP_SETTINGS APP_DATA_PATH("settings.txt")
 
 typedef struct {

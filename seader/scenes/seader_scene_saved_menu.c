@@ -18,14 +18,14 @@ void seader_scene_saved_menu_on_enter(void* context) {
     Submenu* submenu = seader->submenu;
 
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, seader_scene_saved_menu_submenu_callback, seader);
+        submenu, SEADER_UI_TEXT("Info", "信息"), SubmenuIndexInfo, seader_scene_saved_menu_submenu_callback, seader);
     submenu_add_item(
-        submenu, "Delete", SubmenuIndexDelete, seader_scene_saved_menu_submenu_callback, seader);
+        submenu, SEADER_UI_TEXT("Delete", "删除"), SubmenuIndexDelete, seader_scene_saved_menu_submenu_callback, seader);
 
     if(credential->sio[0] == 0x30) {
         submenu_add_item(
             submenu,
-            "Virtual",
+            SEADER_UI_TEXT("Virtual", "虚拟"),
             SubmenuIndexVirtual,
             seader_scene_saved_menu_submenu_callback,
             seader);

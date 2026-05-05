@@ -30,39 +30,39 @@ void callback_message_draw(Canvas *canvas, void *model)
         canvas_draw_str(canvas, 0, 30, "GFX: the1anonlypr3");
         canvas_draw_str(canvas, 0, 40, "github.com/jblanked/FlipWorld");
 
-        canvas_draw_str_multi(canvas, 0, 55, "The first open world multiplayer\ngame on the Flipper Zero.");
+        canvas_draw_str_multi(canvas, 0, 55, FLIP_WORLD_UI_TEXT("The first open world multiplayer\ngame on the Flipper Zero.", "Flipper Zero 上首款\n开放世界多人游戏。"));
     }
     else if (message_model->message_state == MessageStateLoading)
     {
         canvas_set_font(canvas, FontPrimary);
         if (game_mode_index != 1)
         {
-            canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, "Starting FlipWorld");
+            canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, FLIP_WORLD_UI_TEXT("Starting FlipWorld", "启动 FlipWorld"));
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 0, 50, "Please wait while your");
-            canvas_draw_str(canvas, 0, 60, "game is started.");
+            canvas_draw_str(canvas, 0, 50, FLIP_WORLD_UI_TEXT("Please wait while your", "游戏启动中，"));
+            canvas_draw_str(canvas, 0, 60, FLIP_WORLD_UI_TEXT("game is started.", "请稍候..."));
         }
         else
         {
-            canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, "Loading Lobbies");
+            canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, FLIP_WORLD_UI_TEXT("Loading Lobbies", "加载大厅"));
             canvas_set_font(canvas, FontSecondary);
-            canvas_draw_str(canvas, 0, 60, "Please wait....");
+            canvas_draw_str(canvas, 0, 60, FLIP_WORLD_UI_TEXT("Please wait....", "请稍候...."));
         }
     }
     // well this is only called once so let's make a while loop
     else if (message_model->message_state == MessageStateWaitingLobby)
     {
-        canvas_draw_str(canvas, 0, 10, "Waiting for more players...");
+        canvas_draw_str(canvas, 0, 10, FLIP_WORLD_UI_TEXT("Waiting for more players...", "等待更多玩家..."));
         // time elapsed based on timer_iteration and timer_refresh
         // char str[32];
         // snprintf(str, sizeof(str), "Time elapsed: %d seconds", timer_iteration * timer_refresh);
         // canvas_draw_str(canvas, 0, 50, str);
-        canvas_draw_str(canvas, 0, 60, "Press BACK to cancel.");
+        canvas_draw_str(canvas, 0, 60, FLIP_WORLD_UI_TEXT("Press BACK to cancel.", "按返回键取消。"));
         canvas_commit(canvas); // make sure message is drawn
     }
     else
     {
-        canvas_draw_str(canvas, 0, 10, "Unknown message state");
+        canvas_draw_str(canvas, 0, 10, FLIP_WORLD_UI_TEXT("Unknown message state", "未知消息状态"));
     }
 }
 
@@ -184,7 +184,7 @@ void callback_updated_wifi_ssid(void *context)
                     // save the wifi if the device is connected
                     if (!flipper_http_save_wifi(fhttp, app->text_input_buffer, pass))
                     {
-                        easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+                        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), FLIP_WORLD_UI_TEXT("Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.", "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
                     }
 
                     // free the resources
@@ -192,7 +192,7 @@ void callback_updated_wifi_ssid(void *context)
                 }
                 else
                 {
-                    easy_flipper_dialog("FlipperHTTP Error", "The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), FLIP_WORLD_UI_TEXT("The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.", "UART 可能正忙。\n请确认已刷入适合开发板的\n正确固件，然后重启\nFlipper Zero。"));
                 }
             }
         }
@@ -241,7 +241,7 @@ void callback_updated_wifi_pass(void *context)
                 // save the wifi if the device is connected
                 if (!flipper_http_save_wifi(fhttp, ssid, app->text_input_buffer))
                 {
-                    easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), FLIP_WORLD_UI_TEXT("Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.", "请确认 WiFi 开发板或 Pico W\n已连接，并已刷入最新的\nFlipperHTTP 固件。"));
                 }
 
                 // free the resources
@@ -249,7 +249,7 @@ void callback_updated_wifi_pass(void *context)
             }
             else
             {
-                easy_flipper_dialog("FlipperHTTP Error", "The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), FLIP_WORLD_UI_TEXT("The UART is likely busy.\nEnsure you have the correct\nflash for your board then\nrestart your Flipper Zero.", "UART 可能正忙。\n请确认已刷入适合开发板的\n正确固件，然后重启\nFlipper Zero。"));
             }
         }
     }
@@ -438,7 +438,7 @@ static bool _fetch_worlds(DataLoaderModel *model)
 static char *_parse_worlds(DataLoaderModel *model)
 {
     UNUSED(model);
-    return "World Pack Installed";
+    return FLIP_WORLD_UI_TEXT("World Pack Installed", "世界包已安装");
 }
 static void switch_to_view_get_worlds(FlipWorldApp *app)
 {
@@ -447,7 +447,7 @@ static void switch_to_view_get_worlds(FlipWorldApp *app)
         FURI_LOG_E(TAG, "Failed to allocate view loader");
         return;
     }
-    loader_switch_to_view(app, "Fetching World Pack..", _fetch_worlds, _parse_worlds, 1, callback_to_submenu, FlipWorldViewLoader);
+    loader_switch_to_view(app, FLIP_WORLD_UI_TEXT("Fetching World Pack..", "获取世界包..."), _fetch_worlds, _parse_worlds, 1, callback_to_submenu, FlipWorldViewLoader);
 }
 void callback_game_settings_select(void *context, uint32_t index)
 {
@@ -517,7 +517,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
         if (!fhttp)
         {
             FURI_LOG_E(TAG, "Failed to allocate FlipperHTTP");
-            easy_flipper_dialog("Error", "Failed to allocate FlipperHTTP. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to allocate FlipperHTTP. Press BACK to return.", "FlipperHTTP 分配失败。按返回键返回。"));
             return;
         }
 
@@ -525,7 +525,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
         if (!game_fetch_lobby(fhttp, lobby_list[lobby_index]))
         {
             FURI_LOG_E(TAG, "Failed to fetch lobby details");
-            easy_flipper_dialog("Error", "Failed to fetch lobby details. Press BACK to return.");
+            easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to fetch lobby details. Press BACK to return.", "获取大厅详情失败。按返回键返回。"));
             flipper_http_free(fhttp);
             return;
         }
@@ -549,7 +549,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
             {
             case -1:
                 FURI_LOG_E(TAG, "Failed to get player count");
-                easy_flipper_dialog("Error", "Failed to get player count. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to get player count. Press BACK to return.", "获取玩家数量失败。按返回键返回。"));
                 flipper_http_free(fhttp);
                 furi_string_free(lobby);
                 return;
@@ -558,7 +558,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
                 if (!game_join_lobby(fhttp, lobby_list[lobby_index]))
                 {
                     FURI_LOG_E(TAG, "Failed to join lobby");
-                    easy_flipper_dialog("Error", "Failed to join lobby. Press BACK to return.");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to join lobby. Press BACK to return.", "加入大厅失败。按返回键返回。"));
                     flipper_http_free(fhttp);
                     furi_string_free(lobby);
                     return;
@@ -573,7 +573,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
                     if (!game_remove_from_lobby(fhttp))
                     {
                         FURI_LOG_I(TAG, "User is in the lobby but failed to remove");
-                        easy_flipper_dialog("Error", "You're already in the lobby.\nContact JBlanked.\n\nPress BACK to return.");
+                        easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("You're already in the lobby.\nContact JBlanked.\n\nPress BACK to return.", "你已在大厅中。\n请联系 JBlanked。\n\n按返回键返回。"));
                         flipper_http_free(fhttp);
                         furi_string_free(lobby);
                         return;
@@ -583,7 +583,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
                 if (!game_join_lobby(fhttp, lobby_list[lobby_index]))
                 {
                     FURI_LOG_E(TAG, "Failed to join lobby");
-                    easy_flipper_dialog("Error", "Failed to join lobby. Press BACK to return.");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to join lobby. Press BACK to return.", "加入大厅失败。按返回键返回。"));
                     flipper_http_free(fhttp);
                     furi_string_free(lobby);
                     return;
@@ -592,7 +592,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
             case 2:
                 // show an error message saying the lobby is full
                 FURI_LOG_E(TAG, "Lobby is full");
-                easy_flipper_dialog("Error", "Lobby is full. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Lobby is full. Press BACK to return.", "大厅已满。按返回键返回。"));
                 flipper_http_free(fhttp);
                 furi_string_free(lobby);
                 return;
@@ -606,7 +606,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
                 if (!game_remove_from_lobby(fhttp))
                 {
                     FURI_LOG_I(TAG, "User is in the lobby but failed to remove");
-                    easy_flipper_dialog("Error", "You're already in the lobby.\nContact JBlanked.\n\nPress BACK to return.");
+                    easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("You're already in the lobby.\nContact JBlanked.\n\nPress BACK to return.", "你已在大厅中。\n请联系 JBlanked。\n\n按返回键返回。"));
                     flipper_http_free(fhttp);
                     furi_string_free(lobby);
                     return;
@@ -616,7 +616,7 @@ void callback_submenu_lobby_pvp_choices(void *context, uint32_t index)
             if (!game_join_lobby(fhttp, lobby_list[lobby_index]))
             {
                 FURI_LOG_E(TAG, "Failed to join lobby");
-                easy_flipper_dialog("Error", "Failed to join lobby. Press BACK to return.");
+                easy_flipper_dialog(FLIP_WORLD_UI_TEXT("Error", "错误"), FLIP_WORLD_UI_TEXT("Failed to join lobby. Press BACK to return.", "加入大厅失败。按返回键返回。"));
                 flipper_http_free(fhttp);
                 furi_string_free(lobby);
                 return;

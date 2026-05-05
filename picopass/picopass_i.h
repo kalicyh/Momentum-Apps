@@ -34,6 +34,12 @@
 #include "protocol/picopass_poller.h"
 #include "protocol/picopass_listener.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define PICOPASS_UI_TEXT(en, zh) (zh)
+#else
+#define PICOPASS_UI_TEXT(en, zh) (en)
+#endif
+
 #define PICOPASS_TEXT_STORE_SIZE 129
 
 #define PICOPASS_ICLASS_ELITE_DICT_FLIPPER_NAME    APP_ASSETS_PATH("iclass_elite_dict.txt")

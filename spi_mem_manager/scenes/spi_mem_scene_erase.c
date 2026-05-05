@@ -16,11 +16,11 @@ static void spi_mem_scene_erase_callback(void* context, SPIMemCustomEventWorker 
 void spi_mem_scene_erase_on_enter(void* context) {
     SPIMemApp* app = context;
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Cancel", spi_mem_scene_erase_widget_callback, app);
+        app->widget, GuiButtonTypeLeft, SPI_MEM_UI_TEXT("Cancel", "取消"), spi_mem_scene_erase_widget_callback, app);
     widget_add_string_element(
-        app->widget, 64, 15, AlignCenter, AlignBottom, FontPrimary, "Erasing SPI chip");
+        app->widget, 64, 15, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("Erasing SPI chip", "正在擦除 SPI 芯片"));
     widget_add_string_element(
-        app->widget, 64, 27, AlignCenter, AlignBottom, FontSecondary, "Please be patient");
+        app->widget, 64, 27, AlignCenter, AlignBottom, FontSecondary, SPI_MEM_UI_TEXT("Please be patient", "请耐心等待"));
     notification_message(app->notifications, &sequence_blink_start_magenta);
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewWidget);
     spi_mem_worker_start_thread(app->worker);

@@ -10,7 +10,7 @@ void seos_scene_write_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seos->popup;
-    popup_set_header(popup, "Writing", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEOS_UI_TEXT("Writing", "写入中"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinSend_97x61);
 
     seos->credential->write = true;

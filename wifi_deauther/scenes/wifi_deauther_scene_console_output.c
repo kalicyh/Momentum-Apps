@@ -33,13 +33,15 @@ void wifi_deauther_scene_console_output_on_enter(void* context) {
         furi_string_reset(app->text_box_store);
         app->text_box_store_strlen = 0;
         if(0 == strncmp("help", app->selected_tx_string, strlen("help"))) {
-            const char* help_msg = "No help here\nonly pain\n";
+            const char* help_msg =
+                WIFI_DEAUTHER_UI_TEXT("No help here\nonly pain\n", "此处无帮助\n只有痛苦\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
         }
 
         if(app->show_stopscan_tip) {
-            const char* help_msg = "Press BACK to send stopscan\n";
+            const char* help_msg =
+                WIFI_DEAUTHER_UI_TEXT("Press BACK to send stopscan\n", "按返回键发送停止扫描\n");
             furi_string_cat_str(app->text_box_store, help_msg);
             app->text_box_store_strlen += strlen(help_msg);
         }

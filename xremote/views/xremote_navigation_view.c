@@ -49,7 +49,7 @@ static void xremote_navigation_view_draw_callback(Canvas* canvas, void* context)
                                             xremote_navigation_view_draw_vertical :
                                             xremote_navigation_view_draw_horizontal;
 
-    xremote_canvas_draw_header(canvas, orientation, "Navigation");
+    xremote_canvas_draw_header(canvas, orientation, XREMOTE_UI_TEXT("Navigation", "导航"));
     xremote_navigation_view_draw_body(canvas, model);
     xremote_canvas_draw_exit_footer(canvas, orientation, exit_str);
 }

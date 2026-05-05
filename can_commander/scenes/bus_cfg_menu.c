@@ -27,25 +27,25 @@ void cancommander_scene_bus_cfg_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "CAN0 Settings",
+        CAN_COMMANDER_UI_TEXT("CAN0 Settings", "CAN0 设置"),
         BusCfgCan0,
         cancommander_scene_bus_cfg_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "CAN1 Settings",
+        CAN_COMMANDER_UI_TEXT("CAN1 Settings", "CAN1 设置"),
         BusCfgCan1,
         cancommander_scene_bus_cfg_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Get CAN0 Config",
+        CAN_COMMANDER_UI_TEXT("Get CAN0 Config", "获取 CAN0 配置"),
         BusCfgGetCan0,
         cancommander_scene_bus_cfg_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Get CAN1 Config",
+        CAN_COMMANDER_UI_TEXT("Get CAN1 Config", "获取 CAN1 配置"),
         BusCfgGetCan1,
         cancommander_scene_bus_cfg_menu_callback,
         app);
@@ -71,8 +71,8 @@ bool cancommander_scene_bus_cfg_menu_on_event(void* context, SceneManagerEvent e
             app,
             app->args_bus_cfg_can0,
             sizeof(app->args_bus_cfg_can0),
-            "CAN0 Config",
-            "Set CAN0",
+            CAN_COMMANDER_UI_TEXT("CAN0 Config", "CAN0 配置"),
+            CAN_COMMANDER_UI_TEXT("Set CAN0", "设置 CAN0"),
             cancommander_scene_bus_cfg_apply_can0,
             cancommander_scene_status);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -83,8 +83,8 @@ bool cancommander_scene_bus_cfg_menu_on_event(void* context, SceneManagerEvent e
             app,
             app->args_bus_cfg_can1,
             sizeof(app->args_bus_cfg_can1),
-            "CAN1 Config",
-            "Set CAN1",
+            CAN_COMMANDER_UI_TEXT("CAN1 Config", "CAN1 配置"),
+            CAN_COMMANDER_UI_TEXT("Set CAN1", "设置 CAN1"),
             cancommander_scene_bus_cfg_apply_can1,
             cancommander_scene_status);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);

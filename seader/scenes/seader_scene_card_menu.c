@@ -20,29 +20,29 @@ void seader_scene_card_menu_on_enter(void* context) {
     Submenu* submenu = seader->submenu;
 
     submenu_add_item(
-        submenu, "Save", SubmenuIndexSave, seader_scene_card_menu_submenu_callback, seader);
+        submenu, SEADER_UI_TEXT("Save", "保存"), SubmenuIndexSave, seader_scene_card_menu_submenu_callback, seader);
     submenu_add_item(
         submenu,
-        "Save Picopass",
+        SEADER_UI_TEXT("Save Picopass", "保存Picopass"),
         SubmenuIndexSavePicopass,
         seader_scene_card_menu_submenu_callback,
         seader);
     submenu_add_item(
         submenu,
-        "Save RFID",
+        SEADER_UI_TEXT("Save RFID", "保存RFID"),
         SubmenuIndexSaveRFID,
         seader_scene_card_menu_submenu_callback,
         seader);
     if(credential->sio[0] == 0x30 && credential->diversifier_len == RFAL_PICOPASS_UID_LEN) {
         submenu_add_item(
             submenu,
-            "Save SR",
+            SEADER_UI_TEXT("Save SR", "保存SR"),
             SubmenuIndexSaveSR,
             seader_scene_card_menu_submenu_callback,
             seader);
     }
     submenu_add_item(
-        submenu, "Save MFC", SubmenuIndexSaveMFC, seader_scene_card_menu_submenu_callback, seader);
+        submenu, SEADER_UI_TEXT("Save MFC", "保存MFC"), SubmenuIndexSaveMFC, seader_scene_card_menu_submenu_callback, seader);
 
     submenu_set_selected_item(
         seader->submenu,

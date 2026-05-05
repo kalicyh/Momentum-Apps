@@ -8,7 +8,7 @@ void seader_scene_read_14a_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seader->popup;
-    popup_set_header(popup, "Detecting\n14a\ncard", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEADER_UI_TEXT("Detecting\n14a\ncard", "正在检测\n14a\n卡片"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     // Start worker
@@ -33,7 +33,7 @@ bool seader_scene_read_14a_on_event(void* context, SceneManagerEvent event) {
             consumed = true;
         } else if(event.event == SeaderCustomEventPollerDetect) {
             Popup* popup = seader->popup;
-            popup_set_header(popup, "DON'T\nMOVE", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, SEADER_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == SeaderCustomEventPollerSuccess) {
             scene_manager_next_scene(seader->scene_manager, SeaderSceneReadCardSuccess);

@@ -23,18 +23,18 @@ void nfc_playlist_error_playlist_already_exists_scene_on_enter(void* context) {
       23,
       AlignCenter,
       AlignCenter,
-      "\e#A playlist with that name already exists\e#",
+      NFC_PLAYLIST_UI_TEXT("\e#A playlist with that name already exists\e#", "\e#该名称的播放列表已存在\e#"),
       false);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeLeft,
-      "Try Again",
+      NFC_PLAYLIST_UI_TEXT("Try Again", "重试"),
       nfc_playlist_error_playlist_already_exists_scene_menu_callback,
       nfc_playlist);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeRight,
-      "Main Menu",
+      NFC_PLAYLIST_UI_TEXT("Main Menu", "主菜单"),
       nfc_playlist_error_playlist_already_exists_scene_menu_callback,
       nfc_playlist);
 

@@ -23,6 +23,12 @@
 
 #define VGM_TOOL_TAG "VgmTool"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define VGM_UI_TEXT(en, zh) (zh)
+#else
+#define VGM_UI_TEXT(en, zh) (en)
+#endif
+
 // This can be set by the build system to avoid manual code editing
 #ifndef VGM_FW_VERSION
 #define VGM_FW_VERSION "0.1.0"

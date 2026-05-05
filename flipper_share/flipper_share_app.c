@@ -36,7 +36,7 @@ _Bool file_browser_callback(FuriString* path, void* context, unsigned char** ico
 
 void show_file_info_scene(FlipperShareApp* app) {
     furi_assert(app);
-    dialog_ex_set_header(app->dialog_show_file, "File Info", 64, 0, AlignCenter, AlignTop);
+    dialog_ex_set_header(app->dialog_show_file, FLIPPER_SHARE_UI_TEXT("File Info", "文件信息"), 64, 0, AlignCenter, AlignTop);
     dialog_ex_set_text(app->dialog_show_file, app->selected_file_path, 64, 32, AlignCenter, AlignCenter);
     view_dispatcher_switch_to_view(app->view_dispatcher, FlipperShareViewIdShowFile);
 }
@@ -62,13 +62,18 @@ static void submenu_callback(void* context, uint32_t index) {
     } else if(index == 1) { // Receive
         scene_manager_next_scene(app->scene_manager, FlipperShareSceneReceive);
     } else if(index == 2) { // About
-        dialog_ex_set_header(app->dialog_about, "About", 64, 0, AlignCenter, AlignTop);
+        dialog_ex_set_header(app->dialog_about, FLIPPER_SHARE_UI_TEXT("About", "关于"), 64, 0, AlignCenter, AlignTop);
         dialog_ex_set_text(
             app->dialog_about,
-            "\nFlipper Share (flipper_share)\n"
-            "A file sharing app via Sub-GHz\n"
-            "Developed by @lomalkin\n"
-            "github.com/lomalkin",
+            FLIPPER_SHARE_UI_TEXT(
+                "\nFlipper Share (flipper_share)\n"
+                "A file sharing app via Sub-GHz\n"
+                "Developed by @lomalkin\n"
+                "github.com/lomalkin",
+                "\nFlipper Share (flipper_share)\n"
+                "通过 Sub-GHz 传输的文件共享应用\n"
+                "由 @lomalkin 开发\n"
+                "github.com/lomalkin"),
             0,
             0,
             AlignLeft,
@@ -171,9 +176,9 @@ static FlipperShareApp* flipper_share_alloc() {
 
     // Create submenu for main menu
     app->submenu = submenu_alloc();
-    submenu_add_item(app->submenu, "Send", 0, submenu_callback, app);
-    submenu_add_item(app->submenu, "Receive", 1, submenu_callback, app);
-    submenu_add_item(app->submenu, "About", 2, submenu_callback, app);
+    submenu_add_item(app->submenu, FLIPPER_SHARE_UI_TEXT("Send", "发送"), 0, submenu_callback, app);
+    submenu_add_item(app->submenu, FLIPPER_SHARE_UI_TEXT("Receive", "接收"), 1, submenu_callback, app);
+    submenu_add_item(app->submenu, FLIPPER_SHARE_UI_TEXT("About", "关于"), 2, submenu_callback, app);
     view_dispatcher_add_view(
         app->view_dispatcher, FlipperShareViewIdMenu, submenu_get_view(app->submenu));
 

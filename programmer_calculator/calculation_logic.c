@@ -244,7 +244,7 @@ bool binToHex(const char* binaryString, char* binToHexResult, size_t resultSize)
 
     for(size_t i = 0; i < binLength; ++i) {
         if(binaryString[i] != '0' && binaryString[i] != '1') {
-            snprintf(binToHexResult, resultSize, "INVALID Binary");
+            snprintf(binToHexResult, resultSize, PROGRAMMER_CALC_UI_TEXT("INVALID Binary", "无效二进制"));
             return false;
         }
     }
@@ -296,7 +296,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->decToBinResult,
                 sizeof(calculator_state->decToBinResult),
-                "Error    ---------Input:   2^35 - 1");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   2^35 - 1",
+                    "错误    ---------输入:   2^35 - 1"));
         }
         break;
 
@@ -308,7 +310,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->decToHexResult,
                 sizeof(calculator_state->decToHexResult),
-                "Error    ---------Input:   2^64 - 1");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   2^64 - 1",
+                    "错误    ---------输入:   2^64 - 1"));
         }
         break;
 
@@ -320,7 +324,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->decToCharResult,
                 sizeof(calculator_state->decToCharResult),
-                "Error    ---------Input:   0 - 255");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   0 - 255",
+                    "错误    ---------输入:   0 - 255"));
         }
         break;
 
@@ -332,7 +338,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->hexToBinResult,
                 sizeof(calculator_state->hexToBinResult),
-                "Error    ---------Input:   64-bit");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   64-bit",
+                    "错误    ---------输入:   64位"));
         }
         break;
 
@@ -347,7 +355,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->hexToDecResult,
                 sizeof(calculator_state->hexToDecResult),
-                "Error    ---------Input:   2^64 - 1");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   2^64 - 1",
+                    "错误    ---------输入:   2^64 - 1"));
         }
         break;
 
@@ -362,7 +372,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->binToDecResult,
                 sizeof(calculator_state->binToDecResult),
-                "Error    ---------Input:   2^64 - 1");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   2^64 - 1",
+                    "错误    ---------输入:   2^64 - 1"));
         }
         break;
 
@@ -374,7 +386,9 @@ void calculate(Calculator* calculator_state) {
             snprintf(
                 calculator_state->binToHexResult,
                 sizeof(calculator_state->binToHexResult),
-                "Error    ---------Input:   64-bit");
+                PROGRAMMER_CALC_UI_TEXT(
+                    "Error    ---------Input:   64-bit",
+                    "错误    ---------输入:   64位"));
         }
         break;
 

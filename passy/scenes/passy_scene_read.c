@@ -38,7 +38,7 @@ void passy_scene_read_on_enter(void* context) {
 
     // Setup view
     Popup* popup = passy->popup;
-    popup_set_header(popup, "Detecting...", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, PASSY_UI_TEXT("Detecting...", "检测中..."), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
     passy->scanner = nfc_scanner_alloc(passy->nfc);
     nfc_scanner_start(
@@ -90,18 +90,18 @@ bool passy_scene_read_on_event(void* context, SceneManagerEvent event) {
                 view_dispatcher_send_custom_event(
                     passy->view_dispatcher, PassyCustomEventReaderError);
             }
-            popup_set_header(popup, "Detected", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, PASSY_UI_TEXT("Detected", "已检测到"), 68, 30, AlignLeft, AlignTop);
         } else if(event.event == PassyCustomEventReaderAuthenticated) {
-            popup_set_header(popup, "Authenticated", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, PASSY_UI_TEXT("Authenticated", "已认证"), 68, 30, AlignLeft, AlignTop);
         } else if(event.event == PassyCustomEventReaderReading) {
             if(passy->bytes_total == 0) {
-                popup_set_header(popup, "Reading", 68, 30, AlignLeft, AlignTop);
+                popup_set_header(popup, PASSY_UI_TEXT("Reading", "读取中"), 68, 30, AlignLeft, AlignTop);
             } else {
                 // Update the header with the current bytes read
                 snprintf(
                     passy->text_store,
                     PASSY_TEXT_STORE_SIZE,
-                    "Reading\n%d/%dk",
+                    PASSY_UI_TEXT("Reading\n%d/%dk", "读取中\n%d/%dk"),
                     passy->offset,
                     (passy->bytes_total / 1024));
                 popup_set_header(popup, passy->text_store, 68, 30, AlignLeft, AlignTop);

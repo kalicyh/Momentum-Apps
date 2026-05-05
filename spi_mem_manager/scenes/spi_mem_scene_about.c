@@ -15,16 +15,20 @@ void spi_mem_scene_about_on_enter(void* context) {
         app->widget, 0, 0, 128, 14, AlignCenter, AlignBottom, SPI_MEM_BLANK_INV, false);
     widget_add_text_box_element(
         app->widget, 0, 2, 128, 14, AlignCenter, AlignBottom, SPI_MEM_NAME, false);
-    furi_string_printf(tmp_string, "\e#%s\n", "Information");
-    furi_string_cat_printf(tmp_string, "Version: %s\n", SPI_MEM_VERSION_APP);
-    furi_string_cat_printf(tmp_string, "Developed by: %s\n", SPI_MEM_DEVELOPER);
+    furi_string_printf(tmp_string, "\e#%s\n", SPI_MEM_UI_TEXT("Information", "信息"));
+    furi_string_cat_printf(tmp_string, "%s %s\n", SPI_MEM_UI_TEXT("Version:", "版本:"), SPI_MEM_VERSION_APP);
+    furi_string_cat_printf(tmp_string, "%s %s\n", SPI_MEM_UI_TEXT("Developed by:", "开发者:"), SPI_MEM_DEVELOPER);
     furi_string_cat_printf(tmp_string, "Github: %s\n\n", SPI_MEM_GITHUB);
-    furi_string_cat_printf(tmp_string, "\e#%s\n", "Description");
+    furi_string_cat_printf(tmp_string, "\e#%s\n", SPI_MEM_UI_TEXT("Description", "说明"));
     furi_string_cat_printf(
         tmp_string,
-        "SPI memory dumper\n"
-        "Originally written by Hedger, ghettorce and x893 at\n"
-        "Flipper Hackathon 2021\n\n");
+        SPI_MEM_UI_TEXT(
+            "SPI memory dumper\n"
+            "Originally written by Hedger, ghettorce and x893 at\n"
+            "Flipper Hackathon 2021\n\n",
+            "SPI 存储器读写工具\n"
+            "原作者 Hedger, ghettorce 和 x893\n"
+            "于 Flipper Hackathon 2021 编写\n\n"));
     widget_add_text_scroll_element(app->widget, 0, 16, 128, 50, furi_string_get_cstr(tmp_string));
 
     furi_string_free(tmp_string);

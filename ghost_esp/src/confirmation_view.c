@@ -1,4 +1,5 @@
 #include "confirmation_view.h"
+#include "menu.h"
 #include <gui/elements.h>
 #include <furi.h>
 
@@ -82,7 +83,7 @@ static void confirmation_view_draw_callback(Canvas* canvas, void* _model) {
 
     // Draw OK button at bottom
     canvas_set_font(canvas, FontSecondary);
-    elements_button_center(canvas, "OK");
+    elements_button_center(canvas, GHOST_ESP_UI_TEXT("OK", "确定"));
 }
 
 static bool confirmation_view_input_callback(InputEvent* event, void* context) {

@@ -17,12 +17,12 @@ void tpms_scene_start_on_enter(void* context) {
     Submenu* submenu = app->submenu;
 
     submenu_add_item(
-        submenu, "Read TPMS", SubmenuIndexTPMSReceiver, tpms_scene_start_submenu_callback, app);
+        submenu, TPMS_UI_TEXT("Read TPMS", "读取TPMS"), SubmenuIndexTPMSReceiver, tpms_scene_start_submenu_callback, app);
     submenu_add_item(
-        submenu, "Relearn", SubmenuIndexTPMSRelearn, tpms_scene_start_submenu_callback, app);
+        submenu, TPMS_UI_TEXT("Relearn", "重学"), SubmenuIndexTPMSRelearn, tpms_scene_start_submenu_callback, app);
     // Help
     submenu_add_item(
-        submenu, "About", SubmenuIndexTPMSAbout, tpms_scene_start_submenu_callback, app);
+        submenu, TPMS_UI_TEXT("About", "关于"), SubmenuIndexTPMSAbout, tpms_scene_start_submenu_callback, app);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(app->scene_manager, TPMSSceneStart));

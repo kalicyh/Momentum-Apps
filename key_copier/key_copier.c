@@ -109,7 +109,7 @@ static void key_copier_config_enter_callback(void* context) {
     view_dispatcher_switch_to_view(app->view_dispatcher, KeyCopierViewManufacturerList);
 }
 
-static const char* key_name_entry_text = "Enter name";
+static const char* key_name_entry_text = key_copier_UI_TEXT("Enter name", "输入名称");
 static void key_copier_file_saver(void* context) {
     KeyCopierApp* app = (KeyCopierApp*)context;
     KeyCopierModel* model = view_get_model(app->view_measure);
@@ -642,24 +642,24 @@ static KeyCopierApp* key_copier_app_alloc() {
     app->dialogs = furi_record_open(RECORD_DIALOGS);
     app->file_path = furi_string_alloc();
     app->submenu = submenu_alloc();
-    submenu_set_header(app->submenu, "Key Copier v1.5");
+    submenu_set_header(app->submenu, key_copier_UI_TEXT("Key Copier v1.5", "钥匙复制器 v1.5"));
     submenu_add_item(
         app->submenu,
-        "Select Key Format",
+        key_copier_UI_TEXT("Select Key Format", "选择钥匙格式"),
         KeyCopierSubmenuIndexConfigure,
         key_copier_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, "Measure", KeyCopierSubmenuIndexMeasure, key_copier_submenu_callback, app);
+        app->submenu, key_copier_UI_TEXT("Measure", "测量"), KeyCopierSubmenuIndexMeasure, key_copier_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "Save", KeyCopierSubmenuIndexSave, key_copier_submenu_callback, app);
+        app->submenu, key_copier_UI_TEXT("Save", "保存"), KeyCopierSubmenuIndexSave, key_copier_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "Load", KeyCopierSubmenuIndexLoad, key_copier_submenu_callback, app);
+        app->submenu, key_copier_UI_TEXT("Load", "加载"), KeyCopierSubmenuIndexLoad, key_copier_submenu_callback, app);
     submenu_add_item(
-        app->submenu, "Help", KeyCopierSubmenuIndexAbout, key_copier_submenu_callback, app);
+        app->submenu, key_copier_UI_TEXT("Help", "帮助"), KeyCopierSubmenuIndexAbout, key_copier_submenu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Video Instruction",
+        key_copier_UI_TEXT("Video Instruction", "视频教程"),
         KeyCopierSubmenuIndexQRCode,
         key_copier_submenu_callback,
         app);
@@ -716,11 +716,16 @@ static KeyCopierApp* key_copier_app_alloc() {
         0,
         128,
         64,
-        "Key Maker App 1.5\nAuthor: @Torron\n\nTo measure your key:\n\n1. Place "
-        "it on top of the screen.\n\n2. Use the contour to align your key.\n\n3. "
-        "Adjust each pin's depth until they match. It's easier if you look with "
-        "one eye closed.\n\nGithub: github.com/zinongli/KeyCopier \n\nSpecial "
-        "thanks to Derek Jamison's Skeleton App Template.");
+        key_copier_UI_TEXT(
+            "Key Maker App 1.5\nAuthor: @Torron\n\nTo measure your key:\n\n1. Place "
+            "it on top of the screen.\n\n2. Use the contour to align your key.\n\n3. "
+            "Adjust each pin's depth until they match. It's easier if you look with "
+            "one eye closed.\n\nGithub: github.com/zinongli/KeyCopier \n\nSpecial "
+            "thanks to Derek Jamison's Skeleton App Template.",
+            "钥匙制作器 1.5\n作者: @Torron\n\n测量钥匙:\n\n1. 将钥匙放在"
+            "屏幕上。\n\n2. 用轮廓线对齐钥匙。\n\n3. "
+            "调整每个弹片深度直到匹配。闭一只眼更容易。\n\nGithub: github.com/zinongli/KeyCopier \n\n特别"
+            "感谢 Derek Jamison 的骨架应用模板。"));
     view_set_previous_callback(
         widget_get_view(app->widget_about), key_copier_navigation_submenu_callback);
     view_dispatcher_add_view(
@@ -729,17 +734,17 @@ static KeyCopierApp* key_copier_app_alloc() {
     app->widget_qr_code = widget_alloc();
     widget_add_icon_element(app->widget_qr_code, 92, 7, &I_QR_Code);
     widget_add_string_element(
-        app->widget_qr_code, 0, 10, AlignLeft, AlignBottom, FontSecondary, "Check out");
+        app->widget_qr_code, 0, 10, AlignLeft, AlignBottom, FontSecondary, key_copier_UI_TEXT("Check out", "查看"));
     widget_add_string_element(
         app->widget_qr_code, 0, 23, AlignLeft, AlignBottom, FontSecondary, "@TalkingSasquach's");
     widget_add_string_element(
-        app->widget_qr_code, 0, 36, AlignLeft, AlignBottom, FontSecondary, "video from decoding");
+        app->widget_qr_code, 0, 36, AlignLeft, AlignBottom, FontSecondary, key_copier_UI_TEXT("video from decoding", "解码钥匙"));
     widget_add_string_element(
-        app->widget_qr_code, 0, 49, AlignLeft, AlignBottom, FontSecondary, "a key to eventually");
+        app->widget_qr_code, 0, 49, AlignLeft, AlignBottom, FontSecondary, key_copier_UI_TEXT("a key to eventually", "的视频"));
     widget_add_string_element(
-        app->widget_qr_code, 0, 62, AlignLeft, AlignBottom, FontSecondary, "3D-printing a copy!");
+        app->widget_qr_code, 0, 62, AlignLeft, AlignBottom, FontSecondary, key_copier_UI_TEXT("3D-printing a copy!", "最终 3D 打印复制!"));
     widget_add_button_element(
-        app->widget_qr_code, GuiButtonTypeRight, "Back", exit_widget_callback, app);
+        app->widget_qr_code, GuiButtonTypeRight, key_copier_UI_TEXT("Back", "返回"), exit_widget_callback, app);
     view_set_previous_callback(
         widget_get_view(app->widget_qr_code), key_copier_navigation_submenu_callback);
     view_dispatcher_add_view(

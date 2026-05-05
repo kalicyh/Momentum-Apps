@@ -53,7 +53,13 @@ void protopirate_scene_saved_info_on_enter(void* context) {
     if(!app->loaded_file_path || furi_string_empty(app->loaded_file_path)) {
         FURI_LOG_E(TAG, "No file path");
         widget_add_string_element(
-            app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "No file selected");
+            app->widget,
+            64,
+            32,
+            AlignCenter,
+            AlignCenter,
+            FontPrimary,
+            PROTOPIRATE_UI_TEXT("No file selected", "未选择文件"));
         goto switch_view;
     }
 
@@ -65,7 +71,13 @@ void protopirate_scene_saved_info_on_enter(void* context) {
     if(!info_str || !temp_str) {
         FURI_LOG_E(TAG, "String alloc failed");
         widget_add_string_element(
-            app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "Memory error");
+            app->widget,
+            64,
+            32,
+            AlignCenter,
+            AlignCenter,
+            FontPrimary,
+            PROTOPIRATE_UI_TEXT("Memory error", "内存错误"));
         goto cleanup;
     }
 
@@ -77,7 +89,13 @@ void protopirate_scene_saved_info_on_enter(void* context) {
     if(!storage) {
         FURI_LOG_E(TAG, "Storage open failed");
         widget_add_string_element(
-            app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "Storage error");
+            app->widget,
+            64,
+            32,
+            AlignCenter,
+            AlignCenter,
+            FontPrimary,
+            PROTOPIRATE_UI_TEXT("Storage error", "存储错误"));
         goto cleanup;
     }
 
@@ -89,7 +107,13 @@ void protopirate_scene_saved_info_on_enter(void* context) {
     if(!ff) {
         FURI_LOG_E(TAG, "FF alloc failed");
         widget_add_string_element(
-            app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "Memory error");
+            app->widget,
+            64,
+            32,
+            AlignCenter,
+            AlignCenter,
+            FontPrimary,
+            PROTOPIRATE_UI_TEXT("Memory error", "内存错误"));
         goto cleanup;
     }
 
@@ -100,7 +124,13 @@ void protopirate_scene_saved_info_on_enter(void* context) {
     if(!flipper_format_file_open_existing(ff, furi_string_get_cstr(app->loaded_file_path))) {
         FURI_LOG_E(TAG, "File open failed");
         widget_add_string_element(
-            app->widget, 64, 32, AlignCenter, AlignCenter, FontPrimary, "File open failed");
+            app->widget,
+            64,
+            32,
+            AlignCenter,
+            AlignCenter,
+            FontPrimary,
+            PROTOPIRATE_UI_TEXT("File open failed", "文件打开失败"));
         goto cleanup;
     }
 
@@ -113,7 +143,10 @@ void protopirate_scene_saved_info_on_enter(void* context) {
 
     flipper_format_rewind(ff);
     if(flipper_format_read_string(ff, "Protocol", temp_str)) {
-        furi_string_cat_printf(info_str, "Protocol: %s\n", furi_string_get_cstr(temp_str));
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Protocol: %s\n", "协议: %s\n"),
+            furi_string_get_cstr(temp_str));
     }
     if(furi_string_cmp_str(temp_str, "Scher-Khan") == 0) {
         is_emu_off = true;
@@ -126,29 +159,40 @@ void protopirate_scene_saved_info_on_enter(void* context) {
     flipper_format_rewind(ff);
     if(flipper_format_read_uint32(ff, "Frequency", &temp_data, 1)) {
         furi_string_cat_printf(
-            info_str, "Freq: %lu.%02lu MHz\n", temp_data / 1000000, (temp_data % 1000000) / 10000);
+            info_str,
+            PROTOPIRATE_UI_TEXT("Freq: %lu.%02lu MHz\n", "频率: %lu.%02lu MHz\n"),
+            temp_data / 1000000,
+            (temp_data % 1000000) / 10000);
     }
 
     flipper_format_rewind(ff);
     if(flipper_format_read_string(ff, "Preset", temp_str)) {
         // Convert full preset name to short name
         const char* preset_name = preset_name_to_short(furi_string_get_cstr(temp_str));
-        furi_string_cat_printf(info_str, "Modulation: %s\n", preset_name);
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Modulation: %s\n", "调制: %s\n"),
+            preset_name);
     }
 
     flipper_format_rewind(ff);
     if(flipper_format_read_uint32(ff, "Serial", &temp_data, 1)) {
-        furi_string_cat_printf(info_str, "Serial: %08lX\n", temp_data);
+        furi_string_cat_printf(
+            info_str, PROTOPIRATE_UI_TEXT("Serial: %08lX\n", "序列号: %08lX\n"), temp_data);
     }
 
     flipper_format_rewind(ff);
     if(flipper_format_read_uint32(ff, "Btn", &temp_data, 1)) {
-        furi_string_cat_printf(info_str, "Button: %02X\n", (uint8_t)temp_data);
+        furi_string_cat_printf(
+            info_str, PROTOPIRATE_UI_TEXT("Button: %02X\n", "按键: %02X\n"), (uint8_t)temp_data);
     }
 
     flipper_format_rewind(ff);
     if(flipper_format_read_uint32(ff, "Cnt", &temp_data, 1)) {
-        furi_string_cat_printf(info_str, "Counter: %04lX\n", temp_data);
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Counter: %04lX\n", "计数器: %04lX\n"),
+            temp_data);
     }
 
     flipper_format_rewind(ff);
@@ -168,7 +212,10 @@ void protopirate_scene_saved_info_on_enter(void* context) {
 
     flipper_format_rewind(ff);
     if(flipper_format_read_uint32(ff, "Type", &temp_data, 1)) {
-        furi_string_cat_printf(info_str, "Type: %02X\n", (uint8_t)temp_data);
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Type: %02X\n", "类型: %02X\n"),
+            (uint8_t)temp_data);
     }
 
     flipper_format_rewind(ff);
@@ -178,12 +225,18 @@ void protopirate_scene_saved_info_on_enter(void* context) {
 
     flipper_format_rewind(ff);
     if(flipper_format_read_string(ff, "Key", temp_str)) {
-        furi_string_cat_printf(info_str, "Key1: %s\n", furi_string_get_cstr(temp_str));
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Key1: %s\n", "密钥1: %s\n"),
+            furi_string_get_cstr(temp_str));
     }
 
     flipper_format_rewind(ff);
     if(flipper_format_read_string(ff, "Key_2", temp_str)) {
-        furi_string_cat_printf(info_str, "Key2: %s\n", furi_string_get_cstr(temp_str));
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Key2: %s\n", "密钥2: %s\n"),
+            furi_string_get_cstr(temp_str));
     }
 
     flipper_format_rewind(ff);
@@ -198,7 +251,10 @@ void protopirate_scene_saved_info_on_enter(void* context) {
 
     flipper_format_rewind(ff);
     if(flipper_format_read_string(ff, "Manufacture", temp_str)) {
-        furi_string_cat_printf(info_str, "Manufacture: %s\n", furi_string_get_cstr(temp_str));
+        furi_string_cat_printf(
+            info_str,
+            PROTOPIRATE_UI_TEXT("Manufacture: %s\n", "制造商: %s\n"),
+            furi_string_get_cstr(temp_str));
     }
 
     FURI_LOG_I(TAG, "Read complete, len=%u", furi_string_size(info_str));
@@ -227,7 +283,7 @@ cleanup:
             widget_add_button_element(
                 app->widget,
                 GuiButtonTypeLeft,
-                "Emulate",
+                PROTOPIRATE_UI_TEXT("Emulate", "模拟"),
                 protopirate_scene_saved_info_widget_callback,
                 app);
         }
@@ -235,7 +291,7 @@ cleanup:
         widget_add_button_element(
             app->widget,
             GuiButtonTypeRight,
-            "Delete",
+            PROTOPIRATE_UI_TEXT("Delete", "删除"),
             protopirate_scene_saved_info_widget_callback,
             app);
     }

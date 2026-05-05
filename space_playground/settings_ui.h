@@ -9,6 +9,14 @@
 #include "settings.h"
 #include "common.h"
 
+#ifndef SPGROUND_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SPGROUND_UI_TEXT(en, zh) (zh)
+#else
+#define SPGROUND_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 VariableItemList* settings_list;
 
 void settings_ui_clear() {
@@ -136,27 +144,27 @@ void create_items() {
     } while(0)
 
     it = variable_item_list_add(
-        settings_list, "Gravity", (GRAVITY_MAX - GRAVITY_MIN + 1), gravity_cb, NULL);
+        settings_list, SPGROUND_UI_TEXT("Gravity", "引力"), (GRAVITY_MAX - GRAVITY_MIN + 1), gravity_cb, NULL);
     INIT_INDEX(it, settings.gravity_force, GRAVITY_MIN, GRAVITY_MAX);
     gravity_cb(it);
 
     it = variable_item_list_add(
-        settings_list, "Planets", (PLANETS_MAX - PLANETS_MIN + 1), planets_cb, NULL);
+        settings_list, SPGROUND_UI_TEXT("Planets", "行星"), (PLANETS_MAX - PLANETS_MIN + 1), planets_cb, NULL);
     INIT_INDEX(it, settings.num_planets, PLANETS_MIN, PLANETS_MAX);
     planets_cb(it);
 
-    it = variable_item_list_add(settings_list, "Asteroid Interval", 40, launch_cb, NULL);
+    it = variable_item_list_add(settings_list, SPGROUND_UI_TEXT("Asteroid Interval", "小行星间隔"), 40, launch_cb, NULL);
     INIT_INDEX(it, settings.launch_interval, LAUNCH_MIN, LAUNCH_MAX);
     launch_cb(it);
 
     it = variable_item_list_add(
-        settings_list, "Grid speed", (GRID_SPEED_MAX - GRID_SPEED_MIN + 1), grid_speed_cb, NULL);
+        settings_list, SPGROUND_UI_TEXT("Grid speed", "网格速度"), (GRID_SPEED_MAX - GRID_SPEED_MIN + 1), grid_speed_cb, NULL);
     INIT_INDEX(it, settings.grid_speed, GRID_SPEED_MIN, GRID_SPEED_MAX);
     grid_speed_cb(it);
 
     it = variable_item_list_add(
         settings_list,
-        "Grid spacing",
+        SPGROUND_UI_TEXT("Grid spacing", "网格间距"),
         (GRID_SPACING_MAX - GRID_SPACING_MIN + 1),
         grid_space_cb,
         NULL);
@@ -164,13 +172,13 @@ void create_items() {
     grid_space_cb(it);
 
     it = variable_item_list_add(
-        settings_list, "Trail duration", (TRAIL_MAX - TRAIL_MIN + 1), trail_cb, NULL);
+        settings_list, SPGROUND_UI_TEXT("Trail duration", "轨迹时长"), (TRAIL_MAX - TRAIL_MIN + 1), trail_cb, NULL);
     INIT_INDEX(it, settings.trail_duration, TRAIL_MIN, TRAIL_MAX);
     trail_cb(it);
 
     it = variable_item_list_add(
         settings_list,
-        "Asteroid speed",
+        SPGROUND_UI_TEXT("Asteroid speed", "小行星速度"),
         (ASTEROID_SPEED_MAX - ASTEROID_SPEED_MIN + 1),
         asteroid_cb,
         NULL);
@@ -178,7 +186,7 @@ void create_items() {
     asteroid_cb(it);
 
     it = variable_item_list_add(
-        settings_list, "Debri count", (DEBRI_MAX - DEBRI_MIN + 1), debri_cb, NULL);
+        settings_list, SPGROUND_UI_TEXT("Debri count", "碎片数量"), (DEBRI_MAX - DEBRI_MIN + 1), debri_cb, NULL);
     INIT_INDEX(it, settings.debri_count, DEBRI_MIN, DEBRI_MAX);
     debri_cb(it);
 #undef INIT_INDEX

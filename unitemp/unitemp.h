@@ -53,6 +53,12 @@
 
 #define UNITEMP_D
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UNITEMP_UI_TEXT(en, zh) (zh)
+#else
+#define UNITEMP_UI_TEXT(en, zh) (en)
+#endif
+
 #ifdef FURI_DEBUG
 #define UNITEMP_DEBUG(msg, ...) FURI_LOG_D(APP_NAME, msg, ##__VA_ARGS__)
 #else

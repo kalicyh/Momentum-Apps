@@ -1,5 +1,13 @@
 #pragma once
 
+#ifndef CHIEF_COOKER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CHIEF_COOKER_UI_TEXT(en, zh) (zh)
+#else
+#define CHIEF_COOKER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include "lib/String.hpp"
 #include "app/AppConfig.hpp"
 #include "app/pager/data/StoredPagerData.hpp"
@@ -51,18 +59,18 @@ public:
         uint16_t stationNum = decoder->GetStation(pager->data);
         uint16_t pagerNum = decoder->GetPager(pager->data);
 
-        submenu = new SubMenuUiView(headerStr.format("Station %d actions", stationNum));
+        submenu = new SubMenuUiView(headerStr.format(CHIEF_COOKER_UI_TEXT("Station %d actions", "电台 %d 操作"), stationNum));
         submenu->SetOnDestroyHandler(HANDLER(&PagerActionsScreen::destroy));
         submenu->SetOnReturnToViewHandler(HANDLER(&PagerActionsScreen::onReturn));
 
         submenu->AddItem(
-            resendToAllStr.format("Resend %d (%s) to ALL", actionValue, PagerActions::GetDescription(currentAction)),
+            resendToAllStr.format(CHIEF_COOKER_UI_TEXT("Resend %d (%s) to ALL", "重发 %d (%s) 给所有人"), actionValue, PagerActions::GetDescription(currentAction)),
             HANDLER_1ARG(&PagerActionsScreen::resendToAll)
         );
 
         if(currentAction == UNKNOWN) {
             submenu->AddItem(
-                resendToCurrentStr.format("Resend only to pager %d", pagerNum), HANDLER_1ARG(&PagerActionsScreen::resendSingle)
+                resendToCurrentStr.format(CHIEF_COOKER_UI_TEXT("Resend only to pager %d", "仅重发给呼机 %d"), pagerNum), HANDLER_1ARG(&PagerActionsScreen::resendSingle)
             );
         }
 
@@ -74,9 +82,9 @@ public:
             }
 
             if(PagerActions::IsPagerActionSpecial(action)) {
-                actionsStrings[i] = new String("Trigger action %s", PagerActions::GetDescription(action));
+                actionsStrings[i] = new String(CHIEF_COOKER_UI_TEXT("Trigger action %s", "触发动作 %s"), PagerActions::GetDescription(action));
             } else {
-                actionsStrings[i] = new String("%s only pager %d", PagerActions::GetDescription(action), pagerNum);
+                actionsStrings[i] = new String(CHIEF_COOKER_UI_TEXT("%s only pager %d", "%s 仅呼机 %d"), PagerActions::GetDescription(action), pagerNum);
             }
 
             submenu->AddItem(actionsStrings[i]->cstr(), [this, action](uint32_t) { sendAction(action); });

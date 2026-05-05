@@ -14,6 +14,12 @@
 #include <hex_editor_icons.h>
 #include <assets_icons.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define HEX_EDITOR_UI_TEXT(en, zh) (zh)
+#else
+#define HEX_EDITOR_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "HexEditor"
 
 #define STEP 6u
@@ -45,7 +51,7 @@ static void draw_callback(Canvas* canvas, void* ctx) {
 
     canvas_clear(canvas);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 0, 10, "Line and mode:");
+    canvas_draw_str(canvas, 0, 10, HEX_EDITOR_UI_TEXT("Line and mode:", "行和模式:"));
 
     canvas_set_font(canvas, FontSecondary);
 
@@ -75,14 +81,14 @@ static void draw_callback(Canvas* canvas, void* ctx) {
         elements_button_center(canvas, "");
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 45, "edit");
+        canvas_draw_str(canvas, 0, 45, HEX_EDITOR_UI_TEXT("edit", "编辑"));
     } else {
         elements_button_left(canvas, "");
         elements_button_right(canvas, "");
-        elements_button_center(canvas, "chmod");
+        elements_button_center(canvas, HEX_EDITOR_UI_TEXT("chmod", "模式"));
 
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 0, 45, "seek");
+        canvas_draw_str(canvas, 0, 45, HEX_EDITOR_UI_TEXT("seek", "定位"));
     }
 
     canvas_draw_glyph(canvas, 30, 45, hex_editor->model->editable_char);

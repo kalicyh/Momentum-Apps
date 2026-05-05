@@ -19,16 +19,16 @@ void saflip_scene_start_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Read Card",
+        SAFLIP_UI_TEXT("Read Card", "读取卡片"),
         SubmenuIndexReadCard,
         saflip_scene_start_submenu_callback,
         context);
 
     submenu_add_item(
-        app->submenu, "Saved", SubmenuIndexSaved, saflip_scene_start_submenu_callback, context);
+        app->submenu, SAFLIP_UI_TEXT("Saved", "已保存"), SubmenuIndexSaved, saflip_scene_start_submenu_callback, context);
 
     submenu_add_item(
-        app->submenu, "Create", SubmenuIndexCreate, saflip_scene_start_submenu_callback, context);
+        app->submenu, SAFLIP_UI_TEXT("Create", "创建"), SubmenuIndexCreate, saflip_scene_start_submenu_callback, context);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, SaflipSceneStart));

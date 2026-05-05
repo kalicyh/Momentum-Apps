@@ -21,7 +21,7 @@ void picopass_scene_key_menu_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "Write Standard",
+        PICOPASS_UI_TEXT("Write Standard", "写入标准密钥"),
         SubmenuIndexWriteStandard,
         picopass_scene_key_menu_submenu_callback,
         picopass);
@@ -45,7 +45,7 @@ void picopass_scene_key_menu_on_enter(void* context) {
         picopass);
     submenu_add_item(
         submenu,
-        "Write Elite",
+        PICOPASS_UI_TEXT("Write Elite", "写入Elite密钥"),
         SubmenuIndexWriteCustom,
         picopass_scene_key_menu_submenu_callback,
         picopass);

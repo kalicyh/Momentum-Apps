@@ -43,10 +43,10 @@ static void input_callback(InputEvent* const input_event, void* const ctx) {
 
 static bool first_run_init(PluginState* const plugin_state) {
     DialogMessage* message = dialog_message_alloc();
-    dialog_message_set_buttons(message, "No", NULL, "Yes");
+    dialog_message_set_buttons(message, TOTP_UI_TEXT("No", "否"), NULL, TOTP_UI_TEXT("Yes", "是"));
     dialog_message_set_text(
         message,
-        "Would you like to setup PIN?",
+        TOTP_UI_TEXT("Would you like to setup PIN?", "是否设置PIN码?"),
         SCREEN_WIDTH_CENTER,
         SCREEN_HEIGHT_CENTER,
         AlignCenter,
@@ -101,10 +101,10 @@ static bool pinless_activation(PluginState* const plugin_state) {
             LOGGING_TAG,
             "Digital signature verification failed. Looks like conf file was created on another device and can't be used on any other");
         DialogMessage* message = dialog_message_alloc();
-        dialog_message_set_buttons(message, "Exit", NULL, NULL);
+        dialog_message_set_buttons(message, TOTP_UI_TEXT("Exit", "退出"), NULL, NULL);
         dialog_message_set_text(
             message,
-            "Digital signature verification failed",
+            TOTP_UI_TEXT("Digital signature verification failed", "数字签名验证失败"),
             SCREEN_WIDTH_CENTER,
             SCREEN_HEIGHT_CENTER,
             AlignCenter,

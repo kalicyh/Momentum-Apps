@@ -8,6 +8,12 @@
 #include "bomberduck_icons.h"
 #include <dolphin/dolphin.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define BOMBERDUCK_UI_TEXT(en, zh) (zh)
+#else
+#define BOMBERDUCK_UI_TEXT(en, zh) (en)
+#endif
+
 int max(int a, int b) {
     return (a > b) ? a : b;
 }
@@ -340,16 +346,16 @@ static void draw_callback(Canvas* canvas, void* ctx) {
         canvas_set_font(canvas, FontPrimary);
         if(world.player->x == world.endx && world.player->y == world.endy) {
             if(world.level == 20) {
-                canvas_draw_str(canvas, 30, 35, "You win!");
+                canvas_draw_str(canvas, 30, 35, BOMBERDUCK_UI_TEXT("You win!", "你赢了!"));
             } else {
-                canvas_draw_str(canvas, 30, 35, "Next level!");
+                canvas_draw_str(canvas, 30, 35, BOMBERDUCK_UI_TEXT("Next level!", "下一关!"));
                 char str[20];
                 intToStr(world.level, str);
                 canvas_draw_str(canvas, 90, 35, str);
             }
 
         } else {
-            canvas_draw_str(canvas, 30, 35, "You died :(");
+            canvas_draw_str(canvas, 30, 35, BOMBERDUCK_UI_TEXT("You died :(", "你死了:("));
         }
     }
 

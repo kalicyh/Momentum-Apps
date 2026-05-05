@@ -15,7 +15,7 @@ void passy_scene_doe_input_on_enter(void* context) {
     // Setup view
     TextInput* text_input = passy->text_input;
 
-    text_input_set_header_text(text_input, "DoE: YYMMDD");
+    text_input_set_header_text(text_input, PASSY_UI_TEXT("DoE: YYMMDD", "有效期: YYMMDD"));
     text_input_set_minimum_length(text_input, 6);
     if(passy->date_of_expiry[0] != '\0') {
         strlcpy(passy->text_store, passy->date_of_expiry, sizeof(passy->text_store));

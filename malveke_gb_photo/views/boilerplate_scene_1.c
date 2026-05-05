@@ -64,17 +64,17 @@ void boilerplate_scene_1_draw(Canvas* canvas, BoilerplateScene1Model* model) {
     if(app->show_instructions) {
         canvas_draw_icon(canvas, 71, 15, &I_DolphinCommon_56x48);
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, (128 / 2), 4, AlignCenter, AlignTop, "INSTRUCTIONS");
+        canvas_draw_str_aligned(canvas, (128 / 2), 4, AlignCenter, AlignTop, GBPHOTO_UI_TEXT("INSTRUCTIONS", "操作说明"));
 
         canvas_set_custom_u8g2_font(canvas, u8g2_font_5x7_mf); // 5x7 font, 9 lines
 
         canvas_draw_icon_ex(canvas, 15, 18, &I_arrow_13x6, IconRotation180); // DOWN
         canvas_draw_icon(canvas, 28, 18, &I_arrow_13x6); // UP
-        canvas_draw_str_aligned(canvas, 47, 21, AlignLeft, AlignCenter, "SCROLL");
+        canvas_draw_str_aligned(canvas, 47, 21, AlignLeft, AlignCenter, GBPHOTO_UI_TEXT("SCROLL", "滚动"));
         canvas_draw_icon_ex(canvas, 33, 26, &I_arrow_13x6, IconRotation270); // PREV
         canvas_draw_icon_ex(canvas, 22, 36, &I_arrow_13x6, IconRotation90); // NEXT
-        canvas_draw_str_aligned(canvas, 47, 32, AlignLeft, AlignCenter, "LEFT");
-        canvas_draw_str_aligned(canvas, 47, 43, AlignLeft, AlignCenter, "RIGHT");
+        canvas_draw_str_aligned(canvas, 47, 32, AlignLeft, AlignCenter, GBPHOTO_UI_TEXT("LEFT", "左"));
+        canvas_draw_str_aligned(canvas, 47, 43, AlignLeft, AlignCenter, GBPHOTO_UI_TEXT("RIGHT", "右"));
 
         canvas_set_font(canvas, FontPrimary);
         elements_button_center(canvas, "OK");

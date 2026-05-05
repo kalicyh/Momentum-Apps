@@ -1,3 +1,9 @@
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+
 #define TAG "FlipboardBlinky"
 #define FLIPBOARD_APP_NAME "blinky"
 #define FLIPBOARD_PRIMARY_ITEM_NAME "Flipboard Blinky"
@@ -11,15 +17,26 @@
 #define FLIPBOARD_BLINKY_CONFIG_MAGIC 0x46
 #define FLIPBOARD_BLINKY_CONFIG_VERSION 0x1
 
-#define ABOUT_TEXT                             \
-    "Welcome to the Flipboard\n"               \
-    "blinky v3.6!\n\n"                         \
-    "Optimized for FlipBoard \n"               \
-    "hardware --\n"                            \
-    "see link below to order!\n"               \
-    "Created by @MakeItHackin\n"               \
-    "and @CodeAllNight!\n"                     \
-    "https://discord.com/invite/NsjCvqwPAd\n"  \
-    "https://youtube.com/@MrDerekJamison\n"    \
-    "https://tindie.com/stores/MakeItHackin\n" \
-    "https://x.com/MakeItHackin"
+#define ABOUT_TEXT                                     \
+    FLIPBOARD_UI_TEXT(                                 \
+        "Welcome to the Flipboard\n"                  \
+        "blinky v3.6!\n\n"                            \
+        "Optimized for FlipBoard \n"                  \
+        "hardware --\n"                               \
+        "see link below to order!\n"                  \
+        "Created by @MakeItHackin\n"                  \
+        "and @CodeAllNight!\n"                        \
+        "https://discord.com/invite/NsjCvqwPAd\n"    \
+        "https://youtube.com/@MrDerekJamison\n"       \
+        "https://tindie.com/stores/MakeItHackin\n"    \
+        "https://x.com/MakeItHackin",                 \
+        "欢迎使用 Flipboard\n"                         \
+        "blinky v3.6!\n\n"                            \
+        "专为 FlipBoard 硬件优化\n"                    \
+        "详见下方链接购买!\n"                          \
+        "作者 @MakeItHackin\n"                        \
+        "与 @CodeAllNight!\n"                         \
+        "https://discord.com/invite/NsjCvqwPAd\n"    \
+        "https://youtube.com/@MrDerekJamison\n"       \
+        "https://tindie.com/stores/MakeItHackin\n"    \
+        "https://x.com/MakeItHackin")

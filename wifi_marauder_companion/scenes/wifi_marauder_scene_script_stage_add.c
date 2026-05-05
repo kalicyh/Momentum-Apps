@@ -196,86 +196,86 @@ static void wifi_marauder_scene_script_stage_add_delay_callback(void* context, u
 void wifi_marauder_scene_script_stage_add_on_enter(void* context) {
     WifiMarauderApp* app = context;
     Submenu* submenu = app->submenu;
-    submenu_set_header(submenu, "Add stage");
+    submenu_set_header(submenu, WIFI_MARAUDER_UI_TEXT("Add stage", "添加阶段"));
 
     int menu_index = 0;
     submenu_add_item(
-        submenu, "[+] Scan", menu_index++, wifi_marauder_scene_script_stage_add_scan_callback, app);
+        submenu, WIFI_MARAUDER_UI_TEXT("[+] Scan", "[+] 扫描"), menu_index++, wifi_marauder_scene_script_stage_add_scan_callback, app);
     submenu_add_item(
         submenu,
-        "[+] Select",
+        WIFI_MARAUDER_UI_TEXT("[+] Select", "[+] 选择"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_select_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Deauth",
+        WIFI_MARAUDER_UI_TEXT("[+] Deauth", "[+] 解除认证"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_deauth_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Probe",
+        WIFI_MARAUDER_UI_TEXT("[+] Probe", "[+] 探测"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_probe_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Sniff RAW",
+        WIFI_MARAUDER_UI_TEXT("[+] Sniff RAW", "[+] 原始嗅探"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_sniffraw_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Sniff Beacon",
+        WIFI_MARAUDER_UI_TEXT("[+] Sniff Beacon", "[+] 嗅探 Beacon"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_sniffbeacon_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Sniff Deauth",
+        WIFI_MARAUDER_UI_TEXT("[+] Sniff Deauth", "[+] 嗅探解除认证"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_sniffdeauth_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Sniff Esp",
+        WIFI_MARAUDER_UI_TEXT("[+] Sniff Esp", "[+] 嗅探 ESP"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_sniffesp_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Sniff PMKID",
+        WIFI_MARAUDER_UI_TEXT("[+] Sniff PMKID", "[+] 嗅探 PMKID"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_sniffpmkid_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Sniff Pwnagotchi",
+        WIFI_MARAUDER_UI_TEXT("[+] Sniff Pwnagotchi", "[+] 嗅探 Pwnagotchi"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_sniffpwn_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Beacon List",
+        WIFI_MARAUDER_UI_TEXT("[+] Beacon List", "[+] Beacon 列表"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_beaconlist_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Beacon AP",
+        WIFI_MARAUDER_UI_TEXT("[+] Beacon AP", "[+] Beacon AP"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_beaconap_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Custom command",
+        WIFI_MARAUDER_UI_TEXT("[+] Custom command", "[+] 自定义命令"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_exec_callback,
         app);
     submenu_add_item(
         submenu,
-        "[+] Delay",
+        WIFI_MARAUDER_UI_TEXT("[+] Delay", "[+] 延迟"),
         menu_index++,
         wifi_marauder_scene_script_stage_add_delay_callback,
         app);

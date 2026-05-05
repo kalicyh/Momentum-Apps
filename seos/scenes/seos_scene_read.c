@@ -9,7 +9,7 @@ void seos_scene_read_on_enter(void* context) {
 
     // Setup view
     Popup* popup = seos->popup;
-    popup_set_header(popup, "Reading", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, SEOS_UI_TEXT("Reading", "读取中"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     seos->credential->write = false;

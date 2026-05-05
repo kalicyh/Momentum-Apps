@@ -1,5 +1,13 @@
 #include "mifare_fuzzer_emulator.h"
 
+#ifndef MIFARE_FUZZER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define MIFARE_FUZZER_UI_TEXT(en, zh) (zh)
+#else
+#define MIFARE_FUZZER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #define TAG "MifareFuzzerApp_emulator_view"
 
 // Screen is 128 × 64 pixels
@@ -68,11 +76,11 @@ static void mifare_fuzzer_emulator_draw_callback(Canvas* canvas, void* _model) {
 
     if(!model->is_attacking) {
         elements_button_left(canvas, "t-1");
-        elements_button_center(canvas, "Start");
+        elements_button_center(canvas, MIFARE_FUZZER_UI_TEXT("Start", "开始"));
         elements_button_right(canvas, "t+1");
     } else {
         canvas_draw_line(canvas, 1, 49, (128 * model->tick_num / model->ticks_between_cards), 49);
-        elements_button_center(canvas, "Stop");
+        elements_button_center(canvas, MIFARE_FUZZER_UI_TEXT("Stop", "停止"));
     }
 
     // Free temp string
@@ -162,7 +170,7 @@ MifareFuzzerEmulator* mifare_fuzzer_emulator_alloc() {
     with_view_model(
         mifare_fuzzer_emulator->view,
         MifareFuzzerEmulatorModel * model,
-        { model->title = "Mifare Fuzzer (emulator)"; },
+        { model->title = MIFARE_FUZZER_UI_TEXT("Mifare Fuzzer (emulator)", "Mifare Fuzzer (模拟器)"); },
         true);
 
     return mifare_fuzzer_emulator;
@@ -224,7 +232,7 @@ void mifare_fuzzer_emulator_set_card(
                     model->mifare_card_dsc = "Ultralight";
                     break;
                 case MifareCardUnsupported:
-                    model->mifare_card_dsc = "Unsupported Card!";
+                    model->mifare_card_dsc = MIFARE_FUZZER_UI_TEXT("Unsupported Card!", "不支持的卡片!");
                     break;
                 }
             } else {
@@ -253,13 +261,13 @@ void mifare_fuzzer_emulator_set_attack(
             model->attack = mifare_attack;
             switch(mifare_attack) {
             case MifareFuzzerAttackTestValues:
-                model->attack_dsc = "Test values";
+                model->attack_dsc = MIFARE_FUZZER_UI_TEXT("Test values", "测试值");
                 break;
             case MifareFuzzerAttackRandomValues:
-                model->attack_dsc = "Random values";
+                model->attack_dsc = MIFARE_FUZZER_UI_TEXT("Random values", "随机值");
                 break;
             case MifareFuzzerAttackLoadUidsFromFile:
-                model->attack_dsc = "Load Uids From File";
+                model->attack_dsc = MIFARE_FUZZER_UI_TEXT("Load Uids From File", "从文件加载UID");
                 break;
             }
         },

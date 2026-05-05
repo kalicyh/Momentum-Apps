@@ -21,13 +21,13 @@ void pokemon_scene_select_gender_on_enter(void* context) {
 
     submenu_add_item(
         pokemon_fap->submenu,
-        "Female",
+        POKEMON_UI_TEXT("Female", "雌性"),
         GENDER_FEMALE,
         select_gender_selected_callback,
         pokemon_fap);
 
     submenu_add_item(
-        pokemon_fap->submenu, "Male", GENDER_MALE, select_gender_selected_callback, pokemon_fap);
+        pokemon_fap->submenu, POKEMON_UI_TEXT("Male", "雄性"), GENDER_MALE, select_gender_selected_callback, pokemon_fap);
 }
 
 bool pokemon_scene_select_gender_on_event(void* context, SceneManagerEvent event) {

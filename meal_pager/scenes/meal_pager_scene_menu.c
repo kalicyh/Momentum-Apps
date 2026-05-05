@@ -27,37 +27,37 @@ void meal_pager_scene_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Send Data",
+        MEAL_PAGER_UI_TEXT("Send Data", "发送数据"),
         SubmenuIndexTransmit,
         meal_pager_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Set First Station",
+        MEAL_PAGER_UI_TEXT("Set First Station", "设置首基站"),
         SubmenuIndexSetFirstStation,
         meal_pager_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Set Last Station",
+        MEAL_PAGER_UI_TEXT("Set Last Station", "设置末基站"),
         SubmenuIndexSetLastStation,
         meal_pager_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Set First Pager",
+        MEAL_PAGER_UI_TEXT("Set First Pager", "设置首呼机"),
         SubmenuIndexSetFirstPager,
         meal_pager_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Set Last Pager",
+        MEAL_PAGER_UI_TEXT("Set Last Pager", "设置末呼机"),
         SubmenuIndexSetLastPager,
         meal_pager_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Settings",
+        MEAL_PAGER_UI_TEXT("Settings", "设置"),
         SubmenuIndexSettings,
         meal_pager_scene_menu_submenu_callback,
         app);

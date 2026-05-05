@@ -18,7 +18,7 @@ void scene_probe_on_enter(void* context) {
             AlignCenter,
             AlignCenter,
             FontSecondary,
-            "Install Video\nGame Module");
+            VGM_UI_TEXT("Install Video\nGame Module", "安装视频\n游戏模块"));
         view_dispatcher_switch_to_view(app->view_dispatcher, ViewIdWidget);
     }
 }

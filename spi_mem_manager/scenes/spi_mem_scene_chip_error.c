@@ -11,9 +11,9 @@ static void
 void spi_mem_scene_chip_error_on_enter(void* context) {
     SPIMemApp* app = context;
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "Back", spi_mem_scene_chip_error_widget_callback, app);
+        app->widget, GuiButtonTypeLeft, SPI_MEM_UI_TEXT("Back", "返回"), spi_mem_scene_chip_error_widget_callback, app);
     widget_add_string_element(
-        app->widget, 85, 15, AlignCenter, AlignBottom, FontPrimary, "SPI chip error");
+        app->widget, 85, 15, AlignCenter, AlignBottom, FontPrimary, SPI_MEM_UI_TEXT("SPI chip error", "SPI 芯片错误"));
     widget_add_string_multiline_element(
         app->widget,
         85,
@@ -21,7 +21,7 @@ void spi_mem_scene_chip_error_on_enter(void* context) {
         AlignCenter,
         AlignBottom,
         FontSecondary,
-        "Error while\ncommunicating\nwith chip");
+        SPI_MEM_UI_TEXT("Error while\ncommunicating\nwith chip", "与芯片通信\n时出错"));
     widget_add_icon_element(app->widget, 5, 6, &I_Dip8_32x36);
     view_dispatcher_switch_to_view(app->view_dispatcher, SPIMemViewWidget);
 }

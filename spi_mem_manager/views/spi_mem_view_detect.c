@@ -1,4 +1,5 @@
 #include "spi_mem_view_detect.h"
+#include "../spi_mem_app_i.h"
 #include "spi_mem_manager_icons.h"
 #include <gui/elements.h>
 
@@ -23,8 +24,8 @@ static void spi_mem_view_detect_draw_callback(Canvas* canvas, void* context) {
     SPIMemDetectViewModel* model = context;
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_icon_animation(canvas, 0, 0, model->icon);
-    canvas_draw_str_aligned(canvas, 64, 26, AlignLeft, AlignCenter, "Detecting");
-    canvas_draw_str_aligned(canvas, 64, 36, AlignLeft, AlignCenter, "SPI chip...");
+    canvas_draw_str_aligned(canvas, 64, 26, AlignLeft, AlignCenter, SPI_MEM_UI_TEXT("Detecting", "正在检测"));
+    canvas_draw_str_aligned(canvas, 64, 36, AlignLeft, AlignCenter, SPI_MEM_UI_TEXT("SPI chip...", "SPI 芯片..."));
 }
 
 static void spi_mem_view_detect_enter_callback(void* context) {

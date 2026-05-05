@@ -11,7 +11,7 @@ void nfc_apdu_runner_scene_logs_on_enter(void* context) {
 
     FuriString* text = furi_string_alloc();
 
-    furi_string_cat_str(text, "Execution Log:\n\n");
+    furi_string_cat_str(text, NFC_APDU_RUNNER_UI_TEXT("Execution Log:\n\n", "执行日志:\n\n"));
 
     for(uint32_t i = 0; i < app->log_count; i++) {
         if(app->log_entries[i].is_error) {
@@ -24,7 +24,7 @@ void nfc_apdu_runner_scene_logs_on_enter(void* context) {
     }
 
     if(app->log_count == 0) {
-        furi_string_cat_str(text, "No logs available.\nRun a script first.");
+        furi_string_cat_str(text, NFC_APDU_RUNNER_UI_TEXT("No logs available.\nRun a script first.", "暂无日志。\n请先运行脚本。"));
     }
 
     text_box_set_text(text_box, furi_string_get_cstr(text));

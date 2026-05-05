@@ -107,21 +107,21 @@ void FreeRoamApp::callbackSubmenuChoices(uint32_t index)
         // if the board is not connected, we can't use WiFi
         if (!isBoardConnected())
         {
-            easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+            easy_flipper_dialog(free_roam_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), free_roam_UI_TEXT("Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.", "请确保 WiFi 开发板\n或 Pico W 已连接\n并安装最新 FlipperHTTP\n固件。"));
             return;
         }
         // if we don't have WiFi credentials, we can't connect to WiFi in case
         // we are not connected to WiFi yet
         if (!hasWiFiCredentials())
         {
-            easy_flipper_dialog("No WiFi Credentials", "Please set your WiFi SSID\nand Password in Settings.");
+            easy_flipper_dialog(free_roam_UI_TEXT("No WiFi Credentials", "无 WiFi 凭据"), free_roam_UI_TEXT("Please set your WiFi SSID\nand Password in Settings.", "请在设置中配置 WiFi\n名称和密码。"));
             return;
         }
 
         // if we don't have user credentials, we can't connect to the user account
         if (!hasUserCredentials())
         {
-            easy_flipper_dialog("No User Credentials", "Please set your Username\nand Password in Settings.");
+            easy_flipper_dialog(free_roam_UI_TEXT("No User Credentials", "无用户凭据"), free_roam_UI_TEXT("Please set your Username\nand Password in Settings.", "请在设置中配置用户名\n和密码。"));
             return;
         }
 
@@ -359,15 +359,15 @@ FreeRoamApp::FreeRoamApp()
 
     // Submenu
     if (!easy_flipper_set_submenu(&submenu, FreeRoamViewSubmenu,
-                                  "Free Roam", callback_exit_app, &viewDispatcher))
+                                  free_roam_UI_TEXT("Free Roam", "自由漫游"), callback_exit_app, &viewDispatcher))
     {
         FURI_LOG_E(TAG, "Failed to allocate submenu");
         return;
     }
 
-    submenu_add_item(submenu, "Run", FreeRoamSubmenuRun, submenu_choices_callback, this);
-    submenu_add_item(submenu, "About", FreeRoamSubmenuAbout, submenu_choices_callback, this);
-    submenu_add_item(submenu, "Settings", FreeRoamSubmenuSettings, submenu_choices_callback, this);
+    submenu_add_item(submenu, free_roam_UI_TEXT("Run", "运行"), FreeRoamSubmenuRun, submenu_choices_callback, this);
+    submenu_add_item(submenu, free_roam_UI_TEXT("About", "关于"), FreeRoamSubmenuAbout, submenu_choices_callback, this);
+    submenu_add_item(submenu, free_roam_UI_TEXT("Settings", "设置"), FreeRoamSubmenuSettings, submenu_choices_callback, this);
 
     flipperHttp = flipper_http_alloc();
     if (!flipperHttp)

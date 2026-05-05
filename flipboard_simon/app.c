@@ -1,6 +1,14 @@
 #include <furi.h>
 #include <gui/view.h>
 #include "app_config.h"
+
+#ifndef FLIPBOARD_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define FLIPBOARD_UI_TEXT(en, zh) (zh)
+#else
+#define FLIPBOARD_UI_TEXT(en, zh) (en)
+#endif
+#endif
 #include "app_icons.h"
 #include "./common/config_colors.h"
 #include "./common/custom_event.h"
@@ -148,18 +156,54 @@ static void simon_view_draw(Canvas* canvas, void* model) {
     canvas_set_font(canvas, FontPrimary);
     if(game->state == SimonGameStateGameOver) {
         if(game->song_length == 0) {
-            canvas_draw_str_aligned(canvas, 64, 12, AlignCenter, AlignCenter, "PRESS OK TO PLAY");
+            canvas_draw_str_aligned(
+                canvas,
+                64,
+                12,
+                AlignCenter,
+                AlignCenter,
+                FLIPBOARD_UI_TEXT("PRESS OK TO PLAY", "按OK开始游戏"));
         } else if(game->song_length == game->note_number) {
-            canvas_draw_str_aligned(canvas, 64, 12, AlignCenter, AlignCenter, "WIN! OK TO PLAY");
+            canvas_draw_str_aligned(
+                canvas,
+                64,
+                12,
+                AlignCenter,
+                AlignCenter,
+                FLIPBOARD_UI_TEXT("WIN! OK TO PLAY", "胜利! 按OK再来"));
         } else {
-            canvas_draw_str_aligned(canvas, 64, 12, AlignCenter, AlignCenter, "LOST. OK TO PLAY");
+            canvas_draw_str_aligned(
+                canvas,
+                64,
+                12,
+                AlignCenter,
+                AlignCenter,
+                FLIPBOARD_UI_TEXT("LOST. OK TO PLAY", "失败. 按OK再来"));
         }
     } else if(game->state == SimonGameStateNewGame) {
-        canvas_draw_str_aligned(canvas, 64, 12, AlignCenter, AlignCenter, "CREATING NEW GAME");
+        canvas_draw_str_aligned(
+            canvas,
+            64,
+            12,
+            AlignCenter,
+            AlignCenter,
+            FLIPBOARD_UI_TEXT("CREATING NEW GAME", "正在创建新游戏"));
     } else if(game->state == SimonGameStateTeaching) {
-        canvas_draw_str_aligned(canvas, 64, 12, AlignCenter, AlignCenter, "TEACHING NOTES");
+        canvas_draw_str_aligned(
+            canvas,
+            64,
+            12,
+            AlignCenter,
+            AlignCenter,
+            FLIPBOARD_UI_TEXT("TEACHING NOTES", "正在演示音符"));
     } else if(game->state == SimonGameStateListening) {
-        canvas_draw_str_aligned(canvas, 64, 12, AlignCenter, AlignCenter, "YOUR TURN");
+        canvas_draw_str_aligned(
+            canvas,
+            64,
+            12,
+            AlignCenter,
+            AlignCenter,
+            FLIPBOARD_UI_TEXT("YOUR TURN", "轮到你了"));
     }
 }
 

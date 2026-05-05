@@ -26,7 +26,7 @@ void seader_scene_start_on_enter(void* context) {
 
     popup_set_context(seader->popup, seader);
     popup_set_callback(seader->popup, seader_scene_start_detect_callback);
-    popup_set_header(popup, "Detecting SAM", 58, 48, AlignCenter, AlignCenter);
+    popup_set_header(popup, SEADER_UI_TEXT("Detecting SAM", "正在检测SAM"), 58, 48, AlignCenter, AlignCenter);
     popup_set_timeout(seader->popup, 2500);
     popup_enable_timeout(seader->popup);
 

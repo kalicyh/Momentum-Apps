@@ -68,7 +68,7 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
          path_extract_filename_no_ext(
             furi_string_get_cstr(nfc_playlist->worker_info.worker->nfc_card_path), nfc_card_name);
          furi_string_printf(
-            header_str_static, "Emulating:\n%s", furi_string_get_cstr(nfc_card_name));
+            header_str_static, NFC_PLAYLIST_UI_TEXT("Emulating:\n%s", "模拟中:\n%s"), furi_string_get_cstr(nfc_card_name));
          furi_string_free(nfc_card_name);
          dialog_ex_set_header(
             nfc_playlist->views.dialog_ex,
@@ -89,8 +89,8 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
                AlignTop);
          }
          if(nfc_playlist->worker_info.settings->user_controls) {
-            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, "Rewind");
-            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, "Skip");
+            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Rewind", "快退"));
+            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Skip", "跳过"));
          }
          consumed = true;
          break;
@@ -102,7 +102,7 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
          }
          if(!text_str_static) text_str_static = furi_string_alloc();
          dialog_ex_set_header(
-            nfc_playlist->views.dialog_ex, "Delaying", 64, 5, AlignCenter, AlignTop);
+            nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Delaying", "延迟中"), 64, 5, AlignCenter, AlignTop);
          furi_string_printf(
             text_str_static, "%ds", (nfc_playlist->worker_info.worker->ms_counter / 1000));
          dialog_ex_set_text(
@@ -113,8 +113,8 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
             AlignCenter,
             AlignTop);
          if(nfc_playlist->worker_info.settings->user_controls) {
-            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, "Rewind");
-            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, "Skip");
+            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Rewind", "快退"));
+            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Skip", "跳过"));
          }
          consumed = true;
          break;
@@ -139,7 +139,7 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
          if(!text_str_static) text_str_static = furi_string_alloc();
          furi_string_printf(
             header_str_static,
-            "Failed to load:\n%s",
+            NFC_PLAYLIST_UI_TEXT("Failed to load:\n%s", "加载失败:\n%s"),
             furi_string_get_cstr(nfc_playlist->worker_info.worker->nfc_card_path));
          dialog_ex_set_header(
             nfc_playlist->views.dialog_ex,
@@ -160,8 +160,8 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
                AlignTop);
          }
          if(nfc_playlist->worker_info.settings->user_controls) {
-            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, "Rewind");
-            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, "Skip");
+            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Rewind", "快退"));
+            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Skip", "跳过"));
          }
          consumed = true;
          break;
@@ -175,7 +175,7 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
          if(!text_str_static) text_str_static = furi_string_alloc();
          furi_string_printf(
             header_str_static,
-            "Invalid file type:\n%s",
+            NFC_PLAYLIST_UI_TEXT("Invalid file type:\n%s", "无效文件类型:\n%s"),
             furi_string_get_cstr(nfc_playlist->worker_info.worker->nfc_card_path));
          dialog_ex_set_header(
             nfc_playlist->views.dialog_ex,
@@ -196,8 +196,8 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
                AlignTop);
          }
          if(nfc_playlist->worker_info.settings->user_controls) {
-            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, "Rewind");
-            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, "Skip");
+            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Rewind", "快退"));
+            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Skip", "跳过"));
          }
          consumed = true;
          break;
@@ -211,7 +211,7 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
          if(!text_str_static) text_str_static = furi_string_alloc();
          furi_string_printf(
             header_str_static,
-            "File does not exist:\n%s",
+            NFC_PLAYLIST_UI_TEXT("File does not exist:\n%s", "文件不存在:\n%s"),
             furi_string_get_cstr(nfc_playlist->worker_info.worker->nfc_card_path));
          dialog_ex_set_header(
             nfc_playlist->views.dialog_ex,
@@ -232,8 +232,8 @@ bool nfc_playlist_emulation_scene_on_event(void* context, SceneManagerEvent even
                AlignTop);
          }
          if(nfc_playlist->worker_info.settings->user_controls) {
-            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, "Rewind");
-            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, "Skip");
+            dialog_ex_set_left_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Rewind", "快退"));
+            dialog_ex_set_right_button_text(nfc_playlist->views.dialog_ex, NFC_PLAYLIST_UI_TEXT("Skip", "跳过"));
          }
          consumed = true;
          break;

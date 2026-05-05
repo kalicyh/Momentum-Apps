@@ -17,28 +17,28 @@ enum SettingsIndex {
 };
 
 const char* const on_off_text[2] = {
-    "OFF",
-    "ON",
+    FLIPPER_WEDGE_UI_TEXT("OFF", "\xe5\x85\xb3\xe9\x97\xad"),
+    FLIPPER_WEDGE_UI_TEXT("ON", "\xe5\xbc\x80\xe5\x90\xaf"),
 };
 
 // Vibration level options
 const char* const vibration_text[4] = {
-    "OFF",
-    "Low",
-    "Medium",
-    "High",
+    FLIPPER_WEDGE_UI_TEXT("OFF", "\xe5\x85\xb3\xe9\x97\xad"),
+    FLIPPER_WEDGE_UI_TEXT("Low", "\xe4\xbd\x8e"),
+    FLIPPER_WEDGE_UI_TEXT("Medium", "\xe4\xb8\xad"),
+    FLIPPER_WEDGE_UI_TEXT("High", "\xe9\xab\x98"),
 };
 
 // NDEF max length options
 const char* const ndef_max_len_text[3] = {
-    "250 chars",
-    "500 chars",
-    "1000 chars",
+    FLIPPER_WEDGE_UI_TEXT("250 chars", "250 \xe5\xad\x97\xe7\xac\xa6"),
+    FLIPPER_WEDGE_UI_TEXT("500 chars", "500 \xe5\xad\x97\xe7\xac\xa6"),
+    FLIPPER_WEDGE_UI_TEXT("1000 chars", "1000 \xe5\xad\x97\xe7\xac\xa6"),
 };
 
 // Mode startup behavior options
 const char* const mode_startup_text[6] = {
-    "Remember",
+    FLIPPER_WEDGE_UI_TEXT("Remember", "\xe8\xae\xb0\xe4\xbd\x8f"),
     "NFC",
     "RFID",
     "NDEF",
@@ -54,11 +54,11 @@ const char* const output_text[2] = {
 
 // Delimiter options - display names
 const char* const delimiter_names[] = {
-    "(empty)",
+    FLIPPER_WEDGE_UI_TEXT("(empty)", "(\xe7\xa9\xba)"),
     ":",
     "-",
     "_",
-    "space",
+    FLIPPER_WEDGE_UI_TEXT("space", "\xe7\xa9\xba\xe6\xa0\xbc"),
     ",",
     ";",
     "|",
@@ -88,7 +88,7 @@ static size_t layout_total_count = LAYOUT_BUILTIN_COUNT;
 
 // Built-in layout names
 static const char* layout_builtin_names[LAYOUT_BUILTIN_COUNT] = {
-    "Default (QWERTY)",
+    FLIPPER_WEDGE_UI_TEXT("Default (QWERTY)", "\xe9\xbb\x98\xe8\xae\xa4 (QWERTY)"),
     "NumPad",
 };
 
@@ -204,7 +204,7 @@ static void flipper_wedge_scene_settings_set_keyboard_layout(VariableItem* item)
                 // Fall back to default and update UI
                 flipper_wedge_keyboard_layout_set_default(app->keyboard_layout);
                 variable_item_set_current_value_index(item, 0);
-                variable_item_set_current_value_text(item, "Default (QWERTY)");
+                variable_item_set_current_value_text(item, FLIPPER_WEDGE_UI_TEXT("Default (QWERTY)", "\xe9\xbb\x98\xe8\xae\xa4 (QWERTY)"));
             }
         }
     }
@@ -270,7 +270,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     // Output mode selector
     item = variable_item_list_add(
         app->variable_item_list,
-        "Output:",
+        FLIPPER_WEDGE_UI_TEXT("Output:", "\xe8\xbe\x93\xe5\x87\xba:"),
         FlipperWedgeOutputCount,
         flipper_wedge_scene_settings_set_output,
         app);
@@ -295,22 +295,22 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
         // Determine status based on state
         if(switching_to_ble) {
             // Switching USB → BLE: Show "Initializing..." while starting BLE
-            bt_status = "Initializing...";
+            bt_status = FLIPPER_WEDGE_UI_TEXT("Initializing...", "\xe6\xad\xa3\xe5\x9c\xa8\xe5\x88\x9d\xe5\xa7\x8b\xe5\x8c\x96...");
         } else {
             // Normal BLE mode: Show connection status
             bool bt_connected = flipper_wedge_hid_is_bt_connected(flipper_wedge_get_hid(app));
             if(bt_connected) {
-                bt_status = "Paired";
+                bt_status = FLIPPER_WEDGE_UI_TEXT("Paired", "\xe5\xb7\xb2\xe9\x85\x8d\xe5\xaf\xb9");
             } else {
                 // Check if advertising (pairing mode)
                 bool bt_advertising = furi_hal_bt_is_active();
-                bt_status = bt_advertising ? "Pairing..." : "Not paired";
+                bt_status = bt_advertising ? FLIPPER_WEDGE_UI_TEXT("Pairing...", "\xe9\x85\x8d\xe5\xaf\xb9\xe4\xb8\xad...") : FLIPPER_WEDGE_UI_TEXT("Not paired", "\xe6\x9c\xaa\xe9\x85\x8d\xe5\xaf\xb9");
             }
         }
 
         item = variable_item_list_add(
             app->variable_item_list,
-            "Pair Bluetooth...",
+            FLIPPER_WEDGE_UI_TEXT("Pair Bluetooth...", "\xe9\x85\x8d\xe5\xaf\xb9\xe8\x93\x9d\xe7\x89\x99..."),
             1,
             NULL,  // No change callback
             app);
@@ -321,7 +321,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     uint8_t delimiter_index = get_delimiter_index(app->delimiter);
     item = variable_item_list_add(
         app->variable_item_list,
-        "Byte Delimiter:",
+        FLIPPER_WEDGE_UI_TEXT("Byte Delimiter:", "\xe5\xad\x97\xe8\x8a\x82\xe5\x88\x86\xe9\x9a\x94\xe7\xac\xa6:"),
         DELIMITER_OPTIONS_COUNT,
         flipper_wedge_scene_settings_set_delimiter,
         app);
@@ -331,7 +331,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     // Append Enter toggle
     item = variable_item_list_add(
         app->variable_item_list,
-        "Append Enter:",
+        FLIPPER_WEDGE_UI_TEXT("Append Enter:", "\xe8\xbf\xbd\xe5\x8a\xa0\xe5\x9b\x9e\xe8\xbd\xa6:"),
         2,
         flipper_wedge_scene_settings_set_append_enter,
         app);
@@ -341,7 +341,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     // Mode startup behavior selector
     item = variable_item_list_add(
         app->variable_item_list,
-        "Start Mode:",
+        FLIPPER_WEDGE_UI_TEXT("Start Mode:", "\xe5\x90\xaf\xe5\x8a\xa8\xe6\xa8\xa1\xe5\xbc\x8f:"),
         FlipperWedgeModeStartupCount,
         flipper_wedge_scene_settings_set_mode_startup,
         app);
@@ -351,7 +351,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     // Vibration level selector
     item = variable_item_list_add(
         app->variable_item_list,
-        "Vibration:",
+        FLIPPER_WEDGE_UI_TEXT("Vibration:", "\xe6\x8c\xaf\xe5\x8a\xa8:"),
         FlipperWedgeVibrationCount,
         flipper_wedge_scene_settings_set_vibration,
         app);
@@ -361,7 +361,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     // NDEF max length selector
     item = variable_item_list_add(
         app->variable_item_list,
-        "NDEF Max Len:",
+        FLIPPER_WEDGE_UI_TEXT("NDEF Max Len:", "NDEF \xe6\x9c\x80\xe5\xa4\xa7\xe9\x95\xbf\xe5\xba\xa6:"),
         FlipperWedgeNdefMaxLenCount,
         flipper_wedge_scene_settings_set_ndef_max_len,
         app);
@@ -371,7 +371,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
     // Log to SD toggle
     item = variable_item_list_add(
         app->variable_item_list,
-        "Log to SD:",
+        FLIPPER_WEDGE_UI_TEXT("Log to SD:", "\xe8\xae\xb0\xe5\xbd\x95\xe5\x88\xb0 SD:"),
         2,
         flipper_wedge_scene_settings_set_log_to_sd,
         app);
@@ -436,7 +436,7 @@ void flipper_wedge_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         app->variable_item_list,
-        "KB Layout:",
+        FLIPPER_WEDGE_UI_TEXT("KB Layout:", "\xe9\x94\xae\xe7\x9b\x98\xe5\xb8\x83\xe5\xb1\x80:"),
         layout_total_count,
         flipper_wedge_scene_settings_set_keyboard_layout,
         app);

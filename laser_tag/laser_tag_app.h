@@ -1,6 +1,12 @@
 
 #pragma once
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define LASER_TAG_UI_TEXT(en, zh) (zh)
+#else
+#define LASER_TAG_UI_TEXT(en, zh) (en)
+#endif
+
 #include <furi.h>
 #include <gui/gui.h>
 #include <input/input.h>

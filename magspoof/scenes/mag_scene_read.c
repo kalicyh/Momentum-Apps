@@ -141,11 +141,14 @@ bool mag_scene_read_on_event(void* context, SceneManagerEvent event) {
 
                 furi_string_printf(
                     mag->uart_text_box_store,
-                    "Track 1: %.*s\nTrack 2: %.*s\nTrack 3: %.*s",
+                    "%s 1: %.*s\n%s 2: %.*s\n%s 3: %.*s",
+                    MAGSPOOF_UI_TEXT("Track", "磁道"),
                     mag_dev->dev_data.track[0].len,
                     furi_string_get_cstr(mag_dev->dev_data.track[0].str),
+                    MAGSPOOF_UI_TEXT("Track", "磁道"),
                     mag_dev->dev_data.track[1].len,
                     furi_string_get_cstr(mag_dev->dev_data.track[1].str),
+                    MAGSPOOF_UI_TEXT("Track", "磁道"),
                     mag_dev->dev_data.track[2].len,
                     furi_string_get_cstr(mag_dev->dev_data.track[2].str));
 
@@ -153,7 +156,10 @@ bool mag_scene_read_on_event(void* context, SceneManagerEvent event) {
                 scene_manager_next_scene(mag->scene_manager, MagSceneSavedMenu);
 
             } else {
-                furi_string_printf(mag->uart_text_box_store, "Failed to parse! Try again\n");
+                furi_string_printf(
+                    mag->uart_text_box_store,
+                    "%s\n",
+                    MAGSPOOF_UI_TEXT("Failed to parse! Try again", "解析失败! 请重试"));
                 notification_message(mag->notifications, &sequence_error);
             }
 

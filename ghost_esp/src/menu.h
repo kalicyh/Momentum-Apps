@@ -8,6 +8,12 @@
 #include <gui/modules/variable_item_list.h>
 #include "app_state.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GHOST_ESP_UI_TEXT(en, zh) (zh)
+#else
+#define GHOST_ESP_UI_TEXT(en, zh) (en)
+#endif
+
 // Function declarations
 void send_uart_command(const char* command, void* state); // Changed from AppState* to void*
 void send_uart_command_with_text(const char* command, char* text, AppState* state);

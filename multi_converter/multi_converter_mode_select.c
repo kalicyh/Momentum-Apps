@@ -2,10 +2,10 @@
 
 #define MULTI_CONVERTER_LIST_ENTRIES_COUNT 3
 
-#define MULTI_CONVERTER_INFO_STRING_FROM "FROM:"
-#define MULTI_CONVERTER_INFO_STRING_TO   "TO:"
-#define MULTI_CONVERTER_INFO_STRING_OK   "OK: Change"
-#define MULTI_CONVERTER_INFO_STRING_BACK "BACK: Cancel"
+#define MULTI_CONVERTER_INFO_STRING_FROM MULTI_CONVERTER_UI_TEXT("FROM:", "从:")
+#define MULTI_CONVERTER_INFO_STRING_TO   MULTI_CONVERTER_UI_TEXT("TO:", "到:")
+#define MULTI_CONVERTER_INFO_STRING_OK   MULTI_CONVERTER_UI_TEXT("OK: Change", "确认: 更换")
+#define MULTI_CONVERTER_INFO_STRING_BACK MULTI_CONVERTER_UI_TEXT("BACK: Cancel", "返回: 取消")
 
 void multi_converter_mode_select_draw_destination_offset(
     uint8_t x,
@@ -127,7 +127,7 @@ void multi_converter_mode_select_draw(
         canvas,
         128 - 4 - canvas_string_width(canvas, MULTI_CONVERTER_INFO_STRING_BACK),
         64 - 12,
-        canvas_string_width(canvas, "BACK: Cancel") + 4,
+        canvas_string_width(canvas, MULTI_CONVERTER_INFO_STRING_BACK) + 4,
         12);
 
     canvas_set_color(canvas, ColorWhite);

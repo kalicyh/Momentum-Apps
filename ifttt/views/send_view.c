@@ -8,6 +8,14 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifndef IFTTT_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define IFTTT_UI_TEXT(en, zh) (zh)
+#else
+#define IFTTT_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 typedef enum ESerialCommand {
     ESerialCommand_Send
 } ESerialCommand;
@@ -51,11 +59,11 @@ static void send_view_draw_callback(Canvas* canvas, void* context) {
     SendViewModel* model = context;
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
-    canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, "SEND MODULE");
+    canvas_draw_str_aligned(canvas, 64, 0, AlignCenter, AlignTop, IFTTT_UI_TEXT("SEND MODULE", "发送模块"));
     canvas_draw_line(canvas, 0, 10, 128, 10);
-    canvas_draw_str_aligned(canvas, 64, 15, AlignCenter, AlignTop, "Press right to send IFTTT");
-    canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignTop, "command or press and hold");
-    canvas_draw_str_aligned(canvas, 64, 35, AlignCenter, AlignTop, "back to return to the menu");
+    canvas_draw_str_aligned(canvas, 64, 15, AlignCenter, AlignTop, IFTTT_UI_TEXT("Press right to send IFTTT", "按右键发送IFTTT"));
+    canvas_draw_str_aligned(canvas, 64, 25, AlignCenter, AlignTop, IFTTT_UI_TEXT("command or press and hold", "指令 或长按"));
+    canvas_draw_str_aligned(canvas, 64, 35, AlignCenter, AlignTop, IFTTT_UI_TEXT("back to return to the menu", "返回键回到菜单"));
 
     // Right
     if(model->right_pressed) {

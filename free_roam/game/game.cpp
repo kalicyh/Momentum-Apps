@@ -61,7 +61,7 @@ bool FreeRoamGame::init(ViewDispatcher **viewDispatcher, void *appContext)
     else
     {
         FURI_LOG_E("FreeRoamGame", "Board is not connected");
-        easy_flipper_dialog("FlipperHTTP Error", "Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.");
+        easy_flipper_dialog(free_roam_UI_TEXT("FlipperHTTP Error", "FlipperHTTP 错误"), free_roam_UI_TEXT("Ensure your WiFi Developer\nBoard or Pico W is connected\nand the latest FlipperHTTP\nfirmware is installed.", "请确保 WiFi 开发板\n或 Pico W 已连接\n并安装最新 FlipperHTTP\n固件。"));
         endGame(); // End the game if board is not connected
         return false;
     }
@@ -80,7 +80,7 @@ void FreeRoamGame::inputManager()
 bool FreeRoamGame::startGame()
 {
     draw->fillScreen(0xFFFF);
-    draw->text(Vector(0, 10), "Initializing game...", 0x0000);
+    draw->text(Vector(0, 10), free_roam_UI_TEXT("Initializing game...", "正在初始化游戏..."), 0x0000);
 
     if (isGameRunning || engine)
     {
@@ -114,7 +114,7 @@ bool FreeRoamGame::startGame()
     player->setVibrationToggle(vibrationToggle);
 
     draw->fillScreen(0xFFFF);
-    draw->text(Vector(0, 10), "Adding levels and player...", 0x0000);
+    draw->text(Vector(0, 10), free_roam_UI_TEXT("Adding levels and player...", "正在加载关卡和玩家..."), 0x0000);
 
     // add levels and player to the game
     std::unique_ptr<Level> level1 = std::make_unique<Level>("Tutorial", draw->getDisplaySize(), game.get());
@@ -195,7 +195,7 @@ bool FreeRoamGame::startGame()
     }
 
     draw->fillScreen(0xFFFF);
-    draw->text(Vector(0, 10), "Starting game engine...", 0x0000);
+    draw->text(Vector(0, 10), free_roam_UI_TEXT("Starting game engine...", "正在启动游戏引擎..."), 0x0000);
 
     isGameRunning = true; // Set the flag to indicate game is running
     return true;

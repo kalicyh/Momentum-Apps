@@ -109,8 +109,8 @@ static void cbDraw(Canvas* const canvas, void* ctx) {
         show(canvas, 2, 0, &img_csLogo_FULL, SHOW_SET_BLK);
 
         canvas_set_font(canvas, FontSecondary);
-        canvas_draw_str_aligned(canvas, 64, 43, AlignCenter, AlignTop, "Wii Extension Controller");
-        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, "Protocol Analyser");
+        canvas_draw_str_aligned(canvas, 64, 43, AlignCenter, AlignTop, WIIEC_UI_TEXT("Wii Extension Controller", "Wii 扩展控制器"));
+        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignTop, WIIEC_UI_TEXT("Protocol Analyser", "协议分析器"));
 
         showVer(canvas);
 
@@ -159,16 +159,16 @@ static void cbDraw(Canvas* const canvas, void* ctx) {
         canvas_set_font(canvas, FontSecondary);
 
         show(canvas, 0, 0, &img_key_U, SHOW_SET_BLK);
-        canvas_draw_str_aligned(canvas, 11, 0, AlignLeft, AlignTop, "Initialise Perhipheral");
+        canvas_draw_str_aligned(canvas, 11, 0, AlignLeft, AlignTop, WIIEC_UI_TEXT("Initialise Perhipheral", "初始化外设"));
 
         show(canvas, 0, 11, &img_key_OK, SHOW_SET_BLK);
-        canvas_draw_str_aligned(canvas, 11, 11, AlignLeft, AlignTop, "Read values [see log]");
+        canvas_draw_str_aligned(canvas, 11, 11, AlignLeft, AlignTop, WIIEC_UI_TEXT("Read values [see log]", "读取数值 [见日志]"));
 
         show(canvas, 0, 23, &img_key_D, SHOW_SET_BLK);
-        canvas_draw_str_aligned(canvas, 11, 22, AlignLeft, AlignTop, "Restart Scanner");
+        canvas_draw_str_aligned(canvas, 11, 22, AlignLeft, AlignTop, WIIEC_UI_TEXT("Restart Scanner", "重启扫描器"));
 
         show(canvas, 0, 33, &img_key_Back, SHOW_SET_BLK);
-        canvas_draw_str_aligned(canvas, 11, 33, AlignLeft, AlignTop, "Exit");
+        canvas_draw_str_aligned(canvas, 11, 33, AlignLeft, AlignTop, WIIEC_UI_TEXT("Exit", "退出"));
 
         break;
 

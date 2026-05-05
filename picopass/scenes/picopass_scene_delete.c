@@ -12,19 +12,24 @@ void picopass_scene_delete_on_enter(void* context) {
 
     // Setup Custom Widget view
     char temp_str[141];
-    snprintf(temp_str, sizeof(temp_str), "\e#Delete %s?\e#", picopass->dev->dev_name);
+    snprintf(
+        temp_str,
+        sizeof(temp_str),
+        "\e#%s %s?\e#",
+        PICOPASS_UI_TEXT("Delete", "删除"),
+        picopass->dev->dev_name);
     widget_add_text_box_element(
         picopass->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, temp_str, false);
     widget_add_button_element(
         picopass->widget,
         GuiButtonTypeLeft,
-        "Back",
+        PICOPASS_UI_TEXT("Back", "返回"),
         picopass_scene_delete_widget_callback,
         picopass);
     widget_add_button_element(
         picopass->widget,
         GuiButtonTypeRight,
-        "Delete",
+        PICOPASS_UI_TEXT("Delete", "删除"),
         picopass_scene_delete_widget_callback,
         picopass);
 

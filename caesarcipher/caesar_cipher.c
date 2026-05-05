@@ -10,6 +10,12 @@
 
 #define TEXT_BUFFER_SIZE 256
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define CAESAR_CIPHER_UI_TEXT(en, zh) (zh)
+#else
+#define CAESAR_CIPHER_UI_TEXT(en, zh) (en)
+#endif
+
 typedef enum {
     EventTypeTick,
     EventTypeKey,
@@ -123,7 +129,7 @@ int32_t caesar_cipher_app() {
         TEXT_BUFFER_SIZE,
         //clear default text
         true);
-    text_input_set_header_text(caesar_state->text_input, "Input");
+    text_input_set_header_text(caesar_state->text_input, CAESAR_CIPHER_UI_TEXT("Input", "输入"));
 
     // Open GUI and register view_port
     Gui* gui = furi_record_open("gui");

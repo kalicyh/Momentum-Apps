@@ -60,35 +60,43 @@ void esp_flasher_scene_quick_on_enter(void* context) {
     case QuickWROOM:
     case QuickS2:
     case QuickS3:
-        submenu_set_header(submenu, "Choose ESP32 Type:");
+        submenu_set_header(submenu, ESP_FLASHER_UI_TEXT("Choose ESP32 Type:", "选择 ESP32 型号:"));
         submenu_add_item(
             submenu,
-            "Flipper WiFi Devboard",
+            ESP_FLASHER_UI_TEXT("Flipper WiFi Devboard", "Flipper WiFi 开发板"),
             QuickS2Boot,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "WROOM (auto bootloader)",
+            ESP_FLASHER_UI_TEXT("WROOM (auto bootloader)", "WROOM (自动引导)"),
             QuickWROOMBoot,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "S3 (auto bootloader)",
+            ESP_FLASHER_UI_TEXT("S3 (auto bootloader)", "S3 (自动引导)"),
             QuickS3Boot,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "Other ESP32-WROOM",
+            ESP_FLASHER_UI_TEXT("Other ESP32-WROOM", "其他 ESP32-WROOM"),
             QuickWROOM,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
-            submenu, "Other ESP32-S2", QuickS2, esp_flasher_scene_quick_submenu_callback, app);
+            submenu,
+            ESP_FLASHER_UI_TEXT("Other ESP32-S2", "其他 ESP32-S2"),
+            QuickS2,
+            esp_flasher_scene_quick_submenu_callback,
+            app);
         submenu_add_item(
-            submenu, "Other ESP32-S3", QuickS3, esp_flasher_scene_quick_submenu_callback, app);
+            submenu,
+            ESP_FLASHER_UI_TEXT("Other ESP32-S3", "其他 ESP32-S3"),
+            QuickS3,
+            esp_flasher_scene_quick_submenu_callback,
+            app);
         break;
     case QuickS2Boot_Marauder:
     case QuickS2Boot_Flipperhttp:
@@ -96,22 +104,22 @@ void esp_flasher_scene_quick_on_enter(void* context) {
     case QuickS2_Marauder:
     case QuickS2_Flipperhttp:
     case QuickS2_Blackmagic:
-        submenu_set_header(submenu, "Choose Firmware:");
+        submenu_set_header(submenu, ESP_FLASHER_UI_TEXT("Choose Firmware:", "选择固件:"));
         submenu_add_item(
             submenu,
-            "Marauder (has Evil Portal)",
+            ESP_FLASHER_UI_TEXT("Marauder (has Evil Portal)", "Marauder (含 Evil Portal)"),
             state > QuickS2 ? QuickS2_Marauder : QuickS2Boot_Marauder,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "FlipperHTTP (web access)",
+            ESP_FLASHER_UI_TEXT("FlipperHTTP (web access)", "FlipperHTTP (网页访问)"),
             state > QuickS2 ? QuickS2_Flipperhttp : QuickS2Boot_Flipperhttp,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "Black Magic (FZ debugger)",
+            ESP_FLASHER_UI_TEXT("Black Magic (FZ debugger)", "Black Magic (FZ 调试器)"),
             state > QuickS2 ? QuickS2_Blackmagic : QuickS2Boot_Blackmagic,
             esp_flasher_scene_quick_submenu_callback,
             app);
@@ -120,16 +128,16 @@ void esp_flasher_scene_quick_on_enter(void* context) {
     case QuickWROOMBoot_Wardriver:
     case QuickWROOM_Marauder:
     case QuickWROOM_Wardriver:
-        submenu_set_header(submenu, "Choose Firmware:");
+        submenu_set_header(submenu, ESP_FLASHER_UI_TEXT("Choose Firmware:", "选择固件:"));
         submenu_add_item(
             submenu,
-            "Marauder (has Evil Portal)",
+            ESP_FLASHER_UI_TEXT("Marauder (has Evil Portal)", "Marauder (含 Evil Portal)"),
             state > QuickWROOM ? QuickWROOM_Marauder : QuickWROOMBoot_Marauder,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "Wardriver (GPS -> Flipper)",
+            ESP_FLASHER_UI_TEXT("Wardriver (GPS -> Flipper)", "Wardriver (GPS -> Flipper)"),
             state > QuickWROOM ? QuickWROOM_Wardriver : QuickWROOMBoot_Wardriver,
             esp_flasher_scene_quick_submenu_callback,
             app);
@@ -138,16 +146,16 @@ void esp_flasher_scene_quick_on_enter(void* context) {
     case QuickS3Boot_Wardriver:
     case QuickS3_Marauder:
     case QuickS3_Wardriver:
-        submenu_set_header(submenu, "Choose Firmware:");
+        submenu_set_header(submenu, ESP_FLASHER_UI_TEXT("Choose Firmware:", "选择固件:"));
         submenu_add_item(
             submenu,
-            "Marauder (has Evil Portal)",
+            ESP_FLASHER_UI_TEXT("Marauder (has Evil Portal)", "Marauder (含 Evil Portal)"),
             state > QuickS3 ? QuickS3_Marauder : QuickS3Boot_Marauder,
             esp_flasher_scene_quick_submenu_callback,
             app);
         submenu_add_item(
             submenu,
-            "Wardriver (GPS -> Flipper)",
+            ESP_FLASHER_UI_TEXT("Wardriver (GPS -> Flipper)", "Wardriver (GPS -> Flipper)"),
             state > QuickS3 ? QuickS3_Wardriver : QuickS3Boot_Wardriver,
             esp_flasher_scene_quick_submenu_callback,
             app);

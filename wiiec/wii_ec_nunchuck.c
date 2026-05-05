@@ -347,8 +347,8 @@ void nunchuck_show(Canvas* const canvas, state_t* const state) {
     show(canvas, 73, 0, &img_6x8_Y, SHOW_SET_BLK);
     show(canvas, 104, 0, &img_6x8_Z, SHOW_SET_BLK);
 
-    canvas_draw_str_aligned(canvas, 0, 14, AlignLeft, AlignTop, "Accel");
-    canvas_draw_str_aligned(canvas, 0, 28, AlignLeft, AlignTop, "Joy");
+    canvas_draw_str_aligned(canvas, 0, 14, AlignLeft, AlignTop, WIIEC_UI_TEXT("Accel", "加速度"));
+    canvas_draw_str_aligned(canvas, 0, 28, AlignLeft, AlignTop, WIIEC_UI_TEXT("Joy", "摇杆"));
 
     // accel values
     showHex(canvas, 34, 12, c->accX, 3, 2);
@@ -374,7 +374,7 @@ void nunchuck_show(Canvas* const canvas, state_t* const state) {
 
     // buttons
     canvas_set_color(canvas, ColorBlack);
-    canvas_draw_str_aligned(canvas, 0, 44, AlignLeft, AlignTop, "Button");
+    canvas_draw_str_aligned(canvas, 0, 44, AlignLeft, AlignTop, WIIEC_UI_TEXT("Button", "按键"));
 
     if(!d->btnC) {
         canvas_draw_rframe(canvas, 36, 42, 18, 12, 6);

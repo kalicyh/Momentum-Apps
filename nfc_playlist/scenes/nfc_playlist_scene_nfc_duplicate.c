@@ -23,18 +23,18 @@ void nfc_playlist_nfc_duplicate_scene_on_enter(void* context) {
       23,
       AlignCenter,
       AlignCenter,
-      "\e#This item is already\nin the playlist\e#",
+      NFC_PLAYLIST_UI_TEXT("\e#This item is already\nin the playlist\e#", "\e#该项目已在\n播放列表中\e#"),
       false);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeLeft,
-      "Try Again",
+      NFC_PLAYLIST_UI_TEXT("Try Again", "重试"),
       nfc_playlist_nfc_duplicate_scene_menu_callback,
       nfc_playlist);
    widget_add_button_element(
       nfc_playlist->views.widget,
       GuiButtonTypeRight,
-      "Continue",
+      NFC_PLAYLIST_UI_TEXT("Continue", "继续"),
       nfc_playlist_nfc_duplicate_scene_menu_callback,
       nfc_playlist);
 

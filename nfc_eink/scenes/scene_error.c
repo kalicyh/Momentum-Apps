@@ -4,17 +4,17 @@
 
 static const char* nfc_eink_scene_error_get_text_from_code(NfcEinkScreenError error) {
     if(error == NfcEinkScreenErrorUnsupportedScreen)
-        return "Unsupported\nscreen";
+        return NFC_EINK_UI_TEXT("Unsupported\nscreen", "不支持的\n屏幕");
     else if(error == NfcEinkScreenErrorUnableToWrite)
-        return "Unable to write";
+        return NFC_EINK_UI_TEXT("Unable to write", "无法写入");
     else if(error == NfcEinkScreenErrorTargetLost)
-        return "Target lost";
+        return NFC_EINK_UI_TEXT("Target lost", "目标丢失");
     else if(error == NfcEinkScreenErrorNone) {
         FURI_LOG_W(TAG, "No error, but on error screen");
         return "None";
     } else {
         FURI_LOG_W(TAG, "Unknown error: %02X", error);
-        return "Unknown error";
+        return NFC_EINK_UI_TEXT("Unknown error", "未知错误");
     }
 }
 
@@ -28,7 +28,7 @@ void nfc_eink_scene_error_on_enter(void* context) {
 
     Popup* popup = instance->popup;
     popup_set_icon(popup, 10, 14, &I_WarningDolphin_45x42);
-    popup_set_header(popup, "Error", 90, 26, AlignCenter, AlignCenter);
+    popup_set_header(popup, NFC_EINK_UI_TEXT("Error", "错误"), 90, 26, AlignCenter, AlignCenter);
 
     const char* msg = nfc_eink_scene_error_get_text_from_code(instance->last_error);
     popup_set_text(popup, msg, 85, 40, AlignCenter, AlignCenter);

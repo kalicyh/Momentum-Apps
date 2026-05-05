@@ -22,11 +22,11 @@ void nfc_magic_scene_magic_info_on_enter(void* context) {
 
     if(instance->protocol == NfcMagicProtocolClassic) {
         widget_add_string_element(
-            widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "It Might Be a Magic Card");
-        furi_string_printf(message, "You can make sure the card is\nmagic by writing to it\n");
+            widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_MAGIC_UI_TEXT("It Might Be a Magic Card", "可能是魔术卡"));
+        furi_string_printf(message, NFC_MAGIC_UI_TEXT("You can make sure the card is\nmagic by writing to it\n", "可以通过写入来\n确认是否为魔术卡\n"));
     } else {
         widget_add_string_element(
-            widget, 0, 0, AlignLeft, AlignTop, FontPrimary, "Magic card detected!");
+            widget, 0, 0, AlignLeft, AlignTop, FontPrimary, NFC_MAGIC_UI_TEXT("Magic card detected!", "检测到魔术卡!"));
     }
     furi_string_cat_printf(
         message, "Magic Type: %s", nfc_magic_protocols_get_name(instance->protocol));
@@ -55,9 +55,9 @@ void nfc_magic_scene_magic_info_on_enter(void* context) {
     }
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Retry", nfc_magic_scene_magic_info_widget_callback, instance);
+        widget, GuiButtonTypeLeft, NFC_MAGIC_UI_TEXT("Retry", "重试"), nfc_magic_scene_magic_info_widget_callback, instance);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "More", nfc_magic_scene_magic_info_widget_callback, instance);
+        widget, GuiButtonTypeRight, NFC_MAGIC_UI_TEXT("More", "更多"), nfc_magic_scene_magic_info_widget_callback, instance);
 
     furi_string_free(message);
 
