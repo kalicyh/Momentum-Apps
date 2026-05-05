@@ -1,6 +1,7 @@
 App(
     appid="fuzzer_ibtn",
     name="iButton Fuzzer",
+    name_zh="iButton 模糊器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="fuzzer_start_ibtn",
     requires=[
@@ -32,6 +33,7 @@ App(
 App(
     appid="fuzzer_rfid",
     name="RFID Fuzzer",
+    name_zh="RFID模糊器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="fuzzer_start_rfid",
     requires=[

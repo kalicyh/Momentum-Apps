@@ -1,6 +1,7 @@
 App(
     appid="ulc_relay",
     name="UL-C Relay",
+    name_zh="UL-C 继电器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="ulc_relay_app",
     requires=["gui", "subghz"],

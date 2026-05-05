@@ -1,6 +1,7 @@
 App(
     appid="doom",
     name="DOOM",
+    name_zh="毁灭战士",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="doom_app",
     requires=[

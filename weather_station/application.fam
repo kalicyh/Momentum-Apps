@@ -1,6 +1,7 @@
 App(
     appid="weather_station",
     name="Weather Station",
+    name_zh="气象站",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="weather_station_app",

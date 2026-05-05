@@ -1,6 +1,7 @@
 App(
     appid="co2_logger",
     name="[MH-Z19] CO2 Logger",
+    name_zh="[MH-Z19] 二氧化碳记录仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="co2_logger_app",
     stack_size=4 * 1024,

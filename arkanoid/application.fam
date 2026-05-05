@@ -1,6 +1,7 @@
 App(
     appid="arkanoid",
     name="Arkanoid",
+    name_zh="打砖块",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="arkanoid_game_app",
     requires=["gui"],

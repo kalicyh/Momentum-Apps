@@ -1,6 +1,7 @@
 App(
     appid="calculator",
     name="Calculator",
+    name_zh="计算器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="calculator_app",
     cdefines=["APP_CALCULATOR"],

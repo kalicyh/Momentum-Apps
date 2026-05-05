@@ -1,6 +1,7 @@
 App(
     appid="bomberduck",
     name="Bomberduck",
+    name_zh="炸弹鸭",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="bomberduck_app",
     requires=[

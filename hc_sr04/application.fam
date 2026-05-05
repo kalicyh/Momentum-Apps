@@ -1,6 +1,7 @@
 App(
     appid="hc_sr04",
     name="[HC-SR] Dist. Sensor",
+    name_zh="[HC-SR] 区。传感器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="hc_sr04_app",
     requires=[

@@ -1,6 +1,7 @@
 App(
     appid="metronome",
     name="Metronome",
+    name_zh="节拍器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="metronome_app",
     requires=[

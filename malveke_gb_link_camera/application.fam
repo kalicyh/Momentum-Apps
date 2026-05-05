@@ -1,6 +1,7 @@
 App(
     appid="malveke_gb_link_camera",
     name="[GB] Link-Camera",
+    name_zh="[GB] 连接相机",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="link_camera_app",
     cdefines=["APP_EMULATOR"],

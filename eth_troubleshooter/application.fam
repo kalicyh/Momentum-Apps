@@ -1,6 +1,7 @@
 App(
     appid="eth_troubleshooter",
     name="[W5500] Ethernet",
+    name_zh="[W5500] 以太网",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="eth_troubleshooter_app",
     requires=[

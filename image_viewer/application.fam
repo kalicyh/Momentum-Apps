@@ -2,6 +2,7 @@ App(
     apptype=FlipperAppType.EXTERNAL,
     appid="image_viewer",
     name="Image Viewer",
+    name_zh="图片浏览器",
     fap_description="Image viewer for flipper zero!",
     fap_author="@polioan",
     fap_version="0.1",

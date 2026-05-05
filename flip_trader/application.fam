@@ -1,6 +1,7 @@
 App(
     appid="flip_trader",
     name="FlipTrader",
+    name_zh="翻转交易者",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flip_trader_app",
     stack_size=4 * 1024,

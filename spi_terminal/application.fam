@@ -1,6 +1,7 @@
 App(
     appid="flipper_spi_terminal",
     name="[SPI] Terminal",
+    name_zh="[SPI] 端子",
     apptype=FlipperAppType.EXTERNAL,
     fap_version="0.4",
     fap_category="GPIO",

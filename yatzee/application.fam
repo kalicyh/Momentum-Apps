@@ -1,6 +1,7 @@
 App(
     appid="yatzee",
     name="Yatzee",
+    name_zh="亚兹",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="yatzee_main",
     requires=["gui"],

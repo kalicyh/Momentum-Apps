@@ -1,6 +1,7 @@
 App(
     appid="wifi_scanner",
     name="[ESP] WiFi Scanner",
+    name_zh="[ESP] WiFi 扫描仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="wifi_scanner_app",
     requires=["gui"],

@@ -1,6 +1,7 @@
 App(
     appid="lidar_emulator",
     name="LIDAR Emulator",
+    name_zh="激光雷达模拟器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="lidar_emulator_app",
     requires=["gui", "storage", "power"],

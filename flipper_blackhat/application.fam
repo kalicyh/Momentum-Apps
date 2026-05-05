@@ -1,6 +1,7 @@
 App(
     appid="blackhat",
     name="[A33] Flipper Blackhat",
+    name_zh="[A33] 鳍状肢黑帽",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="blackhat_app",
     cdefines=["APP_BLACKHAT"],

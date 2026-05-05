@@ -1,6 +1,7 @@
 App(
     appid="ami_tool",
     name="AmiTool",
+    name_zh="阿米工具",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="ami_tool_app",
     requires=["gui"],

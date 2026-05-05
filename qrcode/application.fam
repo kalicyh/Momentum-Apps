@@ -1,6 +1,7 @@
 App(
     appid="qrcode",
     name="QR Code",
+    name_zh="二维码",
     fap_version=(2, 1),
     fap_description="Display qrcodes",
     fap_author="Bob Matcuk",

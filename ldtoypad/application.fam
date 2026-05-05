@@ -1,6 +1,7 @@
 App(
     appid="ldtoypad",
     name="LEGO Dimensions Toy Pad",  # Displayed in menus
+    name_zh="乐高尺寸玩具垫",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="ldtoypad_app",
     stack_size=4 * 1024,

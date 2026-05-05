@@ -1,6 +1,7 @@
 App(
     appid="wardriver",
     name="[ESP32GPS] Wardriver",
+    name_zh="[ESP32GPS] 战车",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="wardriver_app",
     stack_size=2048,

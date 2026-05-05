@@ -1,6 +1,7 @@
 App(
     appid="flipboard_signal",
     name="FlipBoard Signal",
+    name_zh="FlipBoard 信号",
     apptype=FlipperAppType.EXTERNAL,
     sources=[
         "*.c",

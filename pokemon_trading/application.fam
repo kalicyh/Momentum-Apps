@@ -1,6 +1,7 @@
 App(
     appid="pokemon",
     name="[GB] Pokemon Trading",
+    name_zh="[GB] 口袋妖怪交易",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="pokemon_app",
     requires=["gui"],

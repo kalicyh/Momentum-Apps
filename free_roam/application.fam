@@ -1,6 +1,7 @@
 App(
     appid="free_roam",
     name="Free Roam",
+    name_zh="自由漫游",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="free_roam_main",
     stack_size=4 * 1024,

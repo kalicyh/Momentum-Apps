@@ -1,6 +1,7 @@
 App(
     appid="mitsubishi_ac_remote",
     name="Mitsubishi AC Remote",
+    name_zh="三菱空调遥控器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="ac_remote_app",

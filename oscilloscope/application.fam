@@ -1,6 +1,7 @@
 App(
     appid="flipperscope",
     name="[GPIO] Oscilloscope",
+    name_zh="[GPIO] 示波器",
     fap_author="anfractuosity",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="scope_main",

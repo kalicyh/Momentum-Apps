@@ -3,6 +3,7 @@
 App(
     appid="minesweeper_redux",  # Must be unique
     name="Mine Sweeper",  # Displayed in menus
+    name_zh="扫雷",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="minesweeper_app",
     cdefines=["APP_MINESWEEPER"],

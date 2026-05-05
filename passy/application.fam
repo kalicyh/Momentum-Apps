@@ -3,6 +3,7 @@
 App(
     appid="passy",  # Must be unique
     name="Passport Reader",  # Displayed in menus
+    name_zh="护照读取器",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="passy_app",
     stack_size=2 * 1024,

@@ -11,6 +11,7 @@ App(
     fap_version="1.9",
     fap_weburl="https://github.com/CodyTolene/Flipper-Zero-Cam",
     name="[ESP32CAM] Camera Suite",
+    name_zh="[ESP32CAM] 相机套件",
     order=1,
     requires=["gui", "storage"],
     stack_size=8 * 1024,

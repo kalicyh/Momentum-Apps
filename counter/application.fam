@@ -1,6 +1,7 @@
 App(
     appid="counter",
     name="Counter",
+    name_zh="柜台",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="counterapp",
     requires=[

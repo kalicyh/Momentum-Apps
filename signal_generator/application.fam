@@ -1,6 +1,7 @@
 App(
     appid="signal_generator",
     name="[GPIO] Signal Generator",
+    name_zh="[GPIO] 信号发生器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="signal_gen_app",
     requires=["gui"],

@@ -1,6 +1,7 @@
 App(
     appid="xbox_controller",
     name="Xbox Controller",
+    name_zh="Xbox 控制器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="xbox_controller_app",
     cdefines=["APP_XBOX_CONTROLLER"],

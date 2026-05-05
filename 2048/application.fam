@@ -1,6 +1,7 @@
 App(
     appid="game_2048",
     name="2048",
+    name_zh="2048",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="game_2048_app",
     requires=[

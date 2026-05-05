@@ -3,6 +3,7 @@
 App(
     appid="pinball0",
     name="Pinball0",
+    name_zh="弹球0",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="pinball0_app",
     stack_size=2 * 1024,  # neede?

@@ -1,6 +1,7 @@
 App(
     appid="t_rex_runner",
     name="T-Rex Runner",
+    name_zh="霸王龙赛跑者",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="trexrunner_app",
     cdefines=["APP_TREXRUNNER"],

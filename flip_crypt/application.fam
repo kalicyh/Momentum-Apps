@@ -1,6 +1,7 @@
 App(
     appid="flip_crypt",
     name="FlipCrypt",
+    name_zh="翻转密码",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flip_crypt_app",
     stack_size=4 * 1024,

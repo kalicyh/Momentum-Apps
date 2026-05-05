@@ -1,6 +1,7 @@
 App(
     appid="tama_p1",
     name="Tamagotchi",
+    name_zh="电子宠物",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="tama_p1_app",
     cdefines=["APP_TAMA_P1"],

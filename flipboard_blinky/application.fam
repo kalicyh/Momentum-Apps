@@ -1,6 +1,7 @@
 App(
     appid="flipboard_blinky",
     name="FlipBoard Blinky",
+    name_zh="FlipBoard 闪烁",
     apptype=FlipperAppType.EXTERNAL,
     sources=[
         "*.c",

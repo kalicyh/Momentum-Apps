@@ -1,6 +1,7 @@
 App(
     appid="nfc_login",
     name="NFC Login",
+    name_zh="NFC登录",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="nfc_login",
     requires=["gui", "usb_hid", "storage", "notification", "bt", "cli"],

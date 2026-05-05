@@ -1,6 +1,7 @@
 App(
     appid="ir_remote",
     name="IR Remote",
+    name_zh="红外遥控",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="infrared_remote_app",
     stack_size=3 * 1024,

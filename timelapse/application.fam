@@ -1,6 +1,7 @@
 App(
     appid="timelapse",
     name="[GPIO] Timelapse",
+    name_zh="[GPIO] 延时摄影",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="zeitraffer_app",
     cdefines=["APP_ZEITRAFFER"],

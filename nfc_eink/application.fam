@@ -1,6 +1,7 @@
 App(
     appid="nfc_eink",
     name="NFC-Eink",
+    name_zh="NFC电子墨水",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="nfc_eink",

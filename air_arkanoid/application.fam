@@ -1,6 +1,7 @@
 App(
     appid="air_arkanoid",
     name="Air Arkanoid",
+    name_zh="空气打砖块",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="game_app",
     stack_size=4 * 1024,

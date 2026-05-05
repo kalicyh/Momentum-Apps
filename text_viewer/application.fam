@@ -1,6 +1,7 @@
 App(
     appid="text_viewer",
     name="Text Viewer",
+    name_zh="文本查看器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="text_viewer",
     requires=[

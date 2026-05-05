@@ -1,6 +1,7 @@
 App(
     appid="quadrastic",
     name="Quadrastic",
+    name_zh="二次型",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="game_app",
     stack_size=1 * 1024,

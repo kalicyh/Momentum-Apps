@@ -1,6 +1,7 @@
 App(
     appid="bpm_tapper",
     name="BPM Tapper",
+    name_zh="BPM 敲击器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="bpm_tapper_app",
     requires=["gui"],

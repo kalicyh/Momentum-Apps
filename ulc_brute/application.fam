@@ -1,6 +1,7 @@
 App(
     appid="ulc_brute",
     name="UL-C Bruteforce",
+    name_zh="UL-C 暴力破解",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="ulc_brute_app",
     requires=["gui", "subghz"],

@@ -1,6 +1,7 @@
 App(
     appid="heap_defence",
     name="Heap Defence",
+    name_zh="堆防御",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="heap_defence_app",
     requires=["gui"],

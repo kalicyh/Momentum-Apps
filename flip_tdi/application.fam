@@ -1,6 +1,7 @@
 App(
     appid="flip_tdi",
     name="[FTDI232H] FlipTDI",
+    name_zh="[FTDI232H] 翻转TDI",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flip_tdi_app",
     requires=[

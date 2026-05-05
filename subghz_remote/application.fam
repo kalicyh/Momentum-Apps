@@ -22,6 +22,7 @@
 App(
     appid="subghz_remote",
     name="Sub-GHz Remote",
+    name_zh="Sub-GHz 远程",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="subghz_remote_app",
     requires=[

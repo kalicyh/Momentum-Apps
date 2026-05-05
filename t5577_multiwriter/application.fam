@@ -1,6 +1,7 @@
 App(
     appid="t5577_multiwriter",
     name="T5577 Multiwriter",
+    name_zh="T5577 多功能写入器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="t5577_multiwriter_app",

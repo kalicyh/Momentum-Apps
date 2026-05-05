@@ -1,6 +1,7 @@
 App(
     appid="nrf24mousejacker",
     name="[NRF24] Mouse Jacker",
+    name_zh="[NRF24] 鼠标插孔",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="mousejacker_app",
     requires=[

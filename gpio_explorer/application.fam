@@ -1,6 +1,7 @@
 App(
     appid="gpio_explorer_app",
     name="[GPIO] Explorer",
+    name_zh="[GPIO] 资源管理器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="main_gpio_explorer_app",
     stack_size=4 * 1024,

@@ -1,6 +1,7 @@
 App(
     appid="ir_intervalometer",
     name="IR Intervalometer",
+    name_zh="红外间隔计",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flipvalo_app",
     requires=["gui"],

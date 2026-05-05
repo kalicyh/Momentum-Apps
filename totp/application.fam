@@ -1,6 +1,7 @@
 App(
     appid="totp",
     name="Authenticator",
+    name_zh="验证器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="totp_app",
     cdefines=["APP_TOTP"],

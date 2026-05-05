@@ -1,6 +1,7 @@
 App(
     appid="slotmachine",
     name="Slot Machine",
+    name_zh="老虎机",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="slotmachine_app",
     cdefines=["APP_SLOTMACHINE"],

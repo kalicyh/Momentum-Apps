@@ -1,6 +1,7 @@
 App(
     appid="combo_cracker",
     name="Combo Cracker",
+    name_zh="组合饼干",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="combo_cracker_app",
     stack_size=4 * 1024,

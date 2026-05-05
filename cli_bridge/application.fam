@@ -1,6 +1,7 @@
 App(
     appid="cli_gui",
     name="CLI-GUI Bridge",
+    name_zh="CLI-GUI 桥接器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="cligui_main",
     requires=["gui", "cli"],

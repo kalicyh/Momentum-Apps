@@ -1,6 +1,7 @@
 App(
     appid="fm_radio",
     name="[TEA5767] FM Radio",
+    name_zh="[TEA5767] 调频收音机",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="my_fm_radio",
     stack_size=1 * 1024,

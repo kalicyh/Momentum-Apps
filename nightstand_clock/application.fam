@@ -1,6 +1,7 @@
 App(
     appid="nightstand",
     name="Nightstand Clock",
+    name_zh="床头柜时钟",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="clock_app",
     requires=["gui"],

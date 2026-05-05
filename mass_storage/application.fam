@@ -1,6 +1,7 @@
 App(
     appid="mass_storage",
     name="Mass Storage",
+    name_zh="海量存储",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="mass_storage_app",
     requires=[

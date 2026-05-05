@@ -1,6 +1,7 @@
 App(
     appid="mfc_editor",
     name="MIFARE Classic Editor",
+    name_zh="MIFARE 经典编辑器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="mfc_editor_app",

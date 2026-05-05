@@ -1,6 +1,7 @@
 App(
     appid="gpio_reader_a",
     name="[GPIO] Reader (aureli1c)",
+    name_zh="[GPIO] 读卡器 (aureli1c)",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="GPIO_reader_app",
     requires=["gui"],

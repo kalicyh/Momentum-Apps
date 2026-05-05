@@ -1,6 +1,7 @@
 App(
     appid="malveke_gb_live_camera",
     name="[GB] Live Camera",
+    name_zh="[CN] 实时摄像头",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="gb_live_camera_app",
     cdefines=["APP_CAMERA"],

@@ -3,6 +3,7 @@
 App(
     appid="tasks",  # Must be unique
     name="Tasks",   # Displayed in menus
+    name_zh="任务",   # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="tasks_app",
     stack_size=2 * 1024,

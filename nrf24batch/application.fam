@@ -1,6 +1,7 @@
 App(
     appid="nrf24batch",
     name="[NRF24] Batch",
+    name_zh="[NRF24] 批次",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="nrf24batch_app",
     cdefines=["APP_NRF24BATCH"],

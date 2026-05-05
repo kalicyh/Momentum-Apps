@@ -1,6 +1,7 @@
 App(
     appid="air_labyrinth",
     name="Air Labyrinth",
+    name_zh="空气迷宫",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="game_app",
     stack_size=4 * 1024,  # Game stack, change accordingly

@@ -1,6 +1,7 @@
 App(
     appid="flip_weather",
     name="FlipWeather",
+    name_zh="翻转天气",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flip_weather_app",
     stack_size=4 * 1024,

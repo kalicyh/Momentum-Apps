@@ -1,6 +1,7 @@
 App(
     appid="4inrow",
     name="4 in a Row",
+    name_zh="连续 4 个",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="four_in_row_app",
     requires=[

@@ -1,6 +1,7 @@
 App(
     appid="meal_pager",
     name="Restaurant Pager",
+    name_zh="餐厅寻呼机",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="meal_pager_app",
     stack_size=2 * 1024,

@@ -3,6 +3,7 @@
 App(
     appid="portal_of_flipper",  # Must be unique
     name="Portal Of Flipper",  # Displayed in menus
+    name_zh="脚蹼传送门",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="portal_of_flipper_app",
     stack_size=5 * 1024,

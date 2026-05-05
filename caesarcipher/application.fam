@@ -1,6 +1,7 @@
 App(
     appid="caesar_cipher",
     name="Caesar Cipher",
+    name_zh="凯撒密码",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="caesar_cipher_app",
     cdefines=["APP_CAESAR_CIPHER"],

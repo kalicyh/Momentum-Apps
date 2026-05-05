@@ -1,6 +1,7 @@
 App(
     appid="flipp_pomodoro",
     name="Flipp Pomodoro",
+    name_zh="弗利普·番茄钟",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flipp_pomodoro_app",
     requires=["gui", "notification", "dolphin"],

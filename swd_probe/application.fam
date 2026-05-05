@@ -1,6 +1,7 @@
 App(
     appid="swd_probe",
     name="[SWD] SWD Probe",
+    name_zh="[SWD] SWD 探头",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="swd_probe_app_main",
     requires=["notification", "gui", "storage", "dialogs", "cli"],

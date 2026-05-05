@@ -1,6 +1,7 @@
 App(
     appid="midea_ac_remote",
     name="Midea AC Remote",
+    name_zh="美的空调遥控器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="ac_remote_app",

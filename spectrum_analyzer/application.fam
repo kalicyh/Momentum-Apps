@@ -1,6 +1,7 @@
 App(
     appid="spectrum_analyzer",
     name="Spectrum Analyzer",
+    name_zh="频谱分析仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="spectrum_analyzer_app",
     requires=["gui"],

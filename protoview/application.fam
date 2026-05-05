@@ -1,6 +1,7 @@
 App(
     appid="protoview",
     name="ProtoView",
+    name_zh="原型视图",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="protoview_app_entry",
     requires=["gui"],

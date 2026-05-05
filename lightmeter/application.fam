@@ -1,6 +1,7 @@
 App(
     appid="lightmeter",
     name="[BH1750] Lightmeter",
+    name_zh="[BH1750] 照度计",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="lightmeter_app",
     requires=[

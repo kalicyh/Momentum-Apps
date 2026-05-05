@@ -1,6 +1,7 @@
 App(
     appid="game15",
     name="Game 15",
+    name_zh="第15场比赛",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="game15_app",
     requires=["gui"],

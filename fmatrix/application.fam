@@ -1,6 +1,7 @@
 App(
     appid="fmatrix",
     name="Fmatrix",
+    name_zh="矩阵",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="matrix_app",
     fap_category="Media",

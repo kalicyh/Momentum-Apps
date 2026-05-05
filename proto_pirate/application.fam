@@ -1,6 +1,7 @@
 App(
     appid="proto_pirate",
     name="ProtoPirate",
+    name_zh="原始海盗",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="protopirate_app",

@@ -1,6 +1,7 @@
 App(
     appid="flip_world",
     name="FlipWorld",
+    name_zh="翻转世界",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flip_world_main",
     stack_size=4 * 1024,

@@ -1,6 +1,7 @@
 App(
     appid="ibutton_converter",
     name="iButton Converter",
+    name_zh="iButton 转换器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="ibutton_converter_app",

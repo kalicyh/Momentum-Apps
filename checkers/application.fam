@@ -1,6 +1,7 @@
 App(
     appid="checkers",
     name="Checkers",
+    name_zh="跳棋",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flipcheckers_app",
     requires=[

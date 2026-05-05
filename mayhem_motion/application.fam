@@ -1,6 +1,7 @@
 App(
     appid="mayhem_motion",
     name="[MAYHEM] Motion Detection",
+    name_zh="[混乱] 运动检测",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="uart_echo_app",
     cdefines=["APP_QRCODE"],

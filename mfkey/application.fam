@@ -1,6 +1,7 @@
 App(
     appid="mfkey",
     name="MFKey",
+    name_zh="MF键",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="mfkey_main",

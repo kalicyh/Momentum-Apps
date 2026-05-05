@@ -1,6 +1,7 @@
 App(
     appid="usb_midi",
     name="USB-MIDI",
+    name_zh="USB-MIDI",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="usb_midi_app",
     stack_size=4 * 1024,

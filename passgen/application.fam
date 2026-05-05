@@ -1,6 +1,7 @@
 App(
     appid="passgen",
     name="Password Generator",
+    name_zh="密码生成器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="passgenapp",
     requires=[

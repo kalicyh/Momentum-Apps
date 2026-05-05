@@ -3,6 +3,7 @@
 App(
     appid="seader",
     name="Seader",
+    name_zh="西德尔",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="seader_app",
     cdefines=[

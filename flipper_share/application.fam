@@ -3,6 +3,7 @@
 App(
     appid="flipper_share",
     name="Flipper Share",
+    name_zh="脚蹼分享",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flipper_share_app",
     stack_size=2 * 1024,

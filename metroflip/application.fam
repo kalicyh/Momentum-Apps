@@ -1,6 +1,7 @@
 App(
     appid="metroflip",
     name="Metroflip",
+    name_zh="都市翻转",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="metroflip",
     stack_size=2 * 1024,

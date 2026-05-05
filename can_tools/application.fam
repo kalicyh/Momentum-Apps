@@ -1,6 +1,7 @@
 App(
     appid="can_tools",
     name="CAN Tools",
+    name_zh="CAN工具",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="cantools_app",
     stack_size=4 * 1024,

@@ -1,6 +1,7 @@
 App(
     appid="wire_tester",
     name="[GPIO] Wire Tester",
+    name_zh="[GPIO] 线材测试仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="app_main",
     requires=["gui"],

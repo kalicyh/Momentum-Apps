@@ -1,6 +1,7 @@
 App(
     appid="gpio_reader_b",
     name="[GPIO] Reader (biotinker)",
+    name_zh="[GPIO] 读卡器（biotinker）",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="gpio_app",
     requires=["gui"],

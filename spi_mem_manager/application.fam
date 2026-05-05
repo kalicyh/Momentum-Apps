@@ -1,6 +1,7 @@
 App(
     appid="spi_mem_manager",
     name="[SPI] SPI Mem Manager",
+    name_zh="[SPI] SPI 内存管理器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="spi_mem_app",
     requires=["gui"],

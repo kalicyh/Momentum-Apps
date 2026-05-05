@@ -1,6 +1,7 @@
 App(
     appid="flipboard_keyboard",
     name="FlipBoard Keyboard",
+    name_zh="FlipBoard 键盘",
     apptype=FlipperAppType.EXTERNAL,
     sources=[
         "*.c",

@@ -1,6 +1,7 @@
 App(
     appid="blackjack",
     name="BlackJack",
+    name_zh="二十一点",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="blackjack_app",
     requires=["gui", "storage", "canvas"],

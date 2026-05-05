@@ -1,6 +1,7 @@
 App(
     appid="hex_viewer",
     name="HEX Viewer",
+    name_zh="十六进制查看器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="hex_viewer_app",
     requires=[

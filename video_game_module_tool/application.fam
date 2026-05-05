@@ -1,6 +1,7 @@
 App(
     appid="video_game_module_tool",
     name="[VGM] Video Game Module Tool",
+    name_zh="[VGM] 视频游戏模块工具",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="vgm_tool_app",
     requires=[

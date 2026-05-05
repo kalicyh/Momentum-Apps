@@ -1,6 +1,7 @@
 App(
     appid="video_player",
     name="Video Player",
+    name_zh="视频播放器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="video_player_app",
     cdefines=["APP_VIDEO_PLAYER"],

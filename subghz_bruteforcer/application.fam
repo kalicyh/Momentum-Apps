@@ -1,6 +1,7 @@
 App(
     appid="subghz_bruteforcer",
     name="Sub-GHz Bruteforcer",
+    name_zh="Sub-GHz 暴力破解器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="subbrute_app",
     requires=["gui", "dialogs"],

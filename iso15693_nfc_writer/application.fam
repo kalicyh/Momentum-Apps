@@ -1,6 +1,7 @@
 App(
     appid="iso15693_nfc_writer",
     name="ISO 15693-3 NFC Writer",
+    name_zh="ISO 15693-3 NFC 写入器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="iso15693_writer_app",
     stack_size=2 * 1024,

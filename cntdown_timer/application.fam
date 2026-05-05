@@ -1,6 +1,7 @@
 App(
     appid="cntdown_tim",
     name="Count Down Timer",
+    name_zh="倒计时器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="app_main",
     cdefines=["APP_COUNT_DOWN_TIMER"],

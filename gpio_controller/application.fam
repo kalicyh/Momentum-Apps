@@ -1,6 +1,7 @@
 App(
     appid="gpio_controller",
     name="[GPIO] Controller",
+    name_zh="[GPIO] 控制器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="gpio_controller_main",
     requires=["gui"],

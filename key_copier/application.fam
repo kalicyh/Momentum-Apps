@@ -1,6 +1,7 @@
 App(
     appid="key_copier",
     name="Key Copier",
+    name_zh="钥匙复印机",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="main_key_copier_app",
     stack_size=4 * 1024,

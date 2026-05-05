@@ -3,6 +3,7 @@
 App(
     appid="quac",  # Must be unique
     name="Quac!",  # Displayed in menus
+    name_zh="夸克！",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="quac_app",
     stack_size=2 * 1024,

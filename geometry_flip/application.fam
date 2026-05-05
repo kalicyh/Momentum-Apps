@@ -1,6 +1,7 @@
 App(
     appid="geometry_dash",
     name="Geometry Dash",
+    name_zh="几何冲刺",
     entry_point="geometry_dash_app",
     stack_size=2048,
     icon="images/app_icons/flipper_game_36x36.png",

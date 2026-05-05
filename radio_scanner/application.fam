@@ -1,6 +1,7 @@
 App(
     appid="radio_scanner",
     name="Radio Scanner",
+    name_zh="无线电扫描仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="radio_scanner_app",
     requires=["gui", "subghz"],

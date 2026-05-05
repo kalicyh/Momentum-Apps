@@ -4,6 +4,7 @@ App(
     # --- App Info
     appid="wii_ec_anal",
     name="[WII] EC Analyser",
+    name_zh="[WII] EC分析仪",
     # --- Entry point
     apptype=FlipperAppType.EXTERNAL,
     entry_point="wii_ec_anal",

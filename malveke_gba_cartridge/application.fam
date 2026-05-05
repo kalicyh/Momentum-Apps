@@ -1,6 +1,7 @@
 App(
     appid="malveke_gba_cartridge",
     name="[GBA] Cartridge",
+    name_zh="[GBA]卡带",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="gba_cartridge_app",
     cdefines=["APP_BOILERPLATE"],

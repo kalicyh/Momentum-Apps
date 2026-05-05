@@ -3,6 +3,7 @@
 App(
     appid="fzspground",  # Must be unique
     name="Space Playground",  # Displayed in menus
+    name_zh="太空游乐场",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="fzspground_app",
     stack_size=2 * 1024,

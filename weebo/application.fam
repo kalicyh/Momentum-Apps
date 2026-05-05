@@ -1,6 +1,7 @@
 App(
     appid="weebo",
     name="Weebo",
+    name_zh="威博",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="weebo_app",
     stack_size=5 * 1024,

@@ -1,6 +1,7 @@
 App(
     appid="umpire_indicator",
     name="Umpire Indicator",
+    name_zh="裁判员指示器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="umpire_indicator_app",
     cdefines=["APP_UMPIRE_INDICATOR"],

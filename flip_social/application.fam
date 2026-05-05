@@ -1,6 +1,7 @@
 App(
     appid="flip_social",
     name="FlipSocial",
+    name_zh="翻转社交",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="main_flip_social",
     stack_size=4 * 1024,

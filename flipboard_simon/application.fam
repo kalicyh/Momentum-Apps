@@ -1,6 +1,7 @@
 App(
     appid="flipboard_simon",
     name="FlipBoard Simon",
+    name_zh="FlipBoard 西蒙",
     apptype=FlipperAppType.EXTERNAL,
     sources=[
         "*.c",

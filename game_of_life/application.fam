@@ -1,6 +1,7 @@
 App(
     appid="gameoflife",
     name="Game of Life",
+    name_zh="生命游戏",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="game_of_life_app",
     cdefines=["APP_GAMEOFLIFE_GAME"],

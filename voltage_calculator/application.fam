@@ -3,6 +3,7 @@ App(
     appid="voltcalc_app",
     # name will be show on the Flip.x0 browser
     name="Voltage Calculator",
+    name_zh="电压计算器",
     apptype=FlipperAppType.EXTERNAL,
     # Main function (entry point) of the application
     entry_point="voltcalc_app",

@@ -1,6 +1,7 @@
 App(
     appid="nearby_files",
     name="[NMEA] Nearby Files",
+    name_zh="[NMEA] 附近的文件",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="nearby_files_app",
     stack_size=4 * 1024,

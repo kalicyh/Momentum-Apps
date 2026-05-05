@@ -1,6 +1,7 @@
 App(
     appid="mifare_fuzzer",
     name="Mifare Fuzzer",
+    name_zh="Mifare 模糊器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="mifare_fuzzer_app",
     requires=[

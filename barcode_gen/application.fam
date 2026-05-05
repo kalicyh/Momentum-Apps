@@ -1,6 +1,7 @@
 App(
     appid="barcode_app",
     name="Barcode",
+    name_zh="条码",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="barcode_main",
     requires=["gui", "storage"],

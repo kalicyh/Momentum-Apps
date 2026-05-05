@@ -1,6 +1,7 @@
 App(
     appid="flipper_xremote",
     name="XRemote",
+    name_zh="X遥控",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="xremote_main",
     requires=["gui", "dialogs", "infrared"],

@@ -1,6 +1,7 @@
 App(
     appid="picopass",
     name="HID iClass (PicoPass)",
+    name_zh="HID iClass (PicoPass)",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="picopass_app",

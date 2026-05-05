@@ -1,6 +1,7 @@
 App(
     appid="esp32_wifi_marauder",
     name="[ESP32] WiFi Marauder",
+    name_zh="[ESP32] WiFi 掠夺者",
     fap_version=(7, 8),
     apptype=FlipperAppType.EXTERNAL,
     entry_point="wifi_marauder_app",

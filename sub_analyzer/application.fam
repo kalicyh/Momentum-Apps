@@ -1,6 +1,7 @@
 App(
     appid="sub_analyzer",
     name="Sub Analyzer",
+    name_zh="子分析仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="sub_analyzer_app",
     requires=[

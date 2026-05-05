@@ -1,6 +1,7 @@
 App(
     appid="pocsag_pager",
     name="POCSAG Pager",
+    name_zh="POCSAG寻呼机",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="pocsag_pager_app",
     requires=["gui"],

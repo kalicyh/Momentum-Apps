@@ -3,6 +3,7 @@
 App(
     appid="saflip",  # Must be unique
     name="SaFlip",  # Displayed in menus
+    name_zh="萨弗利普",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="saflip_app",
     stack_size=2 * 1024,

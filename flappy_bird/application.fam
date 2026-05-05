@@ -1,6 +1,7 @@
 App(
     appid="flappy_bird",
     name="Flappy Bird",
+    name_zh="飞扬的鸟",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flappy_game_app",
     requires=["gui"],

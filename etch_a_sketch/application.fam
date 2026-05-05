@@ -1,6 +1,7 @@
 App(
     appid="etch",
     name="Etch a Sketch",
+    name_zh="蚀刻草图",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="etch_a_sketch_app",
     cdefines=["APP_ETCH_A_SKETCH"],

@@ -1,6 +1,7 @@
 App(
     appid="tpms",
     name="TPMS Reader",
+    name_zh="胎压监测系统读取器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="tpms_app",

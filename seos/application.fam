@@ -3,6 +3,7 @@
 App(
     appid="seos",  # Must be unique
     name="Seos Compatible",  # Displayed in menus
+    name_zh="兼容 Seos",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="seos_app",
     stack_size=10 * 1024,

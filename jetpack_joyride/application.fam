@@ -3,6 +3,7 @@
 App(
     appid="jetpack_joyride",
     name="Jetpack Joyride",
+    name_zh="喷气背包欢乐之旅",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="jetpack_game_app",
     cdefines=["APP_JETPACK_GAME"],

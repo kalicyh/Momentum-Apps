@@ -1,6 +1,7 @@
 App(
     appid="magspoof",
     name="[MAG] MagSpoof",
+    name_zh="[MAG] 麦格欺骗",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="mag_app",
     cdefines=["APP_MAG"],

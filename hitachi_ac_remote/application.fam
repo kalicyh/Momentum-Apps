@@ -1,6 +1,7 @@
 App(
     appid="hitachi_ac_remote",
     name="Hitachi AC Remote",
+    name_zh="日立空调遥控器",
     apptype=FlipperAppType.EXTERNAL,
     targets=["f7"],
     entry_point="ac_remote_app",

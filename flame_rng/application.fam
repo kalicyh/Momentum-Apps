@@ -3,6 +3,7 @@
 App(
     appid="flame_rng",  # Must be unique
     name="Flame RNG",  # Displayed in menus
+    name_zh="火焰RNG",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flame_rng",
     stack_size=2 * 1024,

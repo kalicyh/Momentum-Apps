@@ -1,6 +1,7 @@
 App(
     appid="text2sam",
     name="Text to SAM",
+    name_zh="发短信给 SAM",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="sam_app",
     cdefines=["APP_SAM"],

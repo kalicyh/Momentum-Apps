@@ -1,6 +1,7 @@
 App(
     appid="morse_code",
     name="Morse Code",
+    name_zh="摩尔斯电码",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="morse_code_app",
     requires=[

@@ -1,6 +1,7 @@
 App(
     appid="flip_downloader",
     name="FlipDownloader",
+    name_zh="翻页下载器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="main_flip_downloader",
     stack_size=4 * 1024,

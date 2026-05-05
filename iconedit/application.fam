@@ -3,6 +3,7 @@
 App(
     appid="iconedit",  # Must be unique
     name="IconEdit",  # Displayed in menus
+    name_zh="图标编辑",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="iconedit_app",
     stack_size=2 * 1024,

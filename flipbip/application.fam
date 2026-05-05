@@ -1,6 +1,7 @@
 App(
     appid="flipbip",
     name="FlipBIP Crypto Wallet",
+    name_zh="FlipBIP 加密钱包",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flipbip_app",
     requires=[

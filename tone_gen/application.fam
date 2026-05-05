@@ -3,6 +3,7 @@
 App(
     appid="tone_gen",  # Must be unique
     name="Tone Generator",  # Displayed in menus
+    name_zh="音调发生器",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="tone_gen_app",
     stack_size=2 * 1024,

@@ -1,6 +1,7 @@
 App(
     appid="tictactoe",
     name="Tic Tac Toe",
+    name_zh="井字游戏",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="tictactoe_game_app",
     requires=["gui"],

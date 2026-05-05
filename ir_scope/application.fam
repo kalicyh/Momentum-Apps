@@ -1,6 +1,7 @@
 App(
     appid="ir_scope",
     name="IR Scope",
+    name_zh="红外范围",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="ir_scope_app",
     requires=["gui"],

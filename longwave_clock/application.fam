@@ -3,6 +3,7 @@
 App(
     appid="longwave_clock",  # Must be unique
     name="[GPIO] Longwave Clock",  # Displayed in menus
+    name_zh="[GPIO] 长波时钟",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="longwave_clock_app",
     stack_size=2 * 1024,

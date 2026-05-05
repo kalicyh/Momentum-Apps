@@ -1,6 +1,7 @@
 App(
     appid="flizzer_tracker",
     name="Flizzer Tracker",
+    name_zh="闪电追踪器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="flizzer_tracker_app",
     cdefines=["APP_FLIZZER_TRACKER"],

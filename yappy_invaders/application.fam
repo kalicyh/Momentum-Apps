@@ -1,6 +1,7 @@
 App(
     appid="yapinvaders",
     name="Yappy Invaders",
+    name_zh="雅皮入侵者",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="yapinvaders_app",
     requires=["gui"],

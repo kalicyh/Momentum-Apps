@@ -1,6 +1,7 @@
 App(
     appid="tetris",
     name="Tetris",
+    name_zh="俄罗斯方块",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="tetris_game_app",
     requires=["gui"],

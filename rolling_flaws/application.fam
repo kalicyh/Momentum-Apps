@@ -1,6 +1,7 @@
 App(
     appid="rolling_flaws",
     name="Rolling Flaws",
+    name_zh="滚动缺陷",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="rolling_flaws_app",
     requires=["gui", "subghz"],

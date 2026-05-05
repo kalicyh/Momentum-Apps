@@ -1,6 +1,7 @@
 App(
     appid="xremote",
     name="Cross Remote",
+    name_zh="交叉遥控",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="xremote_app",
     stack_size=3 * 1024,

@@ -1,6 +1,7 @@
 App(
     appid="malveke_gb_photo",
     name="[GB] Photo",
+    name_zh="[GB] 照片",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="boilerplate_app",
     cdefines=["APP_GB_PHOTO"],

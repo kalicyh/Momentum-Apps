@@ -1,6 +1,7 @@
 App(
     appid="nfc_maker",
     name="NFC Maker",
+    name_zh="NFC制作器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="nfc_maker",
     stack_size=2 * 1024,

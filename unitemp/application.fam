@@ -1,6 +1,7 @@
 App(
     appid="unitemp",
     name="[GPIO] Unitemp",
+    name_zh="[GPIO] 统一温度",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="unitemp_app",
     requires=[

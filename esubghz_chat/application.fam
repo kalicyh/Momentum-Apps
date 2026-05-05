@@ -1,6 +1,7 @@
 App(
     appid="esubghz_chat",
     name="Enhanced Sub-Ghz Chat",
+    name_zh="增强型 Sub-Ghz 聊天",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="esubghz_chat",
     requires=[

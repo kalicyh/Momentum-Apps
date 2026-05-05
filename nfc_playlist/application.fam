@@ -1,6 +1,7 @@
 App(
     appid="nfc_playlist",
     name="NFC Playlist",
+    name_zh="NFC 播放列表",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="nfc_playlist_main",
     stack_size=4 * 1024,

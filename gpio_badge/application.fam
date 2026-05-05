@@ -1,6 +1,7 @@
 App(
     appid="gpio_badge",
     name="[DIAG] GPIO Badge",
+    name_zh="[诊断] GPIO 徽章",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="gpio_diag_lights_app",
     requires=["gui", "subghz"],

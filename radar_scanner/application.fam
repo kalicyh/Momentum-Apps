@@ -1,6 +1,7 @@
 App(
     appid="radar_scanner",
     name="[RCWL0516] Radar Scan",
+    name_zh="[RCWL0516] 雷达扫描",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="app_radar_scanner",
     requires=["gui"],

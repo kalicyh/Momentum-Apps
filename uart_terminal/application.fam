@@ -1,6 +1,7 @@
 App(
     appid="uart_terminal",
     name="[UART] UART Terminal",
+    name_zh="[UART] 串口端子",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="uart_terminal_app",
     requires=["gui"],

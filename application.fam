@@ -2,5 +2,6 @@
 App(
     appid="external_apps",
     name="External apps bundle",
+    name_zh="外部应用包",
     apptype=FlipperAppType.METAPACKAGE,
 )

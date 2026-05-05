@@ -1,6 +1,7 @@
 App(
     appid="nrf24scan",
     name="[NRF24] Scanner",
+    name_zh="[NRF24] 扫描仪",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="nrf24scan_app",
     cdefines=["APP_NRF24SCAN"],

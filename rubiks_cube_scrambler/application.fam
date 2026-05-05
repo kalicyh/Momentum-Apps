@@ -12,6 +12,7 @@
 App(
     appid="rubiks_cube_scrambler",
     name="Rubik's Cube Scrambler",
+    name_zh="魔方扰乱器",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="rubiks_cube_scrambler_main",
     stack_size=1 * 1024,
