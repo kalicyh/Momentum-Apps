@@ -132,7 +132,7 @@ static void
 }
 
 static void fuzzer_view_attack_draw_time_delays_str(Canvas* canvas, FuzzerViewAttackModel* model) {
-    char temp_str[20];
+    char temp_str[32];
     uint16_t crt;
     const uint16_t y = LINE_2_Y;
 

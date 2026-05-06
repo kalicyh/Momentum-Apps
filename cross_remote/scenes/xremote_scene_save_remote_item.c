@@ -8,7 +8,7 @@ void xremote_scene_save_remote_item_on_enter(void* context) {
     XRemote* app = context;
     TextInput* text_input = app->text_input;
 
-    text_input_set_header_text(text_input, XREMOTE_UI_TEXT("Name the Sequence", "\xe5\x91\xbd\xe5\x90\x8d\xe5\xba\x8f\xe5\x88\x97"));
+    text_input_set_header_text(text_input, XREMOTE_UI_TEXT("Name the Sequence", "命名序列"));
 
     size_t enter_name_length = XREMOTE_MAX_REMOTE_NAME_LENGTH;
     CrossRemoteItem* item = xremote_cross_remote_get_item(app->cross_remote, app->edit_item);

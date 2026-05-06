@@ -41,7 +41,7 @@ void xremote_scene_ir_remote_on_enter(void* context) {
             context);
     }
 
-    button_menu_set_header(button_menu, XREMOTE_UI_TEXT("Select Cmd", "\xe9\x80\x89\xe6\x8b\xa9\xe5\x91\xbd\xe4\xbb\xa4"));
+    button_menu_set_header(button_menu, XREMOTE_UI_TEXT("Select Cmd", "选择命令"));
     const int16_t button_index =
         (signed)scene_manager_get_scene_state(app->scene_manager, XRemoteViewIdIrRemote);
     button_menu_set_selected_item(button_menu, button_index);

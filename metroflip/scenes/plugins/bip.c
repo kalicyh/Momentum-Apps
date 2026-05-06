@@ -215,10 +215,15 @@ static bool bip_parse(FuriString* parsed_data, const MfClassicData* data) {
         // Print basic info
         furi_string_printf(
             parsed_data,
-            "\e#Tarjeta Bip!\n"
-            METROFLIP_UI_TEXT("Card Number: %", "\xe5\x8d\xa1\xe5\x8f\xb7: %lu\n"
-            "Balance: $%hu (flags %hu)\n"
-            "Current Trip Window Ends:\n  @",
+            METROFLIP_UI_TEXT(
+                "\e#Tarjeta Bip!\n"
+                "Card Number: %lu\n"
+                "Balance: $%hu (flags %hu)\n"
+                "Current Trip Window Ends:\n  @",
+                "\e#Tarjeta Bip!\n"
+                "卡号: %lu\n"
+                "余额: $%hu (flags %hu)\n"
+                "当前行程时间窗截止:\n  @"),
             bip_data.card_id,
             bip_data.balance,
             bip_data.flags);
@@ -312,15 +317,15 @@ static NfcCommand bip_poller_callback(NfcGenericEvent event, void* context) {
         if(!bip_parse(parsed_data, mfc_data)) {
             furi_string_reset(app->text_box_store);
             FURI_LOG_I(TAG, "Unknown card type");
-            furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
+            furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "未知卡片\n"));
         }
         metroflip_app_blink_stop(app);
         widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
         widget_add_button_element(
-            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
         widget_add_button_element(
-            widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Save", "\xe4\xbf\x9d\xe5\xad\x98"), metroflip_save_widget_callback, app);
+            widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Save", "保存"), metroflip_save_widget_callback, app);
 
         furi_string_free(parsed_data);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -352,15 +357,15 @@ static void bip_on_enter(Metroflip* app) {
             if(!bip_parse(parsed_data, mfc_data)) {
                 furi_string_reset(app->text_box_store);
                 FURI_LOG_I(TAG, "Unknown card type");
-                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
+                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "未知卡片\n"));
             }
             widget_add_text_scroll_element(
                 widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
             widget_add_button_element(
-                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
+                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "删除"), metroflip_delete_widget_callback, app);
             mf_classic_free(mfc_data);
             furi_string_free(parsed_data);
             view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -369,7 +374,7 @@ static void bip_on_enter(Metroflip* app) {
     } else {
         // Setup view
         Popup* popup = app->popup;
-        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "\xe5\xb0\x86\xe5\x8d\xa1\xe7\x89\x87\xe8\xb4\xb4\xe8\xbf\x91\n\xe8\x83\x8c\xe9\x9d\xa2"), 68, 30, AlignLeft, AlignTop);
+        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "将卡片贴近\n背面"), 68, 30, AlignLeft, AlignTop);
         popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
         // Start worker
@@ -387,19 +392,19 @@ static bool bip_on_event(Metroflip* app, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "卡片\n丢失"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "错误\n卡片"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "失败"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

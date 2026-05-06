@@ -2874,9 +2874,9 @@ void flip_crypt_save_scene_on_enter(void* context) {
 void flip_crypt_about_scene_on_enter(void* context) {
     App* app = context;
     widget_reset(app->widget);
-    widget_add_text_scroll_element(app->widget, 0, 0, 128, 64, "FlipCrypt\n"
-    "v0.6\n"
-    FLIP_CRYPT_UI_TEXT(
+    widget_add_text_scroll_element(app->widget, 0, 0, 128, 64, FLIP_CRYPT_UI_TEXT(
+        "FlipCrypt\n"
+        "v0.6\n"
         "Explore and learn about various cryptographic and text encoding methods.\n\n"
         "Usage:\n"
         "Select the method you want to use for encoding / decoding text and fill in the necessary inputs.\n"
@@ -2913,6 +2913,8 @@ void flip_crypt_about_scene_on_enter(void* context) {
         "LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY\n"
         "OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF\n"
         "SUCH DAMAGE.",
+        "FlipCrypt\n"
+        "v0.6\n"
         "探索和学习各种密码学及文本编码方法。\n\n"
         "使用方法:\n"
         "选择编码/解码方式并填入所需输入。\n"

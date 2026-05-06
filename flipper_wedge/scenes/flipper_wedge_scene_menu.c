@@ -17,7 +17,7 @@ void flipper_wedge_scene_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        FLIPPER_WEDGE_UI_TEXT("Settings", "\xe8\xae\xbe\xe7\xbd\xae"),
+        FLIPPER_WEDGE_UI_TEXT("Settings", "设置"),
         SubmenuIndexSettings,
         flipper_wedge_scene_menu_submenu_callback,
         app);

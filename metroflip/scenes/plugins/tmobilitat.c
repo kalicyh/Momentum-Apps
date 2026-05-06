@@ -57,13 +57,13 @@ static void tmobilitat_on_enter(Metroflip* app) {
     if(!tmobilitat_parse(parsed_data, app)) {
         furi_string_reset(app->text_box_store);
         FURI_LOG_I(TAG, "Unknown card type");
-        furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
+        furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "未知卡片\n"));
     }
     widget_add_text_scroll_element(
         widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+        widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
     
     view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
     furi_string_free(parsed_data);

@@ -13,7 +13,7 @@ void metroflip_scene_supported_on_enter(void* context) {
 
     FuriString* str = furi_string_alloc();
 
-    furi_string_printf(str, METROFLIP_UI_TEXT("\e#Supported Cards:\n\n", "\xe6\x94\xaf\xe6\x8c\x81\xe7\x9a\x84\xe5\x8d\xa1\xe7\x89\x87:\n\n"));
+    furi_string_printf(str, METROFLIP_UI_TEXT("\e#Supported Cards:\n\n", "支持的卡片:\n\n"));
     furi_string_cat_printf(
         str, " - Bip!:\nSantiago de Chile, Chile\nProtocol: MIFARE Classic\n\n");
     furi_string_cat_printf(str, " - Charliecard:\nBoston, MA, USA\nProtocol: MIFARE Classic\n\n");
@@ -39,7 +39,7 @@ void metroflip_scene_supported_on_enter(void* context) {
     widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(str));
 
     widget_add_button_element(
-        widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+        widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
 
     furi_string_free(str);
     view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);

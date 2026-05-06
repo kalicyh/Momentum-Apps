@@ -16,7 +16,7 @@ static void flipper_wedge_scene_bt_pair_rebuild_widget(FlipperWedge* app, Widget
         AlignCenter,
         AlignTop,
         FontPrimary,
-        FLIPPER_WEDGE_UI_TEXT("Bluetooth Pairing", "\xe8\x93\x9d\xe7\x89\x99\xe9\x85\x8d\xe5\xaf\xb9"));
+        FLIPPER_WEDGE_UI_TEXT("Bluetooth Pairing", "蓝牙配对"));
 
     // Instructions
     widget_add_string_element(
@@ -26,7 +26,7 @@ static void flipper_wedge_scene_bt_pair_rebuild_widget(FlipperWedge* app, Widget
         AlignLeft,
         AlignTop,
         FontSecondary,
-        FLIPPER_WEDGE_UI_TEXT("1. Open Bluetooth settings", "1. \xe6\x89\x93\xe5\xbc\x80\xe8\x93\x9d\xe7\x89\x99\xe8\xae\xbe\xe7\xbd\xae"));
+        FLIPPER_WEDGE_UI_TEXT("1. Open Bluetooth settings", "1. 打开蓝牙设置"));
     widget_add_string_element(
         widget,
         4,
@@ -34,7 +34,7 @@ static void flipper_wedge_scene_bt_pair_rebuild_widget(FlipperWedge* app, Widget
         AlignLeft,
         AlignTop,
         FontSecondary,
-        FLIPPER_WEDGE_UI_TEXT("   on your device", "   \xe5\x9c\xa8\xe6\x82\xa8\xe7\x9a\x84\xe8\xae\xbe\xe5\xa4\x87\xe4\xb8\x8a"));
+        FLIPPER_WEDGE_UI_TEXT("   on your device", "   在您的设备上"));
     widget_add_string_element(
         widget,
         4,
@@ -42,7 +42,7 @@ static void flipper_wedge_scene_bt_pair_rebuild_widget(FlipperWedge* app, Widget
         AlignLeft,
         AlignTop,
         FontSecondary,
-        FLIPPER_WEDGE_UI_TEXT("2. Select 'HID-[name]'", "2. \xe9\x80\x89\xe6\x8b\xa9 'HID-[name]'"));
+        FLIPPER_WEDGE_UI_TEXT("2. Select 'HID-[name]'", "2. 选择 'HID-[name]'"));
 
     // Connection status
     bool bt_connected = flipper_wedge_hid_is_bt_connected(flipper_wedge_get_hid(app));
@@ -54,7 +54,7 @@ static void flipper_wedge_scene_bt_pair_rebuild_widget(FlipperWedge* app, Widget
             AlignLeft,
             AlignTop,
             FontSecondary,
-            FLIPPER_WEDGE_UI_TEXT("Status: Connected!", "\xe7\x8a\xb6\xe6\x80\x81: \xe5\xb7\xb2\xe8\xbf\x9e\xe6\x8e\xa5!"));
+            FLIPPER_WEDGE_UI_TEXT("Status: Connected!", "状态: 已连接!"));
     } else {
         widget_add_string_element(
             widget,
@@ -63,7 +63,7 @@ static void flipper_wedge_scene_bt_pair_rebuild_widget(FlipperWedge* app, Widget
             AlignLeft,
             AlignTop,
             FontSecondary,
-            FLIPPER_WEDGE_UI_TEXT("Status: Waiting...", "\xe7\x8a\xb6\xe6\x80\x81: \xe7\xad\x89\xe5\xbe\x85\xe4\xb8\xad..."));
+            FLIPPER_WEDGE_UI_TEXT("Status: Waiting...", "状态: 等待中..."));
     }
 }
 

@@ -554,7 +554,7 @@ ActionConfig* action_config_alloc(
             furi_string_cat_printf(
                 action_name, FLIPBOARD_UI_TEXT("button", "按键"));
             if(i != 1 && i != 2 && i != 4 && i != 8) {
-                furi_string_cat_printf(action_name, FLIPBOARD_UI_TEXT("s", ""));
+                furi_string_cat_str(action_name, FLIPBOARD_UI_TEXT("s", ""));
             }
             furi_string_cat_printf(action_name, " ");
             int btn = 0;

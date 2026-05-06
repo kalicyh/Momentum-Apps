@@ -15,20 +15,20 @@ void xremote_scene_edit_item_submenu_callback(void* context, uint32_t index) {
 void xremote_scene_edit_item_on_enter(void* context) {
     XRemote* app = context;
     submenu_add_item(
-        app->editmenu, XREMOTE_UI_TEXT("Rename", "\xe9\x87\x8d\xe5\x91\xbd\xe5\x90\x8d"), SubmenuIndexRename, xremote_scene_edit_item_submenu_callback, app);
+        app->editmenu, XREMOTE_UI_TEXT("Rename", "重命名"), SubmenuIndexRename, xremote_scene_edit_item_submenu_callback, app);
 
     if(xremote_cross_remote_get_item_type(app->cross_remote, app->edit_item) ==
        XRemoteRemoteItemTypeInfrared) {
         submenu_add_item(
             app->editmenu,
-            XREMOTE_UI_TEXT("Set Timing", "\xe8\xae\xbe\xe7\xbd\xae\xe6\x97\xb6\xe5\xba\x8f"),
+            XREMOTE_UI_TEXT("Set Timing", "设置时序"),
             SubmenuIndexTiming,
             xremote_scene_edit_item_submenu_callback,
             app);
     }
 
     submenu_add_item(
-        app->editmenu, XREMOTE_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), SubmenuIndexDelete, xremote_scene_edit_item_submenu_callback, app);
+        app->editmenu, XREMOTE_UI_TEXT("Delete", "删除"), SubmenuIndexDelete, xremote_scene_edit_item_submenu_callback, app);
 
     submenu_set_selected_item(
         app->editmenu, scene_manager_get_scene_state(app->scene_manager, XRemoteSceneMenu));

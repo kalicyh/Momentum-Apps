@@ -33,12 +33,12 @@ void xremote_pause_set_draw(Canvas* canvas, XRemotePauseSetModel* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Pause duration", "\xe6\x9a\x82\xe5\x81\x9c\xe6\x97\xb6\xe9\x95\xbf"));
+    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Pause duration", "暂停时长"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_icon(canvas, 59, 22, &I_ButtonUp_10x5);
     canvas_draw_icon(canvas, 59, 42, &I_ButtonDown_10x5);
     canvas_draw_str_aligned(canvas, 64, 31, AlignCenter, AlignTop, seconds);
-    elements_button_center(canvas, XREMOTE_UI_TEXT("Add", "\xe6\xb7\xbb\xe5\x8a\xa0"));
+    elements_button_center(canvas, XREMOTE_UI_TEXT("Add", "添加"));
 }
 
 bool xremote_pause_set_input(InputEvent* event, void* context) {

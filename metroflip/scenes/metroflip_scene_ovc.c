@@ -183,13 +183,13 @@ static NfcCommand metroflip_scene_ovc_poller_callback(NfcGenericEvent event, voi
         char card_type[] = "OV-Chipkaart";
         switch(manage) {
         case MISSING_KEYFILE:
-            handle_keyfile_case(app, METROFLIP_UI_TEXT("No keys found", "\xe6\x9c\xaa\xe6\x89\xbe\xe5\x88\xb0\xe5\xaf\x86\xe9\x92\xa5"), METROFLIP_UI_TEXT("Missing keyfile", "\xe7\xbc\xba\xe5\xb0\x91\xe5\xaf\x86\xe9\x92\xa5\xe6\x96\x87\xe4\xbb\xb6"), parsed_data, card_type);
+            handle_keyfile_case(app, METROFLIP_UI_TEXT("No keys found", "未找到密钥"), METROFLIP_UI_TEXT("Missing keyfile", "缺少密钥文件"), parsed_data, card_type);
             command = NfcCommandStop;
             break;
 
         case INCOMPLETE_KEYFILE:
             handle_keyfile_case(
-                app, METROFLIP_UI_TEXT("Incomplete keyfile", "\xe4\xb8\x8d\xe5\xae\x8c\xe6\x95\xb4\xe7\x9a\x84\xe5\xaf\x86\xe9\x92\xa5\xe6\x96\x87\xe4\xbb\xb6"), METROFLIP_UI_TEXT("incomplete keyfile", "\xe4\xb8\x8d\xe5\xae\x8c\xe6\x95\xb4\xe7\x9a\x84\xe5\xaf\x86\xe9\x92\xa5\xe6\x96\x87\xe4\xbb\xb6"), parsed_data, card_type);
+                app, METROFLIP_UI_TEXT("Incomplete keyfile", "不完整的密钥文件"), METROFLIP_UI_TEXT("incomplete keyfile", "不完整的密钥文件"), parsed_data, card_type);
             command = NfcCommandStop;
             break;
 
@@ -224,7 +224,7 @@ static NfcCommand metroflip_scene_ovc_poller_callback(NfcGenericEvent event, voi
         widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
         widget_add_button_element(
-            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
 
         furi_string_free(parsed_data);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -247,7 +247,7 @@ void metroflip_scene_ovc_on_enter(void* context) {
 
     // Setup view
     Popup* popup = app->popup;
-    popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "\xe5\xb0\x86\xe5\x8d\xa1\xe7\x89\x87\xe8\xb4\xb4\xe8\xbf\x91\n\xe8\x83\x8c\xe9\x9d\xa2"), 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "将卡片贴近\n背面"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     // Start worker
@@ -266,19 +266,19 @@ bool metroflip_scene_ovc_on_event(void* context, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "卡片\n丢失"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "错误\n卡片"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "失败"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

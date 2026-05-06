@@ -172,7 +172,7 @@ static bool gocard_parse(FuriString* parsed_data, const MfClassicData* data) {
         int start_index = 4; //byte to start at
         int config_block = 6; //block number containing card configuration
 
-        furi_string_cat_printf(parsed_data, METROFLIP_UI_TEXT("Expiry:\n", "\xe6\x9c\x89\xe6\x95\x88\xe6\x9c\x9f:\n"));
+        furi_string_cat_printf(parsed_data, METROFLIP_UI_TEXT("Expiry:\n", "有效期:\n"));
         parse_gocard_time(config_block, start_index, data, parsed_data);
 
         //concession type:
@@ -208,15 +208,15 @@ static void gocard_on_enter(Metroflip* app) {
             if(!gocard_parse(parsed_data, mfc_data)) {
                 furi_string_reset(app->text_box_store);
                 FURI_LOG_I(TAG, "Unknown card type");
-                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
+                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "未知卡片\n"));
             }
             widget_add_text_scroll_element(
                 widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
             widget_add_button_element(
-                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
+                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "删除"), metroflip_delete_widget_callback, app);
             mf_classic_free(mfc_data);
             furi_string_free(parsed_data);
             view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -225,7 +225,7 @@ static void gocard_on_enter(Metroflip* app) {
     } else {
         // Setup view
         Popup* popup = app->popup;
-        popup_set_header(popup, METROFLIP_UI_TEXT("unsupported", "\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81"), 68, 30, AlignLeft, AlignTop);
+        popup_set_header(popup, METROFLIP_UI_TEXT("unsupported", "不支持"), 68, 30, AlignLeft, AlignTop);
         popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
     }
 }
@@ -236,19 +236,19 @@ static bool gocard_on_event(Metroflip* app, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "卡片\n丢失"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "错误\n卡片"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "失败"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

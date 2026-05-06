@@ -358,7 +358,7 @@ static bool suica_help_with_octopus(const FelicaSystem* suica_system, FuriString
                 parsed_data, "If this card was issued \nbefore 2017 October 1st:\n");
             furi_string_cat_printf(
                 parsed_data,
-                METROFLIP_UI_TEXT("Balance: %", "\xe4\xbd\x99\xe9\xa2\x9d: %sHK$ %d.%02d\n",
+                METROFLIP_UI_TEXT("Balance: %sHK$ %d.%02d\n", "余额: %sHK$ %d.%02d\n"),
                 older_balance_ten_cents < 0 ? "-" : "",
                 older_dollars,
                 older_cents);
@@ -370,7 +370,7 @@ static bool suica_help_with_octopus(const FelicaSystem* suica_system, FuriString
                 parsed_data, "If this card was issued \nafter 2017 October 1st:\n");
             furi_string_cat_printf(
                 parsed_data,
-                METROFLIP_UI_TEXT("Balance: %", "\xe4\xbd\x99\xe9\xa2\x9d: %sHK$ %d.%02d\n",
+                METROFLIP_UI_TEXT("Balance: %sHK$ %d.%02d\n", "余额: %sHK$ %d.%02d\n"),
                 newer_balance_ten_cents < 0 ? "-" : "",
                 newer_dollars,
                 newer_cents);
@@ -460,13 +460,13 @@ static NfcCommand suica_poller_callback(NfcGenericEvent event, void* context) {
 
         if(suica_found) {
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Parse", "\xe8\xa7\xa3\xe6\x9e\x90"), suica_parse_detail_callback, app);
+                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Parse", "解析"), suica_parse_detail_callback, app);
         }
 
         widget_add_button_element(
-            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
         widget_add_button_element(
-            widget, GuiButtonTypeLeft, METROFLIP_UI_TEXT("Save", "\xe4\xbf\x9d\xe5\xad\x98"), metroflip_save_widget_callback, app);
+            widget, GuiButtonTypeLeft, METROFLIP_UI_TEXT("Save", "保存"), metroflip_save_widget_callback, app);
 
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
         furi_string_free(parsed_data);
@@ -641,11 +641,11 @@ static void suica_on_enter(Metroflip* app) {
                 widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
             widget_add_button_element(
-                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
 
             if(suica_found) {
                 widget_add_button_element(
-                    widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Parse", "\xe8\xa7\xa3\xe6\x9e\x90"), suica_parse_detail_callback, app);
+                    widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Parse", "解析"), suica_parse_detail_callback, app);
             }
 
             // No reason to put a save button here if the data is loaded from an existing file
@@ -663,20 +663,20 @@ static bool suica_on_event(Metroflip* app, SceneManagerEvent event) {
     Popup* popup = app->popup;
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
-            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
-            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "卡片\n丢失"), 68, 30, AlignLeft, AlignTop);
             scene_manager_search_and_switch_to_previous_scene(
                 app->scene_manager, MetroflipSceneStart);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
-            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "错误\n卡片"), 68, 30, AlignLeft, AlignTop);
             scene_manager_search_and_switch_to_previous_scene(
                 app->scene_manager, MetroflipSceneStart);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
-            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "失败"), 68, 30, AlignLeft, AlignTop);
             scene_manager_search_and_switch_to_previous_scene(
                 app->scene_manager, MetroflipSceneStart);
             consumed = true;

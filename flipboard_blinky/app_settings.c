@@ -69,11 +69,12 @@ static void app_settings_item_clicked(void* context, uint32_t index) {
     index -= 2;
 
     char header[32];
+    char line_char = (char)('1' + index);
     snprintf(
         header,
         sizeof(header),
         FLIPBOARD_UI_TEXT("Enter Line %c", "输入第%c行"),
-        '1' + index);
+        line_char);
     text_input_set_header_text(settings->text_input, header);
     text_input_get_view(settings->text_input);
     settings->buffer[0] = index;

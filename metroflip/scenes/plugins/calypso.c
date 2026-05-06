@@ -304,7 +304,7 @@ void update_widget_elements(void* context) {
     if(ctx->card->card_type != CALYPSO_CARD_NAVIGO && ctx->card->card_type != CALYPSO_CARD_OPUS &&
        ctx->card->card_type != CALYPSO_CARD_RAVKAV) {
         widget_add_button_element(
-            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_next_button_widget_callback, context);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_next_button_widget_callback, context);
         return;
     } else {
         if(!app->data_loaded) {
@@ -312,7 +312,7 @@ void update_widget_elements(void* context) {
                 widget, GuiButtonTypeCenter, "Save", calypso_save_button_widget_callback, app);
         } else {
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
+                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "删除"), metroflip_delete_widget_callback, app);
         }
     }
     if(ctx->page_id < 10) {
@@ -320,7 +320,7 @@ void update_widget_elements(void* context) {
             widget, GuiButtonTypeRight, "Next", metroflip_next_button_widget_callback, context);
     } else {
         widget_add_button_element(
-            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_next_button_widget_callback, context);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_next_button_widget_callback, context);
     }
     if(ctx->page_id > 0) {
         widget_add_button_element(
@@ -2653,7 +2653,7 @@ static void calypso_on_enter(Metroflip* app) {
 
     // Setup view
     Popup* popup = app->popup;
-    popup_set_header(popup, METROFLIP_UI_TEXT("Parsing...", "\xe8\xa7\xa3\xe6\x9e\x90\xe4\xb8\xad..."), 68, 30, AlignLeft, AlignTop);
+    popup_set_header(popup, METROFLIP_UI_TEXT("Parsing...", "解析中..."), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
     // Start worker
@@ -2662,7 +2662,7 @@ static void calypso_on_enter(Metroflip* app) {
     nfc_poller_start(app->poller, calypso_poller_callback, app);
     if(!app->data_loaded) {
         popup_reset(app->popup);
-        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "\xe5\xb0\x86\xe5\x8d\xa1\xe7\x89\x87\xe8\xb4\xb4\xe8\xbf\x91\n\xe8\x83\x8c\xe9\x9d\xa2"), 68, 30, AlignLeft, AlignTop);
+        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "将卡片贴近\n背面"), 68, 30, AlignLeft, AlignTop);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewPopup);
         metroflip_app_blink_start(app);
     }
@@ -2674,19 +2674,19 @@ static bool calypso_on_event(Metroflip* app, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipPollerEventTypeCardDetect) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Scanning..", "\xe6\x89\xab\xe6\x8f\x8f\xe4\xb8\xad.."), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Scanning..", "扫描中.."), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFileNotFound) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Read Error,\n wrong card", "\xe8\xaf\xbb\xe5\x8f\x96\xe9\x94\x99\xe8\xaf\xaf,\n \xe5\x8d\xa1\xe7\x89\x87\xe9\x94\x99\xe8\xaf\xaf"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Read Error,\n wrong card", "读取错误,\n 卡片错误"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail && app->data_loaded) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Bad File.", "\xe6\x96\x87\xe4\xbb\xb6\xe6\x8d\x9f\xe5\x9d\x8f."), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Bad File.", "文件损坏."), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Error, try\n again", "\xe9\x94\x99\xe8\xaf\xaf,\xe8\xaf\xb7\xe9\x87\x8d\xe8\xaf\x95"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Error, try\n again", "错误,请重试"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

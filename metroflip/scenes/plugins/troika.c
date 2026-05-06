@@ -517,7 +517,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x02: {
         parse_layout_2(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
@@ -574,7 +575,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x06: {
         parse_layout_6(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
@@ -585,7 +587,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_valid_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_valid_from_date_s, 1992);
@@ -622,18 +625,22 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_start_trip_minutes_s.minute);
         //validator
         furi_string_cat_printf(
-            result, METROFLIP_UI_TEXT("Validator: %", "\xe9\xaa\x8c\xe8\xaf\x81\xe5\x99\xa8: %05d", data_block.validator1 * 1024 + data_block.validator2);
+            result,
+            METROFLIP_UI_TEXT("Validator: %05d", "验证器: %05d"),
+            data_block.validator1 * 1024 + data_block.validator2);
         break;
     }
     case 0x08: {
         parse_layout_8(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_valid_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_valid_from_date_s, 1992);
@@ -658,7 +665,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x0A: {
         parse_layout_A(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 2016);
@@ -669,7 +677,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_valid_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_valid_from_date_s, 2016);
@@ -738,12 +747,14 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x0C: {
         parse_layout_C(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_valid_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_valid_from_date_s, 1992);
@@ -764,7 +775,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_valid_to_date_s.month,
             card_valid_to_date_s.year);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d", "剩余次数: %d"), data_block.remaining_trips);
         //trip_from
         if(data_block.start_trip_date) { // TODO: (-nofl) unused
             DateTime card_start_trip_minutes_s = {0};
@@ -782,7 +794,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x0D: {
         parse_layout_D(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
@@ -793,7 +806,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_valid_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_valid_from_date_s, 1992);
@@ -840,7 +854,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x1C1: {
         parse_layout_E1(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
@@ -851,7 +866,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_funds
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Balance: %", "\xe4\xbd\x99\xe9\xa2\x9d: %ld rub\n", data_block.remaining_funds / 100);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Balance: %ld rub\n", "余额: %ld rub\n"), data_block.remaining_funds / 100);
         //trip_from
         if(data_block.start_trip_date) {
             DateTime card_start_trip_minutes_s = {0};
@@ -894,7 +910,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             furi_string_cat(transport, "");
             break;
         }
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Transport: %", "\xe4\xba\xa4\xe9\x80\x9a: %s", furi_string_get_cstr(transport));
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Transport: %s", "交通: %s"), furi_string_get_cstr(transport));
         //validator
         if(data_block.validator) {
             furi_string_cat_printf(result, "\nValidator: %05d", data_block.validator);
@@ -906,7 +923,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x1C2: {
         parse_layout_E2(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
@@ -917,7 +935,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_valid_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_valid_from_date_s, 1992);
@@ -1014,7 +1033,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x1C3: {
         parse_layout_E3(&data_block, block);
         // number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         // use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 1992);
@@ -1025,7 +1045,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         // remaining_funds
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Balance: %", "\xe4\xbd\x99\xe9\xa2\x9d: %lu rub\n", data_block.remaining_funds);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Balance: %lu rub\n", "余额: %lu rub\n"), data_block.remaining_funds);
         // start_trip_minutes
         DateTime card_start_trip_minutes_s = {0};
         from_minutes_to_datetime(data_block.start_trip_minutes, &card_start_trip_minutes_s, 2016);
@@ -1040,9 +1061,11 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
         // transport
         FuriString* transport = furi_string_alloc();
         parse_transport_type(&data_block, transport);
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Transport: %", "\xe4\xba\xa4\xe9\x80\x9a: %s\n", furi_string_get_cstr(transport));
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Transport: %s\n", "交通: %s\n"), furi_string_get_cstr(transport));
         // validator
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Validator: %", "\xe9\xaa\x8c\xe8\xaf\x81\xe5\x99\xa8: %05d\n", data_block.validator);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Validator: %05d\n", "验证器: %05d\n"), data_block.validator);
         // fare
         FuriString* fare = furi_string_alloc();
         switch(data_block.fare_trip) {
@@ -1069,7 +1092,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
         parse_layout_E4(&data_block, block);
 
         // number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         // use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 2016);
@@ -1080,7 +1104,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         // remaining_funds
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Balance: %", "\xe4\xbd\x99\xe9\xa2\x9d: %lu rub\n", data_block.remaining_funds);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Balance: %lu rub\n", "余额: %lu rub\n"), data_block.remaining_funds);
         // valid_from_date
         DateTime card_use_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_use_from_date_s, 2016);
@@ -1111,7 +1136,7 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_to_date_s.month,
             card_use_to_date_s.year);
         // trip_number
-        // furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d", data_block.remaining_trips);
+        // furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "剩余次数: %d", data_block.remaining_trips);
         // trip_from
         DateTime card_start_trip_minutes_s = {0};
         from_minutes_to_datetime(
@@ -1122,7 +1147,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
         //transport
         FuriString* transport = furi_string_alloc();
         parse_transport_type(&data_block, transport);
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Transport: %", "\xe4\xba\xa4\xe9\x80\x9a: %s", furi_string_get_cstr(transport));
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Transport: %s", "交通: %s"), furi_string_get_cstr(transport));
         // validator
         if(data_block.validator) {
             furi_string_cat_printf(result, "\nValidator: %05d", data_block.validator);
@@ -1134,7 +1160,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x1C5: {
         parse_layout_E5(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 2019);
@@ -1145,7 +1172,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_funds
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Balance: %", "\xe4\xbd\x99\xe9\xa2\x9d: %ld rub", data_block.remaining_funds / 100);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Balance: %ld rub", "余额: %ld rub"), data_block.remaining_funds / 100);
         //start_trip_minutes
         if(data_block.start_trip_minutes) {
             DateTime card_start_trip_minutes_s = {0};
@@ -1202,7 +1230,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x1C6: {
         parse_layout_E6(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //use_before_date
         DateTime card_use_before_date_s = {0};
         from_days_to_datetime(data_block.use_before_date, &card_use_before_date_s, 2019);
@@ -1213,7 +1242,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
             card_use_before_date_s.month,
             card_use_before_date_s.year);
         //remaining_trips
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Trips left: %", "\xe5\x89\xa9\xe4\xbd\x99\xe6\xac\xa1\xe6\x95\xb0: %d\n", data_block.remaining_trips);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Trips left: %d\n", "剩余次数: %d\n"), data_block.remaining_trips);
         //valid_from_date
         DateTime card_use_from_date_s = {0};
         from_minutes_to_datetime(data_block.valid_from_date, &card_use_from_date_s, 2019);
@@ -1279,7 +1309,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     case 0x3CCB: {
         parse_layout_FCB(&data_block, block);
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //valid_from_date
         DateTime card_use_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_use_from_date_s, 1992);
@@ -1302,7 +1333,8 @@ bool mosgortrans_parse_transport_block(const MfClassicBlock* block, FuriString* 
     }
     case 0x3C0B: {
         //number
-        furi_string_cat_printf(result, METROFLIP_UI_TEXT("Number: %", "\xe7\xbc\x96\xe5\x8f\xb7: %010lu\n", data_block.number);
+        furi_string_cat_printf(
+            result, METROFLIP_UI_TEXT("Number: %010lu\n", "编号: %010lu\n"), data_block.number);
         //valid_from_date
         DateTime card_use_from_date_s = {0};
         from_days_to_datetime(data_block.valid_from_date, &card_use_from_date_s, 1992);
@@ -1531,14 +1563,14 @@ static NfcCommand troika_poller_callback(NfcGenericEvent event, void* context) {
         if(!troika_parse(parsed_data, mfc_data)) {
             furi_string_reset(app->text_box_store);
             FURI_LOG_I(TAG, "Unknown card type");
-            furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
+            furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "未知卡片\n"));
         }
         widget_add_text_scroll_element(widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
         widget_add_button_element(
-            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+            widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
         widget_add_button_element(
-            widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Save", "\xe4\xbf\x9d\xe5\xad\x98"), metroflip_save_widget_callback, app);
+            widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Save", "保存"), metroflip_save_widget_callback, app);
 
         furi_string_free(parsed_data);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -1570,15 +1602,15 @@ static void troika_on_enter(Metroflip* app) {
             if(!troika_parse(parsed_data, mfc_data)) {
                 furi_string_reset(app->text_box_store);
                 FURI_LOG_I(TAG, "Unknown card type");
-                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "\xe6\x9c\xaa\xe7\x9f\xa5\xe5\x8d\xa1\xe7\x89\x87\n"));
+                furi_string_printf(parsed_data, METROFLIP_UI_TEXT("\e#Unknown card\n", "未知卡片\n"));
             }
             widget_add_text_scroll_element(
                 widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
             widget_add_button_element(
-                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "\xe9\x80\x80\xe5\x87\xba"), metroflip_exit_widget_callback, app);
+                widget, GuiButtonTypeRight, METROFLIP_UI_TEXT("Exit", "退出"), metroflip_exit_widget_callback, app);
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"), metroflip_delete_widget_callback, app);
+                widget, GuiButtonTypeCenter, METROFLIP_UI_TEXT("Delete", "删除"), metroflip_delete_widget_callback, app);
             mf_classic_free(mfc_data);
             furi_string_free(parsed_data);
             view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
@@ -1587,7 +1619,7 @@ static void troika_on_enter(Metroflip* app) {
     } else {
         // Setup view
         Popup* popup = app->popup;
-        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "\xe5\xb0\x86\xe5\x8d\xa1\xe7\x89\x87\xe8\xb4\xb4\xe8\xbf\x91\n\xe8\x83\x8c\xe9\x9d\xa2"), 68, 30, AlignLeft, AlignTop);
+        popup_set_header(popup, METROFLIP_UI_TEXT("Apply\n card to\nthe back", "将卡片贴近\n背面"), 68, 30, AlignLeft, AlignTop);
         popup_set_icon(popup, 0, 3, &I_RFIDDolphinReceive_97x61);
 
         // Start worker
@@ -1605,19 +1637,19 @@ static bool troika_on_event(Metroflip* app, SceneManagerEvent event) {
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "\xe8\xaf\xb7\xe5\x8b\xbf\n\xe7\xa7\xbb\xe5\x8a\xa8"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "\xe5\x8d\xa1\xe7\x89\x87\n\xe4\xb8\xa2\xe5\xa4\xb1"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Card \n lost", "卡片\n丢失"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "\xe9\x94\x99\xe8\xaf\xaf\n\xe5\x8d\xa1\xe7\x89\x87"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("WRONG \n CARD", "错误\n卡片"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
             Popup* popup = app->popup;
-            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "\xe5\xa4\xb1\xe8\xb4\xa5"), 68, 30, AlignLeft, AlignTop);
+            popup_set_header(popup, METROFLIP_UI_TEXT("Failed", "失败"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         }
     } else if(event.type == SceneManagerEventTypeBack) {

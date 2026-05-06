@@ -8,25 +8,22 @@
 #include <gblink/include/gblink_pinconf.h>
 #include <gblink/include/gblink.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
 /* This must match gblink's enum order */
-static const char* named_groups_en[] = {
-    "Original",
-    "MLVK2.5",
-    "Custom",
-    "",
-};
-
-static const char* named_groups_zh[] = {
+static const char* named_groups[] = {
     "原始",
     "MLVK2.5",
     "自定义",
     "",
 };
-
-#ifdef MOMENTUM_UI_LANG_ZH_CN
-#define NAMED_GROUPS named_groups_zh
 #else
-#define NAMED_GROUPS named_groups_en
+/* This must match gblink's enum order */
+static const char* named_groups[] = {
+    "Original",
+    "MLVK2.5",
+    "Custom",
+    "",
+};
 #endif
 
 static void select_pins_rebuild_list(PokemonFap* pokemon_fap, int mode);
@@ -35,7 +32,7 @@ static void select_pins_default_callback(VariableItem* item) {
     uint8_t index = variable_item_get_current_value_index(item);
     PokemonFap* pokemon_fap = variable_item_get_context(item);
 
-    variable_item_set_current_value_text(item, NAMED_GROUPS[index]);
+    variable_item_set_current_value_text(item, named_groups[index]);
     gblink_pin_set_default(pokemon_fap->gblink_handle, index);
     select_pins_rebuild_list(pokemon_fap, index);
 }
@@ -84,7 +81,7 @@ static void select_pins_rebuild_list(PokemonFap* pokemon_fap, int mode) {
         select_pins_default_callback,
         pokemon_fap);
     variable_item_set_current_value_index(item, mode);
-    variable_item_set_current_value_text(item, NAMED_GROUPS[mode]);
+    variable_item_set_current_value_text(item, named_groups[mode]);
 
     item = variable_item_list_add(
         pokemon_fap->variable_item_list,

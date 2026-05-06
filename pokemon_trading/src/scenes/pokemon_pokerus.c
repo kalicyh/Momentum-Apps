@@ -6,16 +6,8 @@
 #include <src/scenes/include/pokemon_scene.h>
 #include <src/include/pokemon_attribute.h>
 
-static const char* strains_en[] = {
-    "None",
-    "A",
-    "B",
-    "C",
-    "D",
-    "",
-};
-
-static const char* strains_zh[] = {
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+static const char* strains[] = {
     "无",
     "A",
     "B",
@@ -23,11 +15,15 @@ static const char* strains_zh[] = {
     "D",
     "",
 };
-
-#ifdef MOMENTUM_UI_LANG_ZH_CN
-#define POKERUS_STRAINS strains_zh
 #else
-#define POKERUS_STRAINS strains_en
+static const char* strains[] = {
+    "None",
+    "A",
+    "B",
+    "C",
+    "D",
+    "",
+};
 #endif
 
 struct pokerus_itemlist {
@@ -43,7 +39,7 @@ static void select_strain_callback(VariableItem* item) {
     PokemonFap* pokemon_fap = variable_item_get_context(item);
 
     /* Need to set the new text from the mangled index */
-    variable_item_set_current_value_text(item, POKERUS_STRAINS[index]);
+    variable_item_set_current_value_text(item, strains[index]);
 
     /* demangle the index to the value we need to set in trade struct */
     if(index == 0)
@@ -141,7 +137,7 @@ static void select_pokerus_rebuild_list(PokemonFap* pokemon_fap) {
     daystring = furi_string_alloc_printf("%d", days);
 
     variable_item_set_current_value_index(pokerus.strain, strain);
-    variable_item_set_current_value_text(pokerus.strain, POKERUS_STRAINS[strain]);
+    variable_item_set_current_value_text(pokerus.strain, strains[strain]);
 
     variable_item_set_current_value_index(pokerus.days, (strain == 0 ? 0 : days));
     variable_item_set_current_value_text(pokerus.days, furi_string_get_cstr(daystring));

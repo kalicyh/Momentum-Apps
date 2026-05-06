@@ -19,26 +19,26 @@ void xremote_scene_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        XREMOTE_UI_TEXT("New Command Chain", "\xe6\x96\xb0\xe5\xbb\xba\xe5\x91\xbd\xe4\xbb\xa4\xe9\x93\xbe"),
+        XREMOTE_UI_TEXT("New Command Chain", "新建命令链"),
         SubmenuIndexCreate,
         xremote_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        XREMOTE_UI_TEXT("Run Saved Command", "\xe8\xbf\x90\xe8\xa1\x8c\xe5\xb7\xb2\xe5\xad\x98\xe5\x91\xbd\xe4\xbb\xa4"),
+        XREMOTE_UI_TEXT("Run Saved Command", "运行已存命令"),
         SubmenuIndexLoad,
         xremote_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        XREMOTE_UI_TEXT("Edit / Delete Command", "\xe7\xbc\x96\xe8\xbe\x91/\xe5\x88\xa0\xe9\x99\xa4\xe5\x91\xbd\xe4\xbb\xa4"),
+        XREMOTE_UI_TEXT("Edit / Delete Command", "编辑/删除命令"),
         SubmenuIndexEdit,
         xremote_scene_menu_submenu_callback,
         app);
     submenu_add_item(
-        app->submenu, XREMOTE_UI_TEXT("Settings", "\xe8\xae\xbe\xe7\xbd\xae"), SubmenuIndexSettings, xremote_scene_menu_submenu_callback, app);
+        app->submenu, XREMOTE_UI_TEXT("Settings", "设置"), SubmenuIndexSettings, xremote_scene_menu_submenu_callback, app);
     submenu_add_item(
-        app->submenu, XREMOTE_UI_TEXT("App Info", "\xe5\xba\x94\xe7\x94\xa8\xe4\xbf\xa1\xe6\x81\xaf"), SubmenuIndexInfoscreen, xremote_scene_menu_submenu_callback, app);
+        app->submenu, XREMOTE_UI_TEXT("App Info", "应用信息"), SubmenuIndexInfoscreen, xremote_scene_menu_submenu_callback, app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, XRemoteSceneMenu));

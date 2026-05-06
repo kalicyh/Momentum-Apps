@@ -27,7 +27,7 @@ namespace FTasks::List
         }
         else
         {
-            UNUSED(menu->setHeader(ctx->currentContainer == &ctx->containers.todo ? TASKS_UI_TEXT("Tasks - TODO", "待办任务") : TASKS_UI_TEXT("Tasks - Done", "已完成"));
+            UNUSED(menu->setHeader(ctx->currentContainer == &ctx->containers.todo ? TASKS_UI_TEXT("Tasks - TODO", "待办任务") : TASKS_UI_TEXT("Tasks - Done", "已完成")));
             for (size_t i = 0; i < ctx->currentContainer->size(); i++)
                 UNUSED(menu->addItem((*ctx->currentContainer)[i].first.c_str(), Scenes::POPUP + i, callback, menu->application));
         }

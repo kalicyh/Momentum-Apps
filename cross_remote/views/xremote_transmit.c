@@ -48,9 +48,9 @@ void xremote_transmit_draw_ir(Canvas* canvas, XRemoteTransmitModel* model) {
     canvas_set_color(canvas, ColorBlack);
     canvas_draw_icon(canvas, 0, 0, &I_ir_transmit_128x64);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 74, 5, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Sending", "\xe5\x8f\x91\xe9\x80\x81\xe4\xb8\xad"));
+    canvas_draw_str_aligned(canvas, 74, 5, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Sending", "发送中"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 74, 15, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Infrared", "\xe7\xba\xa2\xe5\xa4\x96"));
+    canvas_draw_str_aligned(canvas, 74, 15, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Infrared", "红外"));
     canvas_draw_str_aligned(canvas, 74, 25, AlignLeft, AlignTop, model->name);
 
     if(model->time == 0) {
@@ -68,9 +68,9 @@ void xremote_transmit_draw_pause(Canvas* canvas, XRemoteTransmitModel* model) {
     canvas_set_color(canvas, ColorBlack);
     canvas_draw_icon(canvas, 0, 0, &I_pause_128x64);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 74, 5, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Waiting", "\xe7\xad\x89\xe5\xbe\x85\xe4\xb8\xad"));
+    canvas_draw_str_aligned(canvas, 74, 5, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Waiting", "等待中"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 74, 15, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Sequence", "\xe5\xba\x8f\xe5\x88\x97"));
+    canvas_draw_str_aligned(canvas, 74, 15, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Sequence", "序列"));
     canvas_draw_str_aligned(canvas, 74, 25, AlignLeft, AlignTop, model->name);
 
     if(model->time == 0) {
@@ -88,7 +88,7 @@ void xremote_transmit_draw_subghz(Canvas* canvas, XRemoteTransmitModel* model) {
     canvas_set_color(canvas, ColorBlack);
     canvas_draw_icon(canvas, 0, 0, &I_sg_transmit_128x64);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 74, 5, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Sending", "\xe5\x8f\x91\xe9\x80\x81\xe4\xb8\xad"));
+    canvas_draw_str_aligned(canvas, 74, 5, AlignLeft, AlignTop, XREMOTE_UI_TEXT("Sending", "发送中"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str_aligned(canvas, 74, 15, AlignLeft, AlignTop, XREMOTE_UI_TEXT("SubGhz", "SubGhz"));
     canvas_draw_str_aligned(canvas, 74, 25, AlignLeft, AlignTop, model->name);
@@ -113,7 +113,7 @@ void xremote_transmit_draw(Canvas* canvas, XRemoteTransmitModel* model) {
     if(model->time > 2) {
         model->time = 0;
     }
-    elements_button_right(canvas, XREMOTE_UI_TEXT("exit", "\xe9\x80\x80\xe5\x87\xba"));
+    elements_button_right(canvas, XREMOTE_UI_TEXT("exit", "退出"));
 }
 
 bool xremote_transmit_input(InputEvent* event, void* context) {

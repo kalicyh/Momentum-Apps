@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 #define MAX_TEXT_LENGTH_INPUT 17
-#define MAX_TEXT_LENGTH_RESULT 36
+#define MAX_TEXT_LENGTH_RESULT 48
 
 typedef enum {
     ModeNone,

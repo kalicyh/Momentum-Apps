@@ -56,7 +56,7 @@ static void flipper_wedge_scene_startscreen_display_timer_callback(void* context
         } else {
             // For success, show "Sent" with vibration feedback
             flipper_wedge_startscreen_set_display_state(app->flipper_wedge_startscreen, FlipperWedgeDisplayStateSent);
-            flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Sent", "\xe5\xb7\xb2\xe5\x8f\x91\xe9\x80\x81"));
+            flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Sent", "已发送"));
             flipper_wedge_play_happy_bump(app);  // Vibrate when "Sent" is displayed
             furi_timer_start(app->display_timer, furi_ms_to_ticks(200));
         }
@@ -218,7 +218,7 @@ static void flipper_wedge_scene_startscreen_output_and_reset(FlipperWedge* app) 
             for(size_t i = 0; i < chunks; i++) {
                 // Update progress
                 char progress_text[32];
-                snprintf(progress_text, sizeof(progress_text), FLIPPER_WEDGE_UI_TEXT("Typing %zu/%zu...", "\xe8\xbe\x93\xe5\x85\xa5\xe4\xb8\xad %zu/%zu..."), i + 1, chunks);
+                snprintf(progress_text, sizeof(progress_text), FLIPPER_WEDGE_UI_TEXT("Typing %zu/%zu...", "输入中 %zu/%zu..."), i + 1, chunks);
                 flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, progress_text);
 
                 // Type chunk
@@ -398,17 +398,17 @@ bool flipper_wedge_scene_startscreen_on_event(void* context, SceneManagerEvent e
                     // No NDEF text - determine error message based on nfc_error field
                     const char* error_msg;
                     if(app->nfc_error == FlipperWedgeNfcErrorNotForumCompliant) {
-                        error_msg = FLIPPER_WEDGE_UI_TEXT("Not NFC Forum Compliant", "\xe4\xb8\x8d\xe7\xac\xa6\xe5\x90\x88 NFC Forum \xe8\xa7\x84\xe8\x8c\x83");
+                        error_msg = FLIPPER_WEDGE_UI_TEXT("Not NFC Forum Compliant", "不符合 NFC Forum 规范");
                         FURI_LOG_D("FlipperWedgeScene", "NDEF mode - Not NFC Forum compliant (e.g., MIFARE Classic)");
                     } else if(app->nfc_error == FlipperWedgeNfcErrorUnsupportedType) {
-                        error_msg = FLIPPER_WEDGE_UI_TEXT("Unsupported NFC Forum Type", "\xe4\xb8\x8d\xe6\x94\xaf\xe6\x8c\x81\xe7\x9a\x84 NFC Forum \xe7\xb1\xbb\xe5\x9e\x8b");
+                        error_msg = FLIPPER_WEDGE_UI_TEXT("Unsupported NFC Forum Type", "不支持的 NFC Forum 类型");
                         FURI_LOG_D("FlipperWedgeScene", "NDEF mode - Unsupported NFC Forum Type");
                     } else if(app->nfc_error == FlipperWedgeNfcErrorNoTextRecord) {
-                        error_msg = FLIPPER_WEDGE_UI_TEXT("NDEF Not Found", "\xe6\x9c\xaa\xe6\x89\xbe\xe5\x88\xb0 NDEF");
+                        error_msg = FLIPPER_WEDGE_UI_TEXT("NDEF Not Found", "未找到 NDEF");
                         FURI_LOG_D("FlipperWedgeScene", "NDEF mode - NDEF not found");
                     } else {
                         // Fallback for any other case
-                        error_msg = FLIPPER_WEDGE_UI_TEXT("NDEF Not Found", "\xe6\x9c\xaa\xe6\x89\xbe\xe5\x88\xb0 NDEF");
+                        error_msg = FLIPPER_WEDGE_UI_TEXT("NDEF Not Found", "未找到 NDEF");
                         FURI_LOG_D("FlipperWedgeScene", "NDEF mode - Unknown error");
                     }
 
@@ -446,7 +446,7 @@ bool flipper_wedge_scene_startscreen_on_event(void* context, SceneManagerEvent e
                 // Combo mode - now wait for RFID
                 flipper_wedge_nfc_stop(app->nfc);
                 app->scan_state = FlipperWedgeScanStateWaitingSecond;
-                flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Waiting for RFID...", "\xe7\xad\x89\xe5\xbe\x85 RFID..."));
+                flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Waiting for RFID...", "等待 RFID..."));
                 flipper_wedge_startscreen_set_display_state(app->flipper_wedge_startscreen, FlipperWedgeDisplayStateWaiting);
 
                 // Start RFID scanning
@@ -484,7 +484,7 @@ bool flipper_wedge_scene_startscreen_on_event(void* context, SceneManagerEvent e
                 // Combo mode - now wait for NFC
                 flipper_wedge_rfid_stop(app->rfid);
                 app->scan_state = FlipperWedgeScanStateWaitingSecond;
-                flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Waiting for NFC...", "\xe7\xad\x89\xe5\xbe\x85 NFC..."));
+                flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Waiting for NFC...", "等待 NFC..."));
                 flipper_wedge_startscreen_set_display_state(app->flipper_wedge_startscreen, FlipperWedgeDisplayStateWaiting);
 
                 // Start NFC scanning (UID only for combo mode)
@@ -544,7 +544,7 @@ bool flipper_wedge_scene_startscreen_on_event(void* context, SceneManagerEvent e
             app->ndef_text[0] = '\0';
 
             // Show timeout message briefly
-            flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Scan timed out", "\xe6\x89\xab\xe6\x8f\x8f\xe8\xb6\x85\xe6\x97\xb6"));
+            flipper_wedge_startscreen_set_status_text(app->flipper_wedge_startscreen, FLIPPER_WEDGE_UI_TEXT("Scan timed out", "扫描超时"));
             flipper_wedge_startscreen_set_display_state(app->flipper_wedge_startscreen, FlipperWedgeDisplayStateIdle);
 
             // Reset to scanning state and restart for first tag

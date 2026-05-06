@@ -70,7 +70,7 @@ struct MultiConverterUnit {
     uint8_t allow_negative;
     uint8_t max_number_keys;
     char mini_name[8];
-    char name[12];
+    char name[16];
     void (*convert_function)(MultiConverterState* const);
     uint8_t (*allowed_function)(MultiConverterUnitType);
 };

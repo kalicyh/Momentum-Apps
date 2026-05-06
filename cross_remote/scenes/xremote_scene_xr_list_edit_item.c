@@ -16,13 +16,13 @@ void xremote_scene_xr_list_edit_item_on_enter(void* context) {
     //submenu_add_item(app->editmenu, "Rename", SubmenuIndexRename, xremote_scene_xr_list_edit_item_submenu_callback, app);
     submenu_add_item(
         app->editmenu,
-        XREMOTE_UI_TEXT("Edit", "\xe7\xbc\x96\xe8\xbe\x91"),
+        XREMOTE_UI_TEXT("Edit", "编辑"),
         SubmenuIndexEdit,
         xremote_scene_xr_list_edit_item_submenu_callback,
         app);
     submenu_add_item(
         app->editmenu,
-        XREMOTE_UI_TEXT("Delete", "\xe5\x88\xa0\xe9\x99\xa4"),
+        XREMOTE_UI_TEXT("Delete", "删除"),
         SubmenuIndexDelete,
         xremote_scene_xr_list_edit_item_submenu_callback,
         app);

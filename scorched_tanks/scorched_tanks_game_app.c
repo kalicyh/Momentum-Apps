@@ -329,7 +329,7 @@ static void scorched_tanks_render_callback(Canvas* const canvas, void* ctx) {
 
     canvas_set_font(canvas, FontSecondary);
 
-    char buffer2[18];
+    char buffer2[24];
     snprintf(buffer2, sizeof(buffer2), SCORCHED_UI_TEXT("wind: %i", "风速: %i"), game_state->windSpeed - MAX_WIND / 2);
     canvas_draw_str(canvas, 55, 10, buffer2);
 
