@@ -37,6 +37,7 @@ ProtoPirateApp* protopirate_app_alloc() {
         FURI_LOG_E(TAG, "Failed to allocate ProtoPirateApp app !");
         return NULL;
     }
+    memset(app, 0, sizeof(ProtoPirateApp));
 
     LOG_HEAP("Start alloc");
     FURI_LOG_I(TAG, "Allocating ProtoPirate Decoder App");
@@ -153,9 +154,20 @@ ProtoPirateApp* protopirate_app_alloc() {
     // Initialize TxRx structure with minimal setup
     app->lock = ProtoPirateLockOff;
     app->txrx = malloc(sizeof(ProtoPirateTxRx));
+    if(!app->txrx) {
+        FURI_LOG_E(TAG, "Failed to allocate ProtoPirateTxRx!");
+        protopirate_app_free(app);
+        return NULL;
+    }
     memset(app->txrx, 0, sizeof(ProtoPirateTxRx));
 
     app->txrx->preset = malloc(sizeof(SubGhzRadioPreset));
+    if(!app->txrx->preset) {
+        FURI_LOG_E(TAG, "Failed to allocate SubGhzRadioPreset!");
+        protopirate_app_free(app);
+        return NULL;
+    }
+    memset(app->txrx->preset, 0, sizeof(SubGhzRadioPreset));
     app->txrx->preset->name = furi_string_alloc();
     app->txrx->txrx_state = ProtoPirateTxRxStateIDLE;
     app->txrx->rx_key_state = ProtoPirateRxKeyStateIDLE;
@@ -378,31 +390,33 @@ void protopirate_app_free(ProtoPirateApp* app) {
     FURI_LOG_D(TAG, "State: radio_initialized=%d", app->radio_initialized);
 
     // Save settings before exiting
-    ProtoPirateSettings settings;
-    settings.frequency = app->txrx->preset->frequency;
-    settings.auto_save = app->auto_save;
-    settings.tx_power = app->tx_power;
-    settings.hopping_enabled = (app->txrx->hopper_state != ProtoPirateHopperStateOFF);
+    if(app->txrx && app->txrx->preset && app->txrx->preset->name && app->setting) {
+        ProtoPirateSettings settings;
+        settings.frequency = app->txrx->preset->frequency;
+        settings.auto_save = app->auto_save;
+        settings.tx_power = app->tx_power;
+        settings.hopping_enabled = (app->txrx->hopper_state != ProtoPirateHopperStateOFF);
 
-    // Find current preset index
-    settings.preset_index = 0;
-    const char* current_preset = furi_string_get_cstr(app->txrx->preset->name);
-    for(uint8_t i = 0; i < subghz_setting_get_preset_count(app->setting); i++) {
-        if(strcmp(subghz_setting_get_preset_name(app->setting, i), current_preset) == 0) {
-            settings.preset_index = i;
-            break;
+        // Find current preset index
+        settings.preset_index = 0;
+        const char* current_preset = furi_string_get_cstr(app->txrx->preset->name);
+        for(uint8_t i = 0; i < subghz_setting_get_preset_count(app->setting); i++) {
+            if(strcmp(subghz_setting_get_preset_name(app->setting, i), current_preset) == 0) {
+                settings.preset_index = i;
+                break;
+            }
         }
+
+        FURI_LOG_I(
+            TAG,
+            "Saving settings: freq=%lu, preset=%u, auto_save=%d, hopping=%d",
+            settings.frequency,
+            settings.preset_index,
+            settings.auto_save,
+            settings.hopping_enabled);
+
+        protopirate_settings_save(&settings);
     }
-
-    FURI_LOG_I(
-        TAG,
-        "Saving settings: freq=%lu, preset=%u, auto_save=%d, hopping=%d",
-        settings.frequency,
-        settings.preset_index,
-        settings.auto_save,
-        settings.hopping_enabled);
-
-    protopirate_settings_save(&settings);
 
     // Deinitialize whichever is active - NULL checks inside handle all cases
     FURI_LOG_D(TAG, "Calling radio_deinit");
@@ -452,13 +466,21 @@ void protopirate_app_free(ProtoPirateApp* app) {
 
     // Setting
     FURI_LOG_D(TAG, "Freeing subghz_setting");
-    subghz_setting_free(app->setting);
+    if(app->setting) {
+        subghz_setting_free(app->setting);
+    }
 
     // Free preset
     FURI_LOG_D(TAG, "Freeing preset");
-    furi_string_free(app->txrx->preset->name);
-    free(app->txrx->preset);
-    free(app->txrx);
+    if(app->txrx) {
+        if(app->txrx->preset) {
+            if(app->txrx->preset->name) {
+                furi_string_free(app->txrx->preset->name);
+            }
+            free(app->txrx->preset);
+        }
+        free(app->txrx);
+    }
 
     // View dispatcher
     FURI_LOG_D(TAG, "Freeing view_dispatcher and scene_manager");
