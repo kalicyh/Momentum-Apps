@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef MOMENTUM_UI_LANG_ZH_CN
-#define PROTOPIRATE_UI_TEXT(en, zh) (zh)
-#else
 #define PROTOPIRATE_UI_TEXT(en, zh) (en)
-#endif
 
 //#define ENABLE_TIMING_TUNER_SCENE
 #define ENABLE_SUB_DECODE_SCENE
