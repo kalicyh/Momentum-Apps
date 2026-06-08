@@ -114,17 +114,11 @@ static void ami_tool_scene_amiibo_link_show_ready(AmiToolApp* app) {
         return;
     }
     static const char* ready_text =
-        AMI_TOOL_UI_TEXT(
-            "Amiibo Link\n\n"
-            "Flipper is emulating a blank NTAG215.\n"
-            "Use a compatible app to write data.\n"
-            "Press OK once writing is complete.\n"
-            "Press Back to stop.",
-            "Amiibo Link\n\n"
-            "Flipper 正在模拟空白 NTAG215。\n"
-            "使用兼容的应用写入数据。\n"
-            "写入完成后按确认键。\n"
-            "按返回键停止。");
+        "Blank Tag\n\n"
+        "Flipper is emulating a blank NTAG215.\n"
+        "Use a compatible app to write data.\n"
+        "Press OK once writing is complete.\n"
+        "Press Back to stop.";
     widget_reset(app->info_widget);
     widget_add_text_scroll_element(app->info_widget, 2, 0, 124, 60, ready_text);
     widget_add_button_element(
@@ -286,8 +280,7 @@ static bool ami_tool_scene_amiibo_link_prepare(AmiToolApp* app) {
 static bool ami_tool_scene_amiibo_link_start_session(AmiToolApp* app) {
     if(!ami_tool_scene_amiibo_link_prepare(app)) {
         ami_tool_scene_amiibo_link_show_text(
-            app, AMI_TOOL_UI_TEXT("Amiibo Link\n\nUnable to prepare memory.\nPress Back to exit.",
-                                  "Amiibo Link\n\n无法准备内存。\n按返回键退出。"));
+            app, "Blank Tag\n\nUnable to prepare memory.\nPress Back to exit.");
         app->amiibo_link_active = false;
         app->amiibo_link_waiting_for_completion = false;
         return false;
@@ -295,8 +288,7 @@ static bool ami_tool_scene_amiibo_link_start_session(AmiToolApp* app) {
 
     if(!ami_tool_info_start_emulation(app)) {
         ami_tool_scene_amiibo_link_show_text(
-            app, AMI_TOOL_UI_TEXT("Amiibo Link\n\nUnable to start emulation.\nPress Back to exit.",
-                                  "Amiibo Link\n\n无法启动模拟。\n按返回键退出。"));
+            app, "Blank Tag\n\nUnable to start emulation.\nPress Back to exit.");
         app->amiibo_link_active = false;
         app->amiibo_link_waiting_for_completion = false;
         return false;
@@ -356,10 +348,8 @@ static void ami_tool_scene_amiibo_link_handle_completion(AmiToolApp* app) {
     if(!ami_tool_scene_amiibo_link_marker_written(app)) {
         ami_tool_scene_amiibo_link_show_text(
             app,
-            AMI_TOOL_UI_TEXT("Amiibo Link\n\nNo data changes detected.\n"
-                             "Ensure the writing app finishes\nbefore pressing OK.",
-                             "Amiibo Link\n\n未检测到数据变化。\n"
-                             "请确保写入应用完成后再按确认键。"));
+            "Blank Tag\n\nNo data changes detected.\n"
+            "Ensure the writing app finishes\nbefore pressing OK.");
         return;
     }
 
@@ -369,10 +359,8 @@ static void ami_tool_scene_amiibo_link_handle_completion(AmiToolApp* app) {
     if(!ami_tool_scene_amiibo_link_regenerate_template(app)) {
         ami_tool_scene_amiibo_link_show_text(
             app,
-            AMI_TOOL_UI_TEXT("Amiibo Link\n\nUnable to rebuild Amiibo config.\n"
-                             "Press Back to exit.",
-                             "Amiibo Link\n\n无法重建 Amiibo 配置。\n"
-                             "按返回键退出。"));
+            "Blank Tag\n\nUnable to rebuild Amiibo config.\n"
+            "Press Back to exit.");
         ami_tool_info_stop_emulation(app);
         app->amiibo_link_active = false;
         return;
@@ -385,12 +373,9 @@ static void ami_tool_scene_amiibo_link_handle_completion(AmiToolApp* app) {
     }
 
     const char* failure_template =
-        AMI_TOOL_UI_TEXT("Amiibo Link\n\nNo valid Amiibo data detected.\n"
-                         "Detected ID: %s\n"
-                         "Let the app finish writing and press OK again.",
-                         "Amiibo Link\n\n未检测到有效的 Amiibo 数据。\n"
-                         "检测到 ID: %s\n"
-                         "请让应用完成写入后再次按确认键。");
+        "Blank Tag\n\nNo valid Amiibo data detected.\n"
+        "Detected ID: %s\n"
+        "Let the app finish writing and press OK again.";
     char id_hex[17] = {0};
     const char* detected_id = "Unknown";
     if(ami_tool_extract_amiibo_id(app->tag_data, id_hex, sizeof(id_hex))) {
@@ -404,8 +389,7 @@ static void ami_tool_scene_amiibo_link_handle_completion(AmiToolApp* app) {
 
     if(!ami_tool_scene_amiibo_link_start_session(app)) {
         ami_tool_scene_amiibo_link_show_text(
-            app, AMI_TOOL_UI_TEXT("Amiibo Link\n\nUnable to restart emulation.\nPress Back to exit.",
-                                  "Amiibo Link\n\n无法重启模拟。\n按返回键退出。"));
+            app, "Blank Tag\n\nUnable to restart emulation.\nPress Back to exit.");
     }
 }
 

@@ -41,7 +41,7 @@ void MTP_on_draw(Canvas* canvas, void* context) {
 
     if(usb_connected) {
         canvas_set_bitmap_mode(canvas, true);
-        canvas_draw_icon(canvas, 0, 14, &I_DFU_128x50);
+        canvas_draw_icon(canvas, 1, 31, &I_Connect_me_62x31);
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str(canvas, 43, 10, MTP_UI_TEXT("MTP Connection", "MTP 连接"));
         canvas_set_font(canvas, FontSecondary);

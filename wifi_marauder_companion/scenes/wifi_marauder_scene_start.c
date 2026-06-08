@@ -20,7 +20,7 @@ typedef enum {
 #define SHOW_STOPSCAN_TIP (true)
 #define NO_TIP            (false)
 
-#define MAX_OPTIONS (16)
+#define MAX_OPTIONS (17)
 typedef struct {
     const char* item_string;
     const char* options_menu[MAX_OPTIONS];
@@ -33,11 +33,11 @@ typedef struct {
 
 // NUM_MENU_ITEMS defined in wifi_marauder_app_i.h - if you add an entry here, increment it!
 const WifiMarauderItem items[NUM_MENU_ITEMS] = {
-    {WIFI_MARAUDER_UI_TEXT("View Log from", "查看日志"), {"start", "end"}, 2, {"", ""}, NO_ARGS, FOCUS_CONSOLE_TOGGLE, NO_TIP},
-    {WIFI_MARAUDER_UI_TEXT("Scan", "扫描"),
-     {"all", "ap", "station", "ping", "arp"},
-     5,
-     {"scanall", "scanap", "scansta", "pingscan", "arpscan"},
+    {"View Log from", {"start", "end"}, 2, {"", ""}, NO_ARGS, FOCUS_CONSOLE_TOGGLE, NO_TIP},
+    {"Scan",
+     {"all", "ping", "arp"},
+     3,
+     {"scanall", "pingscan", "arpscan"},
      NO_ARGS,
      FOCUS_CONSOLE_END,
      SHOW_STOPSCAN_TIP},
@@ -98,13 +98,16 @@ const WifiMarauderItem items[NUM_MENU_ITEMS] = {
       "badmsg",
       "sleep",
       "sae flood",
+      "csa",
+      "quiet",
       "sour apple",
+      "apple juice",
       "swiftpair spam",
       "samsung spam",
       "google spam",
       "flipper spam",
       "bt spam all"},
-     13,
+     16,
      {"attack -t deauth",
       "attack -t probe",
       "attack -t rickroll",
@@ -112,7 +115,10 @@ const WifiMarauderItem items[NUM_MENU_ITEMS] = {
       "attack -t badmsg",
       "attack -t sleep",
       "attack -t sae",
-      "blespam -t apple",
+      "attack -t csa",
+      "attack -t quiet",
+      "blespam -t sourapple",
+      "blespam -t applejuice",
       "blespam -t windows",
       "blespam -t samsung",
       "blespam -t google",
@@ -128,10 +134,10 @@ const WifiMarauderItem items[NUM_MENU_ITEMS] = {
      INPUT_ARGS,
      FOCUS_CONSOLE_END,
      NO_TIP},
-    {WIFI_MARAUDER_UI_TEXT("Wardrive", "路演扫描"),
-     {"ap", "station", "flock", "bt"},
-     4,
-     {"wardrive", "wardrive -s", "wardrive -f", "btwardrive"},
+    {"Wardrive",
+     {"ap", "station", "flock"},
+     3,
+     {"wardrive", "wardrive -s", "wardrive -f"},
      NO_ARGS,
      FOCUS_CONSOLE_END,
      SHOW_STOPSCAN_TIP},
@@ -185,9 +191,9 @@ const WifiMarauderItem items[NUM_MENU_ITEMS] = {
      INPUT_ARGS,
      FOCUS_CONSOLE_END,
      SHOW_STOPSCAN_TIP},
-    {WIFI_MARAUDER_UI_TEXT("Sniff", "嗅探"),
-     {"beacon", "deauth", "pmkid", "probe", "pwn", "raw", "bt", "skim", "airtag", "flipper", "flock", "mactrack", "packetcount", "pineapple", "multissid", "sae"},
-     16,
+    {"Sniff",
+     {"beacon", "deauth", "pmkid", "probe", "pwn", "raw", "bt", "skim", "airtag", "flipper", "flock", "meta", "mactrack", "packetcount", "pineapple", "multissid", "sae"},
+     17,
      {"sniffbeacon",
       "sniffdeauth",
       "sniffpmkid",
@@ -199,6 +205,7 @@ const WifiMarauderItem items[NUM_MENU_ITEMS] = {
       "sniffbt -t airtag",
       "sniffbt -t flipper",
       "sniffbt -t flock",
+      "sniffbt -t meta",
       "mactrack",
       "packetcount",
       "sniffpinescan",

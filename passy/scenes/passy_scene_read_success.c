@@ -7,6 +7,17 @@
 #define TAG "PassySceneReadCardSuccess"
 // Thank you proxmark code for your passport parsing
 
+static void
+    passy_print_country_specific_info(FuriString* out, const char* issuer, const char* info) {
+    furi_assert(issuer);
+    furi_assert(info);
+    furi_assert(out);
+
+    if(strncmp(issuer, "GEO", 3) == 0) {
+        furi_string_cat_printf(out, "Personal #: %.11s\n", info);
+    }
+}
+
 void passy_scene_read_success_on_enter(void* context) {
     Passy* passy = context;
 
@@ -33,23 +44,29 @@ void passy_scene_read_success_on_enter(void* context) {
             char payloadDebug[384] = {0};
             memset(payloadDebug, 0, sizeof(payloadDebug));
             (&asn_DEF_DG1)
-                ->op->print_struct(&asn_DEF_DG1, dg1, 1, passy_print_struct_callback, payloadDebug);
+                ->op->print_struct(
+                    &asn_DEF_DG1, dg1, 1, passy_print_struct_callback, payloadDebug);
             if(strlen(payloadDebug) > 0) {
                 FURI_LOG_D(TAG, "DG1: %s", payloadDebug);
             } else {
                 FURI_LOG_D(TAG, "Received empty Payload");
             }
 
-            if(dg1->mrz.buf[0] == 'I' && dg1->mrz.buf[1] == 'P') {
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Passport card (IP)\n", "护照卡 (IP)\n"));
-            } else if(dg1->mrz.buf[0] == 'I') {
-                furi_string_cat_printf(str, PASSY_UI_TEXT("ID Card (I)\n", "身份证 (I)\n"));
-            } else if(dg1->mrz.buf[0] == 'P') {
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Passport book (P)\n", "护照本 (P)\n"));
-            } else if(dg1->mrz.buf[0] == 'A') {
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Residency Permit (A)\n", "居留许可 (A)\n"));
+            const char* document_code = (const char*)dg1->mrz.buf;
+
+            if(strncmp(document_code, "IP", 2) == 0) {
+                furi_string_cat_printf(str, "Passport card (IP)\n");
+            } else if(document_code[0] == 'I') {
+                furi_string_cat_printf(str, "ID Card (I)\n");
+            } else if(document_code[0] == 'P') {
+                furi_string_cat_printf(str, "Passport book (P)\n");
+            } else if(document_code[0] == 'A') {
+                furi_string_cat_printf(str, "Residency Permit (A)\n");
+            } else if(strncmp(document_code, "TR", 2) == 0) {
+                furi_string_cat_printf(str, "Residency Permit (TR)\n");
             } else {
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Unknown (%c%c)\n", "未知 (%c%c)\n"), dg1->mrz.buf[0], dg1->mrz.buf[1]);
+                furi_string_cat_printf(
+                    str, "Unknown (%c%c)\n", document_code[0], document_code[1]);
             }
 
             uint8_t td_variant = 0;
@@ -101,13 +118,16 @@ void passy_scene_read_success_on_enter(void* context) {
                 char* row_2 = (char*)dg1->mrz.buf + 30;
                 char* row_3 = (char*)dg1->mrz.buf + 60;
 
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Issuing state: %.3s\n", "签发国: %.3s\n"), row_1 + 2);
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Nationality: %.3s\n", "国籍: %.3s\n"), row_2 + 15);
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Name: %s\n", "姓名: %s\n"), name);
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Doc Number: %.9s\n", "证件号码: %.9s\n"), row_1 + 5);
-                furi_string_cat_printf(str, PASSY_UI_TEXT("DoB: %.6s\n", "出生日期: %.6s\n"), row_2);
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Sex: %.1s\n", "性别: %.1s\n"), row_2 + 7);
-                furi_string_cat_printf(str, PASSY_UI_TEXT("Expiry: %.6s\n", "有效期: %.6s\n"), row_2 + 8);
+                const char* issuing_state = row_1 + 2;
+
+                furi_string_cat_printf(str, "Issuing state: %.3s\n", issuing_state);
+                furi_string_cat_printf(str, "Nationality: %.3s\n", row_2 + 15);
+                furi_string_cat_printf(str, "Name: %s\n", name);
+                furi_string_cat_printf(str, "Doc Number: %.9s\n", row_1 + 5);
+                furi_string_cat_printf(str, "DoB: %.6s\n", row_2);
+                furi_string_cat_printf(str, "Sex: %.1s\n", row_2 + 7);
+                furi_string_cat_printf(str, "Expiry: %.6s\n", row_2 + 8);
+                passy_print_country_specific_info(str, issuing_state, row_1 + 15);
 
                 furi_string_cat_printf(str, "\n");
                 furi_string_cat_printf(str, PASSY_UI_TEXT("Raw data:\n", "原始数据:\n"));
@@ -125,19 +145,13 @@ void passy_scene_read_success_on_enter(void* context) {
         dg1 = 0;
 
     } else if(passy->read_type == PassyReadDG2 || passy->read_type == PassyReadDG7) {
-        furi_string_cat_printf(str, PASSY_UI_TEXT("Saved to disk in apps_data/passy/...\n", "已保存到 apps_data/passy/...\n"));
+        const char* dg_type = passy->read_type == PassyReadDG2 ? "DG2" : "DG7";
+        furi_string_cat_printf(
+            str, "Saved to apps_data/passy/%s-%s.*\n", passy->passport_number, dg_type);
     } else {
-        char display[9]; // 4 byte header in hex + NULL
-        memset(display, 0, sizeof(display));
-        for(size_t i = 0; i < bit_buffer_get_size_bytes(passy->dg_header); i++) {
-            snprintf(
-                display + (i * 2),
-                sizeof(display),
-                "%02X",
-                bit_buffer_get_data(passy->dg_header)[i]);
-        }
-        furi_string_cat_printf(str, PASSY_UI_TEXT("Unparsed file\n", "未解析文件\n"));
-        furi_string_cat_printf(str, PASSY_UI_TEXT("File header: %s\n", "文件头: %s\n"), display);
+        int dg_number = passy->read_type & 0xFF;
+        furi_string_cat_printf(
+            str, "Saved to apps_data/passy/%s-DG%d.bin\n", passy->passport_number, dg_number);
     }
     text_box_set_font(passy->text_box, TextBoxFontText);
     text_box_set_text(passy->text_box, furi_string_get_cstr(passy->text_box_store));

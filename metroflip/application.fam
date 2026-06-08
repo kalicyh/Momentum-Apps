@@ -1,12 +1,11 @@
 App(
     appid="metroflip",
     name="Metroflip",
-    name_zh="都市翻转",
     apptype=FlipperAppType.EXTERNAL,
     entry_point="metroflip",
     stack_size=2 * 1024,
     fap_category="NFC",
-    fap_version="0.9",
+    fap_version="1.1",
     fap_icon="icon.png",
     fap_description="An implementation of metrodroid on the flipper",
     fap_author="luu176",
