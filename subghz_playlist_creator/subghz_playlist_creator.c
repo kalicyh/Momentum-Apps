@@ -268,8 +268,6 @@ SubGhzPlaylistCreator* subghz_playlist_creator_alloc(void) {
     FURI_LOG_D(TAG, "Added submenu item 0");
     submenu_add_item(app->submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Edit", "编辑"), 1, subghz_playlist_creator_submenu_callback, app);
     FURI_LOG_D(TAG, "Added submenu item 1");
-    submenu_add_item(app->submenu, "", 99, NULL, NULL); // blank line
-    FURI_LOG_D(TAG, "Added submenu item 99");
     submenu_add_item(app->submenu, SUBGHZ_PLAYLIST_CREATOR_UI_TEXT("Exit", "退出"), 2, subghz_playlist_creator_submenu_callback, app);
     FURI_LOG_D(TAG, "Added submenu item 2");
 
