@@ -142,7 +142,7 @@ void scheduler_scene_start_on_enter(void* context) {
     add_scheduler_option_item(
         var_item_list,
         app,
-        "Interval:",
+        SCHEDULER_UI_TEXT("Interval:", "间隔:"),
         INTERVAL_COUNT,
         scheduler_scene_start_set_interval,
         get_interval_idx,
@@ -152,7 +152,7 @@ void scheduler_scene_start_on_enter(void* context) {
     add_scheduler_option_item(
         var_item_list,
         app,
-        "Timing:",
+        SCHEDULER_UI_TEXT("Timing:", "计时:"),
         TIMING_MODE_COUNT,
         scheduler_scene_start_set_timing,
         get_timing_idx,
@@ -162,7 +162,7 @@ void scheduler_scene_start_on_enter(void* context) {
     add_scheduler_option_item(
         var_item_list,
         app,
-        "Repeats:",
+        SCHEDULER_UI_TEXT("Repeats:", "重复:"),
         REPEATS_COUNT,
         scheduler_scene_start_set_repeats,
         get_repeats_idx,
@@ -172,7 +172,7 @@ void scheduler_scene_start_on_enter(void* context) {
     add_scheduler_option_item(
         var_item_list,
         app,
-        "Mode:",
+        SCHEDULER_UI_TEXT("Mode:", "模式:"),
         SchedulerTxModeSettingsNum,
         scheduler_scene_start_set_mode,
         get_mode_idx,
@@ -182,29 +182,30 @@ void scheduler_scene_start_on_enter(void* context) {
     add_scheduler_option_item(
         var_item_list,
         app,
-        "TX Delay:",
+        SCHEDULER_UI_TEXT("TX Delay:", "发射延迟:"),
         TX_DELAY_COUNT,
         scheduler_scene_start_set_tx_delay,
         get_tx_delay_idx,
         set_tx_delay_idx,
         tx_delay_text);
 
-    VariableItem* item = variable_item_list_add(var_item_list, "Select File", 0, NULL, app);
+    VariableItem* item =
+        variable_item_list_add(var_item_list, SCHEDULER_UI_TEXT("Select File", "选择文件"), 0, NULL, app);
     if(check_file_extension(furi_string_get_cstr(app->file_path))) {
         scene_manager_set_scene_state(
             app->scene_manager, SchedulerSceneStart, SchedulerStartRunEvent);
         if(scheduler_get_file_type(app->scheduler) == SchedulerFileTypeSingle) {
-            variable_item_set_current_value_text(item, "[Single]");
+            variable_item_set_current_value_text(item, SCHEDULER_UI_TEXT("[Single]", "[单文件]"));
         } else if(scheduler_get_file_type(app->scheduler) == SchedulerFileTypePlaylist) {
             snprintf(
                 buffer,
                 sizeof(buffer),
-                "[Playlist of %d]",
+                SCHEDULER_UI_TEXT("[Playlist of %d]", "[播放列表 %d]"),
                 scheduler_get_list_count(app->scheduler));
             variable_item_set_current_value_text(item, buffer);
         }
     }
-    variable_item_list_add(var_item_list, "Start", 0, NULL, app);
+    variable_item_list_add(var_item_list, SCHEDULER_UI_TEXT("Start", "开始"), 0, NULL, app);
 
     variable_item_list_set_selected_item(
         var_item_list, scene_manager_get_scene_state(app->scene_manager, SchedulerSceneStart));
@@ -220,7 +221,10 @@ bool scheduler_scene_start_on_event(void* context, SceneManagerEvent event) {
         if(event.event == SchedulerStartRunEvent) {
             if(!check_file_extension(furi_string_get_cstr(app->file_path))) {
                 dialog_message_show_storage_error(
-                    app->dialogs, "Please select\nplaylist (*.txt) or\n *.sub file!");
+                    app->dialogs,
+                    SCHEDULER_UI_TEXT(
+                        "Please select\nplaylist (*.txt) or\n *.sub file!",
+                        "请选择\n播放列表 (*.txt)\n或 .sub 文件！"));
             } else {
                 scene_manager_next_scene(app->scene_manager, SchedulerSceneRunSchedule);
             }

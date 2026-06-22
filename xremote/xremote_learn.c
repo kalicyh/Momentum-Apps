@@ -118,8 +118,8 @@ static void xremote_learn_exit_dialog_alloc(
     xremote_learn_exit_dialog_free(learn_ctx);
 
     ViewDispatcher* view_disp = learn_ctx->app_ctx->view_dispatcher;
-    const char* dialog_text = XREMOTE_UI_TEXT("All unsaved data\nwill be lost!", "未保存的数据\n将会丢失!");
-    const char* header_text = XREMOTE_UI_TEXT("Exit to XRemote Menu?", "退出到XRemote菜单?");
+    const char* dialog_text = XREMOTE_UI_TEXT("All unsaved data\nwill be lost!", "未保存的数据\n将会丢失！");
+    const char* header_text = XREMOTE_UI_TEXT("Exit to XRemote Menu?", "退出到 XRemote 菜单？");
 
     learn_ctx->dialog_ex = dialog_ex_alloc();
     View* view = dialog_ex_get_view(learn_ctx->dialog_ex);
@@ -131,7 +131,7 @@ static void xremote_learn_exit_dialog_alloc(
 
     dialog_ex_set_left_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Exit", "退出"));
     dialog_ex_set_center_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Save", "保存"));
-    dialog_ex_set_right_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Stay", "留下"));
+    dialog_ex_set_right_button_text(learn_ctx->dialog_ex, XREMOTE_UI_TEXT("Stay", "停留"));
 
     dialog_ex_set_result_callback(learn_ctx->dialog_ex, callback);
     dialog_ex_set_context(learn_ctx->dialog_ex, learn_ctx);

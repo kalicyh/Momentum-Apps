@@ -231,7 +231,7 @@ void rolling_flaws_receive_sync_draw_callback(Canvas* canvas, void* model) {
     canvas_draw_str(canvas, 13, 30, ROLLING_FLAWS_UI_TEXT("Syncing rolling code:", "同步滚动码:"));
 
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str(canvas, 13, 45, ROLLING_FLAWS_UI_TEXT("Press remote button now.", "请按下遥控器按钮."));
+    canvas_draw_str(canvas, 13, 45, ROLLING_FLAWS_UI_TEXT("Press remote button now.", "请按遥控器按钮。"));
 }
 
 void rolling_flaws_receive_signal_draw_callback(Canvas* canvas, void* model) {
@@ -263,7 +263,7 @@ void rolling_flaws_receive_signal_draw_callback(Canvas* canvas, void* model) {
     if(my_model->opened) {
         canvas_draw_icon(canvas, 100, 15, &I_Unlock_10x8);
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 82, 33, ROLLING_FLAWS_UI_TEXT("OPENED!", "已开启!"));
+        canvas_draw_str(canvas, 82, 33, ROLLING_FLAWS_UI_TEXT("OPENED!", "已开启！"));
     } else {
         canvas_draw_icon(canvas, 100, 15, &I_Lock_10x8);
         canvas_set_font(canvas, FontPrimary);

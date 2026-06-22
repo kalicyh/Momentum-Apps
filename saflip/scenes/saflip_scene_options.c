@@ -38,7 +38,7 @@ void saflip_scene_options_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        SAFLIP_UI_TEXT("Save as NFC", "保存为NFC"),
+        SAFLIP_UI_TEXT("Save as NFC", "保存为 NFC"),
         SaflipSceneOptionsMenuItemSaveNFC,
         saflip_scene_options_menu_callback,
         app);
@@ -62,7 +62,7 @@ void saflip_scene_options_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        SAFLIP_UI_TEXT("Change UID", "修改UID"),
+        SAFLIP_UI_TEXT("Change UID", "修改 UID"),
         SaflipSceneOptionsMenuItemChangeUID,
         saflip_scene_options_menu_callback,
         app);
@@ -128,7 +128,7 @@ bool saflip_scene_options_on_event(void* context, SceneManagerEvent event) {
             break;
 
         case SaflipSceneOptionsMenuItemChangeUID:
-            byte_input_set_header_text(app->byte_input, SAFLIP_UI_TEXT("Change UID", "修改UID"));
+            byte_input_set_header_text(app->byte_input, SAFLIP_UI_TEXT("Change UID", "修改 UID"));
             byte_input_set_result_callback(
                 app->byte_input,
                 saflip_scene_options_byte_input_callback,

@@ -2,6 +2,12 @@
 
 #include <gui/elements.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_MAGIC_VIEW_TEXT(en, zh) (zh)
+#else
+#define NFC_MAGIC_VIEW_TEXT(en, zh) (en)
+#endif
+
 #define NFC_CLASSIC_KEYS_PER_SECTOR 2
 
 struct DictAttack {
@@ -28,10 +34,20 @@ static void dict_attack_draw_callback(Canvas* canvas, void* model) {
     if(!m->card_detected) {
         canvas_set_font(canvas, FontPrimary);
         canvas_draw_str_aligned(
-            canvas, 64, 4, AlignCenter, AlignTop, "Hold the tag to the Flipper!");
+            canvas,
+            64,
+            4,
+            AlignCenter,
+            AlignTop,
+            NFC_MAGIC_VIEW_TEXT("Hold the tag to the Flipper!", "将标签贴近 Flipper!"));
         canvas_set_font(canvas, FontSecondary);
         elements_multiline_text_aligned(
-            canvas, 64, 23, AlignCenter, AlignTop, "Make sure the tag is\npositioned correctly.");
+            canvas,
+            64,
+            23,
+            AlignCenter,
+            AlignTop,
+            NFC_MAGIC_VIEW_TEXT("Make sure the tag is\npositioned correctly.", "请确认标签\n位置正确。"));
     } else {
         char draw_str[32] = {};
         canvas_set_font(canvas, FontSecondary);
@@ -41,10 +57,14 @@ static void dict_attack_draw_callback(Canvas* canvas, void* model) {
             snprintf(
                 draw_str,
                 sizeof(draw_str),
-                "Reuse key check for sector: %d",
+                NFC_MAGIC_VIEW_TEXT("Reuse key check for sector: %d", "复用密钥检查扇区: %d"),
                 m->key_attack_current_sector);
         } else {
-            snprintf(draw_str, sizeof(draw_str), "Unlocking sector: %d", m->current_sector);
+            snprintf(
+                draw_str,
+                sizeof(draw_str),
+                NFC_MAGIC_VIEW_TEXT("Unlocking sector: %d", "解锁扇区: %d"),
+                m->current_sector);
         }
         canvas_draw_str_aligned(canvas, 0, 10, AlignLeft, AlignTop, draw_str);
         float dict_progress = m->dict_keys_total == 0 ?
@@ -65,18 +85,22 @@ static void dict_attack_draw_callback(Canvas* canvas, void* model) {
         }
         elements_progress_bar_with_text(canvas, 0, 20, 128, dict_progress, draw_str);
         canvas_set_font(canvas, FontSecondary);
-        snprintf(
+            snprintf(
             draw_str,
             sizeof(draw_str),
-            "Keys found: %d/%d",
+            NFC_MAGIC_VIEW_TEXT("Keys found: %d/%d", "已找到密钥: %d/%d"),
             m->keys_found,
             m->sectors_total * NFC_CLASSIC_KEYS_PER_SECTOR);
         canvas_draw_str_aligned(canvas, 0, 33, AlignLeft, AlignTop, draw_str);
         snprintf(
-            draw_str, sizeof(draw_str), "Sectors Read: %d/%d", m->sectors_read, m->sectors_total);
+            draw_str,
+            sizeof(draw_str),
+            NFC_MAGIC_VIEW_TEXT("Sectors Read: %d/%d", "已读扇区: %d/%d"),
+            m->sectors_read,
+            m->sectors_total);
         canvas_draw_str_aligned(canvas, 0, 43, AlignLeft, AlignTop, draw_str);
     }
-    elements_button_center(canvas, "Skip");
+    elements_button_center(canvas, NFC_MAGIC_VIEW_TEXT("Skip", "跳过"));
 }
 
 static bool dict_attack_input_callback(InputEvent* event, void* context) {

@@ -38,7 +38,7 @@ void view_saved_menu_alloc(UHFReaderApp* App){
 
     //Allocate the saved submenu and a FuriString to store the number of saved tags
     App->SubmenuSaved = submenu_alloc();
-    submenu_set_header(App->SubmenuSaved, RFID_READER_UI_TEXT("Saved EPCs", "已保存EPC"));
+    submenu_set_header(App->SubmenuSaved, RFID_READER_UI_TEXT("Saved EPCs", "已保存 EPC"));
     FuriString* ExtractedNumTagsStr = furi_string_alloc();
     
     //Try to open the Index_File or create a new one if it doesn't exist

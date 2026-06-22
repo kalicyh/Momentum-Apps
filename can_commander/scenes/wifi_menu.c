@@ -19,14 +19,26 @@ void cancommander_scene_wifi_menu_on_enter(void* context) {
     App* app = context;
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "WiFi Settings");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("WiFi Settings", "WiFi 设置"));
 
     submenu_add_item(
-        app->submenu, "WiFi AP Config", WifiMenuConfig, cancommander_scene_wifi_menu_callback, app);
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("WiFi AP Config", "WiFi AP 配置"),
+        WifiMenuConfig,
+        cancommander_scene_wifi_menu_callback,
+        app);
     submenu_add_item(
-        app->submenu, "Enable AP", WifiMenuEnableAp, cancommander_scene_wifi_menu_callback, app);
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("Enable AP", "启用 AP"),
+        WifiMenuEnableAp,
+        cancommander_scene_wifi_menu_callback,
+        app);
     submenu_add_item(
-        app->submenu, "Disable AP", WifiMenuDisableAp, cancommander_scene_wifi_menu_callback, app);
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("Disable AP", "禁用 AP"),
+        WifiMenuDisableAp,
+        cancommander_scene_wifi_menu_callback,
+        app);
 
     submenu_set_selected_item(
         app->submenu, scene_manager_get_scene_state(app->scene_manager, cancommander_scene_wifi_menu));
@@ -49,8 +61,8 @@ bool cancommander_scene_wifi_menu_on_event(void* context, SceneManagerEvent even
             app,
             app->args_wifi_cfg,
             sizeof(app->args_wifi_cfg),
-            "WiFi AP Settings",
-            "Apply",
+            CAN_COMMANDER_UI_TEXT("WiFi AP Settings", "WiFi AP 设置"),
+            CAN_COMMANDER_UI_TEXT("Apply", "应用"),
             cancommander_scene_wifi_menu_apply_config,
             cancommander_scene_status);
         scene_manager_next_scene(app->scene_manager, cancommander_scene_args_editor);
@@ -77,4 +89,3 @@ void cancommander_scene_wifi_menu_on_exit(void* context) {
     App* app = context;
     submenu_reset(app->submenu);
 }
-

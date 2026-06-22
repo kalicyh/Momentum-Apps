@@ -82,7 +82,7 @@ void nfc_rfid_detector_view_field_presence_draw(
             char str[16];
             snprintf(str, sizeof(str), "%.02f kHz", (double)model->rfid_frequency / 1000);
             canvas_set_font(canvas, FontPrimary);
-            canvas_draw_str(canvas, 76, 10, NFC_RFID_DETECTOR_UI_TEXT("LF RFID", "低频RFID"));
+            canvas_draw_str(canvas, 76, 10, NFC_RFID_DETECTOR_UI_TEXT("LF RFID", "低频 RFID"));
             canvas_draw_icon(
                 canvas,
                 71,

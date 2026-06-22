@@ -14,7 +14,7 @@ void uhf_reader_view_epc_info_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT("            EPC Info:", "            EPC信息:"));
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT("            EPC Info:", "            EPC 信息:"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 4, 22, "EPC: ");
     canvas_draw_str(canvas, 4, 44, RFID_READER_UI_TEXT("Reserved: ", "保留区: "));
@@ -251,9 +251,9 @@ void view_epc_info_alloc(UHFReaderApp* App) {
     ModelEpcInfo->Tid = TidMemEpcInfo;
     ModelEpcInfo->Reserved = ReservedMemEpcInfo;
     ModelEpcInfo->ScrollOffsetEpc = 0;
-    ModelEpcInfo->ScrollingTextEpc = RFID_READER_UI_TEXT("EPC VALUE HERE", "EPC值");
+    ModelEpcInfo->ScrollingTextEpc = RFID_READER_UI_TEXT("EPC VALUE HERE", "EPC 值");
     ModelEpcInfo->ScrollOffsetTid = 0;
-    ModelEpcInfo->ScrollingTextTid = RFID_READER_UI_TEXT("TID VALUE HERE", "TID值");
+    ModelEpcInfo->ScrollingTextTid = RFID_READER_UI_TEXT("TID VALUE HERE", "TID 值");
     ModelEpcInfo->ScrollOffsetRes = 0;
     ModelEpcInfo->ScrollingTextRes = RFID_READER_UI_TEXT("RES VALUE HERE", "保留区");
     ModelEpcInfo->ScrollOffsetMem = 0;

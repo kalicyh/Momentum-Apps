@@ -25,13 +25,13 @@ void cancommander_scene_tools_dbc_menu_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        "Load DBC Profile",
+        CAN_COMMANDER_UI_TEXT("Load DBC Profile", "加载 DBC 配置"),
         ToolsDbcLoadConfig,
         cancommander_scene_tools_dbc_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "DBC Database Manager",
+        CAN_COMMANDER_UI_TEXT("DBC Database Manager", "DBC 数据库管理"),
         ToolsDbcDatabaseManager,
         cancommander_scene_tools_dbc_menu_callback,
         app);

@@ -14,7 +14,7 @@ void uhf_reader_view_delete_success_draw_callback(Canvas* canvas, void* model) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT(" Successfully Deleted!", " 删除成功!"));
+    canvas_draw_str(canvas, 4, 11, RFID_READER_UI_TEXT(" Successfully Deleted!", " 删除成功！"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 4, 22, RFID_READER_UI_TEXT("Name:", "名称:"));
     
@@ -23,7 +23,7 @@ void uhf_reader_view_delete_success_draw_callback(Canvas* canvas, void* model) {
     
     //Displaying the index of the saved tag as shown in the Index file.
     furi_string_printf(XStr, "%ld", MyModel->SelectedTagIndex);
-    canvas_draw_str(canvas, 4, 33, RFID_READER_UI_TEXT("EPC Index:", "EPC索引:"));
+    canvas_draw_str(canvas, 4, 33, RFID_READER_UI_TEXT("EPC Index:", "EPC 索引:"));
     canvas_draw_str(canvas, 53, 33, furi_string_get_cstr(XStr));
 
     //Displaying the EPC scrolling across the screen

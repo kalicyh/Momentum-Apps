@@ -107,7 +107,7 @@ void uhf_reader_rename_text_updated(void* context) {
     view_dispatcher_remove_view(App->ViewDispatcher, UHFReaderViewSaved);
     submenu_free(App->SubmenuSaved);
     App->SubmenuSaved = submenu_alloc();
-    submenu_set_header(App->SubmenuSaved, RFID_READER_UI_TEXT("Saved EPCs", "已保存EPC"));
+    submenu_set_header(App->SubmenuSaved, RFID_READER_UI_TEXT("Saved EPCs", "已保存 EPC"));
 
     //Update the index file or create a new one doesn't exist
     FuriString* ExtractedNumTagsStr = furi_string_alloc();
@@ -189,7 +189,7 @@ void uhf_reader_submenu_tag_info_callback(void* context, uint32_t index) {
 
     //Handles the rename screen
     case UHFReaderSubmenuIndexTagRename:
-        text_input_set_header_text(App->RenameInput, RFID_READER_UI_TEXT("Rename EPC", "重命名EPC"));
+        text_input_set_header_text(App->RenameInput, RFID_READER_UI_TEXT("Rename EPC", "重命名 EPC"));
 
         //Grab the text from the rename text input
         bool Redraw = false;
@@ -258,7 +258,7 @@ uint32_t uhf_reader_navigation_tag_action_exit_callback(void* context) {
 void view_tag_actions_alloc(UHFReaderApp* App) {
     //Allocate the tag actions submenu
     App->SubmenuTagActions = submenu_alloc();
-    submenu_set_header(App->SubmenuTagActions, RFID_READER_UI_TEXT("EPC Actions", "EPC操作"));
+    submenu_set_header(App->SubmenuTagActions, RFID_READER_UI_TEXT("EPC Actions", "EPC 操作"));
     submenu_add_item(
         App->SubmenuTagActions,
         RFID_READER_UI_TEXT("Tag Data", "标签数据"),

@@ -18,14 +18,21 @@
 
 #include "../unitemp.h"
 
-static const char unitemp_scene_settings_backlight_text[2][9] = {"System", "Infinity"};
+static const char* const unitemp_scene_settings_backlight_text[2] = {
+    UNITEMP_UI_TEXT("System", "系统"),
+    UNITEMP_UI_TEXT("Infinity", "常亮"),
+};
 static const char unitemp_scene_settings_temperature_units_text[UT_TEMP_COUNT][3] = {"*C", "*F"};
-static const char unitemp_scene_settings_humidity_units_text[UT_HUMIDITY_COUNT][9] = {
-    "Relative",
-    "Dewpoint"};
+static const char* const unitemp_scene_settings_humidity_units_text[UT_HUMIDITY_COUNT] = {
+    UNITEMP_UI_TEXT("Relative", "相对"),
+    UNITEMP_UI_TEXT("Dewpoint", "露点"),
+};
 static const char unitemp_scene_settings_pressure_units_text[UT_PRESSURE_COUNT][5] =
     {"mmHg", "inHg", "kPa", "hPa"};
-static const char unitemp_scene_settings_off_on_text[2][4] = {"OFF", "ON"};
+static const char* const unitemp_scene_settings_off_on_text[2] = {
+    UNITEMP_UI_TEXT("OFF", "关"),
+    UNITEMP_UI_TEXT("ON", "开"),
+};
 
 static void unitemp_scene_settings_backlight_change_callback(VariableItem* item) {
     UnitempApp* app = variable_item_get_context(item);
@@ -111,7 +118,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Temp. unit",
+        UNITEMP_UI_TEXT("Temp. unit", "温度单位"),
         COUNT_OF(unitemp_scene_settings_temperature_units_text),
         unitemp_scene_settings_temperature_units_change_callback,
         app);
@@ -122,7 +129,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Humidity unit",
+        UNITEMP_UI_TEXT("Humidity unit", "湿度单位"),
         COUNT_OF(unitemp_scene_settings_humidity_units_text),
         unitemp_scene_settings_humidity_units_change_callback,
         app);
@@ -133,7 +140,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Pressure unit",
+        UNITEMP_UI_TEXT("Pressure unit", "压力单位"),
         COUNT_OF(unitemp_scene_settings_pressure_units_text),
         unitemp_scene_settings_pressure_units_change_callback,
         app);
@@ -144,7 +151,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Disp. heat index",
+        UNITEMP_UI_TEXT("Disp. heat index", "显示热指数"),
         COUNT_OF(unitemp_scene_settings_off_on_text),
         unitemp_scene_settings_heat_index_change_callback,
         app);
@@ -154,7 +161,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Env. state LED",
+        UNITEMP_UI_TEXT("Env. state LED", "环境 LED"),
         COUNT_OF(unitemp_scene_settings_off_on_text),
         unitemp_scene_settings_env_state_led_change_callback,
         app);
@@ -164,7 +171,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Env. state sound",
+        UNITEMP_UI_TEXT("Env. state sound", "环境声音"),
         COUNT_OF(unitemp_scene_settings_off_on_text),
         unitemp_scene_settings_env_state_sound_change_callback,
         app);
@@ -175,7 +182,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Backlight time",
+        UNITEMP_UI_TEXT("Backlight time", "背光时间"),
         COUNT_OF(unitemp_scene_settings_backlight_text),
         unitemp_scene_settings_backlight_change_callback,
         app);
@@ -185,7 +192,7 @@ void unitemp_scene_settings_on_enter(void* context) {
 
     item = variable_item_list_add(
         var_item_list,
-        "Auto 5V on",
+        UNITEMP_UI_TEXT("Auto 5V on", "自动开启 5V"),
         COUNT_OF(unitemp_scene_settings_off_on_text),
         unitemp_scene_settings_otg_auto_on_change_callback,
         app);

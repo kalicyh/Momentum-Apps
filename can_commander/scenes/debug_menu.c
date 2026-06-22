@@ -40,18 +40,19 @@ void cancommander_scene_debug_menu_on_enter(void* context) {
     App* app = context;
 
     variable_item_list_reset(app->var_list);
-    variable_item_list_set_header(app->var_list, "Settings");
+    variable_item_list_set_header(app->var_list, CAN_COMMANDER_UI_TEXT("Settings", "设置"));
 
     /* Action items: num_values=0 means no left/right, just clickable */
-    variable_item_list_add(app->var_list, "Connect/Reconnect", 0, NULL, app);
-    variable_item_list_add(app->var_list, "Bus Config", 0, NULL, app);
-    variable_item_list_add(app->var_list, "Bus Filters", 0, NULL, app);
-    variable_item_list_add(app->var_list, "WiFi Settings", 0, NULL, app);
+    variable_item_list_add(
+        app->var_list, CAN_COMMANDER_UI_TEXT("Connect/Reconnect", "连接/重连"), 0, NULL, app);
+    variable_item_list_add(app->var_list, CAN_COMMANDER_UI_TEXT("Bus Config", "总线配置"), 0, NULL, app);
+    variable_item_list_add(app->var_list, CAN_COMMANDER_UI_TEXT("Bus Filters", "总线过滤"), 0, NULL, app);
+    variable_item_list_add(app->var_list, CAN_COMMANDER_UI_TEXT("WiFi Settings", "WiFi 设置"), 0, NULL, app);
 
     /* LED Brightness: 10 values (1-10) */
     VariableItem* brightness_item = variable_item_list_add(
         app->var_list,
-        "LED Brightness",
+        CAN_COMMANDER_UI_TEXT("LED Brightness", "LED 亮度"),
         10,
         cancommander_scene_debug_menu_brightness_changed,
         app);
@@ -61,9 +62,9 @@ void cancommander_scene_debug_menu_on_enter(void* context) {
     variable_item_set_current_value_text(brightness_item, brightness_text);
 
     /* More action items */
-    variable_item_list_add(app->var_list, "Stats", 0, NULL, app);
+    variable_item_list_add(app->var_list, CAN_COMMANDER_UI_TEXT("Stats", "统计"), 0, NULL, app);
     variable_item_list_add(app->var_list, "Ping", 0, NULL, app);
-    variable_item_list_add(app->var_list, "Get Info", 0, NULL, app);
+    variable_item_list_add(app->var_list, CAN_COMMANDER_UI_TEXT("Get Info", "获取信息"), 0, NULL, app);
 
     variable_item_list_set_enter_callback(
         app->var_list, cancommander_scene_debug_menu_enter_callback, app);

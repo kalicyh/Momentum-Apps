@@ -20,7 +20,7 @@ void subbrute_scene_save_name_on_enter(void* context) {
             sizeof(instance->text_store),
             subbrute_protocol_file(instance->device->protocol_info->file));
     }
-    text_input_set_header_text(text_input, "Name of file");
+    text_input_set_header_text(text_input, SUBBRUTE_UI_TEXT("Name of file", "输入文件名"));
     text_input_set_result_callback(
         text_input,
         subbrute_text_input_callback,
@@ -71,7 +71,8 @@ bool subbrute_scene_save_name_on_event(void* context, SceneManagerEvent event) {
         }
 
         if(!success) {
-            dialog_message_show_storage_error(instance->dialogs, "Error during saving!");
+            dialog_message_show_storage_error(
+                instance->dialogs, SUBBRUTE_UI_TEXT("Error during saving!", "保存失败！"));
             consumed = scene_manager_search_and_switch_to_previous_scene(
                 instance->scene_manager, SubBruteSceneSetupAttack);
         }

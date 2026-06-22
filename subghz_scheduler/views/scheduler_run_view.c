@@ -111,7 +111,12 @@ static void scheduler_run_view_draw_callback(Canvas* canvas, void* context) {
         offset = 0;
     }
     canvas_draw_str_aligned(
-        canvas, GUI_MARGIN, (GUI_TEXT_GAP * 5) - 2, AlignLeft, AlignCenter, "File: ");
+        canvas,
+        GUI_MARGIN,
+        (GUI_TEXT_GAP * 5) - 2,
+        AlignLeft,
+        AlignCenter,
+        SCHEDULER_UI_TEXT("File: ", "文件: "));
     elements_scrollable_text_line(
         canvas,
         GUI_DISPLAY_WIDTH - GUI_MARGIN - file_name_width_px + offset,

@@ -69,13 +69,13 @@ void cancommander_scene_tools_control_menu_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        "Replay",
+        CAN_COMMANDER_UI_TEXT("Replay", "重放"),
         ToolsControlReplay,
         cancommander_scene_tools_control_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Stop Active Tool",
+        CAN_COMMANDER_UI_TEXT("Stop Active Tool", "停止当前工具"),
         ToolsControlStopActive,
         cancommander_scene_tools_control_menu_callback,
         app);
@@ -119,7 +119,7 @@ bool cancommander_scene_tools_control_menu_on_event(void* context, SceneManagerE
             "replay",
             app->args_replay,
             sizeof(app->args_replay),
-            "Replay Tool");
+            CAN_COMMANDER_UI_TEXT("Replay Tool", "重放工具"));
         return true;
 
     case ToolsControlStopActive:
@@ -136,4 +136,3 @@ void cancommander_scene_tools_control_menu_on_exit(void* context) {
     App* app = context;
     submenu_reset(app->submenu);
 }
-

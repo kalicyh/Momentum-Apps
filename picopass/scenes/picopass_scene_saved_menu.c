@@ -75,7 +75,7 @@ void picopass_scene_saved_menu_on_enter(void* context) {
     if(secured && !no_credential) {
         submenu_add_item(
             submenu,
-            "Save as LFRFID",
+            PICOPASS_UI_TEXT("Save as LFRFID", "保存为 LFRFID"),
             SubmenuIndexSaveAsLF,
             picopass_scene_saved_menu_submenu_callback,
             picopass);

@@ -20,28 +20,28 @@ void nfc_maker_scene_wifi_auth_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        "WPA 2 Personal",
+        NFC_MAKER_UI_TEXT("WPA 2 Personal", "WPA 2 个人"),
         WifiAuthenticationWpa2Personal,
         nfc_maker_scene_wifi_auth_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "WPA 2 Enterprise",
+        NFC_MAKER_UI_TEXT("WPA 2 Enterprise", "WPA 2 企业"),
         WifiAuthenticationWpa2Enterprise,
         nfc_maker_scene_wifi_auth_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "WPA Personal",
+        NFC_MAKER_UI_TEXT("WPA Personal", "WPA 个人"),
         WifiAuthenticationWpaPersonal,
         nfc_maker_scene_wifi_auth_submenu_callback,
         app);
 
     submenu_add_item(
         submenu,
-        "WPA Enterprise",
+        NFC_MAKER_UI_TEXT("WPA Enterprise", "WPA 企业"),
         WifiAuthenticationWpaEnterprise,
         nfc_maker_scene_wifi_auth_submenu_callback,
         app);

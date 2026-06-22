@@ -1,5 +1,11 @@
 #include "hf_read_lifecycle.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SEADER_HF_TEXT(en, zh) (zh)
+#else
+#define SEADER_HF_TEXT(en, zh) (en)
+#endif
+
 SeaderHfCardSessionDecision
     seader_hf_read_on_card_detect(SeaderHfReadState state, bool sam_can_accept_card) {
     if(state != SeaderHfReadStateDetecting) {
@@ -32,19 +38,19 @@ bool seader_hf_read_should_timeout(
 const char* seader_hf_read_failure_reason_text(SeaderHfReadFailureReason reason) {
     switch(reason) {
     case SeaderHfReadFailureReasonUnavailable:
-        return "HF unavailable";
+        return SEADER_HF_TEXT("HF unavailable", "HF 不可用");
     case SeaderHfReadFailureReasonSamBusy:
-        return "SAM not idle";
+        return SEADER_HF_TEXT("SAM not idle", "SAM 忙碌");
     case SeaderHfReadFailureReasonSamTimeout:
-        return "SAM timeout";
+        return SEADER_HF_TEXT("SAM timeout", "SAM 超时");
     case SeaderHfReadFailureReasonBoardMissing:
-        return "Reader lost";
+        return SEADER_HF_TEXT("Reader lost", "读卡器断开");
     case SeaderHfReadFailureReasonProtocolError:
-        return "Protocol error";
+        return SEADER_HF_TEXT("Protocol error", "协议错误");
     case SeaderHfReadFailureReasonInternalState:
-        return "Read state error";
+        return SEADER_HF_TEXT("Read state error", "读取状态错误");
     case SeaderHfReadFailureReasonNone:
     default:
-        return "Read failed";
+        return SEADER_HF_TEXT("Read failed", "读取失败");
     }
 }

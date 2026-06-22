@@ -3,6 +3,12 @@
 #include <gui/elements.h>
 #include "nfc_magic_icons.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define NFC_MAGIC_VIEW_TEXT(en, zh) (zh)
+#else
+#define NFC_MAGIC_VIEW_TEXT(en, zh) (en)
+#endif
+
 struct WriteProblems {
     View* view;
     WriteProblemsCallback callback;
@@ -23,9 +29,12 @@ static void write_problems_view_draw_callback(Canvas* canvas, void* _model) {
     // Header
     if(model->problems_total > 1) {
         furi_string_printf(
-            header, "Warnings: %d of %d\n", model->problem_index + 1, model->problems_total);
+            header,
+            NFC_MAGIC_VIEW_TEXT("Warnings: %d of %d\n", "警告: %d/%d\n"),
+            model->problem_index + 1,
+            model->problems_total);
     } else {
-        furi_string_printf(header, "Warning!");
+        furi_string_printf(header, NFC_MAGIC_VIEW_TEXT("Warning!", "警告!"));
     }
 
     canvas_set_font(canvas, FontPrimary);
@@ -38,11 +47,11 @@ static void write_problems_view_draw_callback(Canvas* canvas, void* _model) {
 
     // Butttons
     if(model->problem_index == model->problems_total - 1) {
-        elements_button_center(canvas, "Skip");
-        elements_button_left(canvas, "Retry");
+        elements_button_center(canvas, NFC_MAGIC_VIEW_TEXT("Skip", "跳过"));
+        elements_button_left(canvas, NFC_MAGIC_VIEW_TEXT("Retry", "重试"));
     } else {
-        elements_button_center(canvas, "Next");
-        elements_button_left(canvas, "Back");
+        elements_button_center(canvas, NFC_MAGIC_VIEW_TEXT("Next", "下一个"));
+        elements_button_left(canvas, NFC_MAGIC_VIEW_TEXT("Back", "返回"));
     }
 
     // Dolphin

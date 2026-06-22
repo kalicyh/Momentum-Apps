@@ -23,17 +23,20 @@ void seader_scene_sam_wrong_on_enter(void* context) {
     }
     seader_format_atr_summary(seader->ATR, seader->ATR_len, atr_summary, sizeof(atr_summary));
     furi_string_reset(seader->temp_string1);
-    furi_string_printf(seader->temp_string1, "%s\nUse supported SAM", atr_summary);
+    furi_string_printf(
+        seader->temp_string1,
+        SEADER_UI_TEXT("%s\nUse supported SAM", "%s\n请使用支持的 SAM"),
+        atr_summary);
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Back", seader_scene_sam_wrong_widget_callback, seader);
+        widget, GuiButtonTypeLeft, SEADER_UI_TEXT("Back", "返回"), seader_scene_sam_wrong_widget_callback, seader);
     widget_add_button_element(
-        widget, GuiButtonTypeCenter, "Saved", seader_scene_sam_wrong_widget_callback, seader);
+        widget, GuiButtonTypeCenter, SEADER_UI_TEXT("Saved", "已保存"), seader_scene_sam_wrong_widget_callback, seader);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Retry", seader_scene_sam_wrong_widget_callback, seader);
+        widget, GuiButtonTypeRight, SEADER_UI_TEXT("Retry", "重试"), seader_scene_sam_wrong_widget_callback, seader);
 
     widget_add_string_element(
-        widget, 64, 12, AlignCenter, AlignCenter, FontPrimary, "Unsupported SAM");
+        widget, 64, 12, AlignCenter, AlignCenter, FontPrimary, SEADER_UI_TEXT("Unsupported SAM", "不支持的 SAM"));
     widget_add_text_box_element(
         widget,
         8,

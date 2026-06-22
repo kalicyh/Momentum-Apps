@@ -55,8 +55,8 @@ typedef struct {
 
 static SaflipCardType card_types[] = {
     {"Stndard", SAFLIP_UI_TEXT("Make Standard Key", "制作标准钥匙"), "Stndard", SAFLIP_UI_TEXT("Make Standard Key", "制作标准钥匙")},
-    {"Reseque", SAFLIP_UI_TEXT("Make Resequencing Key", "制作重排序钥匙"), "LED Diag", SAFLIP_UI_TEXT("LED Diagnostic", "LED诊断")},
-    {"Block", SAFLIP_UI_TEXT("Make Block Key", "制作锁定钥匙"), "E2 Chng", SAFLIP_UI_TEXT("Dis/Enable E2 Changes", "启用/禁用E2修改")},
+    {"Reseque", SAFLIP_UI_TEXT("Make Resequencing Key", "制作重排序钥匙"), "LED Diag", SAFLIP_UI_TEXT("LED Diagnostic", "LED 诊断")},
+    {"Block", SAFLIP_UI_TEXT("Make Block Key", "制作锁定钥匙"), "E2 Chng", SAFLIP_UI_TEXT("Dis/Enable E2 Changes", "启用/禁用 E2 修改")},
     {"Unblock", SAFLIP_UI_TEXT("Make Unblock Key", "制作解锁钥匙"), "Erase E2", SAFLIP_UI_TEXT("Erase Lock (E2) Memory", "擦除锁(E2)存储")},
     {"ChgDate", SAFLIP_UI_TEXT("Change Checkout Date", "修改退房日期"), "Batt Disc", SAFLIP_UI_TEXT("Battery Disconect", "电池断开")},
     {"Chkout", SAFLIP_UI_TEXT("Check Out a Key", "退房钥匙"), "Display", SAFLIP_UI_TEXT("Make Display Key", "制作显示钥匙")},
@@ -104,7 +104,7 @@ static SaflipDisplayKey display_key_types[] = {
     {"MtrSwt", SAFLIP_UI_TEXT("Motor Switch + Latch State", "电机开关+锁舌状态")},
     {"LowBtry", SAFLIP_UI_TEXT("Low Battery Status", "低电量状态")},
     {"Clck Run", SAFLIP_UI_TEXT("Clock Run Test", "时钟运行测试")},
-    {"LEDTest", SAFLIP_UI_TEXT("LED Lights Test", "LED灯测试")},
+    {"LEDTest", SAFLIP_UI_TEXT("LED Lights Test", "LED 灯测试")},
 };
 
 static const char* options[] = {
@@ -113,7 +113,7 @@ static const char* options[] = {
     SAFLIP_UI_TEXT("Card Type", "卡类型"),
     SAFLIP_UI_TEXT("Card ID", "卡号"),
     SAFLIP_UI_TEXT("Opening Key", "开门钥匙"),
-    SAFLIP_UI_TEXT("Key/Lock ID", "钥匙/锁号"),
+    SAFLIP_UI_TEXT("Key/Lock ID", "钥匙/锁 ID"),
     SAFLIP_UI_TEXT("Pass #/Areas", "通行证/区域"),
     SAFLIP_UI_TEXT("Seq & Comb", "序号与组合"),
     SAFLIP_UI_TEXT("Deadbolt Overide", "覆盖反锁"),

@@ -55,6 +55,12 @@
 //Application version
 #define UNITEMP_APP_VER "2.0"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define UNITEMP_UI_TEXT(en, zh) (zh)
+#else
+#define UNITEMP_UI_TEXT(en, zh) (en)
+#endif
+
 //Settings file name
 #define APP_SETTINGS_FILENAME "unitemp.settings"
 #define APP_SETTINGS_VERSION  (1)

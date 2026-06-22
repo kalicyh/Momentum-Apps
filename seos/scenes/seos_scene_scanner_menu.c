@@ -15,7 +15,7 @@ void seos_scene_scanner_menu_on_enter(void* context) {
 
     submenu_add_item(
         submenu,
-        SEOS_UI_TEXT("Start BLE Reader Scanner", "启动 BLE 读取扫描"),
+        SEOS_UI_TEXT("Start BLE Reader Scanner", "启动 BLE 读卡扫描"),
         SubmenuIndexBLEReaderScanner,
         seos_scene_scanner_menu_submenu_callback,
         seos);

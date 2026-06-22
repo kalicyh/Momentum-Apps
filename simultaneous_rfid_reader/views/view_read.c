@@ -272,7 +272,7 @@ bool uhf_reader_view_read_input_callback(InputEvent* event, void* context) {
         // Handle short press for save menu
         if(event->type == InputTypeShort) {
             //Setting the text input header
-            text_input_set_header_text(App->SaveInput, RFID_READER_UI_TEXT("Save EPC", "保存EPC"));
+            text_input_set_header_text(App->SaveInput, RFID_READER_UI_TEXT("Save EPC", "保存 EPC"));
             bool Redraw = false;
             with_view_model(
                 App->ViewRead,
@@ -689,7 +689,7 @@ void view_read_alloc(UHFReaderApp* App) {
     view_allocate_model(App->ViewRead, ViewModelTypeLockFree, sizeof(UHFReaderConfigModel));
     UHFReaderConfigModel* Model = view_get_model(App->ViewRead);
     FuriString* EpcValueDefault = furi_string_alloc();
-    furi_string_set_str(EpcValueDefault, RFID_READER_UI_TEXT("Press Read", "按OK读取"));
+    furi_string_set_str(EpcValueDefault, RFID_READER_UI_TEXT("Press Read", "按 OK 读取"));
 
     //Setting default values for the view model
     Model->Setting1Index = App->Setting1Index;
@@ -702,7 +702,7 @@ void view_read_alloc(UHFReaderApp* App) {
     Model->Crc = furi_string_alloc_set("XXXX");
     Model->EpcName = furi_string_alloc_set(RFID_READER_UI_TEXT("Enter name", "输入名称"));
     Model->ScrollOffset = 0;
-    Model->ScrollingText = RFID_READER_UI_TEXT("Press Read", "按OK读取");
+    Model->ScrollingText = RFID_READER_UI_TEXT("Press Read", "按 OK 读取");
     Model->EpcValue = EpcValueDefault;
     Model->CurEpcIndex = 1;
     Model->NumEpcsRead = 0;

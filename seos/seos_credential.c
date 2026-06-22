@@ -104,7 +104,8 @@ bool seos_credential_save(SeosCredential* seos_credential, const char* dev_name)
     } while(false);
 
     if(!saved) {
-        dialog_message_show_storage_error(seos_credential->dialogs, "Can not save\nfile");
+        dialog_message_show_storage_error(
+            seos_credential->dialogs, SEOS_UI_TEXT("Can not save\nfile", "无法保存\n文件"));
     }
     furi_string_free(temp_str);
     flipper_format_free(file);

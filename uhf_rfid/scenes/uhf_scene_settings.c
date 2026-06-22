@@ -135,7 +135,7 @@ void uhf_scene_settings_on_enter(void* ctx) {
     value_index = uhf_settings_get_module_power_index(uhf_module);
     item = variable_item_list_add(
         variable_item_list,
-        UHF_UI_TEXT("Power(DBM):", "功率(DBM):"),
+        UHF_UI_TEXT("Power(DBM):", "功率 (dBm):"),
         POWER_DBM_COUNT,
         uhf_settings_set_module_powerdb,
         uhf_module);

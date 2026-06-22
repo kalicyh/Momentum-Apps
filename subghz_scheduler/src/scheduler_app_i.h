@@ -15,6 +15,14 @@
 #include <expansion/expansion.h>
 #include <dialogs/dialogs.h>
 
+#ifndef SCHEDULER_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SCHEDULER_UI_TEXT(en, zh) (zh)
+#else
+#define SCHEDULER_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 #include "scenes/scheduler_scene_settings.h"
 
 struct SchedulerApp {

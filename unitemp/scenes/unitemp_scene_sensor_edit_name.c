@@ -10,7 +10,8 @@ void unitemp_scene_sensor_edit_name_on_enter(void* context) {
     TextInput* text_input = app->text_input;
     app->editable_sensor->name[10] = 0;
 
-    text_input_set_header_text(text_input, "Enter the sensor name:");
+    text_input_set_header_text(
+        text_input, UNITEMP_UI_TEXT("Enter the sensor name:", "输入传感器名称:"));
     text_input_set_result_callback(
         text_input,
         unitemp_scene_sensor_edit_name_text_input_callback,

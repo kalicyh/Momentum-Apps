@@ -34,8 +34,8 @@ static const char* card_types[] = {
 
 static const char* ppk_card_types[] = {
     SAFLIP_UI_TEXT("Standard Key", "标准钥匙"),
-    SAFLIP_UI_TEXT("LED Diagnostic", "LED诊断"),
-    SAFLIP_UI_TEXT("Dis/Enable E2 Changes", "启用/禁用E2修改"),
+    SAFLIP_UI_TEXT("LED Diagnostic", "LED 诊断"),
+    SAFLIP_UI_TEXT("Dis/Enable E2 Changes", "启用/禁用 E2 修改"),
     SAFLIP_UI_TEXT("Erase Lock (E2) Memory", "擦除锁(E2)存储"),
     SAFLIP_UI_TEXT("Battery Disconect", "电池断开"),
     SAFLIP_UI_TEXT("Display Key", "显示钥匙"),
@@ -110,7 +110,7 @@ void saflip_scene_info_on_enter(void* context) {
 
     furi_string_cat_printf(temp_str, SAFLIP_UI_TEXT("Card ID: %d\n", "卡号: %d\n"), app->data->card_id);
     furi_string_cat_printf(temp_str, SAFLIP_UI_TEXT("Opening Key: %s\n", "开门钥匙: %s\n"), app->data->opening_key ? SAFLIP_UI_TEXT("Yes", "是") : SAFLIP_UI_TEXT("No", "否"));
-    furi_string_cat_printf(temp_str, SAFLIP_UI_TEXT("Lock ID: %d\n", "锁号: %d\n"), app->data->lock_id);
+    furi_string_cat_printf(temp_str, SAFLIP_UI_TEXT("Lock ID: %d\n", "锁 ID: %d\n"), app->data->lock_id);
     furi_string_cat_printf(temp_str, SAFLIP_UI_TEXT("Pass #/Areas: %d\n", "通行证/区域: %d\n"), app->data->pass_number);
 
     furi_string_cat_printf(

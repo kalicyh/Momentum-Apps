@@ -425,7 +425,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
                 canvas_set_font(canvas, FontSecondary);
 
                 const char* strConnectModule =
-                    WIFI_SCANNER_UI_TEXT("Attach WiFi scanner module", "请连接WiFi扫描模块");
+                    WIFI_SCANNER_UI_TEXT("Attach WiFi scanner module", "请连接 WiFi 扫描模块");
                 canvas_draw_str(
                     canvas,
                     (128 / 2) - (canvas_string_width(canvas, strConnectModule) / 2),
@@ -463,7 +463,7 @@ static void wifi_module_render_callback(Canvas* const canvas, void* ctx) {
                 offsetX,
                 offsetY,
                 app->m_currentAccesspointDescription.m_isHidden ?
-                    WIFI_SCANNER_UI_TEXT("(Hidden SSID)", "(隐藏SSID)") :
+                    WIFI_SCANNER_UI_TEXT("(Hidden SSID)", "(隐藏 SSID)") :
                     furi_string_get_cstr(app->m_currentAccesspointDescription.m_accessPointName));
 
             offsetY += fontHeight;

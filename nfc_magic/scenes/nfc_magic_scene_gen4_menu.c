@@ -20,16 +20,20 @@ void nfc_magic_scene_gen4_menu_on_enter(void* context) {
 
     Submenu* submenu = instance->submenu;
     submenu_add_item(
-        submenu, "Write", SubmenuIndexWrite, nfc_magic_scene_gen4_menu_submenu_callback, instance);
+        submenu,
+        NFC_MAGIC_UI_TEXT("Write", "写入"),
+        SubmenuIndexWrite,
+        nfc_magic_scene_gen4_menu_submenu_callback,
+        instance);
     submenu_add_item(
         submenu,
-        "Change password",
+        NFC_MAGIC_UI_TEXT("Change password", "修改密码"),
         SubmenuIndexChangePassword,
         nfc_magic_scene_gen4_menu_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Set Shadow Mode",
+        NFC_MAGIC_UI_TEXT("Set Shadow Mode", "设置 Shadow Mode"),
         SubmenuIndexSetShadowMode,
         nfc_magic_scene_gen4_menu_submenu_callback,
         instance);
@@ -37,7 +41,7 @@ void nfc_magic_scene_gen4_menu_on_enter(void* context) {
        Gen4DirectWriteBlock0ModeEnabled) {
         submenu_add_item(
             submenu,
-            "Disable Direct Write Mode",
+            NFC_MAGIC_UI_TEXT("Disable Direct Write Mode", "禁用 Direct Write"),
             SubmenuIndexSetDirectWriteBlock0Mode,
             nfc_magic_scene_gen4_menu_submenu_callback,
             instance);
@@ -48,7 +52,7 @@ void nfc_magic_scene_gen4_menu_on_enter(void* context) {
     } else {
         submenu_add_item(
             submenu,
-            "Enable Direct Write Mode",
+            NFC_MAGIC_UI_TEXT("Enable Direct Write Mode", "启用 Direct Write"),
             SubmenuIndexSetDirectWriteBlock0Mode,
             nfc_magic_scene_gen4_menu_submenu_callback,
             instance);
@@ -59,9 +63,17 @@ void nfc_magic_scene_gen4_menu_on_enter(void* context) {
     }
 
     submenu_add_item(
-        submenu, "Wipe", SubmenuIndexWipe, nfc_magic_scene_gen4_menu_submenu_callback, instance);
+        submenu,
+        NFC_MAGIC_UI_TEXT("Wipe", "擦除"),
+        SubmenuIndexWipe,
+        nfc_magic_scene_gen4_menu_submenu_callback,
+        instance);
     submenu_add_item(
-        submenu, "Info", SubmenuIndexInfo, nfc_magic_scene_gen4_menu_submenu_callback, instance);
+        submenu,
+        NFC_MAGIC_UI_TEXT("Info", "信息"),
+        SubmenuIndexInfo,
+        nfc_magic_scene_gen4_menu_submenu_callback,
+        instance);
 
     submenu_set_selected_item(
         submenu, scene_manager_get_scene_state(instance->scene_manager, NfcMagicSceneGen4Menu));

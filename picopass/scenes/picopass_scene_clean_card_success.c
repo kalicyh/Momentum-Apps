@@ -21,19 +21,19 @@ void picopass_scene_clean_card_success_on_enter(void* context) {
     widget_add_button_element(
         widget,
         GuiButtonTypeLeft,
-        "Retry",
+        PICOPASS_UI_TEXT("Retry", "重试"),
         picopass_scene_clean_card_success_widget_callback,
         picopass);
 
     widget_add_button_element(
         widget,
         GuiButtonTypeRight,
-        "Menu",
+        PICOPASS_UI_TEXT("Menu", "菜单"),
         picopass_scene_clean_card_success_widget_callback,
         picopass);
 
     widget_add_string_element(
-        widget, 64, 5, AlignCenter, AlignCenter, FontSecondary, "MKF Tag Cleaned!");
+        widget, 64, 5, AlignCenter, AlignCenter, FontSecondary, PICOPASS_UI_TEXT("MKF Tag Cleaned!", "MKF 标签已清理!"));
 
     view_dispatcher_switch_to_view(picopass->view_dispatcher, PicopassViewWidget);
 }

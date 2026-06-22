@@ -30,11 +30,11 @@ void seader_scene_sam_missing_on_enter(void* context) {
         seader->temp_string2, seader_board_status_detail_hint(seader->board_status));
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Back", seader_scene_sam_missing_widget_callback, seader);
+        widget, GuiButtonTypeLeft, SEADER_UI_TEXT("Back", "返回"), seader_scene_sam_missing_widget_callback, seader);
     widget_add_button_element(
-        widget, GuiButtonTypeCenter, "Saved", seader_scene_sam_missing_widget_callback, seader);
+        widget, GuiButtonTypeCenter, SEADER_UI_TEXT("Saved", "已保存"), seader_scene_sam_missing_widget_callback, seader);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Retry", seader_scene_sam_missing_widget_callback, seader);
+        widget, GuiButtonTypeRight, SEADER_UI_TEXT("Retry", "重试"), seader_scene_sam_missing_widget_callback, seader);
 
     widget_add_string_element(
         widget,

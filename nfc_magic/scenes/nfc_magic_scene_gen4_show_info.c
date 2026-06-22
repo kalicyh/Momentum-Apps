@@ -90,7 +90,7 @@ void nfc_magic_scene_gen4_show_info_on_enter(void* context) {
     widget_add_button_element(
         widget,
         GuiButtonTypeRight,
-        "More",
+        NFC_MAGIC_UI_TEXT("More", "更多"),
         nfc_magic_scene_gen4_show_info_widget_callback,
         instance);
 

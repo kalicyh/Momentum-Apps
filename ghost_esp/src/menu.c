@@ -306,34 +306,49 @@ static const MenuCommand wifi_scanning_commands[] = {
         .details_text = GHOST_ESP_UI_TEXT("Stops Pineapple detection mode.", "停止 Pineapple 检测模式。"),
     },
     {
-        .label = "Flock Detection",
+        .label = GHOST_ESP_UI_TEXT("Flock Detection", "Flock 检测"),
         .command = "flockscan\n",
-        .details_header = "Flock Detection",
-        .details_text = "Detect Flock Safety cameras,\n"
-                        "extended battery units, and\n"
-                        "Penguin surveillance devices\n"
-                        "on 2.4 GHz Wi-Fi.\n"
-                        "Uses OUI matching, wildcard\n"
-                        "probe detection, and SSID\n"
-                        "keyword matching.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Flock Detection", "Flock 检测"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Detect Flock Safety cameras,\n"
+            "extended battery units, and\n"
+            "Penguin surveillance devices\n"
+            "on 2.4 GHz Wi-Fi.\n"
+            "Uses OUI matching, wildcard\n"
+            "probe detection, and SSID\n"
+            "keyword matching.\n",
+            "检测 2.4GHz WiFi 上的\n"
+            "Flock Safety 摄像头、\n"
+            "扩展电池单元和 Penguin\n"
+            "监控设备。\n"
+            "使用 OUI 匹配、通配\n"
+            "探测检测和 SSID\n"
+            "关键词匹配。\n"),
     },
     {
-        .label = "Flock List",
+        .label = GHOST_ESP_UI_TEXT("Flock List", "Flock 列表"),
         .command = "flocklist\n",
-        .details_header = "Flock List",
-        .details_text = "List detected Flock Safety\n"
-                        "surveillance devices.\n"
-                        "Run after Flock Detection.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Flock List", "Flock 列表"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "List detected Flock Safety\n"
+            "surveillance devices.\n"
+            "Run after Flock Detection.\n",
+            "列出已检测到的 Flock Safety\n"
+            "监控设备。\n"
+            "请先运行 Flock 检测。\n"),
     },
     {
-        .label = "Stop Flock Detection",
+        .label = GHOST_ESP_UI_TEXT("Stop Flock Detection", "停止 Flock 检测"),
         .command = "flockstop\n",
-        .details_header = "Stop Flock Detection",
-        .details_text = "Stops Flock Safety camera\n"
-                        "detection scanning.\n",
+        .details_header = GHOST_ESP_UI_TEXT("Stop Flock Detection", "停止 Flock 检测"),
+        .details_text = GHOST_ESP_UI_TEXT(
+            "Stops Flock Safety camera\n"
+            "detection scanning.\n",
+            "停止 Flock Safety 摄像头\n"
+            "检测扫描。\n"),
     },
     {
-        .label = "Channel Congestion",
+        .label = GHOST_ESP_UI_TEXT("Channel Congestion", "信道拥塞"),
         .command = "congestion\n",
         .details_header = GHOST_ESP_UI_TEXT("Channel Congestion", "信道拥塞"),
         .details_text = GHOST_ESP_UI_TEXT("Display Wi-Fi channel\ncongestion chart.\n", "显示 WiFi 信道\n拥塞图表。\n"),

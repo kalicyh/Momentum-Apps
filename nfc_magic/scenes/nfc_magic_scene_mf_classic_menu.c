@@ -17,13 +17,13 @@ void nfc_magic_scene_mf_classic_menu_on_enter(void* context) {
     Submenu* submenu = instance->submenu;
     submenu_add_item(
         submenu,
-        "Write",
+        NFC_MAGIC_UI_TEXT("Write", "写入"),
         SubmenuIndexWrite,
         nfc_magic_scene_mf_classic_menu_submenu_callback,
         instance);
     submenu_add_item(
         submenu,
-        "Wipe",
+        NFC_MAGIC_UI_TEXT("Wipe", "擦除"),
         SubmenuIndexWipe,
         nfc_magic_scene_mf_classic_menu_submenu_callback,
         instance);

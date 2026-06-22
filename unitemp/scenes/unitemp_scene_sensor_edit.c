@@ -38,7 +38,8 @@ static void _onewire_scan_event_callback(void* context) {
     bool result = unitemp_onewire_scan(ow_sensor);
     FURI_CRITICAL_EXIT();
     if(!result) {
-        variable_item_set_current_value_text(onewire_scan_item, "not found");
+        variable_item_set_current_value_text(
+            onewire_scan_item, UNITEMP_UI_TEXT("not found", "未找到"));
     } else {
         snprintf(
             app->txt_buff,
@@ -60,7 +61,7 @@ static void _i2c_scan_event_callback(void* context) {
     i2c_addr = unitemp_i2c_bus_scan_next(i2c_sensor);
 
     if(!i2c_addr) {
-        variable_item_set_current_value_text(i2c_addr_item, "not found");
+        variable_item_set_current_value_text(i2c_addr_item, UNITEMP_UI_TEXT("not found", "未找到"));
         variable_item_set_values_count(i2c_addr_item, 1);
         variable_item_set_current_value_index(i2c_addr_item, 0);
 
@@ -225,12 +226,16 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
 
     //Sensor name
     item = variable_item_list_add(
-        var_item_list, "Name", strlen(sensor->name) > 7 ? 1 : 2, _name_change_callback, app);
+        var_item_list,
+        UNITEMP_UI_TEXT("Name", "名称"),
+        strlen(sensor->name) > 7 ? 1 : 2,
+        _name_change_callback,
+        app);
     variable_item_set_current_value_index(item, 0);
     variable_item_set_current_value_text(item, sensor->name);
 
     //Sensor model (not editable)
-    model_item = variable_item_list_add(var_item_list, "Model", 1, NULL, NULL);
+    model_item = variable_item_list_add(var_item_list, UNITEMP_UI_TEXT("Model", "型号"), 1, NULL, NULL);
     variable_item_set_current_value_index(model_item, 0);
     variable_item_set_current_value_text(
         model_item,
@@ -241,7 +246,7 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
     if(sensor->model->interface == &unitemp_i2c) {
         i2c_addr_item = variable_item_list_add(
             var_item_list,
-            "I2C address",
+            UNITEMP_UI_TEXT("I2C address", "I2C 地址"),
             (((I2CSensor*)sensor->instance)->max_i2c_adress >> 1) -
                 (((I2CSensor*)sensor->instance)->min_i2c_adress >> 1) + 1,
             _i2c_addr_change_callback,
@@ -256,7 +261,7 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
             variable_item_set_current_value_text(i2c_addr_item, app->txt_buff);
         } else {
             variable_item_set_values_count(i2c_addr_item, 1);
-            variable_item_set_current_value_text(i2c_addr_item, "Scan");
+            variable_item_set_current_value_text(i2c_addr_item, UNITEMP_UI_TEXT("Scan", "扫描"));
             variable_item_set_current_value_index(i2c_addr_item, 0);
         }
     }
@@ -278,7 +283,8 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
         UNITEMP_DEBUG("aviable %d values", aviable_gpio_count);
         gpio_pin_item = variable_item_list_add(
             var_item_list,
-            sensor->model->interface == &unitemp_spi ? "CS pin" : "Data pin",
+            sensor->model->interface == &unitemp_spi ? UNITEMP_UI_TEXT("CS pin", "CS 引脚") :
+                                                        UNITEMP_UI_TEXT("Data pin", "数据引脚"),
             aviable_gpio_count,
             _gpio_change_callback,
             app);
@@ -297,10 +303,10 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
     // Device address on the one wire bus (for one wire sensors)
     if(sensor->model->interface == &unitemp_1w) {
         onewire_scan_item = variable_item_list_add(
-            var_item_list, "Device ID", 2, _onwire_addr_change_callback, app);
+            var_item_list, UNITEMP_UI_TEXT("Device ID", "设备 ID"), 2, _onwire_addr_change_callback, app);
         OneWireSensor* ow_sensor = sensor->instance;
         if(ow_sensor->family_code == 0) {
-            variable_item_set_current_value_text(onewire_scan_item, "Scan");
+            variable_item_set_current_value_text(onewire_scan_item, UNITEMP_UI_TEXT("Scan", "扫描"));
         } else {
             snprintf(
                 app->txt_buff,
@@ -314,7 +320,8 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
     }
 
     //Temperature offset
-    item = variable_item_list_add(var_item_list, "Temp. offset", 41, _offset_change_callback, app);
+    item = variable_item_list_add(
+        var_item_list, UNITEMP_UI_TEXT("Temp. offset", "温度偏移"), 41, _offset_change_callback, app);
     variable_item_set_current_value_index(item, sensor->temperature_offset + 20);
 
     snprintf(
@@ -325,7 +332,7 @@ void unitemp_scene_sensor_edit_on_enter(void* context) {
     variable_item_set_current_value_text(item, app->txt_buff);
 
     if(!unitemp_sensor_in_list(sensor)) {
-        variable_item_list_add(var_item_list, "Save", 1, NULL, NULL);
+        variable_item_list_add(var_item_list, UNITEMP_UI_TEXT("Save", "保存"), 1, NULL, NULL);
     }
 
     view_dispatcher_switch_to_view(app->view_dispatcher, UnitempViewVariableList);

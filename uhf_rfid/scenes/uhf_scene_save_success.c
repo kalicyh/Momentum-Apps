@@ -13,7 +13,7 @@ void uhf_scene_save_success_on_enter(void* context) {
     // Setup view
     Popup* popup = uhf_app->popup;
     popup_set_icon(popup, 36, 5, &I_DolphinDone_80x58);
-    popup_set_header(popup, UHF_UI_TEXT("Saved!", "已保存!"), 13, 22, AlignLeft, AlignBottom);
+    popup_set_header(popup, UHF_UI_TEXT("Saved!", "已保存！"), 13, 22, AlignLeft, AlignBottom);
     popup_set_timeout(popup, 1500);
     popup_set_context(popup, uhf_app);
     popup_set_callback(popup, uhf_scene_save_success_popup_callback);

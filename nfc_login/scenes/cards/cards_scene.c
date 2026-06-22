@@ -33,5 +33,5 @@ void app_render_card_list(App* app) {
             }
         }
     }
-    widget_add_string_element(app->widget, 0, 54, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("OK=Sel  Hold OK=Edit  >Import", "OK=选 长按OK=编 >导入"));
+    widget_add_string_element(app->widget, 0, 54, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("OK=Sel  Hold OK=Edit  >Import", "OK=选 长按 OK=编 >导入"));
 }

@@ -3,13 +3,13 @@
 static const char* seader_scene_read_card_type_label(SeaderCredentialType type) {
     switch(type) {
     case SeaderCredentialType14A:
-        return "Read as 14443A";
+        return SEADER_UI_TEXT("Read as 14443A", "按 14443A 读取");
     case SeaderCredentialTypeMifareClassic:
-        return "Read as Mifare Classic";
+        return SEADER_UI_TEXT("Read as Mifare Classic", "按 Mifare Classic 读取");
     case SeaderCredentialTypePicopass:
-        return "Read as Picopass";
+        return SEADER_UI_TEXT("Read as Picopass", "按 Picopass 读取");
     default:
-        return "Read";
+        return SEADER_UI_TEXT("Read", "读取");
     }
 }
 

@@ -311,8 +311,8 @@ void uhf_reader_setting_lock_action_change(VariableItem* Item) {
 */
 void view_lock_alloc(UHFReaderApp* App) {
     //Setting variables
-    App->SettingApLabel = RFID_READER_UI_TEXT("Set AP", "设置AP");
-    App->SetAccessPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Access Password!", "输入访问密码!"));
+    App->SettingApLabel = RFID_READER_UI_TEXT("Set AP", "设置 AP");
+    App->SetAccessPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Access Password!", "输入访问密码！"));
     App->SettingApDefaultPassword = strdup("00000000");
 
     //Options for different banks to lock following the Gen2 Protocol Standard https://www.gs1.org/sites/default/files/docs/epc/Gen2_Protocol_Standard.pdf
@@ -342,7 +342,7 @@ void view_lock_alloc(UHFReaderApp* App) {
     App->DefaultLockType = Unlock;
     //The Button for executing the desired lock command and storing the output
     App->SettingLockExecuteConfigLabel = RFID_READER_UI_TEXT("Execute", "执行");
-    App->SettingLockExecuteResult = strdup(RFID_READER_UI_TEXT("Press Me!", "按此执行!"));
+    App->SettingLockExecuteResult = strdup(RFID_READER_UI_TEXT("Press Me!", "按此执行！"));
 
     //Allocating the set access password menu
     access_password_menu_alloc(App);

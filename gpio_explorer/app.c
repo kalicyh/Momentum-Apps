@@ -77,13 +77,13 @@ static struct gpio_explorer_app_struct * gpio_explorer_app_alloc() {
         app);
     submenu_add_item(
         app->submenu,
-        GPIO_EXPLORER_UI_TEXT("RGB Light", "RGB灯"),
+        GPIO_EXPLORER_UI_TEXT("RGB Light", "RGB 灯"),
         GPIOExplorerSubmenuIndexRGBLignt,
         gpio_explorer_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        GPIO_EXPLORER_UI_TEXT("GPIO Reader", "GPIO读取"),
+        GPIO_EXPLORER_UI_TEXT("GPIO Reader", "GPIO 读取"),
         GPIOExplorerSubmenuIndexGPIORearder,
         gpio_explorer_submenu_callback,
         app);
@@ -679,4 +679,3 @@ static void gpio_reader_switch_pin(struct gpio_explorer_gpio_reader_struct* mode
     furi_hal_gpio_init(pins[model->curr_pin_index], GpioModeInput, GpioPullDown, GpioSpeedHigh);
     model->curr_pin_state = furi_hal_gpio_read(pins[model->curr_pin_index]);
 }
-

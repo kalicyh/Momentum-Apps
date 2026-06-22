@@ -8,8 +8,8 @@ static const char* nfc_eink_scene_settings_write_mode[] = {
 };
 
 static const char* nfc_eink_scene_settings_invert_image[] = {
-    "OFF",
-    "ON",
+    NFC_EINK_UI_TEXT("OFF", "关"),
+    NFC_EINK_UI_TEXT("ON", "开"),
 };
 
 static void nfc_eink_scene_settings_write_mode_change_callback(VariableItem* item) {

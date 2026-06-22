@@ -108,7 +108,7 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         canvas_draw_str(canvas, 0, 40, progress);
         
         if(input_button_count >= stored_button_count) {
-            canvas_draw_str(canvas, 0, 52, NFC_LOGIN_UI_TEXT("Press OK to verify", "按OK验证"));
+            canvas_draw_str(canvas, 0, 52, NFC_LOGIN_UI_TEXT("Press OK to verify", "按 OK 验证"));
         } else {
             canvas_draw_str(canvas, 0, 52, NFC_LOGIN_UI_TEXT("Enter passcode...", "输入密码..."));
         }
@@ -141,7 +141,7 @@ static void passcode_canvas_draw_callback(Canvas* canvas, void* context) {
         
         // Show instruction
         if(input_button_count >= MIN_PASSCODE_BUTTONS && input_button_count <= MAX_PASSCODE_BUTTONS) {
-            canvas_draw_str(canvas, 0, 40, NFC_LOGIN_UI_TEXT("Press OK when done", "完成后按OK"));
+            canvas_draw_str(canvas, 0, 40, NFC_LOGIN_UI_TEXT("Press OK when done", "完成后按 OK"));
         } else {
             canvas_draw_str(canvas, 0, 40, NFC_LOGIN_UI_TEXT("Need 4-8 buttons", "需要4-8个按键"));
         }
@@ -198,4 +198,3 @@ void passcode_canvas_view_free(View* view) {
     g_app_context = NULL;
     view_free(view);
 }
-

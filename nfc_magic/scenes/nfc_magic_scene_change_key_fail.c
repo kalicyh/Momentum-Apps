@@ -18,12 +18,18 @@ void nfc_magic_scene_change_key_fail_on_enter(void* context) {
 
     widget_add_icon_element(widget, 83, 22, &I_WarningDolphinFlip_45x42);
     widget_add_string_element(
-        widget, 7, 4, AlignLeft, AlignTop, FontPrimary, "Can't change password!");
+        widget,
+        7,
+        4,
+        AlignLeft,
+        AlignTop,
+        FontPrimary,
+        NFC_MAGIC_UI_TEXT("Can't change password!", "无法修改密码!"));
 
     widget_add_button_element(
         widget,
         GuiButtonTypeLeft,
-        "Finish",
+        NFC_MAGIC_UI_TEXT("Finish", "完成"),
         nfc_magic_scene_change_key_fail_widget_callback,
         instance);
 

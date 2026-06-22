@@ -16,7 +16,7 @@ static void seader_scene_sam_present_rebuild_menu(Seader* seader, uint32_t selec
     submenu_reset(submenu);
 
     submenu_add_item(
-        submenu, "Read HF", SubmenuIndexRead, seader_scene_sam_present_submenu_callback, seader);
+        submenu, SEADER_UI_TEXT("Read HF", "读取 HF"), SubmenuIndexRead, seader_scene_sam_present_submenu_callback, seader);
     submenu_add_item(
         submenu, SEADER_UI_TEXT("Saved", "已保存"), SubmenuIndexSaved, seader_scene_sam_present_submenu_callback, seader);
 
@@ -32,7 +32,7 @@ static void seader_scene_sam_present_rebuild_menu(Seader* seader, uint32_t selec
     if(apdu_log_check_presence(SEADER_APDU_RUNNER_FILE_NAME)) {
         submenu_add_item(
             submenu,
-            SEADER_UI_TEXT("Run APDUs", "运行APDU"),
+            SEADER_UI_TEXT("Run APDUs", "运行 APDU"),
             SubmenuIndexAPDURunner,
             seader_scene_sam_present_submenu_callback,
             seader);

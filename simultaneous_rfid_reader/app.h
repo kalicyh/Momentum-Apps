@@ -18,13 +18,13 @@
 
 //Creating different messages used for display
 #define TAG "simultaneous_rfid_reader"
-#define WRITE_EPC_VAL RFID_READER_UI_TEXT("EPC Value", "EPC值")
+#define WRITE_EPC_VAL RFID_READER_UI_TEXT("EPC Value", "EPC 值")
 #define WRITE_RES_MEM RFID_READER_UI_TEXT("Reserved Memory", "保留存储")
 #define WRITE_USR_MEM RFID_READER_UI_TEXT("User Memory", "用户存储")
-#define WRITE_TID_MEM RFID_READER_UI_TEXT("TID Value", "TID值")
-#define WRITE_EPC_OK RFID_READER_UI_TEXT("EPC Written!", "写入成功!")
-#define WRITE_EPC_CANCELED RFID_READER_UI_TEXT("Write Canceled!", "写入取消!")
-#define WRITE_EPC_FAIL RFID_READER_UI_TEXT("Write Failed!", "写入失败!")
+#define WRITE_TID_MEM RFID_READER_UI_TEXT("TID Value", "TID 值")
+#define WRITE_EPC_OK RFID_READER_UI_TEXT("EPC Written!", "写入成功！")
+#define WRITE_EPC_CANCELED RFID_READER_UI_TEXT("Write Canceled!", "写入取消！")
+#define WRITE_EPC_FAIL RFID_READER_UI_TEXT("Write Failed!", "写入失败！")
 
 //Content for the about screen
 #define UHF_RFID_VERSION_APP "1.1.2"

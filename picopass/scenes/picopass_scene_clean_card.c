@@ -57,7 +57,8 @@ void picopass_scene_clean_card_on_enter(void* context) {
 
     // Setup view
     Popup* popup = picopass->popup;
-    popup_set_header(popup, "Cleaning\nMKF tag", 68, 30, AlignLeft, AlignTop);
+    popup_set_header(
+        popup, PICOPASS_UI_TEXT("Cleaning\nMKF tag", "正在清理\nMKF 标签"), 68, 30, AlignLeft, AlignTop);
     popup_set_icon(popup, 0, 3, &I_RFIDDolphinSend_97x61);
     scene_manager_set_scene_state(
         picopass->scene_manager, PicopassSceneCleanCard, CleanCardKeyAttemptHid);

@@ -26,13 +26,33 @@ void cancommander_scene_dbc_menu_on_enter(void* context) {
 
     submenu_reset(app->submenu);
 
-    submenu_add_item(app->submenu, "DBC Clear", DbcClear, cancommander_scene_dbc_menu_callback, app);
-    submenu_add_item(app->submenu, "DBC Add", DbcAdd, cancommander_scene_dbc_menu_callback, app);
-    submenu_add_item(app->submenu, "DBC Remove", DbcRemove, cancommander_scene_dbc_menu_callback, app);
-    submenu_add_item(app->submenu, "DBC List", DbcList, cancommander_scene_dbc_menu_callback, app);
     submenu_add_item(
         app->submenu,
-        "Save DBC Profile",
+        CAN_COMMANDER_UI_TEXT("DBC Clear", "清空 DBC"),
+        DbcClear,
+        cancommander_scene_dbc_menu_callback,
+        app);
+    submenu_add_item(
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("DBC Add", "添加 DBC"),
+        DbcAdd,
+        cancommander_scene_dbc_menu_callback,
+        app);
+    submenu_add_item(
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("DBC Remove", "移除 DBC"),
+        DbcRemove,
+        cancommander_scene_dbc_menu_callback,
+        app);
+    submenu_add_item(
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("DBC List", "DBC 列表"),
+        DbcList,
+        cancommander_scene_dbc_menu_callback,
+        app);
+    submenu_add_item(
+        app->submenu,
+        CAN_COMMANDER_UI_TEXT("Save DBC Profile", "保存 DBC 配置"),
         DbcSaveConfig,
         cancommander_scene_dbc_menu_callback,
         app);

@@ -494,7 +494,7 @@ bool uhf_reader_view_write_input_callback(InputEvent* event, void* context) {
     if(event->type == InputTypeShort) {
         //If the left button is pressed, then pull up the EPC value and keyboard
         if(event->key == InputKeyLeft && !App->IsWriting) {
-            text_input_set_header_text(App->EpcWrite, RFID_READER_UI_TEXT("EPC Value", "EPC值"));
+            text_input_set_header_text(App->EpcWrite, RFID_READER_UI_TEXT("EPC Value", "EPC 值"));
 
             bool redraw = false;
             with_view_model(
@@ -693,12 +693,12 @@ void view_write_alloc(UHFReaderApp* App) {
     ModelWrite->Pc = furi_string_alloc_set("XXXX");
     ModelWrite->Crc = furi_string_alloc_set("XXXX");
     FuriString* EpcWriteDefault = furi_string_alloc();
-    furi_string_set_str(EpcWriteDefault, RFID_READER_UI_TEXT("Press Write", "按OK写入"));
+    furi_string_set_str(EpcWriteDefault, RFID_READER_UI_TEXT("Press Write", "按 OK 写入"));
     FuriString* EpcValueWriteDefault = furi_string_alloc();
-    furi_string_set_str(EpcValueWriteDefault, RFID_READER_UI_TEXT("Press Write", "按OK写入"));
+    furi_string_set_str(EpcValueWriteDefault, RFID_READER_UI_TEXT("Press Write", "按 OK 写入"));
     ModelWrite->EpcValue = EpcValueWriteDefault;
     FuriString* EpcValueWriteStatus = furi_string_alloc();
-    furi_string_set_str(EpcValueWriteStatus, RFID_READER_UI_TEXT("Press Write", "按OK写入"));
+    furi_string_set_str(EpcValueWriteStatus, RFID_READER_UI_TEXT("Press Write", "按 OK 写入"));
     ModelWrite->WriteStatus = EpcValueWriteStatus;
     FuriString* WriteDefaultEpc = furi_string_alloc();
     ModelWrite->NewEpcValue = WriteDefaultEpc;
@@ -709,7 +709,7 @@ void view_write_alloc(UHFReaderApp* App) {
     furi_string_set_str(DefaultWriteTid, RFID_READER_UI_TEXT("TID HERE", "TID"));
     ModelWrite->TidValue = DefaultWriteTid;
     FuriString* DefaultWriteTidNew = furi_string_alloc();
-    furi_string_set_str(DefaultWriteTidNew, RFID_READER_UI_TEXT("NEW TID HERE", "新TID"));
+    furi_string_set_str(DefaultWriteTidNew, RFID_READER_UI_TEXT("NEW TID HERE", "新 TID"));
     ModelWrite->NewTidValue = DefaultWriteTidNew;
     FuriString* DefaultWriteRes = furi_string_alloc();
     furi_string_set_str(DefaultWriteRes, RFID_READER_UI_TEXT("RES HERE", "保留区"));

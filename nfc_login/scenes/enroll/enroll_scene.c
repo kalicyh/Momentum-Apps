@@ -285,7 +285,7 @@ bool app_custom_event_callback(void* context, uint32_t event) {
         // Set up byte input for UID entry - allow up to MAX_UID_LEN bytes
         app->enrollment_card.uid_len = MAX_UID_LEN; // Allow full length, user can enter less
         memset(app->enrollment_card.uid, 0, sizeof(app->enrollment_card.uid));
-        byte_input_set_header_text(app->byte_input, NFC_LOGIN_UI_TEXT("Enter UID (hex)", "输入UID(hex)"));
+        byte_input_set_header_text(app->byte_input, NFC_LOGIN_UI_TEXT("Enter UID (hex)", "输入 UID(hex)"));
         byte_input_set_result_callback(
             app->byte_input,
             app_enroll_uid_byte_input_done,

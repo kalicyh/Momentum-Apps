@@ -1,5 +1,11 @@
 #include "board_power_lifecycle.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SEADER_BOARD_TEXT(en, zh) (zh)
+#else
+#define SEADER_BOARD_TEXT(en, zh) (en)
+#endif
+
 #define SEADER_BOARD_POWER_AVAILABLE_MV 4500U
 
 SeaderBoardPowerAcquirePlan seader_board_power_plan_acquire(bool otg_already_enabled) {
@@ -90,17 +96,17 @@ const char* seader_board_status_label(SeaderBoardStatus status) {
     switch(status) {
     case SeaderBoardStatusFaultPreEnable:
     case SeaderBoardStatusFaultPostEnable:
-        return "Board Fault";
+        return SEADER_BOARD_TEXT("Board Fault", "读卡板故障");
     case SeaderBoardStatusNoResponse:
-        return "Board No Response";
+        return SEADER_BOARD_TEXT("Board No Response", "读卡板无响应");
     case SeaderBoardStatusPowerLost:
-        return "Power Lost";
+        return SEADER_BOARD_TEXT("Power Lost", "供电丢失");
     case SeaderBoardStatusRetryRequested:
-        return "Retry Board";
+        return SEADER_BOARD_TEXT("Retry Board", "重试读卡板");
     case SeaderBoardStatusPowerReadyPendingValidation:
-        return "Checking Board";
+        return SEADER_BOARD_TEXT("Checking Board", "检查读卡板");
     case SeaderBoardStatusReady:
-        return "Board Ready";
+        return SEADER_BOARD_TEXT("Board Ready", "读卡板就绪");
     case SeaderBoardStatusUnknown:
     default:
         return "NO SAM";

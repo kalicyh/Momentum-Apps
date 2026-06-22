@@ -144,12 +144,12 @@ void cancommander_scene_dbc_load_config_menu_on_enter(void* context) {
     cancommander_scene_dbc_config_list_scan();
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Load DBC Profile");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Load DBC Profile", "加载 DBC 配置"));
 
     if(cancommander_dbc_config_count == 0U) {
         submenu_add_item(
             app->submenu,
-            "No DBC profiles",
+            CAN_COMMANDER_UI_TEXT("No DBC profiles", "没有 DBC 配置"),
             0xFFU,
             cancommander_scene_dbc_load_config_menu_callback,
             app);

@@ -29,7 +29,7 @@ void xremote_infoscreen_draw(Canvas* canvas, XRemoteInfoscreenModel* model) {
     canvas_set_font(canvas, FontPrimary);
     canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Cross Remote", "Cross Remote"));
     canvas_set_font(canvas, FontSecondary);
-    canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Chain IR and SubGhz", "串联 IR 与 SubGhz"));
+    canvas_draw_str_aligned(canvas, 64, 22, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Chain IR and SubGhz", "串联 IR 与 Sub-GHz"));
     canvas_draw_str_aligned(canvas, 64, 32, AlignCenter, AlignTop, XREMOTE_UI_TEXT("Commands", "命令"));
 
     snprintf(buffer, sizeof(buffer), XREMOTE_UI_TEXT("Version: %s", "版本: %s"), XREMOTE_VERSION);

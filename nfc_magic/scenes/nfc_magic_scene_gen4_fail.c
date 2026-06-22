@@ -15,12 +15,28 @@ void nfc_magic_scene_gen4_fail_on_enter(void* context) {
 
     widget_add_icon_element(widget, 83, 22, &I_WarningDolphinFlip_45x42);
     widget_add_string_element(
-        widget, 7, 4, AlignLeft, AlignTop, FontPrimary, "Something gone wrong!");
+        widget,
+        7,
+        4,
+        AlignLeft,
+        AlignTop,
+        FontPrimary,
+        NFC_MAGIC_UI_TEXT("Something gone wrong!", "发生错误!"));
     widget_add_string_multiline_element(
-        widget, 7, 17, AlignLeft, AlignTop, FontSecondary, "No response. Maybe\nnot Gen4 card?");
+        widget,
+        7,
+        17,
+        AlignLeft,
+        AlignTop,
+        FontSecondary,
+        NFC_MAGIC_UI_TEXT("No response. Maybe\nnot Gen4 card?", "无响应，可能\n不是 Gen4 卡?"));
 
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Back", nfc_magic_scene_gen4_fail_widget_callback, instance);
+        widget,
+        GuiButtonTypeLeft,
+        NFC_MAGIC_UI_TEXT("Back", "返回"),
+        nfc_magic_scene_gen4_fail_widget_callback,
+        instance);
 
     // Setup and start worker
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewWidget);

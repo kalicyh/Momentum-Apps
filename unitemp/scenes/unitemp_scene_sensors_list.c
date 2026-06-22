@@ -44,7 +44,11 @@ void unitemp_scene_sensors_list_on_enter(void* context) {
     }
 
     submenu_add_item(
-        submenu, " * Need help? * ", sensor_models_count, unitemp_submenu_callback, app);
+        submenu,
+        UNITEMP_UI_TEXT(" * Need help? * ", " * 需要帮助? * "),
+        sensor_models_count,
+        unitemp_submenu_callback,
+        app);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, UnitempViewSubmenu);
 }
@@ -70,11 +74,16 @@ bool unitemp_scene_sensors_list_on_event(void* context, SceneManagerEvent event)
                     0,
                     64 - icon_get_height(&I_confused_dolph_43x31));
                 dialog_message_set_header(
-                    message, "Unable to add a sensor", 64, 6, AlignCenter, AlignCenter);
+                    message,
+                    UNITEMP_UI_TEXT("Unable to add a sensor", "无法添加传感器"),
+                    64,
+                    6,
+                    AlignCenter,
+                    AlignCenter);
                 if(model->interface == &unitemp_singlewire || model->interface == &unitemp_1w) {
                     dialog_message_set_text(
                         message,
-                        "All GPIO's are busy",
+                        UNITEMP_UI_TEXT("All GPIO's are busy", "所有 GPIO\n均被占用"),
                         (128 - icon_get_width(&I_confused_dolph_43x31)) / 2 +
                             icon_get_width(&I_confused_dolph_43x31),
                         36,
@@ -84,7 +93,7 @@ bool unitemp_scene_sensors_list_on_event(void* context, SceneManagerEvent event)
                 } else if(model->interface == &unitemp_i2c) {
                     dialog_message_set_text(
                         message,
-                        "GPIO's 15 or 16\nare busy",
+                        UNITEMP_UI_TEXT("GPIO's 15 or 16\nare busy", "GPIO 15 或 16\n已被占用"),
                         (128 - icon_get_width(&I_confused_dolph_43x31)) / 2 +
                             icon_get_width(&I_confused_dolph_43x31),
                         36,
@@ -94,7 +103,9 @@ bool unitemp_scene_sensors_list_on_event(void* context, SceneManagerEvent event)
                 } else if(model->interface == &unitemp_spi) {
                     dialog_message_set_text(
                         message,
-                        "GPIO's 1, 2 or 4\n are busy or there \nare no available pin\nfor CS wire",
+                        UNITEMP_UI_TEXT(
+                            "GPIO's 1, 2 or 4\n are busy or there \nare no available pin\nfor CS wire",
+                            "GPIO 1/2/4\n已占用，或\n没有可用\nCS 引脚"),
                         (128 - icon_get_width(&I_confused_dolph_43x31)) / 2 +
                             icon_get_width(&I_confused_dolph_43x31),
                         36,

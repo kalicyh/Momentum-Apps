@@ -12,7 +12,7 @@ void update_dictionary_keys(void* context) {
     view_dispatcher_remove_view(App->ViewDispatcher, UHFReaderViewSaved);
     submenu_free(App->SubmenuSaved);
     App->SubmenuSaved = submenu_alloc();
-    submenu_set_header(App->SubmenuSaved, "Saved EPCs");
+    submenu_set_header(App->SubmenuSaved, RFID_READER_UI_TEXT("Saved EPCs", "已保存 EPC"));
     uint32_t TotalTags = App->NumberOfSavedTags;
 
     // Open the saved epcs file and extract the tag name and create the submenu items
