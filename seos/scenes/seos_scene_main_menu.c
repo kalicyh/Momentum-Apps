@@ -40,7 +40,7 @@ void seos_scene_main_menu_on_enter(void* context) {
         seos);
     submenu_add_item(
         submenu,
-        SEOS_UI_TEXT("Start BLE Reader", "启动 BLE 读取"),
+        SEOS_UI_TEXT("Start BLE Reader", "启动 BLE 读卡器"),
         SubmenuIndexBLEReader,
         seos_scene_main_menu_submenu_callback,
         seos);

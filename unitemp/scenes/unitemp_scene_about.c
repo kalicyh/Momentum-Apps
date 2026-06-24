@@ -35,7 +35,9 @@ void unitemp_scene_about_on_enter(void* context) {
         16,
         121,
         44,
-        "Universal plugin for viewing the values of temperature\nsensors\n\e#Author: Quenon\ngithub.com/quen0n\n\e#Designer: Svaarich\ngithub.com/Svaarich\n\e#Issues & suggestions\ntiny.one/unitemp\n\e#Special thanks\nxMasterX\nvladin79\ndivinebird\njamisonderek\nkaklik\n...and everyone who helped \nwith development and \ntesting");
+        UNITEMP_UI_TEXT(
+            "Universal plugin for viewing the values of temperature\nsensors\n\e#Author: Quenon\ngithub.com/quen0n\n\e#Designer: Svaarich\ngithub.com/Svaarich\n\e#Issues & suggestions\ntiny.one/unitemp\n\e#Special thanks\nxMasterX\nvladin79\ndivinebird\njamisonderek\nkaklik\n...and everyone who helped \nwith development and \ntesting",
+            "通用温度传感器读数插件\n\e#作者: Quenon\ngithub.com/quen0n\n\e#设计: Svaarich\ngithub.com/Svaarich\n\e#问题与建议\ntiny.one/unitemp\n\e#特别感谢\nxMasterX\nvladin79\ndivinebird\njamisonderek\nkaklik\n...以及所有参与开发和测试的人"));
     furi_string_free(temp_str);
 
     view_dispatcher_switch_to_view(app->view_dispatcher, UnitempViewWidget);

@@ -14,6 +14,10 @@ typedef enum {
    NfcPlaylistSettings_DeleteSettings,
 } NfcPlaylistSettingsMenuSelection;
 
+static const char* nfc_playlist_settings_bool_text(bool value) {
+   return value ? NFC_PLAYLIST_UI_TEXT("ON", "开") : NFC_PLAYLIST_UI_TEXT("OFF", "关");
+}
+
 static void nfc_playlist_settings_scene_lock_state_check(void* context) {
    furi_assert(context);
    NfcPlaylist* nfc_playlist = context;
@@ -75,28 +79,30 @@ static void nfc_playlist_settings_scene_options_change_callback(VariableItem* it
    case NfcPlaylistSettings_LedIndicator:
       nfc_playlist->worker_info.settings->emulate_led_indicator = option_value_index;
       variable_item_set_current_value_text(
-         item, nfc_playlist->worker_info.settings->emulate_led_indicator ? "ON" : "OFF");
+         item,
+         nfc_playlist_settings_bool_text(
+            nfc_playlist->worker_info.settings->emulate_led_indicator));
       break;
    case NfcPlaylistSettings_SkipError:
       nfc_playlist->worker_info.settings->skip_error = option_value_index;
       variable_item_set_current_value_text(
-         item, nfc_playlist->worker_info.settings->skip_error ? "ON" : "OFF");
+         item, nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->skip_error));
       break;
    case NfcPlaylistSettings_Loop:
       nfc_playlist->worker_info.settings->loop = option_value_index;
       variable_item_set_current_value_text(
-         item, nfc_playlist->worker_info.settings->loop ? "ON" : "OFF");
+         item, nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->loop));
       break;
    case NfcPlaylistSettings_TimeControls:
       nfc_playlist->worker_info.settings->time_controls = option_value_index;
       variable_item_set_current_value_text(
-         item, nfc_playlist->worker_info.settings->time_controls ? "ON" : "OFF");
+         item, nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->time_controls));
 
       break;
    case NfcPlaylistSettings_UserControls:
       nfc_playlist->worker_info.settings->user_controls = option_value_index;
       variable_item_set_current_value_text(
-         item, nfc_playlist->worker_info.settings->user_controls ? "ON" : "OFF");
+         item, nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->user_controls));
       break;
    default:
       break;
@@ -148,7 +154,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
       emulation_led_indicator_setting, nfc_playlist->worker_info.settings->emulate_led_indicator);
    variable_item_set_current_value_text(
       emulation_led_indicator_setting,
-      nfc_playlist->worker_info.settings->emulate_led_indicator ? "ON" : "OFF");
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->emulate_led_indicator));
 
    VariableItem* emulation_skip_error_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
@@ -159,7 +165,8 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
    variable_item_set_current_value_index(
       emulation_skip_error_setting, nfc_playlist->worker_info.settings->skip_error);
    variable_item_set_current_value_text(
-      emulation_skip_error_setting, nfc_playlist->worker_info.settings->skip_error ? "ON" : "OFF");
+      emulation_skip_error_setting,
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->skip_error));
 
    VariableItem* loop_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
@@ -169,7 +176,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
       nfc_playlist);
    variable_item_set_current_value_index(loop_setting, nfc_playlist->worker_info.settings->loop);
    variable_item_set_current_value_text(
-      loop_setting, nfc_playlist->worker_info.settings->loop ? "ON" : "OFF");
+      loop_setting, nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->loop));
 
    VariableItem* time_controls_settings = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
@@ -180,7 +187,8 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
    variable_item_set_current_value_index(
       time_controls_settings, nfc_playlist->worker_info.settings->time_controls);
    variable_item_set_current_value_text(
-      time_controls_settings, nfc_playlist->worker_info.settings->time_controls ? "ON" : "OFF");
+      time_controls_settings,
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->time_controls));
 
    VariableItem* user_controls_setting = variable_item_list_add(
       nfc_playlist->views.variable_item_list,
@@ -191,7 +199,8 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
    variable_item_set_current_value_index(
       user_controls_setting, nfc_playlist->worker_info.settings->user_controls);
    variable_item_set_current_value_text(
-      user_controls_setting, nfc_playlist->worker_info.settings->user_controls ? "ON" : "OFF");
+      user_controls_setting,
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->user_controls));
 
    variable_item_list_add(
       nfc_playlist->views.variable_item_list, NFC_PLAYLIST_UI_TEXT("Back to defaults", "恢复默认设置"), 0, NULL, NULL);
@@ -206,7 +215,7 @@ void nfc_playlist_settings_scene_on_enter(void* context) {
 
    VariableItem* credits = variable_item_list_add(
       nfc_playlist->views.variable_item_list, "acegoal07, xtruan, WillyJL", 1, NULL, NULL);
-   variable_item_set_current_value_text(credits, "Credits");
+   variable_item_set_current_value_text(credits, NFC_PLAYLIST_UI_TEXT("Credits", "鸣谢"));
 
    variable_item_list_set_enter_callback(
       nfc_playlist->views.variable_item_list,
@@ -250,34 +259,37 @@ static void nfc_playlist_settings_update_view(void* context) {
       emulation_led_indicator_setting, nfc_playlist->worker_info.settings->emulate_led_indicator);
    variable_item_set_current_value_text(
       emulation_led_indicator_setting,
-      nfc_playlist->worker_info.settings->emulate_led_indicator ? "ON" : "OFF");
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->emulate_led_indicator));
 
    VariableItem* emulation_skip_error_setting = variable_item_list_get(
       nfc_playlist->views.variable_item_list, NfcPlaylistSettings_SkipError);
    variable_item_set_current_value_index(
       emulation_skip_error_setting, nfc_playlist->worker_info.settings->skip_error);
    variable_item_set_current_value_text(
-      emulation_skip_error_setting, nfc_playlist->worker_info.settings->skip_error ? "ON" : "OFF");
+      emulation_skip_error_setting,
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->skip_error));
 
    VariableItem* loop_setting =
       variable_item_list_get(nfc_playlist->views.variable_item_list, NfcPlaylistSettings_Loop);
    variable_item_set_current_value_index(loop_setting, nfc_playlist->worker_info.settings->loop);
    variable_item_set_current_value_text(
-      loop_setting, nfc_playlist->worker_info.settings->loop ? "ON" : "OFF");
+      loop_setting, nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->loop));
 
    VariableItem* time_controls_setting = variable_item_list_get(
       nfc_playlist->views.variable_item_list, NfcPlaylistSettings_TimeControls);
    variable_item_set_current_value_index(
       time_controls_setting, nfc_playlist->worker_info.settings->time_controls);
    variable_item_set_current_value_text(
-      time_controls_setting, nfc_playlist->worker_info.settings->time_controls ? "ON" : "OFF");
+      time_controls_setting,
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->time_controls));
 
    VariableItem* user_controls_setting = variable_item_list_get(
       nfc_playlist->views.variable_item_list, NfcPlaylistSettings_UserControls);
    variable_item_set_current_value_index(
       user_controls_setting, nfc_playlist->worker_info.settings->user_controls);
    variable_item_set_current_value_text(
-      user_controls_setting, nfc_playlist->worker_info.settings->user_controls ? "ON" : "OFF");
+      user_controls_setting,
+      nfc_playlist_settings_bool_text(nfc_playlist->worker_info.settings->user_controls));
 
    nfc_playlist_settings_scene_lock_state_check(nfc_playlist);
 }

@@ -108,7 +108,7 @@ void view_about_alloc(UHFReaderApp* App) {
             "- Press Down to see TID, EPC, User, and Reserved Memory\n"
             "- Press Left/Right to cycle through tags read (M6E & M7E Only)\n\n",
             " 读取菜单:\n"
-            "- 按OK开始/停止读取\n"
+            "- 按 OK 开始/停止读取\n"
             "- 按上键保存当前EPC\n"
             "- 长按上键暂停滚动\n"
             "- 按下键查看TID、EPC、用户区和保留区\n"
@@ -126,7 +126,7 @@ void view_about_alloc(UHFReaderApp* App) {
             "- Press Up to modify the User Memory Bank\n"
             "- Press Down to modify the TID (Supported but usually locked by manufacturer)\n\n",
             " 写入菜单:\n"
-            "- 按OK开始/停止写入\n"
+            "- 按 OK 开始/停止写入\n"
             "- 按左键修改EPC\n"
             "- 按右键修改保留区 (前4字节=销毁密码, 后4字节=访问密码)\n"
             "- 按上键修改用户区\n"
@@ -148,7 +148,7 @@ void view_about_alloc(UHFReaderApp* App) {
             "- 选择要锁定/解锁的存储区或密码\n"
             "- 选择锁定模式\n"
             "- 按执行按钮执行锁定操作\n"
-            "- 执行前请先在配置菜单中设置AP\n"
+            "- 执行前请先在配置菜单中设置 AP\n"
             "- 密码错误时会发出错误提示音\n\n"));
     furi_string_cat_printf(TmpString, "\e#%s\n", RFID_READER_UI_TEXT("Kill:", "销毁:"));
     furi_string_cat_printf(

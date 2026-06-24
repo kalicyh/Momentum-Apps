@@ -38,10 +38,21 @@ static void nfc_magic_scene_gen4_set_shd_mode_setup_view(NfcMagicApp* instance) 
     if(state == NfcMagicSceneGen4SetShadowModeStateCardSearch) {
         popup_set_icon(instance->popup, 0, 8, &I_NFC_manual_60x50);
         popup_set_text(
-            instance->popup, "Apply the\ncard\nto the back", 128, 32, AlignRight, AlignCenter);
+            instance->popup,
+            NFC_MAGIC_UI_TEXT("Apply the\ncard\nto the back", "将卡片\n贴近\n背面"),
+            128,
+            32,
+            AlignRight,
+            AlignCenter);
     } else {
         popup_set_icon(popup, 12, 23, &I_Loading_24);
-        popup_set_header(popup, "Configuring\nDon't move...", 52, 32, AlignLeft, AlignCenter);
+        popup_set_header(
+            popup,
+            NFC_MAGIC_UI_TEXT("Configuring\nDon't move...", "配置中\n请勿移动..."),
+            52,
+            32,
+            AlignLeft,
+            AlignCenter);
     }
 
     view_dispatcher_switch_to_view(instance->view_dispatcher, NfcMagicAppViewPopup);

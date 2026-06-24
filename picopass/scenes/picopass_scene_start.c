@@ -41,10 +41,14 @@ void picopass_scene_start_on_enter(void* context) {
         picopass_scene_start_submenu_callback,
         picopass);
     submenu_add_item(
-        submenu, "Loclass", SubmenuIndexLoclass, picopass_scene_start_submenu_callback, picopass);
+        submenu,
+        PICOPASS_UI_TEXT("Loclass", "Loclass"),
+        SubmenuIndexLoclass,
+        picopass_scene_start_submenu_callback,
+        picopass);
     submenu_add_item(
         submenu,
-        "Clean MKF",
+        PICOPASS_UI_TEXT("Clean MKF", "清理 MKF"),
         SubmenuIndexCleanMKF,
         picopass_scene_start_submenu_callback,
         picopass);
@@ -60,7 +64,7 @@ void picopass_scene_start_on_enter(void* context) {
         picopass);
     submenu_add_item(
         submenu,
-        "Elite Keygen Attack",
+        PICOPASS_UI_TEXT("Elite Keygen Attack", "Elite 密钥生成攻击"),
         SubmenuIndexKeygenAttack,
         picopass_scene_start_submenu_callback,
         picopass);

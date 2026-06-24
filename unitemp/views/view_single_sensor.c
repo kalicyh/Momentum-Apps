@@ -72,17 +72,17 @@ static void _draw_sensor_not_responding(Canvas* canvas, Sensor* sensor) {
         snprintf(
             temp_str,
             TEMP_STR_SIZE,
-            "Sensor waiting on %s",
+            UNITEMP_UI_TEXT("Sensor waiting on %s", "等待传感器 %s"),
             ((SingleWireSensor*)sensor->instance)->data_pin->name);
     } else if(sensor->model->interface == &unitemp_i2c) {
-        snprintf(temp_str, TEMP_STR_SIZE, "Sensor waiting on SDA & SCL");
+        snprintf(temp_str, TEMP_STR_SIZE, UNITEMP_UI_TEXT("Sensor waiting on SDA & SCL", "等待 SDA/SCL"));
     } else if(sensor->model->interface == &unitemp_spi) {
-        snprintf(temp_str, TEMP_STR_SIZE, "Sensor waiting on SPI pins");
+        snprintf(temp_str, TEMP_STR_SIZE, UNITEMP_UI_TEXT("Sensor waiting on SPI pins", "等待 SPI 引脚"));
     } else if(sensor->model->interface == &unitemp_1w) {
         snprintf(
             temp_str,
             TEMP_STR_SIZE,
-            "Sensor waiting on %s",
+            UNITEMP_UI_TEXT("Sensor waiting on %s", "等待传感器 %s"),
             ((OneWireSensor*)sensor->instance)->bus->bus_pin->name);
     }
 
@@ -95,7 +95,8 @@ static void _draw_sensor_polling(Canvas* canvas, Sensor* sensor) {
 
     canvas_set_font(canvas, FontSecondary);
 
-    canvas_draw_str_aligned(canvas, 65, 19, AlignCenter, AlignCenter, "Reading values...");
+    canvas_draw_str_aligned(
+        canvas, 65, 19, AlignCenter, AlignCenter, UNITEMP_UI_TEXT("Reading values...", "正在读取..."));
 }
 
 void single_sensor_draw_sensor(Canvas* canvas, Sensor* sensor, SingleSensorViewModel* view_model) {

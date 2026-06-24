@@ -54,7 +54,13 @@ void saflip_scene_detect_card_on_enter(void* context) {
         popup_set_header(app->popup, SAFLIP_UI_TEXT("Writing", "写入中"), 97, 15, AlignCenter, AlignTop);
         break;
     }
-    popup_set_text(app->popup, SAFLIP_UI_TEXT("Hold card next\nto Flipper's back", "将卡片贴近\nFlipper背面"), 94, 27, AlignCenter, AlignTop);
+    popup_set_text(
+        app->popup,
+        SAFLIP_UI_TEXT("Hold card next\nto Flipper's back", "将卡片贴近\nFlipper 背面"),
+        94,
+        27,
+        AlignCenter,
+        AlignTop);
     popup_set_icon(app->popup, 0, 8, &I_NFC_manual_60x50);
     view_dispatcher_switch_to_view(app->view_dispatcher, SaflipViewPopup);
 

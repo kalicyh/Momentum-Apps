@@ -116,8 +116,8 @@ void view_config_alloc(UHFReaderApp* App) {
     App->UHFRegionType = USA_REGION;
 
     //Setting the config menu labels for the default read access password
-    App->ReadAccessPasswordLabel = strdup(RFID_READER_UI_TEXT("Default AP", "默认AP"));
-    App->AccessPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Access Password!", "输入访问密码!"));
+    App->ReadAccessPasswordLabel = strdup(RFID_READER_UI_TEXT("Default AP", "默认 AP"));
+    App->AccessPasswordPlaceHolder = strdup(RFID_READER_UI_TEXT("Enter Access Password!", "输入访问密码！"));
     App->DefaultAccessPassword = strdup("00000000");
 
     // Add setting 1 to variable item list

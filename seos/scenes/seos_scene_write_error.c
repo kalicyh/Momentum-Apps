@@ -20,7 +20,7 @@ void seos_scene_write_error_on_enter(void* context) {
     // Send notification
     notification_message(seos->notifications, &sequence_success);
     FuriString* primary_str = furi_string_alloc_set(SEOS_UI_TEXT("Write Error", "写入错误"));
-    FuriString* secondary_str = furi_string_alloc_set(SEOS_UI_TEXT("Try again?", "重试?"));
+    FuriString* secondary_str = furi_string_alloc_set(SEOS_UI_TEXT("Try again?", "重试？"));
 
     widget_add_button_element(
         widget,

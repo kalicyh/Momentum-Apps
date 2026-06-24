@@ -27,6 +27,8 @@ void nfc_apdu_runner_scene_start_on_enter(void* context) {
     Submenu* submenu = app->submenu;
 
     submenu_reset(submenu);
+    submenu_set_header(
+        submenu, NFC_APDU_RUNNER_UI_TEXT("NFC APDU Runner", "NFC APDU 运行器"));
 
     submenu_add_item(
         submenu,

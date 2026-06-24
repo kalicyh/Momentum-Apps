@@ -45,19 +45,19 @@ void mifare_fuzzer_scene_start_on_enter(void* context) {
     submenu_set_header(submenu_card, MIFARE_FUZZER_UI_TEXT("Mifare Fuzzer (card)", "Mifare Fuzzer (卡片)"));
     submenu_add_item(
         submenu_card,
-        "Classic 1k",
+        MIFARE_FUZZER_UI_TEXT("Classic 1k", "经典 1K"),
         SubmenuIndexClassic1k,
         mifare_fuzzer_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu_card,
-        "Classic 4k",
+        MIFARE_FUZZER_UI_TEXT("Classic 4k", "经典 4K"),
         SubmenuIndexClassic4k,
         mifare_fuzzer_scene_start_submenu_callback,
         app);
     submenu_add_item(
         submenu_card,
-        "Ultralight",
+        MIFARE_FUZZER_UI_TEXT("Ultralight", "超轻量"),
         SubmenuIndexUltralight,
         mifare_fuzzer_scene_start_submenu_callback,
         app);

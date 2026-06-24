@@ -18,19 +18,19 @@ void hex_viewer_scene_menu_on_enter(void* context) {
     submenu_set_header(app->submenu, HEX_VIEWER_UI_TEXT("Select action", "选择操作"));
     submenu_add_item(
         app->submenu,
-        HEX_VIEWER_UI_TEXT("Open file ...", "打开文件..."),
+        HEX_VIEWER_UI_TEXT("Open file ...", "打开文件"),
         SubmenuIndexOpen,
         hex_viewer_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        HEX_VIEWER_UI_TEXT("Scroll to ...", "滚动到..."),
+        HEX_VIEWER_UI_TEXT("Scroll to ...", "跳转位置"),
         SubmenuIndexScroll,
         hex_viewer_scene_menu_submenu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        HEX_VIEWER_UI_TEXT("Show info ...", "显示信息..."),
+        HEX_VIEWER_UI_TEXT("Show info ...", "查看信息"),
         SubmenuIndexInfo,
         hex_viewer_scene_menu_submenu_callback,
         app);

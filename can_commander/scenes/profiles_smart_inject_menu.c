@@ -18,13 +18,13 @@ void cancommander_scene_profiles_smart_inject_menu_on_enter(void* context) {
 
     submenu_add_item(
         app->submenu,
-        "Save Smart Injection Profile",
+        CAN_COMMANDER_UI_TEXT("Save Smart Injection Profile", "保存智能注入配置"),
         ProfilesSmartInjectSave,
         cancommander_scene_profiles_smart_inject_menu_callback,
         app);
     submenu_add_item(
         app->submenu,
-        "Load Smart Injection Profile",
+        CAN_COMMANDER_UI_TEXT("Load Smart Injection Profile", "加载智能注入配置"),
         ProfilesSmartInjectLoad,
         cancommander_scene_profiles_smart_inject_menu_callback,
         app);

@@ -33,21 +33,26 @@ void unitemp_scene_delete_confirm_on_enter(void* context) {
     widget_reset(app->widget);
 
     //Adding buttons
-    widget_add_button_element(widget, GuiButtonTypeLeft, "Back", unitemp_widget_callback, context);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Delete", unitemp_widget_callback, context);
+        widget, GuiButtonTypeLeft, UNITEMP_UI_TEXT("Back", "返回"), unitemp_widget_callback, context);
+    widget_add_button_element(
+        widget, GuiButtonTypeRight, UNITEMP_UI_TEXT("Delete", "删除"), unitemp_widget_callback, context);
 
-    furi_string_printf(tmp, "\e#Delete %s?\e#\n", sensor->name);
+    furi_string_printf(tmp, UNITEMP_UI_TEXT("\e#Delete %s?\e#\n", "\e#删除 %s?\e#\n"), sensor->name);
     widget_add_text_box_element(
         app->widget, 0, 0, 128, 23, AlignCenter, AlignCenter, furi_string_get_cstr(tmp), false);
 
     if(sensor->model->interface == &unitemp_1w) {
         OneWireSensor* s = sensor->instance;
 
-        furi_string_printf(tmp, "\e#Model:\e# %s", unitemp_onewire_sensor_get_fc_name(sensor));
+        furi_string_printf(
+            tmp,
+            UNITEMP_UI_TEXT("\e#Model:\e# %s", "\e#型号:\e# %s"),
+            unitemp_onewire_sensor_get_fc_name(sensor));
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
-        furi_string_printf(tmp, "\e#Data pin:\e# %s", s->bus->bus_pin->name);
+        furi_string_printf(
+            tmp, UNITEMP_UI_TEXT("\e#Data pin:\e# %s", "\e#数据引脚:\e# %s"), s->bus->bus_pin->name);
         widget_add_text_box_element(
             app->widget, 0, 28, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
 
@@ -67,30 +72,36 @@ void unitemp_scene_delete_confirm_on_enter(void* context) {
     }
 
     if(sensor->model->interface == &unitemp_singlewire) {
-        furi_string_printf(tmp, "\e#Model:\e# %s", sensor->model->modelname);
+        furi_string_printf(
+            tmp, UNITEMP_UI_TEXT("\e#Model:\e# %s", "\e#型号:\e# %s"), sensor->model->modelname);
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
         furi_string_printf(
-            tmp, "\e#Bus pin:\e# %s", ((SingleWireSensor*)sensor->instance)->data_pin->name);
+            tmp,
+            UNITEMP_UI_TEXT("\e#Bus pin:\e# %s", "\e#总线引脚:\e# %s"),
+            ((SingleWireSensor*)sensor->instance)->data_pin->name);
         widget_add_text_box_element(
             app->widget, 0, 28, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
     }
     if(sensor->model->interface == &unitemp_spi) {
-        furi_string_printf(tmp, "\e#Model:\e# %s", sensor->model->modelname);
+        furi_string_printf(
+            tmp, UNITEMP_UI_TEXT("\e#Model:\e# %s", "\e#型号:\e# %s"), sensor->model->modelname);
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
-        furi_string_printf(tmp, "\e#CS pin:\e# %s", ((SPISensor*)sensor->instance)->cs_pin->name);
+        furi_string_printf(
+            tmp, UNITEMP_UI_TEXT("\e#CS pin:\e# %s", "\e#CS 引脚:\e# %s"), ((SPISensor*)sensor->instance)->cs_pin->name);
         widget_add_text_box_element(
             app->widget, 0, 28, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
     }
 
     if(sensor->model->interface == &unitemp_i2c) {
-        furi_string_printf(tmp, "\e#Model:\e# %s", sensor->model->modelname);
+        furi_string_printf(
+            tmp, UNITEMP_UI_TEXT("\e#Model:\e# %s", "\e#型号:\e# %s"), sensor->model->modelname);
         widget_add_text_box_element(
             app->widget, 0, 16, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
         furi_string_printf(
             tmp,
-            "\e#I2C addr:\e# 0x%02X",
+            UNITEMP_UI_TEXT("\e#I2C addr:\e# 0x%02X", "\e#I2C 地址:\e# 0x%02X"),
             ((I2CSensor*)sensor->instance)->current_i2c_adress >> 1);
         widget_add_text_box_element(
             app->widget, 0, 28, 128, 23, AlignLeft, AlignTop, furi_string_get_cstr(tmp), false);
@@ -114,10 +125,12 @@ bool unitemp_scene_delete_confirm_on_event(void* context, SceneManagerEvent even
             } else {
                 DialogMessage* message = dialog_message_alloc();
                 dialog_message_set_header(
-                    message, "An error occurred", 64, 6, AlignCenter, AlignCenter);
+                    message, UNITEMP_UI_TEXT("An error occurred", "发生错误"), 64, 6, AlignCenter, AlignCenter);
                 dialog_message_set_text(
                     message,
-                    "Please report\nthis to the\napp developers\ntiny.one/unitemp",
+                    UNITEMP_UI_TEXT(
+                        "Please report\nthis to the\napp developers\ntiny.one/unitemp",
+                        "请将此问题\n反馈给应用\n开发者\ntiny.one/unitemp"),
                     (128 - icon_get_width(&I_confused_dolph_43x31)) / 2 +
                         icon_get_width(&I_confused_dolph_43x31),
                     36,

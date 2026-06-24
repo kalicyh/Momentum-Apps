@@ -172,7 +172,7 @@ static void iso15693_draw_callback(Canvas* canvas, void* model) {
             snprintf(footer, sizeof(footer), ISO15693_WRITER_UI_TEXT("OK:Back | >:Save", "OK:返回 | >:保存"));
             canvas_draw_str_aligned(canvas, 64, 64, AlignCenter, AlignBottom, footer);
         } else {
-            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, ISO15693_WRITER_UI_TEXT("SUCCESS!", "成功!"));
+            canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, ISO15693_WRITER_UI_TEXT("SUCCESS!", "成功！"));
             canvas_set_font(canvas, FontSecondary);
             char buf[64];
             if(m->mode == Iso15693WriterWorkerModeRead) {
@@ -190,13 +190,13 @@ static void iso15693_draw_callback(Canvas* canvas, void* model) {
             } else {
                 canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, ISO15693_WRITER_UI_TEXT("Operation finished", "操作完成"));
             }
-            canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, ISO15693_WRITER_UI_TEXT("OK: Repeat | Back: Exit", "OK:重复 | Back:退出"));
+            canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, ISO15693_WRITER_UI_TEXT("OK: Repeat | Back: Exit", "OK: 重复 | Back: 退出"));
         }
     } else if(m->state == Iso15693StateFail) {
         canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignTop, ISO15693_WRITER_UI_TEXT("FAILED", "失败"));
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str_aligned(canvas, 64, 30, AlignCenter, AlignCenter, ISO15693_WRITER_UI_TEXT("Check tag position", "请检查标签位置"));
-        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, ISO15693_WRITER_UI_TEXT("OK: Retry | Back: Exit", "OK:重试 | Back:退出"));
+        canvas_draw_str_aligned(canvas, 64, 55, AlignCenter, AlignBottom, ISO15693_WRITER_UI_TEXT("OK: Retry | Back: Exit", "OK: 重试 | Back: 退出"));
     }
 }
 
@@ -450,7 +450,7 @@ static bool iso15693_custom_event_callback(void* context, uint32_t event) {
         app->save_preview_mode = true;
         app->current_view = Iso15693ViewTextInput;
         text_input_reset(app->text_input);
-        text_input_set_header_text(app->text_input, ISO15693_WRITER_UI_TEXT("Save Dump As:", "保存转储为:"));
+        text_input_set_header_text(app->text_input, ISO15693_WRITER_UI_TEXT("Save Dump As:", "保存转储为："));
         snprintf(app->file_path, sizeof(app->file_path), "%s/", ISO_APP_DATA_PATH);
         text_input_set_result_callback(app->text_input, iso15693_text_input_callback, app, &app->file_path[strlen(ISO_APP_DATA_PATH) + 1], sizeof(app->file_path) - strlen(ISO_APP_DATA_PATH) - 1, false);
         view_dispatcher_switch_to_view(app->view_dispatcher, Iso15693ViewTextInput);

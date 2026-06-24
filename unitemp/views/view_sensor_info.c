@@ -78,22 +78,22 @@ static void sensor_info_draw_callback(Canvas* canvas, void* model) {
     FuriString* temp_str = furi_string_alloc();
 
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 10, 23, "Model:");
+    canvas_draw_str(canvas, 10, 23, UNITEMP_UI_TEXT("Model:", "型号:"));
     canvas_set_font(canvas, FontSecondary);
     canvas_draw_str(canvas, 48, 23, sensor->model->modelname);
     canvas_set_font(canvas, FontPrimary);
     if(sensor->model->interface == &unitemp_singlewire) {
         SingleWireSensor* s = sensor->instance;
-        canvas_draw_str(canvas, 10, 34, "Data pin: ");
+        canvas_draw_str(canvas, 10, 34, UNITEMP_UI_TEXT("Data pin: ", "数据引脚: "));
 
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 57, 34, s->data_pin->name);
     } else if(sensor->model->interface == &unitemp_i2c) {
         I2CSensor* s = sensor->instance;
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 10, 34, "I2C address:");
-        canvas_draw_str(canvas, 10, 45, "SDA pin:");
-        canvas_draw_str(canvas, 10, 56, "SCL pin:");
+        canvas_draw_str(canvas, 10, 34, UNITEMP_UI_TEXT("I2C address:", "I2C 地址:"));
+        canvas_draw_str(canvas, 10, 45, UNITEMP_UI_TEXT("SDA pin:", "SDA 引脚:"));
+        canvas_draw_str(canvas, 10, 56, UNITEMP_UI_TEXT("SCL pin:", "SCL 引脚:"));
         canvas_set_font(canvas, FontSecondary);
         furi_string_printf(temp_str, "0x%02X", s->current_i2c_adress >> 1);
         canvas_draw_str(canvas, 76, 34, furi_string_get_cstr(temp_str));
@@ -102,9 +102,9 @@ static void sensor_info_draw_callback(Canvas* canvas, void* model) {
     } else if(sensor->model->interface == &unitemp_spi) {
         SPISensor* s = sensor->instance;
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 10, 34, "MISO pin:");
-        canvas_draw_str(canvas, 10, 45, "SCK pin:");
-        canvas_draw_str(canvas, 10, 56, "CS pin:");
+        canvas_draw_str(canvas, 10, 34, UNITEMP_UI_TEXT("MISO pin:", "MISO 引脚:"));
+        canvas_draw_str(canvas, 10, 45, UNITEMP_UI_TEXT("SCK pin:", "SCK 引脚:"));
+        canvas_draw_str(canvas, 10, 56, UNITEMP_UI_TEXT("CS pin:", "CS 引脚:"));
 
         canvas_set_font(canvas, FontSecondary);
         canvas_draw_str(canvas, 62, 34, unitemp_gpio_get_from_int(3)->name);
@@ -113,7 +113,7 @@ static void sensor_info_draw_callback(Canvas* canvas, void* model) {
     } else if(sensor->model->interface == &unitemp_1w) {
         OneWireSensor* s = sensor->instance;
         canvas_set_font(canvas, FontPrimary);
-        canvas_draw_str(canvas, 10, 34, "Bus pin:");
+        canvas_draw_str(canvas, 10, 34, UNITEMP_UI_TEXT("Bus pin:", "总线引脚:"));
         canvas_draw_str(canvas, 10, 45, "ID:");
 
         canvas_set_font(canvas, FontSecondary);

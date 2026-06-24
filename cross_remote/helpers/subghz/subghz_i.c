@@ -16,6 +16,14 @@
 
 //#define TAG "SubGhz"
 
+#ifndef XREMOTE_UI_TEXT
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define XREMOTE_UI_TEXT(en, zh) (zh)
+#else
+#define XREMOTE_UI_TEXT(en, zh) (en)
+#endif
+#endif
+
 /*
 void subghz_set_default_preset(SubGhz* subghz) {
     furi_assert(subghz);
@@ -31,7 +39,8 @@ bool subghz_tx_start(SubGhz* subghz, FlipperFormat* flipper_format) {
     switch(subghz_txrx_tx_start(subghz->txrx, flipper_format)) {
     case SubGhzTxRxStartTxStateErrorParserOthers:
         dialog_message_show_storage_error(
-            subghz->dialogs, "Error in protocol\nparameters\ndescription");
+            subghz->dialogs,
+            XREMOTE_UI_TEXT("Error in protocol\nparameters\ndescription", "协议参数\n描述错误"));
         break;
     case SubGhzTxRxStartTxStateErrorOnlyRx:
         // FURI_LOG_D(TAG, 'Cannot send, only RX possible');
@@ -210,7 +219,8 @@ bool subghz_save_protocol_to_file(
 
         // Create subghz folder directory if necessary
         if(!storage_simply_mkdir(storage, furi_string_get_cstr(file_dir))) {
-            dialog_message_show_storage_error(subghz->dialogs, "Cannot create\nfolder");
+            dialog_message_show_storage_error(
+                subghz->dialogs, XREMOTE_UI_TEXT("Cannot create\nfolder", "无法创建\n文件夹"));
             break;
         }
 

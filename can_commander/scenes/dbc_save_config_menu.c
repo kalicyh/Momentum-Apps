@@ -22,12 +22,12 @@ void cancommander_scene_dbc_save_config_menu_on_enter(void* context) {
     }
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Save DBC Profile");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Save DBC Profile", "保存 DBC 配置"));
 
     snprintf(
         cancommander_dbc_save_name_item,
         sizeof(cancommander_dbc_save_name_item),
-        "Profile Name: %s",
+        CAN_COMMANDER_UI_TEXT("Profile Name: %s", "配置名称: %s"),
         app->dbc_config_save_name);
 
     submenu_add_item(
@@ -38,7 +38,7 @@ void cancommander_scene_dbc_save_config_menu_on_enter(void* context) {
         app);
     submenu_add_item(
         app->submenu,
-        "Save to SD",
+        CAN_COMMANDER_UI_TEXT("Save to SD", "保存到 SD"),
         DbcSaveConfigSave,
         cancommander_scene_dbc_save_config_menu_callback,
         app);
@@ -65,7 +65,7 @@ bool cancommander_scene_dbc_save_config_menu_on_event(void* context, SceneManage
             app,
             app->dbc_config_save_name,
             sizeof(app->dbc_config_save_name),
-            "Config Name");
+            CAN_COMMANDER_UI_TEXT("Config Name", "配置名称"));
         scene_manager_next_scene(app->scene_manager, cancommander_scene_text_input);
         return true;
 

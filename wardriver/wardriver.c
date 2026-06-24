@@ -172,9 +172,9 @@ static void render_callback(Canvas* canvas, void* context) {
     case SHOW_NMEA:
 
         if(UART_CH_ESP == UART_CH_GPS) {
-            canvas_draw_str(canvas, 0, 10, WARDRIVER_UI_TEXT("GPS channel invalid!", "GPS通道无效!"));
-            canvas_draw_str(canvas, 0, 20, WARDRIVER_UI_TEXT("Change UART channel", "请在Momentum应用中"));
-            canvas_draw_str(canvas, 0, 30, WARDRIVER_UI_TEXT("in the Momentum app", "更改UART通道"));
+            canvas_draw_str(canvas, 0, 10, WARDRIVER_UI_TEXT("GPS channel invalid!", "GPS 通道无效！"));
+            canvas_draw_str(canvas, 0, 20, WARDRIVER_UI_TEXT("Change UART channel", "请在 Momentum 应用中"));
+            canvas_draw_str(canvas, 0, 30, WARDRIVER_UI_TEXT("in the Momentum app", "更改 UART 通道"));
         } else {
             furi_string_printf(
                 string, "%f", isnan(ctx->gps_data.latitude) ? 0 : (double)ctx->gps_data.latitude);
@@ -186,7 +186,7 @@ static void render_callback(Canvas* canvas, void* context) {
                 isnan(ctx->gps_data.longitude) ? 0 : (double)ctx->gps_data.longitude);
             canvas_draw_str(canvas, 0, 20, furi_string_get_cstr(string));
 
-            furi_string_printf(string, WARDRIVER_UI_TEXT("%d sats", "%d颗卫星"), ctx->gps_data.satelites);
+            furi_string_printf(string, WARDRIVER_UI_TEXT("%d sats", "%d 颗卫星"), ctx->gps_data.satelites);
             canvas_draw_str(canvas, 0, 30, furi_string_get_cstr(string));
 
             furi_string_printf(
@@ -196,7 +196,7 @@ static void render_callback(Canvas* canvas, void* context) {
                 ctx->gps_data.minute,
                 ctx->gps_data.second);
             canvas_draw_str(canvas, 0, 40, furi_string_get_cstr(string));
-            canvas_draw_str(canvas, 70, 10, WARDRIVER_UI_TEXT("GPS DATA", "GPS数据"));
+            canvas_draw_str(canvas, 70, 10, WARDRIVER_UI_TEXT("GPS DATA", "GPS 数据"));
         }
 
         elements_button_left(canvas, WARDRIVER_UI_TEXT("Back", "返回"));
@@ -204,7 +204,7 @@ static void render_callback(Canvas* canvas, void* context) {
         canvas_draw_icon(canvas, 82, 20, &I_WarningDolphinFlip_45x42);
         break;
     case NO_APS:
-        canvas_draw_str(canvas, 80, 30, WARDRIVER_UI_TEXT("No AP's", "未发现AP"));
+        canvas_draw_str(canvas, 80, 30, WARDRIVER_UI_TEXT("No AP's", "未发现 AP"));
         canvas_draw_str(canvas, 80, 40, WARDRIVER_UI_TEXT("Found!", ""));
         canvas_draw_icon(canvas, 1, 9, &I_DolphinWait_59x54);
         break;

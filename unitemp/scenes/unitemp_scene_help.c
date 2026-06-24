@@ -27,7 +27,13 @@ void unitemp_scene_help_on_enter(void* context) {
     widget_add_icon_element(app->widget, 80, 18, &I_WarningDolphinFlip_45x42);
 
     widget_add_string_multiline_element(
-        app->widget, 55, 5, AlignLeft, AlignTop, FontSecondary, "You can find help\nthere");
+        app->widget,
+        55,
+        5,
+        AlignLeft,
+        AlignTop,
+        FontSecondary,
+        UNITEMP_UI_TEXT("You can find help\nthere", "可在这里\n查看帮助"));
 
     widget_add_frame_element(app->widget, 0, 0, 128, 63, 7);
     widget_add_frame_element(app->widget, 0, 0, 128, 64, 7);

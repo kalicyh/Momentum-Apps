@@ -165,11 +165,11 @@ bool mass_storage_scene_create_image_on_event(void* context, SceneManagerEvent e
 
             if(error) {
                 popup_set_header(
-                    app->popup, MASS_STORAGE_UI_TEXT("Error Creating Image!", "创建镜像失败!"), 64, 26, AlignCenter, AlignCenter);
+                    app->popup, MASS_STORAGE_UI_TEXT("Error Creating Image!", "创建镜像失败！"), 64, 26, AlignCenter, AlignCenter);
                 popup_set_text(app->popup, error, 64, 40, AlignCenter, AlignCenter);
                 popup_set_callback(app->popup, popup_callback_error);
             } else {
-                popup_set_header(app->popup, MASS_STORAGE_UI_TEXT("Image Created!", "镜像已创建!"), 64, 32, AlignCenter, AlignCenter);
+                popup_set_header(app->popup, MASS_STORAGE_UI_TEXT("Image Created!", "镜像已创建！"), 64, 32, AlignCenter, AlignCenter);
                 popup_set_text(app->popup, "", 0, 0, AlignLeft, AlignBottom);
                 popup_set_callback(app->popup, popup_callback_ok);
             }

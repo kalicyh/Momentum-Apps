@@ -150,12 +150,12 @@ void cancommander_scene_custom_inject_load_slots_menu_on_enter(void* context) {
     cancommander_scene_custom_inject_set_list_scan();
 
     submenu_reset(app->submenu);
-    submenu_set_header(app->submenu, "Load Injection Profile");
+    submenu_set_header(app->submenu, CAN_COMMANDER_UI_TEXT("Load Injection Profile", "加载注入配置"));
 
     if(cancommander_custom_inject_set_count == 0U) {
         submenu_add_item(
             app->submenu,
-            "No injection profiles",
+            CAN_COMMANDER_UI_TEXT("No injection profiles", "没有注入配置"),
             0xFFU,
             cancommander_scene_custom_inject_load_slots_menu_callback,
             app);

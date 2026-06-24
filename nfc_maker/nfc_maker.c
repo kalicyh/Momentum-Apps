@@ -66,7 +66,7 @@ const CardDef cards[CardMAX] = {
         },
     [CardType4Generic] =
         {
-            .name = "Generic Type 4 Tag",
+            .name = NFC_MAKER_UI_TEXT("Generic Type 4 Tag", "通用 Type 4 标签"),
             .size = -1,
             .protocol = NfcProtocolType4Tag,
         },

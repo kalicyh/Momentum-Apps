@@ -47,7 +47,7 @@ void saflip_scene_variable_key_info_variable_item_list_callback(void* context, u
 
     switch(index) {
     case 0: // Lock ID
-        number_input_set_header_text(app->number_input, SAFLIP_UI_TEXT("Lock ID", "锁号"));
+        number_input_set_header_text(app->number_input, SAFLIP_UI_TEXT("Lock ID", "锁 ID"));
         number_input_set_result_callback(
             app->number_input,
             saflip_scene_variable_keys_number_input_callback,
@@ -103,7 +103,7 @@ void saflip_scene_variable_key_info_on_enter(void* context) {
     variable_item_list_set_enter_callback(
         app->variable_item_list, saflip_scene_variable_key_info_variable_item_list_callback, app);
 
-    var_item = variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Lock ID", "锁号"), 1, NULL, NULL);
+    var_item = variable_item_list_add(app->variable_item_list, SAFLIP_UI_TEXT("Lock ID", "锁 ID"), 1, NULL, NULL);
     furi_string_printf(temp_str, "%d", key.lock_id);
     variable_item_set_current_value_text(var_item, furi_string_get_cstr(temp_str));
 

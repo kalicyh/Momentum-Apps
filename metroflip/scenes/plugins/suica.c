@@ -452,7 +452,9 @@ static NfcCommand suica_poller_callback(NfcGenericEvent event, void* context) {
             } else {
                 furi_string_printf(
                     parsed_data,
-                    "\e#FeliCa\nSorry, unrecorded service code.\nPlease let the developers know and we will add support.");
+                    METROFLIP_UI_TEXT(
+                        "\e#FeliCa\nSorry, unrecorded service code.\nPlease let the developers know and we will add support.",
+                        "\e#FeliCa\n抱歉，未记录的服务码。\n请告知开发者，我们会添加支持。"));
             }
         } while(false);
 
@@ -460,13 +462,25 @@ static NfcCommand suica_poller_callback(NfcGenericEvent event, void* context) {
 
         if(suica_found) {
             widget_add_button_element(
-                widget, GuiButtonTypeCenter, "Parse", suica_parse_detail_callback, app);
+                widget,
+                GuiButtonTypeCenter,
+                METROFLIP_UI_TEXT("Parse", "解析"),
+                suica_parse_detail_callback,
+                app);
         }
 
         widget_add_button_element(
-            widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+            widget,
+            GuiButtonTypeRight,
+            METROFLIP_UI_TEXT("Exit", "退出"),
+            metroflip_exit_widget_callback,
+            app);
         widget_add_button_element(
-            widget, GuiButtonTypeLeft, "Save", metroflip_save_widget_callback, app);
+            widget,
+            GuiButtonTypeLeft,
+            METROFLIP_UI_TEXT("Save", "保存"),
+            metroflip_save_widget_callback,
+            app);
 
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewWidget);
         furi_string_free(parsed_data);
@@ -563,7 +577,13 @@ static void suica_on_enter(Metroflip* app) {
         app->view_dispatcher, MetroflipViewCanvas, app->suica_context->view_history);
 
     if(app->data_loaded == false) {
-        popup_set_header(app->popup, "Apply\n card to\nthe back", 68, 30, AlignLeft, AlignTop);
+        popup_set_header(
+            app->popup,
+            METROFLIP_UI_TEXT("Apply\n card to\nthe back", "将卡片贴近\n背面"),
+            68,
+            30,
+            AlignLeft,
+            AlignTop);
         popup_set_icon(app->popup, 0, 3, &I_RFIDDolphinReceive_97x61);
         view_dispatcher_switch_to_view(app->view_dispatcher, MetroflipViewPopup);
 
@@ -632,7 +652,9 @@ static void suica_on_enter(Metroflip* app) {
 
                 furi_string_printf(
                     parsed_data,
-                    "\e#FeliCa\nSorry, unrecorded service code.\nPlease let the developers know and we will add support.");
+                    METROFLIP_UI_TEXT(
+                        "\e#FeliCa\nSorry, unrecorded service code.\nPlease let the developers know and we will add support.",
+                        "\e#FeliCa\n抱歉，未记录的服务码。\n请告知开发者，我们会添加支持。"));
             } while(false);
 
             // Text scroll must be added before buttons to prevent overlay
@@ -640,11 +662,19 @@ static void suica_on_enter(Metroflip* app) {
                 widget, 0, 0, 128, 64, furi_string_get_cstr(parsed_data));
 
             widget_add_button_element(
-                widget, GuiButtonTypeRight, "Exit", metroflip_exit_widget_callback, app);
+                widget,
+                GuiButtonTypeRight,
+                METROFLIP_UI_TEXT("Exit", "退出"),
+                metroflip_exit_widget_callback,
+                app);
 
             if(suica_found) {
                 widget_add_button_element(
-                    widget, GuiButtonTypeCenter, "Parse", suica_parse_detail_callback, app);
+                    widget,
+                    GuiButtonTypeCenter,
+                    METROFLIP_UI_TEXT("Parse", "解析"),
+                    suica_parse_detail_callback,
+                    app);
             }
 
             // No reason to put a save button here if the data is loaded from an existing file
@@ -662,20 +692,24 @@ static bool suica_on_event(Metroflip* app, SceneManagerEvent event) {
     Popup* popup = app->popup;
     if(event.type == SceneManagerEventTypeCustom) {
         if(event.event == MetroflipCustomEventCardDetected) {
-            popup_set_header(popup, "DON'T\nMOVE", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, METROFLIP_UI_TEXT("DON'T\nMOVE", "请勿\n移动"), 68, 30, AlignLeft, AlignTop);
             consumed = true;
         } else if(event.event == MetroflipCustomEventCardLost) {
-            popup_set_header(popup, "Card \n lost", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, METROFLIP_UI_TEXT("Card \n lost", "卡片\n丢失"), 68, 30, AlignLeft, AlignTop);
             scene_manager_search_and_switch_to_previous_scene(
                 app->scene_manager, MetroflipSceneStart);
             consumed = true;
         } else if(event.event == MetroflipCustomEventWrongCard) {
-            popup_set_header(popup, "WRONG \n CARD", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, METROFLIP_UI_TEXT("WRONG \n CARD", "错误\n卡片"), 68, 30, AlignLeft, AlignTop);
             scene_manager_search_and_switch_to_previous_scene(
                 app->scene_manager, MetroflipSceneStart);
             consumed = true;
         } else if(event.event == MetroflipCustomEventPollerFail) {
-            popup_set_header(popup, "Failed", 68, 30, AlignLeft, AlignTop);
+            popup_set_header(
+                popup, METROFLIP_UI_TEXT("Failed", "失败"), 68, 30, AlignLeft, AlignTop);
             scene_manager_search_and_switch_to_previous_scene(
                 app->scene_manager, MetroflipSceneStart);
             consumed = true;

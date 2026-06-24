@@ -39,7 +39,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexParseSIO]) {
         submenu_add_item(
             submenu,
-            "Parse SIO",
+            PICOPASS_UI_TEXT("Parse SIO", "解析 SIO"),
             SubmenuIndexParseSIO,
             picopass_scene_card_menu_submenu_callback,
             picopass);
@@ -63,7 +63,7 @@ void picopass_scene_card_menu_add_items(void* context, bool included[]) {
     if(included[SubmenuIndexSaveAsLF]) {
         submenu_add_item(
             submenu,
-            "Save as LFRFID",
+            PICOPASS_UI_TEXT("Save as LFRFID", "保存为 LFRFID"),
             SubmenuIndexSaveAsLF,
             picopass_scene_card_menu_submenu_callback,
             picopass);

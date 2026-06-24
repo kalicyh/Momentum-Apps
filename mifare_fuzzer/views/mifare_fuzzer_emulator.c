@@ -64,20 +64,20 @@ static void mifare_fuzzer_emulator_draw_callback(Canvas* canvas, void* _model) {
     // Secondary font
     canvas_set_font(canvas, FontSecondary);
     // Card
-    canvas_draw_str(canvas, 4, 22, "c:");
-    canvas_draw_str(canvas, 15, 22, model->mifare_card_dsc);
+    canvas_draw_str(canvas, 4, 22, MIFARE_FUZZER_UI_TEXT("c:", "卡:"));
+    canvas_draw_str(canvas, 18, 22, model->mifare_card_dsc);
     // Timing
     furi_string_printf(furi_string, "%d", model->ticks_between_cards);
-    canvas_draw_str(canvas, 100, 33, "t:");
-    canvas_draw_str(canvas, 110, 33, furi_string_get_cstr(furi_string));
+    canvas_draw_str(canvas, 100, 33, MIFARE_FUZZER_UI_TEXT("t:", "隔:"));
+    canvas_draw_str(canvas, 114, 33, furi_string_get_cstr(furi_string));
     // Attack
-    canvas_draw_str(canvas, 4, 33, "a:");
-    canvas_draw_str(canvas, 15, 33, model->attack_dsc);
+    canvas_draw_str(canvas, 4, 33, MIFARE_FUZZER_UI_TEXT("a:", "攻:"));
+    canvas_draw_str(canvas, 18, 33, model->attack_dsc);
 
     if(!model->is_attacking) {
-        elements_button_left(canvas, "t-1");
+        elements_button_left(canvas, MIFARE_FUZZER_UI_TEXT("t-1", "-隔"));
         elements_button_center(canvas, MIFARE_FUZZER_UI_TEXT("Start", "开始"));
-        elements_button_right(canvas, "t+1");
+        elements_button_right(canvas, MIFARE_FUZZER_UI_TEXT("t+1", "+隔"));
     } else {
         canvas_draw_line(canvas, 1, 49, (128 * model->tick_num / model->ticks_between_cards), 49);
         elements_button_center(canvas, MIFARE_FUZZER_UI_TEXT("Stop", "停止"));
@@ -223,13 +223,13 @@ void mifare_fuzzer_emulator_set_card(
             if(name == NULL) {
                 switch(mifare_card) {
                 case MifareCardClassic1k:
-                    model->mifare_card_dsc = "Classic 1k";
+                    model->mifare_card_dsc = MIFARE_FUZZER_UI_TEXT("Classic 1k", "经典 1K");
                     break;
                 case MifareCardClassic4k:
-                    model->mifare_card_dsc = "Classic 4k";
+                    model->mifare_card_dsc = MIFARE_FUZZER_UI_TEXT("Classic 4k", "经典 4K");
                     break;
                 case MifareCardUltralight:
-                    model->mifare_card_dsc = "Ultralight";
+                    model->mifare_card_dsc = MIFARE_FUZZER_UI_TEXT("Ultralight", "超轻量");
                     break;
                 case MifareCardUnsupported:
                     model->mifare_card_dsc = MIFARE_FUZZER_UI_TEXT("Unsupported Card!", "不支持的卡片!");

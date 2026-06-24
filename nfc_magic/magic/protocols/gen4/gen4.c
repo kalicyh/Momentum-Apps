@@ -1,6 +1,12 @@
 #include "gen4.h"
 #include "core/check.h"
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define GEN4_UI_TEXT(en, zh) (zh)
+#else
+#define GEN4_UI_TEXT(en, zh) (en)
+#endif
+
 Gen4* gen4_alloc() {
     Gen4* instance = malloc(sizeof(Gen4));
 
@@ -49,30 +55,30 @@ void gen4_password_copy(Gen4Password* dest, const Gen4Password* source) {
 const char* gen4_get_shadow_mode_name(Gen4ShadowMode mode) {
     switch(mode) {
     case Gen4ShadowModePreWrite:
-        return "Pre-Write";
+        return GEN4_UI_TEXT("Pre-Write", "预写入");
     case Gen4ShadowModeRestore:
-        return "Restore";
+        return GEN4_UI_TEXT("Restore", "恢复");
     case Gen4ShadowModeDisabled:
-        return "Disabled";
+        return GEN4_UI_TEXT("Disabled", "已禁用");
     case Gen4ShadowModeHighSpeedDisabled:
-        return "Disabled (High-speed)";
+        return GEN4_UI_TEXT("Disabled (High-speed)", "已禁用 (高速)");
     case Gen4ShadowModeSplit:
-        return "Split";
+        return GEN4_UI_TEXT("Split", "分离");
     default:
-        return "Unknown";
+        return GEN4_UI_TEXT("Unknown", "未知");
     }
 }
 
 const char* gen4_get_direct_write_mode_name(Gen4DirectWriteBlock0Mode mode) {
     switch(mode) {
     case Gen4DirectWriteBlock0ModeEnabled:
-        return "Enabled";
+        return GEN4_UI_TEXT("Enabled", "已启用");
     case Gen4DirectWriteBlock0ModeDisabled:
-        return "Disabled";
+        return GEN4_UI_TEXT("Disabled", "已禁用");
     case Gen4DirectWriteBlock0ModeDefault:
-        return "Default";
+        return GEN4_UI_TEXT("Default", "默认");
     default:
-        return "Unknown";
+        return GEN4_UI_TEXT("Unknown", "未知");
     }
 }
 
@@ -85,7 +91,7 @@ const char* gen4_get_uid_len_num(Gen4UIDLength code) {
     case Gen4UIDLengthTriple:
         return "10";
     default:
-        return "Unknown";
+        return GEN4_UI_TEXT("Unknown", "未知");
     }
 }
 
@@ -100,7 +106,7 @@ const char* gen4_get_configuration_name(const Gen4Config* config) {
         case 19:
             return "MIFARE Classic Mini (0.3K)";
         default:
-            return "Unknown";
+            return GEN4_UI_TEXT("Unknown", "未知");
         }
     } break;
     case Gen4ProtocolMfUltralight: {
@@ -110,11 +116,11 @@ const char* gen4_get_configuration_name(const Gen4Config* config) {
         case 127:
             return "NTAG 2XX";
         default:
-            return "Unknown";
+            return GEN4_UI_TEXT("Unknown", "未知");
         }
     } break;
     default:
-        return "Unknown";
+        return GEN4_UI_TEXT("Unknown", "未知");
         break;
     };
 }

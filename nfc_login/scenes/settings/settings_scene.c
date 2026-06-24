@@ -52,7 +52,7 @@ void app_render_credits(App* app) {
     if(app->credits_page == 0) {
         widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, "NFC Login");
         widget_add_string_element(app->widget, 0, 22, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Version: 1.0", "版本: 1.0"));
-        widget_add_string_element(app->widget, 0, 32, AlignLeft, AlignTop, FontSecondary, "Creator: Play2BReal");
+        widget_add_string_element(app->widget, 0, 32, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Creator: Play2BReal", "作者: Play2BReal"));
         widget_add_string_element(app->widget, 0, 42, AlignLeft, AlignTop, FontSecondary, "github.com/Play2BReal");
     } else if(app->credits_page == 1) {
         widget_add_string_element(app->widget, 0, 12, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Special Thanks To:", "特别感谢:"));
@@ -62,7 +62,7 @@ void app_render_credits(App* app) {
     }
 
     char page_info[32];
-    snprintf(page_info, sizeof(page_info), NFC_LOGIN_UI_TEXT("Page %d/%d  <- ->=Navigate", "第%d/%d页  <- ->=翻页"), app->credits_page + 1, CREDITS_PAGES);
+    snprintf(page_info, sizeof(page_info), NFC_LOGIN_UI_TEXT("Page %d/%d  <- ->=Navigate", "第 %d/%d 页  <- -> 翻页"), app->credits_page + 1, CREDITS_PAGES);
     widget_add_string_element(app->widget, 0, SETTINGS_HELP_Y_POS, AlignLeft, AlignTop, FontSecondary, page_info);
 }
 
@@ -106,7 +106,7 @@ void app_render_lockscreen(App* app) {
     widget_add_string_element(app->widget, 0, 36, AlignLeft, AlignTop, FontSecondary, progress);
     
     if(input_button_count >= stored_button_count) {
-        widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press OK to verify", "按OK验证"));
+        widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Press OK to verify", "按 OK 验证"));
     } else {
         widget_add_string_element(app->widget, 0, 48, AlignLeft, AlignTop, FontSecondary, NFC_LOGIN_UI_TEXT("Enter passcode...", "输入密码..."));
     }
@@ -122,7 +122,7 @@ void app_render_settings(App* app) {
     layout_display[sizeof(layout_display) - 1] = '\0';
 
     snprintf(setting_lines[0], sizeof(setting_lines[0]), "%s %s: %s",
-             (app->settings_menu_index == 0) ? ">" : " ", NFC_LOGIN_UI_TEXT("HID Mode", "HID模式"), app->hid_mode == HidModeBle ? "BLE" : "USB");
+             (app->settings_menu_index == 0) ? ">" : " ", NFC_LOGIN_UI_TEXT("HID Mode", "HID 模式"), app->hid_mode == HidModeBle ? "BLE" : "USB");
     snprintf(setting_lines[1], sizeof(setting_lines[1]), "%s %s: %s",
              (app->settings_menu_index == 1) ? ">" : " ", NFC_LOGIN_UI_TEXT("Keyboard Layout", "键盘布局"), layout_display);
     snprintf(setting_lines[2], sizeof(setting_lines[2]), "%s %s: %dms",

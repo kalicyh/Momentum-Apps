@@ -11,7 +11,7 @@ void nfc_eink_scene_exit_confirm_on_enter(void* context) {
     DialogEx* dialog_ex = instance->dialog_ex;
 
     dialog_ex_set_left_button_text(dialog_ex, NFC_EINK_UI_TEXT("Exit", "退出"));
-    dialog_ex_set_right_button_text(dialog_ex, NFC_EINK_UI_TEXT("Stay", "留下"));
+    dialog_ex_set_right_button_text(dialog_ex, NFC_EINK_UI_TEXT("Stay", "停留"));
     dialog_ex_set_header(
         dialog_ex, NFC_EINK_UI_TEXT("Exit to Main Menu?", "返回主菜单?"), 64, 0, AlignCenter, AlignTop);
     dialog_ex_set_text(

@@ -21,7 +21,7 @@ void render_view_settings(Canvas* const canvas, ProtoViewApp* app) {
     canvas_draw_str(canvas, 10, 61, PROTOVIEW_UI_TEXT("Use up and down to modify", "上下键修改"));
 
     if(app->txrx->debug_timer_sampling)
-        canvas_draw_str(canvas, 3, 52, "(DEBUG timer sampling is ON)");
+        canvas_draw_str(canvas, 3, 52, PROTOVIEW_UI_TEXT("(DEBUG timer sampling is ON)", "(调试计时采样已开)"));
 
     /* Show frequency. We can use big numbers font since it's just a number. */
     if(app->current_view == ViewFrequencySettings) {

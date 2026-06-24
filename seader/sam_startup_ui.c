@@ -2,24 +2,30 @@
 
 #include <stdio.h>
 
+#ifdef MOMENTUM_UI_LANG_ZH_CN
+#define SEADER_STARTUP_TEXT(en, zh) (zh)
+#else
+#define SEADER_STARTUP_TEXT(en, zh) (en)
+#endif
+
 const char* seader_startup_stage_header(SeaderStartupStage stage) {
     switch(stage) {
     case SeaderStartupStageRetryingBoard:
-        return "Retrying Board";
+        return SEADER_STARTUP_TEXT("Retrying Board", "正在重试读卡板");
     case SeaderStartupStageCheckingSam:
-        return "Checking SAM";
+        return SEADER_STARTUP_TEXT("Checking SAM", "检查 SAM");
     case SeaderStartupStageNone:
     default:
-        return "Starting";
+        return SEADER_STARTUP_TEXT("Starting", "启动中");
     }
 }
 
 const char* seader_startup_stage_text(SeaderStartupStage stage) {
     switch(stage) {
     case SeaderStartupStageRetryingBoard:
-        return "Power cycle\nand retry";
+        return SEADER_STARTUP_TEXT("Power cycle\nand retry", "重新上电\n并重试");
     case SeaderStartupStageCheckingSam:
-        return "Waiting for\nCCID/SAM";
+        return SEADER_STARTUP_TEXT("Waiting for\nCCID/SAM", "等待\nCCID/SAM");
     case SeaderStartupStageNone:
     default:
         return NULL;
@@ -30,41 +36,42 @@ const char* seader_board_status_detail_title(SeaderBoardStatus status) {
     switch(status) {
     case SeaderBoardStatusFaultPreEnable:
     case SeaderBoardStatusFaultPostEnable:
-        return "Board Fault";
+        return SEADER_STARTUP_TEXT("Board Fault", "读卡板故障");
     case SeaderBoardStatusNoResponse:
-        return "No Response";
+        return SEADER_STARTUP_TEXT("No Response", "无响应");
     case SeaderBoardStatusPowerLost:
-        return "Power Lost";
+        return SEADER_STARTUP_TEXT("Power Lost", "供电丢失");
     case SeaderBoardStatusRetryRequested:
-        return "Retry Board";
+        return SEADER_STARTUP_TEXT("Retry Board", "重试读卡板");
     case SeaderBoardStatusPowerReadyPendingValidation:
-        return "Checking SAM";
+        return SEADER_STARTUP_TEXT("Checking SAM", "检查 SAM");
     case SeaderBoardStatusReady:
     case SeaderBoardStatusUnknown:
     default:
-        return "No SAM Found";
+        return SEADER_STARTUP_TEXT("No SAM Found", "未找到 SAM");
     }
 }
 
 const char* seader_board_status_detail_body(SeaderBoardStatus status, bool retry_exhausted) {
     switch(status) {
     case SeaderBoardStatusFaultPreEnable:
-        return "5V fault before\nenable";
+        return SEADER_STARTUP_TEXT("5V fault before\nenable", "启用前\n5V 故障");
     case SeaderBoardStatusFaultPostEnable:
-        return "5V fault after\nenable";
+        return SEADER_STARTUP_TEXT("5V fault after\nenable", "启用后\n5V 故障");
     case SeaderBoardStatusNoResponse:
-        return retry_exhausted ? "Board powered,\nno SAM after retry" :
-                                 "Board powered,\nno CCID/SAM reply";
+        return retry_exhausted ?
+                   SEADER_STARTUP_TEXT("Board powered,\nno SAM after retry", "读卡板已上电\n重试后无 SAM") :
+                   SEADER_STARTUP_TEXT("Board powered,\nno CCID/SAM reply", "读卡板已上电\n无 CCID/SAM 响应");
     case SeaderBoardStatusPowerLost:
-        return "USB/5V removed\nboard unpowered";
+        return SEADER_STARTUP_TEXT("USB/5V removed\nboard unpowered", "USB/5V 断开\n读卡板未供电");
     case SeaderBoardStatusRetryRequested:
-        return "Power cycle the\nboard and retry";
+        return SEADER_STARTUP_TEXT("Power cycle the\nboard and retry", "重启读卡板\n并重试");
     case SeaderBoardStatusPowerReadyPendingValidation:
-        return "Board powered,\nchecking SAM";
+        return SEADER_STARTUP_TEXT("Board powered,\nchecking SAM", "读卡板已上电\n正在检查 SAM");
     case SeaderBoardStatusReady:
     case SeaderBoardStatusUnknown:
     default:
-        return "No SAM detected\non the board";
+        return SEADER_STARTUP_TEXT("No SAM detected\non the board", "读卡板上\n未检测到 SAM");
     }
 }
 
@@ -72,19 +79,19 @@ const char* seader_board_status_detail_hint(SeaderBoardStatus status) {
     switch(status) {
     case SeaderBoardStatusFaultPreEnable:
     case SeaderBoardStatusFaultPostEnable:
-        return "Check board/cable";
+        return SEADER_STARTUP_TEXT("Check board/cable", "检查读卡板/线缆");
     case SeaderBoardStatusNoResponse:
-        return "Reseat board/SAM";
+        return SEADER_STARTUP_TEXT("Reseat board/SAM", "重插读卡板/SAM");
     case SeaderBoardStatusPowerLost:
-        return "Reconnect power";
+        return SEADER_STARTUP_TEXT("Reconnect power", "重新连接电源");
     case SeaderBoardStatusRetryRequested:
-        return "Retry bus check";
+        return SEADER_STARTUP_TEXT("Retry bus check", "重试总线检查");
     case SeaderBoardStatusPowerReadyPendingValidation:
-        return "Wait for SAM";
+        return SEADER_STARTUP_TEXT("Wait for SAM", "等待 SAM");
     case SeaderBoardStatusReady:
     case SeaderBoardStatusUnknown:
     default:
-        return "Insert supported SAM";
+        return SEADER_STARTUP_TEXT("Insert supported SAM", "插入支持的 SAM");
     }
 }
 

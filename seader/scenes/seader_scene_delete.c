@@ -17,12 +17,16 @@ void seader_scene_delete_on_enter(void* context) {
 
     // Setup Custom Widget view
     char temp_str[64];
-    snprintf(temp_str, sizeof(temp_str), "\e#Delete %s?\e#", seader->credential->name);
+    snprintf(
+        temp_str,
+        sizeof(temp_str),
+        SEADER_UI_TEXT("\e#Delete %s?\e#", "\e#删除 %s?\e#"),
+        seader->credential->name);
     widget_add_text_box_element(widget, 0, 0, 128, 23, AlignCenter, AlignCenter, temp_str, false);
     widget_add_button_element(
-        widget, GuiButtonTypeLeft, "Back", seader_scene_delete_widget_callback, seader);
+        widget, GuiButtonTypeLeft, SEADER_UI_TEXT("Back", "返回"), seader_scene_delete_widget_callback, seader);
     widget_add_button_element(
-        widget, GuiButtonTypeRight, "Delete", seader_scene_delete_widget_callback, seader);
+        widget, GuiButtonTypeRight, SEADER_UI_TEXT("Delete", "删除"), seader_scene_delete_widget_callback, seader);
 
     view_dispatcher_switch_to_view(seader->view_dispatcher, SeaderViewWidget);
 }

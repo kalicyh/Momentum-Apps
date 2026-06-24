@@ -459,9 +459,9 @@ static void _show_part_confirm(EspFlasherApp* app) {
     widget_reset(app->widget);
     widget_add_text_scroll_element(app->widget, 0, 0, 128, 52, app->part_confirm_text);
     widget_add_button_element(
-        app->widget, GuiButtonTypeLeft, "No", _part_confirm_widget_callback, app);
+        app->widget, GuiButtonTypeLeft, ESP_FLASHER_UI_TEXT("No", "否"), _part_confirm_widget_callback, app);
     widget_add_button_element(
-        app->widget, GuiButtonTypeRight, "Yes", _part_confirm_widget_callback, app);
+        app->widget, GuiButtonTypeRight, ESP_FLASHER_UI_TEXT("Yes", "是"), _part_confirm_widget_callback, app);
     view_dispatcher_switch_to_view(app->view_dispatcher, EspFlasherAppViewWidget);
 }
 
@@ -489,15 +489,17 @@ static void _refresh_submenu(EspFlasherApp* app) {
 
     submenu_add_item(
         submenu,
-        app->advanced_mode ? "[x] Advanced Mode" : "[ ] Advanced Mode",
+        app->advanced_mode ? ESP_FLASHER_UI_TEXT("[x] Advanced Mode", "[x] 高级模式") :
+                             ESP_FLASHER_UI_TEXT("[ ] Advanced Mode", "[ ] 高级模式"),
         SubmenuIndexAdvancedMode,
         esp_flasher_scene_browse_callback,
         app);
 
     submenu_add_item(
         submenu,
-        app->selected_flash_options[SelectedFlashS3Mode] ? "[x] Using S3, C3 or C6" :
-                                                           "[ ] Select for S3, C3 or C6",
+        app->selected_flash_options[SelectedFlashS3Mode] ?
+            ESP_FLASHER_UI_TEXT("[x] Using S3, C3 or C6", "[x] 使用 S3/C3/C6") :
+            ESP_FLASHER_UI_TEXT("[ ] Select for S3, C3 or C6", "[ ] 选择 S3/C3/C6"),
         SubmenuIndexS3Mode,
         esp_flasher_scene_browse_callback,
         app);
@@ -560,7 +562,7 @@ static void _refresh_submenu(EspFlasherApp* app) {
         snprintf(
             str_custom,
             sizeof(str_custom),
-            "%s Custom (0x%lx)",
+            ESP_FLASHER_UI_TEXT("%s Custom (0x%lx)", "%s 自定义 (0x%lx)"),
             app->selected_flash_options[SelectedFlashCustom] ? STR_SELECT : STR_UNSELECT,
             app->custom_slot_addrs[SelectedFlashCustom]);
 
@@ -661,14 +663,14 @@ static void _refresh_submenu(EspFlasherApp* app) {
     snprintf(
         str_flash,
         sizeof(str_flash),
-        "[>] FLASH - slow%s",
+        ESP_FLASHER_UI_TEXT("[>] FLASH - slow%s", "[>] 烧录 - 慢速%s"),
         app->selected_flash_options[SelectedFlashC5Mode] ? " (C5)" :
         app->selected_flash_options[SelectedFlashS3Mode] ? " (S3)" :
                                                            "");
     snprintf(
         str_flash_turbo,
         sizeof(str_flash_turbo),
-        "[>] FLASH - fast%s",
+        ESP_FLASHER_UI_TEXT("[>] FLASH - fast%s", "[>] 烧录 - 快速%s"),
         app->selected_flash_options[SelectedFlashC5Mode] ? " (C5)" :
         app->selected_flash_options[SelectedFlashS3Mode] ? " (S3)" :
                                                            "");

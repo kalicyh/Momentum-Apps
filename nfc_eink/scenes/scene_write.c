@@ -46,7 +46,7 @@ static void nfc_eink_scene_write_show_waiting(const NfcEinkApp* instance) {
         instance->popup, NFC_EINK_UI_TEXT("Waiting", "等待中"), 97, 15, AlignCenter, AlignTop);
     popup_set_text(
         instance->popup,
-        NFC_EINK_UI_TEXT("Apply eink next\nto Flipper's back", "将墨水屏贴近\nFlipper背面"),
+        NFC_EINK_UI_TEXT("Apply eink next\nto Flipper's back", "将墨水屏贴近\nFlipper 背面"),
         94,
         27,
         AlignCenter,

@@ -168,7 +168,13 @@ bool saflip_scene_read_card_on_event(void* context, SceneManagerEvent event) {
             } else {
                 popup_reset(app->popup);
                 popup_set_header(app->popup, SAFLIP_UI_TEXT("Invalid card!", "无效卡片!"), 64, 2, AlignCenter, AlignTop);
-                popup_set_text(app->popup, SAFLIP_UI_TEXT("Failed to\nparse data.", "数据\n解析失败."), 78, 16, AlignLeft, AlignTop);
+                popup_set_text(
+                    app->popup,
+                    SAFLIP_UI_TEXT("Failed to\nparse data.", "数据\n解析失败。"),
+                    78,
+                    16,
+                    AlignLeft,
+                    AlignTop);
                 popup_set_icon(app->popup, 21, 13, &I_dolph_cry_49x54);
                 popup_set_timeout(app->popup, 1500);
                 popup_enable_timeout(app->popup);

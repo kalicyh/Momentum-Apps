@@ -33,14 +33,24 @@ void unitemp_scene_sensor_menu_on_enter(void* context) {
     UnitempApp* app = context;
     Submenu* submenu = app->submenu;
 
-    submenu_add_item(submenu, "Info", SubmenuIndexInfo, unitemp_submenu_callback, app);
-    submenu_add_item(submenu, "Edit", SubmenuIndexEdit, unitemp_submenu_callback, app);
-    submenu_add_item(submenu, "Delete", SubmenuIndexDelete, unitemp_submenu_callback, app);
     submenu_add_item(
-        submenu, "Add a new sensor", SubmenuIndexAddNewSensor, unitemp_submenu_callback, app);
-    submenu_add_item(submenu, "Settings", SubmenuIndexSettings, unitemp_submenu_callback, app);
-    submenu_add_item(submenu, "Help", SubmenuIndexHelp, unitemp_submenu_callback, app);
-    submenu_add_item(submenu, "About", SubmenuIndexAbout, unitemp_submenu_callback, app);
+        submenu, UNITEMP_UI_TEXT("Info", "信息"), SubmenuIndexInfo, unitemp_submenu_callback, app);
+    submenu_add_item(
+        submenu, UNITEMP_UI_TEXT("Edit", "编辑"), SubmenuIndexEdit, unitemp_submenu_callback, app);
+    submenu_add_item(
+        submenu, UNITEMP_UI_TEXT("Delete", "删除"), SubmenuIndexDelete, unitemp_submenu_callback, app);
+    submenu_add_item(
+        submenu,
+        UNITEMP_UI_TEXT("Add a new sensor", "添加传感器"),
+        SubmenuIndexAddNewSensor,
+        unitemp_submenu_callback,
+        app);
+    submenu_add_item(
+        submenu, UNITEMP_UI_TEXT("Settings", "设置"), SubmenuIndexSettings, unitemp_submenu_callback, app);
+    submenu_add_item(
+        submenu, UNITEMP_UI_TEXT("Help", "帮助"), SubmenuIndexHelp, unitemp_submenu_callback, app);
+    submenu_add_item(
+        submenu, UNITEMP_UI_TEXT("About", "关于"), SubmenuIndexAbout, unitemp_submenu_callback, app);
 
     submenu_set_selected_item(app->submenu, 0);
 
